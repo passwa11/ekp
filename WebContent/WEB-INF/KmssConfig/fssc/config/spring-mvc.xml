@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        class="com.landray.kmss.fssc.config.actions.FsscConfigScoreAction" 
+        parent="KmssBaseAction" 
+        name="/fssc/config/fssc_config_score/fsscConfigScore.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.fssc.config.forms.FsscConfigScoreForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry 
+                    key="data" 
+                    value="/fssc/config/fssc_config_score/fsscConfigScore_data.jsp"/>
+                <entry 
+                    key="edit" 
+                    value="/fssc/config/fssc_config_score/fsscConfigScore_edit.jsp"/>
+                <entry 
+                    key="view" 
+                    value="/fssc/config/fssc_config_score/fsscConfigScore_view.jsp"/>
+                 <entry 
+                    key="report" 
+                    value="/fssc/config/fssc_config_report/fsscConfigScoreReport_result.jsp"/>
+                    
+            </map>
+        </property>
+    </bean>
+    <bean 
+        class="com.landray.kmss.fssc.config.actions.FsscConfigScoreDetailAction" 
+        parent="KmssBaseAction" 
+        name="/fssc/config/fssc_config_score/fsscConfigScoreDetail.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.fssc.config.forms.FsscConfigScoreDetailForm"/>
+        <property 
+            name="forwards">
+            <map/>
+        </property>
+    </bean>
+    
+     <bean 
+        class="com.landray.kmss.fssc.config.actions.FsscConfigListAction" 
+        parent="KmssBaseAction" 
+        name="/fssc/config/fssc_config_list/fsscConfigList.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.fssc.config.forms.FsscConfigListForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry 
+                    key="data" 
+                    value="/fssc/config/fssc_config_list/fsscConfigList_data.jsp"/>
+                <entry 
+                    key="edit" 
+                    value="/fssc/config/fssc_config_list/fsscConfigList_edit.jsp"/>
+                <entry 
+                    key="view" 
+                    value="/fssc/config/fssc_config_list/fsscConfigList_view.jsp"/>
+            </map>
+        </property>
+    </bean>
+</beans>

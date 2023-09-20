@@ -1,0 +1,2196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 应用 start -->
+    <bean
+            id="modelingApplicationDao"
+            parent="KmssExtendDataAreaDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingApplicationDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.model.ModelingApplication"/>
+        <property name="modelingAppVersionDao" ref="modelingAppVersionDao"/>
+    </bean>
+
+    <bean
+            id="modelingApplicationServiceTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingApplicationServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingApplicationDao"/>
+        </property>
+        <property name="modelingAppNavService">
+            <ref bean="modelingAppNavService"/>
+        </property>
+        <property name="modelingAppMobileService">
+            <ref bean="modelingAppMobileService"/>
+        </property>
+        <property name="modelingAppListviewService">
+            <ref bean="modelingAppListviewService"/>
+        </property>
+
+        <property name="modelingAppMobileListViewService">
+            <ref bean="modelingAppMobileListViewService"/>
+        </property>
+        <property name="modelingAppVersionService">
+            <ref bean="modelingAppVersionService"/>
+        </property>
+        <property name="modelingPortletCfgService">
+            <ref bean="modelingPortletCfgService"/>
+        </property>
+        <property name="modelingDbEchartsService">
+            <ref bean="modelingDbEchartsService"/>
+        </property>
+        <property name="modelingDbTableService">
+            <ref bean="modelingDbTableService"/>
+        </property>
+        <property name="modelingAppCollectionService">
+            <ref bean="modelingAppCollectionService"/>
+        </property>
+    </bean>
+
+    <bean id="modelingApplicationService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingApplicationServiceTarget"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="copy*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="init*">PROPAGATION_REQUIRED</prop>
+                <prop key="clone*">PROPAGATION_REQUIRED</prop>
+                <prop key="do*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--用于<xform:beanDataSource ../>-->
+    <bean
+            id="modelingApplicationDataService"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingApplicationDataServiceImp">
+        <property name="modelingApplicationService">
+            <ref bean="modelingApplicationService"/>
+        </property>
+    </bean>
+
+    <!-- 应用 end -->
+
+    <!-- 应用分类 start -->
+    <bean
+            id="modelingAppCategoryDao"
+            parent="KmssBaseDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingAppCategoryDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.model.ModelingAppCategory"/>
+    </bean>
+
+    <bean
+            id="modelingAppCategoryServiceTarget"
+            parent="KmssBaseTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppCategoryServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingAppCategoryDao"/>
+        </property>
+    </bean>
+
+    <bean id="modelingAppCategoryService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAppCategoryServiceTarget"/>
+        </property>
+    </bean>
+    <!-- 应用分类 end -->
+
+    <!-- 报表相关 start-->
+    <bean id="modelingDbEchartsService"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingDbEchartsServiceImp">
+    </bean>
+    <!-- 报表相关 end-->
+
+    <!-- 表单模板 start -->
+    <bean id="modelingDbTableService"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingDbTableServiceImp">
+        <property name="sysFormDictVarTree">
+            <ref bean="sysFormDictVarTree"/>
+        </property>
+        <property name="sysFormDbTableService">
+            <ref bean="sysFormDbTableService"/>
+        </property>
+        <property name="sysFormTemplateService">
+            <ref bean="sysFormTemplateService"/>
+        </property>
+    </bean>
+
+    <bean
+            id="modelingAppModelDao"
+            parent="modelingAuthAreaBaseDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingAppModelDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.model.ModelingAppModel"/>
+    </bean>
+
+    <bean
+            id="modelingAppModelServiceTarget"
+            parent="KmssBaseTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppModelServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingAppModelDao"/>
+        </property>
+        <property name="modelingAppFlowService">
+            <ref bean="modelingAppFlowService"/>
+        </property>
+        <property name="modelingFormModifiedLogService">
+            <ref bean="modelingFormModifiedLogService"/>
+        </property>
+    </bean>
+
+    <bean id="modelingAppModelService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAppModelServiceTarget"/>
+        </property>
+    </bean>
+
+    <!-- 表单模板 end -->
+
+    <!-- 导航栏目定义 start -->
+    <bean
+            id="modelingAppNavDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.profile.dao.hibernate.ModelingAppNavDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.profile.model.ModelingAppNav"/>
+    </bean>
+
+    <bean
+            id="modelingAppNavServiceTarget"
+            parent="KmssBaseTarget"
+            class="com.landray.kmss.sys.modeling.base.profile.service.spring.ModelingAppNavServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingAppNavDao"/>
+        </property>
+    </bean>
+
+    <bean id="modelingAppNavService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAppNavServiceTarget"/>
+        </property>
+    </bean>
+    <bean id="modelingAppNavDataBean"
+          class="com.landray.kmss.sys.modeling.base.profile.service.spring.ModelingAppNavDataBean">
+        <property name="modelingAppListviewService">
+            <ref bean="modelingAppListviewService"/>
+        </property>
+        <property name="modelingResourcePanelService">
+            <ref bean="modelingResourcePanelService"/>
+        </property>
+        <property name="modelingGanttService">
+            <ref bean="modelingGanttService"/>
+        </property>
+        <property name="modelingMindMapService">
+            <ref bean="modelingMindMapService"/>
+        </property>
+        <property name="modelingAppCollectionViewService">
+            <ref bean="modelingAppCollectionViewService"/>
+        </property>
+        <property name="modelingCalendarService">
+            <ref bean="modelingCalendarService"/>
+        </property>
+        <property name="modelingTreeViewService">
+            <ref bean="modelingTreeViewService"/>
+        </property>
+    </bean>
+    <bean id="modelingAppModelDataBean"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppModelDataBean">
+        <property name="modelingAppListviewService">
+            <ref bean="modelingAppListviewService"/>
+        </property>
+        <property name="modelingAppModelService">
+            <ref bean="modelingAppModelService"/>
+        </property>
+        <property name="modelingApplicationService">
+            <ref bean="modelingApplicationService"/>
+        </property>
+    </bean>
+    <bean id="modelingAppRptDataBean" class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppRptDataBean">
+    </bean>
+    <!-- 导航栏目定义 end -->
+
+    <!-- 素材库 start -->
+    <bean
+            id="modelingMaterialMainDao"
+            class="com.landray.kmss.sys.modeling.base.material.dao.hibernate.ModelingMaterialMainDaoImp"
+            parent="KmssAuthBaseDao">
+        <property
+            name="modelName"
+            value="com.landray.kmss.sys.modeling.base.material.model.ModelingMaterialMain"/>
+    </bean>
+    <bean
+            id="modelingMaterialMainTarget"
+            class="com.landray.kmss.sys.modeling.base.material.service.spring.ModelingMaterialMainServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingMaterialMainDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingMaterialMainService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingMaterialMainTarget"/>
+        </property>
+    </bean>
+    <!-- 素材库 end -->
+
+    <!-- 业务空间PC首页 start -->
+    <bean
+            id="modelingAppSpaceDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.space.dao.hibernate.ModelingAppSpaceDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.space.model.ModelingAppSpace"/>
+    </bean>
+    <bean
+            id="modelingAppSpaceServiceTarget"
+            parent="KmssBaseTarget"
+            class="com.landray.kmss.sys.modeling.base.space.service.spring.ModelingAppSpaceServiceImp">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingAppSpaceDao"/>
+        </property>
+    </bean>
+
+    <bean
+            id="modelingAppSpaceService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingAppSpaceServiceTarget"/>
+        </property>
+    </bean>
+    <!-- 业务空间PC首页 end -->
+
+    <!-- 树形视图 start -->
+    <bean
+            id="modelingTreeViewDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.treeview.dao.hibernate.ModelingTreeViewDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.treeview.model.ModelingTreeView"/>
+    </bean>
+    <bean
+            id="modelingTreeViewTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.treeview.service.spring.ModelingTreeViewServiceImp">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingTreeViewDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingTreeViewService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingTreeViewTarget"/>
+        </property>
+    </bean>
+
+    <!-- 列表视图 start -->
+    <bean
+            id="modelingAppListviewDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingAppListviewDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.model.ModelingAppListview"/>
+    </bean>
+    <bean
+            id="modelingAppListviewTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppListviewServiceImp">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingAppListviewDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppListviewService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingAppListviewTarget"/>
+        </property>
+    </bean>
+
+    <!-- 新版列表视图 start -->
+    <bean
+            id="ModelingAppCollectionViewDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingAppListviewDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.views.collection.model.ModelingAppCollectionView"/>
+    </bean>
+    <bean
+            id="modelingAppCollectionTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.main.views.service.spring.ModelingAppCollectionServiceImp">
+        <property
+                name="baseDao">
+            <ref
+                    bean="ModelingAppCollectionViewDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppCollectionService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingAppCollectionTarget"/>
+        </property>
+    </bean>
+
+    <bean
+            id="ModelingAppCollectionDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.views.collection.dao.hibernate.ModelingAppCollectionViewDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.views.collection.model.ModelingAppCollectionView"/>
+    </bean>
+
+    <bean
+            id="modelingAppCollectionViewTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.views.collection.service.spring.ModelingAppCollectionViewServiceImp">
+        <property
+                name="baseDao">
+            <ref
+                    bean="ModelingAppCollectionDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppCollectionViewService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingAppCollectionViewTarget"/>
+        </property>
+    </bean>
+
+    <bean
+            id="modelingAppListviewCategoryDictLoader"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppListviewCategoryDictLoaderImp">
+        <property
+                name="sysDictLoader">
+            <ref
+                    bean="sysDictLoader"/>
+        </property>
+    </bean>
+
+    <bean
+            id="modelingAppListviewModelDictService"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppListviewModelDictService">
+        <property name="modelingAppModelService">
+            <ref bean="modelingAppModelService"/>
+        </property>
+    </bean>
+
+    <bean
+            id="modelingAppListviewTemplateTree"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppListviewTemplateTree">
+    </bean>
+    <!-- 列表视图 end -->
+
+    <!-- 查看视图 start -->
+    <bean
+            id="modelingAppViewDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingAppViewDaoImp"
+            parent="modelingAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.model.ModelingAppView</value>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppViewTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppViewServiceImp"
+            parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="modelingAppViewDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppViewService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingAppViewTarget"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppViewopersDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingAppViewopersDaoImp"
+            parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.model.ModelingAppViewopers</value>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppViewopersTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppViewopersServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingAppViewopersDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppViewopersService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingAppViewopersTarget"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppViewincparaDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingAppViewincparaDaoImp"
+            parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.model.ModelingAppViewincpara</value>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppViewincparaTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppViewincparaServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingAppViewincparaDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppViewincparaService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingAppViewincparaTarget"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppViewtabDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingAppViewtabDaoImp"
+            parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.model.ModelingAppViewtab</value>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppViewtabTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppViewtabServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingAppViewtabDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingAppViewtabService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingAppViewtabTarget"/>
+        </property>
+    </bean>
+    <!-- 查看视图 end -->
+
+
+    <!-- 数据字典加载器 -->
+    <bean id="modelingDictLoadService"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingDictLoadServiceImp">
+        <property name="sysDictLoader">
+            <ref bean="sysDictLoader"/>
+        </property>
+    </bean>
+
+    <!-- 基础数据关联bean start -->
+    <bean id="modelingBaseDataTreeInfo"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingBaseDataTreeInfo">
+        <!-- 		<property  name="sysModelingRelationServService"> -->
+        <!--             <ref  bean="sysModelingRelationServService"/> -->
+        <!--         </property> -->
+    </bean>
+    <bean id="modelingBaseDataRelation"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingBaseDataRelation">
+        <property name="modelingBaseDataTreeInfo">
+            <ref bean="modelingBaseDataTreeInfo"/>
+        </property>
+    </bean>
+    <!-- 基础数据关联bean end -->
+
+    <!-- 	关联开始 -->
+    <bean
+            id="sysModelingScenesDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.SysModelingScenesDaoImp"
+            parent="modelingAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.model.SysModelingScenes</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingScenesTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.SysModelingScenesServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="sysModelingScenesDao"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingScenesService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingScenesTarget"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="copy*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="init*">PROPAGATION_REQUIRED</prop>
+                <prop key="clone*">PROPAGATION_REQUIRED</prop>
+                <prop key="do*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+            </props>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingRelationDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.SysModelingRelationDaoImp"
+            parent="modelingAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.model.SysModelingRelation</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingRelationTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.SysModelingRelationServiceImp"
+            parent="ModelingFieldMappingDataTarget">
+        <property name="baseDao">
+            <ref bean="sysModelingRelationDao"/>
+        </property>
+        <property name="modelingAppModelService">
+            <ref bean="modelingAppModelService"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingRelationService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingRelationTarget"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingOperationDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.SysModelingOperationDaoImp"
+            parent="modelingAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.model.SysModelingOperation</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingOperationTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.SysModelingOperationServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="sysModelingOperationDao"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingOperationService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingOperationTarget"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="copy*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="init*">PROPAGATION_REQUIRED</prop>
+                <prop key="clone*">PROPAGATION_REQUIRED</prop>
+                <prop key="do*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean
+            id="sysModelingBehaviorDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.SysModelingBehaviorDaoImp"
+            parent="modelingAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.model.SysModelingBehavior</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.SysModelingBehaviorServiceImp"
+            parent="ModelingFieldMappingDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="sysModelingBehaviorDao"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingBehaviorTarget"/>
+        </property>
+    </bean>
+
+    <bean id="modelingAppListviewExportDictService"
+          class="com.landray.kmss.sys.modeling.main.service.spring.ModelingAppListviewExportDictService">
+        <property name="modelingAppListviewService">
+            <ref bean="modelingAppListviewService"/>
+        </property>
+        <property name="modelingAppListviewModelDictService">
+            <ref bean="modelingAppListviewModelDictService"/>
+        </property>
+    </bean>
+    <!-- 关联结束 -->
+
+    <!-- 流程 start -->
+    <bean
+            id="modelingAppFlowDao"
+            parent="modelingBaseDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingAppFlowDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.model.ModelingAppFlow"/>
+    </bean>
+
+    <bean
+            id="modelingAppFlowServiceTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppFlowServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingAppFlowDao"/>
+        </property>
+        <property name="accessManager" ref="accessManager"/>
+    </bean>
+
+    <bean id="modelingAppFlowService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAppFlowServiceTarget"/>
+        </property>
+    </bean>
+    <!-- 流程 end -->
+
+    <!-- 流程机器人节点  start -->
+    <bean id="robotNodeScene" class="com.landray.kmss.sys.modeling.base.service.flow.robot.RobotNodeScene"></bean>
+    <bean id="robotNodeBehavior" class="com.landray.kmss.sys.modeling.base.service.flow.robot.RobotNodeBehavior"></bean>
+    <bean id="modelingProcessListener"
+          class="com.landray.kmss.sys.modeling.base.service.flow.event.ModelingProcessListener"></bean>
+    <bean id="modelingProcessEventListener"
+          class="com.landray.kmss.sys.modeling.base.service.flow.event.ModelingProcessEventListener"></bean>
+    <!-- 流程机器人节点  end -->
+
+    <!-- E签宝事件  本地服务 start -->
+    <bean id="modelingEqbSignService"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingEqbSignServiceImp"></bean>
+    <!-- E签宝事件  本地服务 end -->
+
+    <!-- E签宝事件  SaSS start -->
+    <bean id="modelingEqbSaSSSignService"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingEqbSaasSignServiceImp"></bean>
+    <!-- E签宝事件  SaSS end -->
+
+
+    <!-- 表单更改日志 start -->
+    <bean
+            id="modelingFormModifiedLogDao"
+            class="com.landray.kmss.sys.modeling.base.formlog.dao.hibernate.ModelingFormModifiedLogDaoImp"
+            parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.formlog.model.ModelingFormModifiedLog</value>
+        </property>
+    </bean>
+    <bean
+            id="modelingFormModifiedLogTarget"
+            class="com.landray.kmss.sys.modeling.base.formlog.service.spring.ModelingFormModifiedLogServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingFormModifiedLogDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingFormModifiedLogService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingFormModifiedLogTarget"/>
+        </property>
+
+    </bean>
+    <!--	-->
+    <bean
+            id="modelingFieldModifiedLogDao"
+            class="com.landray.kmss.sys.modeling.base.formlog.dao.hibernate.ModelingFieldModifiedLogDaoImp"
+            parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.formlog.model.ModelingFieldModifiedLog</value>
+        </property>
+    </bean>
+    <bean
+            id="modelingFieldModifiedLogTarget"
+            class="com.landray.kmss.sys.modeling.base.formlog.service.spring.ModelingFieldModifiedLogServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingFieldModifiedLogDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingFieldModifiedLogService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingFieldModifiedLogTarget"/>
+        </property>
+
+    </bean>
+    <!--	-->
+    <!--表单关联记录 start-->
+    <bean
+            id="modelingFieldMappingDao"
+            class="com.landray.kmss.sys.modeling.base.formlog.dao.hibernate.ModelingFieldMappingDaoImp"
+            parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.formlog.model.ModelingFieldMapping</value>
+        </property>
+    </bean>
+
+    <bean
+            id="modelingFieldMappingTarget"
+            class="com.landray.kmss.sys.modeling.base.formlog.service.mapping.ModelingFieldMappingServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingFieldMappingDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingFieldMappingService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingFieldMappingTarget"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="copy*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="init*">PROPAGATION_REQUIRED</prop>
+                <prop key="clone*">PROPAGATION_REQUIRED</prop>
+                <prop key="do*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+            </props>
+        </property>
+    </bean>
+    <bean
+            id="ModelingFieldMappingDataTarget"
+            class="com.landray.kmss.sys.modeling.base.formlog.service.mapping.ModelingFieldMappingDataServiceImp"
+            parent="KmssExtendDataTarget">
+        <property name="modelingFieldMappingService">
+            <ref bean="modelingFieldMappingService"/>
+        </property>
+    </bean>
+    <!--表单关联记录 end-->
+    <!-- 表单更改日志 end -->
+
+    <!-- 操作权限配置集群接收消息类 -->
+    <bean id="sysModelingOprAuthMessageReceiver"
+          class="com.landray.kmss.sys.modeling.base.service.message.SysModelingOprAuthMessageReceiver">
+    </bean>
+    <bean id="sysModelingConfigClusterService"
+          class="com.landray.kmss.sys.modeling.base.service.spring.SysModelingConfigClusterServiceImp">
+    </bean>
+
+    <bean id="sysModelingClusterMessageReceiver"
+          class="com.landray.kmss.sys.modeling.base.service.message.SysModelingClusterMessageReceiver">
+    </bean>
+
+    <bean id="sysModelingClusterHandler"
+          class="com.landray.kmss.sys.modeling.base.service.spring.SysModelingClusterHandler">
+    </bean>
+
+    <bean id="modelingAppModelSelectDialog"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppModelSelectDialog">
+    </bean>
+
+    <!-- portlet -->
+    <bean
+            id="modelingPortletService"
+            class="com.landray.kmss.sys.modeling.main.service.spring.ModelingPortletService">
+        <property name="modelingPortletCfgService">
+            <ref bean="modelingPortletCfgService"/>
+        </property>
+        <property name="sysAttMainCoreInnerService">
+            <ref bean="sysAttMainService"/>
+        </property>
+    </bean>
+    <!--  portlet  -->
+    <bean
+            id="sysModelingPortletHanler"
+            class="com.landray.kmss.sys.modeling.base.loader.SysModelingPortletHandler">
+        <property name="modelingPortletCfgService">
+            <ref bean="modelingPortletCfgService"/>
+        </property>
+    </bean>
+
+    <!-- portlet cfg start -->
+    <bean
+            id="modelingPortletCfgDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingPortletCfgDaoImp"
+            parent="modelingAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.model.ModelingPortletCfg</value>
+        </property>
+    </bean>
+    <bean
+            id="modelingPortletCfgTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingPortletCfgServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingPortletCfgDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingPortletCfgService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingPortletCfgTarget"/>
+        </property>
+
+    </bean>
+    <!-- portlet cfg end -->
+
+    <!--版本管理 start-->
+    <bean id="modelingAppVersionDao"
+          class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingAppVersionDaoImp"
+          parent="KmssBaseDao">
+        <property name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.model.ModelingAppVersion</value>
+        </property>
+    </bean>
+    <bean id="modelingAppVersionTarget"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppVersionServiceImp"
+          parent="KmssBaseTarget">
+        <property name="baseDao">
+            <ref bean="modelingAppVersionDao"/>
+        </property>
+        <property name="modelingDatainitProcessService">
+            <ref bean="modelingDatainitProcessService"/>
+        </property>
+    </bean>
+    <bean id="modelingAppVersionService"
+          parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAppVersionTarget"/>
+        </property>
+    </bean>
+    <!--版本管理 end-->
+
+    <!--BaseDao定义 START-->
+    <bean id="modelingAuthBaseDao" class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingBaseDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="hqlBuilder" ref="kmssAuthHQLBuilder"/>
+        <property name="modelingAppVersionDao" ref="modelingAppVersionDao"/>
+    </bean>
+
+    <bean id="modelingBaseDao" class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingBaseDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="hqlBuilder" ref="kmssHQLBuilder"/>
+        <property name="modelingAppVersionDao" ref="modelingAppVersionDao"/>
+    </bean>
+
+    <bean id="modelingAuthAreaBaseDao" class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingBaseDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="hqlBuilder" ref="kmssAuthAreaHQLBuilder"/>
+        <property name="modelingAppVersionDao" ref="modelingAppVersionDao"/>
+    </bean>
+    <!--BaseDao定义 END-->
+
+    <!-- 待办的相关业务 start -->
+    <bean id="modelingAppNotifyServiceTarget"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppNotifyServiceImp"
+          parent="KmssBaseTarget">
+    </bean>
+    <bean id="modelingAppNotifyService"
+          parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAppNotifyServiceTarget"/>
+        </property>
+
+    </bean>
+    <!-- 待办的相关业务 end -->
+    <!-- 导入配置 -->
+    <bean
+            id="modelingImportConfigDao"
+            parent="KmssBaseDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingImportConfigDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.model.ModelingImportConfig"/>
+    </bean>
+    <bean
+            id="modelingImportConfigServiceTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingImportConfigServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingImportConfigDao"/>
+        </property>
+        <property name="modelingImportDataManager">
+            <ref bean="modelingImportDataManager"/>
+        </property>
+    </bean>
+
+    <bean id="modelingImportConfigService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingImportConfigServiceTarget"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="importData">PROPAGATION_REQUIRED</prop>
+                <prop key="importRowData">PROPAGATION_REQUIRES_NEW</prop>
+                <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- 导入配置 -->
+
+    <!-- 业务建模应用的可维护者权限 -->
+    <bean id="sysModelingEditorValidator"
+          class="com.landray.kmss.sys.modeling.auth.service.spring.SysModelingEditorValidator">
+    </bean>
+    <!-- 门户链接权限 -->
+    <bean id="porletValidator"
+          class="com.landray.kmss.sys.modeling.auth.service.spring.porletValidator">
+    </bean>
+    <!-- 业务建模应用的可维护者权限 -->
+
+    <!-- 业务建模子流程中选择树 -->
+    <bean id="modelingSubFlowTreeService"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingSubFlowTreeService">
+        <property name="modelingAppCategoryService">
+            <ref bean="modelingAppCategoryService"/>
+        </property>
+        <property name="modelingApplicationService">
+            <ref bean="modelingApplicationService"/>
+        </property>
+        <property name="modelingAppModelService">
+            <ref bean="modelingAppModelService"/>
+        </property>
+        <property name="modelingAppFlowService">
+            <ref bean="modelingAppFlowService"/>
+        </property>
+    </bean>
+    <bean id="modelingSubFlowDictService"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingSubFlowDictService">
+    </bean>
+    <!-- 业务建模子流程中选择树 -->
+    <bean id="modelingMainDataExtendHandler"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingMainDataExtendHandler">
+    </bean>
+
+    <bean
+            id="modelingFormDictTreeVarService"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingFormDictTreeVarService">
+        <property name="loader">
+            <ref bean="sysFormDictLoadService" />
+        </property>
+        <property name="sysFormCommonTemplateService">
+            <ref bean="sysFormCommonTemplateService" />
+        </property>
+        <property name="sysFormTemplateService">
+            <ref bean="sysFormTemplateService" />
+        </property>
+    </bean>
+
+    <!-- 数据校验 start -->
+    <bean id="modelingAppDataValidateDao"
+          parent="modelingBaseDao"
+          class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingAppDataValidateDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.model.ModelingAppDataValidate"/>
+    </bean>
+
+    <bean
+            id="modelingAppDataValidateServiceTarget"
+            parent="KmssBaseTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppDataValidateServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingAppDataValidateDao"/>
+        </property>
+    </bean>
+
+    <bean id="modelingAppDataValidateService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAppDataValidateServiceTarget"/>
+        </property>
+    </bean>
+    <!-- 数据校验 end -->
+
+    <!-- 自动填报 start -->
+    <bean id="modelingAutomaticFillDao"
+          parent="modelingBaseDao"
+          class="com.landray.kmss.sys.modeling.base.formDesign.dao.hibernate.ModelingAutomaticFillDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.formDesign.model.ModelingAutomaticFill"/>
+    </bean>
+
+    <bean
+            id="modelingAutomaticFillServiceTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.formDesign.service.spring.ModelingAutomaticFillServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingAutomaticFillDao"/>
+        </property>
+    </bean>
+
+    <bean id="modelingAutomaticFillService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAutomaticFillServiceTarget"/>
+        </property>
+    </bean>
+    <!-- 自动填报 end -->
+
+    <!-- 自动填报超时策略 start -->
+    <bean id="modelingAutoTimeoutStrategyDao"
+          parent="modelingBaseDao"
+          class="com.landray.kmss.sys.modeling.base.formDesign.dao.hibernate.ModelingAutoTimeoutStrategyDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.formDesign.model.ModelingAutoTimeoutStrategy"/>
+    </bean>
+
+    <bean
+            id="modelingAutoTimeoutStrategyServiceTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.formDesign.service.spring.ModelingAutoTimeoutStrategyServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingAutoTimeoutStrategyDao"/>
+        </property>
+    </bean>
+
+    <bean id="modelingAutoTimeoutStrategyService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAutoTimeoutStrategyServiceTarget"/>
+        </property>
+    </bean>
+    <!-- 自动填报超时策略 end -->
+
+    <!-- 自动填报关联 start -->
+    <bean id="modelingAutomaticFillMappingDao"
+          parent="modelingBaseDao"
+          class="com.landray.kmss.sys.modeling.base.formDesign.dao.hibernate.ModelingAutomaticFillMappingDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.formDesign.model.ModelingAutomaticFillMapping"/>
+    </bean>
+
+    <bean
+            id="modelingAutomaticFillMappingServiceTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.formDesign.service.spring.ModelingAutomaticFillMappingServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingAutomaticFillMappingDao"/>
+        </property>
+    </bean>
+
+    <bean id="modelingAutomaticFillMappingService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAutomaticFillMappingServiceTarget"/>
+        </property>
+    </bean>
+    <!-- 自动填报关联 end -->
+
+    <!-- 对外分享 start -->
+    <bean id="modelingExternalShareDao"
+          parent="modelingBaseDao"
+          class="com.landray.kmss.sys.modeling.base.application.dao.hibernate.ModelingExternalShareDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.application.model.ModelingExternalShare"/>
+    </bean>
+
+    <bean
+            id="modelingExternalShareTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.application.service.spring.ModelingExternalShareServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingExternalShareDao"/>
+        </property>
+    </bean>
+
+    <bean id="modelingExternalShareService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingExternalShareTarget"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="copy*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="init*">PROPAGATION_REQUIRED</prop>
+                <prop key="clone*">PROPAGATION_REQUIRED</prop>
+                <prop key="doCheckSave">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="modelingExternalShareCommitCountDao"
+          parent="modelingBaseDao"
+          class="com.landray.kmss.sys.modeling.base.application.dao.hibernate.ModelingExternalShareCommitCountDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.application.model.ModelingExternalShareCommitCount"/>
+    </bean>
+
+    <bean
+            id="modelingExternalShareCommitCountTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.application.service.spring.ModelingExternalShareCommitCountServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingExternalShareCommitCountDao"/>
+        </property>
+    </bean>
+
+    <bean id="modelingExternalShareCommitCountService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingExternalShareCommitCountTarget"/>
+        </property>
+    </bean>
+    <!-- 对外分享 end -->
+
+    <!-- 公开查询 start -->
+    <bean id="modelingExternalQueryDao"
+          parent="modelingBaseDao"
+          class="com.landray.kmss.sys.modeling.base.application.dao.hibernate.ModelingExternalQueryDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.application.model.ModelingExternalQuery"/>
+    </bean>
+
+    <bean
+            id="modelingExternalQueryTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.application.service.spring.ModelingExternalQueryServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingExternalQueryDao"/>
+        </property>
+    </bean>
+
+    <bean id="modelingExternalQueryService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingExternalQueryTarget"/>
+        </property>
+    </bean>
+
+    <bean id="modelingExternalQueryValidator"
+          class="com.landray.kmss.sys.modeling.auth.service.spring.SysModelingExternalQueryValidator">
+    </bean>
+    <!-- 公开查询 start -->
+
+    <!-- 表单多语言 start -->
+    <bean
+            id="modelingAppFormLangServiceTarget"
+            parent="KmssBaseTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppFormLangServiceImp">
+    </bean>
+
+    <bean id="modelingAppFormLangService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAppFormLangServiceTarget"/>
+        </property>
+    </bean>
+    <!-- 表单多语言 end -->
+    <!-- pc和移动端 列表视图 start -->
+    <bean
+            id="modelingPcAndMobileListViewDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.pcmobile.dao.hibernate.ModelingPcAndMobileListViewDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.pcmobile.model.ModelingPcAndMobileListView"/>
+    </bean>
+    <bean
+            id="modelingPcAndMobileListViewTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.pcmobile.service.spring.ModelingPcAndMobileListViewServiceImp">
+        <property
+                name="baseDao">
+            <ref bean="modelingPcAndMobileListViewDao"/>
+        </property>
+        <property name="modelingAppListviewService">
+            <ref bean="modelingAppListviewService"/>
+        </property>
+        <property name="modelingAppMobileListViewService">
+            <ref bean="modelingAppMobileListViewService"/>
+        </property>
+        <property name="modelingAppModelService">
+            <ref bean="modelingAppModelService"/>
+        </property>
+
+    </bean>
+    <bean
+            id="modelingPcAndMobileListViewService"
+            parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingPcAndMobileListViewTarget"/>
+        </property>
+    </bean>
+    <!-- pc和移动端 列表视图 end -->
+    <!-- pc和移动端 查看视图 start -->
+    <bean
+            id="modelingPcAndMobileViewDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.pcmobile.dao.hibernate.ModelingPcAndMobileViewDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.pcmobile.model.ModelingPcAndMobileView"/>
+    </bean>
+    <bean
+            id="modelingPcAndMobileViewTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.pcmobile.service.spring.ModelingPcAndMobileViewServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingPcAndMobileViewDao"/>
+        </property>
+        <property name="modelingAppModelService">
+            <ref bean="modelingAppModelService"/>
+        </property>
+        <property name="modelingAppViewService">
+            <ref bean="modelingAppViewService"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingPcAndMobileViewService"
+            parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingPcAndMobileViewTarget"/>
+        </property>
+    </bean>
+    <!-- pc和移动端 查看视图 end -->
+    <!--	业务场景 start-->
+    <bean id="modelingAppModelBusinessDataBean"
+          class="com.landray.kmss.sys.modeling.base.business.service.spring.ModelingAppModelBusinessDataBean">
+        <property name="modelingResourcePanelService">
+            <ref bean="modelingResourcePanelService"/>
+        </property>
+        <property name="modelingAppModelService">
+            <ref bean="modelingAppModelService"/>
+        </property>
+        <property name="modelingApplicationService">
+            <ref bean="modelingApplicationService"/>
+        </property>
+        <property name="modelingGanttService">
+            <ref bean="modelingGanttService"/>
+        </property>
+        <property name="modelingCalendarService">
+            <ref bean="modelingCalendarService"/>
+        </property>
+    </bean>
+    <!--	业务场景-资源面板 start-->
+    <bean
+            id="modelingResourcePanelDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.business.dao.hibernate.ModelingResourcePanelDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.business.model.ModelingResourcePanel"/>
+    </bean>
+    <bean
+            id="modelingResourcePanelTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.business.service.spring.ModelingResourcePanelServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingResourcePanelDao"/>
+        </property>
+        <property name="modelingAppModelService">
+            <ref bean="modelingAppModelService"/>
+        </property>
+        <property name="sysDictLoader">
+            <ref bean="sysDictLoader"/>
+        </property>
+    </bean>
+    <bean id="modelingResourcePanelService"
+          parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingResourcePanelTarget"/>
+        </property>
+    </bean>
+    <!--	业务场景-资源面板 end-->
+    <!--	业务场景-甘特图 start-->
+    <bean
+            id="modelingGanttDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.business.dao.hibernate.ModelingGanttDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.business.model.ModelingGantt"/>
+    </bean>
+    <bean
+            id="modelingGanttTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.business.service.spring.ModelingGanttServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingGanttDao"/>
+        </property>
+        <property name="modelingAppModelService">
+            <ref bean="modelingAppModelService"/>
+        </property>
+        <property name="sysModelingOperationService">
+            <ref bean="sysModelingOperationService"/>
+        </property>
+        <property name="sysDictLoader">
+            <ref bean="sysDictLoader"/>
+        </property>
+        <property name="modelingGanttColorCustomService">
+            <ref bean="modelingGanttColorCustomService"/>
+        </property>
+        <property name="modelingGanttColorProgrammeService">
+            <ref bean="modelingGanttColorProgrammeService"/>
+        </property>
+        <property name="modelingGanttTimeDimensionService">
+            <ref bean="modelingGanttTimeDimensionService"/>
+        </property>
+    </bean>
+    <bean id="modelingGanttService"
+          parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingGanttTarget"/>
+        </property>
+    </bean>
+    <!--	业务场景-甘特图 end-->
+    <!--	业务场景-甘特图自定义颜色 start-->
+    <bean
+            id="modelingGanttColorCustomDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.business.dao.hibernate.ModelingGanttColorCustomDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.business.model.ModelingGanttColorCustom"/>
+    </bean>
+    <bean
+            id="modelingGanttColorCustomTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.business.service.spring.ModelingGanttColorCustomServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingGanttColorCustomDao"/>
+        </property>
+    </bean>
+    <bean id="modelingGanttColorCustomService"
+          parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingGanttColorCustomTarget"/>
+        </property>
+    </bean>
+
+    <bean
+            id="modelingGanttColorProgrammeDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.business.dao.hibernate.ModelingGanttColorProgrammeDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.business.model.ModelingGanttColorProgramme"/>
+    </bean>
+    <bean
+            id="modelingGanttColorProgrammeTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.business.service.spring.ModelingGanttColorProgrammeServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingGanttColorProgrammeDao"/>
+        </property>
+    </bean>
+    <bean id="modelingGanttColorProgrammeService"
+          parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingGanttColorProgrammeTarget"/>
+        </property>
+    </bean>
+    <!--	业务场景-甘特图自定义颜色 end-->
+    <!--    业务场景-甘特图自定义时间维度 start -->
+    <bean id="modelingGanttTimeDimensionDao"
+          parent="modelingAuthBaseDao"
+          class="com.landray.kmss.sys.modeling.base.business.dao.hibernate.ModelingGanttTimeDimensionDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.business.model.ModelingGanttTimeDimension"/>
+    </bean>
+
+    <bean
+            id="modelingGanttTimeDimensionServiceTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.business.service.spring.ModelingGanttTimeDimensionServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingGanttTimeDimensionDao"/>
+        </property>
+    </bean>
+
+    <bean id="modelingGanttTimeDimensionService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingGanttTimeDimensionServiceTarget"/>
+        </property>
+    </bean>
+    <!--    业务场景-甘特图自定义时间维度 end -->
+    <!--    业务场景-甘特图里程碑 start -->
+    <bean id="modelingGanttMilepostDao"
+          parent="modelingAuthBaseDao"
+          class="com.landray.kmss.sys.modeling.base.business.dao.hibernate.ModelingGanttMilepostDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.business.model.ModelingGanttMilepost"/>
+    </bean>
+
+    <bean
+            id="modelingGanttMilepostServiceTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.business.service.spring.ModelingGanttMilepostServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingGanttMilepostDao"/>
+        </property>
+    </bean>
+
+    <bean id="modelingGanttMilepostService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingGanttMilepostServiceTarget"/>
+        </property>
+    </bean>
+    <!--    业务场景-甘特图里程碑 end -->
+    <!--	业务场景-思维导图 start-->
+    <bean
+            id="modelingMindMapDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.business.dao.hibernate.ModelingMindMapDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.business.model.ModelingMindMap"/>
+    </bean>
+    <bean
+            id="modelingMindMapTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.business.service.spring.ModelingMindMapServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingMindMapDao"/>
+        </property>
+        <property name="modelingAppModelService">
+            <ref bean="modelingAppModelService"/>
+        </property>
+        <property name="sysDictLoader">
+            <ref bean="sysDictLoader"/>
+        </property>
+    </bean>
+    <bean id="modelingMindMapService"
+          parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingMindMapTarget"/>
+        </property>
+    </bean>
+    <!--	业务场景-思维导图 end-->
+    <!--	业务场景-日历 start-->
+    <bean
+            id="modelingCalendarDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.business.dao.hibernate.ModelingCalendarDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.business.model.ModelingCalendar"/>
+    </bean>
+    <bean
+            id="modelingCalendarTarget"
+            parent="KmssExtendDataTarget"
+            class="com.landray.kmss.sys.modeling.base.business.service.spring.ModelingCalendarServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingCalendarDao"/>
+        </property>
+        <property name="modelingAppModelService">
+            <ref bean="modelingAppModelService"/>
+        </property>
+        <property name="sysDictLoader">
+            <ref bean="sysDictLoader"/>
+        </property>
+    </bean>
+    <bean id="modelingCalendarService"
+          parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingCalendarTarget"/>
+        </property>
+    </bean>
+    <!--	业务场景-日历 end-->
+    <!--	业务场景 end-->
+
+    <!--	自定义链接 start-->
+    <bean
+            id="modelingDynamicLinkDao"
+            parent="modelingAuthBaseDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingDynamicLinkDaoImp">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.base.model.ModelingDynamicLink"/>
+    </bean>
+    <bean
+            id="modelingDynamicLinkTarget"
+            parent="KmssBaseTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingDynamicLinkServiceImpl">
+        <property name="baseDao">
+            <ref bean="modelingDynamicLinkDao"/>
+        </property>
+        <property name="modelingApplicationService">
+            <ref bean="modelingApplicationService"/>
+        </property>
+    </bean>
+    <bean id="modelingDynamicLinkService"
+          parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingDynamicLinkTarget"/>
+        </property>
+    </bean>
+    <!--	自定义链接 end-->
+    <!--操作日志start-->
+    <bean
+            id="modelingOperLogDao"
+            class="com.landray.kmss.sys.modeling.base.dao.hibernate.ModelingOperLogDaoImp"
+            parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.model.ModelingOperLog</value>
+        </property>
+    </bean>
+    <bean
+            id="modelingOperLogTarget"
+            class="com.landray.kmss.sys.modeling.base.service.spring.ModelingOperLogServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingOperLogDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingOperLogService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingOperLogTarget"/>
+        </property>
+    </bean>
+    <!--操作日志访问记录-->
+    <bean id="modelingOperLogFilter" class="com.landray.kmss.sys.modeling.base.filter.ModelingOperLogFilter">
+    </bean>
+    <!--操作日志end-->
+
+
+    <!--操作日志end-->
+    <!--用于处理访问业务建模请求的公共处理-->
+    <bean id="modelingCommonHandlerFilter"
+          class="com.landray.kmss.sys.modeling.base.filter.ModelingCommonHandlerFilter">
+    </bean>
+
+    <bean id="modelingAppDataFormRelevanceService"
+          class="com.landray.kmss.sys.modeling.base.service.spring.ModelingAppDataFormRelevanceService">
+        <property name="modelingApplicationService">
+            <ref bean="modelingApplicationService"/>
+        </property>
+        <property name="modelingAppModelService">
+            <ref bean="modelingAppModelService"/>
+        </property>
+    </bean>
+
+    <!--	工具箱 start-->
+    <bean
+            id="modelingMaintenanceLogDao"
+            class="com.landray.kmss.sys.modeling.base.maintenance.dao.hibernate.ModelingMaintenanceLogDaoImp"
+            parent="KmssAuthBaseDao">
+        <property name="modelName"
+                  value="com.landray.kmss.sys.modeling.base.maintenance.model.ModelingMaintenanceLog"/>
+    </bean>
+    <bean
+            id="modelingMaintenanceTarget"
+            parent="KmssBaseTarget"
+            class="com.landray.kmss.sys.modeling.base.maintenance.service.spring.ModelingMaintenanceServiceImp">
+        <property name="processRuntimeManager">
+            <ref bean="modelingMaintenanceRuntimeManager"/>
+        </property>
+
+        <property name="baseDao">
+            <ref bean="modelingMaintenanceLogDao"/>
+        </property>
+    </bean>
+    <bean id="modelingMaintenanceService"
+          parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingMaintenanceTarget"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="copy*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="init*">PROPAGATION_REQUIRED</prop>
+                <prop key="clone*">PROPAGATION_REQUIRED</prop>
+                <prop key="do*">PROPAGATION_REQUIRED</prop>
+                <prop key="execute*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- 多线程处理 -->
+    <bean id="modelingMaintenanceRuntimeManager"
+          class="com.landray.kmss.sys.modeling.base.maintenance.runtime.ProcessRuntimeManager">
+        <property name="processRuntimeThreadExecutor" ref="modelingMaintenanceRuntimeThreadExecutor"/>
+    </bean>
+
+    <!-- 多线程处理 -->
+    <bean id="modelingMaintenanceRuntimeThreadExecutor"
+          class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="8"/>
+        <property name="maxPoolSize" value="16"/>
+        <property name="keepAliveSeconds" value="200"/>
+        <property name="queueCapacity" value="100"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
+        </property>
+    </bean>
+    <!-- 多线程导入数据处理 -->
+     <bean id="modelingImportDataManager"
+          class="com.landray.kmss.sys.modeling.base.thread.ModelingImportDataManager">
+        <property name="modelingImportDataThreadExecutor" ref="modelingImportDataThreadExecutor"/>
+    </bean>
+    <!-- 多线程导入数据处理 -->
+    <bean id="modelingImportDataThreadExecutor"
+          class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="8"/>
+        <property name="maxPoolSize" value="16"/>
+        <property name="keepAliveSeconds" value="200"/>
+        <property name="queueCapacity" value="100"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
+        </property>
+    </bean>
+
+    <!--    工具箱的具体实现-->
+    <bean
+            id="abstractModelingMaintenanceActionTarget"
+            abstract="true"
+            class="com.landray.kmss.sys.modeling.base.maintenance.runtime.action.AbstractBizMaintenanceAction">
+    </bean>
+    <bean
+            id="abstractModelingMaintenanceAction"
+            lazy-init="true"
+            class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+            <ref bean="transactionManager"/>
+        </property>
+        <property name="target">
+            <ref bean="abstractModelingMaintenanceActionTarget"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="execute*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+            </props>
+        </property>
+    </bean>
+    <!--	工具箱-配置项升级 -->
+    <bean
+            id="modelingMaintenanceCfgUpgradeActionTarget"
+            parent="abstractModelingMaintenanceActionTarget"
+            class="com.landray.kmss.sys.modeling.base.maintenance.runtime.action.CfgUpgradeAction">
+    </bean>
+    <bean
+            id="modelingMaintenanceCfgUpgradeAction"
+            parent="abstractModelingMaintenanceAction">
+        <property name="target">
+            <ref bean="modelingMaintenanceCfgUpgradeActionTarget"/>
+        </property>
+    </bean>
+    <!--	工具箱-历史数据兼容 -->
+    <bean
+            id="modelingMaintenanceHistoryFixActionTarget"
+            parent="abstractModelingMaintenanceActionTarget"
+            class="com.landray.kmss.sys.modeling.base.maintenance.runtime.action.HistoryFixAction">
+    </bean>
+    <bean
+            id="modelingMaintenanceHistoryFixAction"
+            parent="abstractModelingMaintenanceAction">
+        <property name="target">
+            <ref bean="modelingMaintenanceHistoryFixActionTarget"/>
+        </property>
+    </bean>
+    <!--	工具箱-多选地址本迁移 -->
+    <bean
+            id="modelingMaintenanceMultiAddrMigrationActionTarget"
+            parent="abstractModelingMaintenanceActionTarget"
+            class="com.landray.kmss.sys.modeling.base.maintenance.runtime.action.MultiAddrMigrationAction">
+    </bean>
+    <bean
+            id="modelingMaintenanceMultiAddrMigrationAction"
+            parent="abstractModelingMaintenanceAction">
+        <property name="target">
+            <ref bean="modelingMaintenanceMultiAddrMigrationActionTarget"/>
+        </property>
+    </bean>
+    <!--	工具箱-流程已审批人无权限查看修复 -->
+    <bean
+            id="modelingMaintenanceUserAssignUpgradeActionTarget"
+            parent="abstractModelingMaintenanceActionTarget"
+            class="com.landray.kmss.sys.modeling.base.maintenance.runtime.action.UserAssignUpgradeAction">
+    </bean>
+    <bean
+            id="modelingMaintenanceUserAssignUpgradeAction"
+            parent="abstractModelingMaintenanceAction">
+        <property name="target">
+            <ref bean="modelingMaintenanceUserAssignUpgradeActionTarget"/>
+        </property>
+    </bean>
+    <!--	工具箱 end-->
+
+    <!--工具箱数据库检测 begin-->
+    <bean id="modelingDbCheckerXMLDataBean" class="com.landray.kmss.sys.modeling.base.maintenance.schema.ModelingDbCheckerXMLDataBean"></bean>
+
+    <!--工具箱数据库检测 end-->
+
+    <!--    主文档数据统一入口 start -->
+
+    <bean
+            id="modelingAppModelDataServiceTarget"
+            parent="modelingAppModelServiceTarget"
+            class="com.landray.kmss.sys.modeling.base.result.service.spring.IModelingAppModelDataServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingAppModelDao" />
+        </property>
+    </bean>
+
+    <bean id="modelingAppModelDataService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAppModelDataServiceTarget" />
+        </property>
+    </bean>
+
+    <!--    主文档数据统一入口 end -->
+    <!--    webservice-->
+    <bean
+            id="modelingAppModelWSServiceTarget"
+            class="com.landray.kmss.sys.modeling.webservice.ModelingAppModelWSServiceImp">
+
+        <property name="modelingAppModelMainService" ref="modelingAppModelMainService"/>
+        <property name="sysWsOrgService" ref="sysWsOrgService"/>
+        <property name="sysWsAttService" ref="sysWsAttService"/>
+        <property name="modelingAppModelService" ref="modelingAppModelService" />
+        <property name="backgroundAuthService" ref="backgroundAuthService"/>
+        <property name="sysMetadataService" ref="sysMetadataService" />
+        <property name="sysDictLoader" ref="sysDictLoader"/>
+        <property name="modelingInterfaceLogService" ref="modelingInterfaceLogService"/>
+        <property name="sysOrgCoreService" ref="sysOrgCoreService"/>
+    </bean>
+    <bean
+            id="modelingAppModelWSService"
+            parent="KmssBaseService">
+        <property name="target" ref="modelingAppModelWSServiceTarget"/>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="*">PROPAGATION_REQUIRES_NEW</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="modelingLbpmPersonService" class="com.landray.kmss.sys.modeling.base.service.spring.ModelingLbpmPersonServiceImp">
+        <property name="modelingAppModelService" ref="modelingAppModelService" />
+        <property name="modelingAppCategoryService" ref="modelingAppCategoryService" />
+        <property name="modelingApplicationService" ref="modelingApplicationService" />
+        <property name="modelingAppFlowService" ref="modelingAppFlowService" />
+    </bean>
+
+    <!-- 监控start -->
+    <!-- 触发日志 -->
+    <bean
+            id="sysModelingBehaviorLogDao"
+            class="com.landray.kmss.sys.modeling.base.monitor.dao.hibernate.SysModelingBehaviorLogDaoImp"
+            parent="KmssBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.monitor.model.SysModelingBehaviorLog</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogTarget"
+            class="com.landray.kmss.sys.modeling.base.monitor.service.spring.SysModelingBehaviorLogServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="sysModelingBehaviorLogDao"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingBehaviorLogTarget"/>
+        </property>
+    </bean>
+
+    <bean
+            id="sysModelingBehaviorLogCountTotalDao"
+            class="com.landray.kmss.sys.modeling.base.monitor.dao.hibernate.SysModelingBehaviorLogCountTotalDaoImp"
+            parent="KmssBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.monitor.model.SysModelingBehaviorLogCountTotal</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogCountTotalTarget"
+            class="com.landray.kmss.sys.modeling.base.monitor.service.spring.SysModelingBehaviorLogCountTotalServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="sysModelingBehaviorLogCountTotalDao"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogCountTotalService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingBehaviorLogCountTotalTarget"/>
+        </property>
+    </bean>
+
+    <bean
+            id="sysModelingBehaviorLogConsumeWeekDao"
+            class="com.landray.kmss.sys.modeling.base.monitor.dao.hibernate.SysModelingBehaviorLogConsumeWeekDaoImp"
+            parent="KmssBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.monitor.model.SysModelingBehaviorLogConsumeWeekTotal</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeWeekTarget"
+            class="com.landray.kmss.sys.modeling.base.monitor.service.spring.SysModelingBehaviorLogConsumeWeekServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeWeekDao"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeWeekService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeWeekTarget"/>
+        </property>
+    </bean>
+
+    <bean
+            id="sysModelingBehaviorLogConsumeThreeMonthDao"
+            class="com.landray.kmss.sys.modeling.base.monitor.dao.hibernate.SysModelingBehaviorLogConsumeThreeMonthDaoImp"
+            parent="KmssBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.monitor.model.SysModelingBehaviorLogConsumeThreeMonthTotal</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeThreeMonthTarget"
+            class="com.landray.kmss.sys.modeling.base.monitor.service.spring.SysModelingBehaviorLogConsumeThreeMonthServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeThreeMonthDao"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeThreeMonthService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeThreeMonthTarget"/>
+        </property>
+    </bean>
+
+    <bean
+            id="sysModelingBehaviorLogConsumeMonthDao"
+            class="com.landray.kmss.sys.modeling.base.monitor.dao.hibernate.SysModelingBehaviorLogConsumeMonthDaoImp"
+            parent="KmssBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.monitor.model.SysModelingBehaviorLogConsumeMonthTotal</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeMonthTarget"
+            class="com.landray.kmss.sys.modeling.base.monitor.service.spring.SysModelingBehaviorLogConsumeMonthServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeMonthDao"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeMonthService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeMonthTarget"/>
+        </property>
+    </bean>
+
+    <bean
+            id="sysModelingBehaviorLogConsumeDayDao"
+            class="com.landray.kmss.sys.modeling.base.monitor.dao.hibernate.SysModelingBehaviorLogConsumeDayDaoImp"
+            parent="KmssBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.monitor.model.SysModelingBehaviorLogConsumeDayTotal</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeDayTarget"
+            class="com.landray.kmss.sys.modeling.base.monitor.service.spring.SysModelingBehaviorLogConsumeDayServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeDayDao"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeDayService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeDayTarget"/>
+        </property>
+    </bean>
+
+    <bean
+            id="sysModelingBehaviorLogConsumeHalfYearDao"
+            class="com.landray.kmss.sys.modeling.base.monitor.dao.hibernate.SysModelingBehaviorLogConsumeHalfYearDaoImp"
+            parent="KmssBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.monitor.model.SysModelingBehaviorLogConsumeHalfYearTotal</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeHalfYearTarget"
+            class="com.landray.kmss.sys.modeling.base.monitor.service.spring.SysModelingBehaviorLogConsumeHalfYearServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeHalfYearDao"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeHalfYearService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeHalfYearTarget"/>
+        </property>
+    </bean>
+
+    <bean
+            id="sysModelingBehaviorLogConsumeYearDao"
+            class="com.landray.kmss.sys.modeling.base.monitor.dao.hibernate.SysModelingBehaviorLogConsumeYearDaoImp"
+            parent="KmssBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.monitor.model.SysModelingBehaviorLogConsumeYearTotal</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeYearTarget"
+            class="com.landray.kmss.sys.modeling.base.monitor.service.spring.SysModelingBehaviorLogConsumeYearServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeYearDao"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeYearService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeYearTarget"/>
+        </property>
+    </bean>
+
+    <bean
+            id="sysModelingBehaviorLogConsumeTotalTaskDao"
+            class="com.landray.kmss.sys.modeling.base.monitor.dao.hibernate.SysModelingBehaviorLogConsumeTotalTaskDaoImp"
+            parent="KmssBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.monitor.model.SysModelingBehaviorLogConsumeTotalTask</value>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeTotalTaskServiceTarget"
+            class="com.landray.kmss.sys.modeling.base.monitor.service.spring.SysModelingBehaviorLogConsumeTotalTaskServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeTotalTaskDao"/>
+        </property>
+    </bean>
+    <bean
+            id="sysModelingBehaviorLogConsumeTotalTaskService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="sysModelingBehaviorLogConsumeTotalTaskServiceTarget"/>
+        </property>
+    </bean>
+    <!-- 接口日志 -->
+    <bean
+            id="modelingInterfaceLogDao"
+            class="com.landray.kmss.sys.modeling.base.monitor.dao.hibernate.SysModelingInterfaceLogDaoImp"
+            parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.sys.modeling.base.monitor.model.SysModelingInterfaceLog</value>
+        </property>
+    </bean>
+    <bean
+            id="modelingInterfaceLogTarget"
+            class="com.landray.kmss.sys.modeling.base.monitor.service.spring.SysModelingInterfaceLogServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="modelingInterfaceLogDao"/>
+        </property>
+    </bean>
+    <bean
+            id="modelingInterfaceLogService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingInterfaceLogTarget"/>
+        </property>
+
+    </bean>
+    <!-- 接口日志 -->
+    <!-- 监控end -->
+</beans>

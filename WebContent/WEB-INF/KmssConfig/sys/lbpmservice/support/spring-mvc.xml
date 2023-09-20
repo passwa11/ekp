@@ -1,0 +1,793 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/lbpmservice/support/lbpm_template/lbpmTemplate.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmTemplateForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_list.jsp" />
+				<entry
+					key="updateAuditor"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_auditor.jsp" />
+				<entry
+					key="viewHistory"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_viewHistory.jsp" />
+				<entry
+					key="refList"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplateRefCommon_list.jsp" />
+				<entry
+					key="data"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_template/lbpmNodes2Excel.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmTemplateForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="exportNodesExcel2Page"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_export2Excel.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_template/lbpmPrivileger.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmTemplateForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="updatePrivileger"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_privileger.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<bean
+		name="/sys/lbpmservice/support/lbpm_privilege_log/lbpmPrivilegeLog.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmPrivilegeLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmPrivilegeLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_privilege_log/lbpmPrivilegeLog_list.jsp" />
+				<entry
+					key="data"
+					value="/sys/lbpmservice/support/lbpm_privilege_log/lbpmPrivilegeLog_data.jsp" />
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_privilege_log/lbpmPrivilegeLog_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+			name="/sys/lbpmservice/support/lbpm_events_log/lbpmEventsLog.do"
+			class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmEventsLogAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+						key="list"
+						value="/sys/lbpmservice/support/lbpm_events_log/lbpmEventsLog_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_process/lbpmProcess.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmProcessMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmProcessMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="listNodeSubs"
+					value="/sys/lbpmservice/support/lbpm_subprocess/lbpmSubProcess_list.jsp" />
+				<entry
+					key="viewSub"
+					value="/sys/lbpmservice/support/lbpm_subprocess/lbpmSubProcess_view.jsp" />
+				<entry
+					key="viewParent"
+					value="/sys/lbpmservice/support/lbpm_subprocess/lbpmSubProcess_view.jsp" />
+				<entry
+					key="viewProcess"
+					value="/sys/lbpmservice/common/process_view_only.jsp" />
+				<entry
+					key="editProcess"
+					value="/sys/lbpmservice/common/process_edit_only.jsp" />
+				<entry
+					key="viewChart"
+					value="/sys/lbpmservice/include/sysLbpmProcess_flowchart.jsp" />
+				<entry
+					key="viewMobile"
+					value="/sys/lbpmservice/mobile/import/view_only.jsp" />
+				<entry
+					key="editMobile"
+					value="/sys/lbpmservice/mobile/import/edit_only.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_template_change_history/lbpmTemplateChangeHistory.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmTemplateChangeHistoryAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmTemplateChangeHistoryForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_template_change_history/lbpmTemplateChangeHistory_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_template_change_history/lbpmTemplateChangeHistory_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_template_change_history/lbpmTemplateChangeHistory_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_audit_note/lbpmAuditNote.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmAuditNoteAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmAuditNoteForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="listNotes"
+					value="/sys/lbpmservice/support/lbpm_audit_note/lbpmAuditNote_list.jsp" />
+				<entry
+					key="listNotes4Moblie"
+					value="/sys/lbpmservice/mobile/lbpm_audit_note/index.jsp" />
+				<entry
+					key="listNotes4DingMoblie"
+					value="/sys/lbpmservice/mobile/lbpm_audit_note/import/dingSuit/index.jsp" />
+				<entry
+					key="listFlowLog"
+					value="/sys/lbpmservice/support/lbpm_audit_note/lbpmAuditNote_flowLog_list.jsp" />
+				<entry
+					key="listAuditNotes"
+					value="/sys/lbpmservice/support/lbpm_audit_note/lbpmAuditNote_view.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_audit_note_ui/lbpmAuditNote_flowLog_list.jsp" />
+				<entry
+					key="modify"
+					value="/sys/lbpmservice/support/lbpm_audit_note/lbpmAuditNote_modify.jsp" />
+				<entry
+					key="viewHistory"
+					value="/sys/lbpmservice/support/lbpm_audit_note/lbpmAuditNote_viewHistory.jsp" />
+				<entry
+					key="viewNote"
+					value="/sys/lbpmservice/support/lbpm_audit_note_ui/lbpmAuditNote_flowLog_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- 流程附言 -->
+	<bean
+		name="/sys/lbpmservice/support/lbpm_postscript/lbpmPostscript.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmPostscriptAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmPostscriptForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_postscript/lbpmPostscript_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_postscript/lbpmPostscript_list.jsp" />
+				<entry
+					key="edit.4m"
+					value="/sys/lbpmservice/mobile/lbpm_postscript/lbpmPostscript_edit.jsp" />
+				<entry
+					key="list.4m"
+					value="/sys/lbpmservice/mobile/lbpm_postscript/lbpmPostscript_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_usage/lbpmUsage.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmUsageAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmUsageForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="define"
+					value="/sys/lbpmservice/support/lbpm_usage/lbpmUsage_define.jsp" />
+				<entry
+					key="define_person"
+					value="/sys/lbpmservice/support/lbpm_usage/lbpmUsage_define_person.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_usage/lbpmUsage_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/sys/lbpmservice/support/lbpm_usage/lbpmCommunicateUsageAction.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmCommunicateUsageAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmCommunicateUsageForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_usage/lbpmUsage_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	
+	<bean
+		name="/sys/lbpmservice/support/lbpm_operations/lbpmOperations.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmOperationsAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmOperationsForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_operations/lbpmOperations_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_operations/lbpmOperations_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_operations/lbpmOperations_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_oper_main/lbpmOperMain.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmOperMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmOperMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_oper_main/lbpmOperMain_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_oper_main/lbpmOperMain_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_oper_main/lbpmOperMain_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_template_exportandimport/lbpmTemplateExportAndImport.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmTemplateExportAndImportAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmTemplateExportAndImportForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_template_exportandimport/lbpmTemplateImport_view.jsp" />
+				<entry
+					key="import"
+					value="/sys/lbpmservice/support/lbpm_template_exportandimport/lbpmTemplateImport_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_cost_time/lbpmCostTime.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmCostTimeAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_follow/lbpmFollow.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmFollowAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="portlet"
+					value="/sys/lbpmservice/support/lbpm_follow/lbpmFollowPortlet_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_assign/lbpmAssign.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmAssignAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmAssignForm" />
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/person_set/SysLbpmPersonSet.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.SysLbpmPersonSetAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_simulation_exampleService/lbpmSimulationExampleService.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmSimulationExampleAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpmSimulationExample.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmSimulationExampleAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_simulation/example/lbpmSimulationExample_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpm/lbpm_simulation_plan/lbpmSimulationPlan.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmSimulationPlanAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmSimulationPlanForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_simulation/plan/lbpmSimulationPlan_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_simulation/plan/lbpmSimulationPlan_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_simulation/plan/lbpmSimulationPlan_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_simulation_log/lbpmSimulationLog.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmSimulationLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmSimulationLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_simulation/log/lbpmSimulationLog_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_simulation/log/lbpmSimulationLog_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_simulation/log/lbpmSimulationLog_list.jsp" />
+				<entry
+					key="data"
+					value="/sys/lbpmservice/support/lbpm_simulation/log/lbpmSimulationLog_index.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_simulation_node_test_log/lbpmSimulationNodeTestLog.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmSimulationNodeTestLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmSimulationNodeTestLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_simulation/node_test_log/lbpmSimulationNodeTestLog_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_simulation/node_test_log/lbpmSimulationNodeTestLog_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_simulation/node_test_log/lbpmSimulationNodeTestLog_list.jsp" />
+				<entry
+					key="data"
+					value="/sys/lbpmservice/support/lbpm_simulation/node_test_log/lbpmSimulationNodeTestLog_index.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpm_simulation_plan_record/lbpmSimulationPlanRecord.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmSimulationPlanRecordAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmSimulationPlanRecordForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_simulation/plan/record/lbpmSimulationPlanRecord_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_simulation/plan/record/lbpmSimulationPlanRecord_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_simulation/plan/record/lbpmSimulationPlanRecord_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpmSubFormAction.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmSubFormAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpmProcessRestartAction.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmProcessRestartAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpmHistoryWorkitemAction.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmHistoryWorkitemAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_process_status/list.jsp" />
+				<entry
+					key="list.4m"
+					value="/sys/lbpmservice/mobile/lbpm_audit_note/lbpm_process_status/list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/LbpmToolsAction.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmToolsAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="node_name_list"
+					value="/sys/lbpmservice/support/lbpm_tools/node_name/lbpm_tool_node_name_data.jsp" />
+				<entry
+					key="finger_print_list"
+					value="/sys/lbpmservice/support/lbpm_tools/finger_print/lbpm_tool_finger_print_data.jsp" />
+				<entry
+					key="face_print_list"
+					value="/sys/lbpmservice/support/lbpm_tools/face_print/lbpm_tool_face_print_data.jsp" />
+				<entry
+					key="node_timeout_list"
+					value="/sys/lbpmservice/support/lbpm_tools/node_timeout/lbpm_tool_node_timeout_data.jsp" />
+				<entry
+					key="node_timeout2_list"
+					value="/sys/lbpmservice/support/lbpm_tools/node_timeout/lbpm_tool_node_timeout2_data.jsp" />
+				<entry
+					key="notify_type_list"
+					value="/sys/lbpmservice/support/lbpm_tools/notify_type/lbpm_tool_notify_type_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/sys/lbpmservice/support/LbpmProcessRestartLogAction.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmProcessRestartLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_process_restart_log/lbpmProcessRestartLog_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/sys/lbpmservice/support/lbpmConfigAction.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+	
+	<bean
+		name="/sys/lbpmservice/support/lbpmEmbeddedSubFlowCategory.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmEmbeddedSubFlowCategoryAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmEmbeddedSubFlowCategoryForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_embeddedSubFlow/category/lbpmEmbeddedSubFlowCategory_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_embeddedSubFlow/category/lbpmEmbeddedSubFlowCategory_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpmEmbeddedSubFlow.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmEmbeddedSubFlowAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmEmbeddedSubFlowForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_embeddedSubFlow/lbpmEmbeddedSubFlow_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_embeddedSubFlow/lbpmEmbeddedSubFlow_edit.jsp" />
+				<entry
+					key="manageList"
+					value="/sys/lbpmservice/support/lbpm_embeddedSubFlow/lbpmEmbeddedSubFlow_ui_include.jsp" />
+				<entry
+					key="ref"
+					value="/sys/lbpmservice/support/lbpm_embeddedSubFlow/ref/lbpmEmbeddedSubFlowRef_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpmDynamicSubFlow.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmDynamicSubFlowAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmDynamicSubFlowForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_dynamicSubFlow/lbpmDynamicSubFlow_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_dynamicSubFlow/lbpmDynamicSubFlow_edit.jsp" />
+				<entry
+					key="manageList"
+					value="/sys/lbpmservice/support/lbpm_dynamicSubFlow/lbpmDynamicSubFlow_ui_include.jsp" />
+				<entry
+					key="ref"
+					value="/sys/lbpmservice/support/lbpm_dynamicSubFlow/ref/lbpmDynamicSubFlowRef_data.jsp" />
+				<entry
+					key="paramConfigs"
+					value="/sys/lbpmservice/support/lbpm_dynamicSubFlow/lbpmDynamicSubFlow_paramConfig.jsp" />
+				<entry
+					key="viewParam"
+					value="/sys/lbpmservice/support/lbpm_dynamicSubFlow/lbpmDynamicSubFlow_view_param.jsp" />
+				<entry
+					key="ref"
+					value="/sys/lbpmservice/support/lbpm_dynamicSubFlow/ref/lbpmDynamicSubFlowRef_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpmEmbeddedSubFlowIndex.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmEmbeddedSubFlowIndexAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmEmbeddedSubFlowForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_embeddedSubFlow/lbpmEmbeddedSubFlow_ui_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpmDynamicSubFlowIndex.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmDynamicSubFlowIndexAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmDynamicSubFlowForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_dynamicSubFlow/lbpmDynamicSubFlow_ui_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpmFreeflowDefaultTempAction.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmFreeflowDefaultTempAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpmFreeflowVersionAction.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmFreeflowVersionAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpmSaveDraftAction.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmSaveDraftAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	
+	<bean
+		name="/sys/lbpmservice/support/lbpm_press_log/lbpmPressLog.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmPressLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmPressLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/sys/lbpmservice/support/lbpm_press_log/lbpmPressLog_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- 摘要汇总 -->
+	<bean
+		name="/sys/lbpmservice/support/actions/LbpmSummaryApproval.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmSummaryApprovalAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="summaryDialog"
+					value="/sys/lbpmservice/support/lbpm_summary_approval/dialog.jsp" />
+				<entry
+					key="data"
+					value="/sys/lbpmservice/support/lbpm_summary_approval/config/data.jsp" />
+				<entry
+					key="data.4m"
+					value="/sys/lbpmservice/mobile/lbpm_summary_approval/data.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/sys/lbpmservice/support/lbpm_summary_approval/lbpmSummaryApprovalConfig.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmSummaryApprovalConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmSummaryApprovalConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_summary_approval/config/config_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_summary_approval/config/config_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_summary_approval/config/config_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- 意见类型 -->
+	<bean
+		name="/sys/lbpmservice/support/lbpm_audit_note_type/lbpmAuditNoteType.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmAuditNoteTypeAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmAuditNoteTypeForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_audit_note_type/lbpmAuditNoteType_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_audit_note_type/lbpmAuditNoteType_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_audit_note_type/lbpmAuditNoteType_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmservice/support/lbpmNoteImissiveAuth.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmNodeImissiveAuthAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+
+	<bean
+			name="/sys/lbpmservice/support/auditNoteDataShowAction.do"
+			class="com.landray.kmss.sys.lbpmservice.taglib.auditnote.AuditNoteDataShowAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+	</bean>
+	
+	
+</beans>

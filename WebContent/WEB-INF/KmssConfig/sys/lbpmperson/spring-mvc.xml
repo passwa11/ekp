@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/lbpmperson/sys_lbpmperson_myprocess/SysLbpmPersonMyProcess.do"
+		class="com.landray.kmss.sys.lbpmperson.actions.SysLbpmPersonMyProcessAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="listDraft"
+					value="/sys/lbpmperson/person_flow_draft/draft_list.jsp" />
+				<entry
+					key="listAbandon"
+					value="/sys/lbpmperson/person_flow_abandon/abandon_list.jsp" />
+				<entry
+					key="listCreator"
+					value="/sys/lbpmperson/person_flow_creator/creator_list.jsp" />
+				<entry
+					key="listApproval"
+					value="/sys/lbpmperson/person_flow_approval/approval_list.jsp" />
+				<entry
+					key="listApproval.4m"
+					value="/sys/lbpmperson/mobile/listNotifyApprove.jsp" />
+				<entry
+					key="listApproved"
+					value="/sys/lbpmperson/person_flow_approved/approved_list.jsp" />
+				<entry
+					key="listTrack"
+					value="/sys/lbpmperson/person_flow_track/track_list.jsp" />
+				<entry
+					key="listProcess"
+					value="/sys/lbpmperson/mobile/list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmperson/SysLbpmPersonCreate.do"
+		class="com.landray.kmss.sys.lbpmperson.actions.SysLbpmPersonCreateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="create"
+					value="/sys/lbpmperson/createDocDialog.jsp" />
+				<entry
+					key="portlet"
+					value="/sys/lbpmperson/portlet/lbpmperson_portlet.jsp" />
+				<entry
+						key="listUsually"
+						value="/sys/lbpmperson/portlet/lbpmperson_recentuse.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmperson/SysLbpmPersonSummary.do"
+		class="com.landray.kmss.sys.lbpmperson.actions.SysLbpmPersonSummaryAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="barLine"
+					value="/sys/lbpmperson/person_efficiency/data_create/data_create_summary_barLine.jsp" />
+				<entry
+					key="portletApprovedSummary"
+					value="/sys/lbpmperson/portlet/count/portletSummary_index.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmperson/SysLbpmPersonSearch.do"
+		class="com.landray.kmss.sys.lbpmperson.actions.SysLbpmPersonSearchAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+    <bean
+        id="sysLbpmPersonMyProcessController"
+        class="com.landray.kmss.sys.lbpmperson.rest.controller.SysLbpmPersonMyProcessController">
+    </bean>
+    <bean
+        id="sysLbpmPersonCreateController"
+        class="com.landray.kmss.sys.lbpmperson.rest.controller.SysLbpmPersonCreateController">
+    </bean>
+    <bean
+        id="sysLbpmPersonMyProcessConvertor"
+        class="com.landray.kmss.sys.lbpmperson.rest.convertor.SysLbpmPersonMyProcessConvertor">
+    </bean>
+</beans>

@@ -1,0 +1,69 @@
+
+{
+    "global" : {
+        "modelName" : "com.landray.kmss.sys.rule.model.SysRuleTemplate",
+        "messageKey" : "sys-rule:table.sysRuleTemplate",
+        "serviceBean" : "sysRuleTemplateService",
+        "table" : "sys_rule_temp"
+    },
+    "attrs" : {
+        "fdId" : {
+            "propertyType" : "id",
+            "generator" : {
+                "type" : "assigned"
+            }
+        },
+         "fdModelName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-rule:sysRuleTemplate.fdModelName",
+            "type": "String",
+            "column": "fd_model_name",
+            "notNull": "false",
+            "length": "100",
+            "validate": "true"
+        },
+        "fdModelId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-rule:sysRuleTemplate.fdModelId",
+            "type": "String",
+            "column": "fd_model_id",
+            "notNull": "false",
+            "length": "36",
+            "validate": "true"
+        },
+        "fdKey":         {
+            "propertyType": "simple",
+            "messageKey": "sys-rule:sysRuleTemplate.fdKey",
+            "type": "String",
+            "column": "fd_key",
+            "notNull": "false",
+            "length": "100",
+            "validate": "true"
+        },
+        "quoteInfo" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleTemplate.quoteInfo",
+            "type" : "RTF",
+            "column" : "quote_info",
+            "length": "1000000"
+        },
+        "sysRuleTemplateEntrys" : {
+        	"propertyType" : "list",
+            "messageKey" : "sys-rule:sysRuleTemplate.sysRuleTemplateEntrys",
+            "type" : "com.landray.kmss.sys.rule.model.SysRuleTemplateEntry",
+            "table" : "sys_rule_temp_entry",
+            "column" : "sys_rule_temp_id",
+            "cascade": "all-delete-orphan",
+            "inverse": "false"
+        },
+        "sysRuleQuoteInfos" : {
+        	"propertyType" : "list",
+            "messageKey" : "sys-rule:sysRuleTemplate.sysRuleQuoteInfos",
+            "type" : "com.landray.kmss.sys.rule.model.SysRuleQuoteInfo",
+            "table" : "sys_rule_quoteinfo",
+            "column" : "sys_rule_temp_id",
+            "cascade": "all-delete-orphan",
+            "inverse": "false"
+        }
+    }
+}

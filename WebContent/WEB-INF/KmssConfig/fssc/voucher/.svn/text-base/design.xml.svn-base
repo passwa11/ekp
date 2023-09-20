@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/fssc/voucher/" 
+        messageKey="fssc-voucher:module.fssc.voucher" 
+        defaultValidator="roleValidator(role=ROLE_FSSCVOUCHER_DEFAULT)">
+        <roles>
+            ROLE_FSSCVOUCHER_DEFAULT; 	<!-- 默认权限 -->
+            ROLE_FSSCVOUCHER_RULE; 		<!-- 凭证规则维护权限 -->
+            ROLE_FSSCVOUCHER_SETTING;	<!-- 后台设置权限 -->
+            ROLE_FSSCVOUCHER_DELETE;	<!-- 删除权限 -->
+            ROLE_FSSCVOUCHER_REFRESH_VOUCHER;	<!-- 重新制证角色 -->
+            ROLE_FSSCVOUCHER_BOOKKEEPING;	<!-- 记账 -->
+            ROLE_FSSCVOUCHER_VIEW;	<!-- 凭证查看 -->
+        </roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_FSSCVOUCHER_SETTING;ROLE_FSSCVOUCHER_RULE)"/>
+        <request 
+            path="fssc_voucher_main/fsscVoucherMain.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.voucher.model.FsscVoucherMain"
+            defaultValidator="roleValidator(role=ROLE_FSSCVOUCHER_DEFAULT)">
+            <!-- 财务人员在开账期间有权限新建 -->
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="fsscCommonFinanceAuthValidator()"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="fieldValueValidator(fieldproperty=fdBookkeepingStatus,value=10;11)&amp;fsscCommonFinanceAuthValidator()"/>
+            <query 
+                queryString="method=delete" 
+                validator="[roleValidator(role=ROLE_FSSCVOUCHER_DELETE)|authFieldValidator(type=creator)]&amp;fieldValueValidator(fieldproperty=fdBookkeepingStatus,value=10;11)"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCVOUCHER_DELETE)"/>
+            <query
+                queryString="method=view"
+                validator="authFieldValidator(type=creator)|fsscCommonFinanceAuthValidator()|roleValidator(role=ROLE_FSSCVOUCHER_VIEW)"/>
+            <query
+                queryString="method=bookkeeping"
+                validator="roleValidator(role=ROLE_FSSCVOUCHER_BOOKKEEPING)"/>
+            <query
+                queryString="method=refreshVoucher"
+                validator="fsscVoucherRefreshAuth()&amp;roleValidator(role=ROLE_FSSCVOUCHER_REFRESH_VOUCHER)"/>
+        </request>
+        <request
+            path="fssc_voucher_model_config/fsscVoucherModelConfig.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.voucher.model.FsscVoucherModelConfig"
+            defaultValidator="roleValidator(role=ROLE_FSSCVOUCHER_SETTING)">
+            <query
+                queryString="method=view"
+                validator="roleValidator(role=ROLE_FSSCVOUCHER_SETTING)"/>
+        </request>
+        <request
+            path="fssc_voucher_rule_config/fsscVoucherRuleConfig.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.voucher.model.FsscVoucherRuleConfig"
+            defaultValidator="roleValidator(role=ROLE_FSSCVOUCHER_RULE)">
+            <query
+                queryString="method=view"
+                validator="roleValidator(role=ROLE_FSSCVOUCHER_RULE)"/>
+        </request>
+        <filters 
+            modelName="com.landray.kmss.fssc.voucher.model.FsscVoucherMain">
+            <filter 
+                type="creator" 
+                expression="authFieldFilter(field=docCreator.fdId)"/>
+        </filters>
+    </module>
+    <module
+        urlPrefix="/sys/number/">
+        <request
+            path="sys_number_main/sysNumberMain*">
+            <query
+                queryString="modelName=com.landray.kmss.fssc.voucher.model.FsscVoucherMain"
+                validator="roleValidator(role=ROLE_FSSCVOUCHER_SETTING)"/>
+        </request>
+    </module>
+    <!-- 【费控系统】凭证中心-凭证自动记账定时任务 -->
+    <quartz
+        messageKey="fssc-voucher:fsscVoucher.bookkeeping.quartz"
+        jobService="fsscVoucherAutoBookkeeping"
+        jobMethod="updateAutoBookkeeping"
+        cronExpression="0 0 1 * * ?"
+        description="fssc-voucher:fsscVoucher.bookkeeping.quartz.description" />
+    <homePage 
+        messageKey="fssc-voucher:module.fssc.voucher" 
+        urlPrefix="fssc/voucher"
+        url="/fssc/voucher/index.jsp"
+        config="/moduleindex_notopic.jsp?nav=/fssc/voucher/tree.jsp"/>
+    <profileConfig 
+        key="fssc/voucher" 
+        messageKey="{fssc-voucher:module.fssc.voucher}" 
+        url="/sys/profile/moduleindex.jsp?nav=/fssc/voucher/tree.jsp" 
+        icon="km_comminfo" 
+        type="fs"
+        description="{fssc-voucher:module.fssc.voucher.description}"/>
+</configs>

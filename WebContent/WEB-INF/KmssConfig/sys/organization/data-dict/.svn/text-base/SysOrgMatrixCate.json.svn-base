@@ -1,0 +1,64 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.organization.model.SysOrgMatrixCate",
+        "messageKey": "sys-organization:table.sysOrgMatrixCate",
+        "displayProperty": "fdName",
+        "serviceBean": "sysOrgMatrixCateService",
+        "table": "sys_org_matrix_cate",
+        "url": "/sys/organization/sys_org_matrix_cate/sysOrgMatrixCate.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgMatrixCate.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "unique": "false",
+            "length": "200",
+            "langSupport": "true"
+        },
+        "fdCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "model.fdCreateTime",
+            "type": "DateTime",
+            "column": "fd_create_time",
+            "notNull": "false",
+            "unique": "false",
+            "readOnly": "true"
+        },
+        "fdAlterTime":         {
+            "propertyType": "simple",
+            "messageKey": "model.fdAlterTime",
+            "type": "DateTime",
+            "column": "fd_alter_time",
+            "notNull": "false",
+            "unique": "false",
+            "readOnly": "true"
+        },
+        "hbmParent":         {
+            "propertyType": "model",
+            "messageKey": "sys-organization:sysOrgMatrixCate.fdParent",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgMatrixCate",
+            "column": "fd_parent_id",
+            "notNull": "false",
+            "unique": "false",
+            "treeModel": "true",
+            "dialogJS": "Dialog_Tree(!{mulSelect},'!{idField}','!{nameField}',null,Tree_GetBeanNameFromService('sysOrgMatrixCateService', 'hbmParent', 'fdName:fdId'),'!{message(sys-organization:table.sysOrgMatrixCate)');"
+        },
+        "hbmChildren":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrgMatrixCate.hbmChildren",
+            "column": "fd_parent_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgMatrixCate",
+            "inverse": "true",
+            "readOnly": "true",
+            "canDisplay": "false",
+            "table": "sys_org_matrix_cate"
+        }
+    }
+}

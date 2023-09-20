@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<isolationConfig
+	xmlns="http://www.example.org/area-isolation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/area-isolation area-isolation.xsd ">
+	
+	<!-- 1. modules的优先级高于scenes -->
+	<!-- 2. modules里可以配置主文档，也可以配置模板。当配置模板时，不管此模板属于全局分类还是简单分类，都将以此配置为准。未在此处配置模板的模块，将取scenes中的配置 -->
+	<!-- 3. 当modules里配置的模板属于全局分类时，此模块的分类也会同步采用modules里的配置，其它未配置的模块依然采用scenes里的配置 -->
+	<!-- 4. 增加NONE配置项，用于开放所有数据（即不使用集团分级的数据隔离） -->
+	<!-- 
+    <modules>
+	    <model className="com.landray.kmss.km.review.model.KmReviewMain" isolationType="SELF" desc="流程审批模块" />
+	    <model className="com.landray.kmss.km.doc.model.KmDocKnowledge" isolationType="SELF" desc="知识文档模块" />
+	</modules>
+	-->
+	
+	<!-- 以下配置将影响全系统的“分类”与“模板”，如无配置，将取admin.do中的配置项 -->
+    <scenes>
+	    <scene key="category" isolationType="BRANCH" desc="全局分类" />
+	    <!-- 
+	    <scene key="simplecategory" isolationType="BRANCH" desc="简单分类" />
+	     -->
+	</scenes>
+</isolationConfig>

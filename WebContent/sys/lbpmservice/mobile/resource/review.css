@@ -1,0 +1,1919 @@
+﻿@IMPORT url("../audit_note_ext/speech/speech_style.css");
+@IMPORT url("../audit_note_ext/canvas.css");
+@IMPORT url("../audit_note_ext/log/log_style.css");
+@IMPORT url("../signature/css/signatrue.css");
+@IMPORT url("../lbpm_audit_note/lbpm_process_status/css/mobileflow.css");
+.lbpmView .tb_normal {
+	border-collapse: collapse;
+}
+.lbpmView .td_title {
+	width: 28%;
+	text-align: left;
+	color: #898989;
+}
+.lbpmView .tb_normal td{
+	vertical-align: top;
+	padding: 12px 6px 12px 0px;
+	border-bottom: 1px solid #e2e2e2;
+}
+.lbpmView .tb_normal tr:last-child td{
+	border-bottom:none;
+}
+.lbpmView .tb_normal td b{ font-weight: normal;}
+.lbpmView .tb_normal td:nth-child(even) {
+	vertical-align: top;
+	padding: 12px 5px 0px 0px;
+}
+.lbpmView .tb_normal td:nth-child(even) .muiField{ padding: 0px; margin-top: -3px;}
+.lbpmView .tb_normal,
+.lbpmView .tb_normal td,
+.lbpmView .tb_normal td b {
+	/**/font-size: 1.4rem;
+}
+.lbpmView .tb_normal td textarea{ border: none; width: 100%; -webkit-appearance:none; height: 60px;}
+.lbpmOptionsPane {
+	background-color: #fff;
+	z-index: 1;
+	background-color: #fff;
+	position: relative;
+}
+.lbpmOptionsPane .mblView {
+	text-align: center;
+	z-index: 1;
+	/*background-color: #fff;*/
+}
+.lbpmOptionsPane .mblIconItem {
+	width: 20%;
+	display: inline-block;
+	float: none;
+}
+.mblIconArea {
+	height: 6.0rem;
+	width: 100%;
+	font-size: 1.4rem;
+	opacity: 0.6;
+}
+.mblIconArea.selected{ opacity: 1;}
+.mblIconAreaInner {
+	/*opacity:0.3;*/
+	height: 3.6rem;
+	width: 3.6rem;
+	line-height: 3.6rem;
+	border-radius: 50%;
+	/*background-color: #61AEF2;*/
+	margin: 1rem auto 0.5rem auto;
+	color: white;
+	font-size: 2.2rem;
+}
+.mblIconAreaInner i.mui {
+	font-size: 2rem;
+	line-height: inherit;
+}
+/*.mblIconAreaInner i.mui.mui-handler_pass{ position: relative; top:1px;}
+.mblIconAreaInner i.mui.mui-handler_cancelCommunicate{ position: relative; top:-1px;}
+.mblIconAreaInner i.mui.mui-handler_refuse{ position: relative; left: 1px; top:-1px;}
+.mblIconAreaInner i.mui.mui-handler_commission{ position: relative; top:-1px;}
+.mblIconAreaInner i.mui.mui-handler_additionSign{ position: relative; top:-1px;}
+.mblIconAreaInner i.mui.mui-handler_abandon,
+.mblIconAreaInner i.mui.mui-drafter_refuse_abandon{ position: relative; top:-2px;}
+.mblIconAreaInner i.mui.mui-handler_communicate{ position: relative; top:-1px;}
+.mblIconAreaInner i.mui.mui-handler_superRefuse{ position: relative; left: 1px; top:-1px;}
+.mblIconAreaInner i.mui.mui-drafter_submit{ position: relative; top:-2px;}*/
+
+.selected .mblIconAreaInner {
+	height: 3.8rem;
+	width: 3.8rem;
+	line-height: 4rem;
+	border: 2px solid #87C6F9;
+	opacity:1;
+	margin-top: 0;
+}
+.selected .mblIconAreaInner i.mui {
+	line-height: 3.8rem;
+}
+.selected .mblIconAreaInner i.mui.mui-handler_cancelCommunicate{ top:-2px;}
+
+.mblIconAreaTitle {
+	color: #7e7e7e;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 100%;
+	display: block;
+}
+.lbpmView .splitLine td {
+	/*border-bottom: 1px dashed #b4c7d9;*/
+}
+
+.lbpmView .mblTabBarButtonIconParent1,
+.lbpmView .mblTabBarButtonIconParent2 {
+	/* float: right; */
+}
+.lbpmView .mblTabBarButtonIconParent2 .mui-address,
+.lbpmView .mblTabBarButtonIconParent1 .mui-address{
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	font-size: 1.6rem;
+	border: 1px solid #3298E0;
+	border-radius: 50%;
+	color: #3298E0;
+}
+.lbpmView .mblTabBarButtonIconParent1 .mui-address:before{ position:relative; top:0.2rem;}
+.lbpmView .modifyNodeAuthorizationSelector {
+	height:30px;clear:both;
+}
+#modifyNodeAuthorizationTr .oldMui .muiSelInputRight{
+	border:1px solid #3298e0;
+	border-radius:50%;
+	text-align:center;
+	color:#3298e0;
+	display:-webkit-box;
+}
+.modifyNodeAuthorizationSelector > .muiAddressForm{
+	z-index: 1;
+}
+/*#102282地址本多选，遮盖了层级低的数据显示*/
+.modifyNodeAuthorizationSelector .muiAddressOrg{
+	/*z-index: 999;*/
+}
+#currentHandlersLabel{ /*padding-top: 20px;*/}
+/* handler_pass 通过 */
+.handler_pass .mblIconAreaInner {
+	/*background-color: #26c41c;*/
+	border: 1px solid #84c138;
+	color: #84c138;
+}
+
+.selected.handler_pass .mblIconAreaInner {
+	background-color: #84c138;
+	color: #fff;
+}
+.selected.handler_pass .mblIconAreaTitle {
+	color: #84c138;
+}
+.mblIconAreaTitle{font-size: 1.2rem;}
+/* handler_refuse 驳回 */
+.handler_refuse .mblIconAreaInner{
+	border: 1px solid #eb1d68;
+	color: #eb1d68;
+}
+
+.selected.handler_refuse .mblIconAreaInner {
+	background-color: #eb1d68;
+	color: #fff;
+}
+.selected.handler_refuse .mblIconAreaTitle {
+	color: #eb1d68;
+}
+/* handler_communicate 沟通 */
+.handler_communicate .mblIconAreaInner {
+	/*background-color: yellow;*/
+	border: 1px solid #ecb02b;
+	color: #ecb02b;
+}
+
+.selected.handler_communicate .mblIconAreaInner {
+	background-color: #ecb02b;
+	color: #fff;
+}
+.selected.handler_communicate .mblIconAreaTitle {
+	color: #ecb02b;
+}
+
+/* handler_nodeSuspend 节点暂停 */
+.handler_nodeSuspend .mblIconAreaInner {
+	/*background-color: #CA8130;*/
+	border: 1px solid #4dbeba;
+	color: #4dbeba;
+}
+.selected.handler_nodeSuspend .mblIconAreaInner {
+	background-color: #4dbeba;
+	color: #fff;
+}
+.selected.handler_nodeSuspend .mblIconAreaTitle {
+	color: #4dbeba;
+}
+
+/* handler_nodeResume 节点唤醒 */
+.handler_nodeResume .mblIconAreaInner {
+	/*background-color: #CA8130;*/
+	border: 1px solid #4dbeba;
+	color: #4dbeba;
+}
+.selected.handler_nodeResume .mblIconAreaInner {
+	background-color: #4dbeba;
+	color: #fff;
+}
+.selected.handler_nodeResume .mblIconAreaTitle {
+	color: #4dbeba;
+}
+
+/* handler_commission 转办  */
+.handler_commission .mblIconAreaInner {
+	/*background-color: #4a93fc;*/
+	border: 1px solid #2391dc;
+	color: #2391dc;
+}
+
+.selected.handler_commission .mblIconAreaInner{
+	background-color: #2391dc;
+	color: #fff;
+}
+.selected.handler_commission .mblIconAreaTitle {
+	color: #2391dc;
+}
+
+/* handler_additionSign 加签  */
+.handler_additionSign .mblIconAreaInner {
+	/*background-color: #4a93fc;*/
+	border: 1px solid #2391dc;
+	color: #2391dc;
+}
+
+.selected.handler_additionSign .mblIconAreaInner{
+	background-color: #2391dc;
+	color: #fff;
+}
+.selected.handler_additionSign .mblIconAreaTitle {
+	color: #2391dc;
+}
+
+.handler_abandon .mblIconAreaInner,
+.drafter_refuse_abandon .mblIconAreaInner{
+	color:#999;
+	border: 1px solid #999;
+}
+.selected.handler_abandon .mblIconAreaInner,
+.selected.drafter_refuse_abandon .mblIconAreaInner{
+	background-color: #999;
+	color: #fff;
+}
+.selected.handler_abandon .mblIconAreaTitle,
+.selected.drafter_refuse_abandon .mblIconAreaTitle {
+	color: #999;
+}
+
+.drafter_submit .mblIconAreaInner{
+	color:#2391dc;
+	border: 1px solid #2391dc;
+}
+.selected.drafter_submit .mblIconAreaInner {
+	background-color: #2391dc;
+	color: #fff;
+}
+.selected.drafter_submit .mblIconAreaTitle{
+	color:#2391dc;
+}
+
+.handler_cancelCommunicate .mblIconAreaInner{
+	color:#5e5e5e;
+	border: 1px solid #5e5e5e;
+}
+.selected.handler_cancelCommunicate .mblIconAreaInner {
+	background-color: #5e5e5e;
+	color: #fff;
+}
+.selected.handler_cancelCommunicate .mblIconAreaTitle{
+	color:#5e5e5e;
+}
+
+.handler_returnCommunicate .mblIconAreaInner{
+	color:#87C6F9;
+	border: 1px solid #87C6F9;
+}
+.selected.handler_returnCommunicate .mblIconAreaInner {
+	background-color: #87C6F9;
+	color: #fff;
+}
+.selected.handler_returnCommunicate .mblIconAreaTitle{
+	color:#87C6F9;
+}
+.handler_superRefuse .mblIconAreaInner{
+	color:#ff0000;
+	border: 1px solid #ff0000;
+}
+.selected.handler_superRefuse .mblIconAreaInner {
+	background-color: #ff0000;
+	color: #fff;
+}
+.selected.handler_superRefuse .mblIconAreaTitle{
+	color:#ff0000;
+}
+/* handler_sign 签字  */
+.handler_sign .mblIconAreaInner{
+	color:#dead76;
+	border: 1px solid #2391dc;
+}
+.selected.handler_sign .mblIconAreaInner {
+	background-color: #2391dc;
+	color: #fff;
+}
+.selected.handler_sign .mblIconAreaTitle{
+	color:#2391dc;
+}
+
+/* history_handler_back 撤回*/
+.history_handler_back .mblIconAreaInner{
+	border: 1px solid #eb1d68;
+	color: #eb1d68;
+}
+
+.selected.history_handler_back .mblIconAreaInner {
+	background-color: #eb1d68;
+	color: #fff;
+}
+.selected.history_handler_back .mblIconAreaTitle {
+	color: #eb1d68;
+}
+
+/* history_handler_press 催办*/
+.history_handler_press .mblIconAreaInner{
+	border: 1px solid #ecb02b;
+	color: #ecb02b;
+}
+
+.selected.history_handler_press .mblIconAreaInner {
+	background-color: #ecb02b;
+	color: #fff;
+}
+.selected.history_handler_press .mblIconAreaTitle {
+	color: #ecb02b;
+}
+
+/* history_handler_addOpinion 增加意见*/
+.history_handler_addOpinion .mblIconAreaInner{
+	border: 1px solid #2391dc;
+	color: #2391dc;
+}
+
+.selected.history_handler_addOpinion .mblIconAreaInner {
+	background-color: #2391dc;
+	color: #fff;
+}
+.selected.history_handler_addOpinion .mblIconAreaTitle {
+	color: #2391dc;
+}
+
+/* drafter_press 起草人催办*/
+.drafter_press .mblIconAreaInner{
+	border: 1px solid #ecb02b;
+	color: #ecb02b;
+}
+
+.selected.drafter_press .mblIconAreaInner {
+	background-color: #ecb02b;
+	color: #fff;
+}
+.selected.drafter_press .mblIconAreaTitle {
+	color: #ecb02b;
+}
+/* drafter_return 起草人撤回*/
+.drafter_return .mblIconAreaInner{
+	border: 1px solid #eb1d68;
+	color: #eb1d68;
+}
+
+.selected.drafter_return .mblIconAreaInner {
+	background-color: #eb1d68;
+	color: #fff;
+}
+.selected.drafter_return .mblIconAreaTitle {
+	color: #eb1d68;
+}
+/* drafter_abandon 起草人废弃*/
+.drafter_abandon .mblIconAreaInner{
+	border: 1px solid #999;
+	color: #999;
+}
+
+.selected.drafter_abandon .mblIconAreaInner {
+	background-color: #999;
+	color: #fff;
+}
+.selected.drafter_abandon .mblIconAreaTitle {
+	color: #999;
+}
+
+#notifyLevelTD {
+	font-size: 1.4rem;
+}
+
+.lbpmNextRouteInfoRow label{ font-size: 1.4rem;}
+.mblContainer{ border: none!important; box-shadow: 0px 2px 4px #cdcdcd;}
+
+.optionsSplitLine{height: 1rem;background-color: #f6f6f6;}
+
+#commonUsagesRow {
+	/*position: absolute !important;*/
+	width: 100%;
+	z-index: 1;
+}
+
+#commonUsages {
+	/* max-width: 100px; */
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.iconArea {
+	display: inline-block;
+}
+.handingWay{
+	display: inline-block;
+	cursor: pointer;
+	font-size: 13px;
+}
+
+
+.actionView{
+	padding: 0 0 0.5rem 1rem!important;
+	/* border-top: 1px solid #e2e2e2; */
+	/* border-bottom: 1px solid #e2e2e2; */
+}
+.actionView:last-child{ border-bottom: 0;}
+.actionView select{
+	max-width: 96%;
+}
+.actionView .splitLine,
+.actionView .handler_pass,
+.actionView .handler_refuse,
+.actionView .handler_superRefuse {}
+.actionView .handler_refuse .muiFormSelect,
+.actionView .handler_superRefuse .muiFormSelect{ max-width:100%!important;}
+.actionView .handler_refuse .muiFormSelect > .muiFieldItem > .muiFieldOpt span,
+.actionView .handler_superRefuse .muiFormSelect > .muiFieldItem > .muiFieldOpt span{ right: 1rem;}
+.actionView .handler_refuse .titleNode,
+.actionView .handler_superRefuse .titleNode{
+	padding-bottom: 5px;
+}
+.actionView .handler_refuse .detailNode,
+.actionView .handler_superRefuse .detailNode{ padding-left: 1rem;}
+.actionView .handler_refuse .refusePassedToThisNode,
+.actionView .handler_superRefuse .refusePassedToThisNode{
+	font-size: 1.4rem;
+}
+.actionView .handler_refuse .refusePassedToThisNode label,
+.actionView .handler_superRefuse .refusePassedToThisNode label{
+	margin-left: 0!important;
+}
+
+.actionView .handler_commission,
+.actionView .handler_additionSign,
+.actionView .handler_communicate{
+	position: relative;
+	padding: 5px 0;
+}
+.actionView .handler_commission .titleNode,
+.actionView .handler_additionSign .titleNode,
+.actionView .handler_communicate .titleNode{
+	padding: 0;
+	line-height: 30px;
+	/*position: absolute;*/
+}
+.actionView .handler_commission .detailNode .muiField,
+.actionView .handler_additionSign .detailNode .muiField,
+.actionView .handler_communicate .detailNode .muiField{
+	padding: 0;
+}
+.actionView .handler_commission .detailNode .muiField .muiFieldOpt,
+.actionView .handler_additionSign .detailNode .muiField .muiFieldOpt,
+.actionView .handler_communicate .detailNode .muiField .muiFieldOpt,
+.actionView .splitLine .detailNode .muiField .muiFieldOpt{
+	padding-right:1rem;
+}
+.actionView .mblTabBarButton{
+	/*position: absolute;
+	right:0;
+	top: 9px;*/
+	padding-right: 1rem;
+}
+.actionView .mblTabBarButton>.mblTabBarButtonIconArea{ width: auto!important;}
+.actionView .lbpmInfoTable .detailNode{ border-bottom: 0;}
+
+
+
+.actionView .splitLine:last-child{
+	border-bottom:0;
+}
+
+.actionView .titleNode,#assignmentRow .muiFormEleTitle{
+	padding: 1rem  0;
+	color: rgba(25,31,37,0.56);
+	font-size: 1.2rem;
+	display: block;
+}
+.actionView .detailNode{
+	padding-bottom: 5px;
+	font-size:1.4rem;
+	border-bottom: 1px solid #f2f2f2;
+	border-bottom-width:.5px;
+}
+.actionView .detailNode .muiFieldItem{ width: 100%}
+.actionView .detailNode>label{ word-break:break-all; word-wrap:break-word; padding-right: 1rem; display: inline-block;}
+.actionView .detailNode .muiFieldOptions > .muiFieldText{ word-break:break-all; word-wrap:break-word; padding-right: 1rem;}
+.actionView #operationsRow_Scope{ color: #999; font-size:1.2rem; padding-bottom: 10px;}
+.actionView .detailNode .muiFieldItem .muiFieldOpt i.mui-backupList:before{ position:relative; top:0.2rem;}
+.actionView .notifyLevelRow .detailNode{
+	border-bottom: 0;
+}
+.actionView .notifyLevelRow .detailNode .muiFieldValue{
+	width: 100%;
+	table-layout: fixed;
+	display: table;
+}
+.actionView .notifyLevelRow .detailNode .muiField{ padding: 0;}
+.actionView .notifyLevelRow .detailNode .muiFieldValue .muiField{
+	display: table-cell;
+	vertical-align: middle;
+}
+.actionView .notifyLevelRow .detailNode .muiFieldValue .muiField .muiFieldText{
+	border-bottom: 0; position:relative; top:0.1rem;
+	padding: 0;
+}
+.actionView .notifyLevelRow .detailNode .muiFormRadio .muiFormRadioOverlay{ top:-5px;}
+.actionView .notifyLevelRow .detailNode .muiFieldValue .muiField:nth-child(1) .muiFieldOptions .muiFormRadio{ }
+.actionView .notifyLevelRow .detailNode .muiFieldValue .muiField:nth-child(1) .muiFieldText{ color: #ff0000;}
+.actionView .notifyLevelRow .detailNode .muiFieldValue .muiField:nth-child(2) .muiFieldText{ color: #4285f4;}
+
+.actionView .notifyLevelRow .detailNode .muiRadioItem:nth-child(1) {color: #ff0000;}
+.actionView .notifyLevelRow .detailNode .muiRadioItem:nth-child(2) {color: #4285f4;}
+
+/*************** #23657 测试用 **********************/
+.actionView .notifyLevelRow .detailNode .muiFormRadio{  top:0px; left:0px;}
+.actionView .notifyLevelRow .detailNode .muiFormRadio input{ position:absolute; left:0px; top:0px;}
+.actionView .notifyLevelRow .detailNode .muiFieldValue .muiField .muiFieldText{ display:inline-block; }
+.actionView .notifyLevelRow .detailNode .muiFormRadio .muiFormRadioOverlay{  left:0px; top:-0.1rem;}
+.actionView .notifyLevelRow .detailNode .muiFieldOptions{  }
+.actionView .notifyLevelRow .detailNode .muiFieldValue .muiField:nth-child(1) .muiFieldOptions .muiFormRadio{ top:0px;}
+
+.actionView .keepAuditNoteRow .detailNode{
+	margin-top: 8px;
+	border-bottom: 0;
+}
+
+.actionView .keepAuditNoteRow .detailNode .muiFieldValue{
+	width: 100%;
+	table-layout: fixed;
+	display: table;
+}
+.actionView .keepAuditNoteRow .detailNode .muiField{ padding: 0;}
+.actionView .keepAuditNoteRow .detailNode .muiFieldValue .muiField{
+	display: table-cell;
+	vertical-align: middle;
+}
+.actionView .keepAuditNoteRow .detailNode .muiFieldValue .muiField .muiFieldText{
+	border-bottom: 0; position:relative; top:0.1rem;
+	padding: 0;
+}
+
+.actionView .keepAuditNoteRow .detailNode .muiFormRadio .muiFormRadioOverlay{ top:-5px;}
+
+.actionView .keepAuditNoteRow .detailNode .muiFormRadio{  top:0px; left:0px;}
+.actionView .keepAuditNoteRow .detailNode .muiFormRadio input{ position:absolute; left:0px; top:0px;}
+.actionView .keepAuditNoteRow .detailNode .muiFieldValue .muiField .muiFieldText{ display:inline-block; }
+.actionView .keepAuditNoteRow .detailNode .muiFormRadio .muiFormRadioOverlay{  left:0px; top:-0.1rem;}
+.actionView .keepAuditNoteRow .detailNode .muiFieldOptions{  }
+.actionView .keepAuditNoteRow .detailNode .muiFieldValue .muiField:nth-child(1) .muiFieldOptions .muiFormRadio{ top:0px;}
+
+/* .actionView #handlerIdentityRow .detailNode{
+	padding: 8px 0;
+} */
+
+.actionView .lbpmInfoTable .titleNode{ padding-bottom: 6px;}
+.actionView .detailNode .lbpmNextRouteInfoRow{
+	min-height: 30px;
+	font-size:1.4rem;
+	border-bottom: 1px solid #e2e2e2;
+}
+.actionView .detailNode .lbpmNextRouteInfoRow .muiFormOptionsField{ border-bottom: 1px solid #e2e2e2;}
+.actionView .detailNode .lbpmNextRouteInfoRow .muiFormOptionsField:last-child{ border-bottom:0;}
+.actionView .detailNode .lbpmNextRouteInfoRow .muiFieldOptions{ zoom: 1;}
+.actionView .detailNode .lbpmNextRouteInfoRow .muiFieldOptions:after{
+	content: "clear";
+	clear: both;
+	display: block;
+	line-height: 0;
+	visibility: hidden;
+}
+.actionView .detailNode .lbpmNextRouteInfoRow .muiFieldOptions > .muiFieldText{
+	padding:6px 1rem 6px 0;
+	border-bottom: 0;
+	float: left;
+}
+.actionView .detailNode .lbpmNextRouteInfoRow .muiFieldOptions .muiFormRadio,
+.actionView .detailNode .lbpmNextRouteInfoRow .muiFormOptionsField:first-child .muiFieldOptions .muiFormRadio{ top:-5px;}
+.actionView .detailNode .lbpmNextRouteInfoRow .handlerNamesLabel{ padding: 5px 1rem;}
+.actionView .detailNode .isHiddenNoteCheckbox,
+.actionView .detailNode .isMutiCommunicateCheckbox{
+	margin-left:1rem;
+	padding: 6px 0;
+	font-size:1.4rem;
+	border-bottom: 1px solid #e2e2e2;
+}
+.actionView .detailNode .returnToCommissionedPerson{
+	margin-left:1rem;
+	padding: 6px 0;
+	font-size:1.4rem;
+}
+.actionView .detailNode .isHiddenNote{
+	margin-left:1rem;
+	padding: 6px 0;
+	font-size:1.4rem;
+}
+.actionView .detailNode .lbpmNextRouteInfoRow:last-child,
+.actionView .detailNode .isHiddenNoteCheckbox:last-child,
+.actionView .detailNode .isMutiCommunicateCheckbox:last-child{
+	border-bottom:0;
+}
+.actionView .detailNode .modifyNodeAuthorizationSelector{
+	padding:11px 5px;
+	padding-right: 0;
+	height: auto;
+	/*min-height: 30px;*/
+	font-size:1.4rem;
+	border-bottom: 1px solid #e2e2e2;
+	position: relative;
+}
+.actionView .detailNode .modifyNodeAuthorizationSelector:last-child{ border-bottom: 0;}
+.actionView .detailNode .modifyNodeAuthorizationSelector .muiField{
+	margin:0!important;
+	min-width: 0;
+	padding: 0;
+	/*padding-top:6px;*/
+}
+.actionView .detailNode .modifyNodeAuthorizationSelector .muiField .muiFieldOpt{ padding-right: 1rem;}
+.actionView .detailNode .lbpmNextRouteInfoRow b,
+.actionView .detailNode .modifyNodeAuthorizationSelector b{ font-weight: normal!important;}
+.actionView .detailNode .handlerNamesLabel{
+	color: #999;
+	text-decoration: none;
+	font-size: 1.4rem;
+    word-break: break-all;
+}
+.actionView .detailNode #currentHandlersLabel{
+	font-size:1.4rem;
+	line-height: 1.5;
+	word-break: break-all;
+}
+.actionView .detailNode .orgNameLabel{
+	color: #4285f4;
+	word-break: break-all;
+}
+.actionView .handingWay{
+	/*margin-left: 5px;*/
+}
+.actionView .handingWay i{
+	font-size: 1.8rem;
+}
+.actionView .lbpmAuditNoteTable textarea{
+	width: 99%;
+	border: 0;
+	-webkit-appearance: none;
+}
+
+#lbpmFlowChartBack {
+	background-color: #18b4ed;
+	color:#fff;
+	line-height: 30px;
+	height: 38px;
+	z-index: 6;
+}
+#lbpmFlowChartBack .mblToolBarButton {
+	margin: 0;
+}
+#lbpmFlowChartBack .mblToolBarButtonLabel {
+	color:#fff;
+	font-weight: 300;
+}
+#lbpmFlowChartBack .mblToolBarButtonArrow {
+	width: 14px;
+	height: 14px;
+	top: 9px;
+	left:1rem;
+	border: 3px solid #fff;
+	border-top: none;
+	border-right: none;
+}
+#lbpmFlowChartBack .mblHeadingDivTitle {
+	font-size:1.8rem;
+	font-weight:bold;
+	line-height: 38px;
+}
+.mblToolBarButtonHasLeftArrow .mblToolBarButtonIcon{ padding-left: 10px!important;}
+
+#commonUsagesDiv,.commonUsagesDiv{
+	margin-top: 5px;
+	width: 97%;
+	border-top: 1px solid #f2f2f2;
+	border-top-width:.5px;
+	background-color: #fff;
+	display: -webkit-flex;  /* 新版本语法: Chrome 21+ */
+	display: flex;          /* 新版本语法: Opera 12.1, Firefox 22+ */
+	display: -webkit-box;   /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+	display: -moz-box;      /* 老版本语法: Firefox (buggy) */
+	display: -ms-flexbox;   /* 混合版本语法: IE 10 */
+	-webkit-box-orient: horizontal;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-box-pack: start;
+	-webkit-justify-content: flex-start;
+	justify-content: flex-start;
+}
+#commonUsagesDiv .handingWay,
+.commonUsagesDiv .handingWay{
+	padding: 10px 0;
+	vertical-align: middle;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	position: relative;
+	display: block;
+	width: 100%;
+  -webkit-flex: 1;        /* Chrome */ 
+					flex: 1;        /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  -webkit-box-flex: 1;    /* OLD - iOS 6-, Safari 3.1-6 */  
+}
+#commonUsagesDiv .handingWay,
+.commonUsagesDiv .handingWay{
+	margin: 0;
+	font-size: 2rem;
+}
+
+#commonUsagesDiv .handingWay:not(:last-child):after,
+.commonUsagesDiv .handingWay:not(:last-child):after{
+	content: '';
+	width: 1px;
+	background-repeat: repeat-y;
+	background-size: 1px 100%;
+	background-position: right top;
+	background-image: -webkit-gradient(linear, right top, left top, color-stop(0.5, transparent), color-stop(0.5, #e0e0e0), to(#e0e0e0));
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 20px;
+	bottom: 20px;
+}
+#commonUsagesDiv .handingWay .iconTitle,
+.commonUsagesDiv .handingWay .iconTitle{
+	text-align: center;
+	font-size: 12px;
+	display: block;
+	color: #666;
+}
+
+#commonUsagesDiv .handingWay .iconArea,
+.commonUsagesDiv .handingWay .iconArea {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 5px;
+	width: 2.5rem;
+	height: 2.5rem;
+	line-height: 2.5rem;
+	text-align: center;
+	color: #4285f4;
+	/* border:1px solid #cbcbcb; */
+	border-radius: 50%;
+	display: block;
+}
+/* #commonUsagesDiv .handingWay .iconArea {
+	border: none;
+	color: #999;
+	margin-right: 0;
+} */
+#commonUsagesDiv .handingWay .iconArea i,.commonUsagesDiv .handingWay .iconArea i{
+	font-size: 1.8rem;
+	line-height: 2.5rem;
+}
+#commonUsagesDiv .handingWay .iconArea i {
+	font-size: 2rem;
+}
+#commonUsagesDiv .handingWay.selected .iconArea,.commonUsagesDiv .handingWay.selected .iconArea{
+	color: #fff;
+	border-color: #4285f4;
+	background-color: #4285f4;
+}
+#commonUsagesDiv .handingWay.selected .iconTitle,.commonUsagesDiv .handingWay.selected .iconTitle{
+	color: #4285f4;
+}
+#commonUsagesDiv #commonUsages i:before, .commonUsagesDiv #commonExtUsages i:before{
+	position: relative;
+	font-size: 1.6rem;
+	content: "\C157";
+}
+#commonUsagesDiv #digitalSignature i:before {
+	position: relative;
+	top: -2px;
+	font-size: 1.8rem;
+}
+#commonUsagesDiv #digitalSignature .blockRadio .muiRadioItem {
+	margin-bottom: 1rem;
+}
+#commonUsagesDiv #digitalSignature .modifyNodeAuthorizationSelector .muiCateFiledShow {
+	position: absolute;
+}
+
+#descriptionDiv .textarea .muiTextarea {
+	position: relative;
+	padding: 2rem 1rem 0 0.5rem;
+	min-height: 15rem;
+}
+#descriptionDiv .oldMui.textarea .muiTextarea {
+	padding: 1.2rem 0  0  0;
+	/* touch-action:none; */
+}
+
+#descriptionDiv .textarea .muiFormEleTip {
+    padding-top: .5rem;
+    padding-left: .5rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    right: 1rem
+}
+
+/*在可视区域的宽度大于401px 的时候被应用(魅族mx3 432px)*/
+@media screen and (min-width: 401px) {
+	#commonUsagesDiv .handingWay .iconArea,.commonUsagesDiv .handingWay .iconArea{
+		width: 3rem;
+		height: 3rem;
+		line-height: 3rem;
+	}
+	#commonUsagesDiv #commonUsages i:before,.commonUsagesDiv #commonExtUsages i:before{ position: relative; top:0px; font-size: 1.6rem; line-height: 1; content: "\C157";}
+	#commonUsagesDiv #digitalSignature i:before{ position: relative; top:-2px; font-size: 1.8rem; }
+	#commonUsagesDiv #handwriting i:before{ position: relative; top:2px;}
+    .actionView #notifyLevelRow .detailNode .muiFieldValue .muiField .muiFieldText{ position:relative; /*top:0.1rem;*/}
+}
+
+.actionView .detailNode .lbpmNextRouteInfoRow #nextNodeName {
+	padding:6px 1rem 6px 0;
+	border-bottom: 0;
+	float: left;
+}
+.canvas_selectPenWidth{
+    line-height: 8px;
+    min-width: 35px;
+    border: 1px solid #e2e2e2;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+}
+.canvas_selectPenColor{
+	line-height: 8px;
+    min-width: 45px;
+    border: 1px solid #e2e2e2;
+    border-bottom: 0;
+    border-right: 0;
+}
+.canvas_selectPenColor .muiFormSelectText,.canvas_selectPenColor.muiFormSelectText{
+	font-size:12px !important;
+}
+
+.muiPenSelect{
+	border-bottom: 1px solid #e2e2e2;
+    padding-left: .5rem;
+    display: flex;
+    height: 5rem;
+}
+
+.muiPenSelect > div{
+	vertical-align: middle;
+    display: flex;
+    line-height: 1.5rem;
+    align-items: center;
+    padding: 0 1.5rem 0 .5rem
+}
+
+.muiPenSelect > .muiPenSelectCircleContainer{
+	padding: 0;
+}
+
+.muiPenSelectLabel{
+	color: #A8A8A8;
+}
+
+.muiPenWidthSelect{
+	border-right: 1px solid #e2e2e2;
+}
+.penSelectCircleContainer{
+	display: inline-block;
+}
+.muiPenSelectCircle{
+	width: 2.8rem;
+    height: 2.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 3px;
+}
+.muiPenSelectCircle .muiPenSelectCircleOuter{
+	border-radius: 50%;
+	width : 2rem;
+	height: 2rem;
+	background-color: #fff;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.muiPenSelectCircle.selected .muiPenSelectCircleOuter{
+	border : 1px solid #000;
+}
+
+.muiPenSelectCircleInner{
+	border-radius: 50%;
+	width: 90%;
+	height: 90%;
+	background-color: #A8A8A8;
+}
+
+.muiPenWidthSelect .muiPenSelectCircle.selected .muiPenSelectCircleInner{
+	background-color: #000;
+}
+
+.muiPenWidthSelect .muiPenSelectCircle:nth-child(1) .muiPenSelectCircleOuter{
+	width: 1rem;
+	height: 1rem;
+}
+
+.muiPenWidthSelect .muiPenSelectCircle:nth-child(1) .mui-pitchon{
+	display: none!important;
+}
+
+.muiPenWidthSelect .muiPenSelectCircle:nth-child(2) .muiPenSelectCircleOuter{
+	width: 1.4rem;
+	height: 1.4rem;
+}
+
+.muiPenWidthSelect .muiPenSelectCircle:nth-child(2) .muiPenSelectCircleInner{
+	width: 85%;
+	height: 85%;
+	line-height: 1.2;
+}
+
+.muiPenWidthSelect .muiPenSelectCircle:nth-child(2) .mui-pitchon{
+	font-size: 12px;
+}
+
+.muiPenWidthSelect .muiPenSelectCircle:nth-child(4) .muiPenSelectCircleOuter{
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
+.muiPenWidthSelect .muiPenSelectCircle:nth-child(4) .muiPenSelectCircleInner{
+	width: 95%;
+	height: 95%;
+	line-height: 2.2;
+}
+
+.muiPenWidthSelect .muiPenSelectCircle:nth-child(4) .mui-pitchon{
+	font-size: 18px;
+}
+
+.muiPenCorloSelect .muiPenSelectCircle:nth-child(1) .muiPenSelectCircleOuter{
+	border-color: #D0021B;
+}
+.muiPenCorloSelect .muiPenSelectCircle:nth-child(1) .muiPenSelectCircleInner{
+	background-color: #D0021B;
+}
+
+.muiPenCorloSelect .muiPenSelectCircle:nth-child(2) .muiPenSelectCircleOuter{
+	border-color: #4285f4;
+}
+.muiPenCorloSelect .muiPenSelectCircle:nth-child(2) .muiPenSelectCircleInner{
+	background-color: #4285f4;
+}
+
+.muiPenCorloSelect .muiPenSelectCircle:nth-child(3) .muiPenSelectCircleOuter{
+	border-color: #000;
+}
+.muiPenCorloSelect .muiPenSelectCircle:nth-child(3) .muiPenSelectCircleInner{
+	background-color: #000;
+}
+
+.muiPenSelectCircle .mui-pitchon{
+	color: #fff;
+	font-size: 14px;
+	display: none;
+}
+
+.muiPenSelectCircle.selected .mui-pitchon{
+	display: inline;
+}
+
+.newMui .lbpmView .muiFormEleWrap:before,
+.newMui .muiExtOperationDialog .muiFormEleWrap:before{
+	border: 0!important;
+}
+
+/* newMui 新UI 新建流程修改 Starts */
+.newMui .lbpmView #lbpmOperationTable .muiFormEleWrap {
+	min-height: auto;
+	padding-left: 0;
+}
+.newMui .lbpmView #lbpmOperationTable .muiFormEleTip {
+	display: none;
+}
+.newMui .lbpmView #lbpmOperationTable .muiFormEleWrap:after {
+	content: '';
+	display: none;
+}
+.newMui .lbpmView .actionView .titleNode {
+	color: #999;
+	font-size: 1.3rem;
+	font-weight: normal;
+}
+.newMui .actionView #lbpmOperationTable .notifyLevelRow .detailNode .muiRadioItem:nth-child(1) {
+	color: #F56B6B;
+}
+.newMui .actionView #lbpmOperationTable .notifyLevelRow .detailNode .muiRadioItem:nth-child(2) {
+	color: #F29A5F;	
+}
+.newMui .lbpmView #lbpmOperationTable #notifyLevelTD label.muiRadioItem {
+	margin: 0.3rem 3.5rem 0.3rem 0;
+}
+.newMui .lbpmView #lbpmOperationTable .detailNode {
+	padding-left: 0;
+}
+.newMui .lbpmView #lbpmOperationTable .actionView .detailNode {
+	border-bottom: none;
+	position: relative;
+}
+.newMui .lbpmView #lbpmOperationTable .actionView .detailNode:after {
+	content: '';
+	height: 1px;
+	position: absolute;
+	bottom: 0;
+	background-color: #d5d5d5;
+	left: 0rem;
+	right: 0;
+	transform: scaleY(0.5);
+	webkit-transform: scaleY(0.5);
+	z-index: 2;
+}
+.newMui .lbpmView #lbpmOperationTable .actionView .notifyLevelRow .detailNode:after {
+	height: 0;
+}
+.newMui .lbpmView #lbpmOperationTable .muiRadioGroupWrap {
+	padding-bottom: 0;
+}
+.newMui .lbpmView #lbpmOperationTable .muiSelInput {
+	padding-top: 0;
+}
+.newMui .lbpmView #lbpmOperationTable .muiFormEleWrap.popup {
+	height: auto !important;
+}
+
+/* newMui 新UI 新建流程修改 Ends */
+.muiFormSelect .muiCheckItem .muiCheckBoxWrap>.muiCheckItem,
+.muiFormSelect .muiRadioGroupWrap.blockRadio>.muiRadioItem{
+	position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+    padding: 0 1.5rem;
+    min-height: 4rem;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.muiFormSelect .muiCheckItem .muiCheckBoxWrap>.muiCheckItem:after,
+.muiFormSelect .muiRadioGroupWrap.blockRadio>.muiRadioItem:after{
+    content: " ";
+    position: absolute;
+    z-index: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-bottom: .1rem solid #eee;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+}
+
+.muiFormSelect .muiFormRadioTable .muiRadioTableItem{
+	padding-left: 1.2rem;
+}
+
+/** 无数据提醒内容样式 **/
+.muiFormSelect .muiDialogElementContent_top>p,
+.muiFormSelect .muiDialogElementContent_center>p,
+.muiFormSelect .muiDialogElementContent_bottom>p{
+    text-align: center;
+    margin-top: 4rem;
+    font-size: var(--muiFontSizeMS);
+    color: var(--muiFontColorInfo);
+}
+
+.muiFormSelect .muiCheckItem .muiCheckBlock,
+.muiFormSelect .muiRadioItem .muiRadioCircle{
+	display: none;
+}
+
+.muiFormSelect .muiCheckItem input[type=checkbox],
+.muiFormSelect .muiRadioItem input[type=radio]{
+	opacity: 0;
+}
+
+.muiAddressButtonGroup{
+	box-shadow: none;
+}
+
+.muiFormSelect .muiListItem{
+	display: block;
+    text-align: left;
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 1.5rem;
+    border-bottom: 1px solid #e7e7e7;
+    padding: 0 1.5rem;
+}
+
+.muiFormSelect .muiAddressOrgIcon{
+	display: inline-block;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    line-height: 4rem;
+    vertical-align: top;
+    color: rgb(221, 221, 221);
+    margin: 0.7rem 0.7rem 0.7rem 0px;
+}
+
+.muiFormSelect .del{
+	color: white;
+    background-color: rgb(245, 107, 107);
+    font-size: 0.8rem;
+    border-radius: 50%;
+    width: 1.2rem;
+    height: 1.2rem;
+    line-height: 1.4rem;
+    text-align: center;
+    float: right;
+    top: 1.4rem;
+}
+
+.actionView .freeflowChartRow .detailNode,.actionView .operationMethodArea .detailNode{
+	border-bottom: none;
+}
+
+.splitLine .muiSimple>tbody>tr:last-child>td{
+	border-bottom: none;
+}
+
+.muiRadioItem.lbpmSwitchOption{
+	color: #0D93D6;
+}
+.mblTabBarTabBar .lbpmSwitchButton{
+	width:4.5rem !important;
+	padding: 0px !important;
+}
+
+
+/* 自由流 UI Begin */
+.freeFlowFiledShow {
+  text-align:left;
+  margin-right: 0.2rem;
+}
+.newMui.showTitle .freeFlowFiledShow {
+	margin-top: 1rem;
+}
+.muiFormStatusEdit .freeFlowFiledShow:empty:after{
+  content: attr(placeholder);
+  color: #999;
+  display: block;
+  height: 100%;
+  line-height: 4rem;
+  font-size: 1.5rem;
+}
+.newMui.muiFormStatusEdit .freeFlowFiledShow:empty:after {
+	line-height: 4rem;
+}
+.oldMui .freeFlowFiledShow {
+	min-height: 3rem;
+}
+.freeFlowFiledShow > div {
+	margin:0.1rem 0.3rem;
+    padding:0.2rem;
+	display: inline-block;
+    border-radius:3px;
+}
+.freeFlowFiledShow .freeFlowOrg{
+	margin:0rem;
+	padding: 0 1.6rem 0 0.9rem;
+	font-size:1.4rem;
+	position: relative;
+	height: 2.3rem;
+    background: rgba(229,229,229,0.5);
+    border-radius: 3px;
+}
+.muiFormStatusView .freeFlowFiledShow .freeFlowOrg {
+	padding: 0 0.6rem;
+}
+.muiFormStatusView .freeFlowFiledShow .freeFlowOrg .name {
+	margin-top: 0.6rem;
+}
+.freeFlowShowHeadImg .freeFlowFiledShow .freeFlowOrg{
+	padding:0rem;
+	background:none;
+	border-radius: 0;
+}
+
+.freeFlowShowHeadImg .freeFlowFiledShow .freeFlowOrg{
+	width: 5rem;
+	padding-bottom:1.2rem
+}
+.oldMui.freeFlowShowHeadImg .freeFlowFiledShow .freeFlowOrg {
+	padding-bottom: 0
+}
+.newMui.freeFlowShowHeadImg .freeFlowFiledShow .freeFlowOrg{
+	padding-bottom:.8rem
+}
+
+.freeFlowFiledShow > div i{
+	position: absolute;
+	right: 0.3rem;
+	top: 50%;
+	height: 1.6rem;
+	margin-top: -.4rem;
+	color: #333;
+	font-size: 1rem;
+}
+ .freeFlowFiledShow .muiCatePlaceHold{
+ 	color: #A9A9A9; 
+ }
+.freeFlowFiledShow > .mui,
+.freeFlowFiledShow .freeFlowOrg .freeFlowOrgIcon{
+	width: 3.7rem;
+	height: 3.7rem;
+	border-radius: 50%;
+	padding: 0;
+	line-height: 4rem;
+	line-height: 3.5rem;
+	font-size: 1.5rem;
+	vertical-align: top;
+	color: #ddd;
+	text-align: center;
+}
+.oldMui .freeFlowFiledShow > .mui,
+.oldMui .freeFlowFiledShow .freeFlowOrg .freeFlowOrgIcon{
+	margin: 1rem 1rem 1rem 0;
+}
+.newMui .oldMui.freeFlowFiledShow > .mui,
+.newMui .freeFlowFiledShow .freeFlowOrg .freeFlowOrgIcon{
+	margin: 0 1rem 1rem 0;
+}
+
+.freeFlowFiledShow .mui-plus {
+	border: 1px solid #d6d6d6;
+}
+.oldMui .freeFlowFiledShow .mui-plus {
+	margin-left: 0.5rem;
+}
+.freeFlowFiledShow .mui-forward{
+	display: inline-block;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    font-size: 1.8rem;
+    color: #d5d5d5;
+}
+.freeFlowFiledShow .freeFlowOrg .freeFlowOrgIcon{
+	margin: 0 .5rem!important;
+}
+.freeFlowFiledShow .freeFlowOrg .freeFlowOrgIcon.mui.mui-file-text{
+	background-color: #4285f4;
+}
+
+.freeFlowOrg{
+	margin: 0.6rem 1rem 0.6rem 0!important;
+}
+.newMui.muiFormStatusEdit .freeFlowFiledShow .freeFlowOrg {
+	margin: 0.2rem 1rem 0.6em 0!important;
+}
+.freeFlowOrg .freeFlowOrgIcon{
+	width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
+.freeFlowOrg .name{
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	font-size: 1.2rem;
+	margin-top: .6rem;
+	line-height: 100%;
+	color: #666;
+}
+.freeFlowShowHeadImg .freeFlowOrg .name{
+	width: 5rem;
+}
+.freeFlowOrg .mui-close.del{
+	display: block;
+	position: absolute;
+	top: 0;
+	right:-0.2rem;
+	color: #F56B6B;
+	background-color: transparent;
+	font-size: .6rem;
+	margin:0.6rem;
+}
+.freeFlowOrg .mui-close.del:before {
+	transform: scale(0.7);
+	-webkit-transform: scale(0.7);
+	display: inline-block;
+}
+.freeFlowShowHeadImg .freeFlowOrg .mui-close.del {
+	margin-top: 0;
+	right: 0;
+	color:white;
+	background-color: #F56B6B;
+	font-size: .8rem;
+	top: -0.6rem;
+	margin:0.6rem;
+}
+
+.freeFlowFiledShow .arrowGoIcon {
+	position: absolute;
+    width: 1.2rem;
+    height: 0.6rem;
+    left: 4.7rem;
+    top: 1.9rem;
+}
+.freeFlowFiledShow .nodeTypeIcon {
+	position: absolute;
+    width: 1.2rem;
+	height: 1.2rem;
+	right: 0.7rem;
+	bottom: -1.5rem;
+}
+/* 自由流 UI End */
+
+.actionView .lastTitleNode{
+	padding: 1rem  0;
+	color: rgba(25,31,37,0.56);
+	font-size: 1.2rem;
+	border-top: 1px solid #e2e2e2;
+}
+
+.actionView .lastDetailNode{
+	padding-bottom: 5px;
+	font-size:1.4rem;
+}
+
+.actionView #nodeDescriptionRow {margin-bottom: 0.5rem;}
+
+.actionView #nodeDescriptionRow .lastTitleNode {padding-bottom: 0;}
+
+.mui_kmCard_wrap{background:#fdf3e4;border-top:1px solid #f2dfc3;margin:1rem 1rem 0 0;padding: 1rem;overflow:  hidden;}
+.mui_kmCard_title{margin-bottom: 5px;line-height: 20px;}
+
+.mui_kmCard_rtf{color:#666;word-break:  break-word;}
+.mui_kmCard_rtf img{ max-width:100%!important;}
+.mui_kmCard_source{margin-top: 10px;color:#6c8ff6;}
+.mui_kmCard_source a{font-size:1.4rem;}
+.mui_kmCard_source_title{ font-style: normal;}
+.mui_kmCard_source .lui_kmCard_split{margin: 0 2px;}
+
+.mui_kmCard_wrap pre{
+    white-space:normal!important;
+    word-break:break-all!important;
+}
+
+/***************** TransactionTabBarBtn start *********************/
+.transactionBar{
+	background-color: #ffffff;
+	padding-left: 1.2rem;
+	box-shadow: 0 -5px 15px #ededed;
+}
+
+.transactionBar .striking{
+	color: #48b4eb;
+}
+
+.transactionBar .transactionHead{
+	padding: 1rem 0;
+	border-bottom: 1px solid #f7f6f6;
+	/* font-size: 1.3rem; */
+	position: relative;
+}
+
+
+.transactionBar .transactionHead span{
+	vertical-align:middle;
+}
+.transactionBar .transactionHead .text{
+	display:inline-block;
+	margin-left : 0.5rem;
+	color: #48b4eb;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: 20rem;
+	vertical-align: middle;
+}
+
+.transactionBar .transactionHead .icon{
+	float: right;
+	margin-right: 1rem;
+	margin-top: .35rem;
+	font-size: 1.4rem;
+	position: absolute;
+	white-space: nowrap;
+	right: 0;
+	top: 1rem;
+}
+.transactionBar .transactionHead .icon:before{
+	float:right;
+	margin-left:0.5rem;
+}
+
+.transactionBar .transactionContent{
+	overflow-y : scroll;
+	width : 100%;
+	max-height: 0px;
+	transition: max-height .3s;
+}
+.transactionBar .transactionContent.expand{
+	max-height : 14rem;
+}
+.transactionBar .transactionContent ul{
+	padding-top:.5rem;
+	padding-bottom:.5rem;
+}
+
+.transactionBar .transactionContent ul li{
+	padding: .6rem 0;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: 30rem;
+	font-size: 1.4rem;
+}
+
+.transactionBar .transactionContent ul .active{
+	color: #4285f4;
+}
+/***************** TransactionTabBarBtn end *********************/
+
+.mblTabBarTabBar.mblTabBar .mainTabBarButton {
+	padding: 6px 0;
+	line-height: 3.5rem;
+}
+
+.mblTabBarTabBar.mblTabBar .mainTabBarButton .mblTabBarButtonLabel {
+    color: #fff;
+    background-color: #4285f4;
+    margin: 0 0.8rem;
+    border-radius: 3px;
+}
+
+/* 附件细节调整 */
+#assignmentRow{
+
+}
+#assignmentRow .titleNode{
+	padding-bottom:0;
+}
+
+.splitLine#assignmentRow .muiSimple>tbody>tr:last-child>td{
+	padding:0;
+padding-top:1.2rem;
+
+}
+
+/* 电子签章 */
+#signaturePicUL{
+
+}
+#signaturePicUL.lui_sns_signatureList li{
+	left:0;
+}
+#signaturePicUL.lui_sns_signatureList li img{
+	width: 5rem;
+	height: 5rem;
+}
+
+/* 底部  */
+.mblTabBarTabBar{
+	box-shadow:none;
+}
+.mblTabBarTabBar.mblTabBar .mainTabBarButton{
+	line-height:4rem;
+}
+
+#validate_window{
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:900;
+}
+#validate_window #ifr_validate{
+	position:absolute;
+	top:0;
+	z-index:980;
+	background-color:white;
+	border:0;
+}
+#validate_window .btnBar{
+	height:70px;
+	position:absolute;
+	bottom:0;
+	background-color:white;
+	color:#999;
+	z-index:999;
+}
+#validate_window #div_validateType_errorMsg{
+	display:none;
+	position:absolute;
+	top:0;
+	background-color:white;
+	border:0;
+}
+#validate_window #span_validateType_errorMsg{
+	display:inline-block;
+	vertical-align:middle;
+	font-size:20px;
+	line-height:36px;
+	padding:0 20px;
+}
+#validate_window .muiVerify-btns{
+	position:absolute;
+	left:10px;
+	right:10px;
+	bottom:25px;
+	display:flex;
+}
+#validate_window .muiVerify-btn{
+	flex:1;
+	text-align:center;
+	display:inline-block;
+	height:44px;
+	line-height:44px;
+	margin:0 5px;
+}
+#validate_window .btn-confirm{
+	border:1px solid #4285f4;
+	background-color:#4285f4;
+	color:#fff;
+}
+#validate_window .btn-cancel{
+	border:1px solid #ddd;
+}
+
+/*来自lbpmPostscript_list.jsp*/
+.muiLbpmPostscriptTableWrap{
+	margin-top:10px;
+	padding-bottom:10px;
+	background-color:#EEEEEE;
+	border-radius:4px;
+	text-align:left;
+}
+.muiLbpmPostscriptTableWrap .tb_noborder{
+	background-color:#EEEEEE;
+}
+.muiLbpmPostscriptHead{
+	margin-right:10px;
+}
+.muiLbpmPostscriptContent{
+	padding-top:5px !important;
+	padding-left:10px !important;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+.muiLbpmPostscriptAttachmentContent{
+	padding-top:5px !important;
+	padding-left:10px !important;
+}
+.muiLbpmPostscriptTop{
+	padding-top:10px !important;
+	display:inline-block;
+}
+
+/* 自由流改造 */
+#freeflowChartArea .actionView {
+    padding: 1rem 1.5rem 5rem 1.5rem !important;
+}
+
+.freeflowChartRow .free_flow_node {
+    /* height: 7rem; */
+    height: 9.8rem;
+    width: auto;
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    /* line-height: 7rem; */
+    line-height: 9.8rem;
+    margin-bottom: 0.1rem;
+}
+.freeflowChartRow .free_flow_node .free_flow_move_up_margin{
+	margin-top: 2.45rem;
+}
+.freeflowChartRow .free_flow_node .free_flow_move_down_margin{
+	margin-top: -2.45rem;
+}
+.freeflowChartRow .free_flow_node .free_flow_center {
+    width: 30%;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_center .free_flow_center_icon {
+    border-radius: 50%;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: inline-block;
+    margin-top: -0.3rem;
+    background-color: #4285F4;
+    line-height: 1.1em;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_center .free_flow_center_icon>i {
+    color: #fff;
+    font-size: 1rem;
+    margin-left: 0.3rem;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_center .free_flow_center_icon_review {
+    background-color: #2BCF8F;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_center .free_flow_center_icon_sign {
+    background-color: #6E93FF;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_center .free_flow_center_icon_send {
+    background-color: #FFB900;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_center .free_flow_sortName {
+    color: #2A304A;
+    font-size: 1.5rem;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_left {
+    width: 10%;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_right {
+    width: 60%;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_right {
+    text-align: right;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_right>span {
+	margin-right: 1.5rem;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_right .free_flow_drafterTip {
+    color: #B0B4CA;
+    font-size: 1.3rem;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_right .free_flow_set_tip>span {
+    color: #2A304A;
+    font-size: 1.3rem;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_right .free_flow_set_tip>i {
+    margin-top: -0.1rem;
+    margin-left: .5rem;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_move {
+    height: 50%;
+    line-height: 4.9rem;
+}
+
+.freeflowChartRow .free_flow_node .free_flow_move>i {
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    color: #999FB7;
+}
+
+.freeflowChartRow .free_flow_addArea>.mui {
+    width: 3.7rem;
+    height: 3.7rem;
+    border-radius: 50%;
+    line-height: 3.7rem;
+    font-size: 1.5rem;
+    color: #4285f4;
+    text-align: center;
+    margin: 1.65rem 0 0 -1.85rem;
+    background: #fff;
+    box-shadow: 0 0 30px 0 rgba(153, 179, 210, 0.20);
+}
+
+.freeflowChartRow .free_flow_addArea {
+    display: flex;
+    height: 7rem;
+}
+
+.freeflowChartRow .free_flow_addArea .free_flow_split {
+    border-right: 1px dashed #d6d6d6;
+    width: 50%;
+}
+
+.freeflowChartRow .free_flow_item:last-child .free_flow_addArea .free_flow_split {
+    border-right: none;
+}
+
+.freeflowChartRow .free_flow_addArea .free_flow_delete {
+    position: fixed;
+    right: 2.7rem;
+    margin-top: -5.9rem;
+    font-size: 2rem;
+    display: none;
+}
+
+.free_flow_selectNodeType .muiDialogElementContainer_bottom {
+    background-color: transparent;
+}
+
+.muiDialogElement.muiFormSelect.free_flow_selectNodeType .muiDialogElementContent_bottom {
+    height: 208px !important;
+}
+
+.free_flow_selectNodeType .muiDialogElementButtons_bottom {
+    bottom: 0rem;
+	top: inherit;
+	border-radius: 0px;
+	height: 4.8rem;
+    line-height: 4.8rem;
+}
+
+.free_flow_selectNodeType .muiDialogElementButton_bottom_split{
+	height: 1.5rem;
+    background-color: #F5F6FB;
+}
+
+.free_flow_selectNodeType .muiDialogElementButton_bottom{
+	line-height: 4.8rem;
+	color: #4285f4;
+    text-align: center;
+    line-height: 4.9rem;
+    vertical-align: middle;
+    font-size: 1.7rem;
+    width: 100%;
+    background: #fff;
+}
+
+.free_flow_selectNodeType .muiRadioGroupWrap .muiRadioItem {
+    margin: 0;
+    background-color: #fff;
+    height: 4.8rem;
+    line-height: 4.8rem;
+}
+
+.free_flow_selectNodeType .muiRadioGroupWrap .muiRadioItem:first-child{
+	border-radius: 1.5rem 1.5rem 0 0;
+}
+
+.free_flow_selectNodeType .newMui.muiFormEleWrap .muiRadioGroupWrap.muiRadioGroupNormalWrap,
+.muiSimple>tr>td .newMui.muiFormEleWrap .muiRadioGroupWrap.muiRadioGroupNormalWrap {
+    margin-top: 0;
+}
+
+.free_flow_selectNodeType .muiFormSelect .muiCheckItem .muiCheckBoxWrap>.muiCheckItem:after,
+.muiFormSelect .muiRadioGroupWrap.blockRadio>.muiRadioItem:after {
+    border-bottom: none;
+}
+
+.free_flow_selectNodeType .muiDialogElementButtons_bottom:after {
+    border-bottom: none;
+}
+
+.free_flow_nodeAttribute {
+    background-color: #F5F6FB;
+    height: 100%;
+}
+
+.free_flow_nodeAttribute_item {
+    display: flex;
+    /*  height: 6rem; */
+    line-height: 6rem;
+    background-color: #fff;
+    padding: 0 2rem;
+}
+
+.free_flow_nodeAttribute_item .muiFormRequired {
+    line-height: 6rem;
+}
+
+.free_flow_nodeAttribute_item .muiFormHandlerRequired {
+    display: inline-block;
+}
+
+.free_flow_nodeAttribute_item .muiFormRequiredShow+.muiSelInputRight {
+    right: 0rem;
+}
+
+.free_flow_nodeAttribute_item .muiValidate {
+    line-height: 2rem;
+}
+
+.free_flow_nodeAttribute_item .muiValidateShape {
+    background-color: #fff;
+}
+
+.free_flow_nodeAttribute_area {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #E7E7E7;
+}
+
+.free_flow_nodeAttribute_left {
+    width: 30%;
+    font-size: 1.5rem;
+    color: #2A304A;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.free_flow_nodeAttribute_right {
+    width: 70%;
+    text-align: right;
+    right: 2rem;
+    font-size: 1.4rem;
+    color: #2A304A;
+}
+
+.free_flow_nodeAttribute_right>span>span {
+    padding-right: 0.6rem;
+}
+
+.free_flow_nodeAttribute_right .muiSelInput {
+    line-height: 6rem !important;
+    text-align: right;
+    font-size: 1.4rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.free_flow_nodeAttribute_right .fontmuis {
+    color: #c7c7cc;
+    z-index: 3;
+    font-size: var(--muiFontSizeMS);
+}
+
+.free_flow_nodeAttribute_right .free_flow_handler_to_right {
+    font-size: 1.12rem;
+}
+
+.free_flow_nodeAttribute_right .muiFormEleWrap .muiInput {
+    padding-right: 2rem;
+    text-align: right;
+}
+
+.free_flow_nodeAttribute_right .muiSelInput:empty:after {
+    line-height: 6rem !important;
+}
+
+.free_flow_nodeAttribute_right .muiAddressForm .muiFormRequired {
+    top: auto;
+}
+
+.free_flow_nodeAttribute_right .muiFormEleWrap.muiFormLeft{
+	text-align: right;
+}
+
+.free_flow_nodeAttribute_split {
+    height: 1rem;
+}
+
+.free_flow_nodeAttribute_delBtn {
+    background-color: #fff;
+    text-align: center;
+    height: 6rem;
+    line-height: 6rem;
+    font-size: 1.7rem;
+    color: #2A304A
+}
+
+.free_flow_nodeAttribute_delBtn>div {
+    text-align: center !important;
+}
+
+.free_flow_nodeAttribute_tip {
+    min-height: 4rem;
+    line-height: 4rem;
+    font-size: 1.4rem;
+    padding-left: .3rem;
+    color: #ADAFBA;
+}
+
+.free_flow_nodeAttribute_tip .preview {
+    margin-left: -3px !important;
+}

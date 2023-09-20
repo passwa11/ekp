@@ -1,0 +1,205 @@
+data = data || {};
+var viewWgt = render.parent;
+var fieldInfos = viewWgt.getFieldInfos();
+var lang = viewWgt.getModelingLang();
+// 列表穿透，默认是true
+var viewFlag = data.fdViewFlag === "0" ? "0":"1";
+// 是否权限过滤，默认是true
+var authEnabled = data.fdAuthEnabled === "0" ? "0":"1";
+
+// 获取标题字段的文本值
+var fdSubject = data.fdSubject || {};
+
+{$
+<table class="tb_simple model-view-panel-table" width="100%">
+    <!-- 统计项start -->
+    <tr lui-pam-hidden="true" style="">
+        <td class="td_normal_title td_normal_title_statistics">
+            <div data-lui-position='fdStatistics'>
+                <span class="model-edit-view-oper-title">{%lang['listview.Statistics']%}</span>
+                <span class="model-data-create model-data-statistics">{%lang['button.add']%}</span>
+            </div>
+
+        </td>
+    </tr>
+    <tr lui-pam-hidden="true" style="">
+        <td class="model-view-panel-table-td td-bottom">
+            <div class="model-panel-table-base"  data-lui-position='fdStatistics' style="display:none;margin-bottom:0">
+                <div class="tb_simple model-edit-view-oper-content-table"  id="fd_{%viewWgt.id%}_statistics" data-table-type="statistics" style="width:100%;">
+                </div>
+            </div>
+        </td>
+    </tr>
+    <!-- 统计项end -->
+
+    <!-- 筛选项start -->
+    <tr>
+        <td class="td_normal_title" data-lui-position='fdCondition'>
+            {%lang['modelingAppListview.fdCondition']%}
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <div class="inputselectsgl multiSelectDialog"  data-lui-position='fdCondition' style="width:100%;height: 28px!important;">
+                <input name="fd_{%viewWgt.id%}_fdCondition" value='{%JSON.stringify(data.fdCondition)%}' type="hidden">
+                <div class="input">
+                    <input name="fd_{%viewWgt.id%}_fdConditionText" value="{%data.fdConditionText%}" type="text" style="display:none;" />
+                    <span class="selectedItem"></span>
+                </div>
+                <div class="deleteAll"></div>
+                <div class="selectitem"></div>
+            </div>
+        </td>
+    </tr>
+    <!-- 筛选项end -->
+
+    <!-- 排序设置start -->
+    <tr>
+        <td class="td_normal_title" data-lui-position='fdOrderBy'>
+            <span class="model-edit-view-oper-title">{%lang['modelingAppListview.fdOrderBy']%}</span>
+            <span class="model-data-create model-data-order">{%lang['button.add']%}</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <div class="model-panel-table-base" style="display:none;margin-bottom:0">
+                <div class="tb_simple model-edit-view-oper-content-table" id="fd_{%viewWgt.id%}_order" data-table-type="order" style="width:100%;">
+                </div>
+            </div>
+        </td>
+    </tr>
+    <!-- 排序设置end -->
+
+    <!-- 业务操作start -->
+    <tr  class="operationTr">
+        <td class="td_normal_title" data-lui-position='fdOperation'>
+            <span class="model-edit-view-oper-title">
+                {%lang['modelingAppListview.listOperation']%}
+            </span>
+            <span class="model-data-create model-data-operate">
+                {%lang['button.add']%}
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <div class="model-panel-table-base" style="display:none;margin-bottom:0">
+                <div class="tb_simple model-edit-view-oper-content-table" id="fd_{%viewWgt.id%}_operate" data-table-type="operate" style="width:100%;">
+                </div>
+                <input name="operationIds" type="hidden" value="" />
+                <input name="operationNames" type="hidden" value="" />
+            </div>
+        </td>
+    </tr>
+    <!-- 业务操作end -->
+
+    <!-- 显示项start -->
+    <tr>
+        <td class="td_normal_title" data-lui-position='fdDisplay'>
+            {%lang['modelingAppListview.fdDisplay']%}
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <div class="inputselectsgl multiSelectDialog" data-lui-position='fdDisplay'  style="width:100%;height: 28px!important;">
+                <input name="fd_{%viewWgt.id%}_fdDisplay" value='{%JSON.stringify(data.fdDisplay)%}' type="hidden">
+                <div class="input">
+                    <input name="fd_{%viewWgt.id%}_fdDisplayText" value="{%data.fdDisplayText%}" type="text" style="display:none;"/>
+                    <span class="selectedItem"></span>
+                </div>
+                <div class="deleteAll"></div>
+                <div class="selectitem"></div>
+            </div>
+        </td>
+    </tr>
+    <!-- 显示项end -->
+
+    <!-- 显示样式start -->
+    <tr id="fdDisplayCssSetTr">
+        <td class="td_normal_title td_display_add">
+            <span class="displaycss td_normal_title" data-lui-position="fdDisplayCss">{%lang['modelingAppListview.fdDisplayCssSet']%}</span>
+            <span class="displaycss_create model_select_selected" style="float: right; padding-bottom: 8px; pointer-events: auto;">{%lang['button.add']%}
+                <div class="displaycss_create_pop" style="height: 0px; border: 0px;">
+                </div>
+            </span>
+        </td>
+    </tr>
+    <!-- 显示样式end -->
+
+    <!-- 底部数据统计start -->
+    <tr id="fdFootStatisticsTr">
+        <td class="td_normal_title td_display_add">
+            <span class="footStatistics td_normal_title" data-lui-position="fdFootStatistics"><span class="footStatisticsTitle" style="color: #999999;margin-right: 4px;">{%lang['listview.data.statistics']%}</span><span style="font-size: 12px;color: #999999;">{%lang['listview.data.statistics.directions']%}</span></span>
+            <span class="footStatistics_create footStatistics_create_none" style="float: right; padding-bottom: 8px; pointer-events: auto;">{%lang['button.add']%}
+                <div class="footStatistics_create_pop" style="height: 0px; border: 0px;">
+                </div>
+            </span>
+        </td>
+    </tr>
+    <!-- 底部数据统计end -->
+
+    <!-- 视图穿透start-->
+    <tr>
+        <td class="td_normal_title viewcover-content">
+            {%lang['listview.view.penetration']%}
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <input type="hidden" name="fd_{%viewWgt.id%}_fdViewFlag" value='{%viewFlag%}'>
+            <div class="view_flag_radio" style="display: inline-block;">
+                <div class="view_flag_radio_yes" style="display: inline-block;cursor: pointer;"  onclick="changeViewFlag(this,'fd_{%viewWgt.id%}_fdViewFlag',1,'fd_{%viewWgt.id%}_fdViewId')">
+                    <i class="view_flag_no {%viewFlag === '1'?'view_flag_yes':''%}"></i>是
+                </div>
+                <div class="view_flag_radio_no view_flag_last" style="display:inline-block;cursor: pointer;"  onclick="changeViewFlag(this,'fd_{%viewWgt.id%}_fdViewFlag',0,'fd_{%viewWgt.id%}_fdViewId')">
+                    <i class="view_flag_no {%viewFlag === '0'?'view_flag_yes':''%}"></i>否
+                </div>
+            </div>
+            <select class='inputsgl selectCover' name="fd_{%viewWgt.id%}_fdViewId" style="{%viewFlag === '1'?'width:75%;margin-left: 8px':'display:none'%}">
+                <option value="">{%lang['listview.default.view']%}</option>$}
+                // listviewOption.baseInfo在edit.jsp里面定义
+                for(var i = 0;i < listviewOption.baseInfo.views.length;i++){
+                var option = listviewOption.baseInfo.views[i];
+                if (!option[2]) {
+                    {$
+                    <option value="{%option[0]%}" {%data.fdViewId === option[0]?'selected':''%}>{%option[1]%}</option>
+                    $}
+                }
+                }
+                {$</select>
+        </td>
+    </tr>
+    <!-- 视图穿透end-->
+
+    <!-- 分页器start -->
+    <tr>
+        <td data-lui-position="fdPagination" class="td_normal_title"  onclick='switchSelectPosition(this,"right")'>
+            <div>{%lang['listview.pager.configuration']%}</div>
+            <div id="paginationPosition"></div>
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <input type="hidden" name="fdPageSetting" value="{%data.fdPageSetting%}">
+            <div class="view_flag_radio" style="display: inline-block;" id="{%viewWgt.id%}_pagingset">
+                <div id="{%viewWgt.id%}_defalutPagination" name="pagingset" value="1" popupObj="pagingset_1" class="view_flag_radio_yes" style="display: inline-block;cursor: pointer;">
+                    <i class="view_flag_no"></i>
+                    {%lang['listview.default.pagination']%}
+                </div>
+                <div id="{%viewWgt.id%}_simplePagination" name="pagingset" value="2" popupObj="pagingset_2" class="view_flag_radio_no view_flag_last" style="display:inline-block;cursor: pointer;">
+                    <i class="view_flag_no"></i>
+                    {%lang['listview.simple.pagination']%}
+                </div>
+                <div id="{%viewWgt.id%}_changePagination" name="pagingset" value="3" popupObj="pagingset_3" class="view_flag_radio_last view_flag_last" style="display:inline-block;cursor: pointer;">
+                    <i class="view_flag_no"></i>
+                    {%lang['listview.allow.switc.tabs']%}
+                </div>
+            </div>
+            <div name="pagingset_1"></div>
+            <div name="pagingset_2"></div>
+            <div name="pagingset_3"></div>
+        </td>
+    </tr>
+    <!-- 分页器end -->
+</table>
+$}

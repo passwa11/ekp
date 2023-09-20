@@ -1,0 +1,291 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/resource/jsp/view_top.jsp"%>
+<link href="resource/css/maincss.css" rel="stylesheet">
+<link href="resource/css/css.css" rel="stylesheet">
+<script type="text/javascript" src="resource/js/jquery-2.2.4.min.js" />
+<script>
+	function confirmDelete(msg){
+	var del = confirm("<bean:message key="page.comfirmDelete"/>");
+	return del;
+}
+</script>
+<div id="optBarDiv">
+		<kmss:auth requestURL="/sys/time/sys_time_area/sysTimeArea.do?method=edit&fdId=${JsParam.fdId}" requestMethod="GET">
+			<input type="button"
+				value="<bean:message key="button.edit"/>"
+				onclick="Com_OpenWindow('sysTimeArea.do?method=edit&fdId=${JsParam.fdId}','_self');">
+		</kmss:auth>
+		<kmss:auth requestURL="/sys/time/sys_time_area/sysTimeArea.do?method=delete&fdId=${JsParam.fdId}" requestMethod="GET">
+			<input type="button"
+				value="<bean:message key="button.delete"/>"
+				onclick="if(!confirm('<bean:message key="page.comfirmDelete"/>'))return;Com_OpenWindow('sysTimeArea.do?method=delete&fdId=${JsParam.fdId}','_self');">
+		</kmss:auth>
+		<input type="button" value="<bean:message key="button.close"/>" onclick="top.close();">
+</div>
+<p class="txttitle"><bean:message  bundle="sys-time" key="title.timeSetting"/></p>
+<center>
+	<table class="tb_normal" width=98%>
+		<html:hidden name="sysTimeAreaForm" property="fdId"/>
+		<tr>
+			<td class="td_normal_title" width=15%>
+				<bean:message  bundle="sys-time" key="sysTimeArea.fdName"/>
+			</td>
+			<td width=85% colspan=3>
+				<bean:write name="sysTimeAreaForm" property="fdName"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="td_normal_title" width=15%>
+				<bean:message  bundle="sys-time" key="sysTimeArea.fdHoliday"/>
+			</td>
+			<td width=85% colspan=3>
+				<bean:write name="sysTimeAreaForm" property="fdHolidayName"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="td_normal_title" width=15%>
+				<bean:message bundle="sys-time" key="sysTimeArea.scope"/>
+			</td>
+			<td width=85% colspan=3>
+				<bean:write name="sysTimeAreaForm" property="areaMemberNames"/>						
+			</td>
+		</tr>
+		<tr>
+			<td class="td_normal_title" width=15%>
+				<bean:message  bundle="sys-time" key="sysTimeArea.timeAdmin"/>
+			</td>
+			<td width=85% colspan=3>
+				<bean:write name="sysTimeAreaForm" property="areaAdminNames"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="td_normal_title" width=15%>
+				<bean:message  bundle="sys-time" key="sysTimeArea.docCreatorId"/>
+			</td><td width=35%>
+				<bean:write name="sysTimeAreaForm" property="docCreatorName"/>
+			</td>
+			<td class="td_normal_title" width=15%>
+				<bean:message  bundle="sys-time" key="sysTimeArea.docCreateTime"/>
+			</td><td width=35%>
+				<bean:write name="sysTimeAreaForm" property="docCreateTime"/>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<div class="lui_workforce_management_container">
+		<div class="lui_workforce_management_tab">
+	      <div class="lui_workforce_management_tab-wrap">
+	        <div class="lui_workforce_management_tab-heading">
+	          <span><bean:message  bundle="sys-time" key="calendar.data.list"/></span>
+	        </div>
+	        <div class="lui_workforce_management_tab-list-wrap">
+	          <ul class="lui_workforce_management_tab-list">
+	            <li class="active">
+	              	<bean:message  bundle="sys-time" key="calendar.data.list1"/>
+	            </li>
+	            <li>
+	              	<bean:message  bundle="sys-time" key="calendar.data.list2"/>
+	            </li>
+	          </ul>
+	        </div>
+	      </div>
+	      <div class="lui_workforce_management_tab-content">
+	        <ul class="lui_workforce_management_tab-content-list">
+	          <li class="active">
+	            <div class="lui_workforce_management-inner-tab">
+	              <div class="lui_workforce_management-inner-tab-wrap">
+	                <ul class="lui_workforce_management-inner-tab-list">
+	                  <li class="active">
+	                   	 <bean:message  bundle="sys-time" key="calendar.data.list.worktime"/>
+	                  </li>
+	                  <li>
+	                  	<bean:message  bundle="sys-time" key="calendar.data.list.holiday"/>
+	                  </li>
+	                  <li>
+	                  	<bean:message  bundle="sys-time" key="calendar.data.list.pach"/>
+	                  </li>
+	                </ul>
+	              </div>
+	              <div class="lui_workforce_management-inner-tab-content-wrap">
+	                <ul class="lui_workforce_management-inner-tab-content-list">
+	                  <li class="active">
+	                      <iframe id="workTimeContent" src='<c:url value="/sys/time/sys_time_work/sysTimeWork.do?method=list&sysTimeAreaId="/>${sysTimeAreaForm.fdId}' width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+	                      <div class="lui_workforce_management-table-remark">
+	                        	${lfn:message('sys-time:sysTimeArea.descriptption')}<br>
+							    ${lfn:message('sys-time:sysTimeArea.descriptption.area')}<br>
+							    ${lfn:message('sys-time:sysTimeArea.descriptption.time')}<br>
+							    ${lfn:message('sys-time:sysTimeArea.descriptption.voa')}<br>
+							    ${lfn:message('sys-time:sysTimeArea.descriptption.patch')}<br>
+							    ${lfn:message('sys-time:sysTimeArea.descriptption.patch5')}<br>
+							    ${lfn:message('sys-time:sysTimeArea.descriptption.patch6')}<br>
+							    
+							    ${lfn:message('sys-time:sysTimeArea.notice')} <br>
+							    ${lfn:message('sys-time:sysTimeArea.notice1')}<br>
+							    ${lfn:message('sys-time:sysTimeArea.notice2')}<br>
+							    
+							    ${lfn:message('sys-time:sysTimeArea.notice.example')}<br>
+							    ${lfn:message('sys-time:sysTimeArea.notice.example1')}<br>
+							    ${lfn:message('sys-time:sysTimeArea.notice.example2')}<br>
+	                      </div>
+	                  </li>
+	                  <li>
+	                  	<div class="lui_page_panel_accordion">
+					      <div class="heading">
+					        <i class="accordion_arrow"></i>
+					        <h4 class="heading_title" align="left" style="font-size: 12px">${lfn:message('sys-time:sysTimeHolidayDetail.custom.vacation')}</h4>
+					      </div>
+					      <div class="content">
+			                    <iframe id="vacationContent" src='' width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+					      </div>
+					    </div>
+	                  </li>
+	                  <li>
+	                  	<div class="lui_page_panel_accordion">
+					      <div class="heading">
+					        <i class="accordion_arrow"></i>
+					        <h4 class="heading_title" align="left" style="font-size: 12px">${lfn:message('sys-time:sysTimeHolidayDetail.custom.pachwork')}</h4>
+					      </div>
+					      <div class="content">
+			                    <iframe id="patchWorkContent" src='' width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+					      </div>
+					    </div>
+	                  </li>
+	                </ul>
+	              </div>
+	            </div>
+	          </li>
+	          <li>
+				<iframe id="calendarContent" src="" width="100%" height="1300px" frameborder="0" scrolling="no"></iframe>
+	          </li>
+	        </ul>
+	      </div>
+	    </div>
+    </div>
+</center>
+<script>
+	/*外选项卡*/
+	$('.lui_workforce_management_tab-list>li').click(function() {
+	  $(this).parent().find('li').removeClass('active');
+	  $(this).addClass('active');
+	  var idx = $(this).index();
+	  if(idx==1){
+		  $("#calendarContent").attr("src",'<c:url value="/sys/time/sys_time_area/sysTimeArea.do?method=calendar&fdId="/>${sysTimeAreaForm.fdId}');
+	  }
+	  var showContent = '.lui_workforce_management_tab-content-list>li:eq(' + idx + ')';
+	  $(this).parents('.lui_workforce_management_tab').find('.lui_workforce_management_tab-content-list>li').css({'display': 'none'});
+	  $(this).parents('.lui_workforce_management_tab').find(showContent).fadeIn()
+	})
+	
+	/*内选项卡*/
+	$('.lui_workforce_management-inner-tab-list>li').click(function() {
+	  $(this).parent().find('li').removeClass('active');
+	  $(this).addClass('active');
+	  var idx = $(this).index();
+	  if(idx==0){
+		  //iFrameHeight("workTimeContent");
+		  window.clearInterval(tid);
+		  count=0;
+		  tid = window.setInterval("iFrameHeight('workTimeContent')",1000);
+	  }
+	  if(idx==1){
+		  $("#vacationContent").attr("src",'<c:url value="/sys/time/sys_time_vacation/sysTimeVacation.do?method=list&sysTimeAreaId="/>${sysTimeAreaForm.fdId}&fdHolidayId=${sysTimeAreaForm.fdHolidayId}&type=vacation');
+		  //iFrameHeight("vacationContent");
+		  window.clearInterval(tid);
+		  count=0;
+		  tid = window.setInterval("iFrameHeight('vacationContent')",1000);
+	  }else if(idx==2){
+		  $("#patchWorkContent").attr("src",'<c:url value="/sys/time/sys_time_patchwork/sysTimePatchwork.do?method=list&sysTimeAreaId="/>${sysTimeAreaForm.fdId}&fdHolidayId=${sysTimeAreaForm.fdHolidayId}&type=pachwork');
+		  //iFrameHeight("patchWorkContent");
+		  window.clearInterval(tid);
+		  count=0;
+		  tid = window.setInterval("iFrameHeight('patchWorkContent')",1000);
+	  }
+	  var showContent = '.lui_workforce_management-inner-tab-content-list>li:eq(' + idx + ')';
+	  $(this).parents('.lui_workforce_management-inner-tab').find('.lui_workforce_management-inner-tab-content-list>li').css({'display': 'none'});
+	  $(this).parents('.lui_workforce_management-inner-tab').find(showContent).fadeIn()
+	})
+	var tid,ifh,count=0;
+	$(function(){
+		tid = window.setInterval("iFrameHeight('workTimeContent')",1000);
+	});
+	/* ===============iframe高度自适应=============*/
+	function iFrameHeight(id) {
+		try {
+		 var browserVersion = window.navigator.userAgent.toUpperCase();
+		 var isOpera = false, isFireFox = false, isChrome = false, isSafari = false, isIE = false;
+	    isOpera = browserVersion.indexOf("OPERA") > -1 ? true : false;
+        isFireFox = browserVersion.indexOf("FIREFOX") > -1 ? true : false;
+        isChrome = browserVersion.indexOf("CHROME") > -1 ? true : false;
+        isSafari = browserVersion.indexOf("SAFARI") > -1 ? true : false;
+        if (!!window.ActiveXObject || "ActiveXObject" in window)
+            isIE = true;
+        var iframe = document.getElementById(id);
+        var bHeight = 0;
+        if (isChrome == false && isSafari == false){
+        	if(iframe.contentWindow.document.getElementsByTagName("table").length>1){
+        		bHeight = iframe.contentWindow.document.getElementsByTagName("table")[1].scrollHeight+100;
+        	}else{
+	            bHeight = iframe.contentWindow.document.getElementsByTagName("table")[0].scrollHeight;
+        	}
+        }
+        var dHeight = 0;
+        if (isFireFox){
+        	if(iframe.contentWindow.document.getElementsByTagName("table").length>1){
+        		dHeight = iframe.contentWindow.document.getElementsByTagName("table")[1].offsetHeight + 102;
+        	}else{
+	            dHeight = iframe.contentWindow.document.getElementsByTagName("table")[0].offsetHeight + 2;
+        	}
+        }else if (!isIE && !isOpera){
+        	if(iframe.contentWindow.document.getElementsByTagName("table").length>1){
+        		dHeight = iframe.contentWindow.document.getElementsByTagName("table")[1].scrollHeight+100;
+        	}else{
+        		dHeight = iframe.contentWindow.document.getElementsByTagName("table")[0].scrollHeight;
+        	}
+            
+        }else if (isIE && -[1,] ) {
+        } else{//ie9+
+            bHeight += 3;
+        }
+        var height = Math.max(bHeight, dHeight);
+        if("vacationContent"==id){
+        	if(height<=40)
+		        height += 350;
+        	var if_h = $("#vacationContent").contents().find("#hv").contents().find("#List_ViewTable").height();
+	        height += if_h+300;
+        }else if("patchWorkContent"==id){
+        	if(height<=40)
+		        height += 350;
+        	var if_h = $("#patchWorkContent").contents().find("#hp").contents().find("#List_ViewTable").height();
+        	height += if_h+300;
+        }
+        count+=1;
+        if(count>5){
+        	window.clearInterval(tid);
+        	count=0;
+        }
+        iframe.style.height = height + "px";
+		} catch (ex) {
+        }
+	}
+	$(function(){
+        $(".lui_page_panel_accordion .heading").bind('click', function() {
+          var tc2 = $(this).toggleClass('accordion').next(".content").find("#vacationContent").contents().find("#c2").attr("style");
+          if(tc2&&tc2!=""&&tc2.indexOf("display: block;")>-1){
+        	  $(this).toggleClass('accordion');
+          }else if(tc2&&tc2!=""){
+        	  $(this).toggleClass('accordion');
+          }
+          $(this).toggleClass('accordion').next(".content").find("#vacationContent").contents().find("#c2").slideToggle(300);
+          
+          var tc1 = $(this).toggleClass('accordion').next(".content").find("#patchWorkContent").contents().find("#c1").attr("style");
+          if(tc1&&tc1!=""&&tc1.indexOf("display: block;")>-1){
+        	  $(this).toggleClass('accordion');
+          }else if(tc1&&tc1!=""){
+        	  $(this).toggleClass('accordion');
+          }
+          $(this).toggleClass('accordion').next(".content").find("#patchWorkContent").contents().find("#c1").slideToggle(300);
+        });
+      })
+</script>
+<%@ include file="/resource/jsp/view_down.jsp"%>

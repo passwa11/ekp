@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="sys-datainit:datainit.mechanism"
+		urlPrefix="/sys/datainit/"
+		defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)">
+		
+		<!-- 开启三员管理后，系统管理员不能导出数据 -->
+		<request path="sys_datainit_main/sysDatainit_select.jsp*"
+			defaultValidator="uselessRoleValidator()">
+		</request>
+		<request path="sys_datainit_main/sysDatainitMain*">
+			<query
+				validator="uselessRoleValidator()"
+				queryString="type=export" />
+			<query
+				validator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN)"
+				queryString="method=showImport" />
+		</request>
+	</module>
+</configs>

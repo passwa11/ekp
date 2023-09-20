@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	<extension-point id="com.landray.kmss.sys.formMultiLang">
+		<item name="item">
+			<param name="uuid" kind="string" required="true">
+				<description>唯一key值</description>
+			</param>
+			<param name="bundle" kind="string">
+				<description>国际化的bundle</description>
+			</param>
+			<param name="key" kind="string">
+				<description>国际化的bundle,对应的key值</description>
+			</param>
+			<description>自定义表单多过语言配置扩展点</description>
+		</item>
+		<description>
+				uuid 是对应数据库中 json 数据的 国际化语言 key 值，必须保持唯一
+				bundle 以及 key 都是对应国际化资源文件的定义。uuid 必须和 admin.do
+				里面的 kmss.lang.support 里面的 | 后面的 key 值保持一致,key值里面
+				绝对不能出现 '_' 字符。
+		</description>
+	</extension-point>
+	
+	<extension-point id="com.landray.kmss.sys.formMultiLang.import.log">
+		<item name="item">
+			<param name="uuid" kind="string" required="true">
+				<description>唯一key值，对应的是模板名（ModelName）</description>
+			</param>
+			<param name="model" kind="string" required="true">
+				<description>唯一key值，对应的是模板所绑定的模块</description>
+			</param>
+			<param name="name" kind="string">
+				<description>模块名称标识，前端页面显示内容</description>
+			</param>
+			<param name="template" kind="string">
+				<description>
+					模板名称简写,例如 com.landray.kmss.km.review.model.KmReviewTemplate 对应 kmReviewTemplate ，首字母小写
+				</description>
+			</param>
+			<param name="view" kind="string">
+				<description>视图页面</description>
+			</param>
+			<param name="edit" kind="string">
+				<description>编辑页面</description>
+			</param>
+			<param name="commonEdit" kind="string">
+				<description>公共模板编辑页面</description>
+			</param>
+			<param name="commonView" kind="string">
+				<description>公共模板视图页面</description>
+			</param>
+			<description>自定义表单多语言导入导出日志链接扩展点</description>
+		</item>
+		<description>
+				uuid 对应的是模板全路径
+				model 对应的模块全路径
+				template 模板的缩写(首字母小写)
+				name 模块名称标识，前端页面显示内容
+				view 对应的是视图页面的 url 访问路径
+				edit 编辑页面
+				commonEdit 公共模板编辑页面
+				commonView 公共模板视图页面
+				
+				特别说明： view , edit , commonEdit , commonView 里面 ？号字符，都需要用 ；来替换（这是个隐患，如果后续需要定制，可以修改 LangUtil 工具类来实现）
+		</description>
+	</extension-point>
+	
+	<extension point="com.landray.kmss.sys.formMultiLang">
+		<item name="item">
+			<param name="uuid" value="en-US" />
+			<param name="bundle" value="sys-xform" />
+			<param name="key" value="sys.xform.lang.English" />
+		</item>
+		<item name="item">
+			<param name="uuid" value="zh-CN" />
+			<param name="bundle" value="sys-xform" />
+			<param name="key" value="sys.xform.lang.Chinese" />
+		</item>
+		<item name="item">
+			<param name="uuid" value="zh-HK" />
+			<param name="bundle" value="sys-xform" />
+			<param name="key" value="sys.xform.lang.HongKong" />
+		</item>
+		<item name="item">
+			<param name="uuid" value="ja-JP" />
+			<param name="bundle" value="sys-xform" />
+			<param name="key" value="sys.xform.lang.Japanese" />
+		</item>
+		<item name="item">
+			<param name="uuid" value="th-TH" />
+			<param name="bundle" value="sys-xform" />
+			<param name="key" value="sys.xform.lang.Thai" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.config.admin.do">
+		<item name="config">
+			<param name="jsp" value="/sys/xform/lang/include/config.jsp" />
+			<param name="type" value="base" />
+			<param name="order" value="20" />
+		</item>
+	</extension>
+		
+	<extension point="com.landray.kmss.sys.admin.commontools">
+		<item
+			name="tools">
+			<param
+				name="name"
+				value="{sys-xform:sysFormMultiLang.multi.imporexp}" />
+			<param
+				name="path"
+				value="/sys/xform/lang/commonTool/sysFormMultilang_upload.jsp" />
+			<param
+				name="description"
+				value="{sys-xform:sysFormMultiLang.multi.imporexp.Description}" />
+			<param
+				name="icon"
+				value="profile_tool_io" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.xform.jsp.generator" model="*">
+		<item name="generator">
+			<param name="bean" value="sysFormTemplateLangJsonGeneraotr" />
+			<param name="order" value="20"/>
+		</item>
+	</extension>
+</plugin>

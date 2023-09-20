@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root 
+    xmlns:m="http://www.landray.com.cn/schema/mportlet" 
+    xmlns="http://www.landray.com.cn/schema/lui" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.landray.com.cn/schema/mportlet 
+	../../../sys/mobile/mportlet.xsd
+		http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd">
+	
+	<m:mportlet 
+		id="sys.notify.list.mobile"
+		name="{sys-notify:sysNotifyTodo.mportal.name}"
+		module= "{sys-notify:module.sys.notify}"
+		description="{sys-notify:sysNotifyTodo.mportal.desc}"
+		moduleUrl = "/sys/notify/mobile/index.jsp"
+		jsUrl="/sys/notify/mobile/mportal/sysNotify_list.js?rowsize=!{rowsize}&amp;type=!{type}">
+		<m:vars>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="5"/>
+			<var name="{sys-notify:sysNotifyTodo.mportal.type}" key="type" kind="enumValue" default="1">
+		    	{"values":
+		    		[{"text":"{sys-notify:sysNotifyTodo.mportal.type.todo}", "value":"1"},
+		    		{"text":"{sys-notify:sysNotifyTodo.mportal.type.view}", "value":"2"},
+		    		{"text":"{sys-notify:sysNotifyTodo.mportal.type.done}", "value":"3"}],
+		    		"showType":"radio"
+		    	}
+		    </var>
+		</m:vars>
+	</m:mportlet>
+	
+</root>	

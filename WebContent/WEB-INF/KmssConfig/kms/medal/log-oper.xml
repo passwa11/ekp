@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<!-- 勋章分类 -->
+		<oper
+            id="kmsMedalCategoryOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.medal.model.KmsMedalCategory"
+            action="/kms/medal/kms_medal_category/kmsMedalCategory.do">
+            <!-- 删除 -->
+            <query 
+                method="deleteCate"
+                logPoint="Service_Delete"
+                messageKey="kms-medal:kms.medal.cate.log.deleteCate">
+            </query>
+        </oper>
+        
+        <!-- 勋章主文档 -->
+		<oper
+            id="kmsMedalMainOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.medal.model.KmsMedalMain"
+            action="/kms/medal/kms_medal_main/kmsMedalMain.do">
+            <!-- 查询 -->
+            <query 
+                method="manageList"
+                logPoint="manageList"
+                messageKey="kms-medal:kms.medal.main.log.manageList">
+            </query>
+            <!-- 查询 -->
+            <query 
+                method="listChildren"
+                logPoint="manageList"
+                messageKey="kms-medal:kms.medal.main.log.listChildren">
+            </query>
+            <!-- 添加授勋人员 -->
+            <query 
+                method="downloadTemplate"
+                logPoint="Base_UrlParam"
+                messageKey="kms-medal:kms.medal.main.log.downloadTemplate">
+            </query>
+            <!-- 添加授勋人员 -->
+            <query 
+                method="addOwners"
+                logPoint="addOwners"
+                messageKey="kms-medal:kms.medal.main.log.addOwners">
+            </query>
+            <!-- 查询 -->
+            <query 
+                method="getMedlSource"
+                logPoint="getMedlSource"
+                messageKey="kms-medal:kms.medal.main.log.getMedlSource">
+            </query>
+        </oper>
+        
+        <!-- excel导入 -->
+        <oper
+            id="kmsUploadExcelOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/kms/medal/kms_upload_excel/kmsUploadExcel.do">
+            <!-- 批量导入授勋人员 -->
+            <query 
+                method="*"
+                logPoint="Base_UrlParam;addOwners"
+                messageKey="kms-medal:kms.medal.owner.log.addOwners">
+            </query>
+        </oper>
+        
+        <!-- 授勋人员 -->
+        <oper
+            id="kmsMedalOwnerOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.medal.model.KmsMedalOwner"
+            action="/kms/medal/kms_medal_owner/kmsMedalOwner.do">
+            <!-- 删除 -->
+            <query 
+                method="deleteByUserId"
+                logPoint="deleteByUserId"
+                messageKey="kms-medal:kms.medal.owner.log.deleteByUserId">
+            </query>
+        </oper>
+        
+        <!-- 授勋日志 -->
+        <oper
+            id="kmsMedalLogOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.medal.model.KmsMedalLog"
+            action="/kms/medal/kms_medal_log/kmsMedalLog.do">
+            <!-- 查询 -->
+            <query 
+                method="listdata"
+                logPoint="Action_FindAll"
+                messageKey="kms-medal:kms.medal.log.log.listdata">
+            </query>
+        </oper>
+	</logset>
+</log-oper>

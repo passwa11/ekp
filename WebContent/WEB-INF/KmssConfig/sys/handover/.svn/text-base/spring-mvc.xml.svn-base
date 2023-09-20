@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/handover/sys_handover_config_main/sysHandoverConfigMain.do"
+		class="com.landray.kmss.sys.handover.actions.SysHandoverConfigMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.handover.forms.SysHandoverConfigMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/handover/sys_handover_config/sysHandoverConfigMain_view.jsp" />
+				<entry
+					key="viewAuth"
+					value="/sys/handover/sys_handover_auth/sysHandoverAuth_view.jsp" />
+				<entry
+					key="viewItem"
+					value="/sys/handover/sys_handover_item/sysHandoverItem_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/handover/sys_handover_config/sysHandoverConfigMain_edit.jsp" />
+				<entry
+					key="edit_auth"
+					value="/sys/handover/sys_handover_auth/sysHandoverAuth_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/handover/sys_handover_config/sysHandoverConfigMain_list.jsp" />
+				<entry
+					key="listChildren_doc"
+					value="/sys/handover/sys_handover_doc/sysHandoverDoc_doc_list.jsp" />
+				<entry
+					key="listChildren_auth"
+					value="/sys/handover/sys_handover_doc/sysHandoverDoc_auth_list.jsp" />
+				<entry
+					key="listChildren_item"
+					value="/sys/handover/sys_handover_doc/sysHandoverDoc_item_list.jsp" />
+				<entry
+					key="listLogChildren_doc"
+					value="/sys/handover/sys_handover_log/sysHandoverLog_doc_list.jsp" />
+				<entry
+					key="listLogChildren_item"
+					value="/sys/handover/sys_handover_log/sysHandoverLog_item_list.jsp" />
+				<entry
+					key="listLogChildren_auth"
+					value="/sys/handover/sys_handover_log/sysHandoverLog_auth_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/handover/sys_handover_auth/sysHandoverConfigAuthLogDetail.do"
+		class="com.landray.kmss.sys.handover.actions.SysHandoverConfigAuthLogDetailAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.handover.forms.SysHandoverConfigMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/handover/sys_handover_auth/sysHandoverAuthLogDetail_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/handover/sysHandoverTaskSetting.do"
+		class="com.landray.kmss.sys.handover.actions.SysHandoverTaskSettingAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+</beans>

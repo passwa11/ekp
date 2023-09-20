@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="kms-knowledge:module.kms.knowledge"
+		urlPrefix="/kms/knowledge/"
+		defaultValidator="roleValidator(role=ROLE_KMSKNOWLEDGE_DEFAULT)">
+		<roles>
+			ROLE_KMSKNOWLEDGE_DEFAULT;ROLE_KMSKNOWLEDGE_COMMONWORKFLOW;
+			ROLE_KMSKNOWLEDGE_FILTERCONFIG;ROLE_KMSMISSIVE_COMMONNUMBER;
+			<!-- 知识借阅_借阅默认角色 -->
+			ROLE_KMSKNOWLEDGE_BORROW_DEFAULT;
+			<!-- 沉淀文档_参数设置 -->
+			ROLE_KMSKNOWLEDGE_SUBSIDE_SETTING;
+			<!-- 知识仓库_知识批量入库权限 -->
+			ROLE_KMSKNOWLEDGE_BATCH;
+		</roles>
+		<areaRoles>
+			ROLE_KMSKNOWLEDGE_CREATE; ROLE_KMSKNOWLEDGE_DELETE;
+			ROLE_KMSKNOWLEDGE_READER; ROLE_KMSKNOWLEDGE_EDITOR;
+			
+			ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER;
+			ROLE_KMSKNOWLEDGE_EFFECTIVE;
+			ROLE_KMSKNOWLEDGE_CHANGERIGHT;
+			ROLE_KMSKNOWLEDGE_PROPERTY_MAINTAINER;
+			ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION;
+			ROLE_KMSKNOWLEDGE_EXCEL_IMPORT;
+			ROLE_KMSKNOWLEDGE_SETTOP;
+			ROLE_KMSKNOWLEDGE_CANCELTOP;
+			ROLE_KMSKNOWLEDGE_RELACHANGE;
+			ROLE_KMSKNOWLEDGE_BACKSTAGE_MANAGER;
+			<!-- 纠错删除权限 -->
+			ROLE_KMSKNOWLEDGE_DOCERRCORRECTION_DELETE;
+			<!-- 知识仓库_附件权限申请-->
+			ROLE_KMSKNOWLEDGE_BORROW_ATTAUTH_APPLICATION;
+		</areaRoles>
+		
+		<request path="tree.jsp*" defaultValidator="roleValidator(role=ROLE_KMSKNOWLEDGE_BACKSTAGE_MANAGER)" />
+		
+		<request
+			path="kms_knowledge_base_doc/kmsKnowledgeBaseDoc*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc,cateModel=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory">
+			<!-- 在模板树下新建 -->
+			<query
+				queryString="method=add&amp;fdTemplateId=*"
+				validator="authCategoryExternalValidator(cateId=fdTemplateId)&amp;areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CREATE)&amp;authSimpleCategoryReaderValidator(cateId=fdTemplateId)" />
+			<query
+				queryString="method=addTest"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CREATE)" />
+			<!-- 保存新版本 -->
+			<query
+				queryString="method=save|saveadd&amp;originId=*"
+				validator="authFieldValidator(type=creator,recid=originId)|authFieldValidator(recid=originId,type=SYS_EDITOR)|areaRoleValidator(role=ROLE_KMSKNOWLEDGE_EDITOR)&amp;authSimpleCategoryEditorValidator(recid=originId,property=docCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<!-- 保存 -->
+			<query
+				queryString="method=save|saveadd"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CREATE)&amp;authSimpleCategoryReaderValidator(cateId=fdTemplateId)" />
+			<!-- 阅读 -->
+			<query
+				queryString="method=view"
+				validator="sysRecycleAuthFieldValidator(type=recycle)|authFieldValidator(type=SYS_READER,isArea=true)|authSimpleCategoryEditorValidator(property=docCategory)|kmsKnowledgeBorrowAuthFieldValidator(type=borrow)" />
+			<!-- 编辑 -->
+			<query
+				queryString="method=edit|update"
+				validator=" authFieldValidator(type=SYS_EDITOR)|fieldValueValidator(fieldproperty=docStatus,value=30;40)&amp;areaRoleValidator(role=ROLE_KMSKNOWLEDGE_EDITOR)&amp;authSimpleCategoryEditorValidator(property=docCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<!-- 批量编辑属性 -->
+			<query
+				queryString="method=editPropertys|editProperty|updateProperty&amp;templateId=*"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_PROPERTY_MAINTAINER)&amp;authSimpleCategoryEditorValidator(cateId=templateId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<!-- 编辑属性 -->
+			<query
+				queryString="method=editProperty|updateProperty"
+				validator="authFieldValidator(type=creator)|authFieldValidator(type=author)|authFieldValidator(type=SYS_EDITOR)|[areaRoleValidator(role=ROLE_KMSKNOWLEDGE_PROPERTY_MAINTAINER)|areaRoleValidator(role=ROLE_KMSKNOWLEDGE_EDITOR)]&amp;authSimpleCategoryEditorValidator(property=docCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<query
+				queryString="method=deleteall&amp;status=10"
+				validator="roleValidator(role=ROLE_KMSKNOWLEDGE_DEFAULT)" />
+			<!-- 删除所有其他视图 -->
+			<query
+				queryString="method=deleteall"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_DELETE)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			
+			<!-- 二级页面置顶/首页置顶 -->
+			<query
+				queryString="method=setTop&amp;local=index"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_SETTOP)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<!-- 批量取消置顶 -->
+			<query
+				queryString="method=cancelTops&amp;local=index"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CANCELTOP)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<!-- <query
+				queryString="method=recycleall"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_RECYCLE)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+		
+			<query
+				queryString="method=recoverall"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_RECOVER)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			 -->
+			<query
+				queryString="method=delete"
+				validator="fieldValueValidator(fieldproperty=docStatus,value=10)&amp;authFieldValidator(type=creator)|areaRoleValidator(role=ROLE_KMSKNOWLEDGE_DELETE)&amp;authSimpleCategoryEditorValidator(property=docCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />	
+			<!-- <query
+				queryString="method=recycle"
+				validator="fieldValueValidator(fieldproperty=docStatus,value=30)
+							&amp;areaRoleValidator(role=ROLE_KMSKNOWLEDGE_RECYCLE)
+							&amp;authSimpleCategoryEditorValidator(property=docCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />	
+			<query
+				queryString="method=recover"
+				validator="fieldValueValidator(fieldproperty=docStatus,value=50)
+							&amp;areaRoleValidator(role=ROLE_KMSKNOWLEDGE_RECOVER)
+							&amp;authSimpleCategoryEditorValidator(property=docCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />	
+			 -->
+			<query queryString="method=exportExcel"
+				validator="authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)|roleValidator(role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER)"/>
+		</request>
+		
+		<!-- 模板权限 -->
+		<request
+			path="kms_knowledge_category/kmsKnowledgeCategory*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory,adminRoleName=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER">
+			<!-- 保存 -->
+			<query
+				queryString="method=add"
+				validator="sysSimpleCategoryEditorValidator(recid=parentId)" />
+			<!-- 阅读 -->
+			<query
+				queryString="method=view"
+				validator="sysSimpleCategoryReaderValidator()" />
+			<!-- 编辑和删除 -->
+			<query
+				queryString="method=edit|update|delete"
+				validator="sysSimpleCategoryEditorValidator()" />
+			<query
+				queryString="method=copy"
+				validator="sysSimpleCategoryEditorValidator(recid=fdCopyId)" />
+		</request>
+		
+		<!-- 筛选器配置权限 -->
+		<request
+			path="kms_knowledge_filter_config/kmsKnowledgeFilterConfig*">
+			<query queryString="method=edit|update"
+					validator="roleValidator(role=ROLE_KMSKNOWLEDGE_FILTERCONFIG)"/>
+		</request>
+
+		<!-- 文档模版 -->
+		<request path="kms_knowledge_doc_template/kmsKnowledgeDocTemplate*" 
+			defaultValidator="areaRoleValidator(role=ROLE_KMSMULTIDOCTEMP_ADMIN)">
+		</request>
+		
+		<!-- 知识分类开启后导入导出 -->
+		<request path="transport/sys_transport_import/SysTransportImport*">
+			<query
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_EXCEL_IMPORT)"
+				queryString="fdModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory" />
+		</request>
+		<request path="transport/sys_transport_import/SysTransportUpload*">
+			<query
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_EXCEL_IMPORT)"
+				queryString="fdModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory" />
+		</request>
+
+		<!-- 文档批量上传Starts -->
+		<request path="kms_knowledge_file_store*"
+				defaultValidator="roleValidator(role=ROLE_KMSKNOWLEDGE_BACKSTAGE_MANAGER)">
+		</request>
+		<request path="kms_knowledge_fs_record*"
+				 defaultValidator="roleValidator(role=ROLE_KMSKNOWLEDGE_BACKSTAGE_MANAGER)">
+		</request>
+		<!-- 文档批量上传Ends -->
+
+		<!-- 借阅权限 -->
+		<request path="kms_knowledge_borrow/kmsKnowledgeBorrow.*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.kms.knowledge.borrow.model.KmsKnowledgeBorrow" 
+			defaultValidator="roleValidator(role=ROLE_KMSKNOWLEDGE_BORROW_DEFAULT)">
+			<query queryString="method=view" validator="authFieldValidator(type=SYS_READER)"/>
+			<query queryString="method=myBorrowData" validator="roleValidator(role=ROLE_KMSKNOWLEDGE_DEFAULT)"/>
+			<query queryString="method=edit" validator="authFieldValidator(type=creator)&amp;fieldValueValidator(fieldproperty=docStatus,value=10;11)"/>
+		</request>
+
+		<!-- 附件权限申请 -->
+		<request path="kms_knowledge_borrow/kmsKnowledgeBorrowAttAuth.*"
+				 validatorParameter="recid=fdId,model=com.landray.kmss.kms.knowledge.borrow.model.KmsKnowledgeBorrowAttAuth"
+				 defaultValidator="roleValidator(role=ROLE_KMSKNOWLEDGE_BORROW_ATTAUTH_APPLICATION)">
+			<query queryString="method=view" validator="authFieldValidator(type=SYS_READER)"/>
+			<query queryString="method=myBorrowAttAuthData" validator="roleValidator(role=ROLE_KMSKNOWLEDGE_DEFAULT)"/>
+			<query queryString="method=checkAttAuthApplication" validator="roleValidator(role=ROLE_KMSKNOWLEDGE_BORROW_ATTAUTH_APPLICATION)&amp;kmsKnowledgeBorrowAttAuthApplicationValidator()"/>
+			<query queryString="method=edit" validator="authFieldValidator(type=creator)&amp;fieldValueValidator(fieldproperty=docStatus,value=10;11)"/>
+		</request>
+
+		<request path="kms_knowledge_multiple_upload/kmsMultipleUploadMain*" >
+			<query queryString="method=querySleepTime" validator="roleValidator(role=ROLE_KMSKNOWLEDGE_BACKSTAGE_MANAGER)"/>
+			<query queryString="method=updateSleepTime" validator="roleValidator(role=ROLE_KMSKNOWLEDGE_BACKSTAGE_MANAGER)"/>
+		</request>
+
+		<request path="kms_knowledge_batch*"
+				 defaultValidator="roleValidator(role=ROLE_KMSKNOWLEDGE_BATCH)">
+		</request>
+
+		<filters modelName="com.landray.kmss.kms.knowledge.borrow.model.KmsKnowledgeBorrow">
+			<filter type="SYS_READER" expression="roleFilter(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)" />
+			<filter type="creator" expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter type="SYS_READER" expression="authFieldFilter(field=authAllReaders.fdId)" />
+		</filters>
+		
+		<filters
+			modelName="com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc">
+			<filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter
+				type="author"
+				expression="authFieldFilter(field=fdDocAuthorList.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_KMSKNOWLEDGE_READER)" />
+		<!--<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_KMSKNOWLEDGE_EDITOR)" /> -->
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=authAllReaders.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="flagFieldFilter(field=authReaderFlag,value=1)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="authFieldFilter(field=authAllEditors.fdId)" />
+		</filters>
+	</module>
+	
+	<!-- 关联权限 -->
+	<module urlPrefix="/sys/relation/">
+		<request
+			path="sys_relation_main/sysRelationMain*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc,cateModel=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory">
+			<query
+				queryString="method=changeRela&amp;modelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc"
+				validator="roleValidator(role=ROLE_KMSKNOWLEDGE_RELACHANGE)"/>
+		</request>
+	</module>
+	<!-- 维基模版 -->
+	<module urlPrefix="/kms/knowledge/">
+		<request path="kms_knowledge_wiki_template/kmsKnowledgeWikiTemplate*">
+			<query
+				queryString="method=add|deleteall|list|edit|update"
+				validator="areaRoleValidator(role=ROLE_KMSWIKITEMP_ADMIN)"/>
+			<query
+				queryString="method=queryListForAdd"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_DEFAULT)"/>
+		</request>
+	</module>
+	
+	<!-- 通用流程模板设置权限 -->
+	<module urlPrefix="/sys/workflow/">
+		<request path="sys_wf_common_template/sysWfCommonTemplate*">
+			<query
+				queryString="fdModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+				validator="roleValidator(role=ROLE_KMSKNOWLEDGE_COMMONWORKFLOW)" />
+		</request>
+	</module>
+	
+	<!-- 转移分类权限 查看所有文档列表内 -->
+	<!--<module urlPrefix="/sys/sc/">
+		<request path="cateChg*">
+			<query
+				queryString="method=cateChgEdit&amp;cateModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CHANGECATE)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,cateModel=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+		</request>
+	</module>
+	
+	--><!-- 阅读页面内和文档视图列表批量修改权限 -->
+	<module urlPrefix="/sys/right/">
+		<request path="rightDocChange*">
+			<query
+				queryString="method=docRightEdit|docRightUpdate&amp;modelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CHANGERIGHT)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,cateModel=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+		</request>
+		<request path="cchange_doc_right/cchange_doc_right.jsp">
+			<query
+				queryString="modelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CHANGERIGHT)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,cateModel=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+		</request>
+	</module>
+	
+	<!-- 批量修改权限 -->
+	<module urlPrefix="/sys/right/">
+		<request path="rightCateChange*">
+			<query
+				queryString="method=cateRightEdit&amp;cateModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+				validator="roleValidator(role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER)|roleValidator(role=ROLE_KMSKNOWLEDGE_BACKSTAGE_MANAGER)" />
+		</request>
+		<request path="cchange_doc_right/cchange_doc_right.jsp">
+			<query
+				queryString="modelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc"
+				validator="roleValidator(role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER)|roleValidator(role=ROLE_KMSKNOWLEDGE_BACKSTAGE_MANAGER)" />
+		</request>
+	</module>
+	
+	
+	<!-- 删除纠错记录 -->
+	<module urlPrefix="/kms/common/">
+		<request path="kms_common_doc_error_correction/kmsCommonDocErrorCorrection*">
+			<query
+				queryString="method=delete&amp;fdModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_DOCERRCORRECTION_DELETE)" />
+		</request>
+	</module>
+	
+	<!-- 分类导入 -->
+	<module urlPrefix="/sys/transport/">
+		<request path="sys_transport_import/SysTransportImport*">
+			<query
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_EXCEL_IMPORT)"
+				queryString="fdModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory" />
+		</request>
+		<request path="sys_transport_import/SysTransportUpload*">
+			<query
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_EXCEL_IMPORT)"
+				queryString="fdModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory" />
+		</request>
+	</module>
+	
+	<!-- 通用编号规则设置权限 -->
+	<module urlPrefix="/sys/number/">
+		<request path="sys_number_main/sysNumberMain*">
+			<query
+				queryString="modelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc"
+				validator="roleValidator(role=ROLE_KMSMISSIVE_COMMONNUMBER)"/>
+		</request>
+	</module>
+	<module messageKey="" urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+					queryString="modelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCompareConfig"
+					validator="roleValidator(role=ROLE_KMSKNOWLEDGE_BACKSTAGE_MANAGER)" />
+			<query
+					queryString="modelName=com.landray.kmss.kms.multidoc.model.KmsMultidocSubsideConfig"
+					validator="roleValidator(role=ROLE_KMSKNOWLEDGE_SUBSIDE_SETTING)" />
+		</request>
+	</module>
+	<!-- 定时计算多维知识库分类预览 -->
+	<quartz
+		cronExpression="0 0 4 * * ?"
+		jobService="kmsKnowledgeCategoryPreManagerService"
+		messageKey="kms-knowledge:kmsKnowledge.quartz.preview"
+		jobMethod="____previeQuartz" 
+		description="kms-knowledge:kmsKnowledge.quartz.preview.description"/>
+		
+	<!-- 更新借阅状态 -->
+	<quartz
+		messageKey="kms-knowledge-borrow:kmsKnowledgeBorrow.updateBorrowFdStatus"
+		jobService="kmsKnowledgeBorrowService"
+		jobMethod="updateBorrowFdStatus"
+		enable="true"
+		cronExpression="0 0 2 * * ?"
+		description="kms-knowledge-borrow:kmsKnowledgeBorrow.updateBorrowFdStatus.desc" />
+	<!-- 更新附件权限申请状态 -->
+	<quartz
+		messageKey="kms-knowledge-borrow:kmsKnowledgeBorrowAttAuth.updateFdStatus"
+		jobService="kmsKnowledgeBorrowAttAuthService"
+		jobMethod="updateAttPermissionApplicationFdStatus"
+		enable="true"
+		cronExpression="0 0 2 * * ?"
+		description="kms-knowledge-borrow:kmsKnowledgeBorrowAttAuth.updateFdStatus.desc" />
+	<!-- 更新文件批量导入状态 -->
+	<quartz
+			messageKey="kms-knowledge:kmsKnowledgeFileStoreExcelImport.quartz.updateDetail"
+			jobService="kmsKnowledgeFsRecordService"
+			jobMethod="updateHandleRecord"
+			enable="true"
+			cronExpression="0 0/20 * * * ?"
+			description="kms-knowledge:kmsKnowledgeFileStoreExcelImport.quartz.updateDetail.desc" />
+
+	<!-- 批量入库定时任务 -->
+	<quartz cronExpression="0 0 4 * * ?"
+			jobService="kmsKnowledgeBatchLogService"
+			messageKey="kms-knowledge-batch:kmsKnowledgeBatch.addModules"
+			enable="true"
+			jobMethod="addModules" />
+
+	<!-- 关联机制 -->
+<!-- 	<relation
+		modelName="com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc"
+		messageKey="kms-knowledge:module.kms.knowledge" 
+		whereBlock="kmsKnowledgeBaseDoc.docIsNewVersion is true"/> -->
+		
+	<!-- kms后台管理 -->
+	<treeNodes type="kms">
+		<treeNode
+			messageKey="kms-knowledge:kmsKnowledge.config.tree">
+			<treeNode
+				messageKey="kms-knowledge:menu.kmdoc.categoryconfig"
+				url="/sys/simplecategory/sys_simple_category/sysCategoryMain_tree.jsp?modelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory&amp;actionUrl=/kms/knowledge/kms_knowledge_category/kmsKnowledgeCategory.do&amp;formName=kmsKnowledgeCategoryForm&amp;mainModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc&amp;docFkName=docCategory">
+			</treeNode>
+			<treeNode
+				messageKey="kms-knowledge:tree.workflowTemplate"
+				url="/sys/workflow/sys_wf_common_template/sysWfCommonTemplate.do?method=list&amp;fdModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory&amp;fdKey=mainDoc">
+			</treeNode>
+			<treeNode
+				messageKey="kms-knowledge:table.kmsKnowledgeWikiTemplate"
+				url="/kms/knowledge/kms_knowledge_wiki_template/kmsKnowledgeWikiTemplate.do?method=list">
+			</treeNode>
+			<treeNode
+				messageKey="kms-knowledge:table.kmsKnowledgeDocTemplate"
+				url="/kms/knowledge/kms_knowledge_doc_template/kmsKnowledgeDocTemplate_list.jsp">
+			</treeNode>
+			<treeNode
+				messageKey="kms-knowledge:templateImport.config"
+				url="/sys/transport/sys_transport_import/SysTransportImport.do?method=list&amp;fdModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory">
+			</treeNode>
+		</treeNode>
+	</treeNodes>
+	
+	
+	<!-- 知识库主页配置 -->
+	<homePage
+		urlPrefix="kms/knowledge"
+		url="/sys/portal/page.jsp#j_start=/kms/knowledge/index.jsp&amp;j_target=_iframe"
+		messageKey="kms-knowledge:module.kms.knowledge"
+		config="/moduleindex_notopic.jsp?nav=/kms/knowledge/tree.jsp"/>
+		
+	<!-- 知识库流程配置 -->
+	<flowDef
+		modelName="com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc"
+		templateModelName="com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+		key="mainDoc"
+		templatePropertyName="docCategory"
+		moduleMessageKey="kms-knowledge:table.kmKnowledge"
+		type="oa" />
+	<flowDef
+		modelName="com.landray.kmss.kms.common.model.KmsCommonDocErrorCorrection"
+		templateModelName="com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+		key="knowledgeErrorCorrectionFlow"
+		show="false"
+		moduleMessageKey="kms-common:table.kmsCommonDocErrorCorrectionFlow"
+		type="oa" />
+	<flowDef
+		modelName="com.landray.kmss.kms.knowledge.borrow.model.KmsKnowledgeBorrow"
+		templateModelName="com.landray.kmss.kms.knowledge.borrow.model.KmsKnowledgeBorrow"
+		key="kmsKnowledgeBorrow"
+		moduleMessageKey="kms-knowledge-borrow:table.kmsKnowledgeBorrow"
+		type="oa" />
+	<flowDef
+		modelName="com.landray.kmss.sys.introduce.model.SysIntroduceMain"
+		templateModelName="com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+		key="introDoc"
+		moduleMessageKey="kms-knowledge:table.kmKnowledge"
+		type="oa" />
+    <!-- 这里是知识借阅通用流程 -->
+	 <flowDef
+        modelName="com.landray.kmss.kms.knowledge.borrow.model.KmsKnowledgeBorrow"
+        templateModelName="com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+        key="kmsKnowledgeCategoryBorrow"
+		show="false"
+        moduleMessageKey="kms-knowledge-borrow:table.kmsKnowledgeBorrow"
+        type="oa" />
+	<flowDef
+		modelName="com.landray.kmss.kms.knowledge.borrow.model.KmsKnowledgeBorrowAttAuth"
+		key="kmsKnowledgeBorrowAttAuth"
+		type="oa"
+		show="false"
+		moduleMessageKey="kms-knowledge-borrow:table.kmsKnowledgeBorrowAttAuth"
+		templateModelName="com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"/>
+    <!-- 这里是分类下设置的借阅流程 -->
+	<flowDef
+		modelName="com.landray.kmss.kms.knowledge.borrow.model.KmsKnowledgeBorrow"
+		templateModelName="com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+		key="kmsKnowledgeCategoryBorrow"
+		show="false"
+		moduleMessageKey="kms-knowledge:kmsKnowledgeCategory.borrowFlow"
+		type="oa" />
+
+	<profileConfig
+		key="kms/knowledge"
+		messageKey="{kms-knowledge:module.kms.knowledge}" 
+		url="/sys/profile/moduleindex.jsp?nav=/kms/knowledge/tree.jsp" 
+		icon="kms_knowledge"
+		type="kms"
+		order="1"
+		description="{kms-knowledge:kmsKnowledge.profileCfg.description}"/>
+</configs>

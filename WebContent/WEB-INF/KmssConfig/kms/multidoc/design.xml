@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<!-- 权限控制 -->
+	<module
+		messageKey="kms-multidoc:module.kms.multidoc"
+		defaultValidator="roleValidator(role=ROLE_KMSMULTIDOC_DEFAULT)"
+		urlPrefix="/kms/multidoc/">
+		<roles>
+			ROLE_KMSMULTIDOC_DEFAULT;
+		</roles>
+		<areaRoles>
+			ROLE_KMSMULTIDOC_EVALUATE_CREATE; ROLE_KMSMULTIDOC_EVALUATE_DELETE;
+			ROLE_KMSMULTIDOC_INTRODUCE; ROLE_KMSMULTIDOC_INTRODUCE_CANCEL;
+			ROLE_KMSMULTIDOC_CHANGECATE;
+			ROLE_KMSMULTIDOC_TAG_MAINTAINER;ROLE_KMSMULTIDOCTEMP_ADMIN;
+			ROLE_KMSMULTIDOC_MANUALPUBLISH;
+			ROLE_KMSMULTIODC_NEW_EDITION;
+			ROLE_KMSMULTIODC_ADD_PUBLISH_LEARNCW
+		</areaRoles>
+
+		<!-- 主文档权限 -->
+		<request
+			path="kms_multidoc_knowledge/kmsMultidocKnowledge.*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,cateModel=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory,adminRoleName=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER">
+			<!-- 在模板树下新建 -->
+			<query
+				queryString="method=add&amp;fdTemplateId=*"
+				validator="authCategoryExternalValidator(cateId=fdTemplateId)&amp;areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CREATE)&amp;authSimpleCategoryReaderValidator(cateId=fdTemplateId)" />
+			<query 
+				queryString="method=add"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CREATE)" />
+			<!-- 控制推送保存权限-->
+			<query
+				queryString="method=save&amp;isPush=*"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CREATE)&amp;authSimpleCategoryReaderValidator(cateId=fdTemplateId)" />	
+			<!-- 保存新版本 -->
+			<query
+				queryString="method=save|saveadd&amp;originId=*"
+				validator="authFieldValidator(type=creator,recid=originId)|authFieldValidator(recid=originId,type=SYS_EDITOR)|areaRoleValidator(role=ROLE_KMSMULTIODC_NEW_EDITION)&amp;authSimpleCategoryReaderValidator(recid=originId,property=kmsMultidocTemplate,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<!-- 保存 -->
+			<query
+				queryString="method=save|saveadd"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CREATE)&amp;authSimpleCategoryReaderValidator(cateId=fdTemplateId)" />
+			<!-- 阅读 -->
+			<query
+				queryString="method=view"
+				validator="sysRecycleAuthFieldValidator(type=recycle)|authFieldValidator(type=SYS_READER,isArea=true)|authSimpleCategoryEditorValidator(property=docCategory)|kmsKnowledgeBorrowAuthFieldValidator(type=borrow)" />
+			<!-- 编辑 -->
+			<query
+				queryString="method=edit|update"
+				validator=" authFieldValidator(type=SYS_EDITOR)|fieldValueValidator(fieldproperty=docStatus,value=30;40)&amp;areaRoleValidator(role=ROLE_KMSKNOWLEDGE_EDITOR)&amp;authSimpleCategoryEditorValidator(property=kmsMultidocTemplate,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<!-- 批量编辑属性 -->
+			<query
+				queryString="method=editPropertys|editProperty|updateProperty&amp;templateId=*"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_PROPERTY_MAINTAINER)&amp;authSimpleCategoryEditorValidator(cateId=templateId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<!-- 编辑属性 -->
+			<query
+				queryString="method=editProperty|updateProperty"
+				validator="authFieldValidator(type=creator)|authFieldValidator(type=author)|areaRoleValidator(role=ROLE_KMSKNOWLEDGE_PROPERTY_MAINTAINER)&amp;authSimpleCategoryEditorValidator(property=kmsMultidocTemplate,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			
+			<!-- <query
+				queryString="method=recycle"
+				validator="fieldValueValidator(fieldproperty=docStatus,value=30)
+							&amp;areaRoleValidator(role=ROLE_KMSKNOWLEDGE_RECYCLE)
+							&amp;authSimpleCategoryEditorValidator(property=kmsMultidocTemplate,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />	
+			<query
+				queryString="method=recycleall"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_RECYCLE)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<query
+				queryString="method=recover"
+				validator="fieldValueValidator(fieldproperty=docStatus,value=50)
+							&amp;areaRoleValidator(role=ROLE_KMSKNOWLEDGE_RECOVER)
+							&amp;authSimpleCategoryEditorValidator(property=kmsMultidocTemplate,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />	
+			 -->
+				
+			<!-- 文档中的删除 -->
+			<query
+				queryString="method=delete"
+				validator="fieldValueValidator(fieldproperty=docStatus,value=10)&amp;authFieldValidator(type=creator)|areaRoleValidator(role=ROLE_KMSKNOWLEDGE_DELETE)&amp;authSimpleCategoryEditorValidator(property=kmsMultidocTemplate,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />	
+			<!-- 删除所有草稿视图 -->
+			<query
+				queryString="method=deleteall&amp;status=10"
+				validator="roleValidator(role=ROLE_KMSMULTIDOC_DEFAULT)" />
+			<!-- 删除所有其他视图 -->
+			<query
+				queryString="method=deleteall"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_DELETE)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			
+			<!-- 维护界面 -->
+			<query
+				queryString="method=manageList"
+				validator="authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+					
+			<!-- 筛选查询 -->
+			<query
+				queryString="method=index"
+				validator="roleValidator(role=ROLE_KMSMULTIDOC_DEFAULT)" />
+
+			<!-- 二级页面置顶/首页置顶 -->
+			<query
+				queryString="method=setTop&amp;local=index"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_SETTOP)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<!-- View页面置顶 -->
+			<query
+				queryString="method=setTop&amp;local=view"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_SETTOP)&amp;authSimpleCategoryEditorValidator(property=docCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<!-- 取消首页置顶 -->
+			<query
+				queryString="method=cancelTop&amp;local=index"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CANCELTOP)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<!-- View页面取消置顶 -->
+			<query
+				queryString="method=cancelTop&amp;local=view"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CANCELTOP)&amp;authSimpleCategoryEditorValidator(property=docCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<query queryString="method=exportExcel"
+				validator="authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)|roleValidator(role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER)"/>
+		</request>
+		<filters
+			modelName="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge">
+			<filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter
+				type="author"
+				expression="authFieldFilter(field=fdDocAuthorList.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_KMSKNOWLEDGE_READER)" />
+	<!--    <filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_KMSKNOWLEDGE_EDITOR)" />  -->
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=authAllReaders.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="flagFieldFilter(field=authReaderFlag,value=1)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="authFieldFilter(field=authAllEditors.fdId)" />
+		</filters>
+		
+	</module>
+	
+	
+	<!-- 软删除权限 -->
+	<module urlPrefix="/sys/recycle/">
+		<request path="sys_recycle_doc/sysRecycle*"
+		   validatorParameter="recid=modelId,model=modelName">
+			<query
+			    queryString="modelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=hardDelete|recover" 
+				validator="sysRecycleAuthFieldValidator(type=SYS_EDITOR)|sysRecycleAuthFieldValidator(type=recycle)|areaRoleValidator(role=ROLE_SYS_RECYCLE_BACKSTAGE_MANAGER)"/>
+			<query
+				queryString="modelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=hardDeleteAll|recoverAll"
+				validator="areaRoleValidator(role=ROLE_SYS_RECYCLE_BACKSTAGE_MANAGER)" />
+		</request>
+		<request path="sys_recycle_log/sysRecycleLog*">
+			<query
+			    queryString="modelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge" 
+				validator="areaRoleValidator(role=ROLE_SYS_RECYCLE_BACKSTAGE_MANAGER)"/>
+		</request>	
+	</module>
+
+	<!-- 修改标签 -->
+	<module
+		urlPrefix="/sys/tag/">
+		<request path="sys_tag_main/sysTagMain*"
+				validatorParameter="model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,recid=fdModelId">
+		    <query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=updateTag|editTag"
+				validator="authFieldValidator(type=creator,recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge)
+				|authFieldValidator(type=SYS_EDITOR,recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge)
+				|[areaRoleValidator(role=ROLE_KMSMULTIDOC_TAG_MAINTAINER)&amp;authSimpleCategoryEditorValidator(property=kmsMultidocTemplate,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION,recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,cateModel=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory)]"/>
+			<query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=addTag|saveTag|checkSpecial"
+				validator="roleValidator(role=ROLE_KMSMULTIDOC_DEFAULT)" />
+		</request>
+	</module>
+
+	<!-- 创建新版本 -->
+	<module urlPrefix="/sys/edition/">
+		<request path="sys_edition_main/sysEditionMain*">
+			<query
+				queryString="method=newVersion&amp;fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+				validator="authFieldValidator(type=creator,recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge)
+				|authFieldValidator(type=SYS_EDITOR,recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge)
+				|areaRoleValidator(role=ROLE_KMSMULTIODC_NEW_EDITION)&amp;authSimpleCategoryReaderValidator(property=kmsMultidocTemplate,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION,recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,cateModel=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory)"/>
+		</request>
+	</module>
+	
+	<!-- 转移分类权限 -->
+	<module urlPrefix="/sys/sc/">
+		<request path="cateChg*">
+			<query
+				queryString="method=cateChgEdit&amp;cateModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory&amp;modelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+				validator="areaRoleValidator(role=ROLE_KMSMULTIDOC_CHANGECATE)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,cateModel=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+		</request>
+	</module>
+	
+	<!-- 点评机制配置 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/evaluation/">
+		<request path="sys_evaluation_main/sysEvaluationMain*">
+			<query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=add|save|saveadd"
+				validator="areaRoleValidator(role=ROLE_KMSMULTIDOC_EVALUATE_CREATE)&amp;fieldValueValidator(recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,fieldproperty=docStatus,value=30)" />
+			<query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=delete"
+				validator="areaRoleValidator(role=ROLE_KMSMULTIDOC_EVALUATE_DELETE)&amp;authSimpleCategoryEditorValidator(recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,property=kmsMultidocTemplate,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+				validator="roleValidator(role=ROLE_KMSMULTIDOC_DEFAULT)" />
+		</request>
+		<!-- 段落点评 -->
+		<request path="sys_evaluation_main/sysEvaluationNotes*">
+			<query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=saveEvalNotes"
+				validator="areaRoleValidator(role=ROLE_KMSMULTIDOC_EVALUATE_CREATE)&amp;fieldValueValidator(recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,fieldproperty=docStatus,value=30)" />
+			<query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=delete"
+				validator="areaRoleValidator(role=ROLE_KMSMULTIDOC_EVALUATE_DELETE)&amp;authSimpleCategoryEditorValidator(recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,property=kmsMultidocTemplate,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+			<query queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+				validator="roleValidator(role=ROLE_KMSMULTIDOC_DEFAULT)" />
+		</request>
+	</module>
+	
+	<!-- 推荐机制配置 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/introduce/">
+		<request path="sys_introduce_main/sysIntroduceMain*">
+		    <query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=changeReason|introcheck"
+				validator="areaRoleValidator(role=ROLE_KMSMULTIDOC_INTRODUCE)" />
+			<query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=viewAll"
+				validator="roleValidator(role=ROLE_KMSMULTIDOC_DEFAULT)" />
+			<query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=add|save|saveadd"
+				validator="areaRoleValidator(role=ROLE_KMSMULTIDOC_INTRODUCE)&amp;fieldValueValidator(recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,fieldproperty=docStatus,value=30)" />
+			<query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=viewCancel"
+				validator="areaRoleValidator(role=ROLE_KMSMULTIDOC_INTRODUCE_CANCEL)" />
+				
+			<query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge&amp;method=personCanserIntro"
+				validator="sysIntroduceCanserValidator(cateProperty=docCategory,canserRole=ROLE_KMSMULTIDOC_INTRODUCE_CANCEL,cateRole=ROLE_KMSMULTIDOC_CATEGORY_MAINTAINER,cateExtRole=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+		
+		</request>
+	</module>
+	<!-- 导入导出 -->
+	<module urlPrefix="/sys/transport/">
+		<request path="sys_transport_import/index.jsp*">
+			<query
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_EXCEL_IMPORT)"
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge" />
+		</request>
+		<request path="sys_transport_import/SysTransportImport*">
+			<query
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_EXCEL_IMPORT)"
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge" />
+		</request>
+		<request path="sys_transport_import/SysTransportUpload*">
+			<query
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_EXCEL_IMPORT)"
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge" />
+		</request>
+	</module>
+
+	
+	<!-- 阅读页面内和文档视图列表批量修改权限 -->
+	<module urlPrefix="/sys/right/">
+		<request path="rightDocChange*">
+			<query
+				queryString="method=docRightEdit|docRightUpdate&amp;modelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CHANGERIGHT)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,cateModel=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+		</request>
+		<request path="cchange_doc_right/cchange_doc_right.jsp">
+			<query
+				queryString="modelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+				validator="areaRoleValidator(role=ROLE_KMSKNOWLEDGE_CHANGERIGHT)&amp;authSimpleCategoryEditorValidator(cateId=categoryId,cateModel=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+		</request>
+	</module>
+	<!--发布机制权限-->
+	<module
+		messageKey=""
+		urlPrefix="/sys/news/">
+		<request 
+				path="sys_news_publish_main/sysNewsPublishMain_viewManualFrame.jsp*">			
+			<query
+				queryString="fdModelNameParam=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+				validator="areaRoleValidator(role=ROLE_KMSMULTIDOC_MANUALPUBLISH,recid=fdModelIdParam,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge)" />
+		</request>
+	</module>
+	
+	<!-- ROLE_KMSMULTIODC_ADD_PUBLISH_LEARNCW -->
+	<module 
+		urlPrefix="/kms/learn/">
+		<request 
+				path="kms_learn_courseware/import/kmsLearnCoursewarePublish_add.jsp*">			
+			<query
+				queryString="fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+				validator="areaRoleValidator(role=ROLE_KMSMULTIODC_ADD_PUBLISH_LEARNCW)&amp;authSimpleCategoryEditorValidator(recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,property=kmsMultidocTemplate,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)" />
+		</request>
+		<request path="kms_learn_courseware/kmsLearnCourseware*">
+			<query 
+				queryString="method=manualPublishAdd&amp;fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+				validator="areaRoleValidator(role=ROLE_KMSMULTIODC_ADD_PUBLISH_LEARNCW)&amp;authSimpleCategoryEditorValidator(recid=fdModelId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,property=kmsMultidocTemplate,role=ROLE_KMSKNOWLEDGE_CATEGORY_MAINTAINER_EXTENSION)"/>
+		</request>
+	</module>
+	
+	<!-- 搜索权限 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/ftsearch/">
+		<request path="searchBuilder*">
+			<query
+				queryString="modelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+				validator="roleValidator(role=ROLE_KMSMULTIDOC_DEFAULT)" />
+		</request>
+	</module>
+	
+	<!-- 关联权限 -->
+	<module urlPrefix="/sys/relation/">
+		<request
+			path="sys_relation_main/sysRelationMain*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,cateModel=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory">
+			<query
+				queryString="method=changeRela&amp;modelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+				validator="roleValidator(role=ROLE_KMSKNOWLEDGE_RELACHANGE)"/>
+		</request>
+	</module>
+	
+	<!-- 文档过期定时任务 -->
+	<quartz
+		cronExpression="0 0 1 * * ?"
+		jobService="kmsMultidocKnowledgeService"
+		messageKey="kms-multidoc:kmsMultidoc.quartz.expire"
+		jobMethod="updateDocExpire"
+		description="kms-multidoc:kmsMultidoc.quartz.expire.description" />		
+		
+	<!-- 定时计算多维知识库分类预览 -->
+	<quartz
+		cronExpression="0 0 4 * * ?"
+		jobService="kmsMultidocCategoryPreManagerService"
+		messageKey="kms-multidoc:kmsMultidoc.quartz.preview"
+		jobMethod="____previeQuartz" 
+		description="kms-multidoc:kmsMultidoc.quartz.preview.description"/>
+		
+		
+	<!-- 主文档高级搜索 -->
+	<search
+		modelName="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+		messageKey="kms-multidoc:kmsMultidoc.search.title"
+		resultUrl="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=result" />
+	<!-- 主文档全文搜索 -->
+	<ftSearch
+		modelName="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+		boost="2.0"
+		timeField="fdLastModifiedTime">
+		<luceneField 
+			name="fdDescription" 
+			property="fdDescription"
+			type="text" />
+		<luceneField
+			name="subject"
+			property="docSubject"
+			type="text" />
+		<luceneField
+			name="content"
+			property="docContent"
+			type="text" />
+		<luceneField
+			name="template"
+			property="docCategory.fdName"
+			type="text" />
+		<!-- 将搜索创建者指定为作者 -->	
+		<luceneField
+			name="creator"
+			property="fdDocAuthorList"
+			property-value-getter="com.landray.kmss.sys.ftsearch.util.DocAuthorsFullTextPropertyGetter"
+			type="text" />
+		<luceneField
+			name="author"
+			property="docAuthor.fdName"
+			type="keyword" />
+		<luceneField
+			name="createTime"
+			property="docCreateTime"
+			type="keyword" />
+		<luceneField
+			name="keyword"
+			property="sysTagMain"			
+			property-value-getter="com.landray.kmss.sys.ftsearch.util.TagFullTextPropertyGetter"
+			type="text" />
+		<luceneField
+			name="content"
+			property="fdNumber"
+			type="text" />
+		<luceneField
+			name="category"
+			property="docCategory.fdHierarchyId"
+			type="keyword" />
+	</ftSearch>
+	<!-- 文档订阅机制配置 -->
+	<subscribe 
+		messageKey="kms-multidoc:kmsMultidoc.tree.title"
+		modelName="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+		timeField="docPublishTime"
+		whereBlock="kmsMultidocKnowledge.docStatus='30'"
+		replaceKey="sys-doc:sysDocBaseInfo.docCreateTime;sys-doc:sysDocBaseInfo.docCreator;sys-doc:sysDocBaseInfo.docSubject" />
+	<!-- 收藏夹 -->
+    <bookmark
+       messageKey="kms-multidoc:title.kms.multidoc"
+       modelName="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+       timeField="docAlterTime"
+       whereBlock=""
+    />
+	<!-- 关联机制 -->
+	<relation
+		modelName="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+		messageKey="kms-multidoc:table.kmsMultidocKnowledge" 
+		whereBlock="kmsMultidocKnowledge.docIsNewVersion is true"/>
+	<!-- 我的工作菜单 -->
+	<treeNodes type="myjob">
+		<treeNode messageKey="kms-multidoc:kmsMultidoc.form.title">
+			<treeNode
+				messageKey="kms-multidoc:kmsMultidoc.tree.myDoc"
+				url="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=list&amp;mydoc=true&amp;status=all">
+				<treeNode
+					messageKey="status.discard"
+					url="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=list&amp;mydoc=true&amp;status=00">
+				</treeNode>
+				<treeNode
+					messageKey="status.draft"
+					url="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=list&amp;mydoc=true&amp;status=10">
+				</treeNode>
+				<treeNode
+					messageKey="status.refuse"
+					url="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=list&amp;mydoc=true&amp;status=11">
+				</treeNode>
+				<treeNode
+					messageKey="status.examine"
+					url="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=list&amp;mydoc=true&amp;status=20">
+				</treeNode>
+				<treeNode
+					messageKey="status.publish"
+					url="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=list&amp;mydoc=true&amp;status=30">
+				</treeNode>
+				<treeNode
+					messageKey="status.expire"
+					url="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=list&amp;mydoc=true&amp;status=40">
+				</treeNode>
+			</treeNode>
+			<treeNode messageKey="kms-multidoc:kmsMultidoc.tree.myJob.flowStatus">
+				<treeNode
+					messageKey="kms-multidoc:kmsMultidoc.tree.myJob.flowStatus.prepare"
+					url="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=list&amp;myflow=0&amp;status=all">
+				</treeNode>
+				<treeNode
+					messageKey="kms-multidoc:kmsMultidoc.tree.myJob.flowStatus.passed"
+					url="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=list&amp;myflow=1&amp;status=all">
+				</treeNode>
+			</treeNode>
+		</treeNode>
+	</treeNodes>
+	<!-- 我的工作－－草稿箱 -->
+	<treeNodes type="draft">
+		<treeNode
+			messageKey="kms-multidoc:kmsMultidoc.form.title"
+			url="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=list&amp;mydoc=true&amp;status=10">
+		</treeNode>
+	</treeNodes>
+	
+	<!-- kms后台管理 -->
+	<treeNodes type="knowledge">
+		<treeNode
+			messageKey="kms-multidoc:kmsMultidoc.config.tree">
+			<treeNode
+				messageKey="kms-multidoc:kmsMultidoc.config.main.import"
+				url="/sys/transport/sys_transport_import/index.jsp?fdModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge">
+			</treeNode>
+			<treeNode
+				messageKey="kms-knowledge:table.kmsKnowledgeDocTemplate"
+				url="/kms/knowledge/kms_knowledge_doc_template/kmsKnowledgeDocTemplate.do?method=list&amp;fdModelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeDocTemplate">
+			</treeNode>
+		</treeNode>
+	</treeNodes>
+	
+	<!-- 文档系统配置 -->
+	<treeNodes type="config">
+		<treeNode messageKey="kms-multidoc:table.kmsMultidocKnowledge">
+			<treeNode
+				messageKey="kms-multidoc:menu.kmdoc.categoryconfig"
+				url="/sys/simplecategory/sys_simple_category/sysCategoryMain_tree.jsp?modelName=com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory&amp;actionUrl=/kms/multidoc/kms_multidoc_template/kmsMultidocTemplate.do&amp;formName=kmsMultidocTemplateForm&amp;mainModelName=com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge" />
+		</treeNode>
+	</treeNodes>
+	
+	<homePage
+		urlPrefix="kms/multidoc"
+		url="/sys/portal/page.jsp#j_start=/kms/multidoc/index.jsp&amp;j_target=_iframe"
+		messageKey="kms-multidoc:title.kms.multidoc"/>
+
+</configs>

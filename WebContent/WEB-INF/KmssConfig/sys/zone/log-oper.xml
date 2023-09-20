@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="sysZonePrivateConfig"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/sys/zone/sys_zone_private_config/sysZonePrivateConfig.do">
+        </oper>
+        <oper
+            id="sysZonePersonInfoOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.zone.model.SysZonePersonInfo"
+            action="/sys/zone/sys_zone_personInfo/sysZonePersonInfo.do">
+             <query
+				method="saveOtherResume"
+				logPoint="Base_UrlParam;saveResume"
+				messageKey="sys-zone:sysZonePersonInfo.logOper.saveOtherResume" />
+			<query
+				method="saveResume"
+				logPoint="Base_UrlParam;saveResume"
+				messageKey="sys-zone:sysZonePersonInfo.logOper.saveOtherResume" />
+			<query
+				method="listPersons"
+				logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="button.list" />	
+        </oper>
+        <oper
+            id="sysZonePersonMultiResumeOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/zone/sys_zone_person_multi_resume/sysZonePersonMultiResume.do">
+             <query
+				method="save"
+				logPoint="Base_UrlParam;addResumes"
+				messageKey="sys-zone:sysZonePersonMultiResume.logOper.addResumes" />
+        </oper>
+        
+        
+        <oper
+            id="sysZonePrivateChangeOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/zone/sys_zone_private_change/sysZonePrivateChange.do">
+             <query
+				method="updatePrivate"
+				logPoint="Base_UrlParam;updatePrivate"
+				messageKey="sys-zone:sysZonePrivateChange.logOper.updatePrivate" />
+        </oper>
+         <oper
+            id="sysZoneNavigationOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.zone.model.SysZoneNavigation"
+            action="/sys/zone/sys_zone_navigation/sysZoneNavigation.do">
+            <query
+				method="updateStatus"
+				logPoint="Base_UrlParam;updateStatus"
+				messageKey="sys-zone:sysZoneNavigation.logOper.updateStatus" />
+        </oper>
+        
+         <oper
+            id="sysZonePersonDataCateOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.zone.model.SysZonePersonDataCate"
+            action="/sys/zone/sys_zone_person_data_cate/sysZonePersonDataCate.do">
+        </oper>
+        
+	</logset>
+</log-oper>

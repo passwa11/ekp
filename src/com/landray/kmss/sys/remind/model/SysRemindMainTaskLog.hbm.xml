@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.sys.remind.model.SysRemindMainTaskLog" 
+        table="sys_remind_main_task_log">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36">
+            <generator class="assigned" />
+        </id>
+		<property
+			name="fdNotifyType"
+			column="fd_notify_type"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="50"/>
+		<property
+			name="fdCreateTime"
+			column="fd_create_time"
+			update="true"
+			insert="true"
+			not-null="false"/>
+		<property
+			name="fdIsSuccess"
+			column="fd_is_success"
+			update="true"
+			insert="true"
+			not-null="false"/>
+		<property
+			name="fdMessage"
+			column="fd_message"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="4000"/>
+			
+		<many-to-one
+			name="fdSender"
+			column="fd_sender_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<many-to-one
+			name="fdReceiver"
+			column="fd_receiver_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<many-to-one
+			name="fdTask"
+			column="fd_task_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+	</class>
+</hibernate-mapping>

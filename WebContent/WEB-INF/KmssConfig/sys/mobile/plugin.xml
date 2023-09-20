@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+
+	<extension-point id="com.landray.kmss.sys.mobile.configBusiness.extInterface.IFeedbackInfoConfig">
+		<item name="feedbackinfo">
+			<param name="key"
+				   kind="unid"
+				   required="true">
+				<description>扩展对应的key值，如：指定唯一值</description>
+			</param>
+			<param
+					name="modelName"
+					kind="unid"
+					required="true">
+				<description>模块名称，如：com.landray.kmss.km.review.model.KmReviewMain</description>
+			</param>
+			<param
+					name="provider"
+					kind="spring"
+					basedOn="com.landray.kmss.sys.mobile.configBusiness.extInterface.IFeedbackInfoConfig"
+					required="true">
+				<description>具体接口实现是否开启，详见IBaaaConfig接口说明</description>
+			</param>
+			<description>业务开关可配置</description>
+		</item>
+		<description>业务开关可配置</description>
+	</extension-point>
+	<!-- 移动模块配置 -->
+	<extension-point id="com.landray.kmss.sys.mobile.config">
+		<item name="info">
+			<param name="modelName" required="true" kind="string">
+				<description>主model名称</description>
+			</param>
+			<!--param name="templateModelName" required="false" kind="java">
+				<description>模版或分类名称</description>
+			</param>
+			<param name="templatePropertyName" required="false" kind="string">
+				<description>文件路径</description>
+			</param-->
+			<param name="name" required="true" kind="string">
+				<description>模块名</description>
+			</param>
+			<param name="defaultUrl" required="false" kind="string">
+				<description>默认数据包</description>
+			</param>
+			<description>移动信息配置</description>
+		</item>
+		<description>移动配置</description>
+	</extension-point>
+	
+	<extension-point id="com.landray.kmss.sys.mobile.compress">
+		<item name="js-pkg">
+			<param name="name" required="true" kind="string">
+				<description>任务名</description>
+			</param>
+			<param name="targetFile" required="true" kind="string">
+				<description>压缩后生成的合并文件，未压缩前应该不存在，一般以._min_.js结尾</description>
+			</param>
+			<param name="srcFold" required="false" kind="string">
+				<description>需要压缩的文件目录</description>
+			</param>
+			<param name="tinyId" required="false" kind="string">
+				<description>精准压缩的映射文件</description>
+			</param>
+			<description>js压缩任务配置</description>
+		</item>
+		<item name="css-pkg">
+			<param name="name" required="true" kind="string">
+				<description>任务名</description>
+			</param>
+			<param name="targetFile" required="true" kind="string">
+				<description>压缩后生成的合并文件，未压缩前也许不存在，一般以._css_.js结尾</description>
+			</param>
+			<param name="srcFold" required="true" kind="string">
+				<description>需要压缩的文件目录，如果未配置，表示只压缩targetFile</description>
+			</param>
+			<description>css压缩合并任务配置</description>
+		</item>
+		<item name="css-file">
+			<param name="name" required="true" kind="string">
+				<description>任务名</description>
+			</param>
+			<param name="targetFile" required="true" kind="string">
+				<description>压缩后生成的合并文件，未压缩前也许不存在，一般以._css_.js结尾</description>
+			</param>
+			<description>css压缩任务配置</description>
+		</item>
+		<description>文件压缩配置</description>
+	</extension-point>
+	
+	<extension-point id="com.landray.kmss.sys.mobile.third.integrate">
+		<item name="sign">
+			<param
+				name="key"
+				kind="unid"
+				required="true">
+				<description>扩展对应的key值，如：weixin,ding</description>
+			</param>
+			<param
+				name="clientType"
+				kind="int">
+				<description>第三方模块对应客户端标示，参考MobileUtil工具类的数值。如weixin为6</description>
+			</param>
+			<param
+				name="file"
+				kind="string"
+				required="true">
+				<description>进行授权初始化的js文件,如：/third/weixin/mobile/third.js</description>
+			</param>
+			<description>第三方授权签名</description>
+		</item>
+		<description>移动端与第三方对接相关拓展点</description>
+	</extension-point>
+	
+	<extension-point id="com.landray.kmss.sys.mobile.more.navItem.config">
+		<item name="info">
+			<param name="modelName" required="true" kind="string">
+				<description>主model名称</description>
+			</param>
+			<param name="name" required="true" kind="string">
+				<description>模块名</description>
+			</param>
+			<param name="filePath" required="false" kind="string">
+				<description>数据包json</description>
+			</param>
+			<description>移动端更多导航项扩展配置</description>
+		</item>
+		<description>移动端更多导航项扩展配置，读取业务模块对配置的更多导航按钮列表</description>
+	</extension-point>
+	
+	<extension-point id="com.landray.kmss.sys.mobile.package">
+		<item name="m-pkg">
+			<param name="appId" required="true" kind="string">
+				<description>模块Id,如sys/mportal</description>
+			</param>
+			<param name="appName" required="true" kind="string">
+				<description>模块名,支持多语言</description>
+			</param>
+			<param name="description" kind="string">
+				<description>模块描述,非必填</description>
+			</param>
+			<param name="folder" required="true" kind="string">
+				<description>打包模块目录</description>
+			</param>
+			<param name="homepage" required="true" kind="string">
+				<description>模块入口文件</description>
+			</param>
+			<param name="page" kind="string">
+				<description>其他需要做转换的文件,以;作为分隔符。位于folder/mobile/offline目录下的会自动转换,无需填写</description>
+			</param>
+			<param name="customProcesser" kind="spring"
+				basedOn="com.landray.kmss.sys.mobile.offline.interfaces.IPackageProcesser">
+				<description>自定义打包处理器</description>
+			</param>
+			<description>离线打包</description>
+		</item>
+		<description>离线打包相关拓展点</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.sys.mobile.category.view">
+		<item name="info">
+			<param name="actionPath" required="true" kind="string">
+				<description>
+					action的请求路径，比如：<![CDATA[/km/review/km_review_main/kmReviewMain.do]]>
+					，和请求路径对应，拦截时以此来寻找对应的扩展
+				</description>
+			</param>
+			<param name="methodName" required="true" kind="string">
+				<description>
+					请求方法名，也就是参数method的值，和actionPath构成请求唯一标识
+				</description>
+			</param>
+			<param name="paramName" required="true" kind="string">
+				<description>
+					参数名称，是值为模板id的参数名称，拦截器以此作为判断，
+					若是参数为空，则表示需要显示分类进行选择，
+					若是参数不为空，则不进行拦截
+				</description>
+			</param>
+			<param name="props" required="true" kind="string">
+				<description>
+					需要提供的属性，json文件，用于前端组件的props,
+					其中createUrl(字符串，创建文档的url)和modelName(字符串，模板文档全路径类名）和isSimple（boolean,是否是简单分类）是必须的，
+					其他可选
+				</description>
+			</param>
+			<param name="mixins" required="false" kind="string">
+				<description>需要扩展的mixin，用于页面的扩展，非必需，多值用,分隔</description>
+			</param>
+			<description>业务模块提供的信息</description>
+		</item>
+		<description>移动端新增文档时，若是没有传入模板id，需要显示分类选择进行新建。业务模块需要实现此功能，需要实现该扩展点，提供对应的信息。</description>
+	</extension-point>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui.js" />
+			<param name="targetFile" value="/sys/mobile/js/mui/mui.js" />
+			<param name="srcFold" value="/sys/mobile/js/mui" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-common.js" />
+			<param name="targetFile" value="/sys/mobile/js/mui/mui-common.js" />
+			<param name="tinyId" value="common" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-form.js" />
+			<param name="targetFile" value="/sys/mobile/js/mui/mui-form.js" />
+			<param name="tinyId" value="form" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-simpleCate.js" />
+			<param name="targetFile" value="/sys/mobile/js/mui/mui-simpleCate.js" />
+			<param name="tinyId" value="simpleCate" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-sysCate.js" />
+			<param name="targetFile" value="/sys/mobile/js/mui/mui-sysCate.js" />
+			<param name="tinyId" value="sysCate" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-view.js" />
+			<param name="targetFile" value="/sys/mobile/js/mui/mui-view.js" />
+			<param name="tinyId" value="view" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-main.js" />
+			<param name="targetFile" value="/sys/mobile/js/mui/mui-main.js" />
+			<param name="tinyId" value="main" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-list.js" />
+			<param name="targetFile" value="/sys/mobile/js/mui/mui-list.js" />
+			<param name="tinyId" value="list" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-ocr.js" />
+			<param name="targetFile" value="/sys/mobile/js/mui/mui-ocr.js" />
+			<param name="tinyId" value="ocr" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-nav.js" />
+			<param name="targetFile" value="/sys/mobile/js/mui/mui-nav.js" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="common.css" />
+			<param name="targetFile" value="/sys/mobile/css/themes/default/common.css" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="common-tiny.css" />
+			<param name="targetFile" value="/sys/mobile/css/themes/default/common-tiny.css" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="list-tiny.css" />
+			<param name="targetFile" value="/sys/mobile/css/themes/default/list-tiny.css" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="view-tiny.css" />
+			<param name="targetFile" value="/sys/mobile/css/themes/default/view-tiny.css" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="list.css" />
+			<param name="targetFile" value="/sys/mobile/css/themes/default/list.css" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="view.css" />
+			<param name="targetFile" value="/sys/mobile/css/themes/default/view.css" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.config.loader">
+		<item name="framework">
+			<param name="name" value="mobileCompress" />
+			<param name="loader" value="com.landray.kmss.sys.mobile.loader.SysMobileCompressLoader" />
+			<param name="order"	value="100" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.lbpm.engine.node">
+		<item name="nodeAttributeExtend">
+			<param
+				name="nodeType"
+				value="reviewNode" />
+			<param
+				name="position"
+				value="newtag" />
+			<param
+				name="includeJsp"
+				value="/sys/mobile/sys_mobile_lbpm_ext/reviewNode_ext.jsp" />		
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.cluster">
+		<item name="messageReceiver">
+			<param name="service" value="compressMessage" />
+			<param name="type" value="compress" />
+		</item>
+	</extension>
+
+	<!-- action拦截 -->
+	<extension point="com.landray.kmss.common.actions">
+		<item name="interceptor">
+			<param name="bean" value="templateCategoryViewHandlerInterceptor" />
+			<param name="order" value="0" />
+		</item>
+	</extension>
+	
+</plugin>

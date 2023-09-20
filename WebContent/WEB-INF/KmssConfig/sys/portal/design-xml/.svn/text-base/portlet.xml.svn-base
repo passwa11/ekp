@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root
+		xmlns="http://www.landray.com.cn/schema/lui"
+		xmlns:degign="http://www.landray.com.cn/schema/design"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+
+	<!-- 自定义页面 -->
+	<portlet
+			id="sys.portal.html"
+			name="{sys-portal:portlet.html}"
+			module="{sys-portal:module.sys.portal}"
+			description="{sys-portal:sys.portal.html.description}">
+		<source
+				format="sys.ui.html"
+				type="AjaxText">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/sys_portal_html/sysPortalHtml.do?method=html&fdId=!{fdId}",
+					"formatKey":"html"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					{^/sys/portal/example_images/sys/portalimg/sys_portal_html.jpg$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:portlet.html}">
+				{"jsp":"/sys/portal/designer/jsp/selectportletcustompage.jsp"}
+			</var>
+		</vars>
+	</portlet>
+	<!-- 引用其他网页 -->
+	<portlet
+			id="sys.portal.iframe"
+			name="{sys-portal:portlet.iframe}"
+			module="{sys-portal:module.sys.portal}">
+		<source
+				format="sys.ui.iframe"
+				type="Static">
+			<code>
+				<![CDATA[
+				{
+					"src":"!{src}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					{^/sys/portal/example_images/sys/portalimg/sys_portal_html.jpg$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="src" kind="string" name="{sys-portal:portlet.website}" required="true" ></var>
+		</vars>
+	</portlet>
+	<!-- 快捷方式 -->
+	<portlet
+			id="sys.portal.shortcut"
+			name="{sys-portal:portlet.shortcut}"
+			module="{sys-portal:module.sys.portal}">
+		<source
+				format="sys.ui.picMenu"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/sys_portal_link/sysPortalLink.do?method=portlet&fdType=2&fdId=!{fdId}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+						{"text":"新建流程","icon":"lui_icon_l_icon_48"},{"text":"新建会议","icon":"lui_icon_l_icon_48"},{"text":"新建发文","icon":"lui_icon_l_icon_48"},
+						{"text":"新建新闻","icon":"lui_icon_l_icon_48"},{"text":"新建知识","icon":"lui_icon_l_icon_48"},{"text":"新建总结","icon":"lui_icon_l_icon_48"},
+						{"text":"新建任务","icon":"lui_icon_l_icon_48"},{"text":"新建制度","icon":"lui_icon_l_icon_48"},{"text":"新建调查","icon":"lui_icon_l_icon_48"},
+						{"text":"新建固资","icon":"lui_icon_l_icon_48"},{"text":"新建门户","icon":"lui_icon_l_icon_48"},{"text":"新建页面","icon":"lui_icon_l_icon_48"}
+					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:portlet.shortcut}" required="true" >
+				{"jsp":"/sys/portal/designer/jsp/selectportletshortcut.jsp?fdType=2"}
+			</var>
+		</vars>
+	</portlet>
+	<!-- 常用链接 -->
+	<portlet
+			id="sys.portal.linking"
+			name="{sys-portal:portlet.link}"
+			module="{sys-portal:module.sys.portal}">
+		<source
+				format="sys.ui.textMenu"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/sys_portal_link/sysPortalLink.do?method=portlet&fdType=1&fdId=!{fdId}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+						{"text":"公司员工入职指引"},{"text":"公司协议酒店"},{"text":"公司网络资源指引"},
+						{"text":"公司办公区域座位图"},{"text":"公司行政服务指引"},{"text":"公司文化专栏"},
+						{"text":"系统使用导航指引"},{"text":"公司财务业务办理操作指南 "}
+					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:portlet.link}" required="true" >
+				{"jsp":"/sys/portal/designer/jsp/selectportletshortcut.jsp?fdType=1"}
+			</var>
+		</vars>
+	</portlet>
+	<!-- 系统导航 -->
+	<portlet
+			id="sys.portal.sysnav"
+			name="{sys-portal:portlet.sysNav}"
+			description="{sys-portal:sys.portal.sysNav.description}"
+			module="{sys-portal:module.sys.portal}">
+		<source
+				format="sys.ui.sysnav"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/sys_portal_nav/sysPortalNav.do?method=portlet&fdId=!{fdId}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+   					[
+						{
+							"text": "协同管理","icon":"iconfont_nav","children":
+								[
+									{"text": "流程管理","icon":"iconfont_nav"},{"text": "任务管理","icon":"iconfont_nav"},{"text": "项目协作","icon":"iconfont_nav"},{"text": "公文管理","icon":"iconfont_nav"},
+									{"text": "工作沟通","icon":"iconfont_nav"},{"text": "签章管理","icon":"iconfont_nav"}
+								]
+	    				},
+						{
+							"text": "知识管理","icon":"iconfont_nav","children":
+								[
+									{"text": "文档中心","icon":"iconfont_nav"},{"text": "工作总结","icon":"iconfont_nav"},{"text": "规范制度","icon":"iconfont_nav"},{"text": "常用资料","icon":"iconfont_nav"}
+								]
+	    				}
+   					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:table.sysPortalNav}" required="true" >
+				{"jsp":"/sys/portal/varkind/selectAppNav.jsp"}
+			</var>
+		</vars>
+	</portlet>
+	<!-- 二级树菜单 -->
+	<portlet
+			id="sys.portal.treeMenu2"
+			name="{sys-portal:portlet.tree2}"
+			description="{sys-portal:sys.portal.treeMenu2.description}"
+			module="{sys-portal:module.sys.portal}">
+		<source
+				format="sys.ui.treeMenu2"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/sys_portal_tree/sysPortalTree.do?method=portlet&fdType=1&fdId=!{fdId}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+						{
+							"text": "协同管理","children": [ {"text": "流程管理"},{"text": "任务管理"},{"text": "项目协作"},{"text": "公文管理"},{"text": "工作沟通"},{"text": "签章管理"},{"text": "流程管理"}]
+	    				},
+						{
+							"text": "知识管理","children": [ {"text": "文档中心"},{"text": "工作总结"},{"text": "规范制度"},{"text": "常用资料"}]
+	    				},
+						{
+							"text": "文化管理","children": [ {"text": "新闻管理"},{"text": "论坛管理"},{"text": "调查管理"},{"text": "员工活动"},{"text": "电子简报"},{"text": "投票管理"}]
+	    				},
+						{
+							"text": "行政管理","children": [ {"text": "会议管理"},{"text": "车辆管理"},{"text": "固资管理"},{"text": "图书管理"},{"text": "资源借用"},{"text": "办公用品管理"}]
+	    				}
+   					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:portlet.tree2}" required="true" >
+				{"jsp":"/sys/portal/designer/jsp/selectportlettree.jsp?fdType=1"}
+			</var>
+		</vars>
+	</portlet>
+	<!-- 三级树菜单 -->
+	<portlet
+			id="sys.portal.treeMenu3"
+			name="{sys-portal:portlet.tree3}"
+			description="{sys-portal:sys.portal.treeMenu3.description}"
+			module="{sys-portal:module.sys.portal}">
+		<source
+				format="sys.ui.treeMenu3"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/sys_portal_tree/sysPortalTree.do?method=portlet&fdType=2&fdId=!{fdId}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+   					[
+   						{"text": "工作流程",
+   						"children": [
+   										{"text": "常用流程","children": [{"text": "新建请假申请"},{"text": "新建普通报销单"},{"text": "新建请示报告"}]},
+   										{"text": "我的流程","children": [{"text": "我发起的流程"},{"text": "待我审的流程"},{"text": "我已审的流程"}]}
+   									]
+            			},
+           				{"text": "沟通协作",
+   						"children": [
+   										{"text": "工作沟通","children": [{"text": "创建沟通"},{"text": "创建协作"}]},
+   										{"text": "我的沟通","children": [{"text": "我发起的沟通"},{"text": "我参与的沟通"},{"text": "我关注的沟通"}]}
+   									]
+            			},
+            			{"text": "会务管理",
+   						"children": [
+   										{"text": "会务创建","children": [{"text": "创建会议"},{"text": "创建督办"}]},
+   										{"text": "我的会务","children": [{"text": "我发起的会议"},{"text": "我参加的会议"},{"text": "我发起的督办"}]}
+   									]
+            			}
+
+					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:portlet.tree3}" required="true" >
+				{"jsp":"/sys/portal/designer/jsp/selectportlettree.jsp?fdType=2"}
+			</var>
+		</vars>
+	</portlet>
+	<!-- 门户导航三级 -->
+	<portlet
+			id="sys.portal.navtree3"
+			name="{sys-portal:portlet.nav}"
+			description="{sys-portal:sys.portal.navtree3.description}"
+			module="{sys-portal:module.sys.portal}">
+		<source
+				format="sys.ui.treeMenu3"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/sys_portal_portlet/sysPortalPortlet.do?method=portalNavTree"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+   						{"text": "集团总部",
+   						"children": [
+   										{"text": "业务门户","children": [{"text": "信息门户"},{"text": "知识门户"},{"text": "服务门户"},{"text": "新人门户"}]},
+   										{"text": "其他门户","children": [{"text": "财务门户"},{"text": "产品门户"},{"text": "人事门户"}]}
+   									]
+            			},
+           				{"text": "大中国区",
+   						"children": [
+   										{"text": "业务门户","children": [{"text": "信息门户"},{"text": "知识门户"},{"text": "服务门户"},{"text": "新人门户"}]},
+   										{"text": "其他门户","children": [{"text": "财务门户"},{"text": "产品门户"},{"text": "人事门户"}]}
+   									]
+            			},
+            			{"text": "地区公司",
+   						"children": [
+   										{"text": "业务门户","children": [{"text": "信息门户"},{"text": "知识门户"},{"text": "服务门户"},{"text": "新人门户"}]},
+   										{"text": "其他门户","children": [{"text": "财务门户"},{"text": "产品门户"},{"text": "人事门户"}]}
+   									]
+            			}
+
+					]
+				]]>
+				</code>
+			</example>
+		</source>
+	</portlet>
+	<!-- 门户导航二级 -->
+	<portlet
+			id="sys.portal.navtree2"
+			name="{sys-portal:portlet.nav}"
+			description="{sys-portal:sys.portal.navtree2.description}"
+			module="{sys-portal:module.sys.portal}">
+		<source
+				format="sys.ui.treeMenu2"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/sys_portal_portlet/sysPortalPortlet.do?method=portalNavTree"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+						{
+							"text": "业务门户","children": [ {"text": "信息门户"},{"text": "知识门户"},{"text": "服务门户"},{"text": "新人门户"}]
+	    				},
+						{
+							"text": "角色门户","children": [ {"text": "高管门户"},{"text": "营销门户"},{"text": "战略门户"}]
+	    				},
+						{
+							"text": "其他门户","children": [ {"text": "财务门户"},{"text": "产品门户"},{"text": "人事门户"}]
+	    				}
+   					]
+				]]>
+				</code>
+			</example>
+		</source>
+	</portlet>
+	<!-- 推荐专题幻灯片 -->
+	<portlet
+			id="sys.portal.topic"
+			name="{sys-portal:table.sysPortalTopic}"
+			module="{sys-portal:module.sys.portal}">
+		<source
+				format="sys.ui.slide"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+					{"url":"/sys/portal/sys_portal_topic/portlet/sysPortalTopicPortlet.do?method=getPortalTopic&fdIds=!{fdids}&orderby=docAlterTime&ordertype=down"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+						{"text":"恭喜公司荣获年度优秀企业大奖","image":"/sys/portal/example_images/sys/portalimg/sys_portal_topic_1.jpg"},
+						{"text":"恭喜公司荣获年度最佳软件供应商","image":"/sys/portal/example_images/sys/portalimg/sys_portal_topic_2.jpg"},
+						{"text":"恭喜公司荣获年度最佳软件服务商","image":"/sys/portal/example_images/sys/portalimg/sys_portal_topic_3.jpg"}
+					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdids" kind="custom" name="{sys-portal:portlet.var.topic.name}" required="true">
+				{"file":"/sys/portal/varkind/topicVar.jsp"}
+			</var>
+		</vars>
+	</portlet>
+	<!-- 推荐专题图文 -->
+	<portlet
+			id="sys.portal.topic.image"
+			name="推荐专题图文展现"
+			module="{sys-portal:module.sys.portal}">
+		<source
+				format="sys.ui.image"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+					{"url":"/sys/portal/sys_portal_topic/portlet/sysPortalTopicPortlet.do?method=getPortalTopic&fdIds=!{fdids}&orderby=docAlterTime&ordertype=down"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+						{"text":"恭喜公司荣获年度优秀企业大奖","image":"/sys/portal/example_images/sys/portalimg/sys_portal_topic_1.jpg"},
+						{"text":"恭喜公司荣获年度最佳软件供应商","image":"/sys/portal/example_images/sys/portalimg/sys_portal_topic_2.jpg"},
+						{"text":"恭喜公司荣获年度最佳软件服务商","image":"/sys/portal/example_images/sys/portalimg/sys_portal_topic_3.jpg"}
+					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdids" kind="custom" name="{sys-portal:portlet.var.topic.name}" required="true">
+				{"file":"/sys/portal/varkind/topicVar.jsp"}
+			</var>
+		</vars>
+	</portlet>
+	<!-- 情感组件 -->
+	<portlet
+			id="sys.portal.emotional"
+			name="{sys-portal:portlet.emotional.name}"
+			description=""
+			module="{sys-portal:module.sys.portal}">
+		<source  format="sys.ui.emotional" type="AjaxJson">
+			<code>
+				<![CDATA[
+					{"url":"/sys/portal/sys_portal_portlet/sysPortalPortlet.do?method=getEmotionalPortlet"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					{^/sys/portal/example_images/sys/portalimg/sys_portal_emotional.jpg$}
+				]]>
+				</code>
+			</example>
+		</source>
+	</portlet>
+	<!-- 地图模板 -->
+	<portlet
+			id="sys.portal.mapTpl"
+			name="{sys-portal:table.sysPortalMapTpl}"
+			module="{sys-portal:module.sys.portal}">
+		<source
+				format="sys.ui.mapTpl"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/sys_portal_map_tpl/sysPortalMapTpl.do?method=portlet&fdId=!{fdId}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[[{"content":[{"text":"个人流程中心","href":"/sys/lbpmperson.index","target":"_top","icon":"iconfont_nav lui_iconfont_nav_sys_lbpmperson"},{"text":"新闻管理","href":"/sys/news.index","target":"_top","icon":"iconfont_nav lui_iconfont_nav_sys_news"},{"text":"规范制度","href":"/km/institution.index","target":"_top","icon":"iconfont_nav lui_iconfont_nav_km_institution"}],"name":"门户左支导航","type":0}],[]]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:table.sysPortalMapTpl}" required="true" >
+				{"jsp":"/sys/portal/designer/jsp/selectportletmaptpl.jsp"}
+			</var>
+		</vars>
+	</portlet>
+	<!-- ***************************************** 匿名门户部件 ***************************************** -->
+	<!-- 推荐专题（匿名） -->
+	<portlet
+			id="sys.portal.topic.anonym"
+			name="{sys-portal:table.sysPortalTopic.anonym}"
+			module="{sys-portal:module.sys.portal}" anonymous="true" >
+		<source  format="sys.ui.slide" type="AjaxJson">
+			<code>
+				<![CDATA[
+					{"url":"/sys/portal/anonym/sysPortalTopicAnonym.do?method=portlet&fdIds=!{fdids}&orderby=docAlterTime&ordertype=down"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+						{"text":"恭喜公司荣获年度优秀企业大奖","image":"/sys/portal/example_images/sys/portalimg/sys_portal_topic_1.jpg"},
+						{"text":"恭喜公司荣获年度最佳软件供应商","image":"/sys/portal/example_images/sys/portalimg/sys_portal_topic_2.jpg"},
+						{"text":"恭喜公司荣获年度最佳软件服务商","image":"/sys/portal/example_images/sys/portalimg/sys_portal_topic_3.jpg"}
+					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdids" kind="custom" name="{sys-portal:portlet.var.topic.name}" required="true">
+				{"file":"/sys/portal/varkind/topicVar_anonym.jsp"}
+			</var>
+		</vars>
+	</portlet>
+	<!-- 推荐专题图文(匿名) -->
+	<portlet
+			id="sys.portal.topic.image.anonym"
+			name="推荐专题图文展现(匿名)"
+			module="{sys-portal:module.sys.portal}" anonymous="true" >
+		<source  format="sys.ui.image" type="AjaxJson">
+			<code>
+				<![CDATA[
+					{"url":"/sys/portal/anonym/sysPortalTopicAnonym.do?method=portlet&fdIds=!{fdids}&orderby=docAlterTime&ordertype=down"}
+				]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					[
+						{"text":"恭喜公司荣获年度优秀企业大奖","image":"/sys/portal/example_images/sys/portalimg/sys_portal_topic_1.jpg"},
+						{"text":"恭喜公司荣获年度最佳软件供应商","image":"/sys/portal/example_images/sys/portalimg/sys_portal_topic_2.jpg"},
+						{"text":"恭喜公司荣获年度最佳软件服务商","image":"/sys/portal/example_images/sys/portalimg/sys_portal_topic_3.jpg"}
+					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdids" kind="custom" name="{sys-portal:portlet.var.topic.name}" required="true">
+				{"file":"/sys/portal/varkind/topicVar_anonym.jsp"}
+			</var>
+		</vars>
+	</portlet>
+	<!-- 自定义页面(匿名) -->
+	<portlet
+			id="sys.portal.html.anonym"
+			name="{sys-portal:portlet.html.anonym}"
+			module="{sys-portal:module.sys.portal}"
+			description="{sys-portal:sys.portal.html.description}" anonymous="true">
+		<source
+				format="sys.ui.html"
+				type="AjaxText">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/anonym/sysPortalHtmlAnonym.do?method=portlet&fdId=!{fdId}",
+					"formatKey":"html"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					{^/sys/portal/example_images/sys/portalimg/sys_portal_html.jpg$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:portlet.html}">
+				{"jsp":"/sys/portal/designer/jsp/selectportletcustompage_anonym.jsp"}
+			</var>
+		</vars>
+	</portlet>
+	<!-- 快捷方式匿名 -->
+	<portlet
+			id="sys.portal.shortcut.anonym"
+			name="{sys-portal:portlet.shortcut.anonym}"
+			module="{sys-portal:module.sys.portal}" anonymous="true">
+		<source
+				format="sys.ui.picMenu"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/anonym/sysPortalLinkAnonym.do?method=portlet&fdId=!{fdId}&fdType=2"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+						{"text":"新建流程","icon":"lui_icon_l_icon_48"},{"text":"新建会议","icon":"lui_icon_l_icon_48"},{"text":"新建发文","icon":"lui_icon_l_icon_48"},
+						{"text":"新建新闻","icon":"lui_icon_l_icon_48"},{"text":"新建知识","icon":"lui_icon_l_icon_48"},{"text":"新建总结","icon":"lui_icon_l_icon_48"},
+						{"text":"新建任务","icon":"lui_icon_l_icon_48"},{"text":"新建制度","icon":"lui_icon_l_icon_48"},{"text":"新建调查","icon":"lui_icon_l_icon_48"},
+						{"text":"新建固资","icon":"lui_icon_l_icon_48"},{"text":"新建门户","icon":"lui_icon_l_icon_48"},{"text":"新建页面","icon":"lui_icon_l_icon_48"}
+					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:portlet.shortcut}" required="true" >
+				{"jsp":"/sys/portal/designer/jsp/selectportletshortcut_anonym.jsp?fdType=2"}
+			</var>
+		</vars>
+	</portlet>
+
+	<portlet
+			id="sys.portal.linking.anonym"
+			name="{sys-portal:portlet.link.anonym}"
+			module="{sys-portal:module.sys.portal}" anonymous="true">
+		<source
+				format="sys.ui.textMenu"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/anonym/sysPortalLinkAnonym.do?method=portlet&fdId=!{fdId}&fdType=1"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+						{"text":"公司员工入职指引"},{"text":"公司协议酒店"},{"text":"公司网络资源指引"},
+						{"text":"公司办公区域座位图"},{"text":"公司行政服务指引"},{"text":"公司文化专栏"},
+						{"text":"系统使用导航指引"},{"text":"公司财务业务办理操作指南 "}
+					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:portlet.link}" required="true" >
+				{"jsp":"/sys/portal/designer/jsp/selectportletshortcut_anonym.jsp?fdType=1"}
+			</var>
+		</vars>
+	</portlet>
+
+	<portlet
+			id="sys.portal.sysnav.anonym"
+			name="{sys-portal:portlet.sysNav.anonym}"
+			description="{sys-portal:sys.portal.sysNav.description}"
+			module="{sys-portal:module.sys.portal}"  anonymous="true" >
+		<source
+				format="sys.ui.sysnav"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/anonym/sysPortalNavAnonym.do?method=portlet&fdId=!{fdId}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+						{
+							"text": "协同管理","icon":"iconfont_nav","children":
+								[
+									{"text": "流程管理","icon":"iconfont_nav"},{"text": "任务管理","icon":"iconfont_nav"},{"text": "项目协作","icon":"iconfont_nav"},{"text": "公文管理","icon":"iconfont_nav"},
+									{"text": "工作沟通","icon":"iconfont_nav"},{"text": "签章管理","icon":"iconfont_nav"}
+								]
+	    				},
+						{
+							"text": "知识管理","icon":"iconfont_nav","children":
+								[
+									{"text": "文档中心","icon":"iconfont_nav"},{"text": "工作总结","icon":"iconfont_nav"},{"text": "规范制度","icon":"iconfont_nav"},{"text": "常用资料","icon":"iconfont_nav"}
+								]
+	    				}
+   					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:table.sysPortalNav}" required="true" >
+				{"jsp":"/sys/portal/varkind/selectAppNav_anonym.jsp"}
+			</var>
+		</vars>
+	</portlet>
+
+	<portlet
+			id="sys.portal.treeMenu2.anonym"
+			name="{sys-portal:portlet.tree2.anonym}"
+			description="{sys-portal:sys.portal.treeMenu2.description}"
+			module="{sys-portal:module.sys.portal}" anonymous="true">
+		<source
+				format="sys.ui.treeMenu2"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/anonym/sysPortalTreeAnonym.do?method=portlet&fdId=!{fdId}&fdType=1"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+					{ "text": "协同管理","children": [ {"text": "流程管理"},{"text": "任务管理"},{"text": "项目协作"},
+            			{"text": "公文管理"},{"text": "工作沟通"},{"text": "签章管理"},{"text": "流程管理"}]
+    				},
+					{ "text": "知识管理","children": [ {"text": "文档中心"},{"text": "工作总结"},{"text": "规范制度"},
+            			{"text": "常用资料"}]
+    				},
+					{ "text": "文化管理","children": [ {"text": "新闻管理"},{"text": "论坛管理"},{"text": "调查管理"},
+            			{"text": "员工活动"},{"text": "电子简报"},{"text": "投票管理"}]
+    				},
+					{ "text": "行政管理","children": [ {"text": "会议管理"},{"text": "车辆管理"},{"text": "固资管理"},
+            			{"text": "图书管理"},{"text": "资源借用"},{"text": "办公用品管理"}]
+    				}
+   					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:portlet.tree2}" required="true" >
+				{"jsp":"/sys/portal/designer/jsp/selectportlettree_anonym.jsp?fdType=1"}
+			</var>
+		</vars>
+	</portlet>
+
+	<portlet
+			id="sys.portal.treeMenu3.anonym"
+			name="{sys-portal:portlet.tree3.anonym}"
+			description="{sys-portal:sys.portal.treeMenu3.description}"
+			module="{sys-portal:module.sys.portal}" anonymous="true">
+		<source
+				format="sys.ui.treeMenu3"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/sys/portal/anonym/sysPortalTreeAnonym.do?method=portlet&fdId=!{fdId}&fdType=2"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+   						{"text": "工作流程",
+   						"children": [
+   										{"text": "常用流程","children": [{"text": "新建请假申请"},{"text": "新建普通报销单"},{"text": "新建请示报告"}]},
+   										{"text": "我的流程","children": [{"text": "我发起的流程"},{"text": "待我审的流程"},{"text": "我已审的流程"}]}
+   									]
+            			},
+           				{"text": "沟通协作",
+   						"children": [
+   										{"text": "工作沟通","children": [{"text": "创建沟通"},{"text": "创建协作"}]},
+   										{"text": "我的沟通","children": [{"text": "我发起的沟通"},{"text": "我参与的沟通"},{"text": "我关注的沟通"}]}
+   									]
+            			},
+            			{"text": "会务管理",
+   						"children": [
+   										{"text": "会务创建","children": [{"text": "创建会议"},{"text": "创建督办"}]},
+   										{"text": "我的会务","children": [{"text": "我发起的会议"},{"text": "我参加的会议"},{"text": "我发起的督办"}]}
+   									]
+            			}
+
+					]
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{sys-portal:portlet.tree3}" required="true" >
+				{"jsp":"/sys/portal/designer/jsp/selectportlettree_anonym.jsp?fdType=2"}
+			</var>
+		</vars>
+	</portlet>
+
+	<!-- LDUX_装饰组件 Starts -->
+	<portlet id="sys.portal.decorate"
+			 name="{sys-portal:sys.portal.decorate}"
+			 module="{sys-portal:module.sys.portal}"
+			 description="{sys-portal:sys.portal.decorate.desc}">
+		<source format="sys.portal.decorate" type="Static">
+			<code>
+				<![CDATA[
+				{
+					"src":"",
+				}
+			]]>
+			</code>
+		</source>
+	</portlet>
+	<!-- LDUX_装饰组件 Ends -->
+
+
+</root>

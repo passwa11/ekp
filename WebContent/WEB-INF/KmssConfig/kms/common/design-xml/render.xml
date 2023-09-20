@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+
+	<render id="kms.common.doc.zone.rt" name="{kms-common:kmsKnowledge.porlet.kmsbj.doc}" format="kms.common.doc.zone"
+		css="/kms/common/kms_common_portlet/css/kms_common_doc_zone_rt.css"
+		thumb="/kms/common/kms_common_portlet/js/kms_common_doc_zone_rt.jpg"
+		type="Javascript">
+		<code src="/kms/common/kms_common_portlet/js/kms_common_doc_zone_rt.js" ellipsis="true"/>
+	</render>
+
+	<render id="kms.list.first.picture.left" name="首行左封面呈现" format="kms.list.first.picture"
+      css="/kms/common/kms_common_portlet/css/kms_common_list_first_picture_left.css"
+      thumb="/kms/common/kms_common_portlet/img/kms_common_list_first_picture_left.png"
+      type="Javascript">
+     <code src="/kms/common/kms_common_portlet/js/kms_common_list_first_picture_left.js" ellipsis="true"/>
+   </render>
+
+	<!-- 应用列表渲染视图 -->
+	<render format="sys.profile.config" id="kms.common.sys.profile.listview.default"
+			name="应用列表渲染视图" type="Javascript" css="theme!profile">
+		<code src="/kms/common/profile/resource/js/render/listview.js" />
+	</render>
+	<!-- 简单列表 -->
+	<render format="sys.ui.classic.rename" id="sys.ui.classic.default.rename"
+			name="{sys-ui:render.classic.default}" type="Javascript" css="theme!dataview"
+			thumb="/sys/ui/extend/dataview/render/help/classic.jpg">
+		<code src="sys/ui/extend/dataview/render/classic.js" ellipsis="true" predraw="false"/>
+		<vars>
+			<var key="firstRowScroll" kind="enumValue" name="{sys-ui:render.var.fistrow.scroll}">
+				{"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="highlight" kind="enumValue" name="{sys-ui:render.var.fistrow}">
+				{"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showCreator" kind="enumValue" name="{sys-ui:dataview.imgtext.author}" default="true">
+				{"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+				{"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+				{"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showRank" kind="enumValue" name="{sys-ui:render.var.order}" default="no">
+				{"values":[{"text":"{sys-ui:render.var.rank.no}", "value":"no"},
+				{"text":"{sys-ui:render.var.rank.three}", "value":"three"},
+				{"text":"{sys-ui:render.var.rank.all}", "value":"all"}],
+				"showType":"radio"}
+			</var>
+			<var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+				{"help":"{sys-ui:render.var.oversize}"}
+			</var>
+			<var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+				{"help":"{sys-ui:render.var.hotday}"}
+			</var>
+			<var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+			<var key="subjectSize" kind="int" name="{sys-ui:render.var.subjectsize}" default="0">
+				{"help":"{sys-ui:render.var.oversize}"}
+			</var>
+		</vars>
+	</render>
+
+	<!-- 简单列表日期序列展现 ends -->
+	<!-- classicrich -->
+	<render
+			id="sys.ui.classic.rich.rename"
+			format="sys.ui.classic.rich.rename"
+			name="{sys-ui:render.classic.rich}"
+			type="Javascript"
+			css="theme!dataview"
+			thumb="/sys/ui/extend/dataview/render/help/classicrich.jpg">
+		<code
+				src="sys/ui/extend/dataview/render/classic_rich.js"
+				ellipsis="true"
+				predraw="false"/>
+		<vars>
+			<var key="firstRowScroll" kind="enumValue" name="{sys-ui:render.var.fistrow.scroll}">
+				{"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<!-- <var key="highlight" kind="enumValue" name="{sys-ui:render.var.fistrow}">
+                {"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+            </var> -->
+			<var key="showCreator" kind="enumValue" name="{sys-ui:dataview.imgtext.author}" default="true">
+				{"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+				{"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+
+			<var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+				{"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+
+			<var key="showEvaluateCount" kind="enumValue" name="{sys-ui:render.var.showEvaluateCount}" default="true">
+				{"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showReadCount" kind="enumValue" name="{sys-ui:render.var.showReadCount}" default="true">
+				{"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showDocscore" kind="enumValue" name="{sys-ui:render.var.showDocscore}" default="true">
+				{"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+
+			<var key="showRank" kind="enumValue" name="{sys-ui:render.var.rank}" default="no">
+				{"values":[{"text":"{sys-ui:render.var.rank.no}", "value":"no"},
+				{"text":"{sys-ui:render.var.rank.three}", "value":"three"},
+				{"text":"{sys-ui:render.var.rank.all}", "value":"all"}],
+				"showType":"radio"}
+			</var>
+
+			<var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+				{"help":"{sys-ui:render.var.oversize}"}
+			</var>
+			<var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+				{"help":"{sys-ui:render.var.hotday}"}
+			</var>
+			<var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+			<var key="subjectSize" kind="int" name="{sys-ui:render.var.subjectsize}" default="0">
+				{"help":"{sys-ui:render.var.oversize}"}
+			</var>
+		</vars>
+	</render>
+</root>

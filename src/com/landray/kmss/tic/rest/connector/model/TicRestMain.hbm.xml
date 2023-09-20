@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<subclass discriminator-value="5"
+		name="com.landray.kmss.tic.rest.connector.model.TicRestMain"
+		extends="com.landray.kmss.tic.core.common.model.TicCoreFuncBase">
+		<join table="tic_rest_main">
+			<key column="fd_id"></key>
+
+			<property name="fdOauthEnable" column="fd_oauth_enable"
+				update="true" insert="true" not-null="false" />
+				
+			<property name="fdCookieEnable" column="fd_cookie_enable"
+				update="true" insert="true" not-null="false" />
+				
+			<property name="fdPrefixReqEnable" column="fd_prefixReq_enable"
+				update="true" insert="true" not-null="false" />
+				
+				
+			<property name="fdReqMethod" column="fd_req_method"
+				update="true" insert="true" length="100" not-null="false" />
+
+			<property name="fdReqURL" column="fd_req_url" update="true"
+				insert="true" length="600" not-null="false" />
+
+			<property name="fdReqParam" column="fd_req_param" update="true"
+				insert="true" length="1000000"
+				type="com.landray.kmss.common.dao.ClobStringType" lazy="true" />
+
+			<property name="fdRemark" column="fd_remark" update="true"
+				insert="true" length="4000" not-null="false" />
+
+			<many-to-one name="ticRestAuth"
+				column="fd_rest_auth" insert="true" update="true"
+				not-null="false" lazy="false" />
+				
+			<many-to-one name="ticRestCookieSetting"
+				column="fd_rest_cookie_setting" insert="true" update="true"
+				not-null="false" lazy="false" />
+			
+			<many-to-one name="ticRestPrefixReqSetting"
+				column="fd_rest_prefixReq_setting" insert="true" update="true"
+				not-null="false" lazy="false" />
+			
+
+			<many-to-one name="ticRestSetting"
+				column="fd_rest_setting" insert="true" update="true"
+				not-null="false" lazy="false" />
+
+			<property name="fdOriParaIn" column="fd_ori_para_in" update="true"
+				insert="true" length="1000000"
+				type="com.landray.kmss.common.dao.ClobStringType" lazy="true" />
+			<property name="fdOriParaOut" column="fd_ori_para_out"
+				update="true" insert="true" length="1000000"
+				type="com.landray.kmss.common.dao.ClobStringType" lazy="true" />
+
+		</join>
+	</subclass>
+
+
+</hibernate-mapping>
+
+
+

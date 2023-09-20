@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+
+		<!-- 属性分类 -->
+		<oper id="sysPropertyCategoryOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.property.model.SysPropertyCategory"
+			action="/sys/property/sys_property_category/sysPropertyCategory.do">
+		</oper>
+
+		<!-- 属性定义 -->
+		<oper id="sysPropertyDefineOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.property.model.SysPropertyDefine" action="/sys/property/sys_property_define/sysPropertyDefine.do">
+		</oper>
+
+		<!-- 主数据定义 -->
+		<oper id="sysPropertyTreeOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.property.model.SysPropertyTree" action="/sys/property/sys_property_tree/sysPropertyTree.do">
+		</oper>
+
+		<!-- 属性模板 -->
+		<oper id="sysPropertyTemplateOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.property.model.SysPropertyTemplate"
+			action="/sys/property/sys_property_template/sysPropertyTemplate.do">
+			<query method="importExcel" logPoint="Base_UrlParam"
+				messageKey="sys-property:sysProperty.template.Import" />
+		</oper>
+
+		<!-- 筛选项设置 -->
+		<oper id="sysPropertyFilterSettingOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.property.model.SysPropertyFilterSetting"
+			action="/sys/property/sys_property_filter_setting/sysPropertyFilterSetting.do">
+		</oper>
+		
+		<!-- 筛选项设置 -->
+		<oper id="sysPropertyCustomFieldOperLog" extends="BaseOperLog"
+			model="*"
+			action="/sys/property/custom_field/customField.do">
+			<query method="updateMapping" logPoint="updateMapping"
+				messageKey="sys-property:custom.field.updateMapping" />
+			<query method="changeStatus" logPoint="changeStatus"
+				messageKey="sys-property:custom.field.status.true" />
+		</oper>
+
+	</logset>
+</log-oper>

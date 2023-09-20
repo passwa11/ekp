@@ -1,0 +1,110 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.portal.model.SysPortalNav",
+        "messageKey": "sys-portal:table.sysPortalNav",
+        "displayProperty": "fdName",
+        "serviceBean": "sysPortalNavService",
+        "table": "sys_portal_nav",
+        "url": "/sys/portal/sys_portal_nav/sysPortalNav.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-portal:sysPortalNav.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "length": "200",
+            "langSupport": "true"
+        },
+        "fdContent":         {
+            "propertyType": "simple",
+            "messageKey": "sys-portal:sysPortalNav.fdContent",
+            "type": "RTF",
+            "column": "fd_content",
+            "notNull": "false",
+            "length": "1000000"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-portal:sysPortalNav.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "false"
+        },
+        "docAlterTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-portal:sysPortalNav.docAlterTime",
+            "type": "DateTime",
+            "column": "doc_alter_time",
+            "notNull": "false"
+        },
+        "fdPageId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-portal:sysPortalNav.fdPageId",
+            "type": "String",
+            "column": "fd_page_id",
+            "notNull": "false",
+            "length": "400",
+            "validate": "true"
+        },        
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-portal:sysPortalNav.docCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "doc_creator_id",
+            "notNull": "false"
+        },
+        "docAlteror":         {
+            "propertyType": "model",
+            "messageKey": "sys-portal:sysPortalNav.docAlteror",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "doc_alteror_id",
+            "notNull": "false"
+        },
+        "fdEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-portal:sysPortalNav.fdEditors",
+            "column": "fd_nav_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "fd_org_id",
+            "table": "sys_portal_nav_editors"
+        },
+        "authArea":         {
+            "propertyType": "model",
+            "messageKey": "sys-authorization:sysAuthArea.authArea",
+            "type": "com.landray.kmss.sys.authorization.model.SysAuthArea",
+            "column": "auth_area_id",
+            "notNull": "false",
+            "unique": "false",
+            "readOnly": "true"
+        },
+        "fdAnonymous": 			{
+            "propertyType": "simple",
+            "messageKey": "sys-portal:sysPortalNav.fdAnonymous",
+            "type": "Boolean",
+            "column": "fd_anonymous",
+            "notNull": "false",
+            "unique": "false",
+            "length": "1",
+            "enumType": "common_yesno_number"
+        },
+        "fdPortalMapTpl" : {
+            "propertyType" : "list",
+            "messageKey": "sys-portal:sysPortalNav.fdPortalMapTpl",
+            "type" : "com.landray.kmss.sys.portal.model.SysPortalMapTpl",
+            "table" : "sys_portal_map_tpl_nav",
+            "elementColumn" : "fd_tpl_id",
+            "column" : "fd_nav_id",
+            "notNull" : "false",
+            "readOnly" : "false",
+            "validate" : "true",
+            "canDisplay" : "false",
+            "canRelation" : "false"
+        }
+    }
+}

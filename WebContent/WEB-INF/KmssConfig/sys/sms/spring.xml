@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="sysSmsMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.sms.dao.hibernate.SysSmsMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.sms.model.SysSmsMain" />
+	</bean>
+	<bean
+		id="sysSmsMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.sms.service.spring.SysSmsMainServiceImp">
+		<property name="baseDao">
+			<ref bean="sysSmsMainDao" />
+		</property>
+		<property name="sysSmsSortofpeopleService">
+			<ref bean="sysSmsSortofpeopleService" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="sysSmsMainService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysSmsMainTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysSmsSortofpeopleDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.sms.dao.hibernate.SysSmsSortofpeopleDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.sms.model.SysSmsSortofpeople" />
+	</bean>
+	<bean
+		id="sysSmsSortofpeopleTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.sms.service.spring.SysSmsSortofpeopleServiceImp">
+		<property name="baseDao">
+			<ref bean="sysSmsSortofpeopleDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysSmsSortofpeopleService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysSmsSortofpeopleTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysSmsSortsDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.sms.dao.hibernate.SysSmsSortsDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.sms.model.SysSmsSorts" />
+	</bean>
+	<bean
+		id="sysSmsSortsTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.sms.service.spring.SysSmsSortsServiceImp">
+		<property name="baseDao">
+			<ref bean="sysSmsSortsDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysSmsSortsService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysSmsSortsTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysSmsUpperlimitDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.sms.dao.hibernate.SysSmsUpperlimitDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.sms.model.SysSmsUpperlimit" />
+	</bean>
+	<bean
+		id="sysSmsUpperlimitTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.sms.service.spring.SysSmsUpperlimitServiceImp">
+		<property name="baseDao">
+			<ref bean="sysSmsUpperlimitDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysSmsUpperlimitService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysSmsUpperlimitTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysSmsSortsTreeService"
+		class="com.landray.kmss.sys.sms.service.spring.SysSmsSortsTreeServiceImp">
+		<property name="sysSmsSortsService">
+			<ref bean="sysSmsSortsService" />
+		</property>
+	</bean>
+	<bean
+		id="sysSmsMainServiceGetphones"
+		class="com.landray.kmss.sys.sms.service.spring.SysSmsMainServiceGetphones">
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+	</bean>
+	<bean
+		id="sysSmsSortofpeopleTreeService"
+		class="com.landray.kmss.sys.sms.service.spring.SysSmsSortofpeopleTreeServiceImp">
+		<property name="sysSmsSortsService">
+			<ref bean="sysSmsSortsService" />
+		</property>
+		<property name="sysSmsSortofpeopleService">
+			<ref bean="sysSmsSortofpeopleService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysSmsShortMessageServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.sms.service.spring.SysSmsShortMessageServiceImp">
+		<property name="baseDao">
+			<ref bean="sysNotifyShortMessageSendDao" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+	</bean>
+	<bean
+		id="sysSmsShortMessageService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysSmsShortMessageServiceTarget" />
+		</property>
+	</bean>
+</beans>

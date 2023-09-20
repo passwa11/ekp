@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="sys-notify:module.sys.notify"
+		urlPrefix="/sys/notify/"
+		defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN)">
+
+		<roles>ROLE_NOTIFYTODO_MNG;</roles>
+		<request
+			path="tools/mailTest_commontools.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)"/>
+		<!-- 待办管理 -->
+		<request path="sys_notify_todo/index.jsp*" defaultValidator="roleValidator(role=ROLE_NOTIFYTODO_MNG)" />
+		<request
+			path="sys_notify_todo/sysNotifyTodo.do*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+			<query
+				queryString="owner=false"
+				validator="roleValidator(role=ROLE_NOTIFYTODO_MNG)" />
+			<query
+				queryString="method=mngDelete"
+				validator="roleValidator(role=ROLE_NOTIFYTODO_MNG)" />
+		</request>
+		<request path="sys_notify_todo/sysNotifyConfig.do*"
+				defaultValidator="roleValidator(role=SYSROLE_SYSADMIN)|[roleValidator(role=ROLE_NOTIFYTODO_MNG)&amp;uselessRoleValidator()]">
+		</request>
+		<request
+			path="sys_notify_lang/*"
+			defaultValidator="roleValidator(role=ROLE_NOTIFYTODO_MNG;SYSROLE_SYSADMIN)">
+		</request>
+		<!-- 消息队列出错信息 -->
+		<request 
+			path="queue/sysNotifyQueueError.do*"
+			defaultValidator="roleValidator(role=SYSROLE_SYSADMIN)|[roleValidator(role=ROLE_NOTIFYTODO_MNG)&amp;uselessRoleValidator()]">
+			<query
+				queryString="method=list"
+				validator="roleValidator(role=ROLE_NOTIFYTODO_MNG;SYSROLE_SYSADMIN)" />
+			<!-- 三员管理员不可以查看view页面 -->
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_NOTIFYTODO_MNG)&amp;roleValidator(role=SYSROLE_USER)" />
+		</request>
+		
+		<request 
+			path="queue/index.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_SYSADMIN)|[roleValidator(role=ROLE_NOTIFYTODO_MNG)&amp;uselessRoleValidator()]">
+		</request>
+		
+		<request 
+			path="sysNotifyMailSetting*"
+			defaultValidator="roleValidator(role=ROLE_NOTIFYTODO_MNG;SYSROLE_SYSADMIN)">
+		</request>
+		
+		<request path="sys_notify_todo/index.jsp*" defaultValidator="roleValidator(role=SYSROLE_USER)" />
+		
+		<request
+			path="sys_notify_category/sysNotifyCategory.do*"
+			defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN)">
+			<query
+				queryString="method=getAppNames"
+				validator="roleValidator(role=SYSROLE_USER)" />
+			<query
+				queryString="method=getCategory|select|edit|add|delete|deleteAll|list|view"
+				validator="roleValidator(role=SYSROLE_SYSADMIN)|[roleValidator(role=ROLE_NOTIFYTODO_MNG)&amp;uselessRoleValidator()]" />
+		</request>
+		<request path="sys_notify_category/index.jsp*" defaultValidator="roleValidator(role=SYSROLE_SYSADMIN)|[roleValidator(role=ROLE_NOTIFYTODO_MNG)&amp;uselessRoleValidator()]" />
+	</module>
+	
+		<module
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<!-- 温馨提示内容 -->
+			<query
+				queryString="modelName=com.landray.kmss.sys.notify.model.SysNotifyMailConfig"
+				validator="roleValidator(role=ROLE_NOTIFYTODO_MNG;SYSROLE_SYSADMIN)" />
+		</request>
+	</module>
+
+	<!-- 
+		<portlet
+		moduleKey="sys-notify:table.sysNotifyTodo"
+		titleKey="sys-notify:table.sysNotifyTodo"
+		contentBean="sysNotifyTodoPortlet&amp;rowsize=!{rowsize}"
+		docLink="/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=view&amp;fdId=!{id}" />
+	-->
+	<!-- 默认显示“待审”和“暂挂” 
+	<portlet
+		moduleKey="sys-notify:table.sysNotifyTodo"
+		messageKey="sys-notify:table.sysNotifyTodo"
+		contentURL="/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&amp;home=1&amp;rowsize=10&amp;s_css=!{css}"
+		moreURL="/sys/notify.index" />
+    “待审”和“暂挂” 
+	<portlet
+		moduleKey="sys-notify:table.sysNotifyTodo"
+		messageKey="sys-notify:sysNotifyTodo.type.toDo"
+		contentURL="/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&amp;home=1&amp;isShowBtLable=0&amp;rowsize=10&amp;s_css=!{css}"
+		moreURL="/sys/notify.index" />
+	  “待阅” 
+	<portlet
+		moduleKey="sys-notify:table.sysNotifyTodo"
+		messageKey="sys-notify:sysNotifyTodo.type.toView"
+		contentURL="/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&amp;home=1&amp;isShowBtLable=0&amp;fdType=2&amp;rowsize=10&amp;s_css=!{css}"
+		moreURL="/sys/notify.index" />		 
+	 “已处理”  
+	<portlet
+		moduleKey="sys-notify:table.sysNotifyTodo"
+		messageKey="sys-notify:sysNotifyTodo.type.done"
+		contentURL="/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&amp;home=1&amp;isShowBtLable=0&amp;finish=1&amp;rowsize=10&amp;s_css=!{css}"
+		moreURL="/sys/notify.index" />
+	 -->
+
+	<quartz
+		messageKey="sys-notify:sysNotifyTodo.clear.job"
+		jobService="sysNotifyTodoJobService"
+		jobMethod="clearTodoDone"
+		cronExpression="0 0 1 * * ?"
+		description="sys-notify:sysNotify.quartz.description" />
+
+	<!-- 定时清理WebService日志 -->
+	<quartz
+		messageKey="sys-notify:sysNotifyWebServiceLog.clear.job"
+		jobService="sysNotifyWebServiceLogService"
+		jobMethod="clear"
+		cronExpression="0 0 1 * * ?"
+		description="sys-notify:sysNotifyWebServiceLog.quartz.description" />
+	<!-- 定时清理错误队列日志 -->
+	<quartz
+		messageKey="sys-notify:sysNotifyQueueError.clear.job"
+		jobService="sysNotifyQueueErrorService"
+		jobMethod="clear"
+		cronExpression="0 0 1 * * ?"
+		description="sys-notify:sysNotifyQueueError.quartz.description" />
+	<!-- 定时清理请求MK日志 -->
+	<quartz
+		messageKey="sys-notify:sysNotifyMKRequest.clear.job"
+		jobService="sysNotifyMKRequestJobService"
+		jobMethod="clear"
+		cronExpression="0 0 1 * * ?"
+		description="sys-notify:sysNotifyMKRequest.quartz.description" />
+	
+	<treeNodes type="myjob">
+		<treeNode messageKey="sys-notify:sysNotify.type.todo">
+			<treeNode
+				messageKey="sys-notify:sysNotifyTodo.tree.unfinished"
+				url="/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&amp;finish=0">
+				<treeNode
+					messageKey="sys-notify:sysNotifyTodo.tree.cate.audit"
+					url="/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&amp;finish=0&amp;fdType=1">
+				</treeNode>
+				<treeNode
+					messageKey="sys-notify:sysNotifyTodo.tree.cate.copyto"
+					url="/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&amp;finish=0&amp;fdType=2">
+				</treeNode>
+			</treeNode>
+			<treeNode
+				messageKey="sys-notify:sysNotifyTodo.tree.finished"
+				url="/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&amp;finish=1">
+				<treeNode
+					messageKey="sys-notify:sysNotifyTodo.tree.cate.audit"
+					url="/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&amp;finish=1&amp;fdType=1">
+				</treeNode>
+				<treeNode
+					messageKey="sys-notify:sysNotifyTodo.tree.cate.copyto"
+					url="/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&amp;finish=1&amp;fdType=2">
+				</treeNode>
+			</treeNode>
+		</treeNode>
+	</treeNodes>
+	<homePage
+		urlPrefix="sys/notify"
+		url="/sys/notify/sys_notify_todo/sysNotifyTodo_person.jsp?dataType=todo%26s_path%3D!{message(sys-notify:sysNotify.todo)}"
+		messageKey="sys-notify:table.sysNotifyTodo"
+		config="/moduleindex_notopic.jsp?nav=/sys/notify/tree_config.jsp"
+		type="global"/>
+
+</configs>

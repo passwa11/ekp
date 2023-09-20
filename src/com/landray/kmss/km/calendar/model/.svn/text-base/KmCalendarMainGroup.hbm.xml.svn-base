@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.calendar.model.KmCalendarMainGroup"
+		table="km_calendar_main_group">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+		
+		<many-to-one
+			name="fdGroup"
+			column="fd_group"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+		<bag
+			name="fdMainList"
+			table="km_calendar_mg"
+			lazy="false">
+			<key column="fd_main_group_id" />
+			<many-to-many
+				class="com.landray.kmss.km.calendar.model.KmCalendarMain"
+				column="fd_calendar_main_id" />
+		</bag>
+
+	</class>
+</hibernate-mapping>

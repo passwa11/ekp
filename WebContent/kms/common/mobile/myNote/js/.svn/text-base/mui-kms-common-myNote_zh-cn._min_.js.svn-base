@@ -1,0 +1,1 @@
+define([],function(){return{"mobile.myNote.comfirm.delete.content":"删除后无法恢复，确认删除吗？","mobile.myNote.msg.deleteSuccess":"删除成功","mobile.myNote.msg.note":"笔记","mobile.myNote.msg.unit":"个","mobile.myNote.comfirm.delete.title":"删除"}});

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		id="modelingAppMainMobileServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.modeling.main.mobile.service.spring.ModelingAppMainMobileServiceImp">
+	</bean>
+	
+	<bean id="modelingAppMainMobileService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="modelingAppMainMobileServiceTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="modelingAppTreeMobileServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.modeling.main.mobile.service.spring.ModelingAppTreeMobileServiceImp">
+	</bean>
+	
+	<bean id="modelingAppTreeMobileService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="modelingAppTreeMobileServiceTarget" />
+		</property>
+	</bean>
+	<bean
+			id="modelingCalendarMobileServiceTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.sys.modeling.main.views.mobile.service.spring.ModelingCalendarMobileServiceImp">
+	</bean>
+	<bean id="modelingCalendarMobileService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="modelingCalendarMobileServiceTarget" />
+		</property>
+	</bean>
+</beans>

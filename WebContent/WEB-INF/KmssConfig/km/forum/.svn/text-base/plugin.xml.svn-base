@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+		<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.km.forum.transfer.KmForumTransferTask" />
+			<param
+				name="name"
+				value="论坛管理数据迁移" />
+			<param
+				name="path"
+				value="/km/forum/" />
+			<param
+				name="check"
+				value="com.landray.kmss.km.forum.transfer.KmForumTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.km.forum.transfer.KmForumTransferTask" />
+			<param
+				name="description"
+				value="把老版本的发文数拆分为：发帖数和回帖数，故对当前数据库中的发帖和回帖进行重新计算" />
+		</item>
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.km.forum.transfer.KmForumPraiseTransferTask" />
+			<param
+				name="name"
+				value="论坛点赞数据迁移" />
+			<param
+				name="path"
+				value="/km/forum/" />
+			<param
+				name="check"
+				value="com.landray.kmss.km.forum.transfer.KmForumPraiseTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.km.forum.transfer.KmForumPraiseTransferTask" />
+			<param
+				name="description"
+				value="把点赞的数据迁移到点赞机制中去" />
+		</item>
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.km.forum.transfer.KmForumCategoryTransferTask" />
+			<param
+				name="name"
+				value="论坛管理板块层级ID迁移" />
+			<param
+				name="path"
+				value="/km/forum/" />
+			<param
+				name="check"
+				value="com.landray.kmss.km.forum.transfer.KmForumCategoryTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.km.forum.transfer.KmForumCategoryTransferTask" />
+			<param
+				name="description"
+				value="批量修改层级ID错误的板块分类" />
+		</item>
+	</extension>
+	
+		
+	<extension point="com.landray.kmss.sys.mobile.config">
+		<item name="info">
+			<param name="name" value="{km-forum:module.km.forum}" />
+			<param name="modelName" value="com.landray.kmss.km.forum.model.KmForumTopic" />
+			<param name="defaultUrl" value="/km/forum/mobile/nav.json" />
+		</item>
+	</extension>
+	
+	<extension	point="com.landray.kmss.km.keydata"	model="*" >
+		<item
+			name="showKeydataUsed">
+			<param
+				name="name"
+				value="论坛管理" />
+			<param
+				name="actionUrl"
+				value="/km/forum/showKeydataUsed.jsp?keydataId=${keydataId}" />
+			<param
+				name="formName"
+				value="kmForumPostForm" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item 
+			name="js-pkg">
+			<param 
+				name="name" 
+				value="mui-forum.js" />
+			<param 
+				name="targetFile" 
+				value="/km/forum/mobile/resource/mui-forum.js" />
+			<param name="tinyId" value="forum" />
+		</item>
+		<item 
+			name="js-pkg">
+			<param 
+				name="name" 
+				value="mui-forum-view.js" />
+			<param 
+				name="targetFile" 
+				value="/km/forum/mobile/resource/mui-forum-view.js" />
+			<param name="tinyId" value="forum-view" />
+		</item>
+		<item 
+			name="css-file">
+			<param 
+				name="name" 
+				value="forum.css" />
+			<param 
+				name="targetFile" 
+				value="/km/forum/mobile/resource/css/forum.css" />
+		</item>
+		<item 
+			name="css-file">
+			<param 
+				name="name" 
+				value="newForum.css" />
+			<param 
+				name="targetFile" 
+				value="/km/forum/mobile/resource/css/newForum.css" />
+		</item>
+		<item 
+			name="css-file">
+			<param 
+				name="name" 
+				value="mui-forum-list.css" />
+			<param 
+				name="targetFile" 
+				value="/km/forum/mobile/resource/css/list.css" />
+		</item>
+		<item
+			name="css-file">
+			<param
+				name="name"
+				value="introduce.css" />
+			<param
+				name="targetFile"
+				value="/km/forum/mobile/resource/css/introduce.css" />
+		</item>
+		<item
+			name="css-file">
+			<param
+				name="name"
+				value="mui-forum-edit.css" />
+			<param
+				name="targetFile"
+				value="/km/forum/mobile/resource/css/edit.css" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.zone.doccount" >
+             <item name="doccount" >
+                   <param name="unid" value="kmForum" />
+                   <param name="order" value="5"/>
+                   <param name="title" value="{km-forum:module.km.forum.hr}" />
+                   <param name="link" value="/km/forum/indexCriteria.jsp#cri.q=myTopic:create" />
+                   <param name="bean" value="kmForumDocCountGetter"/>
+             </item>
+      </extension>
+      
+      <!-- Webservice分享贴子 -->
+      <extension
+		point="com.landray.kmss.sys.webservice2">
+		<item
+			name="registry">
+			<param
+				name="serviceName"
+				value="{km-forum:kmForumTopic.webservice.title}" />
+			<param
+				name="serviceClass"
+				value="com.landray.kmss.km.forum.webservice.IKmForumWebserviceService" />
+			<param
+				name="serviceBean"
+				value="kmForumWebserviceService" />				
+			<param
+				name="serviceDoc"
+				value="/km/forum/km_forum_webservice/kmForumWebServiceHelp.jsp" />
+		</item>
+	</extension>
+	
+	<!-- 敏感词过滤 -->
+	<extension point="com.landray.sys.profile.sensitive.config" model="*">
+		<item
+			name="sensitiveConfig">
+			<param
+				name="name" 
+				value="{km-forum:module.km.forum}" />
+			<param 
+				name="formName" 
+				value="kmForumPostForm" />
+		</item>
+	</extension>
+	
+	<!--论坛管理一键选择分类扩展点实现 -->
+	<extension point="com.landray.kmss.sys.person.categoryUrl" model="com.landray.kmss.km.forum.model.KmForumPost" >
+		<item name="categoryUrl">
+			<param name="addUrl" value="/km/forum/km_forum/kmForumPost.do?method=add&amp;fdForumId={0}" />
+			<param name="templateModel" value="com.landray.kmss.km.forum.model.KmForumCategory" />
+		</item>
+	</extension>
+	<!-- 数据中台 -RTF -->
+	<extension point="com.landray.kmss.sys.xform.maindata.rtf">
+		<item name="config">
+			<!-- 主文档全名称 -->
+			<param
+				name="modelName"
+				value="com.landray.kmss.km.forum.model.KmForumPost" />
+			<param
+				name="fields"
+				value="docContent" />
+		</item>
+		<item name="config">
+			<!-- 主文档全名称 -->
+			<param
+				name="modelName"
+				value="com.landray.kmss.km.forum.model.KmForumScore" />
+			<param
+				name="fields"
+				value="fdSign" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.third.krobot">
+		<item name="modules">
+			<param name="moduleName" value="com.landray.kmss.km.forum.model.KmForumTopic" />
+			<param name="moduleMessage" value="km-forum:module.km.forum" />
+		</item>
+	</extension>
+</plugin>

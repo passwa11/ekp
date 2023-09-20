@@ -1,0 +1,33 @@
+var datas = data;
+{$<div class="model-mask-panel">$}
+	{$<div class="model-list app">$}
+		{$<p class="model-list-title">選擇版本</p>$}
+		{$<ul class="model-list-content">$}
+			for (var i = 0; i < datas.length; i ++) {
+				var grid = datas[i];
+				{$
+					<li data-ver-id="{%grid['fdId'].text%}" data-app-id="{%grid['fdApplicationId'].text%}" class="$}if(grid['fdStatus'].text === 'cur'){$cur$}{$">
+						<div class="model-list-content-item">
+							<i class="model-list-content-radio">
+								<input type="radio" name="List_Selected" style="display: none" value="{%grid['fdId'].text%}" data-lui-mark="table.content.radio">
+							</i>
+							<div class="model-list-content-desc">
+								<div class="model-list-content-desc-title">
+									<p>版本{% grid['fdVersion'].text %}</p>$}
+									if(grid['fdStatus'].text === 'cur'){
+										{$<span>當前版本</span>$}
+									} else if(grid['fdStatus'].text === 'new'){
+										{$<div></div>$}
+									}
+								{$</div>
+								<p class="model-list-content-desc-date">發佈時間：{% grid['fdPublishTime'].text %}</p>
+								<p class="model-list-content-desc-name">创建人：{% grid['fdCreator'].text %}</p>
+							</div>
+							<i class="model-list-content-create"></i>
+						</div>
+					</li>
+				$}
+			}
+		{$</ul>$}
+	{$</div>$}
+{$</div>$}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrgGroupCate"
+		table="sys_org_group_cate">
+		<!-- 主结构配置 -->
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<!-- 简单属性 -->
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			length="200"
+			access="com.landray.kmss.sys.organization.lang.SysOrgCommonAccessor" />
+		<property
+			name="fdKeyword"
+			column="fd_keyword"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100" />
+		<property
+			name="fdCreateTime"
+			column="fd_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdAlterTime"
+			column="fd_alter_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 对象属性 -->
+		<many-to-one
+			name="hbmParent"
+			column="fd_parentid"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<bag
+			name="hbmChildren"
+			inverse="true">
+			<key column="fd_parentid" />
+			<one-to-many class="com.landray.kmss.sys.organization.model.SysOrgGroupCate" />
+		</bag>
+	</class>
+</hibernate-mapping>

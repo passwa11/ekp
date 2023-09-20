@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+    <!-- 前后端分离列表字段信息 -->
+    <extension-point id="com.landray.kmss.sys.list.field.config">
+        <item name="field">
+            <param name="unid" kind="string" required="true">
+                <description>标识</description>
+            </param>
+            <param name="property" kind="string" required="true">
+                <description>属性名</description>
+            </param>
+            <param name="col" kind="string">
+                <description>返回字段名</description>
+            </param>
+            <param name="title" kind="string">
+                <description>字段标题</description>
+            </param>
+            <param name="show" kind="string">
+                <description>是否展示,默认为true,不展示false,动态判断bean</description>
+            </param>
+            <param name="convertor" kind="spring" required="true"
+                   basedOn="com.landray.kmss.common.rest.convertor.IPropertyConvertor">
+                <description>值转换器</description>
+            </param>
+            <param name="convertorProps" kind="string">
+                <description>转换器所需的属性,没有可不填</description>
+            </param>
+            <param name="props" kind="string">
+                <description>字段属性</description>
+            </param>
+            <description>前后端分离列表字段信息</description>
+        </item>
+        <description>前后端分离列表字段信息</description>
+    </extension-point>
+</plugin>

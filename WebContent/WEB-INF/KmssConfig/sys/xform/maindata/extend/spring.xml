@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 业务数据start -->
+	<bean id="sysFormBusinessDataControlTreeBean" 
+	  class="com.landray.kmss.sys.xform.maindata.extend.bean.SysFormBusinessDataControlTreeBean" >
+	</bean>
+	<bean id="sysFormBusinessDataControlTreeInfo" 
+	  class="com.landray.kmss.sys.xform.maindata.extend.bean.SysFormBusinessDataControlTreeInfo" >
+	</bean>
+	<bean id="sysFormBusinessDataControlRelation" 
+	  class="com.landray.kmss.sys.xform.maindata.extend.bean.SysFormBusinessDataControlRelation" >
+	  <property name="sysFormBusinessDataControlTreeBean" ref="sysFormBusinessDataControlTreeBean"></property>
+	</bean>
+	<!-- 业务数据end -->
+	
+	<bean id="getFullPathByOrgElement" class="com.landray.kmss.sys.xform.maindata.extend.GetFullPathByOrgElement">
+		<property name="baseService">
+			<ref bean="KmssBaseService" />
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!-- 匿名模型扩展点定义开始 -->
+	<extension-point id="com.landray.kmss.sys.anonym.model">
+		<item name="anonymModel">
+			<param name="targetModelName" kind="unid" required="true" >
+				<description>匿名模型全类限定名</description>
+			</param>
+			<param
+				 name="dataBean" 
+				 kind="spring"
+				 basedOn="com.landray.kmss.sys.anonym.base.data.IBaseDataBean"
+				 required="true" >
+				<description>匿名模型数据获取接口</description>
+			</param>
+			<param name="desc" required="false" >
+				<description>匿名模型描述信息</description>
+			</param>
+			<description>匿名模型</description>
+		</item>
+		<description>匿名模型</description>
+	</extension-point>
+	
+	
+	
+	<!-- 数据映射扩展点定义开始 -->
+	<extension-point id="com.landray.kmss.sys.anonym.relation" >
+		<item name="mapRelation">
+			<param name="categoryModelName" kind="unid" required="true" >
+				<description>
+					categoryModelName 业务主模型全类限定名，
+					例如：com.landray.kmss.sys.news.model.SysNewsMain
+				</description>
+			</param>
+			<param name="targetModelName" required="true" >
+				<description>
+					targetModelName 映射目标匿名模型全类限定名，
+					如果是公共匿名模型，则为固定模型(SysAnonymCommon):com.landray.kmss.sys.anonym.model.SysAnonymCommon
+					如果是自己扩展的业务匿名模型(例如新闻扩展匿名模型SysNewsMainAnonym)：com.landray.kmss.sys.news.model.SysNewsMainAnonym
+				</description>
+			</param>
+			<param name="fieldMap" required="true" >
+				<description>
+					fieldMap 业务主模型和匿名模型之间的字段映射关系
+					如果是自己扩展的业务匿名模型(例如SysNewsMainAnonym),配置格式如下：fdName:docSubject;docCreator.fdName:docCreatorName
+					如果是公共匿名模型SysAnonymCommon，则字段包括:
+					fdName(文档名称),fdCategory(文档类别),fdNumber(文档编号),docCreator(创建人),docCreateTime(创建时间),docAuthor(作者)，docDept(所属部门),docPublishTime(发布时间)，fdSummary(内容摘要)
+					fdPicAtt:xx,fdAttachment:xxx,fdContentAtt:editonlie
+				</description>
+			</param>	
+			<param name="formatKey" required="false" ><description>数据格式key,可传多值，用分号分割，例如clssicNewsList;classicNewsView,Html</description></param>
+			<param name="listUrl" kind="filepath" ><description>列表url</description></param>
+			<param name="viewUrl" kind="filepath" ><description>详情url</description></param>
+			<param name="attContentKey" required="false" ><description>正文附件KEY</description></param>
+			<description>数据映射</description>
+		</item>
+		<description>数据映射</description>
+	</extension-point>
+	
+	
+	<!-- 匿名机制实现配置 -->
+	
+	<!-- 匿名机制-公共匿名模型配置 -->
+	<extension point="com.landray.kmss.sys.anonym.model">
+		<item name="anonymModel">
+			<param name="targetModelName" value="com.landray.kmss.sys.anonym.model.SysAnonymCommon" />
+			<param name="dataBean" value="commonDataBean" />
+			<param name="desc" value="公共匿名模型" />
+		</item>
+	</extension>
+	
+	
+	<!-- 自定义附件权限实现 -->
+	<extension point="com.landray.kmss.sys.attachment.validator"
+		model="com.landray.kmss.sys.anonym.model.SysAnonymCommon">
+		<item name="validator">
+			<param name="bean" value="sysAnonymAttValidator" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.cache.filter.webcontentcache">
+		<item name="provider">
+			<param name="bean" value="sysAnonymPageCache"/>
+			<!--
+			<param name="loadable" value="true"/>
+			-->
+		</item>
+	</extension>
+</plugin>

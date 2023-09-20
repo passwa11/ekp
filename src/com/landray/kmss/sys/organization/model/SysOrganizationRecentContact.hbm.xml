@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrganizationRecentContact"
+		table="sys_org_recent_contact">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+		
+		<version name="version"  type="integer"></version>
+
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+
+		<many-to-one
+			name="fdUser"
+			column="fd_user_id"
+			insert="true"
+			update="true"
+			unique-key="unique_contact"
+			index="idx_rc_fdUser" />
+
+		<many-to-one
+			name="fdContact"
+			column="fd_contact_id"
+			insert="true"
+			update="true"
+			unique-key="unique_contact" />
+
+	</class>
+</hibernate-mapping>

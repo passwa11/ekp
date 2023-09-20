@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/category/sys_category_main/sysCategoryMain.do"
+		class="com.landray.kmss.sys.category.actions.SysCategoryMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.category.forms.SysCategoryMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/category/sys_category_main/sysCategoryMain_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/category/sys_category_main/sysCategoryMain_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/category/sys_category_main/sysCategoryMain_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/category/sys_category_property/sysCategoryProperty.do"
+		class="com.landray.kmss.sys.category.actions.SysCategoryPropertyAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.category.forms.SysCategoryPropertyForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/category/sys_category_property/sysCategoryProperty_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/category/sys_category_property/sysCategoryProperty_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/category/sys_category_property/sysCategoryProperty_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/category/criteria/sysCategoryCriteria.do"
+		class="com.landray.kmss.sys.category.actions.SysCategoryCriteriaAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/category/sys_category_config/sysCategoryConfig.do"
+		class="com.landray.kmss.sys.category.actions.SysCategoryConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.category.forms.SysCategoryConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/sys/category/sysCategoryAuthconfig.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="sysCategoryCriteriaController"
+        class="com.landray.kmss.sys.category.actions.SysCategoryCriteriaController">
+    </bean>
+    <bean
+        id="sysCategoryPropertyController"
+        class="com.landray.kmss.sys.category.rest.controller.SysCategoryPropertyController">
+    </bean>
+</beans>

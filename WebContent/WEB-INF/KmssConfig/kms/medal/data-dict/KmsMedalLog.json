@@ -1,0 +1,63 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.kms.medal.model.KmsMedalLog",
+        "messageKey": "kms-medal:table.kmsMedalLog",
+        "displayProperty": "fdId",
+        "serviceBean": "kmsMedalLogService",
+        "table": "kms_medal_log",
+        "url": "/kms/medal/kms_medal_log/kmsMedalLog.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "docHonoursTime":         {
+            "propertyType": "simple",
+            "messageKey": "kms-medal:kmsMedalLog.docHonoursTime",
+            "type": "DateTime",
+            "column": "doc_honours_time",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "fdMedalId":         {
+            "propertyType": "simple",
+            "messageKey": "kms-medal:kmsMedalLog.fdMedalId",
+            "type": "String",
+            "column": "fd_medal_id",
+            "notNull": "false",
+            "length": "36",
+            "validate": "true"
+        },
+        "docOperator":         {
+            "propertyType": "model",
+            "messageKey": "kms-medal:kmsMedalLog.docOperator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "doc_operator_id",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "fdHonours":         {
+            "propertyType": "list",
+            "messageKey": "kms-medal:kmsMedalLog.fdHonours",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "kms_medal_log_honours",
+            "column": "fd_doc_id",
+            "elementColumn": "fd_org_id"
+        },
+        "fdSourceName":         {
+            "propertyType": "simple",
+            "messageKey": "kms-medal:kmsMedalLog.fdSourceName",
+            "type": "String",
+            "column": "fd_source_name",
+            "length": "100"
+        },
+        "fdSourceId":         {
+            "propertyType": "simple",
+            "messageKey": "kms-medal:kmsMedalLog.fdSourceId",
+            "type": "String",
+            "column": "fd_source_id",
+            "length": "50"
+        }
+    }
+}

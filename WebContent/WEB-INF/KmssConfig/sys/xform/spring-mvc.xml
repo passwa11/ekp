@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/xform.do"
+		class="com.landray.kmss.sys.xform.actions.XFormAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/sys/xform/db/form_operation_def.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/xform/import.do"
+		class="com.landray.kmss.sys.xform.actions.XFormImportAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="result"
+					value="/sys/xform/impt/result.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/mutillang/import.do"
+		class="com.landray.kmss.sys.xform.actions.SysXformMultiLangImportAndExportAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.datainit.forms.UploadInitForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="result"
+					value="/sys/xform/lang/sysFormMultilang_upload_result.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

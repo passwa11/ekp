@@ -1,0 +1,103 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.lbpm.engine.persistence.model.LbpmProcessDefinition",
+        "messageKey": "sys-lbpm-engine:table.lbpmProcessDefinition",
+        "displayProperty": "fdTemplateModelName",
+        "serviceBean": "lbpmProcessDefinitionService",
+        "table": "lbpm_process_definition"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdTemplateModelName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpm-engine:lbpmProcessDefinition.fdTemplateModelName",
+            "type": "String",
+            "column": "fd_template_model_name",
+            "notNull": "false",
+            "length": "200"
+        },
+        "fdKey":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpm-engine:lbpmProcessDefinition.fdKey",
+            "type": "String",
+            "column": "fd_key",
+            "notNull": "false",
+            "length": "50"
+        },
+        "fdContent":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpm-engine:lbpmProcessDefinition.fdContent",
+            "type": "RTF",
+            "column": "fd_content",
+            "notNull": "false",
+            "length": "1000000"
+        },
+        "fdVersion":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpm-engine:lbpmProcessDefinition.fdVersion",
+            "type": "Long",
+            "column": "fd_version",
+            "notNull": "false",
+            "length": "19"
+        },
+        "fdIsCurrentVersion":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpm-engine:lbpmProcessDefinition.fdIsCurrentVersion",
+            "type": "Boolean",
+            "column": "fd_is_current_version",
+            "notNull": "false",
+            "length": "1"
+        },
+        "fdLoadType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpm-engine:lbpmProcessDefinition.fdLoadType",
+            "type": "Integer",
+            "column": "fd_load_type",
+            "notNull": "false",
+            "length": "1"
+        },
+        "fdTemplateId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpm-engine:lbpmProcessDefinition.fdTemplateId",
+            "type": "String",
+            "column": "fd_template_id",
+            "notNull": "false",
+            "length": "36"
+        },
+        "fdCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-lbpm-engine:lbpmProcessDefinition.fdCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_creator_id",
+            "notNull": "false"
+        },
+        "fdCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpm-engine:lbpmProcessDefinition.fdCreateTime",
+            "type": "DateTime",
+            "column": "fd_create_time",
+            "notNull": "false"
+        },
+        "nodeDefinitions":         {
+            "propertyType": "list",
+            "messageKey": "sys-lbpm-engine:table.lbpmNodeDefinition",
+            "column": "fd_process_id",
+            "type": "com.landray.kmss.sys.lbpm.engine.persistence.model.LbpmNodeDefinition",
+            "cascade": "delete",
+            "inverse": "true",
+            "table": "lbpm_node_definition"
+        },
+        "nodeDefinitionHandlers":         {
+            "propertyType": "list",
+            "messageKey": "sys-lbpm-engine:table.lbpmNodeDefinitionHandler",
+            "column": "fd_process_id",
+            "type": "com.landray.kmss.sys.lbpm.engine.persistence.model.LbpmNodeDefinitionHandler",
+            "cascade": "delete",
+            "inverse": "true",
+            "table": "lbpm_node_definition_handler"
+        }
+    }
+}

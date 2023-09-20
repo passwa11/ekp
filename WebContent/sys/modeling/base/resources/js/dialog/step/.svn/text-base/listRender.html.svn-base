@@ -1,0 +1,30 @@
+var view = render.parent;
+
+var infos = view.formateSourceData(data.datas);
+var paths = view.getPaths();
+
+
+{$
+	<div class="list-block">
+		<div class="path-wrap">$}
+		if(paths.length > 0){
+			for(var i = 0;i < paths.length;i++){
+				var path = paths[i];
+				{$
+					<span class="path-txt">{%path%}</span>
+				$}
+			}
+		}
+		{$</div>
+		<div class="list-record-wrap">$}
+			for(var key in infos){
+				var info = infos[key];
+				{$
+					<div class="list-record" data-trigger='true' data-item-value="{%info.id%}">
+						<label><i></i><input type="radio" name="record" />{%info.name%}</label>
+					</div>
+				$}
+			}
+		{$</div>
+	</div>
+$}

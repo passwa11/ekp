@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <!--印章相关的扩展点-->
+    <extension-point 
+        id="com.landray.kmss.elec.core.seal">
+        <item name="service">
+            <param name="sealType" kind="string"  required="true">
+                <description>印章类型，请参考枚举ESealType，physical;electrical;antiforgery，注意同一个sealType只有一个扩展点</description>
+            </param>
+            <param name="sealTypeKey" kind="string"  required="true">
+                <description>印章类型对应的资源文件，格式为elec-seal:xxx.yyy</description>
+            </param>
+            <param name="modelName" kind="string"  required="true">
+                <description>印章类全名，比如com.kmss.landray.elec.eseal.model.ESealModel</description>
+            </param>
+            <description>印章服务</description> 
+        </item>
+        
+        <item name="coreService">
+        	<param name="bean" required="true" kind="spring"
+				basedOn="com.landray.kmss.elec.core.seal.ISealInfoService">
+				<description>印章信息接口</description>
+			</param>
+            <description>印章信息服务</description> 
+        </item>
+        <description>印章相关的扩展点</description>          
+    </extension-point> 
+    
+    <!--认证服务扩展点-->
+	<extension-point 
+		id="com.landray.kmss.elec.core.authentication">
+		<item name="service">
+			<param name="bean" required="true" kind="spring"
+				basedOn="com.landray.kmss.elec.core.authentication.IAuthenticationService">
+				<description>认证接口</description>
+			</param>
+			<param name="providerName" kind="string" required="true">
+                <description>认证机构: CFCA,BJCA...，同时作为唯一标识</description>
+            </param>
+            <param name="providerNameKey" kind="string"  required="true">
+                <description>机构名称对应的资源key</description>
+            </param>
+            <param name="configJsp" kind="string"  required="false">
+                <description>服务对应的配置页面，/**/*.jsp</description>
+            </param>
+            <param name="paramInputJsp" kind="string"  required="false">
+                <description>认证服务参数页面，业务模块（比如相对方）在需要认证的时候引用，
+                                该页面只提供本厂商需要的form表单数据，注意内部不要使用&lt;form&gt;标签
+                                页面路径遵循模块划分:/km/review/km_review_main/**/*.jsp
+                </description>
+            </param>
+            <param name="order" default="50" kind="int">
+                <description>
+                            排序号，providerName冲突时，序号小的优先被调用。
+                </description>
+            </param>
+			<description>认证接口</description>	
+		</item>
+		<item name="corePersonService">
+            <param name="bean" required="true" kind="spring"
+                basedOn="com.landray.kmss.elec.core.authentication.IPersonAuthenticationManagementService">
+                <description>个人认证服务</description>
+            </param>
+            <param name="providerName" kind="string" required="true">
+                <description>认证提供商</description>
+            </param>
+            <param name="configJsp" kind="string"  required="true">
+                <description>服务对应的配置页面，/**/*.jsp</description>
+            </param>
+            <param name="authResultViewUrl" kind="string"  required="true">
+                <description>认证结果展示链接，可以是.jsp或.do，格式为/**/*.jsp|do</description>
+            </param>
+            
+            <param name="order" default="50" kind="int">
+                <description>
+                            排序号，providerName冲突时，序号小的优先被调用。
+                </description>
+            </param>
+            <description>个人认证服务</description> 
+        </item>
+        <item name="corePriseService">
+            <param name="bean" required="true" kind="spring"
+                basedOn="com.landray.kmss.elec.core.authentication.IEnterpriseAuthenticationManagementService">
+                <description>企业认证服务</description>
+            </param>
+            <param name="providerName" kind="string" required="true">
+                <description>认证提供商</description>
+            </param>
+            <param name="configJsp" kind="string"  required="true">
+                <description>服务对应的配置页面，/**/*.jsp</description>
+            </param>
+            <param name="order" default="50" kind="int">
+                <description>
+                            排序号，providerName冲突时，序号小的优先被调用。
+                </description>
+            </param>
+            <description>企业认证服务</description> 
+        </item>
+		<description>认证服务扩展点</description>			
+	</extension-point>
+	
+	<!--
+	证书服务扩展点，用于对接证书落地的平台，比如客户的证书管理系统，或者直接对接某机构提供的SaaS、或RA
+	该扩展点的使用上下文应该在elec.ca.service.spring.CertificationServiceImpl里提供
+	-->
+    <extension-point 
+        id="com.landray.kmss.elec.core.certification">
+        <item name="service">
+            <param name="bean" required="true" kind="spring"
+                basedOn="com.landray.kmss.elec.core.certification.ICertificationService">
+                <description>证书功能接口</description>
+            </param>
+            <param name="providerName" kind="string" required="true">
+                <description>发证机构: CFCA、易起签..等等，唯一标识,纯字母的形式</description>
+            </param>
+            <param name="providerNameKey" kind="string"  required="true">
+                <description>机构名称对应的资源key</description>
+            </param>
+            <param name="configJspName" kind="string"  required="false">
+                <description>配置页的显示名称，当configJsp有值时有值</description>
+            </param>
+            <param name="configJsp" kind="string"  required="false">
+                <description>服务对应的配置页面，/**/*.jsp</description>
+            </param>
+            <param name="order" default="50" kind="int">
+                <description>
+                            排序号，providerName冲突时，序号小的优先被调用。注意10以内的暂定为代理类的CA，比如易企签，
+                            10+表示CA直属机构，比如CFCA
+                </description>
+            </param>
+            <description>证书服务</description> 
+        </item>
+         <item name="coreService">
+            <param name="bean" required="true" kind="spring"
+                basedOn="com.landray.kmss.elec.core.certification.ICertificationManagementService">
+                <description>证书功能接口</description>
+            </param>
+            <param name="providerName" kind="string" required="true">
+                <description>证书提供商</description>
+            </param>
+            <param name="configJsp" kind="string"  required="false">
+                <description>服务对应的配置页面，/**/*.jsp</description>
+            </param>
+            <param name="importApplyUrl" kind="string"  required="true">
+                <description>证书申请的引入页面，为业务模块的toolbar中提供按钮，类似于传阅机制的按钮，/**/*.jsp|do</description>
+            </param>
+            <param name="importCertViewUrl" kind="string"  required="true">
+                <description>用于引入绑定的证书列表，可以是.jsp或.do，格式为/**/*.jsp|do</description>
+            </param>
+            <param name="order" default="50" kind="int">
+                <description>
+                            排序号，providerName冲突时，序号小的优先被调用。
+                </description>
+            </param>
+            <description>书提供数据服务</description> 
+        </item>
+        <description>证书服务扩展点</description>         
+    </extension-point>
+
+    <!--签约服务扩展点，负责对接签约平台-->
+    <extension-point 
+        id="com.landray.kmss.elec.core.signature">
+        <item name="service">
+            <param name="bean" required="true" kind="spring"
+                basedOn="com.landray.kmss.elec.core.signature.ISignatureService">
+                <description>签约功能接口</description>
+            </param>
+            <param name="providerName" kind="string" required="true">
+                <description>签约平台: YQQ（易企签），AXQ（安心签）..等等，唯一标识,纯字母的形式</description>
+            </param>
+            <param name="providerNameKey" kind="string"  required="true">
+                <description>机构名称对应的资源key</description>
+            </param>
+            <param name="configJsp" kind="string"  required="false">
+                <description>服务对应的配置页面，/**/*.jsp</description>
+            </param>
+            <param name="order" default="50" kind="int">
+                <description>
+                            排序号，providerName冲突时，序号小的优先被调用。
+                </description>
+            </param>
+            <description>签约服务</description> 
+        </item>
+        <item name="coreService">
+            <param name="bean" required="true" kind="spring"
+                basedOn="com.landray.kmss.elec.core.signature.ISignatureManagementService">
+                <description>签约服务管理侧的管理侧扩展点，负责定义业务方法</description>
+            </param>
+            <param name="providerName" kind="string" required="true">
+                <description>签约服务管理提供商，一般只有内部的</description>
+            </param>
+            <param name="providerNameKey" kind="string"  required="true">
+                <description>机构名称对应的资源key</description>
+            </param>
+            <param name="order" default="50" kind="int">
+                <description>
+                            排序号，providerName冲突时，序号小的优先被调用。
+                </description>
+            </param>
+            <description>签约服务管理侧的管理侧扩展点，负责定义业务方法，该item逻辑上只有一个实现</description> 
+        </item>
+        <description>签约服务管理侧扩展点</description>         
+    </extension-point>
+    
+    <!-- 相对方外部服务 -->
+    <extension-point 
+        id="com.landray.kmss.elec.core.involver">
+        <item name="service">
+            <param name="bean" required="true" kind="spring"
+                basedOn="com.landray.kmss.elec.core.involver.IInvolverService">
+                <description>相对方外部服务接口</description>
+            </param>
+            <param name="providerName" kind="string" required="true">
+                <description>服务平台: YQQ（易企签），AXQ（安心签）..等等，唯一标识,纯字母的形式</description>
+            </param>
+            <param name="providerNameKey" kind="string"  required="true">
+                <description>机构名称对应的资源key</description>
+            </param>
+            <param name="configJsp" kind="string"  required="false">
+                <description>服务对应的配置页面，/**/*.jsp</description>
+            </param>
+            <param name="order" default="50" kind="int">
+                <description>
+                            排序号，providerName冲突时，序号小的优先被调用。
+                </description>
+            </param>
+            <description>相对方外部服务</description> 
+        </item>
+        <description>相对方外部服务扩展点</description>         
+    </extension-point>
+    
+      <extension-point
+		id="com.landray.kmss.elec.core.identity.validate">
+		<item
+			name="validateType">
+			<param
+				name="key"
+				required="true"
+				kind="string">
+				<description>校验方式的标识关键字,如：mobileCode、authenVerify，用于唯一标识作用。</description>
+			</param>
+			<param
+				name="name"
+				required="true"
+				kind="string">
+				<description>身份校验方式的名称,如：人脸识别、数字证书校验-长期云证书PIN码校验、数字证书校验-UKEY校验，用于前台页面显示。</description>
+			</param>
+			<param
+				name="order"
+				default="50"
+				required="true"
+				kind="int">
+				<description>
+					排序号，序号小的优先被调用。
+				</description>
+			</param>
+			<param
+				name="validateBean"
+				required="true"
+				kind="spring"
+				basedOn="com.landray.kmss.elec.core.authentication.IElecCoreInentityValidate">
+				<description>
+					身份校验实现bean。实现接口com.landray.kmss.elec.core.authentication.IElecCoreInentityValidate
+				</description>
+			</param>
+			<description>
+				身份校验扩展点定义。
+			</description>
+		</item>
+		<description>与身份校验相关的扩展</description>
+	</extension-point>
+	
+	<!-- 用印记录 -->
+	<extension-point id="com.landray.kmss.elec.core.seal.ledger">
+		<item name="connector">
+			<param name="bean" 
+				   required="true" 
+				   kind="spring" 
+				   basedOn="com.landray.kmss.elec.core.seal.service.IElecSealUseService">
+				<description>非印章用印记录写入bean, 实现接口com.landray.kmss.elec.core.seal.service.IElecSealUseService </description>
+			</param>
+			<description>非印章模块写入用印记录扩展点定义</description>	
+		</item>
+		<description>非印章模块写入用印记录扩展</description>			
+	</extension-point>
+
+    <!-- 签署文件扩展点 -->
+    <extension-point
+            id="com.landray.kmss.elec.core.file.service.IElecChannelFileService">
+        <item name="convertor">
+            <param name="bean" required="true" kind="spring"
+                   basedOn="com.landray.kmss.elec.core.file.service.IElecChannelFileService">
+                <description>无纸化文件渠道服务</description>
+            </param>
+            <param name="channel" kind="string" required="true">
+                <description>服务商</description>
+            </param>
+            <description>无纸化文件转换总线</description>
+        </item>
+        <description>无纸化文件转换总线</description>
+    </extension-point>
+
+    <!-- 签署印章服务扩展点 -->
+    <extension-point
+            id="com.landray.kmss.elec.core.seal.service.IElecSealChannelService">
+        <item name="convertor">
+            <param name="bean" required="true" kind="spring"
+                   basedOn="com.landray.kmss.elec.core.seal.service.IElecSealChannelService">
+                <description>无纸化印章渠道服务</description>
+            </param>
+            <param name="channel" kind="string" required="true">
+                <description>服务商</description>
+            </param>
+            <description>无纸化印章转换总线</description>
+        </item>
+        <description>无纸化印章转换总线</description>
+    </extension-point>
+
+    <!-- 签署服务扩展点 -->
+    <extension-point
+            id="com.landray.kmss.elec.core.signature.service.IElecChannelSignService">
+        <item name="convertor">
+            <param name="bean" required="true" kind="spring"
+                   basedOn="com.landray.kmss.elec.core.signature.service.IElecChannelSignService">
+                <description>无纸化签署渠道服务</description>
+            </param>
+            <param name="channel" kind="string" required="true">
+                <description>服务商</description>
+            </param>
+            <description>无纸化签署转换总线</description>
+        </item>
+        <description>无纸化签署转换总线</description>
+    </extension-point>
+</plugin>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../../design.xsd ">
+	
+ 	<module 
+        urlPrefix="/sys/lbpmext/businessauth/" 
+        messageKey="sys-lbpmext-businessauth:module.sys.lbpmext.businessauth"
+        defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN)">
+        <roles>
+        	ROLE_SYSLBPMEXTAUTH_DEFAULT;
+        	ROLE_SYSLBPMEXTAUTH_ADMIN;
+        	ROLE_SYSLBPMEXTAUTH_MAINTAINER;
+        </roles>
+        <request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_DEFAULT)&amp;lbpmExtBusinessauthValidator(isSetting=true)"/>
+        <request 
+            path="lbpmBusinessAuthCate.do*"
+            defaultValidator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_DEFAULT)" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuthCate">
+            <query
+				queryString="method=add|save|saveadd"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)|roleValidator(role=ROLE_SYSLBPMEXTAUTH_MAINTAINER)" />			
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)|roleValidator(role=ROLE_SYSLBPMEXTAUTH_MAINTAINER)|roleValidator(role=ROLE_SYSLBPMEXTAUTH_DEFAULT)" />
+			<query
+				queryString="method=edit|update|delete"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)|[roleValidator(role=ROLE_SYSLBPMEXTAUTH_MAINTAINER)&amp;lbpmExtBusinessauthValidator()]" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)" />
+        </request>
+        
+        <request 
+            path="lbpmBusinessAuthInfoCate.do*"
+            defaultValidator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_DEFAULT)" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuthInfoCate">
+            <query
+				queryString="method=add|save|saveadd"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)|roleValidator(role=ROLE_SYSLBPMEXTAUTH_MAINTAINER)" />			
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)|roleValidator(role=ROLE_SYSLBPMEXTAUTH_MAINTAINER)|roleValidator(role=ROLE_SYSLBPMEXTAUTH_DEFAULT)" />
+			<query
+				queryString="method=edit|update|delete"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)|[roleValidator(role=ROLE_SYSLBPMEXTAUTH_MAINTAINER)&amp;lbpmExtBusinessauthValidator()]" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)" />
+       </request>  
+        
+       <request 
+            path="lbpmBusinessAuth.do*"
+            defaultValidator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_DEFAULT)" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuth">
+            <query
+				queryString="method=add|save|saveadd"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)|[roleValidator(role=ROLE_SYSLBPMEXTAUTH_MAINTAINER)&amp;lbpmExtBusinessauthValidator(recid=category,model=com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuthCate)]" />			
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)|roleValidator(role=ROLE_SYSLBPMEXTAUTH_MAINTAINER)|roleValidator(role=ROLE_SYSLBPMEXTAUTH_DEFAULT)" />
+			<query
+				queryString="method=edit|update|delete"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)|[roleValidator(role=ROLE_SYSLBPMEXTAUTH_MAINTAINER)&amp;lbpmExtBusinessauthValidator()]" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)" />
+        </request> 
+        
+        <request 
+            path="lbpmBusinessAuthInfo.do*"
+            defaultValidator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_DEFAULT)" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuthInfo">
+            <query
+				queryString="method=add|save|saveadd"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)|roleValidator(role=ROLE_SYSLBPMEXTAUTH_MAINTAINER)" />			
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)|roleValidator(role=ROLE_SYSLBPMEXTAUTH_MAINTAINER)|roleValidator(role=ROLE_SYSLBPMEXTAUTH_DEFAULT)" />
+			<query
+				queryString="method=edit|update|delete"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)|[roleValidator(role=ROLE_SYSLBPMEXTAUTH_MAINTAINER)&amp;lbpmExtBusinessauthValidator()]" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_ADMIN)" />
+        </request>
+    </module>
+	
+	<!-- 通用编号规则设置权限 -->
+	<module urlPrefix="/sys/number/">
+		<request path="sys_number_main/sysNumberMain*">
+			<query
+			    queryString="modelName=com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuth" 
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_DEFAULT)"/>
+			<query
+			    queryString="modelName=com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuthInfo" 
+				validator="roleValidator(role=ROLE_SYSLBPMEXTAUTH_DEFAULT)"/>
+		</request>
+	</module>
+	
+	<quartz
+		messageKey="sys-lbpmext-businessauth:businessauth.job"
+		jobService="lbpmExtBusinessAuthInfoService"
+		jobMethod="checkAuthStatus"
+		cronExpression="0 0 5 * * ?"
+		description="sys-lbpmext-businessauth:businessauth.quartz.description" />
+	
+	<!-- 业务授权 -->
+	<profileConfig
+		key="businessauth"
+		messageKey="{sys-lbpmext-businessauth:module.sys.lbpmext.businessauth}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/lbpmext/businessauth/tree.jsp" 
+		icon="lui_icon_s_profile_navLeft_businessauth"
+		type="lbpm"
+		order="7"/>
+</configs>

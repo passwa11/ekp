@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="thirdCommonService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdCommonServiceTarget" />
+		</property>
+
+	</bean>
+	<bean
+		id="thirdCommonServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.third.ctrip.service.spring.ThirdCtripCommonServiceImp">
+		<property name="baseDao">
+			<ref bean="KmssAuthBaseDao" />
+		</property>
+	</bean>
+
+	<bean
+		id="thirdCtripConfigDao"
+		class="com.landray.kmss.third.ctrip.dao.hibernate.ThirdCtripConfigDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.third.ctrip.model.ThirdCtripConfig</value>
+		</property>
+	</bean>
+	<bean
+		id="thirdCtripConfigTarget"
+		class="com.landray.kmss.third.ctrip.service.spring.ThirdCtripConfigServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="thirdCtripConfigDao" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="thirdCtripFlightService">
+			<ref bean="thirdCtripFlightService" />
+		</property>
+		<property name="thirdCtripHotelService">
+			<ref bean="thirdCtripHotelService" />
+		</property>
+	</bean>
+	<bean
+		id="thirdCtripConfigService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdCtripConfigTarget" />
+		</property>
+	</bean>
+	<bean
+		id="thirdCtripAccountDao"
+		class="com.landray.kmss.third.ctrip.dao.hibernate.ThirdCtripAccountDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.third.ctrip.model.ThirdCtripAccount</value>
+		</property>
+	</bean>
+	<bean
+		id="thirdCtripAccountTarget"
+		class="com.landray.kmss.third.ctrip.service.spring.ThirdCtripAccountServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="thirdCtripAccountDao" />
+		</property>
+	</bean>
+	<bean
+		id="thirdCtripAccountService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdCtripAccountTarget" />
+		</property>
+	</bean>
+	
+	<bean 
+        id="thirdCtripHotelDao" 
+        class="com.landray.kmss.third.ctrip.dao.hibernate.ThirdCtripHotelDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ctrip.model.ThirdCtripHotel</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdCtripHotelTarget" 
+        class="com.landray.kmss.third.ctrip.service.spring.ThirdCtripHotelServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdCtripHotelDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdCtripHotelService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdCtripHotelTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdCtripFlightDao" 
+        class="com.landray.kmss.third.ctrip.dao.hibernate.ThirdCtripFlightDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ctrip.model.ThirdCtripFlight</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdCtripFlightTarget" 
+        class="com.landray.kmss.third.ctrip.service.spring.ThirdCtripFlightServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdCtripFlightDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdCtripFlightService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdCtripFlightTarget"/>
+        </property>
+    </bean>
+</beans>

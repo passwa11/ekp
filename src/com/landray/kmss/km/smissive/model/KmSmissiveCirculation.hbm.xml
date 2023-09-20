@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.smissive.model.KmSmissiveCirculation"
+		table="km_smissive_circulation">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		
+		<many-to-one
+			name="fdSmissiveMain"
+			column="fd_main_id"
+			update="true"
+			insert="true"
+			not-null="false" />
+
+		<property
+			name="docSubject"
+			column="doc_subject"
+			update="true"
+			insert="true"
+			length="500" />
+		<property
+			name="fdCirculationIds"
+			column="fd_urgency"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1000" />
+		<property
+			name="fdCirculationNames"
+			column="fd_secret"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1000" />
+		
+		<many-to-one
+			name="docCreator"
+			column="doc_creator_id"
+			update="true"
+			insert="true"/>
+		
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="true"
+			insert="true" />
+				
+	</class>
+</hibernate-mapping>

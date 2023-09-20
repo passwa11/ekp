@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.hr.staff.model.HrStaffFileAuthor"
+		table="hr_staff_file_author">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			length="200"/>
+
+		<bag
+			name="authorDetail"
+			table="hr_staff_file_author_detail"
+			lazy="true">
+			<key
+				column="fd_author_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_org_id" />
+		</bag>
+
+
+	</class>
+</hibernate-mapping>

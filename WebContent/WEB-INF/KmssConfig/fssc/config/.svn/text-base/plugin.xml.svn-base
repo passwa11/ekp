@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <extension
+		point="com.landray.kmss.sys.webservice2">
+		<item name="registry">
+			<param name="serviceName" value="{fssc-config:sFourWebserviceService.title}" />
+			<param name="serviceClass"							
+				value="com.landray.kmss.fssc.config.webserver.ISFourWebserviceService" />
+			<param name="serviceBean"
+				value="sFourWebserviceService" />
+			<param name="serviceDoc"
+				value="/fssc/config/webserver/sFour_webserviceHelp.jsp" />
+		</item>
+		
+		<item name="registry">
+			<param name="serviceName" value="{fssc-config:sFiveWebserviceService.title}" />
+			<param name="serviceClass"							
+				value="com.landray.kmss.fssc.config.webserver.ISFiveWebserviceService" />
+			<param name="serviceBean"
+				value="sFiveWebserviceService" />
+			<param name="serviceDoc"
+				value="/fssc/config/webserver/sFive_webserviceHelp.jsp" />
+		</item>
+		<item name="registry">
+			<param name="serviceName" value="{fssc-config:sEASWebserviceService.title}" />
+			<param name="serviceClass"							
+				value="com.landray.kmss.fssc.config.webserver.ISEASWebserviceService" />
+			<param name="serviceBean"
+				value="sEASWebserviceService" />
+			<param name="serviceDoc"
+				value="/fssc/config/webserver/sEAS_webserviceHelp.jsp" />
+		</item>
+		<item name="registry">
+			<param name="serviceName" value="{fssc-config:sThirteenWebserviceService.title}" />
+			<param name="serviceClass"							
+				value="com.landray.kmss.fssc.config.webserver.ISThirteenWebserviceService" />
+			<param name="serviceBean"
+				value="sThirteenWebserviceService" />
+			<param name="serviceDoc"
+				value="/fssc/config/webserver/sThirteen_webserviceHelp.jsp" />
+		</item>
+		
+		<item name="registry">
+			<param name="serviceName" value="{fssc-config:sFourteenWebserviceService.title}" />
+			<param name="serviceClass"							
+				value="com.landray.kmss.fssc.config.webserver.ISFourteenWebserviceService" />
+			<param name="serviceBean"
+				value="sFourteenWebserviceService" />
+			<param name="serviceDoc"
+				value="/fssc/config/webserver/sFourteen_webserviceHelp.jsp" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain;com.landray.kmss.fssc.config.model.FsscConfigScore">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="fsscConfigScoreListener" />
+			<param
+				name="messageKey"
+				value="fssc-config:fsscConfigScore.lbpmevent.Detail"/>
+			<param
+				name="eventTypes"
+				value="endedNodeEvent;lbpmProcessFinishEvent"/>
+			<param
+				name="listener"
+				value="fsscConfigScoreListener" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	</plugin>

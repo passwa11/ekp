@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="assignTaskBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.assignment.AssignTaskBehaviour"
+		parent="abstractManualNodeBehaviour">
+	</bean>
+	<bean
+		id="assignTaskProvider"
+		class="com.landray.kmss.sys.lbpmservice.node.assignment.AssignTaskProvider">
+		<property
+			name="accessManager">
+			<ref
+				bean="accessManager" />
+		</property>
+	</bean>
+	<bean
+		id="assignTaskDesc"
+		class="com.landray.kmss.sys.lbpmservice.node.assignment.AssignTaskDesc" />
+	<bean
+		id="assignWorkitemBehaviour"
+		parent="abstractManualWorkitemBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.assignment.AssignWorkitemBehaviour" />
+	<bean
+		id="assignWorkitemDesc"
+		class="com.landray.kmss.sys.lbpmservice.node.assignment.AssignWorkitemDesc" />
+		
+	<bean
+		id="assignDataAccess"
+		class="com.landray.kmss.sys.lbpmservice.node.assignment.AssignDataAccess" />
+
+	<bean
+		id="doForAssignTaskListener"
+		class="com.landray.kmss.sys.lbpmservice.node.assignment.DoForAssignTaskListener" />
+
+</beans>

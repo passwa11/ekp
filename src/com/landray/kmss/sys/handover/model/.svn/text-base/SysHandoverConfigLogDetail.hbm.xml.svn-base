@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.handover.model.SysHandoverConfigLogDetail"
+		table="sys_handover_config_log_detail">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="fdModelId"
+			column="fd_model_id"
+			update="true"
+			insert="true"
+			length="36" />
+
+		<property
+			name="fdModelName"
+			column="fd_model_name"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="fdDescription"
+			column="fd_description"
+			update="true"
+			insert="true"
+			length="1000000"
+			not-null="false"
+		    type="com.landray.kmss.common.dao.ClobStringType"/>
+		<property
+			name="fdFactId"
+			column="fd_fact_id"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+	    <property
+			name="fdUrl"
+			column="fd_url"
+			update="true"
+			insert="true"
+			length="1500"
+			not-null="false" />
+			
+		<property
+			name="fdState"
+			column="fd_state"
+			update="true"
+			insert="true"
+			length="19"
+			not-null="false" />
+
+		<many-to-one
+			name="fdLog"
+			column="fd_log"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+	</class>
+</hibernate-mapping>

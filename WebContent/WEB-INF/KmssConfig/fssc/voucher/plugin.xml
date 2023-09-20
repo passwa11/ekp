@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <extension
+            point="com.landray.kmss.sys.number.config"
+            model="*">
+        <item name="extend">
+            <param name="modelName" value="com.landray.kmss.fssc.voucher.model.FsscVoucherMain"/>
+            <param name="templatePropertyName" value=""/>
+            <param name="moduleName" value="{fssc-voucher:module.fssc.voucher}"/>
+            <param name="isReform" value="true"/>
+            <param name="order" value="10"/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.sys.formula" model="*">
+        <item name="function">
+            <param name="className" value="com.landray.kmss.fssc.voucher.formula.FsscVoucherCommon" />
+        </item>
+    </extension>
+
+    <extension point="com.landray.kmss.lbpm.engine.event" model="*">
+        <item name="listener">
+            <param name="unid" value="fsscVoucherAutoCreateListener"/>
+            <param name="messageKey" value="fssc-voucher:listener.fsscVoucherAutoCreateListener"/>
+            <param name="eventTypes" value="enterNodeEvent"/>
+            <param name="listener" value="fsscVoucherAutoCreateListener"/>
+            <param name="enforce" value="false"/>
+        </item>
+    </extension>
+    <extension 
+        point="com.landray.kmss.sys.listshow.listShowConfig" 
+        model="com.landray.kmss.fssc.voucher.model.FsscVoucherMain">
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="fssc-voucher:table.fsscVoucherMain"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.voucher.model.FsscVoucherMain"/>
+            <param 
+                name="page" 
+                value="/listAll"/>
+             <param 
+                name="default" 
+                value="fdCompany.name;docFinanceNumber;docNumber;fdModelNumber;fdBaseVoucherType.name;fdAccountingYear;fdPeriod;fdVoucherDate;fdBookkeepingStatus;fdBookkeepingDate"/>
+            <param 
+                name="customized" 
+                value=""/>
+        </item>
+    </extension>
+</plugin>

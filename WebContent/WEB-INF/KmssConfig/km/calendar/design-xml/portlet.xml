@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+	
+	<portlet id="km.calendar.portlet" 
+			name="{km-calendar:kmCalendarMain.calendar}" 
+			module="{km-calendar:module.km.calendar}" >
+		<source format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/km/calendar/portlet/calendar.jsp?LUIID=!{lui.element.id}",
+					 "formatKey":"html"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/km/calendar/calendar.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation
+				name="{km-calendar:kmCalendarMain.opt.create}"
+				type="create"
+				href="javascript:openEvent('/km/calendar/km_calendar_main/kmCalendarMain.do?method=addEvent','add','event')" 
+				target="_self"/>
+			<operation
+				name="{km-calendar:kmCalendarMain.opt.note.create}"
+				type="create"
+				href="javascript:openEvent('/km/calendar/km_calendar_main/kmCalendarMain.do?method=addNote','add','note')" 
+				target="_self"/>
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/calendar" />
+		</operations>
+	</portlet>
+	
+	<portlet id="km.calendar.portletx" 
+			name="{km-calendar:kmCalendarMain.calendarx}" 
+			module="{km-calendar:module.km.calendar}" >
+		<source format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/km/calendar/portlet/calendarx.jsp?LUIID=!{lui.element.id}&rowsize=!{rowsize}",
+					 "formatKey":"html"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/km/calendar/calendarx.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="javascript:calendarNewPortletOpen('/km/calendar/km_calendar_main/kmCalendarMain.do?method=addEvent','add','event');"
+				target="_self"/>
+			<operation
+				name="{km-calendar:kmCalendarMain.opt.note.create}"
+				type="create"
+				href="javascript:calendarNewPortletOpen('/km/calendar/km_calendar_main/kmCalendarMain.do?method=addNote','add','note');"
+				target="_self"/>
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/calendar" />
+		</operations>
+	</portlet>
+	
+	<portlet id="km.calendar.portlet.month" 
+			name="{km-calendar:kmCalendarMain.calendar.month}" 
+			module="{km-calendar:module.km.calendar}"
+			description="{km-calendar:kmCalendarMain.calendar.month.desc}" >
+		<source format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/km/calendar/portlet/calendar_month.jsp?LUIID=!{lui.element.id}&rowsize=!{rowsize}",
+					 "formatKey":"html"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/km/calendar/calendarmonth.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="javascript:calendarPortletMonthOpen('/km/calendar/km_calendar_main/kmCalendarMain.do?method=addEvent','add','event');"
+				target="_self"/>
+			<operation
+				name="{km-calendar:kmCalendarMain.opt.note.create}"
+				type="create"
+				href="javascript:calendarPortletMonthOpen('/km/calendar/km_calendar_main/kmCalendarMain.do?method=addNote','add','note');"
+				target="_self"/>
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/calendar" />
+		</operations>
+	</portlet>
+	<!-- 新增portlet -->
+	<portlet id="km.calendar.portlet.direction" 
+			name="{km-calendar:kmCalendarMain.calendar.direction}" 
+			module="{km-calendar:module.km.calendar}"
+			description="{km-calendar:kmCalendarMain.calendar.direction.desc}" >
+		<source format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/km/calendar/portlet/calendar_month_direction.jsp?LUIID=!{lui.element.id}&rowsize=!{rowsize}",
+					 "formatKey":"html"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/km/calendar/direction.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="javascript:calendarPortletDirectionOpen('/km/calendar/km_calendar_main/kmCalendarMain.do?method=addEvent','add','event');"
+				target="_self"/>
+			<operation
+				name="{km-calendar:kmCalendarMain.opt.note.create}"
+				type="create"
+				href="javascript:calendarPortletDirectionOpen('/km/calendar/km_calendar_main/kmCalendarMain.do?method=addNote','add','note');"
+				target="_self"/>
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/calendar" />
+		</operations>
+	</portlet>
+	
+	<!-- 新增日历左右视图portlet -->
+	<portlet id="km.calendar.portlet.white" 
+			name="{km-calendar:kmCalendarMain.calendar.white}" 
+			module="{km-calendar:module.km.calendar}"
+			description="{km-calendar:km.calendar.portlet.white.desc}" >
+		<source format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/km/calendar/portlet/calendar_month_white.jsp?LUIID=!{lui.element.id}&rowsize=!{rowsize}",
+					 "formatKey":"html"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/km/calendar/white.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="javascript:calendarPortletWhiteOpen('/km/calendar/km_calendar_main/kmCalendarMain.do?method=addEvent','add','event');"
+				target="_self"/>
+			<operation
+				name="{km-calendar:kmCalendarMain.opt.note.create}"
+				type="create"
+				href="javascript:calendarPortletWhiteOpen('/km/calendar/km_calendar_main/kmCalendarMain.do?method=addNote','add','note');"
+				target="_self"/>
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/calendar" />
+		</operations>
+	</portlet>
+	
+	<!-- 群组日程 -->
+	<portlet id="km.calendar.portlet.group" 
+			name="{km-calendar:kmCalendarMain.calendar.group}" 
+			module="{km-calendar:module.km.calendar}" >
+		<source format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/km/calendar/portlet/calendar_group.jsp?LUIID=!{lui.element.id}&rowsize=!{rowsize}&groupId=!{groupId}",
+					 "formatKey":"html"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/km/calendar/group.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{km-calendar:km.calendar.portlet.group.kind.title}" key="groupId" kind="dialogJs" required="true">
+			    {"jsp":"/km/calendar/portlet/calendar_group_portlet_kind.jsp"}
+			</var>	
+		</vars>
+		
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="javascript:createGroupCalendarPortlet('/km/calendar/km_calendar_main/kmCalendarMain.do?method=addGroupEvent&amp;personGroupId=!{groupId}','add');" 
+				target="_self"/>
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/calendar" />
+		</operations>
+	</portlet>
+	
+	<!-- 以下为支持cloud数据源 -->
+	<!-- 旧版日历 -->
+	<!-- <portlet id="km.calendar.portlet" 
+			name="{km-calendar:kmCalendarMain.calendar}" 
+			module="{km-calendar:module.km.calendar}"
+			forSystem="cloud"
+			varExtend="km.calendar.portlet">
+		<source id="km-calendar.portlet" format="data.schedule" type="json">
+			<code>
+				<![CDATA[
+					{"url":"/data/km-calendar/kmCalendarMain/getEventsByRange?startTime=!{startTime}&endTime=!{endTime}"}
+				]]>
+			</code>
+		</source>
+		<operations>
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/calendar" />
+		</operations>
+	</portlet> -->
+	<!-- 新版日历 -->
+	<portlet id="km.calendar.portletx" 
+			name="{km-calendar:kmCalendarMain.calendarx}" 
+			module="{km-calendar:module.km.calendar}"
+			forSystem="cloud"
+			varExtend="km.calendar.portletx">
+		<source id="km-calendar.portletx" format="data.schedule" type="json">
+			<code>
+				<![CDATA[
+					{"url":"/data/km-calendar/kmCalendarMain/data?fdStart=!{startTime}&fdEnd=!{endTime}"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"任务结项","startDate":1563854400000,"endDate":1563858000000,"creator":{"fdId":"1183b0b84ee4f581bba001c47a78b2d9","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=1183b0b84ee4f581bba001c47a78b2d9"},"allDay":false,"href":"/km/calendar/km_calendar_main/kmCalendarMain.do?method=view&fdId=16c1ce7f83554ee2c753ac242789bd2d","desc":"任务结项","cateName":"任务安排","cateHref":"/km/calendar/","cateColor":"#5484ed"},{"text":"KM测试组周例会","startDate":1564563600000,"endDate":1564588800000,"creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"allDay":false,"href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c420a7e8761bd8560c60f4c64b9af5","cateName":"会议管理","cateHref":"/km/imeeting/"},{"text":"KMS研发周例会","startDate":1564628400000,"endDate":1564632000000,"creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"allDay":false,"href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c4b1709a0b7cb094abb6f47e28fbf1","cateName":"会议管理","cateHref":"/km/imeeting/"},{"text":"乐读乐享【第二期】分享","startDate":1564662360000,"endDate":1564665960000,"creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"allDay":false,"href":"/km/calendar","cateName":"员工活动","cateHref":"/km/empactivity"},{"text":"建党节","startDate":1565020800000,"endDate":1565193599000,"creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"allDay":true,"href":"/km/review/km_review_main/kmReviewMain.do?method=view&fdId=16c61205f60dbab19d5128d4d8bb9c23","cateName":"我的日历","cateHref":"/km/calendar"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/calendar/km_calendar_main/kmCalendarMain.do?method=addEvent"
+				mobileHref="/km/calendar/km_calendar_main/kmCalendarMain.do?method=addEvent" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/calendar/mobile"
+				href="/km/calendar" />
+		</operations>
+	</portlet>
+	<!-- 周月结合日历 -->
+	<portlet id="km.calendar.portlet.month" 
+			name="{km-calendar:kmCalendarMain.calendar.month}" 
+			module="{km-calendar:module.km.calendar}"
+			forSystem="cloud"
+			varExtend="km.calendar.portlet.month">
+		<source id="km-calendar.portletMonth" format="data.schedule" type="json">
+			<code>
+				<![CDATA[
+					{"url":"/data/km-calendar/kmCalendarMain/data?fdStart=!{startTime}&fdEnd=!{endTime}"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"任务结项","startDate":1563854400000,"endDate":1563858000000,"creator":{"fdId":"1183b0b84ee4f581bba001c47a78b2d9","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=1183b0b84ee4f581bba001c47a78b2d9"},"allDay":false,"href":"/km/calendar/km_calendar_main/kmCalendarMain.do?method=view&fdId=16c1ce7f83554ee2c753ac242789bd2d","desc":"任务结项","cateName":"任务安排","cateHref":"/km/calendar/","cateColor":"#5484ed"},{"text":"KM测试组周例会","startDate":1564563600000,"endDate":1564588800000,"creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"allDay":false,"href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c420a7e8761bd8560c60f4c64b9af5","cateName":"会议管理","cateHref":"/km/imeeting/"},{"text":"KMS研发周例会","startDate":1564628400000,"endDate":1564632000000,"creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"allDay":false,"href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c4b1709a0b7cb094abb6f47e28fbf1","cateName":"会议管理","cateHref":"/km/imeeting/"},{"text":"乐读乐享【第二期】分享","startDate":1564662360000,"endDate":1564665960000,"creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"allDay":false,"href":"/km/calendar","cateName":"员工活动","cateHref":"/km/empactivity"},{"text":"建党节","startDate":1565020800000,"endDate":1565193599000,"creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"allDay":true,"href":"/km/review/km_review_main/kmReviewMain.do?method=view&fdId=16c61205f60dbab19d5128d4d8bb9c23","cateName":"我的日历","cateHref":"/km/calendar"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				mobileHref="/km/calendar/km_calendar_main/kmCalendarMain.do?method=addEvent" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/calendar/mobile"
+				href="/km/calendar" />
+		</operations>
+	</portlet>
+	
+</root>

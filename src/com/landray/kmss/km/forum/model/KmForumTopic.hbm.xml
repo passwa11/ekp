@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.forum.model.KmForumTopic"
+		table="km_forum_topic">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+
+		<property
+			name="docSubject"
+			column="doc_subject"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200" />
+			
+		<property
+			name="docSummary"
+			column="doc_summary"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="400" />
+		
+		<property
+			name="fdThumbInfo"
+			column="fd_thumbInfo"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1600" />
+		
+		<property
+			name="fdIsAnonymous"
+			column="fd_is_anonymous"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdSticked"
+			column="fd_sticked"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<property
+			name="docAlterTime"
+			column="doc_alter_time"
+			update="true"
+			insert="true"
+			not-null="false"
+			index="idx_kmForumTopic_docAlterTime"  />
+		<property
+			name="fdLastPostTime"
+			column="fd_last_post_time"
+			update="true"
+			insert="true"
+			not-null="false" 
+			index="idx_kmForumTopic_lastPostTime"/>
+		<property
+			name="fdReplyCount"
+			column="fd_reply_count"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="10" />
+		<property
+			name="fdHitCount"
+			column="fd_hit_count"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="10" />
+		<property
+			name="fdPinked"
+			column="fd_pinked"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<property
+			name="fdLastPosterName"
+			column="fd_last_poster_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="50" />
+		<property
+			name="fdImportInfo"
+			column="fd_import_info"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200" />
+		<property
+			name="fdConcludeInfo"
+			column="fd_conclude_info"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200" />
+		<property
+			name="fdStatus"
+			column="fd_status"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="2" />
+		<property
+			name="fdIsNotify"
+			column="fd_is_notify"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="2" />
+		<property
+			name="fdNotifyType"
+			column="fd_notify_type"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100" />
+		<property
+			name="fdLastModifiedTime"
+			column="fd_last_modified_time"
+			update="true"
+			insert="true" />
+		<property
+			name="fdTopTime"
+			column="fd_top_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+				
+		<property
+			name="fdTopEndTime"
+			column="fd_top_end_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+
+		<many-to-one
+			name="kmForumCategory"
+			column="fd_forum_id"
+			insert="true"
+			update="true" />
+
+		<many-to-one
+			name="fdPoster"
+			column="fd_poster_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		
+		<many-to-one
+			name="fdLastPoster"
+			column="fd_last_poster_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+		<bag
+			name="forumPosts"
+			lazy="true"
+			inverse="true"
+			order-by="fd_floor asc"
+			cascade="all-delete-orphan">
+			<key column="fd_topic_id" />
+			<one-to-many class="com.landray.kmss.km.forum.model.KmForumPost"/>
+		</bag>
+		
+	</class>
+</hibernate-mapping>

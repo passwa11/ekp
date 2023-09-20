@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.hr.staff.model.HrStaffRatifyLog"
+		table="hr_staff_ratify_log" >
+		<!-- 主结构配置 -->
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<!-- 简单属性 -->
+		<property
+			name="fdRatifyType"
+			column="fd_ratify_type"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="36" />
+		<property
+			name="fdRatifyDate"
+			column="fd_ratify_date"
+			update="true"
+			insert="true"
+			not-null="false"/>
+		<property
+			name="fdRatifyProcess"
+			column="fd_ratify_process"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="500" />
+		<many-to-one
+			name="fdOrgPerson"
+			column="fd_org_person_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<many-to-one
+			name="fdRatifyOldDept"
+			column="fd_ratify_old_dept_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<bag
+			name="fdRatifyOldPosts"
+			table="hr_staff_ratify_log_post_old">
+			<key column="fd_log_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgPost"
+				column="fd_post_id" />
+		</bag>
+		<many-to-one
+			name="fdRatifyDept"
+			column="fd_ratify_dept_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<bag
+			name="fdRatifyPosts"
+			table="hr_staff_ratify_log_post">
+			<key column="fd_log_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgPost"
+				column="fd_post_id" />
+		</bag>
+	</class>
+</hibernate-mapping>

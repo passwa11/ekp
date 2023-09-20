@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../../plugin.xsd ">
+	
+	<!-- 数据中台 -RTF -->
+	<extension point="com.landray.kmss.sys.xform.maindata.rtf">
+		<item name="config">
+			<!-- 主文档全名称 -->
+			<param
+				name="modelName"
+				value="com.landray.kmss.km.comminfo.model.KmComminfoMain" />
+			<param
+				name="fields"
+				value="docContent" />
+		</item>
+	</extension>
+	<!-- 常用资料类别层级ID数据迁移 -->
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.km.comminfo.transfer.KmComminfoCategoryTransferTask" />
+			<param
+				name="name"
+				value="常用资料类别层级ID数据迁移" />
+			<param
+				name="path"
+				value="/km/comminfo/" />
+			<param
+				name="check"
+				value="com.landray.kmss.km.comminfo.transfer.KmComminfoCategoryTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.km.comminfo.transfer.KmComminfoCategoryTransferTask" />
+			<param
+				name="description"
+				value="修复层级ID数据正确性" />
+		</item>
+	</extension>
+	<!-- 常用资料JS、CSS文件压缩 -->
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-comminfo-list.js" />
+			<param name="targetFile" value="/km/comminfo/mobile/resource/js/list/mui-comminfo-list.js" />
+			<param name="srcFold" value="/km/comminfo/mobile/resource/js/list" />
+		</item>
+		<item 
+			name="css-file">
+			<param 
+				name="name" 
+				value="mui-comminfo-list.css" />
+			<param 
+				name="targetFile" 
+				value="/km/comminfo/mobile/resource/css/commInfoList.css" />
+		</item>
+	</extension>	
+	 
+	<!--<extension point="com.landray.kmss.third.krobot">
+		<item name="modules">
+			<param name="moduleName" value="com.landray.kmss.km.comminfo.model.KmComminfoMain" />
+			<param name="moduleMessage" value="km-comminfo:module.km.comminfo" />
+		</item>
+	</extension>-->
+</plugin>

@@ -1,0 +1,222 @@
+/* 防止 touchstart 事件导致Chrome浏览器报错
+[Intervention] Unable to preventDefault inside passive event listener due to target being treated as passive
+*/
+* { touch-action: none; }
+
+/* 登陆页 */
+::-webkit-input-placeholder {
+  color: #C9CAD1;
+  letter-spacing: 0;
+}
+::-moz-placeholder {
+  color: #C9CAD1;
+  letter-spacing: 0;
+}
+:-ms-input-placeholder {
+  color: #C9CAD1;
+  letter-spacing: 0;
+} 
+.mui_ekp_portal_login_box{
+	width: 100%;
+	height:100%;
+	overflow: hidden;
+	background-color: #fff;
+	position: fixed; /*禁止滚动*/
+}
+.mui_ekp_portal_login_box::-webkit-scrollbar {
+	display: none;
+}
+.mui_ekp_portal_login_bgImg{
+	position: absolute;
+	width: 100%;
+	height:20rem;
+}
+.mui_ekp_portal_login_bgImg>img{
+	width: 100%;
+	height:20rem;
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+.mui_ekp_portal_login_bgImg>img.blur{
+	filter: url(blur.svg#blur);
+    filter: blur(3px);
+    -ms-filter: blur(3px);    
+    -moz-filter: blur(3px);
+    -webkit-filter: blur(3px); 
+    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false);
+}
+.mui_ekp_portal_login_content{
+	width: 100%;
+	height:100%;
+	background-color: #fff;
+	z-index: 99;
+	position: absolute;
+	top:12.4rem;
+	border-radius: 2rem;
+	transition: top 0.4s ease,border-radius 1s ease;
+	-webkit-transition: top 0.4s ease,border-radius 1s ease;
+}
+.mui_ekp_portal_login_content_wrap{
+	margin-top: 2rem;
+	margin-left: 2rem;
+	margin-right: 2rem;
+	height: 100%;
+}
+.mui_ekp_portal_login_content_fixed{
+	width: 100%;
+	height:100%;
+	background-color: #fff;
+	z-index: 99;
+	position: absolute;
+	top:0;
+	padding:2rem 2rem;
+	transition: top 0.4s ease,border-radius 1s ease;
+	-webkit-transition: top 0.4s ease,border-radius 1s ease;
+}
+.mui_ekp_portal_login_content.edit{
+	top:0;
+	border-radius:0;
+}
+.mui_ekp_portal_login_content_title{
+	font-size: 1.5rem;
+	color: #999FB7;
+}
+.mui_ekp_portal_login_content_title>span{
+	font-family: PingFangSC-Medium;
+	font-size: 2.6rem;
+	color: #2A304A;
+	font-weight: bold;
+}
+.mui_ekp_portal_login_btn_delete{
+	opacity: 0;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    position: absolute;
+    right: 0px;
+	bottom: 1.6rem;
+	background-image: url(../icon/mui-fail@2x.png);
+	background-size: 2rem 2rem;
+}
+.mui_ekp_portal_login_btn_delete.btn_show{
+	opacity: 1;
+}
+.mui_ekp_portal_login_content_bar>li{
+	width: 100%;
+	position: relative;
+	margin-top: 2.2rem;
+	float: left;
+}
+.mui_ekp_portal_login_content_bar>li>p{
+	font-size: 1.3rem;
+	color: #999FB7;
+}
+.mui_ekp_portal_login_input{
+	border:1px solid #ddd;
+	width: 100%;
+	height:50px;
+	color: #2A304A;
+	caret-color:#4285F4;
+	padding-right: 2rem;
+    box-sizing: border-box;
+	border-color: transparent;
+	border-bottom: 1px solid  #F4F5F7;
+    border-radius: 0;
+}
+.mui_ekp_portal_login_input:focus{
+	border-bottom: 1px solid #9497A4;
+}
+.mui_ekp_portal_login_input.error{
+	border-bottom: 1px solid #FF694B;
+}
+.mui_ekp_portal_login_input[name='j_password']{
+	letter-spacing: .4rem;
+}
+.mui_ekp_portal_verification_code{
+	width: 7.5rem;
+	height: 3.5rem;
+	position: absolute;
+	top: .6rem;
+	right:0;
+}
+.mui_ekp_portal_verification_code>img{
+	cursor: pointer;
+	width: 100%;
+	height: 100%;
+}
+.mui_ekp_portal_login_content_btn_submit{
+	margin-top: 6rem;
+	width: 100%;
+    height: 5rem;
+    line-height: 5rem;
+}
+.mui_ekp_portal_login_content_btn_submit>button{
+	font-family: PingFangSC-Regular;
+	color: #C9CAD1;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    outline: none;
+    border-radius: .5rem;
+    background-color: #EAEBF0;
+    display: block;
+    text-align: center;
+    transition: all 0.5s;
+    pointer-events: none;	
+}
+.mui_ekp_portal_login_content_btn_submit>button.clickable{
+	background-color: #4285F4;
+	color: #fff;
+	pointer-events: all;
+}
+.mui_ekp_portal_login_error{
+	display: inline-block;
+	position: relative;
+	color: #FF694B;
+	min-width: 2rem;
+    max-width: 22rem;
+	min-height: 2rem;
+	bottom: -2.2rem;
+	visibility: visible;
+}
+
+.mui_ekp_portal_retrieve_password{
+	position: relative;
+	color: #C9CAD1;
+	bottom: -2.2rem;
+	float: right;
+}
+
+
+/*登录底部*/
+.muiLoginFooter{
+    width: 100%;
+    left: 0;
+    position: fixed;
+    bottom: 1rem;
+}
+.muiLoginFooter>ul{
+	width: 100%;
+	display: table;
+	table-layout: fixed;
+	padding: .5rem 0;
+	text-align: center;
+}
+.muiLoginFooter>ul>li{
+	display: table-cell;
+	padding: 0 2rem;
+	color: #5498ff;
+	font-size: 1.2rem;
+}
+.muiLoginFooter>ul>li a{
+	color: #C9CAD1;
+}
+.muiLoginFooter>ul>li .mui{
+	line-height: 1;
+    text-align: right;
+	font-size: 1.6rem;
+	margin-right: .4rem;
+	position: relative;
+}

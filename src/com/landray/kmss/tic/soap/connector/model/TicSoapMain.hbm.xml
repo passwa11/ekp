@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<subclass discriminator-value="3"
+		name="com.landray.kmss.tic.soap.connector.model.TicSoapMain" extends="com.landray.kmss.tic.core.common.model.TicCoreFuncBase">
+		<join table="tic_soap_main">
+			<key column="fd_id"></key>
+
+			<property name="wsMapperTemplate" column="ws_mapper_template"
+				update="true" insert="true" length="1000000" not-null="false"
+				type="com.landray.kmss.common.dao.ClobStringType" lazy="true" />
+
+			<property name="wsSoapVersion" column="ws_soap_version"
+				update="true" insert="true" length="36" not-null="false" />
+
+			<property name="wsBindFunc" column="ws_bind_func" update="true"
+				insert="true" length="500" not-null="false" />
+
+			<property name="wsMarks" column="ws_marks" update="true"
+				insert="true" length="4000" not-null="false" />
+
+			<property name="wsBindFuncInfo" column="ws_bind_func_info"
+				update="true" insert="true" length="500" not-null="false" />
+
+			<many-to-one name="ticSoapSetting" column="ws_server_setting"
+				insert="true" update="true" not-null="false" lazy="false" />
+
+		</join>
+	</subclass>
+
+
+</hibernate-mapping>
+
+
+

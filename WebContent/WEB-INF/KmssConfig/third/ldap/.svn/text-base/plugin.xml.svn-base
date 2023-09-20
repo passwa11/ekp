@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	<!-- SSO -->
+	<extension
+		point="com.landray.kmss.sys.authentication">
+		<item
+			name="authenticationProcessingFilter"
+			enable="true">
+			<param
+				name="bean"
+				value="ldapProcessingFilter" />
+		</item>
+	</extension>
+
+	<!-- OMS -->
+	<extension
+		point="com.landray.kmss.sys.oms">
+		<item
+			name="in"
+			enable="true">
+			<param
+				name="name"
+				value="ldap" />
+			<param
+				name="service"
+				value="ldapSynchroInProvider" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.oms">
+		<item
+			name="in"
+			enable="true">
+			<param
+				name="name"
+				value="ldapIncrement" />
+			<param
+				name="service"
+				value="ldapSynchroInIncrementProvider" />
+		</item>
+	</extension>
+
+	<!-- admin.do配置 
+	<extension
+		point="com.landray.kmss.sys.config.admin.do">
+		<item
+			name="config">
+			<param
+				name="jsp"
+				value="/third/ldap/config.jsp" />
+			<param
+				name="type"
+				value="integrate" />
+		</item>
+		<item
+			name="backup">
+			<param
+				name="name"
+				value="ldapconfig.properties" />
+			<param
+				name="path"
+				value="/WEB-INF/KmssConfig/ldapconfig.properties" />
+		</item>			
+	</extension>
+	-->
+	
+	<extension
+		point="com.landray.kmss.sys.organization.person">
+		<item
+			name="updatePass">
+			<param
+				name="key"
+				value="LDAP" />
+			<param
+				name="beanName"
+				value="ldapPassUpdateProvider" />
+		</item>
+	</extension>
+	
+</plugin>

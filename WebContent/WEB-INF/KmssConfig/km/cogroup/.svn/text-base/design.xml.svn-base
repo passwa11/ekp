@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="km-cogroup:km.cogroup.menu.tree"
+		urlPrefix="/km/cogroup/">
+		<roles>
+			ROLE_COGROUP_DEFAULT;
+		</roles>
+ 
+		<request
+			path="kmCogroup.do*"
+			defaultValidator="true">
+		</request>
+	</module>
+	
+	<module
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<!-- 数据备份工具, 行为分析 -->
+			<query
+				queryString="modelName=com.landray.kmss.km.cogroup.model.GroupConfig"
+				validator="roleValidator(role=ROLE_COGROUP_DEFAULT)" />
+		</request>
+	</module>
+
+	<!-- 群协作集成后台配置 -->
+	<profileConfig
+		key="cogroup"
+		messageKey="{km-cogroup:km.cogroup.menu.tree}"
+		url="/sys/profile/moduleindex.jsp?nav=/km/cogroup/profile.jsp"
+		icon="lui_icon_s_profile_navLeft_cogroup"
+		type="intelligence"
+		order="3" />
+
+
+</configs>

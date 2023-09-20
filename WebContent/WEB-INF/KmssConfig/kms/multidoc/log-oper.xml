@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<log-oper>
+    <logset>
+        <oper
+            id="kmsMultidocKnowledgeOuterSearchOperLog"
+            desc="log for kmsMultidocKnowledgeOuterSearch.do"
+            extends="KmsOuterSearchOperLog"
+            model="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+            action="/kms/multidoc/kms_outer_search/kmsMultidocKnowledgeOuterSearch.do">
+            <query
+				method="result"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+            <query
+				method="exportResult"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.export" />
+            <query
+				method="condition"
+				logPoint="Base_UrlParam"
+				messageKey="button.search" />
+        </oper>
+        <oper
+            id="kmsMultidocKnowledgePortletOperLog"
+            desc="log for kmsMultidocKnowledgePortlet.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+            action="/kms/multidoc/kms_multidoc_portlet/kmsMultidocKnowledgePortlet.do">
+			<query
+				method="list|data|listChildren|manageList"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+			<query
+				method="getKmsMultidocKnowledge"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+        </oper>
+        <oper
+            id="kmsMultidocKnowledgeIndexOperLog"
+            desc="log for kmsMultidocKnowledgeIndex.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+            action="/kms/multidoc/kms_multidoc_index/kmsMultidocKnowledgeIndex.do">
+			<query
+				method="list|data|listChildren|manageList|getSysAttList|exportExcel"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+			<query
+				method="exportExcel"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.export" />
+			<query
+				method="mydoc|myReview|myEvaluate|myIntroduce|listPerson"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+			<query
+				method="setTop"
+				logPoint="Base_UrlParam;KmsMultidoc_SetTop" 
+				messageKey="kms-multidoc:kmsMultidoc.setTop" />
+			<query
+				method="cancelTop"
+				logPoint="Base_UrlParam;KmsMultidoc_CancelTop" 
+				messageKey="kms-multidoc:kmsMultidoc.cancelSetTop" />
+        </oper>
+        <oper
+            id="kmsMultidocKnowledgeOperLog"
+            desc="log for kmsMultidocKnowledge.do"
+            extends="kmsKnowledgeBaseDocOperLog"
+            model="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge"
+            action="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do">
+            <query
+				method="list|data|listChildren|manageList|docList|listOut|manageListBack"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+            <query
+				method="refresh"
+				logPoint="Base_UrlParam"
+				messageKey="button.refresh" />
+            <query
+				method="importDoc"
+				logPoint="Base_UrlParam"
+				messageKey="button.import" />
+            <query
+				method="changeTemplate"
+				logPoint="Base_UrlParam"
+				messageKey="kms-multidoc:kmsMultidoc.changeTemplate" />
+            <query
+				method="topView"
+				logPoint="Base_UrlParam;Action_Find"
+				messageKey="button.view" />
+            <query
+				method="setTop"
+				logPoint="Base_UrlParam"
+				messageKey="kms-multidoc:kmsMultidoc.setTop" />
+            <query
+				method="newEdition"
+				logPoint="Base_UrlParam;Action_Find"
+				messageKey="kms-multidoc:kmsMultidoc.kmsMultidocKnowledge.NewVersion" />
+            <query
+				method="saveExcel"
+				logPoint="Base_UrlParam;KmsMultidoc_SaveExcel"
+				messageKey="button.save" />
+            <query
+				method="recycle"
+				logPoint="Base_UrlParam;Service_Delete"
+				messageKey="kms-knowledge:kmsKnowledge.button.recycle" />
+			<query
+				method="recover"
+				logPoint="Base_UrlParam;KmsKnowledge_UpdateRecover" 
+				messageKey="kms-knowledge:kmsKnowledge.button.recover" />
+        </oper>
+        
+        <!-- 知识沉淀 -->
+        <oper id="kmsMultidocSubsideOperLog"
+			action="/kms/multidoc/kms_multidoc_subside/kmsMultidocSubside.do"
+			model="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge">
+			<query messageKey="kms-multidoc:kms.knowledge.subside" method="fileDoc"
+				logPoint="Base_UrlParam;fileDoc" />
+		</oper>
+
+    </logset>
+</log-oper>

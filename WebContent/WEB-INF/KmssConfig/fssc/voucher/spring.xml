@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="fsscVoucherMainDao" 
+        class="com.landray.kmss.fssc.voucher.dao.hibernate.FsscVoucherMainDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.voucher.model.FsscVoucherMain</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscVoucherMainTarget" 
+        class="com.landray.kmss.fssc.voucher.service.spring.FsscVoucherMainServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="fsscVoucherMainDao"/>
+        </property>
+        <property name="sysNumberFlowService">
+            <ref bean="sysNumberFlowService"/>
+        </property>
+        <property name="fsscVoucherRuleConfigService">
+            <ref bean="fsscVoucherRuleConfigService"/>
+        </property>
+        <property name="fsscVoucherModelConfigService">
+            <ref bean="fsscVoucherModelConfigService"/>
+        </property>
+        <property name="sysOrgCoreService">
+            <ref bean="sysOrgCoreService"/>
+        </property>
+        <property name="backgroundAuthService">
+            <ref bean="backgroundAuthService"/>
+        </property>
+        <property name="lbpmProcessService">
+            <ref bean="lbpmProcessService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscVoucherMainService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscVoucherMainTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscVoucherDetailDao" 
+        class="com.landray.kmss.fssc.voucher.dao.hibernate.FsscVoucherDetailDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.voucher.model.FsscVoucherDetail</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscVoucherDetailTarget" 
+        class="com.landray.kmss.fssc.voucher.service.spring.FsscVoucherDetailServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscVoucherDetailDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscVoucherDetailService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscVoucherDetailTarget"/>
+        </property>
+    </bean>
+    <bean id="fsscCommonVoucherService" class="com.landray.kmss.fssc.voucher.service.spring.FsscCommonVoucherServiceImp">
+        <property name="fsscVoucherMainService">
+            <ref bean="fsscVoucherMainService"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscVoucherModelConfigDao"
+        class="com.landray.kmss.fssc.voucher.dao.hibernate.FsscVoucherModelConfigDaoImp"
+        parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.fssc.voucher.model.FsscVoucherModelConfig</value>
+        </property>
+    </bean>
+    <bean
+        id="fsscVoucherModelConfigTarget"
+        class="com.landray.kmss.fssc.voucher.service.spring.FsscVoucherModelConfigServiceImp"
+        parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="fsscVoucherModelConfigDao"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscVoucherModelConfigService"
+        parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="fsscVoucherModelConfigTarget"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscVoucherRuleConfigDao"
+        class="com.landray.kmss.fssc.voucher.dao.hibernate.FsscVoucherRuleConfigDaoImp"
+        parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.fssc.voucher.model.FsscVoucherRuleConfig</value>
+        </property>
+    </bean>
+    <bean
+        id="fsscVoucherRuleConfigTarget"
+        class="com.landray.kmss.fssc.voucher.service.spring.FsscVoucherRuleConfigServiceImp"
+        parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="fsscVoucherRuleConfigDao"/>
+        </property>
+        <property name="fsscVoucherModelConfigService">
+            <ref bean="fsscVoucherModelConfigService"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscVoucherRuleConfigService"
+        parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="fsscVoucherRuleConfigTarget"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscVoucherRuleDetailDao"
+        class="com.landray.kmss.fssc.voucher.dao.hibernate.FsscVoucherRuleDetailDaoImp"
+        parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.fssc.voucher.model.FsscVoucherRuleDetail</value>
+        </property>
+    </bean>
+    <bean
+        id="fsscVoucherRuleDetailTarget"
+        class="com.landray.kmss.fssc.voucher.service.spring.FsscVoucherRuleDetailServiceImp"
+        parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="fsscVoucherRuleDetailDao"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscVoucherRuleDetailService"
+        parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="fsscVoucherRuleDetailTarget"/>
+        </property>
+    </bean>
+
+    <bean
+        id="fsscVoucherAutoCreateListener" class="com.landray.kmss.fssc.voucher.listener.FsscVoucherAutoCreateListener">
+        <property name="fsscVoucherMainService">
+            <ref bean="fsscVoucherMainService"/>
+        </property>
+    </bean>
+
+    <bean
+        id="fsscVoucherAutoBookkeeping" class="com.landray.kmss.fssc.voucher.service.spring.FsscVoucherAutoBookkeeping">
+        <property name="fsscVoucherMainService">
+            <ref bean="fsscVoucherMainService"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscVoucherRefreshAuth" 
+        class="com.landray.kmss.fssc.voucher.authValidator.FsscVoucherRefreshAuth">
+    </bean>
+    <bean
+        id="fsscVoucherPortletService"
+        class="com.landray.kmss.fssc.voucher.service.spring.FsscVoucherPortletService">
+        <property name="fsscVoucherMainService">
+            <ref bean="fsscVoucherMainService"/>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/resource/third/wxwork/mutil/cpEndpoint.do"
+		class="com.landray.kmss.third.weixin.mutil.sso.WxCpEndpointAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/third/wxwork/mutil/menu/wxworkMenu.do"
+		class="com.landray.kmss.third.weixin.mutil.spi.actions.WxworkMenuAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.weixin.spi.forms.WxMenuForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/third/weixin/mutil/menu/editWxMenu.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/wxwork/mutil/menu/wxworkMenuDefine.do"
+		class="com.landray.kmss.third.weixin.mutil.spi.actions.WxworkMenuDefineAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.weixin.mutil.spi.forms.WxworkMenuForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/third/weixin/mutil/menu/wxMenu_edit.jsp" />
+				<entry
+					key="view"
+					value="/third/weixin/mutil/menu/wxMenu_view.jsp" />
+				<entry
+					key="data"
+					value="/third/weixin/mutil/menu/wxMenu_data.jsp" />
+				<entry
+					key="list"
+					value="/third/weixin/mutil/menu/wxMenu_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/resource/third/wxwork/mutil/attachment.do"
+		class="com.landray.kmss.third.weixin.mutil.attachment.action.WeixinAttachmentAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/third/wxwork/mutil/jsapi/wxJsapi.do"
+		class="com.landray.kmss.third.weixin.mutil.action.WxJsapiAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/third/wxwork/mutil/weixinSynchroOrgCheck.do"
+		class="com.landray.kmss.third.weixin.mutil.action.SynchroOrg2WxCheckAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="check"
+					value="/third/weixin/mutil/oms/check.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/weixin/mutil/third_weixin_work/thirdWeixinWork.do"
+		class="com.landray.kmss.third.weixin.mutil.action.ThirdWeixinWorkAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.weixin.mutil.forms.ThirdWeixinWorkForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/weixin/mutil/third_weixin_work/thirdWeixinWork_view.jsp" />
+				<entry
+					key="edit"
+					value="/third/weixin/mutil/third_weixin_work/thirdWeixinWork_edit.jsp" />
+				<entry
+					key="list"
+					value="/third/weixin/mutil/third_weixin_work/thirdWeixinWork_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/wxwork/mutil/pcScanLogin.do"
+		class="com.landray.kmss.third.weixin.mutil.sso.WxWorkPcScanLoginAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/third/weixin/mutil/third_wxwork_oms_init/thirdWxworkOmsInit.do"
+		class="com.landray.kmss.third.weixin.mutil.action.ThirdWxworkOmsInitAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.weixin.mutil.forms.ThirdWxworkOmsInitForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/third/weixin/mutil/third_wxwork_oms_init/thirdWxworkOmsInit_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/weixin/mutil/spi/wxwork_oms_relation/wxworkOmsRelation.do"
+		class="com.landray.kmss.third.weixin.mutil.spi.actions.WxworkOmsRelationAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.weixin.mutil.spi.forms.WxworkOmsRelationModelForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/weixin/mutil/spi/wxwork_oms_relation/wxworkOmsRelation_view.jsp" />
+				<entry
+					key="edit"
+					value="/third/weixin/mutil/spi/wxwork_oms_relation/wxworkOmsRelation_edit.jsp" />
+				<entry
+					key="list"
+					value="/third/weixin/mutil/spi/wxwork_oms_relation/wxworkOmsRelation_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/weixin/mutil/user.do"
+		class="com.landray.kmss.third.weixin.mutil.action.WxWorkUserAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	
+	<bean
+		name="/third/weixin/mutil/thirdWxWorkConfig.do"
+		class="com.landray.kmss.third.weixin.mutil.action.ThirdWxWorkConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.weixin.mutil.forms.ThirdWxWorkConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/third/weixin/mutil/third_wx_work_config/thirdWxWorkConfig_data.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

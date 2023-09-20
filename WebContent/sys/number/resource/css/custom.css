@@ -1,0 +1,448 @@
+@charset "UTF-8"; /* create191213 编号机制 */
+body.dragging, body.dragging * {
+    cursor: move !important;
+}
+
+.dragged {
+    position: absolute;
+    opacity: 0.5;
+    z-index: 2000;
+}
+
+ol.example li.placeholder {
+    position: relative;
+    /** More li styles **/
+}
+
+ol.example li.placeholder:before {
+    position: absolute;
+    /** Define arrowhead **/
+}
+
+.lui_number_setting_wrap .number_raido, .lui_number_setting_wrap .number_checkbox {
+    margin-right: 10px;
+}
+
+.lui_number_setting_wrap .number_raido input, .lui_number_setting_wrap .number_checkbox input {
+    margin-right: 5px;
+}
+
+.lui_number_setting_wrap .number_warn {
+    font-style: normal;
+    color: #e61400;
+    margin-left: 5px;
+}
+
+.lui_number_setting_wrap .lui_number_setting_head {
+    background: #eee;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.lui_number_setting_wrap .lui_number_setting_head .number_setting_td_title {
+    font-style: normal;
+    width: 200px;
+    display: inline-block;
+    padding-left: 10px;
+}
+
+.lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 0;
+}
+
+.lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li {
+    display: inline-block;
+    width: 120px;
+    height: 46px;
+    line-height: 46px;
+    text-align: center;
+    cursor: pointer;
+    background: #f1f1f1;
+    border: 1px dashed #d8d8d8;
+    margin-right: 5px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li .number_icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 8px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px auto;
+}
+
+.lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li .number_icon.icon_date {
+    background-image: url(../images/gray/icon-date@2x.png);
+}
+
+.lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li .number_icon.icon_time {
+    background-image: url(../images/gray/icon-time@2x.png);
+}
+
+.lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li .number_icon.icon_flow {
+    background-image: url(../images/gray/icon-no@2x.png);
+}
+
+.lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li .number_icon.icon_const {
+    background-image: url(../images/gray/icon-const@2x.png);
+}
+
+.lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li .number_icon.icon_custom {
+    background-image: url(../images/gray/icon-custom@2x.png);
+}
+
+.lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li span {
+    vertical-align: middle;
+    font-size: 12px;
+    color: #666;
+}
+
+.lui_number_setting_wrap .lui_number_setting_head .number_btn_clear {
+    float: right;
+    border: 1px solid #4285F4;
+    color: #4285F4;
+    padding: 5px 10px;
+    min-width: 40px;
+    text-align: center;
+    margin-right: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.lui_number_setting_wrap .lui_number_setting_head .number_btn_clear:hover {
+    background-color: #4285F4;
+    color: #fff;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content {
+    background: #fff;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list_wrap {
+    padding-top: 30px;
+/*     padding-bottom: 20px; */
+    text-align: left;
+    overflow: auto;
+    overflow-y: hidden;
+    width: 800px;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list {
+    display: inline-block;
+    white-space: nowrap;
+    padding-bottom: 20px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 0;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    border: 1px solid #f1f1f1;
+    margin: 0 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li.tab_cur, .lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li:hover {
+    border-color: #4285F4;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .icon_del {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: url(../images/bg-del@2x.png) no-repeat center;
+    width: 19px;
+    height: 19px;
+    background-size: 19px auto;
+    display: none;
+    cursor: pointer;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li.tab_cur .icon_del, .lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li:hover .icon_del {
+    display: block;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li.tab_cur .icon_arrow
+/* .lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li:hover .icon_arrow */
+ {
+    display: block;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .icon_arrow {
+    position: absolute;
+    left: 32px;
+    bottom: -25px;
+    display: none;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .icon_arrow:before, .lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .icon_arrow:after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    position: absolute;
+    left: -10px;
+    bottom: 1px;
+    content: "";
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .icon_arrow:before {
+    border-bottom-color: #d8d8d8;
+    bottom: 2px;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .icon_arrow:after {
+    border-bottom-color: #f1f1f1;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .number_icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-size: 30px auto;
+    background-position: center;
+    vertical-align: middle;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .number_icon.icon_date {
+    background-image: url(../images/on/icon-date@2x.png);
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .number_icon.icon_time {
+    background-image: url(../images/on/icon-time@2x.png);
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .number_icon.icon_flow {
+    background-image: url(../images/on/icon-no@2x.png);
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .number_icon.icon_const {
+    background-image: url(../images/on/icon-const@2x.png);
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .number_icon.icon_custom {
+    background-image: url(../images/on/icon-custom@2x.png);
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_tab_tips {
+    background: #f1f1f1;
+    padding-left: 200px;
+    padding-top: 13px;
+    padding-bottom: 20px;
+    margin-top: 0px;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_tab_tips .number_tab_title {
+    font-weight: bold;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_tab_tips .number_table ul {
+    list-style: none;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_tab_tips .number_table ul li {
+    padding-bottom: 10px;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_tab_tips .number_table ul li em {
+    font-style: normal;
+    color: #666;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_tab_tips .number_table ul li input[type="text"] {
+    margin-right: 5px;
+    padding: 5px;
+    line-height: 20px;
+    height: 20px;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_tab_tips .number_table ul li select {
+    border: 1px solid #d3d3d3;
+    height: 24px;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_tab_tips .number_btn_group {
+    margin-top: 15px;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_tab_tips .number_btn_group .number_btn {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    cursor: pointer;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_tab_tips .number_btn_group .number_btn.number_btn_primary {
+    background-color: #4285F4;
+    color: #fff;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_tab_tips .number_btn_group .number_btn.number_btn_gray {
+    border: 1px solid #d3d3d3;
+    display: none;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_tab_tips .number_btn_group .number_btn.number_btn_grayshow {
+    border: 1px solid #d3d3d3;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_input_wrap {
+    padding-top: 20px;
+    /* text-align: center; */
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_input_wrap .number_input_list {
+    display: inline-block;
+    font-size: 0;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_input_wrap input, .lui_number_setting_wrap .lui_number_setting_content .number_input_wrap span {
+    display: inline-block;
+    width: auto;
+    white-space: nowrap;
+    font-size: 14px;
+    border: none;
+    border-bottom: 1px solid #d3d3d3;
+    line-height: 44px;
+    padding: 0 4px;
+    text-align: center;
+    color: #666;
+    vertical-align: middle;
+}
+
+.lui_number_setting_wrap .lui_number_setting_content .number_input_wrap input:focus, .lui_number_setting_wrap .lui_number_setting_content .number_input_wrap span:focus {
+    color: #4285F4;
+    border-bottom-color: #4285F4;
+}
+
+@media \0screen {
+    .lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li .number_icon.icon_date {
+        background-image: url(../images/gray/icon-date.png);
+    }
+
+    .lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li .number_icon.icon_time {
+        background-image: url(../images/gray/icon-time.png);
+    }
+
+    .lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li .number_icon.icon_flow {
+        background-image: url(../images/gray/icon-no.png);
+    }
+
+    .lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li .number_icon.icon_const {
+        background-image: url(../images/gray/icon-const.png);
+    }
+
+    .lui_number_setting_wrap .lui_number_setting_head .number_setting_tab_list li .number_icon.icon_custom {
+        background-image: url(../images/gray/icon-custom.png);
+    }
+
+    .lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .number_icon.icon_date {
+        background-image: url(../images/on/icon-date.png);
+    }
+
+    .lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .number_icon.icon_time {
+        background-image: url(../images/on/icon-time.png);
+    }
+
+    .lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .number_icon.icon_flow {
+        background-image: url(../images/on/icon-no.png);
+    }
+
+    .lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .number_icon.icon_const {
+        background-image: url(../images/on/icon-const.png);
+    }
+
+    .lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li .number_icon.icon_custom {
+        background-image: url(../images/on/icon-custom.png);
+    }
+
+    .lui_number_setting_wrap .lui_number_setting_content .number_setting_tab_list li.tab_cur .icon_del {
+        background-image: url(../images/bg-del.png);
+    }
+}
+
+/*# sourceMappingURL=custom.css.map */
+
+.number_prompt_tooltip{
+    margin: 0 5px;
+    display: inline-block;
+    position: relative;
+    margin-left: -10px;
+}
+.number_prompt_tooltip_drop{
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: -2px;
+}
+.number_prompt_tooltip_drop > img{
+    width: 100%;
+    height: 100%;
+}
+.number_dropdown_tooltip_menu{
+    z-index: 10000;
+    display: none;
+    padding: 10px;
+    min-width: 220px;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 0 12px rgba(0, 0, 0, .175);
+    position: absolute;
+    bottom: 26px;
+    left: 50%;
+    margin-left: -185px;
+    white-space:  normal;
+}
+.number_dropdown_tooltip_menu:after,
+.number_dropdown_tooltip_menu:before{
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    vertical-align: middle;
+    border-top: 8px dashed;
+    border-top: 8px solid \9;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    left: 50%;
+    margin-left: -10px;
+    bottom: 0;
+}
+.number_dropdown_tooltip_menu:after{
+    color: #fff;
+    bottom: -7px;
+}
+.number_dropdown_tooltip_menu:before{
+    color: #ccc;
+    color: rgba(0, 0, 0, .1);
+    bottom: -8px;
+}

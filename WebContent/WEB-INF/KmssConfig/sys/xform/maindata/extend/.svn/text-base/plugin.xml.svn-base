@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+	<!-- 业务函数扩展点 -->
+	<extension-point id="com.landray.kmss.sys.xform.maindata.extend.businessData">
+		<item name="config">
+			<param name="sourceName" required="true" kind="string">
+				<description>数据源名称</description>
+			</param>
+			<param name="sourceUUID" required="true" kind="string">
+				<description>数据源唯一标识，该标识不可被修改</description>
+			</param>
+			<param name="sourceBean" required="true" kind="spring" basedOn="com.landray.kmss.sys.xform.base.service.controls.relation.SysFormRelation">
+				<description><![CDATA[
+				数据源实现接口
+				]]>
+				</description>
+			</param>
+			<param name="templateFilePath"  kind="string">
+				<description>模板文件路径</description>
+			</param>
+			<param name="order"  kind="int">
+				<description>数据源选择排序</description>
+			</param>
+			<param name="isSupportPage"  kind="string">
+				<description>数据源是否支持分页</description>
+			</param>
+			<param name="description"  kind="string">
+				<description>公式描述</description>
+			</param>
+			<description>参数配置</description>
+		</item>
+		<description>
+			数据关联控件扩展点
+		</description>
+	</extension-point>
+	
+	<!--业务函数-->
+	<extension point="com.landray.kmss.sys.xform.relation.params">
+		<item name="config">
+			<param name="sourceName" value="{sys-xform-maindata:sysFormBusinessData.sysFormBusinessData}"></param>
+			<param name="sourceUUID" value="MAINDATABUSINESS"></param>
+			<param name="sourceBean" value="sysFormBusinessDataControlRelation"></param>
+			<param name="paramsURL" value="sys/xform/maindata/dialog/dialog.jsp?springBean=sysFormBusinessDataControlTreeBean&amp;infoBean=sysFormBusinessDataControlTreeInfo"></param>
+			<param name="order" value="1"></param>
+		</item>
+	</extension>
+	
+	<!--组织架构全路径-->
+	<extension point="com.landray.kmss.sys.xform.maindata.extend.businessData">
+		<item name="config">
+			<param name="sourceName" value="{sys-xform-maindata:sysFormBusinessData.getFullPathByOrgElement}"></param>
+			<param name="sourceUUID" value="getFullPathByOrgElement"></param>
+			<param name="sourceBean" value="getFullPathByOrgElement"></param>
+			<param name="templateFilePath" value="/WEB-INF/KmssConfig/sys/xform/maindata/extend/getFullPathByOrgElement.xml"></param>
+			<param name="description" value="{sys-xform-maindata:sysFormBusinessData.getFullPathByOrgElementDescription}"></param>
+			<param name="order" value="1"></param>
+		</item>
+	</extension>
+</plugin>

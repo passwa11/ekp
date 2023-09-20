@@ -1,0 +1,957 @@
+.lui-seat {
+  box-sizing: border-box;
+  font-family: "Microsoft YaHei", sans-serif;
+}
+
+.lui-seat-b {
+  position: relative;
+  font-size: 0;
+}
+
+.lui-seat-b-r{
+	
+}
+
+.lui-seat-main-row {
+  font-size: 0;
+  white-space: nowrap;
+}
+
+.lui-seat-main-col {
+  font-size: 14px;
+  text-align: center;
+  position: relative;
+  border: 1px dashed #dadada;
+}
+
+.lui-seat[data-mode="edit"] .lui-seat-main-col-temp {
+  /* cursor: pointer; */
+}
+
+.lui-seat-main-col-temp:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+	background-color: black;
+	opacity: 0.1;
+}
+
+@media \0screen{
+	.lui-seat-main-col-temp:after {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		display: none;
+		background-color: #f4f4f4;
+		opacity: 0.1;
+	}
+}
+
+.lui-seat[data-mode="edit"] .lui-seat-main-col.range:after,
+.lui-seat[data-mode="edit"] .lui-seat-main-col:hover:after {
+	display: block;
+}
+
+
+/******************* 右键菜单 *******************/
+.lui-seat-contextmenu {
+	position: fixed;
+	z-index: 1;
+	width: 152px;
+	border: 1px solid #ccc;
+	background-color: white;
+	box-shadow: 0 0 1px #ccc;
+}
+.lui-seat-contextmenu-item {
+	padding: 4px;
+    text-align: center;
+    font-size: 14px;
+    border-bottom: 1px dashed #ccc;
+    cursor: pointer;
+}
+
+.lui-seat-contextmenu-item:hover {
+	background-color: #e9e9e9;
+}
+
+.lui-seat-contextmenu-item[data-type="menu-title"] {
+    font-weight: bold;
+}
+
+
+/* ========== 会议坐席安排 公共 Starts  ========== */
+.lui_seat_btn {
+	border: 1px solid transparent;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 10px;
+	cursor: pointer;
+	font-size: 12px;
+	display: inline-block;
+}
+
+.lui_seat_btn_primary {
+	color: #fff;
+}
+
+.lui_seat_btn_plain {
+	border-color: #ddd;
+	/* color: #333; */
+	border-radius: 4px;
+}
+
+/* ========= 鼠标手型 Starts */
+.lui_seat_setting_wrap.status_seat {
+	cursor: url(../images/seat/cur/status_seat.cur),auto;
+}
+
+.lui_seat_setting_wrap.status_occupation {
+	cursor: url(../images/seat/cur/status_occupation.cur),auto;
+}
+
+.lui_seat_setting_wrap.status_speech {
+	cursor: url(../images/seat/cur/status_speech.cur),auto;
+}
+
+.lui_seat_setting_wrap.status_screen_up {
+	cursor: url(../images/seat/cur/status_screen_up.cur),auto;
+}
+
+.lui_seat_setting_wrap.status_screen_down {
+	cursor: url(../images/seat/cur/status_screen_down.cur),auto;
+}
+
+.lui_seat_setting_wrap.status_screen_left {
+	cursor: url(../images/seat/cur/status_screen_left.cur),auto;
+}
+
+.lui_seat_setting_wrap.status_screen_right {
+	cursor: url(../images/seat/cur/status_screen_right.cur),auto;
+}
+
+.lui_seat_setting_wrap.status_door_up {
+	cursor: url(../images/seat/cur/status_door_up.cur),auto;
+}
+
+.lui_seat_setting_wrap.status_door_down {
+	cursor: url(../images/seat/cur/status_door_down.cur),auto;
+}
+
+.lui_seat_setting_wrap.status_door_left {
+	cursor: url(../images/seat/cur/status_door_left.cur),auto;
+}
+
+.lui_seat_setting_wrap.status_door_right {
+	cursor: url(../images/seat/cur/status_door_right.cur),auto;
+}
+
+.lui_seat_arrangement_wrap.status_temporary{
+	cursor: url(../images/seat/cur/status_temporary.cur),auto;
+}
+/* ===== 鼠标手型 Ends ===== */
+
+
+/* ========== 会议坐席安排 公共 Ends  ========== */
+/* ========== 会议管理-坐席设置 Starts ========== */
+/*
+part1.最外层包裹层
+*/
+.lui_seat_setting_wrap {
+	/* margin: auto 50px; */
+	border: 1px solid #dddddd;
+	position: absolute;
+	left: hidden;
+	top: 160px;
+	bottom: 20px;
+	overflow: hidden;
+	left: 50px;
+	right: 50px;
+	background: #fff;
+}
+
+/*
+part2.坐席设置的左边区域:坐席模板和会议室元素
+*/
+/*会议模板区域*/
+.lui_seat_setting_aside {
+	width: 313px;
+	border-right: 1px solid #dddddd;
+	height: 100%;
+	float: left;
+	position: relative;
+	overflow: hidden;
+}
+
+.lui_seat_setting_aside_inner {
+	position: absolute;
+	top: 0;
+	bottom: 50px;
+	overflow: auto;
+	/* width: 100%; */
+	left: 0;
+	right: 0;
+	overflow-x: hidden;
+}
+
+.lui_seat_setting_aside_item {
+	/* padding:0 20px; */
+	padding-left: 20px;
+}
+
+.lui_seat_setting_aside_item_title {
+	margin: 0;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	font-size: 16px;
+	font-weight: normal;
+}
+
+.lui_seat_setting_aside_item > select {
+	height: 30px;
+	width: 100%;
+	font-size: 14px;
+	color: #3e4651;
+	line-height: 14px;
+}
+
+.lui_seat_setting_seat_wrapper {
+	width: 100%;
+	margin: 8px 0px;
+	padding: 0 0 16px 0;
+	border-bottom: 1px solid #dddddd;
+}
+
+.lui_seat_setting_seat {
+	display: inline-block;
+	font-size: 14px;
+	color: #666666;
+	letter-spacing: 0;
+	line-height: 14px;
+}
+
+.lui_seat_setting_seat_number {
+	font-size: 14px;
+	color: #151515;
+	letter-spacing: 0;
+	line-height: 14px;
+}
+
+/*会议室元素*/
+.lui_seat_setting_aside_item_row {
+	overflow: hidden;
+	margin-right: -12px;
+}
+
+/*各个元素的包裹层*/
+.lui_seat_graphic_item {
+	width: 48px;
+	float: left;
+	margin-right: 22px;
+	margin-bottom: 18px;
+	cursor: pointer;
+}
+
+.lui_seat_graphic_item.lui_seat_select .lui_seat_graphic_title {
+	color: #4285f4;
+}
+
+/* 图例 */
+.lui_seat_graphic_icon {
+	width: 100%;
+	height: 48px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+/*名称*/
+.lui_seat_graphic_title {
+	width: 100%;
+	text-align: center;
+	font-size: 12px;
+	color: #666666;
+	letter-spacing: 0;
+	line-height: 14px;
+	margin-top: 10px;
+}
+
+/*会议室元素的各个图片*/
+.lui_seat_graphic_icon.status_seat {
+	background-image: url(../images/seat/icon-graphic/seat.png);
+}
+
+.lui_seat_graphic_icon.status_occupation {
+	background-image: url(../images/seat/icon-graphic/occupation.png);
+}
+
+.lui_seat_graphic_icon.status_speech {
+	background-image: url(../images/seat/icon-graphic/speech.png);
+}
+
+.lui_seat_graphic_icon.status_screen_up {
+	background-image: url(../images/seat/icon-graphic/screen_up.png);
+}
+
+.lui_seat_graphic_icon.status_screen_down {
+	background-image: url(../images/seat/icon-graphic/screen_down.png);
+}
+
+.lui_seat_graphic_icon.status_screen_left {
+	background-image: url(../images/seat/icon-graphic/screen_left.png);
+}
+
+.lui_seat_graphic_icon.status_screen_right {
+	background-image: url(../images/seat/icon-graphic/screen_right.png);
+}
+
+.lui_seat_graphic_icon.status_door_up {
+	background-image: url(../images/seat/icon-graphic/door_up.png);
+}
+
+.lui_seat_graphic_icon.status_door_down {
+	background-image: url(../images/seat/icon-graphic/door_down.png);
+}
+
+.lui_seat_graphic_icon.status_door_left {
+	background-image: url(../images/seat/icon-graphic/door_left.png);
+}
+
+.lui_seat_graphic_icon.status_door_right {
+	background-image: url(../images/seat/icon-graphic/door_right.png);
+}
+
+.status_temporary{
+	background-image: url(../images/seat/icon/temperary_seat.png);
+}
+
+/* 选中状态 */
+.lui_seat_select .lui_seat_graphic_icon.status_seat {
+	background-image: url(../images/seat/icon-graphic/on/seat.png);
+}
+
+.lui_seat_select .lui_seat_graphic_icon.status_occupation {
+	background-image: url(../images/seat/icon-graphic/on/occupation.png);
+}
+
+.lui_seat_select .lui_seat_graphic_icon.status_speech {
+	background-image: url(../images/seat/icon-graphic/on/speech.png);
+}
+
+.lui_seat_select .lui_seat_graphic_icon.status_screen_up {
+	background-image: url(../images/seat/icon-graphic/on/screen_up.png);
+}
+
+.lui_seat_select .lui_seat_graphic_icon.status_screen_down {
+	background-image: url(../images/seat/icon-graphic/on/screen_down.png);
+}
+
+.lui_seat_select .lui_seat_graphic_icon.status_screen_left {
+	background-image: url(../images/seat/icon-graphic/on/screen_left.png);
+}
+
+.lui_seat_select .lui_seat_graphic_icon.status_screen_right {
+	background-image: url(../images/seat/icon-graphic/on/screen_right.png);
+}
+
+.lui_seat_select .lui_seat_graphic_icon.status_door_up {
+	background-image: url(../images/seat/icon-graphic/on/door_up.png);
+}
+
+.lui_seat_select .lui_seat_graphic_icon.status_door_down {
+	background-image: url(../images/seat/icon-graphic/on/door_down.png);
+}
+
+.lui_seat_select .lui_seat_graphic_icon.status_door_left {
+	background-image: url(../images/seat/icon-graphic/on/door_left.png);
+}
+
+.lui_seat_select .lui_seat_graphic_icon.status_door_right {
+	background-image: url(../images/seat/icon-graphic/on/door_right.png);
+}
+
+
+
+/*另存为坐席模板*/
+.lui_seat_setting_aside_item_save_module {
+	height: 50px;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	line-height: 50px;
+	text-align: center;
+	box-sizing: border-box;
+	left: 0;
+	border-top: 1px solid #dddddd;
+	font-size: 14px;
+	color: #4285f4;
+	z-index: 2;
+	background: #fff;
+	cursor: pointer;
+}
+
+/*
+part3.右侧方格和选座
+*/
+.lui_seat_setting_content {
+	margin-left: 321px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	overflow: auto;
+	right: 0;
+	left: 0;
+}
+
+/* ===== 坐席table ===== */
+
+.lui_seating_table_wrap{
+}
+
+/* 临时坐席 */
+.lui_seat_fixBar{
+	position: fixed;
+	z-index: 4;
+	left: 102px;
+	bottom: 102px;
+}
+.lui_seat_fixBar_item{
+	width:80px;
+	height:80px;
+	background: #FFFFFF;
+	box-shadow: 0 1px 4px 0 rgba(0,0,0,0.50);
+	border-radius: 4px;
+	border-radius: 4px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.lui_seat_fixBar_item p{
+	text-align: center;
+	font-size:12px;
+	margin-top: -10px;
+}
+
+.lui_seat_fixBar_item.lui_seat_select p{
+	color: #4285f4;
+}
+
+.lui_seat_fixBar_item .status_temporary{
+	display:inline-block;
+	width: 60px;
+	height: 60px;
+}
+
+.lui-seat-main {
+	height: 100%;
+	/* min-width: 100%; */
+	table-layout: fixed;
+}
+
+.lui-seat-main tr {
+	height: 60px;
+}
+
+.lui-seat-main td {
+	height: 60px;
+	width: 60px;
+	border: #cccccc 1px dashed;
+	background-position: center;
+	background-repeat: no-repeat;
+	text-align: center;
+	min-width: 60px;
+	position: relative;
+	box-sizing: border-box;
+	max-width: 60px;
+	/* line-height: 60px; */
+	-moz-user-select:none; /*火狐*/
+    -webkit-user-select:none; /*webkit浏览器*/
+    -ms-user-select:none; /*IE10*/
+    -khtml-user-select:none; /*早期浏览器*/
+    user-select:none;
+}
+
+.lui-seat-main td .status_seat_no {
+	font-size: 12px;
+	color: #999999;
+	text-align: center;
+	display: inline-block;
+	/* width: 100%; */
+	/* height: 60px; */
+	line-height: 60px;
+	border: none;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	-moz-user-select:none; /*火狐*/
+    -webkit-user-select:none; /*webkit浏览器*/
+    -ms-user-select:none; /*IE10*/
+    -khtml-user-select:none; /*早期浏览器*/
+    user-select:none;
+}
+
+.lui-seat-main td.status_seat {
+	background-image: url(../images/seat/icon/seat.png);
+}
+
+.lui-seat-main td.status_occupation {
+	background-image: url(../images/seat/icon/occupation.png);
+}
+
+.lui-seat-main td.status_speech {
+	background-image: url(../images/seat/icon/speech.png);
+}
+
+.lui-seat-main td.status_screen_up {
+	background-image: url(../images/seat/icon/screen_up.png);
+}
+
+.lui-seat-main td.status_screen_down {
+	background-image: url(../images/seat/icon/screen_down.png);
+}
+
+.lui-seat-main td.status_screen_left {
+	background-image: url(../images/seat/icon/screen_left.png);
+}
+
+.lui-seat-main td.status_screen_right {
+	background-image: url(../images/seat/icon/screen_right.png);
+	background-size: auto;
+}
+
+.lui-seat-main td.status_door_up {
+	background-image: url(../images/seat/icon/door_up.png);
+}
+
+.lui-seat-main td.status_door_down {
+	background-image: url(../images/seat/icon/door_down.png);
+}
+
+.lui-seat-main td.status_door_left {
+	background-image: url(../images/seat/icon/door_left.png);
+}
+
+.lui-seat-main td.status_door_right {
+	background-image: url(../images/seat/icon/door_right.png);
+}
+.lui-seat-main td.status_temperary_seat {
+	background-image: url(../images/seat/icon/temperary_seat.png);
+}
+
+.lui-seat-main img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.lui_seat_table_text{
+	width: 100%;
+	height: 60px;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+	text-align: center;
+	vertical-align: middle;
+	display: inline-block;
+}
+.lui_seat_table_text:after{
+	display:inline-block;
+	content:"";
+	vertical-align:middle;
+}
+
+.lui_seat_table_text .mask_name {
+	height: 12px;
+	font-size: 12px;
+	line-height: 12px;
+	letter-spacing: 0;
+	text-align: center;
+	margin: 24px 0;
+	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 98%;
+	display: inline-block;
+	color:#999999;
+	padding: 2px 0;
+	background: #fff;
+	-moz-user-select:none; /*火狐*/
+    -webkit-user-select:none; /*webkit浏览器*/
+    -ms-user-select:none; /*IE10*/
+    -khtml-user-select:none; /*早期浏览器*/
+    user-select:none;
+}
+
+.lui_seat_table_mask {
+	width: 100%;
+	height: 100%;
+	height: 60px;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+	background: #000000;
+	background: rgba(0,0,0,0.6);
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	bottom: 0;
+	line-height: 60px;
+	left: 0;
+	right: 0;
+	text-align: center;
+}
+
+.lui_seat_table_mask .mask_name {
+	height: 12px;
+	font-size: 12px;
+	line-height: 12px;
+	color: #ffffff;
+	letter-spacing: 0;
+	text-align: center;
+	margin: 24px 0;
+	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 98%;
+	display: inline-block;
+}
+
+.lui_seat_table_mask .mask_number{
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	top: -20px;
+	left: 0;
+	color: #ffffff;
+}
+
+.lui_seat_table_mask .mask_close {
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	top: 0;
+	right: 0;
+	background:url(../images/seat/icon/icon-close@2x.png) no-repeat;
+	background-size:18px 18px;
+	cursor:pointer;
+}
+/* IE8使用一倍图 */
+@media \0screen {
+	.lui_seat_table_mask .mask_close{
+		background-image:url(../images/seat/icon/icon-close.png);
+	}
+}
+
+/* ========== 会议管理-坐席设置 Ends ==========  */
+/* ========== 会议管理-坐席设置 Starts ========== */
+/*
+布局相关
+*/
+
+.lui_seat_arrangement_wrap{
+	position:absolute;
+	left:50px;
+	right:50px;
+	top:100px;
+	bottom:50px;
+	overflow:hidden;
+	border:1px solid #ddd;
+	background:#FFFFFF;
+}
+
+.lui_seat_arrangement_aside {
+	padding: 18px 20px 0;
+	width: 300px;
+	border-left: 1px solid #dddddd;
+	height: 100%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	overflow: auto;
+}
+
+.lui_seat_arrangement_content {
+	position: absolute;
+	left: 0;
+	right: 340px;
+	top: 0;
+	bottom: 0;
+	overflow: auto;
+}
+
+/* 坐席安排表格区域 */
+.lui_seat_arrangement_title {
+	text-align: center;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 35px;
+}
+
+/*
+part2.坐席安排右边的区域:按议题排位,人员安排,主持人,参加人员*2
+*/
+/*按议题排位*/
+.lui_seat_arrangement_aside_item {
+	overflow: hidden;
+}
+
+.lui_seat_arrangement_aside_item_head {
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+
+.lui_seat_arrangement_aside_item_title {
+	float: left;
+}
+
+.lui_seat_arrangement_aside_item_opt {
+	float: right;
+	width: 28%;
+}
+
+/* 按钮组 */
+.lui_seat_arrangement_aside_item .lui_seat_btn_group {
+	margin: 15px 0;
+}
+
+.lui_seat_arrangement_aside_item .lui_seat_btn_group .lui_seat_btn_primary {
+	width: 62%;
+	text-align: center;
+	margin-right: 10px;
+	font-size: 14px;
+}
+
+.lui_seat_arrangement_aside_item .lui_seat_btn_group .lui_seat_btn_plain {
+	padding: 0 15px;
+}
+
+.lui_seat_arrangement_aside .lui_seat_arrangement_aside_item_title {
+	font-size: 16px;
+	color: #333333;
+	letter-spacing: 0;
+	/* width: 80%; */
+	margin: 0;
+}
+
+/*按议题排位的列表项	*/
+.lui_seat_arrangement_list ul {
+	width: 100%;
+	clear: both;
+	overflow: hidden;
+	border-bottom: 1px solid #dddddd;
+	list-style: none;
+}
+
+.lui_seat_arrangement_list li {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	line-height: 30px;
+	cursor: pointer;
+	width: 100%;
+	display: block;
+}
+
+.lui_seat_arrangement_list {
+	margin: 15px 0;
+	list-style: none;
+}
+
+.lui_seat_arrangement_list .lui_seat_subject_title {
+}
+
+.lui_seat_arrangement_list .lui_seat_status {
+}
+
+.lui_seat_arrangement_list .lui_seat_status.status_done {
+	color: #34a853;
+}
+
+.lui_seat_arrangement_list .lui_seat_status.status_warn {
+	color: #f25643;
+}
+
+.lui_seat_arrangement_seat_wrapper {
+	width: 100%;
+	margin: 8px 0px;
+	padding: 0 0 16px 0;
+	border-bottom: 1px solid #dddddd;
+}
+
+/*主持人*/
+.lui_seat_arrangement_item_wrapper {
+	overflow: hidden;
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+.lui_seat_arrangement_item_wrapper > div:first-child {
+	overflow: hidden;
+}
+
+.lui_seat_arrangement_item_wrapper .lui_seat_arrangement_aside_item_title_second {
+	font-size: 14px;
+	color: #3e4651;
+	line-height: 20px;
+	/* float: left; */
+	display: inline;
+}
+
+.lui_seat_arrangement_item_wrapper h4 {
+	float: left;
+	margin: 0;
+	width: auto;
+}
+
+/* 子item */
+.lui_seat_arrangement_subItem{
+	margin-bottom:20px;
+	border-top: 1px dashed #ddd;
+	padding-top: 15px;
+}
+.lui_seat_arrangement_subItem_head{
+	overflow:hidden;
+	/* margin-bottom: 20px; */
+}
+
+.lui_seat_arrangement_subItem_title{
+    display: inline;
+    line-height: 32px;
+}
+.lui_seat_arrangement_subItem_opt{
+	float:right;
+}
+.lui_seat_arrangement_subItem_opt .lui_seat_btn{
+	height:20px;
+	line-height:20px;
+	color:#999;
+}
+
+/* 人员 */
+.lui_seat_person_list{
+    margin: -5px;
+}
+.lui_seat_person_list .lui_seat_btn{
+    height: 24px;
+    line-height: 24px;
+    border-radius: 12px;
+    padding: 0 18px;
+    margin: 5px;
+    max-width: 100%;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+.lui_seat_person_list .lui_seat_btn.lui_text_primary{
+	border-color: inherit;
+}
+.lui_seat_person_list .lui_seat_person_selected{
+    background: #d7d7d7;
+    color: #999;
+    border-color: #d7d7d7;
+}
+
+.lui_seat_person_list .unshow{
+   display:none;
+}
+
+/*取消占位的黑色掩膜*/
+/* ========== 会议管理-坐席安排 Ends ==========  */
+
+/* 坐席模版设置页面 */
+.lui_form_body.lui_seat_body .tempTB{
+	background:transparent!important;
+}
+
+.lui_form_body.lui_seat_body .lui_form_content{
+	background-color:transparent;
+}
+
+.lui_form_body.lui_seat_body .lui_seat_setting_wrap{
+	top:50px;
+}
+.lui_form_body.lui_seat_body .lui_toolbar_frame_float .lui_toolbar_content{
+	max-width:12000px!important;
+}
+/* 前台页面没有存为模板 */
+.lui_form_body.lui_seat_body .lui_seat_setting_aside_inner{
+	bottom:0;
+}
+
+/* 没有模版坐席安排*/
+/* 带步骤条 */
+.lui_seat_no_template_body{}
+.lui_seat_no_template_body .tempTB{
+	width: 90%!important;
+	max-width:12000px!important;
+}
+.lui_seat_no_template_body .lui_seat_setting_wrap{
+	top:140px;
+	left: 10px;
+	right: 10px;
+	margin-left:auto;
+	margin-right:auto;
+	bottom:100px;
+}
+
+.lui_seat_no_template_body .lui_step_sheet_content{
+	padding:0;
+}
+
+.lui_seat_no_template_body .lui_seat_arrangement_wrap{
+	left: 10px;
+	right: 10px;
+	margin-left:auto;
+	margin-right:auto;
+	bottom:100px;
+	top:140px;
+}
+
+.lui_seat_no_template_body .lui_form_content{
+	position:absolute;
+	left:50px;
+	right:50px;
+	top:50px;
+	bottom:0;
+}
+
+.lui_seat_no_template_body .lui_step_buttons_wrapper{
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   right: 0;
+}
+.lui_seat_no_template_body .lui_step_buttons_btnList{
+	left:auto;
+	right:auto;
+}
+
+@media print{
+	.lui_seat_print_wrap{
+		page-break-after:always
+	}
+	
+	.lui-seat-main td{
+		border:1px solid #000;
+	}
+
+	.lui_seat_table_text .mask_name,
+	.lui-seat-main td .status_seat_no{
+		color:#000;
+	}
+   
+    body{
+        -webkit-print-color-adjust:exact;
+        -moz-print-color-adjust:exact;
+        -ms-print-color-adjust:exact;
+        print-color-adjust:exact;
+    } 
+  
+}

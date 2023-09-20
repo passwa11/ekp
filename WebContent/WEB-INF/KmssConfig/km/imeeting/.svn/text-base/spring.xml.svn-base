@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean 
+		id="kmImeetingSysAttendProvider"
+		class="com.landray.kmss.km.imeeting.provider.KmImeetingSysAttendProvider">
+		<property 
+			name="kmImeetingService"
+			ref="kmImeetingMainService"></property>	
+	</bean>	
+	
+	<bean
+		id="kmImeetingMappingDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingMappingDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingMapping" />
+	</bean>
+	<bean
+		id="kmImeetingMappingTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingMappingServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingMappingDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingMappingService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingMappingTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmImeetingResCategoryDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingResCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingResCategory" />
+	</bean>
+	<bean
+		id="kmImeetingResCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingResCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingResCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingResCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingResCategoryTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmImeetingMainHistoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingMainHistoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingMainHistory" />
+	</bean>
+	<bean
+		id="kmImeetingMainHistoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingMainHistoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingMainHistoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingMainHistoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingMainHistoryTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmImeetingSummaryDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingSummaryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingSummary" />
+	</bean>
+	<bean
+		id="kmImeetingSummaryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingSummaryServiceImp">
+		<property name="baseDao">
+			<ref bean="kmImeetingSummaryDao" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="kmImeetingMainHistoryService">
+			<ref bean="kmImeetingMainHistoryService" />
+		</property>
+		<property name="kmImeetingMainService">
+			<ref bean="kmImeetingMainService" />
+		</property>
+		<property name="sysAttMainCoreInnerService">
+			<ref bean="sysAttMainService" />
+		</property>
+		<property name="kmsMultidocSubsideService">
+			<ref bean="kmsMultidocSubsideService"/>
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingSummaryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingSummaryTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmImeetingTemplateDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingTemplate" />
+	</bean>
+	<bean
+		id="kmImeetingTemplateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingTemplateServiceImp">
+		<property name="baseDao">
+			<ref bean="kmImeetingTemplateDao" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="kmImeetingMappingService">
+			<ref bean="kmImeetingMappingService" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingTemplateService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingTemplateTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmImeetingStatDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingStatDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingStat" />
+	</bean>
+	<bean
+		id="kmImeetingStatTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingStatServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingStatDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingStatService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingStatTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmImeetingBookDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingBookDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingBook" />
+	</bean>
+	<bean
+		id="kmImeetingBookTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingBookServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingBookDao" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingBookService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingBookTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmImeetingDeviceDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingDeviceDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingDevice" />
+	</bean>
+	<bean
+		id="kmImeetingDeviceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingDeviceServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingDeviceDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingDeviceService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingDeviceTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmImeetingResDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingResDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingRes" />
+	</bean>
+	<bean
+		id="kmImeetingResTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingResServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingResDao" />
+		</property>
+		<property
+			name="kmImeetingResCategoryService">
+			<ref
+				bean="kmImeetingResCategoryService" />
+		</property>
+		<property name="kmImeetingMainService">
+			<ref bean="kmImeetingMainService" />
+		</property>
+		<property name="kmImeetingBookService">
+			<ref bean="kmImeetingBookService" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="sysNotifyTodoService">
+			<ref bean="sysNotifyTodoService" />
+		</property>
+		<property name="kmImeetingMappingService">
+			<ref bean="kmImeetingMappingService" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingResService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingResTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmImeetingMainDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+	</bean>
+	<bean
+		id="kmImeetingMainTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingMainServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingMainDao" />
+		</property>
+		<property name="sysNumberFlowService">
+               <ref bean="sysNumberFlowService"/>
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="sysQuartzCoreService">
+			<ref bean="sysQuartzCoreService" />
+		</property>
+		<property name="kmImeetingMainHistoryService">
+			<ref bean="kmImeetingMainHistoryService" />
+		</property>
+		<property name="kmImeetingMainFeedbackService">
+			<ref bean="kmImeetingMainFeedbackService" />
+		</property>
+		<property name="kmImeetingAgendaService">
+			<ref bean="kmImeetingAgendaService" />
+		</property>
+		<property name="kmImeetingOutCacheService">
+			<ref bean="kmImeetingOutCacheService" />
+		</property>
+		<property name="kmImeetingOutVedioService">
+			<ref bean="kmImeetingOutVedioService" />
+		</property>
+		<property name="kmImeetingTemplateService">
+			<ref bean="kmImeetingTemplateService" />
+		</property>
+		<property name="kmImeetingBookService">
+			<ref bean="kmImeetingBookService" />
+		</property>
+		<property name="kmImeetingTopicService">
+			<ref bean="kmImeetingTopicService" />
+		</property>
+		<property name="kmImeetingMappingService">
+			<ref bean="kmImeetingMappingService" />
+		</property>
+		<property name="backgroundAuthService">
+			<ref bean="backgroundAuthService" />
+		</property>
+		
+		
+	</bean>
+	<bean
+		id="kmImeetingMainService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingMainTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmImeetingAgendaDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingAgendaDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingAgenda" />
+	</bean>
+	<bean
+		id="kmImeetingAgendaTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingAgendaServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingAgendaDao" />
+		</property>
+		<property name="kmImeetingMainHistoryService">
+			<ref bean="kmImeetingMainHistoryService"/>
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingAgendaService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingAgendaTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmImeetingMainFeedbackDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingMainFeedbackDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingMainFeedback" />
+	</bean>
+	<bean
+		id="kmImeetingMainFeedbackTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingMainFeedbackServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingMainFeedbackDao" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="kmImeetingAgendaService">
+			<ref bean="kmImeetingAgendaService" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingMainFeedbackService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingMainFeedbackTarget" />
+		</property>
+	</bean>
+	
+	<!-- 模板树菜单 -->
+	<bean
+		id="kmImeetingTemplateTreeService"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingTemplateTreeService">
+		<property name="kmImeetingTemplateService">
+			<ref bean="kmImeetingTemplateService" />
+		</property>
+	</bean>
+	
+	<!--部门会议吞吐量  -->
+	<bean id="kmImeetingDeptStatExecutor" 
+		  class="com.landray.kmss.km.imeeting.service.stat.executor.KmImeetingDeptStatExecutor">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+	</bean>
+	
+	<!--部门会议吞吐量环比  -->
+	<bean id="kmImeetingDeptStatMonExecutor" 
+		  class="com.landray.kmss.km.imeeting.service.stat.executor.KmImeetingDeptStatMonExecutor">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+	</bean>
+	
+	<!--人员会议吞吐量  -->
+	<bean id="kmImeetingPersonStatExecutor" 
+		  class="com.landray.kmss.km.imeeting.service.stat.executor.KmImeetingPersonStatExecutor">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+	</bean>
+	
+	<!--人员会议吞吐量环比  -->
+	<bean id="kmImeetingPersonStatMonExecutor" 
+		  class="com.landray.kmss.km.imeeting.service.stat.executor.KmImeetingPersonStatMonExecutor">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+	</bean>
+	
+	<!--会议室使用率  -->
+	<bean id="kmImeetingResourceStatExecutor" 
+		  class="com.landray.kmss.km.imeeting.service.stat.executor.KmImeetingResourceStatExecutor">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+	</bean>
+	
+	<!--会议室使用率环比  -->
+	<bean id="kmImeetingResourceStatMonExecutor" 
+		  class="com.landray.kmss.km.imeeting.service.stat.executor.KmImeetingResourceStatMonExecutor">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmImeetingOutCacheTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingOutCacheServiceImp">
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="kmImeetingSyncMappingService">
+			<ref bean="kmImeetingSyncMappingService" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingOutCacheService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingOutCacheTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmImeetingOutVedioTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingOutVedioServiceImp">
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="kmImeetingSyncMappingService">
+			<ref bean="kmImeetingSyncMappingService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmImeetingOutVedioService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingOutVedioTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="init*">PROPAGATION_REQUIRED</prop>
+				<prop key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop key="getVideoMeetingUrl*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+		
+	</bean>
+	
+	
+	<bean
+		id="kmImeetingSyncMappingDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingSyncMappingDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingSyncMapping" />
+	</bean>
+	<bean
+		id="kmImeetingSyncMappingTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingSyncMappingServiceImp">
+		<property name="baseDao">
+			<ref bean="kmImeetingSyncMappingDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingSyncMappingService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingSyncMappingTarget" />
+		</property>
+	</bean>
+	
+	
+	<bean
+		id="kmImeetingEquipmentDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingEquipmentDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingEquipment" />
+	</bean>
+	<bean
+		id="kmImeetingEquipmentTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingEquipmentServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingEquipmentDao" />
+		</property>
+		<property name="kmImeetingMainService">
+			<ref bean="kmImeetingMainService" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingEquipmentService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingEquipmentTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmImeetingIntegrateErrorDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingIntegrateErrorDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingIntegrateError" />
+	</bean>
+	<bean
+		id="kmImeetingIntegrateErrorTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingIntegrateErrorServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingIntegrateErrorDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingIntegrateErrorService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingIntegrateErrorTarget" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingDocCountGetter"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingDocCountGetter">
+		<property
+			name="kmImeetingMainService">
+			<ref
+				bean="kmImeetingMainService" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref
+				bean="sysOrgCoreService" />
+		</property>
+	</bean>
+	<bean id="kmImeetingCreateAttendValidator" class="com.landray.kmss.km.imeeting.service.spring.KmImeetingCreateAttendValidator">
+	</bean>
+	<bean id="kmImeetingMainFeedbackValidator" class="com.landray.kmss.km.imeeting.service.spring.KmImeetingMainFeedbackValidator">
+		<property name="kmImeetingMainService">
+            <ref bean="kmImeetingMainService"/>
+        </property>
+	</bean>
+	<bean id="kmImeetingMainFeedbackViewValidator" class="com.landray.kmss.km.imeeting.service.spring.KmImeetingMainFeedbackViewValidator">
+		<property name="kmImeetingMainService">
+            <ref bean="kmImeetingMainService"/>
+        </property>
+        <property name="kmImeetingMainFeedbackService">
+			<ref bean="kmImeetingMainFeedbackService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmImeetingSyncBindDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingSyncBindDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingSyncBind" />
+	</bean>
+	
+	<bean
+		id="kmImeetingSyncBindTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingSyncBindServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmImeetingSyncBindDao" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingSyncBindService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmImeetingSyncBindTarget" />
+		</property>
+	</bean>
+	
+	<bean id="meetingSynchroService" class="com.landray.kmss.km.imeeting.synchro.IMeetingSynchroService">
+	</bean>
+	
+	<bean
+		id="kmImeetingTopicCategoryDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingTopicCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingTopicCategory" />
+	</bean>
+	<bean
+		id="kmImeetingTopicCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingTopicCategoryServiceImp">
+		<property name="baseDao">
+			<ref bean="kmImeetingTopicCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingTopicCategoryService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmImeetingTopicCategoryTarget" />
+		</property>
+	</bean>
+	
+	
+	<bean
+		id="kmImeetingTopicDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingTopicDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingTopic" />
+	</bean>
+	<bean
+		id="kmImeetingTopicTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingTopicServiceImp">
+		<property name="baseDao">
+			<ref bean="kmImeetingTopicDao" />
+		</property>
+		<property name="sysNumberFlowService">
+			<ref bean="sysNumberFlowService" />
+		</property>	
+	</bean>
+	<bean
+		id="kmImeetingTopicService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmImeetingTopicTarget" />
+		</property>
+	</bean>
+	<!--智能门户新增接口-->
+	<bean id="kmImeetingMainDataService" class="com.landray.kmss.km.imeeting.service.spring.KmImeetingMainDataServiceImp">
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property
+			name="kmImeetingMainService">
+			<ref
+				bean="kmImeetingMainService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmImeetingSeatTemplateDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingSeatTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingSeatTemplate" />
+	</bean>
+	<bean
+		id="kmImeetingSeatTemplateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingSeatTemplateServiceImp">
+		<property name="baseDao">
+			<ref bean="kmImeetingSeatTemplateDao" />
+		</property>
+		
+	</bean>
+	<bean
+		id="kmImeetingSeatTemplateService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmImeetingSeatTemplateTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmImeetingSeatPlanDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingSeatPlanDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingSeatPlan" />
+	</bean>
+	<bean
+		id="kmImeetingSeatPlanTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingSeatPlanServiceImp">
+		<property name="baseDao">
+			<ref bean="kmImeetingSeatPlanDao" />
+		</property>
+		<property name="kmImeetingMainService">
+			<ref bean="kmImeetingMainService" />
+		</property>	
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>	
+	</bean>
+	<bean
+		id="kmImeetingSeatPlanService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmImeetingSeatPlanTarget" />
+		</property>
+	</bean>
+	<bean id="kmImeetingSeatPlanValidator" class="com.landray.kmss.km.imeeting.service.spring.KmImeetingSeatPlanValidator">
+		<property name="kmImeetingMainService">
+            <ref bean="kmImeetingMainService"/>
+        </property>
+        <property name="kmImeetingSeatPlanService">
+            <ref bean="kmImeetingSeatPlanService"/>
+        </property>
+	</bean>	
+	
+	<bean 
+   	 	id="kmImeetingYqqSignService" 
+    	class="com.landray.kmss.km.imeeting.service.spring.KmImeetingYqqSignServiceImp"/>
+    	
+    <bean
+		id="kmImeetingOutsignDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingOutsignDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingOutsign" />
+	</bean>
+	<bean
+		id="kmImeetingOutsignTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingOutsignServiceImp">
+		<property name="baseDao">
+			<ref bean="kmImeetingOutsignDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingOutsignService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmImeetingOutsignTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmImeetingOuterScreenDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingOuterScreenDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingOuterScreen" />
+	</bean>
+	<bean
+		id="kmImeetingOuterScreenTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingOuterScreenServiceImp">
+		<property name="baseDao">
+			<ref bean="kmImeetingOuterScreenDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingOuterScreenService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmImeetingOuterScreenTarget" />
+		</property>
+	</bean>
+	
+	
+	<bean
+		id="kmImeetingInnerScreenDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingInnerScreenDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingInnerScreen" />
+	</bean>
+	<bean
+		id="kmImeetingInnerScreenTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingInnerScreenServiceImp">
+		<property name="baseDao">
+			<ref bean="kmImeetingInnerScreenDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingInnerScreenService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmImeetingInnerScreenTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmImeetingVoteDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.km.imeeting.dao.hibernate.KmImeetingVoteDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.imeeting.model.KmImeetingVote" />
+	</bean>
+	<bean
+		id="kmImeetingVoteTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingVoteServiceImp">
+		<property name="baseDao">
+			<ref bean="kmImeetingVoteDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmImeetingVoteService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmImeetingVoteTarget" />
+		</property>
+	</bean>
+	<!--会议室预定-->
+	<bean
+		id="kmImeetingBookWebServiceTarget"
+		class="com.landray.kmss.km.imeeting.webservice.KmImeetingBookWebServiceImp">
+		<property name="kmImeetingBookService" ref="kmImeetingBookService"/>
+		<property name="kmImeetingResService" ref="kmImeetingResService" />
+		<property name="sysWsOrgService" ref="sysWsOrgService" />
+		<property name="backgroundAuthService" ref="backgroundAuthService" />
+	</bean>
+	<bean
+		id="kmImeetingBookWebService"
+		parent="KmssBaseService">
+		<property name="target" ref="kmImeetingBookWebServiceTarget" />
+	</bean>
+	<!--会议室资源-->
+	<bean
+		id="kmImeetingResWebserviceTarget"
+		class="com.landray.kmss.km.imeeting.webservice.KmImeetingResWebServiceImp">
+		<property name="kmImeetingResService" ref="kmImeetingResService"/>
+		<property name="kmImeetingResCategoryService" ref="kmImeetingResCategoryService"/>
+		<property name="sysWsOrgService" ref="sysWsOrgService" />
+		<property name="backgroundAuthService" ref="backgroundAuthService" />
+	</bean>
+	<bean
+			id="kmImeetingResWebService"
+			parent="KmssBaseService">
+		<property name="target" ref="kmImeetingResWebserviceTarget" />
+	</bean>
+	
+	<bean id="kmImeetingAliMeetingValidator"
+		class="com.landray.kmss.km.imeeting.service.spring.KmImeetingAliMeetingValidator">
+	</bean>
+	
+	<bean id="kmImeetingResReaderFilter" class="com.landray.kmss.km.imeeting.service.spring.KmImeetingResReaderFilter"></bean>
+	<bean id="kmImeetingDatamngExtensionPointApi" class="com.landray.kmss.km.imeeting.service.spring.KmImeetingDatamngExtensionPointApiImpl"></bean>
+</beans>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<plugin
+       xmlns="http://www.example.org/plugin-config"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+        <extension-point id="com.landray.kmss.sys.tag.group" >
+             <item name="module" >
+                   <param name="message" kind="string">
+                         <description>模块名称</description >
+                   </param>
+                   <description>
+                         标签选择扩展
+                   </description>
+             </item>
+             <description>
+                标签选择树模块自定义扩展，实现此扩展后可以定义自己模块的可选择标签
+             </description>
+       </extension-point>
+       
+       <extension
+		point="com.landray.kmss.sys.webservice2">
+		<item
+			name="registry">
+			<param
+				name="serviceName"
+				value="{sys-tag:sys.tagss.webservice.title}" />
+			<param
+				name="serviceClass"
+				value="com.landray.kmss.sys.tag.webservice.ISysTagWebService" />
+			<param
+				name="serviceBean"
+				value="sysTagWebService" />
+			<param
+				name="serviceDoc"
+				value="/sys/tag/webservice/SysTagWebServiceHelp.jsp" />
+		</item>
+	   </extension>
+       
+       
+       <extension point="com.landray.kmss.sys.admin.transfer" >
+             <item name="config" >
+                   <param name="unid"
+                         value="com.landray.kmss.sys.tag.transfer.SysTagCategroyTransferTask" />
+                   <param name="name" value="标签分类数据和个人标签迁移" />
+                   <param name="path" value="/sys/tag/" />
+                   <param name="check"
+                         value="com.landray.kmss.sys.tag.transfer.SysTagCategoryTransferChecker" />
+                   <param name="upgrade"
+                         value="com.landray.kmss.sys.tag.transfer.SysTagCategroyTransferTask" />
+                   <param name="description"
+                         value="标签改为多分类，将之前的分类迁移到新的表中。根据旧的个人标签，生成个人标签筛选设置，并将个人标签改为公共标签。" />
+             </item>
+       </extension>
+       
+       <extension point="com.landray.kmss.sys.admin.transfer" >
+             <item name="config" >
+                   <param name="unid"
+                         value="com.landray.kmss.sys.tag.transfer.SysTagGetTagListTransferTask" />
+                   <param name="name" value="标签删除标记数据迁移" />
+                   <param name="path" value="/sys/tag/" />
+                   <param name="check"
+                         value="com.landray.kmss.sys.tag.transfer.SysTagGetTagListTransferChecker" />
+                   <param name="upgrade"
+                         value="com.landray.kmss.sys.tag.transfer.SysTagGetTagListTransferTask" />
+                   <param name="description"
+                         value="标签添加是否删除标记，需给该字段设置初始值" />
+             </item>
+       </extension>
+
+    <!-- 前后端分离列表字段信息 -->
+    <extension point="com.landray.kmss.sys.list.field.config"
+               model="com.landray.kmss.sys.tag.model.SysTagTags">
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdId"></param>
+            <param name="title" value=""></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdName"></param>
+            <param name="title" value="{sys-tag:sysTagTags.fdName}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdStatus"></param>
+            <param name="title" value="{sys-tag:sysTagTags.fdStatus}"></param>
+            <param name="convertor" value="enumsPropetyConvertor"></param>
+            <param name="convertorProps" value="enumsType:sysTagTags_fdStatus"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="docCreateTime"></param>
+            <param name="title" value="{sys-tag:sysTagTags.docCreateTime}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdCountQuoteTimes"></param>
+            <param name="title" value="{sys-tag:sysTagTags.fdQuoteTimes}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="docCreator.fdName"></param>
+            <param name="title" value="{sys-tag:sysTagTags.docCreatorId}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdAlias"></param>
+            <param name="title" value="{sys-tag:sysTagTags.fdAlias}"></param>
+            <param name="convertor" value="listPropertyConvertor"></param>
+            <param name="convertorProps" value="prop:fdAlias.fdName"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdCategorys"></param>
+            <param name="title" value="{sys-tag:sysTagTags.fdCategoryId}"></param>
+            <param name="convertor" value="listPropertyConvertor"></param>
+            <param name="convertorProps" value="prop:fdCategorys.fdName"></param>
+        </item>
+    </extension>
+</plugin>

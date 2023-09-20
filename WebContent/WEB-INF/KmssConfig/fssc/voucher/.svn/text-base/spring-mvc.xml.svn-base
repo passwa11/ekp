@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/fssc/voucher/fssc_voucher_main/fsscVoucherMain.do"
+		class="com.landray.kmss.fssc.voucher.actions.FsscVoucherMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.voucher.forms.FsscVoucherMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/fssc/voucher/fssc_voucher_main/fsscVoucherMain_data.jsp" />
+				<entry
+					key="edit"
+					value="/fssc/voucher/fssc_voucher_main/fsscVoucherMain_edit.jsp" />
+				<entry
+					key="view"
+					value="/fssc/voucher/fssc_voucher_main/fsscVoucherMain_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/voucher/fssc_voucher_model_config/fsscVoucherModelConfig.do"
+		class="com.landray.kmss.fssc.voucher.actions.FsscVoucherModelConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.voucher.forms.FsscVoucherModelConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+                    			value="/fssc/voucher/fssc_voucher_model_config/fsscVoucherModelConfig_data.jsp"/>
+				<entry
+					key="edit"
+                    			value="/fssc/voucher/fssc_voucher_model_config/fsscVoucherModelConfig_edit.jsp"/>
+				<entry
+					key="view"
+                    			value="/fssc/voucher/fssc_voucher_model_config/fsscVoucherModelConfig_view.jsp"/>
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/voucher/fssc_voucher_model_config/fsscVoucherModelConfigData.do"
+		class="com.landray.kmss.fssc.voucher.actions.FsscVoucherModelConfigDataAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.voucher.forms.FsscVoucherModelConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="fdModel"
+                			value="/fssc/voucher/fssc_voucher_model_config/fsscVoucherModelConfig_dialog_fdModel.jsp"/>
+				<entry
+					key="fdCategory"
+                			value="/fssc/voucher/fssc_voucher_model_config/fsscVoucherModelConfig_dialog_fdCategory.jsp"/>
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/voucher/fssc_voucher_rule_config/fsscVoucherRuleConfig.do"
+		class="com.landray.kmss.fssc.voucher.actions.FsscVoucherRuleConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.voucher.forms.FsscVoucherRuleConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+                    			value="/fssc/voucher/fssc_voucher_rule_config/fsscVoucherRuleConfig_data.jsp"/>
+				<entry
+					key="edit"
+                    			value="/fssc/voucher/fssc_voucher_rule_config/fsscVoucherRuleConfig_edit.jsp"/>
+				<entry
+					key="view"
+                    			value="/fssc/voucher/fssc_voucher_rule_config/fsscVoucherRuleConfig_view.jsp"/>
+			</map>
+		</property>
+	</bean>
+
+	<bean
+			class="com.landray.kmss.fssc.voucher.actions.FsscVoucherPortletAction"
+			parent="KmssBaseAction"
+			name="/fssc/voucher/fssc_voucher_portlet/fsscVoucherPortlet.do"
+			lazy-init="true">
+		<property
+				name="forwards">
+			<map>
+				<entry
+						key="getVapprove"
+						value="/fssc/voucher/fssc_voucher_portlet/fsscVoucherApprove_portlet.jsp" />
+				<entry
+						key="getVapproved"
+						value="/fssc/voucher/fssc_voucher_portlet/fsscVoucherApproved_portlet.jsp" />
+				<entry
+						key="bookkeepingFailed"
+						value="/fssc/voucher/fssc_voucher_portlet/fssc_voucher_to_bookkeeping.jsp" />
+				<entry
+						key="getBookingSuccessData"
+						value="/fssc/voucher/fssc_voucher_portlet/fssc_voucher_bookkeeping_success.jsp" />
+				<entry
+						key="bookkeeping"
+						value="/fssc/voucher/fssc_voucher_portlet/fssc_voucher_bookkeeping.jsp" />
+				<entry
+						key="countStatus"
+						value="/fssc/voucher/fssc_voucher_portlet/fssc_voucher_month.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

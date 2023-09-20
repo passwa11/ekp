@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.km.calendar.model.KmCalendarAuthList" 
+        table="km_calendar_auth_list">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property 
+            name="fdIsEdit" 
+            column="fd_is_edit" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="fdIsRead" 
+            column="fd_is_read" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="fdIsModify" 
+            column="fd_is_modify" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="fdShareDate" 
+            column="fd_share_date" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="fdIsShare" 
+            column="fd_is_share" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="fdIsPartShare" 
+            column="fd_is_part_share" 
+            update="true" 
+            insert="true"/>
+        <many-to-one
+			name="fdAuth"
+			column="fd_auth_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+        <bag 
+            name="fdPerson" 
+            table="km_calendar_auth_list_person" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.organization.model.SysOrgElement" 
+                column="fd_target_id"/>
+        </bag>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+    <!-- 简单分类机制-->
+	<logset>
+        <oper
+            id="SysSimpleCategoryDtAction"
+            desc=""
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/sc/scdt.do">
+            <!-- 分类迁移 -->
+            <query
+                method="dt"
+                logPoint="Base_UrlParam;dt" 
+                messageKey="sys-simplecategory:sysSimpleCategory.chg.button"/>
+        </oper>
+        <oper
+            id="CateChgAction"
+            desc=""
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/sc/cateChg.do">
+            <query
+                method="cateChgUpdate"
+                logPoint="Base_UrlParam;cateChgUpdate" 
+                messageKey="sys-simplecategory:sysSimpleCategory.chg.button"/>
+        </oper>
+        <oper
+        	id="sysSimpleCategoryTreeOperLog"
+        	extends="BaseOperLog"
+        	model="*"
+        	action="/sys/common/treexml.jsp">
+        	<query
+            	paramName="s_bean"
+            	paramValue="sysSimpleCategoryTreeService"
+            	logPoint="Base_UrlParam;sysSimpleCategoryTreeService"
+            	messageKey="button.list">
+            </query>
+        </oper>
+        
+        <oper
+            id="categoryPreivewOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/sc/categoryPreivew.do">
+            <query
+                method="getContent"
+                logPoint="Base_UrlParam"
+                messageKey="button.list">
+            </query>
+            <query
+                method="getXMLContent"
+                logPoint="Base_UrlParam"
+                messageKey="button.list">
+            </query>
+        </oper>
+	</logset>
+</log-oper>

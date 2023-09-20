@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrganizationVisible"
+		table="sys_org_visible">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+
+		<property
+			name="docAlterTime"
+			column="doc_alter_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+
+		<property
+			name="fdDescription"
+			column="fd_description"
+			update="true"
+			insert="true"
+			length="1500"
+			not-null="false" />
+
+		<bag
+			name="visiblePrincipals"
+			table="sys_org_visible_principal"
+			lazy="true">
+			<key
+				column="fd_doc_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_org_id" />
+		</bag>
+
+		<bag
+			name="visibleSubordinates"
+			table="sys_org_visible_sub"
+			lazy="true">
+			<key
+				column="fd_doc_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_org_id" />
+		</bag>
+
+	</class>
+</hibernate-mapping>

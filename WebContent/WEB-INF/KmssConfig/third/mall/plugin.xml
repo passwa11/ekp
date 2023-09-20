@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	<extension-point id="com.landray.kmss.third.mall">
+		<item name="mallItem">
+			<param name="fdKey" kind="string" required="true">
+				<description>唯一标识符</description>
+			</param>
+			<param name="messageKey" kind="string" required="true">
+				<description>模块名，支持多语言</description>
+			</param>
+			<param name="description" kind="string" required="true">
+				<description>描述</description>
+			</param>
+			<param name="imgSrc" kind="string" required="true">
+				<description>图例</description>
+			</param>
+			<description>商城服务</description>
+		</item>
+		<item name="config">
+			<param name="sourceName" kind="string" required="true">
+				<description>Tab标签页的名称</description>
+			</param>
+			<param name="sourceUUID" kind="string" required="true">
+				<description>访问的参数</description>
+			</param>
+			<param name="sourceURL" kind="string" required="true">
+				<description>访问的URL</description>
+			</param>
+			<param name="order" kind="string" required="true">
+				<description>排序号</description>
+			</param>
+			<description>商城服务展示列表分类</description>
+		</item>
+		<description>商城服务</description>
+	</extension-point>
+	<extension-point id="com.landray.kmss.third.mall.portal">
+		<item name="portalItem">
+			<param name="fdKey" kind="string" required="true">
+				<description>唯一标识符，如：登录页(login)，主题包(theme)，部件呈现(render)，部件外观(panel)，页眉(header)，页脚(footer)，页面模板(template)</description>
+			</param>
+			<param name="parser" kind="string" required="true" basedOn="com.landray.kmss.common.service.IXMLDataBean">
+				<description>文件包解析器，获取文件参数：requestContext.getParameter("filePath")</description>
+			</param>
+			<description>商城解析</description>
+		</item>
+		<description>门户解析服务</description>
+	</extension-point>
+	
+	<extension
+		point="com.landray.kmss.third.mall">
+		<!-- 表单服务 -->
+		<item
+			name="mallItem">
+			<param
+				name="fdKey"
+				value="sys_xform" />
+			<param
+				name="messageKey"
+				value="third-mall:thirdMallAuthorize.xform.name" />
+			<param
+				name="description"
+				value="third-mall:thirdMallAuthorize.xform.desc" />
+			<param
+				name="imgSrc"
+				value="/third/mall/resource/images/example.png" />
+		</item>
+		<!-- 门户服务 -->
+		<item
+			name="mallItem">
+			<param
+				name="fdKey"
+				value="sys_portal" />
+			<param
+				name="messageKey"
+				value="third-mall:thirdMallAuthorize.portal.name" />
+			<param
+				name="description"
+				value="third-mall:thirdMallAuthorize.portal.desc" />
+			<param
+				name="imgSrc"
+				value="/third/mall/resource/images/example.png" />
+		</item>
+		<!-- 素材服务（未实现）
+		<item
+			name="mallItem">
+			<param
+				name="fdKey"
+				value="sys_material" />
+			<param
+				name="messageKey"
+				value="third-mall:thirdMallAuthorize.material.name" />
+			<param
+				name="description"
+				value="third-mall:thirdMallAuthorize.material.desc" />
+			<param
+				name="imgSrc"
+				value="/third/mall/resource/images/example.png" />
+		</item> -->
+		<!--业务建模-->
+		<item
+				name="mallItem">
+			<param
+					name="fdKey"
+					value="sys_application" />
+			<param
+					name="messageKey"
+					value="third-mall:thirdMallAuthorize.application.name" />
+			<param
+					name="description"
+					value="third-mall:thirdMallAuthorize.application.desc" />
+			<param
+					name="imgSrc"
+					value="/third/mall/resource/images/example.png" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.xform.template.source" model="*">
+		<item name="config">
+			<param name="sourceName" value="{third-mall:thirdMall.Template}"></param>
+			<param name="sourceUUID" value="Reuse"></param>
+			<param name="sourceModelName" value=""></param>
+			<param name="sourceBean" value="thirdMallTemplateDataService"></param>
+			<param name="sourceURL" value="third/mall/template/thirdMallTemplate_index.jsp"></param>
+			<param name="order" value="0"></param>
+			<param name="moreURL" value="km/reuse/km_reuse_xform_set/kmReuseXformSet.do?method=goodsList"></param>
+		</item>
+		<item name="config">
+			<param name="sourceName" value="{third-mall:thirdMall.template.group}"></param>
+			<param name="sourceUUID" value="sysXformGroup"></param>
+			<param name="sourceModelName" value=""></param>
+			<param name="sourceBean" value="thirdMallTemplateDataService"></param>
+			<param name="sourceURL" value="third/mall/template/thirdMallTemplate_index.jsp"></param>
+			<param name="order" value="0"></param>
+			<param name="moreURL" value="km/reuse/km_reuse_xform_set/kmReuseXformSet.do?method=goodsList"></param>
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-mall.js" />
+			<param name="targetFile" value="/third/mall/mobile/resource/js/mui-mall.js" />
+			<param name="srcFold" value="/third/mall/mobile/resource/js" />
+		</item>
+		<item 
+			name="css-file">
+			<param 
+				name="name" 
+				value="mui-mall-list.css" />
+			<param 
+				name="targetFile" 
+				value="/third/mall/mobile/resource/css/list.css" />
+		</item>
+	</extension>
+
+	<!--云商城扩展点-->
+	<extension point="com.landray.kmss.third.mall" model="*">
+		<item name="config">
+			<param name="sourceName" value="new"></param>
+			<param name="sourceUUID" value="docAlterTime"></param>
+			<param name="sourceURL" value="third/mall/thirdMallPublic.do?method=showIndex"></param>
+			<param name="order" value="0"></param>
+		</item>
+		<item name="config">
+			<param name="sourceName" value="jp"></param>
+			<param name="sourceUUID" value="fdIsRecommend"></param>
+			<param name="sourceURL" value="third/mall/thirdMallPublic.do?method=showIndex"></param>
+			<param name="order" value="1"></param>
+		</item>
+		<item name="config">
+			<param name="sourceName" value="rm"></param>
+			<param name="sourceUUID" value="docReadCount"></param>
+			<param name="sourceURL" value="third/mall/thirdMallPublic.do?method=showIndex"></param>
+			<param name="order" value="2"></param>
+		</item>
+		<item name="config">
+			<param name="sourceName" value="all"></param>
+			<param name="sourceUUID" value="all"></param>
+			<param name="sourceURL" value="third/mall/thirdMallPublic.do?method=showIndex"></param>
+			<param name="order" value="3"></param>
+		</item>
+		<item name="config">
+			<param name="sourceName" value="over"></param>
+			<param name="sourceUUID" value="over"></param>
+			<param name="sourceURL" value="third/mall/thirdMallPublic.do?method=showIndex"></param>
+			<param name="order" value="4"></param>
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.third.mall" model="profile">
+		<item name="config">
+			<param name="sourceName" value="all"></param>
+			<param name="sourceUUID" value="all"></param>
+			<param name="sourceURL" value="third/mall/thirdMallPublic.do?method=showIndex"></param>
+			<param name="order" value="3"></param>
+		</item>
+	</extension>
+</plugin>

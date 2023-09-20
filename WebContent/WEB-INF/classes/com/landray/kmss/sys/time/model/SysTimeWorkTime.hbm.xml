@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.time.model.SysTimeWorkTime"
+		table="sys_time_work_time">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		
+		<property
+			name="hbmWorkStartTime"
+			column="fd_work_start_time"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="19" />
+		<property
+			name="hbmWorkEndTime"
+			column="fd_work_end_time"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="19" />
+		<property
+			name="fdOverTimeType"
+			column="fd_over_time_type"
+			update="true"
+			insert="true"
+			not-null="false" />
+
+		<many-to-one
+			name="sysTimeWork"
+			column="fd_work_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+		
+	<module
+		messageKey="third-ecalendar:module.third.ecalendar"
+		urlPrefix="/third/ecalendar/"
+		defaultValidator="roleValidator(role=SYSROLE_USER;ROLE_ECALENDAR_BACKSTAGE_MANAGER)">
+		<roles>
+			<!-- 后台管理  -->
+			ROLE_ECALENDAR_BACKSTAGE_MANAGER
+		</roles>
+		<roleType>
+			<!-- 系统管理员权限 -->
+			<sysadmin>
+				ROLE_ECALENDAR_BACKSTAGE_MANAGER
+			</sysadmin>
+		</roleType>
+		
+		 <request
+			path="ecalendar_bind_data/ecalendarBindData*">
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=SYSROLE_USER)" />
+		</request>
+		
+		<request
+			path="sysMail_home.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+		</request>
+		
+		<request
+			path="ecalendar*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+		</request>
+		
+		<request path="config*" defaultValidator="roleValidator(role=ROLE_ECALENDAR_BACKSTAGE_MANAGER)">
+		</request>
+	</module>
+	
+	<!-- 后台配置权限 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.third.ecalendar.EcalendarConfig"
+				validator="roleValidator(role=ROLE_ECALENDAR_BACKSTAGE_MANAGER)" />
+		</request>
+	</module>
+
+	<homePage urlPrefix="third/ecalendar" 
+		url="/third/ecalendar/config.do?method=config"
+		messageKey="third-ecalendar:ecalendar.integration" 
+		config="/third/ecalendar/config.do?method=config" />
+		
+	<profileConfig 
+		key="exchange"
+		messageKey="{third-ecalendar:exchange.integration}"
+		url="/sys/appconfig/sys_appconfig/sysAppConfig.do?method=edit&amp;modelName=com.landray.kmss.third.ecalendar.EcalendarConfig"
+		type="mail"
+		icon="third_ecalendar"
+		order="1" 
+		userType="2"
+		description="{third-ecalendar:exchange.profileCfg.description}"/>
+</configs>

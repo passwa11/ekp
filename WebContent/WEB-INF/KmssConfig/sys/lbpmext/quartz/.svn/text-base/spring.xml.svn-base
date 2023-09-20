@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 流程定时任务提供器 -->
+	<bean id="lbpmQuartzJobProvider"
+		class="com.landray.kmss.sys.lbpmext.quartz.LbpmQuartzJobProvider">
+		<property name="quartzJobService">
+			<ref bean="sysQuartzJobService" />
+		</property>
+		<property name="accessManager">
+			<ref bean="accessManager" />
+		</property>
+	</bean>
+</beans>

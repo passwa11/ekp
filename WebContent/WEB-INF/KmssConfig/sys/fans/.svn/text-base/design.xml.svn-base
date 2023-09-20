@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="sys-fans:module.sys.fans"
+		urlPrefix="/sys/fans/"
+		defaultValidator="roleValidator(role=SYSROLE_USER)">
+		<request
+			path="sys_fans_main/sysFansMain*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+			<query
+				queryString="method=view|add|edit|update|save|saveadd|delete|deleteall|list|data"
+				validator="roleValidator(role=SYSROLE_ADMIN)" />
+		</request>
+		<request
+			path="tree.jsp"
+			defaultValidator="roleValidator(role=SYSROLE_ADMIN)">
+		</request>
+	</module>
+</configs>

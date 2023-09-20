@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module xmlns="http://www.landray.com.cn/fsscxml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.landray.com.cn/fsscxml ../../../eop/basedata/design-xml/import.xsd ">
+	<!-- 费用类型设置 -->
+	<model name="com.landray.kmss.fssc.fee.model.FsscFeeExpenseItem" key-col="fdCompany;fdTemplate">
+		<column property="fdCompany.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompany" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdTemplate" type="Object">
+			<rel type="strong" ref="com.landray.kmss.fssc.fee.model.FsscFeeTemplate">
+				<key name="fdName"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdIsNeedBudget" type="Radio" ifModuleExist="/fssc/budget/">
+			<validator rel="required"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdItemList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdItemList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdCode"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="exists"/>
+		</column>
+	</model>
+</module>

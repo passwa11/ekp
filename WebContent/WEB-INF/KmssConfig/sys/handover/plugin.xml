@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	<extension-point
+		id="com.landray.kmss.sys.handover">
+		<item
+			name="config">
+			<param
+				name="module"
+				required="true"
+				kind="unid">
+				<description>配置类工作交接模块</description>
+			</param>
+			<param
+				name="messageKey"
+				required="true"
+				kind="string">
+				<description>配置类工作交接模块的messageKey</description>
+			</param>
+			<param
+				name="handler"
+				kind="java"
+				basedOn="com.landray.kmss.sys.handover.interfaces.config.IHandoverHandler">
+				<description>配置类工作交接查询、执行实现接口（与provider，二选一）</description>
+			</param>
+			<param
+				name="provider"
+				kind="java"
+				basedOn="com.landray.kmss.sys.handover.interfaces.config.IHandoverProvider">
+				<description>配置类工作交接扩展子分类接口（与handler，二选一）</description>
+			</param>
+			<param
+				name="order"
+				kind="int">
+				<description>排序</description>
+			</param>
+			<description>配置类工作交接扩展</description>
+		</item>
+		<description>工作交接相关扩展点</description>
+	</extension-point>
+	
+	<extension-point
+		id="com.landray.kmss.sys.handover.doc.auth">
+		<item
+			name="config">
+			<param
+				name="module"
+				required="true"
+				kind="unid">
+				<description>文档类（权限）工作交接模块</description>
+			</param>
+			<param
+				name="messageKey"
+				required="false"
+				kind="string">
+				<description>文档类工作交接模块的messageKey,有则使用该messageKey,无则使用数据字典中默认的</description>
+			</param>
+			<!-- 
+				由于文档权限只会对“可阅读者、可编辑者、流程意见阅读权限、附件可打印者、附件可拷贝者、附件可下载者”进行交接处理，
+				所以这里统一使用默认的Provider(com.landray.kmss.sys.handover.support.config.auth.DocAuthProvider)。
+				所有的权限字段都取自于数据字典
+			-->
+			<param
+				name="provider"
+				kind="java"
+				basedOn="com.landray.kmss.sys.handover.interfaces.config.IHandoverProvider">
+				<description>文档类工作交接扩展子分类接口</description>
+			</param>
+			<param
+				name="subSql"
+				required="false"
+				kind="string">
+				<description>
+					用于额外的查询条件，
+					比如：KmsMultidocKnowledge和KmsWikiMain，共用了一张权限表，为了区分交接的数据来由自哪个类，额外的条件
+					KmsMultidocKnowledge：and fd_doc_id in (select distinct fd_fk_id from kms_multidoc_knowledge)
+					KmsWikiMain：and fd_doc_id in (select distinct fd_fk_id from kms_wiki_main)
+					还比如：KmAssetApplyChange、KmAssetApplyDeal、KmAssetApplyDivert.....共用了一张表，为了区分数据的严，也需要加入额外的条件
+					and subclass_modelname='com.landray.kmss.km.asset.model.KmAssetApplyChange' 
+					或
+					and subclass_modelname='com.landray.kmss.km.asset.model.KmAssetApplyDeal' 
+					......
+				</description>
+			</param>
+			<param
+				name="order"
+				kind="int">
+				<description>排序</description>
+			</param>
+			<description>文档类文档类（权限工作交接扩展）</description>
+		</item>
+		<description>工作交接相关扩展点</description>
+	</extension-point>	
+	
+	<!-- 全能的工作交接 -->
+	<extension-point
+		id="com.landray.kmss.sys.handover.item">
+		<item
+			name="config">
+			<param
+				name="module"
+				required="true"
+				kind="unid">
+				<description>事项交接模块</description>
+			</param>
+			<param
+				name="messageKey"
+				required="false"
+				kind="string">
+				<description>事项交接模块的messageKey,有则使用该messageKey,无则使用数据字典中默认的</description>
+			</param>
+			<param
+				name="handler"
+				required="true"
+				kind="java"
+				basedOn="com.landray.kmss.sys.handover.support.config.item.AbstractItemHandler">
+				<description>事项交接处理类（处理具体的交接逻辑）</description>
+			</param>
+			<param
+				name="provider"
+				required="true"
+				kind="java"
+				basedOn="com.landray.kmss.sys.handover.interfaces.config.IHandoverProvider">
+				<description>事项交接提供类（提供需要交接的属性）</description>
+			</param>
+			<param
+				name="order"
+				kind="int"
+				default="5">
+				<description>排序</description>
+			</param>
+			<description>事项交接（全能的工作交接，完全由业务模块来处理数据）</description>
+		</item>
+		<description>工作交接相关扩展点</description>
+	</extension-point>	
+	
+	<!-- 配置类数据迁移 -->
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid"
+				value="com.landray.kmss.sys.handover.model.SysHandoverConfigMain" />
+			<param name="name"
+				value="{sys-handover:sysHandoverConfigMain.transfer.name}" />
+			<param name="description"
+				value="{sys-handover:sysHandoverConfigMain.transfer.desc}"/>
+			<param name="check"
+				value="com.landray.kmss.sys.handover.transfer.SysHandoverConfigChecker" />
+			<param name="upgrade"
+				value="com.landray.kmss.sys.handover.transfer.SysHandoverConfigTask" />
+			<param name="path" 
+				value="/sys/handover/"/>
+		</item>
+	</extension>
+
+	<!-- webservice2 -->
+	<extension point="com.landray.kmss.sys.webservice2">
+		<item name="registry">
+			<param name="serviceName" value="{sys-handover:module.sys.handover}" />
+			<param name="serviceClass"
+				   value="com.landray.kmss.sys.handover.webservice.ISysHandoverWebService" />
+			<param name="serviceBean"
+				   value="sysHandoverWebService" />
+			<param name="serviceDoc"
+				   value="/sys/handover/sysHandoverWebServiceHelp.jsp" />
+		</item>
+	</extension>
+</plugin>

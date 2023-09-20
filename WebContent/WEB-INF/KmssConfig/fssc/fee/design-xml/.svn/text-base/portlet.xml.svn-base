@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+<!-- 事前申请 -->
+<portlet
+		id="fssc.fee.porlet"
+		name="{fssc-fee:module.fssc.fee}"
+		module="{fssc-fee:module.fssc.fee}"
+		description="{fssc-fee:module.fssc.fee.description}">
+		<source
+			format="sys.ui.listtable"
+			type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/fssc/fee/fssc_fee_main/fsscFeeMainPortlet.do?method=listPortlet&type=ower&fdCategoryId=!{cateid}"
+				}
+			]]>
+			</code>
+		</source>
+		<vars>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		    <var
+				name="{portlet.cate}"
+				key="cateid"
+				kind="sys.category">
+				{"model":"com.landray.kmss.fssc.fee.model.FsscFeeTemplate","name":"{button.select}"}
+			</var>
+		</vars>
+		<operations>
+		   <operation
+				name="{operation.create}"
+				type="create"
+				href="/fssc/fee/fssc_fee_main/fsscFeeMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/fssc/fee/#j_path=/listAll&amp;mydoc=all"/>
+	    </operations>
+</portlet>
+</root>

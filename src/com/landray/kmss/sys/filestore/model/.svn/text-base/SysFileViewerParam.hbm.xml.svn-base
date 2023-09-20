@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.landray.kmss.sys.filestore.model.SysFileViewerParam"
+	table="sys_file_viewer_param">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="fdFileId"
+			column="fd_file_id"
+			update="true"
+			insert="true"
+			length="36"
+			not-null="false"
+			index="idx_sysFileViewerParam_fileId" />
+		
+		<property
+			name="fdAttMainId"
+			column="fd_attmain_id"
+			update="true"
+			insert="true"
+			length="36"
+			not-null="false"
+			index="idx_sysFileViewerParam_attMId" />
+			
+		<property
+			name="fdConverterKey"
+			column="fd_converter_key"
+			update="true"
+			insert="true"
+			length="100"
+			not-null="false" />
+			
+		<property
+			name="fdViewerKey"
+			column="fd_viewer_key"
+			update="true"
+			insert="true"
+			length="100"
+			not-null="false" />
+			
+		<property
+			name="fdParameter"
+			column="fd_parameter"
+			update="true"
+			insert="true"
+			length="4000"
+			not-null="false" />
+			
+		<property
+			name="fdParameterLong"
+			column="fd_parameter_long"
+			update="true"
+			insert="true"
+			not-null="false"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true"
+			length="50000" />			
+
+	</class>
+</hibernate-mapping>

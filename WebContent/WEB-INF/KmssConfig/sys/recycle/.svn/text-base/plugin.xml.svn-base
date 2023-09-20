@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<plugin
+       xmlns="http://www.example.org/plugin-config"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+       
+       <extension-point id="com.landray.kmss.sys.recycle" >
+             <item name="softDelete" >
+                   <param name="moduleName" kind="string">
+                         <description>模块名称</description >
+                   </param>
+                   <param name="modelName" kind="string" required="true">
+                         <description>主文档名称</description >
+                   </param>
+                   <param name="modelClassName" kind="string" required="true">
+                         <description>主文档类名</description >
+                   </param>
+                   <param name="categoryClassName" kind="string">
+                         <description>所属分类类名</description >
+                   </param>
+                   <param name="categoryField" kind="string">
+                         <description>所属分类字段名称</description >
+                   </param>
+                   <param name="titleField" kind="string"  required="true">
+                         <description>标题字段</description >
+                   </param>
+                   <description>
+                         软删除功能扩展，需要实现软删除的主文档必须实现该扩展点
+                   </description>
+             </item>
+             <description>
+                软删除
+             </description>
+       </extension-point>
+
+    <!-- 前后端分离列表字段信息 -->
+    <extension point="com.landray.kmss.sys.list.field.config"
+               model="com.landray.kmss.sys.recycle.model.SysRecycleLog">
+        <item name="field">
+            <param name="unid" value="listModelDoc"></param>
+            <param name="property" value="fdId"></param>
+            <param name="title" value=""></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="listModelDoc"></param>
+            <param name="property" value="modelName"></param>
+            <param name="title" value=""></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="listModelDoc"></param>
+            <param name="property" value="docSubject"></param>
+            <param name="title" value="{sys-recycle:sysRecycleLog.docSubject}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="listModelDoc"></param>
+            <param name="property" value="docDeleteTime"></param>
+            <param name="title" value="{sys-recycle:sysRecycleLog.fdOptDate}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="listModelDoc"></param>
+            <param name="property" value="docDeleteBy"></param>
+            <param name="title" value="{sys-recycle:sysRecycleLog.fdOperator}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+    </extension>
+
+</plugin>

@@ -1,0 +1,78 @@
+var list = data.modelList;
+var wgt = render.parent;
+var lang = wgt.getModelingLang();
+console.log("lang",lang);
+if(JSON.stringify(list) == "{}"){
+{$
+<div class="model-maintenance-toolbox">
+    <div class="toolbox-blank-space-main">
+        <div class="toolbox-blank-space">
+            <div class="toolbox-blank-space-img"></div>
+            <div class="toolbox-blank-space-tip">
+                <div class="toolbox-blank-space-text">{%lang['modeling.no.application.system.create.first']%}</div>
+                <div class="toolbox-blank-space-button">
+                    <a class="lui_custom_list_box_content_blue_btn" href="javascript:void(0)" onclick="top.location.href = top.location.href.replace('#modeling/maintenance','#modeling/application');top.location.reload();">{%lang['sys.profile.modeling.homePage.createApp']%}</a>
+                    <a class="lui_custom_list_box_content_whith_btn" href="javascript:void(0)" onclick="top.location.reload();">{%lang['sys.profile.modeling.homePage.back']%}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+$}
+}else{
+{$
+<div class="model-maintenance-toolbox">
+    <div class="maintenance-toolbox-return">
+        <div onclick="returnPage('pc')">
+            <i></i>
+            <p>{%lang['sys.profile.modeling.homePage.back']%}</p>
+        </div>
+    </div>
+    <div class="maintenance-toolbox-actionBar clearfix">
+        <div class="selectAll">
+            <i></i>
+            <span>{%lang['modeling.common.selectAll']%}</span>
+        </div>
+        <div id="doCheck" class="doCheck">{%lang['modeling.start.testing']%}</div>
+    </div>
+    <div class="maintenance-toolbox-container">
+        $}
+        for(var key in list ){
+        var node = list[key];
+        var c_nodes = node.models
+        {$
+        <div class="toolbox-form-item">
+            <div class="form-item-title">
+                <i ms1-id="{%key%}"></i>
+                <span>  {%node.name%}</span>
+            </div>
+            <ul class="form-item-list">
+                $}
+                for(var ck in c_nodes ){
+                var cn = c_nodes[ck];
+                {$
+                <li title="{%cn.name%}">
+                    <i ms1-id="{%cn.id%}" ms1-name="{%cn.name%}"></i>
+                    <p>{%cn.name%}</p>
+                </li>
+                $}
+                }
+                {$
+
+
+            </ul>
+        </div>
+        $}
+        }
+        {$
+    </div>
+</div>
+<div style="width: 100%;height: 40px;margin-bottom: 10px"></div>
+<script>
+    function returnPage() {
+        $(window.parent.document).find("#base_iframe").attr("src", Com_Parameter.ContextPath + "sys/modeling/base/maintenance/tools.jsp");
+    }
+
+</script>
+$}
+}

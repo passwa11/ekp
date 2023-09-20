@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!-- SSO -->
+	<extension
+		point="com.landray.kmss.sys.authentication">
+		<item
+			name="authenticationProcessingFilter">
+			<param
+				name="bean"
+				value="wxworkOauth2ProcessingFilter" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.notify">
+		<item name="todoExtend">
+			<param name="bean" value="wxworkNotifyProvider" />
+			<param name="name" value="{third-weixin-work:third.weixin.work.extension.notify}" />
+		</item>
+	</extension>
+
+	<!--
+    <extension
+		point="com.landray.kmss.sys.config.admin.do">
+		<item
+			name="config">
+			<param
+				name="jsp"
+				value="/third/wxwork/wxConfig.jsp" />
+			<param
+				name="type"
+				value="integrate" />
+			<param
+				name="order"
+				value="200" />
+		</item>
+	</extension>
+	-->
+	
+	<extension point="com.landray.kmss.sys.mobile.third.integrate">
+		<item name="sign">
+			<param 
+				name="key" 
+				value="wxwork" />
+			<param 
+				name="clientType" 
+				value="12" />
+			<param 
+				name="file" 
+				value="/third/weixin/work/mobile/third.js" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.lbpm.engine.robot" model="*">
+		<item name="robot">
+			<param name="unid"
+				value="com.landray.kmss.third.weixin.work.service.spring.RobotNodeSendDynamicInfoToWxworkServiceImp" />
+			<param name="category" value="{third-weixin-work:lbpmRobotNode.category.wx}" />
+			<param name="type"
+				value="{third-weixin-work:lbpmRobotNode.type.sendDynamicInfoToWx}" />
+			<param name="bean" value="robotNodeSendDynamicInfoToWxworkService" />
+			<param name="class" value="integrate" />
+			<param name="description" value="{third-weixin-work:lbpmRobotNode.type.sendDynamicInfoToWx}"/>
+			<param name="url" value="/third/weixin/work/robot_node.jsp" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.profile.login.third" model="*">
+		<item name="config">
+			<param name="bean" value="wxWorkPcScanLogin"></param>
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.km.calendar.cms">
+		<item
+			name="cms"
+			enable="true">
+			<param
+				name="key"
+				value="wxWorkCalendar" />
+			<param
+				name="name"
+				value="{third-weixin-work:module.third.weixin.work.calendar}" />
+			<param
+				name="cmsService"
+				value="weixinWorkCalendarProvider" />
+			<param
+				name="order"
+				value="30" />
+		</item>
+	</extension>
+
+</plugin>

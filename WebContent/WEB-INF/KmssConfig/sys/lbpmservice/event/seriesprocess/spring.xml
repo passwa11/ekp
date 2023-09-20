@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="lbpmStartSeriesProcessListener"
+		class="com.landray.kmss.sys.lbpmservice.event.seriesprocess.StartSeriesProcessListener">
+		<property name="backgroundAuthService">
+			<ref bean="backgroundAuthService" />
+		</property>
+		<property name="sysAttachmentService">
+			<ref bean="sysAttachmentService" />
+		</property>
+		<property name="sysMetadataParser">
+			<ref bean="sysMetadataParser" />
+		</property>
+	</bean>
+
+	<bean
+		id="lbpmSeriesProcessStartListener"
+		class="com.landray.kmss.sys.lbpmservice.event.seriesprocess.SeriesProcessStartListener">
+	</bean>
+	<bean
+		id="lbpmSeriesProcessNotifyDrafterListener"
+		class="com.landray.kmss.sys.lbpmservice.event.seriesprocess.SeriesProcessNotifyDrafterListener">
+	</bean>
+	<bean
+		id="lbpmSeriesProcessDrafterSubmitAddNoteListener"
+		class="com.landray.kmss.sys.lbpmservice.event.seriesprocess.SeriesProcessDrafterSubmitAddNoteListener">
+	</bean>
+
+	<bean
+		id="lbpmSeriesProcessDialogService"
+		class="com.landray.kmss.sys.lbpmservice.event.seriesprocess.SeriesProcessDialogService" />
+	<bean
+		id="lbpmSeriesProcessDictService"
+		class="com.landray.kmss.sys.lbpmservice.event.seriesprocess.SeriesProcessDictService">
+		<property name="sysDictLoader">
+			<ref bean="sysDictLoader" />
+		</property>
+	</bean>
+</beans>

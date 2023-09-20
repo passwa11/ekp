@@ -1,0 +1,413 @@
+var test = render.parent;
+var lang = test.getModelingLang();
+var testSource = test.source;
+var config = testSource.config;
+var datas = config.datas || {};
+var views = datas.views || [];
+var currentViewId = datas.currentViewId;
+var currentView = {};
+var styleContent = "";
+var fdSubject = {};//标题
+var fdSummaryFlag = "0";//是否显示摘要标题
+var fdName = $("input[name=fdName]").val() || "视图名称";
+var fdShowCoverImg = "0";//是否显示封面图片
+var fdGroup = {};//分类项
+for(var i=0; i<views.length; i++){
+    var id = views[i].id;
+    if(id == currentViewId){
+    	if(i>2){
+    		var xAxis = i * 82.6667;
+			var defiHori = xAxis - 165.3334;
+			styleContent = "transition-duration: 0.3s;transform: translate3d(-"+defiHori+"px, 0px, 0px);"
+		}
+		currentView = views[i];
+		fdSubject = currentView.fdSubject || {};//标题
+		fdSummaryFlag = currentView.fdSummaryFlag || "0";//是否显示摘要标题
+		fdShowCoverImg = currentView.fdShowCoverImg || "0";
+		fdGroup = currentView.fdGroup || {};//分类项
+	}
+}
+var count = fdSummaryFlag == "0"?3:2;
+{$
+	<div class="model-body-wrap">
+       <div class="model-body-content">
+         <!-- 这里放入你的组件 starts -->
+         <div class="model-body-content-wrap" style="overflow:auto">
+           <div class="model-body-content-phone new-list-phone">
+             <div class="model-body-content-phone-wrap">
+				 <div class="model-body-content-phone-status-bar"></div>
+               <div class="model-body-content-phone-view">
+                 <div class="model-body-content-phone-top" style="background: #ffffff;">
+                   <div class="swiper-container">
+                     <div class="swiper-wrapper" style=" height: 40px;{%styleContent%}">
+						 {%fdName%}
+                      </div>
+                    </div>
+                    <div class="model-body-content-phone-sort clearfix">
+						<div class="model-phone-sort-left model-phone-sort-group" data-lui-position='fdGroup' onclick='switchSelectPosition(this,"left")'>
+							<div class="model-phone-criteria-flag">{%lang['modelingAppListview.fdCondition']%}</div>
+							<div class="boardConfigMobileTitle">
+								{%lang['modelingAppListview.fdCondition']%}<span></span>
+							</div>
+						</div>
+						<div class="model-phone-sort-right" data-lui-position='fdCondition' onclick='switchSelectPosition(this,"left")'>
+							<p>{%lang['listview.filter']%}</p>
+							<i></i>
+						</div>
+                      <div class="model-phone-sort-left model-board-phone-sort-item" data-lui-position='fdOrderBy' onclick='switchSelectPosition(this,"left")'>
+                        <div class="model-phone-sort-flag">{%lang['modelingAppListview.fdOrderBy']%}</div>
+                        $}
+                        var fdOrderBys = currentView.fdOrder;
+                        var fdOrderBysLen = fdOrderBys ? fdOrderBys.length : 0;
+     					var len = fdOrderBysLen;
+     					if(fdOrderBysLen > 2){
+							len = 2;
+						}
+						for(var i=0; i<len; i++){
+							var fdOrderBy = fdOrderBys[i];
+							var index = i;
+							var temp = i+1;
+							if(fdOrderBy.text){
+							{$
+								<div class="model-phone-sort-item in_edit">
+		                          <p data-lui-position='fdOrderBy-{%index%}' onclick='switchSelectPosition(this,"left")'>{%fdOrderBy.text%}</p><i></i>
+		                        </div>
+							$}
+							}else{
+							{$
+								<div class="model-phone-sort-item out_edit">
+		                          <p data-lui-position='fdOrderBy-{%index%}' onclick='switchSelectPosition(this,"left")'>{%lang['listview.sort.item']%}{%temp%}</p><i></i>
+		                        </div>
+							$}
+							}
+						}
+						var moreLen = 0;
+						if(fdOrderBysLen <= 2 && fdOrderBysLen > 0){
+							var restLen = 2-fdOrderBysLen;
+							for(var i=restLen; i>0; i--){
+								var index = 2-i+1;
+								var temp = index-1;
+								{$
+									<div class="model-phone-sort-item out_edit">
+			                          <p data-lui-position='fdOrderBy-{%temp%}'>{%lang['listview.sort.item']%}{%index%}</p><i></i>
+			                        </div>
+								$}
+							}
+						}else if(fdOrderBysLen<=0){
+							{$
+								<div class="model-phone-sort-item out_edit">
+		                          <p data-lui-position='fdOrderBy-1'>{%lang['listview.sort.item']%}1</p><i></i>
+		                        </div>
+		                        <div class="model-phone-sort-item out_edit">
+		                          <p data-lui-position='fdOrderBy-2'>{%lang['listview.sort.item']%}2</p><i></i>
+		                        </div>
+							$}		
+						}else{
+							moreLen = fdOrderBysLen - 2;
+						}
+						if(moreLen > 0){
+					{$
+						 <div class="model-phone-sort-dots mobile out_edit" data-lui-position='fdOrderBy-more' onclick='switchSelectPosition(this,"left");showMoreItemMobile(this,"fdOrderBy_more")'>...</div>
+					$}	
+						}
+						if(moreLen > 0){
+							{$
+								<div id='fdOrderBy_more' class='moreList' style="display:none">
+								<div class='triangle'></div>
+								<ul>
+							$}
+								for(var i=0; i<moreLen; i++){
+									var index = 2+i;
+									var temp = 2+i+1;
+									var fdOrderBy = fdOrderBys[index];
+							if(fdOrderBy.text){
+							{$
+								<li class="in_edit" data-lui-position='fdOrderBy-{%index%}' onclick='switchSelectPosition(this,"left");'>{%fdOrderBy.text%}</li>
+							$}
+							}else{
+							{$
+								<li class="out_edit" data-lui-position='fdOrderBy-{%index%}' onclick='switchSelectPosition(this,"left");'>{%lang['listview.sort.item']%}{%temp%}</li>
+							$}
+							}
+								}
+							{$
+								</ul></div>
+							$}
+						}
+						{$
+                      </div>
+
+                    </div>
+					 <ul class="boardConfigMobileCLassify">
+						 <li>{%lang['listview.category.item']%}1<span>(3)</span><li>
+						 <li>{%lang['listview.category.item']%}2<span>(4)</span><li>
+						 <li>{%lang['listview.category.item']%}3<span>(5)</span><li>
+					 </ul>
+                  </div>
+                 <div class="model-body-content-phone-center" data-lui-position='fdDisplay' onclick='switchSelectPosition(this,"left")'>
+					 <div class="model-phone-board-flag">{%lang['listview.board.item']%}</div>
+					 <div class="cardViewMobileConfigContainer" >
+						 <div class="cardViewMobileConfigCardContent">
+							 $}
+							 	if(fdShowCoverImg == "1"){
+							 		{$
+										 <div class="cardViewMobileConfigCardCoverBox">
+											 <div class="cardViewMobileConfigCardCover default"></div>
+										 </div>
+							 		$}
+							 	}
+							 {$
+							 <div class="cardViewMobileConfigCardTextBox">
+								 <div class="cardViewMobileConfigCardTextTitle" >
+									 $}
+									 if(fdSubject.text){
+									 {$
+									 {%fdSubject.text%}
+									 $}
+									 }else{
+									 {$
+									 标题
+									 $}
+									 }
+									 {$
+								 </div>
+								 <ul class="cardViewMobileConfigCardTextList">
+										 $}
+										 var fdDisplays = currentView.fdSummary;
+										 var fdDisplaysLen = fdDisplays ? fdDisplays.length : 0;
+									 	fdDisplaysLen = fdDisplaysLen >6?6:fdDisplaysLen;
+										 var len = fdDisplaysLen;
+										 for(var i=0; i<fdDisplaysLen; i++){
+										 var fdDisplay = fdDisplays[i];
+										 if(!fdDisplay.field){
+										 len--;
+										 continue;
+										 }
+										 var index = i;
+										 var temp = i+1;
+										 if(fdDisplay.text){
+											 if(count == 2){
+											 {$
+									 			<li data-lui-position='fdDisplay-{%index%}' onclick='switchSelectPosition(this,"left")' style="width: 48%">{%fdDisplay.text%}：{%lang['listview.summary.item.content']%}</li>
+											 $}
+											 }else{
+											 {$
+									 			<li data-lui-position='fdDisplay-{%index%}' onclick='switchSelectPosition(this,"left")'>{%fdDisplay.text%}</li>
+											 $}
+											 }
+										 }else{
+											 if(count == 2){
+											 {$
+									 			<li data-lui-position='fdDisplay-{%index%}' onclick='switchSelectPosition(this,"left")' style="width: 48%">{%lang['listview.summary.item']%}{%temp%}：{%lang['listview.summary.item.content']%}</li>
+											 $}
+											 }else{
+											 {$
+									 			<li data-lui-position='fdDisplay-{%index%}' onclick='switchSelectPosition(this,"left")'>{%lang['listview.summary.item']%}{%temp%}</li>
+											 $}
+											 }
+										 }
+										 }
+										 {$
+									 </li>
+								 </ul>
+							 </div>
+						 </div>
+						 <div class="cardViewMobileConfigCardContent">
+							 $}
+							 if(fdShowCoverImg == "1"){
+							 {$
+							 <div class="cardViewMobileConfigCardCoverBox">
+								 <div class="cardViewMobileConfigCardCover default"></div>
+							 </div>
+							 $}
+							 }
+							 {$
+							 <div class="cardViewMobileConfigCardTextBox">
+								 <div class="cardViewMobileConfigCardTextTitle">
+									 {%lang['modelingAppNav.docSubject']%}
+								 </div>
+								 <ul class="cardViewMobileConfigCardTextList">
+									 $}
+									 for(var i=1;i<7;i++){
+									 	if(count == 2){
+									 		{$
+									 			<li style="width: 48%">{%lang['listview.summary.item']%}:{%i%}：{%lang['listview.summary.item.content']%}</li>
+									 			$}
+									 	}else{
+											 {$
+											 <li>{%lang['listview.summary.item.content']%}{%i%}</li>
+											 $}
+									 	}
+									 }
+									 {$
+								 </ul>
+							 </div>
+							 <div class="viewMobileConfigCardContentMore" onclick="moreSummary()">
+								 <i></i>
+							 </div>
+						 </div>
+					 </div>
+                  </div>
+                 </div>
+				 <div class="model-body-content-phone-bottom">
+					 <div class="model-phone-opt finish" data-lui-position='fdOperation'>
+						 <div class="model-phone-opt-flag">{%lang['modelingAppListview.listOperation']%}</div>
+						 <div class="model-phone-opt-wrap clearfix"style="height: 38px;overflow: hidden;">
+							 $}
+							 var listOperations = currentView.fdOperation;
+							 var listOperationsLen = listOperations ? listOperations.length : 0;
+							 var len = listOperationsLen;
+							 if(listOperationsLen > 3){
+							 len = 3;
+							 }
+							 for(var i=0; i<len; i++){
+							 var listOperation = listOperations[i] || {};
+							 var index = i;
+							 var temp = i+1;
+							 var className = "first-item";
+							 if(i != 0){
+							 className = "";
+							 }
+							 if(listOperation.fdName){
+							 {$
+							 <div class="model-phone-opt-item col-{%listOperationsLen%} {%className%}" id="model-phone-opt-item" data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left")'>
+								 <p>{%listOperation.fdName%}</p>
+							 </div>
+							 $}
+							 }else{
+							 {$
+							 <div class="model-phone-opt-item col-{%listOperationsLen%} {%className%}" data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left")'>
+								 <p>{%lang['listview.action.item']%}{%temp%}</p>
+							 </div>
+							 $}
+							 }
+							 }
+							 if(listOperationsLen>3){
+							 {$
+							 <div class="model-phone-opt-item col-{%listOperationsLen%} {%className%}" data-lui-position='fdOperation-' onclick='switchSelectPosition(this,"left")'>
+								 <p>{%lang['modeling.more']%}</p>
+							 </div>
+							 $}
+							 }
+							 if(listOperationsLen<=0){
+							 {$
+							 <div class="model-phone-opt-item col-1 no-item first-item" data-lui-position='fdOperation-1' onclick='switchSelectPosition(this,"left")'>
+								 <p>{%lang['modelingAppListview.listOperation']%}</p>
+							 </div>
+							 $}
+							 }
+							 {$
+						 </div>
+					 </div>
+				 </div>
+                <div class="model-phone-filter-mask" data-lui-position='fdCondition'></div>
+                <div class="model-phone-filter-panel" data-lui-position='fdCondition' onclick="switchSelectPosition(this,'left')">
+                  <p class="model-phone-filter-flag">{%lang['modelingAppListview.fdCondition']%}</p>
+                  <ul class="model-phone-filter-list">
+                  $}
+                 		var fdConditions = currentView.fdCondition;
+                        var fdConditionsLen = fdConditions ? fdConditions.length : 0;
+						for(var i=0; i<fdConditionsLen; i++){
+							var fdCondition = fdConditions[i];
+							var index = i;
+							var temp = i+1;
+							if(fdCondition.text){
+							{$
+		                         <li class="model-phone-filter-item">
+			                       <p data-lui-position='fdCondition-{%index%}' onclick='switchSelectPosition(this,"left")'>{%fdCondition.text%}</p>
+			                       <div></div>
+			                     </li>
+							$}
+							}else{
+							{$
+		                        <li class="model-phone-filter-item">
+			                       <p data-lui-position='fdCondition-{%index%}' onclick='switchSelectPosition(this,"left")'>{%lang['modelingAppListview.fdCondition']%}{%temp%}</p>
+			                       <div></div>
+			                     </li>
+			                     
+							$}
+							}
+						}
+						if(fdConditionsLen<=0){
+							{$
+		                          <li class="model-phone-filter-item">
+				                      <p data-lui-position='fdCondition-1'>{%lang['modelingAppListview.fdCondition']%}1</p>
+				                      <div></div>
+				                  </li>
+				                  <li class="model-phone-filter-item">
+				                      <p data-lui-position='fdCondition-2'>{%lang['modelingAppListview.fdCondition']%}2</p>
+				                      <div></div>
+				                  </li>
+				                  <li class="model-phone-filter-item">
+				                      <p data-lui-position='fdCondition-3'>{%lang['modelingAppListview.fdCondition']%}3</p>
+				                      <div></div>
+				                  </li>
+							$}		
+						}
+                  {$
+                  </ul>
+                </div>
+				 <div class="board-select-mark" data-lui-position='fdGroup'></div>
+				 <div class="board-select-dropdown" data-lui-position='fdGroup' onclick="switchSelectPosition(this,'left')">
+					 $}
+					 	var groupType = fdGroup.groupType;
+					 	if(groupType == 1){
+					 		var groupItems = fdGroup.customCfg;
+					 	}else{
+					 		var groupItems = fdGroup.fieldCfg;
+					 	}
+					 	var groupLength = 0;
+					 	if(groupItems){
+					 		groupLength = groupItems.length<4?groupItems.length:4;
+					 	}
+					 	var len = 4-groupLength;
+					 	for(var i=0;i<groupLength;i++){
+					 		var groupItem = groupItems[i];
+					 		if(i==0){
+								 {$
+								 <div class="board-select-dropdown-item board-select-selected-active" >
+									 <div class="board-select-selected"><div class=""></div></div>
+									 <div class="board-select-item">{%groupItem.text||groupItem.name%}</div>
+								 </div>
+								 $}
+					 		}else{
+								 {$
+								 <div class="board-select-dropdown-item" >
+									 <div class="board-select-selected"><div class=""></div></div>
+									 <div class="board-select-item">{%groupItem.text||groupItem.name%}</div>
+								 </div>
+								 $}
+					 		}
+					 	}
+						 for(var i=0;i<len;i++){
+							 {$
+							 <div class="board-select-dropdown-item" >
+								 <div class="board-select-selected"><div class=""></div></div>
+								 <div class="board-select-item">{%lang['listview.classify.filter']%}{%groupLength+i+1%}</div>
+							 </div>
+							 $}
+						 }
+					 {$
+				 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="model-import-pc">
+        <div class="model-import-pc-text">{%lang['listview.import.PC.configuration']%}</div>
+        <i class="model-import-pc-icon"></i>
+        <div class="model-import-pc-tip">
+            <div class="model-import-pc-tip-top">
+                <div class="model-import-pc-tip-icon"></div>
+                <div class="model-import-pc-tip-content">
+                    {%lang['listview.import.PC.configuration.tips']%}
+                </div>
+            </div>
+            <div class="model-import-pc-bottom">
+                <div class="model-import-pc-btn-ok">{%lang['modeling.button.ok']%}</div>
+                <div class="model-import-pc-btn-cancel">{%lang['modeling.Cancel']%}</div>
+            </div>
+        </div>
+    </div>
+$}

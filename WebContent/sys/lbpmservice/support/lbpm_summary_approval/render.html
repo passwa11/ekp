@@ -1,0 +1,112 @@
+var viewWgt = render.parent;
+var datas = viewWgt.source.config.datas || [];
+var optionButtom = viewWgt.optionButtom || [];
+{$
+	<div class='content'>
+		$}
+		for(var i=0; i<datas.length; i++){
+			var data = datas[i];
+			data.subject = $("<div></div>").text(data.subject).html();
+			var subject = Com_HtmlEscape(data.subject);
+		{$
+			<div class='content-item' data-id='{%data.fdId%}'>
+				<div class='content-item-name'>
+					<p title='{%subject%}'>{%data.subject%}</p>
+					<div class='content-item-buttons'>
+					$}
+					if(data.btn.isFastApprove){
+						{$<div class='content-item-buttons-pass processPass'>{%optionButtom.approval%}</div>$}
+					}
+					if(data.btn.isFastReject){
+						{$<div class='content-item-buttons-reject processRefuse'>{%optionButtom.refuse%}</div>$}
+					}
+					{$
+					</div>
+				</div>
+				<div class='content-item-infos'>
+					<div class='content-item-info content-item-infos-creator'>
+						<img src="{%Com_Parameter.ContextPath%}sys/person/image.jsp?personId={%data.docCreator.fdId%}&size=90"/>
+						<div>
+							<div class='info'><span class='title'>{%optionButtom.applicant%}：</span>{%data.docCreator.fdName%}</div>
+						</div>
+					</div>
+					<div class='content-item-info content-item-infos-createTime'>
+						<i></i>
+						<div>
+							<div class='info'><span class='title'>{%optionButtom.applicationTime%}：</span>{%data.docCreateTime%}</div>
+						</div>
+					</div>
+					<div class='content-item-info content-item-infos-summary'>
+						<i></i>
+						<div>
+							<div class='info'><span class='title'>{%optionButtom.summaryInformation%}：</span>{%data.summary.content%}</div>
+						</div>
+					</div>
+					$}
+					var displayStyle = "display:none";
+					if(data.summary.tables.length>0){
+						displayStyle = "";
+					}
+					{$
+					<div class='content-item-infos-tables' style='{%displayStyle%}'>
+					$}
+						for(var j=0; j<data.summary.tables.length; j++){
+							var headers = data.summary.tables[j].headers;
+							var rows = data.summary.tables[j].rows;
+							var otherRows = data.summary.tables[j].otherRows;
+						{$
+							<table class='tb_normal'>
+								<tr class='tr_normal_title'>
+								$}
+									if(headers.length > 0){
+								{$
+									<td style='width:25px' class='td_normal_title'>序号</td>
+								$}
+									}
+									for(var k=0; k<headers.length; k++){
+										{$<td class='td_normal_title'>{%headers[k]%}</td>$}
+									}
+								{$
+								</tr>
+								$}
+									for(var k=0; k<rows.length; k++){
+										var row = rows[k];
+										{$
+										<tr>
+											<td>{%k+1%}</td>
+										$}
+											for(var g=0; g<row.length; g++){
+												{$<td>{%row[g]%}</td>$}
+											}
+										{$
+										</tr>
+										$}
+									}
+									for(var k=0; k<otherRows.length; k++){
+										var row = otherRows[k];
+										{$
+										<tr>
+										$}
+											if(row.length > 0){
+												{$<td></td>$}
+											}
+											for(var g=0; g<row.length; g++){
+												{$<td>{%row[g]%}</td>$}
+											}
+										{$
+										</tr>
+										$}
+									}
+								{$
+							</table>
+						$}
+						}
+					{$
+					</div>
+				</div>
+			</div>
+		$}
+		}
+		{$
+	</div>
+$}

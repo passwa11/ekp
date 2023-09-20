@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/transport/sys_transport_import/SysTransportImport.do"
+		class="com.landray.kmss.sys.transport.actions.SysTransportImportAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.transport.form.SysTransportImportForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/transport/sys_transport_import/SysTransportImport_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/transport/sys_transport_import/SysTransportImport_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/transport/sys_transport_import/SysTransportImport_list.jsp" />
+				<entry
+					key="upload"
+					value="/sys/transport/sys_transport_import/SysTransportImport_upload.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/transport/sys_transport_import/SysTransportImportUpload.do"
+		class="com.landray.kmss.sys.transport.actions.SysTransportImportAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.transport.form.SysTransportImportUploadForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/sys/transport/sys_transport_import/SysTransportImport_upload.jsp" />
+				<entry
+					key="uploadResult"
+					value="/sys/transport/sys_transport_import/SysTransportImport_upload_result.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/transport/sys_transport_xform/SysTransportImportUpload.do"
+		class="com.landray.kmss.sys.transport.actions.SysTransportImportAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.transport.form.SysTransportImportUploadForm" />
+	</bean>
+	<bean
+		name="/sys/transport/sys_transport_export/SysTransportExport.do"
+		class="com.landray.kmss.sys.transport.actions.SysTransportExportAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.transport.form.SysTransportExportForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/transport/sys_transport_export/SysTransportExport_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/transport/sys_transport_export/SysTransportExport_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/transport/sys_transport_export/SysTransportExport_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/transport/detailTableExport.do"
+		class="com.landray.kmss.sys.transport.actions.SysTransportExportAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.transport.form.SysTransportExportForm" />
+	</bean>
+	<bean
+			name="/sys/transport/detailTableSeniorExport.do"
+			class="com.landray.kmss.sys.transport.actions.SysTransportSeniorExportAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/transport/detailTableImport.do"
+		class="com.landray.kmss.sys.transport.actions.SysTransportImportAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.transport.form.SysTransportImportUploadForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="upload"
+					value="/sys/transport/sys_transport_import/SysTransportImportDetailTable_upload.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+			name="/sys/transport/sys_transport_xform/SysTransportSeniorImportUpload.do"
+			class="com.landray.kmss.sys.transport.actions.SysTransportSeniorImportAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.transport.form.SysTransportImportUploadForm" />
+		<property name="forwards">
+			<map>
+				<entry
+						key="upload"
+						value="/sys/transport/sys_transport_import/SysTransportImportSeniorDetailTable_upload.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

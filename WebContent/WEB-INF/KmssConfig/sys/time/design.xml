@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="sys-time:module.sys.time"
+		urlPrefix="/sys/time/"
+		defaultValidator="roleValidator(role=ROLE_SYS_TIME_DEFAULT)">
+		<roles>
+			ROLE_SYS_TIME_DEFAULT;
+			ROLE_SYS_TIME_LEAVERULE_ADMIN;
+			ROLE_SYS_TIME_TIMECOMMON_EDIT;
+		</roles>
+		<areaRoles>
+			ROLE_SYS_TIME_TIMEAREA_EDIT;
+			
+			ROLE_SYS_TIME_HOLIDAY_ADMIN;
+			
+			ROLE_SYS_TIME_LEAVEAMOUNT_MANAGER;
+			ROLE_SYS_TIME_LEAVEAMOUNT_VIEW;
+			
+			ROLE_SYS_TIME_LEAVEDETAIL_MANAGER;
+			ROLE_SYS_TIME_LEAVEDETAIL_VIEW;
+			
+		</areaRoles>
+		<!-- 区域组设置 -->
+		<request
+			path="sys_time_area/sysTimeArea.do*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.time.model.SysTimeArea">
+			<query
+				queryString="method=view"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin)" />
+			<query
+				queryString="method=add|save|saveadd|simulatorWork|clone"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)" />
+			<query
+				queryString="method=edit|update|editMCalendar|viewMCalendar|viewCalendar|editCalendar"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin)" />
+			<query
+				queryString="method=importExcel|exportExcel"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin)" />
+			<query
+				queryString="method=delete"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin)" />
+			<query
+				queryString="method=deleteall"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)" />
+			<query
+				queryString="method=getHPDay"
+				validator="true" />
+		</request>
+		<!-- 班次设置 -->
+		<request
+			path="sys_time_work/sysTimeWork.do*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.time.model.SysTimeWork">
+			<query
+				queryString="method=add|save|saveadd"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin,recid=sysTimeAreaId,model=com.landray.kmss.sys.time.model.SysTimeArea)" />
+			<query
+				queryString="method=edit|update|view"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin)" />
+			<query
+				queryString="method=delete"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin)" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin,recid=sysTimeAreaId,model=com.landray.kmss.sys.time.model.SysTimeArea)" />
+		</request>
+		<!-- 休假设置 -->
+		<request
+			path="sys_time_vacation/sysTimeVacation.do*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.time.model.SysTimeVacation">
+			<query
+				queryString="method=add|save|saveadd"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin,recid=sysTimeAreaId,model=com.landray.kmss.sys.time.model.SysTimeArea)" />
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin)" />
+			<query
+				queryString="method=delete"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin)" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin,recid=sysTimeAreaId,model=com.landray.kmss.sys.time.model.SysTimeArea)" />
+		</request>
+		<!-- 补班设置 -->
+		<request
+			path="sys_time_patchwork/sysTimePatchwork.do*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.time.model.SysTimePatchwork">
+			<query
+				queryString="method=add|save|saveadd"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin,recid=sysTimeAreaId,model=com.landray.kmss.sys.time.model.SysTimeArea)" />
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin)" />
+			<query
+				queryString="method=delete"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin)" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMEAREA_EDIT)|authFieldValidator(type=timeAdmin,recid=sysTimeAreaId,model=com.landray.kmss.sys.time.model.SysTimeArea)" />
+		</request>
+			<!-- 补班设置 -->
+		<request
+			path="sys_time_common_time/sysTimeCommonTime*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.time.model.SysTimeCommonTime">
+			<query
+				queryString="method=add|save|saveadd|view"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMECOMMON_EDIT)" />
+			<query
+				queryString="method=edit|update|data"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMECOMMON_EDIT)" />
+			<query
+				queryString="method=delete"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMECOMMON_EDIT)" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYS_TIME_TIMECOMMON_EDIT)" />
+		</request>
+
+		<request
+			path="sys_time_holiday/sysTimeHoliday*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.time.model.SysTimeHoliday">
+			<query
+				queryString="method=add|save|saveadd"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_HOLIDAY_ADMIN)" />
+			<query
+				queryString="method=edit|update"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_HOLIDAY_ADMIN)" />
+			<query
+				queryString="method=delete"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_HOLIDAY_ADMIN)" />
+			<query
+				queryString="method=deleteall"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_HOLIDAY_ADMIN)" />
+		</request>
+
+		<request
+			path="sys_time_holiday_detail/sysTimeHolidayDetail*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.time.model.SysTimeHolidayDetail">
+			<query
+				queryString="method=add|save|saveadd"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_HOLIDAY_ADMIN)" />
+			<query
+				queryString="method=edit|update"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_HOLIDAY_ADMIN)" />
+			<query
+				queryString="method=delete"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_HOLIDAY_ADMIN)" />
+			<query
+				queryString="method=deleteall"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_HOLIDAY_ADMIN)" />
+		</request>
+		<!-- 假期类型 -->
+		<request
+			path="sys_time_leave_rule/sysTimeLeaveRule*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.time.model.SysTimeLeaveRule">
+			<query
+				queryString="method=add|save|saveadd"
+				validator="roleValidator(role=ROLE_SYS_TIME_LEAVERULE_ADMIN)" />
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_SYS_TIME_LEAVERULE_ADMIN)" />
+			<query
+				queryString="method=enable|disable"
+				validator="roleValidator(role=ROLE_SYS_TIME_LEAVERULE_ADMIN)" />
+			<query
+				queryString="method=delete"
+				validator="roleValidator(role=ROLE_SYS_TIME_LEAVERULE_ADMIN)" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYS_TIME_LEAVERULE_ADMIN)" />
+		</request>
+		<!-- 假期额度 -->
+		<request
+			path="sys_time_leave_amount/sysTimeLeaveAmount*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.time.model.SysTimeLeaveAmount">
+			<query
+				queryString="method=add|save|saveadd"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEAMOUNT_MANAGER)" />
+			<query
+				queryString="method=edit|update"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEAMOUNT_MANAGER)" />
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=SYS_READER)" />
+			<query
+				queryString="method=fileUpload|downloadTemplet"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEAMOUNT_MANAGER)" />
+			<query
+				queryString="method=delete"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEAMOUNT_MANAGER)" />
+			<query
+				queryString="method=deleteall"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEAMOUNT_MANAGER)" />
+			<!-- 批量导出 -->
+			<query
+				queryString="method=batchExport"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEAMOUNT_MANAGER)" />
+		</request>
+		<!-- 假期明细 -->
+		<request
+			path="sys_time_leave_detail/sysTimeLeaveDetail*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.time.model.SysTimeLeaveDetail">
+			<query
+				queryString="method=add|save|saveadd"
+				validator="roleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<query
+				queryString="method=edit|update"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=SYS_READER)" />
+			<query
+				queryString="method=fileUpload|downloadTemplet"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<query
+				queryString="method=deduct|deductAll"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<query
+				queryString="method=delete"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<query
+				queryString="method=deleteall"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<query
+				queryString="method=updateAttend"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<query
+				queryString="method=updateAttendAll"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+		</request>
+		<!-- 销假明细 -->
+		<request
+			path="sys_time_leave_resume/sysTimeLeaveResume*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.time.model.SysTimeLeaveResume">
+			<query
+				queryString="method=add|save|saveadd"
+				validator="roleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=SYS_READER)" />
+			<query
+				queryString="method=delete"
+				validator="roleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<query
+				queryString="method=updateAttend"
+				validator="roleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+		</request>
+		
+		<filters
+			modelName="com.landray.kmss.sys.time.model.SysTimeArea">
+			<filter
+				type="timeAdmin"
+				expression="authFieldFilter(field=areaAdmins.fdId)" />
+			<filter
+				type="timeAdmin"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+		</filters>
+		<filters
+			modelName="com.landray.kmss.sys.time.model.SysTimeWork">
+			<filter
+				type="timeAdmin"
+				expression="authFieldFilter(field=sysTimeArea.areaAdmins.fdId)" />
+			<filter
+				type="timeAdmin"
+				expression="authFieldFilter(field=sysTimeArea.docCreator.fdId)" />
+		</filters>
+		<filters
+			modelName="com.landray.kmss.sys.time.model.SysTimeVacation">
+			<filter
+				type="timeAdmin"
+				expression="authFieldFilter(field=sysTimeArea.areaAdmins.fdId)" />
+			<filter
+				type="timeAdmin"
+				expression="authFieldFilter(field=sysTimeArea.docCreator.fdId)" />
+		</filters>
+		<filters
+			modelName="com.landray.kmss.sys.time.model.SysTimePatchwork">
+			<filter
+				type="timeAdmin"
+				expression="authFieldFilter(field=sysTimeArea.areaAdmins.fdId)" />
+			<filter
+				type="timeAdmin"
+				expression="authFieldFilter(field=sysTimeArea.docCreator.fdId)" />
+		</filters>
+		<filters
+			modelName="com.landray.kmss.sys.time.model.SysTimeLeaveRule">
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYS_TIME_LEAVERULE_ADMIN)" />
+			<filter type="SYS_READER" expression="authFieldFilter(field=docCreator.fdId)" />
+		</filters>
+		<filters
+			modelName="com.landray.kmss.sys.time.model.SysTimeLeaveAmount">
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYS_TIME_LEAVEAMOUNT_MANAGER)" />
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYS_TIME_LEAVEAMOUNT_VIEW)" />
+			<filter type="SYS_READER" expression="authFieldFilter(field=fdPerson.fdId)" />
+			<filter type="SYS_EDITOR" expression="roleFilter(role=ROLE_SYS_TIME_LEAVEAMOUNT_MANAGER)" />
+		</filters>
+		<filters
+			modelName="com.landray.kmss.sys.time.model.SysTimeLeaveDetail">
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYS_TIME_LEAVEDETAIL_VIEW)" />
+			<filter type="SYS_READER" expression="authFieldFilter(field=fdPerson.fdId)" />
+			<filter type="SYS_EDITOR" expression="roleFilter(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+		</filters>
+		<filters
+			modelName="com.landray.kmss.sys.time.model.SysTimeLeaveResume">
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYS_TIME_LEAVEDETAIL_VIEW)" />
+			<filter type="SYS_READER" expression="authFieldFilter(field=fdPerson.fdId)" />
+			<filter type="SYS_EDITOR" expression="roleFilter(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+		</filters>
+	</module>
+	
+	<module urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="method=edit&amp;modelName=com.landray.kmss.sys.time.model.SysTimeLeaveConfig"
+				validator="roleValidator(role=ROLE_SYS_TIME_LEAVERULE_ADMIN)" />
+		</request>
+	</module>
+
+	<!-- 导出 -->
+	<module urlPrefix="/sys/transport/">
+		<request path="sys_transport_export/SysTransportExport*">
+			<query
+				queryString="fdModelName=com.landray.kmss.sys.time.model.sysTimeLeaveAmount"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEAMOUNT_MANAGER)" />
+			<query
+				queryString="fdModelName=com.landray.kmss.sys.time.model.SysTimeLeaveDetail"
+				validator="areaRoleValidator(role=ROLE_SYS_TIME_LEAVEDETAIL_MANAGER)" />
+		</request>
+	</module>
+	
+	<quartz
+		messageKey="sys-time:sysTimeLeaveAmount.status.quartz.job"
+		jobService="sysTimeLeaveAmountJobService"
+		jobMethod="execute"
+		cronExpression="0 0 1 * * ?"
+		description="sys-time:sysTimeLeaveAmount.status.quartz.job.description" />
+	<quartz
+		messageKey="sys-time:sysTimeLeaveAmount.release.quartz.job"
+		jobService="sysTimeLeaveAmountReleaseJobService"
+		jobMethod="execute"
+		cronExpression="0 0 2 * * ?"
+		description="sys-time:sysTimeLeaveAmount.release.quartz.job.description" />
+	<quartz
+		messageKey="sys-time:sysTimeLeaveAmount.Rehire.quartz.job"
+		jobService="sysTimeLeaveAmountRehireService"
+		jobMethod="execute"
+		cronExpression="0 0 2 * * ?"
+		description="sys-time:sysTimeLeaveAmount.release.quartz.job.description" />
+	<quartz
+		messageKey="sys-time:sysTimeLeaveAmount.prolong.quartz.job"
+		jobService="sysTimeRuleProlongExpireService"
+		jobMethod="updateValidDate"
+		cronExpression="0 0 2 * * ?"
+		description="sys-time:sysTimeLeaveAmount.prolong.quartz.job.description" />
+
+	<quartz
+		messageKey="sys-time:sysTimeLeaveAmount.item.quartz.job"
+		jobService="sysTimeLeaveAmountYearService"
+		jobMethod="executeFullYearByEnterEnterpriseTime"
+		cronExpression="0 0 2 * * ?"
+		description="sys-time:sysTimeLeaveAmount.item.quartz.job.description" />
+	<quartz
+		messageKey="sys-time:sysTimeLeaveAmount.item2.quartz.job"
+		jobService="sysTimeLeaveAmountYearService"
+		jobMethod="executeFullYearByConvertTime"
+		cronExpression="0 0 2 * * ?"
+		description="sys-time:sysTimeLeaveAmount.item2.quartz.job.description" />
+	<quartz
+		messageKey="sys-time:sysTimeLeaveAmount.item3.quartz.job"
+		jobService="sysTimeLeaveAmountYearService"
+		jobMethod="executeYearItem"
+		cronExpression="0 0 2 * * ?"
+		description="sys-time:sysTimeLeaveAmount.item3.quartz.job.description" />
+
+	<homePage
+		urlPrefix="sys/time"
+		messageKey="sys-time:title.timeSetting"
+		config="/sys/time/sys_time_area/sysTimeArea.do?method=list"
+		type="global"
+		url="/sys/portal/page.jsp#j_start=/sys/time/index.jsp&amp;j_target=_iframe" />
+
+	<profileConfig
+		key="sys/time"
+		messageKey="{sys-time:module.sys.time}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/time/tree.jsp" 
+		icon="sys_time"
+		description="{sys-time:sysTime.profileCfg.description}"
+		type="hr"
+		order="301" />
+</configs>

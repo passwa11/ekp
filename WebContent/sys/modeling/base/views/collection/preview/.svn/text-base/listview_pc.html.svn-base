@@ -1,0 +1,783 @@
+var test = render.parent;
+var lang = test.getModelingLang();
+var testSource = test.source;
+var config = testSource.config;
+var datas = config.datas || {};
+var views = datas.views || [];
+var currentViewId = datas.currentViewId;
+var fdStatistics = [];//统计项
+var fdConditions = [];//筛选项
+var fdOrderBys = [];//排序项
+var listOperations = [];//业务操作
+var fdDisplays = [];//显示项
+var fdFootStatistics = [];//数据统计
+if(views && views.length > 0){
+	fdStatistics = views[0].fdStatistics || [];//统计项
+	fdConditions = views[0].fdCondition || [];//筛选项
+	fdOrderBys = views[0].fdOrder || [];//排序项
+	listOperations = views[0].fdOperation || [];//业务操作
+	fdDisplays = views[0].fdDisplay || [];//显示项
+	fdFootStatistics = views[0].fdFootStatistics || [];//数据统计
+}
+
+{$
+	<div class="model-edit-left-wrap">
+		<div class="model-edit-view">
+			<div class="model-edit-view-content">
+				<div class="model-edit-view-content-top" data-lui-position="fdStatistics" onclick='switchSelectPosition(this,"left")'>
+						<div class="model-edit-view-subtitle">{%lang['listview.statistical']%}<i></i></div>
+						<div class="model-edit-view-list">
+							$}
+							var fdStatisticsLen = fdStatistics.length;
+							var len = fdStatisticsLen;
+							if(fdStatisticsLen > 4){
+							len = 4;
+							}
+							for(var i=0; i<len; i++){
+								var fdStatistic = fdStatistics[i];
+								var index = i;
+								var temp = i+1;
+								{$
+								<div class="statistics_div" data-lui-position='fdStatistics-{%index%}' onclick='switchSelectPosition(this,"left")'>
+									<div class="up_div">{%fdStatistic.name%}</div>
+									<div class="down_div">9999+</div>
+								</div>
+								$}
+							}
+							var moreLen = 0;
+							if(fdStatisticsLen <= 4 && fdStatisticsLen > 0){
+								var restLen = 4-fdStatisticsLen;
+								for(var i=restLen; i>0; i--){
+									var index = 4-i+1;
+									var temp = index-1;
+									{$
+									<div class='statistics_div disabled_div' data-lui-position='fdStatistics-{%temp%}'>
+										<div class="up_div disabled_up">{%lang['listview.Statistics']%}{%index%}</div>
+										<div class="down_div disabled_down">9999+</div>
+									</div>
+									$}
+								}
+							}else if(fdStatisticsLen<=0){
+								{$
+								<div class='statistics_div disabled_div' data-lui-position='fdStatistics-1'>
+									<div class="up_div disabled_up">{%lang['listview.Statistics']%}1</div>
+									<div class="down_div disabled_down">9999+</div>
+								</div>
+								<div class='statistics_div disabled_div' data-lui-position='fdStatistics-2'>
+									<div class="up_div disabled_up">{%lang['listview.Statistics']%}2</div>
+									<div class="down_div disabled_down">9999+</div>
+								</div>
+								<div class='statistics_div disabled_div' data-lui-position='fdStatistics-3'>
+									<div class="up_div disabled_up">{%lang['listview.Statistics']%}3</div>
+									<div class="down_div disabled_down">9999+</div>
+								</div>
+								<div class='statistics_div disabled_div' data-lui-position='fdStatistics-4'>
+									<div class="up_div disabled_up">{%lang['listview.Statistics']%}4</div>
+									<div class="down_div disabled_down">9999+</div>
+								</div>
+								$}
+							}else{
+								moreLen = fdStatisticsLen - 4;
+							}
+							if(moreLen > 0){
+								{$
+								<div class='statistics_mores' onclick='showMoreItem(this,"fdStatistics_more", false,40 ,30)'>...</div>
+								$}
+							}else{
+								{$
+								<div class='statistics_mores disabled_more'>...</div>
+								$}
+							}
+							if(moreLen > 0){
+								{$
+								<div id='fdStatistics_more' style="display:none;left: 100px">
+									<ul>
+										$}
+										for(var i=0; i<moreLen; i++){
+											var index = 4+i;
+											var temp = 4+i+1;
+											var fdStatistic = fdStatistics[index];
+											if(fdStatistic.name){
+												{$
+												<li data-lui-position='fdStatistics-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdStatistic_more")'>{%fdStatistic.name%}</li>
+												$}
+											}else{
+												{$
+												<li data-lui-position='fdStatistics-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdStatistic_more")'>{%lang['listview.Statistics']%}{%temp%}</li>
+												$}
+											}
+										}
+										{$
+									</ul></div>
+								$}
+							}
+							{$
+						</div>
+				</div>
+				<div class="model-edit-view-content-top" data-lui-position="fdCondition" onclick='switchSelectPosition(this,"left")'>
+					<div class="model-edit-view-subtitle">{%lang['modelingAppListview.fdCondition']%}<i></i></div>
+					<ul class="model-edit-view-btn model-edit-view-top-list">
+					$}
+						var fdConditionsLen = fdConditions.length;
+						var len = fdConditionsLen;
+						if(fdConditionsLen > 2){
+							len = 2;
+						}
+						for(var i=0; i<len; i++){
+							var fdCondition = fdConditions[i];
+							var index = i;
+							var temp = i+1;
+							if(fdCondition.text){
+							{$
+								<li>
+									<div class="model-edit-view-top-list-wrap">
+										<p class="model-edit-view-list-title" data-lui-position='fdCondition-{%index%}' onclick='switchSelectPosition(this,"left")'>{%fdCondition.text%}</p>
+										<div class="model-edit-view-list-bg">
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+										</div>
+									</div>
+								</li>
+							$}
+							}else{
+							{$
+								<li>
+									<div class="model-edit-view-top-list-wrap">
+										<p class="model-edit-view-list-title" data-lui-position='fdCondition-{%index%}' onclick='switchSelectPosition(this,"left")'>{%lang['modelingAppListview.fdCondition']%}{%temp%}</p>
+										<div class="model-edit-view-list-bg">
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+										</div>
+									</div>
+								</li>
+							$}
+							}
+						}
+						var moreLen = 0;
+						if(fdConditionsLen < 2 && fdConditionsLen > 0){
+							var restLen = 2-fdConditionsLen;
+							for(var i=restLen; i>0; i--){
+								var index = 2-i+1;
+								var temp = index-1;
+								{$
+									<li>
+										<div class="model-edit-view-top-list-wrap">
+											<p class="model-edit-view-list-title disabled" data-lui-position='fdCondition-{%temp%}'>{%lang['modelingAppListview.fdCondition']%}{%index%}</p>
+											<div class="model-edit-view-list-bg">
+												<div class="model-edit-view-list-bg-item">
+													<div></div>
+												</div>
+												<div class="model-edit-view-list-bg-item">
+													<div></div>
+												</div>
+												<div class="model-edit-view-list-bg-item">
+													<div></div>
+												</div>
+												<div class="model-edit-view-list-bg-item">
+													<div></div>
+												</div>
+												<div class="model-edit-view-list-bg-item">
+													<div></div>
+												</div>
+											</div>
+										</div>
+									</li>
+								$}
+							}
+						}else if(fdConditionsLen<=0){
+							{$
+								<li>
+									<div class="model-edit-view-top-list-wrap">
+										<p class="model-edit-view-list-title disabled" data-lui-position='fdCondition-1'>{%lang['modelingAppListview.fdCondition']%}1</p>
+										<div class="model-edit-view-list-bg">
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="model-edit-view-top-list-wrap">
+										<p class="model-edit-view-list-title disabled" data-lui-position='fdCondition-2'>{%lang['modelingAppListview.fdCondition']%}2</p>
+										<div class="model-edit-view-list-bg">
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+											<div class="model-edit-view-list-bg-item">
+												<div></div>
+											</div>
+										</div>
+									</div>
+								</li>
+							$}		
+						}else{
+							moreLen = fdConditionsLen - 2;
+						}
+						{$
+						<li>
+							<div class="model-edit-view-top-list-wrap">
+							$}
+								if(moreLen > 0){
+							{$
+								<p class="model-edit-view-list-title dots " onclick='showMoreItem(this,"fdCondition_more")'>...</p>
+							$}	
+								}else{
+							{$
+								<p class="model-edit-view-list-title dots disabled">...</p>
+							$}
+								}
+							{$
+								<div class="model-edit-view-list-bg">
+									<div class="model-edit-view-list-bg-item">
+										<div></div>
+									</div>
+									<div class="model-edit-view-list-bg-item">
+										<div></div>
+									</div>
+									<div class="model-edit-view-list-bg-item">
+										<div></div>
+									</div>
+									<div class="model-edit-view-list-bg-item">
+										<div></div>
+									</div>
+									<div class="model-edit-view-list-bg-item">
+										<div></div>
+									</div>
+								</div>
+								$}
+								if(moreLen > 0){
+									{$
+										<div id='fdCondition_more' style="display:none">
+										<ul>
+									$}
+										for(var i=0; i<moreLen; i++){
+											var index = 2+i;
+											var temp = 2+i+1;
+											var fdCondition = fdConditions[index];
+									if(fdCondition.text){
+									{$
+										<li data-lui-position='fdCondition-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdCondition_more")'>{%fdCondition.text%}</li>
+									$}
+									}else{
+									{$
+										<li data-lui-position='fdCondition-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdCondition_more")'>{%lang['modelingAppListview.fdCondition']%}{%temp%}</li>
+									$}
+									}
+										}
+									{$
+										</ul></div>
+									$}
+								}
+								{$
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="model-edit-view-content-center">
+					<div class="model-edit-view-content-center left">
+						<div class="model-edit-view-content-center-wrap" data-lui-position="fdOrderBy" onclick='switchSelectPosition(this,"left")'>
+							<div class="model-edit-view-subtitle">{%lang['modelingAppListview.fdOrderBy']%}<i></i></div>
+							<div class="model-edit-view-list">
+							$}
+								var fdOrderBysLen = fdOrderBys.length;
+								var len = fdOrderBysLen;
+								if(fdOrderBysLen > 2){
+									len = 2;
+								}
+								for(var i=0; i<len; i++){
+									var fdOrderBy = fdOrderBys[i];
+									var index = i;
+									var temp = i+1;
+									if(fdOrderBy.text){
+									{$
+										<p data-lui-position='fdOrderBy-{%index%}' onclick='switchSelectPosition(this,"left")'>{%fdOrderBy.text%}</p>
+									$}
+									}else{
+									{$
+										<p data-lui-position='fdOrderBy-{%index%}' onclick='switchSelectPosition(this,"left")'>{%lang['listview.sort.item']%}{%temp%}</p>
+									$}
+									}
+								}
+								var moreLen = 0;
+								if(fdOrderBysLen <= 2 && fdOrderBysLen > 0){
+									var restLen = 2-fdOrderBysLen;
+									for(var i=restLen; i>0; i--){
+										var index = 2-i+1;
+										var temp = index-1;
+										{$
+											<p  class='disabled' data-lui-position='fdOrderBy-{%temp%}'>{%lang['listview.sort.item']%}{%index%}</p>
+										$}
+									}
+								}else if(fdOrderBysLen<=0){
+									{$
+										<p  class='disabled' data-lui-position='fdOrderBy-1'>{%lang['listview.sort.item']%}1</p>
+										<p  class='disabled' data-lui-position='fdOrderBy-2'>{%lang['listview.sort.item']%}2</p>
+									$}		
+								}else{
+									moreLen = fdOrderBysLen - 2;
+								}
+								if(moreLen > 0){
+							{$
+								<p class='dots' onclick='showMoreItem(this,"fdOrderBy_more")'>...</p>
+							$}	
+								}else{
+							{$
+								<p class='dots disabled'>...</p>
+							$}
+								}
+								if(moreLen > 0){
+									{$
+										<div id='fdOrderBy_more' style="display:none">
+										<ul>
+									$}
+										for(var i=0; i<moreLen; i++){
+											var index = 2+i;
+											var temp = 2+i+1;
+											var fdOrderBy = fdOrderBys[index];
+									if(fdOrderBy.text){
+									{$
+										<li data-lui-position='fdOrderBy-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdOrderBy_more")'>{%fdOrderBy.text%}</li>
+									$}
+									}else{
+									{$
+										<li data-lui-position='fdOrderBy-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdOrderBy_more")'>{%lang['listview.sort.item']%}{%temp%}</li>
+									$}
+									}
+										}
+									{$
+										</ul></div>
+									$}
+								}
+								{$
+							</div>
+						</div>
+					</div>
+					<div class="model-edit-view-content-center right"  >
+						<div class="model-edit-view-content-center-wrap" data-lui-position="fdOperation" onclick='switchSelectPosition(this,"left");return false;'>
+							<div class="model-edit-view-subtitle">{%lang['modelingAppListview.listOperation']%}<i></i></div>
+							<div class="model-edit-view-list">
+								$}
+								var listOperationsLen = listOperations.length;
+								var len = listOperationsLen;
+								if(listOperationsLen > 2){
+									len = 2;
+								}
+								for(var i=0; i<len; i++){
+									var listOperation = listOperations[i];
+									var index = i;
+									var temp = i+1;
+									if(listOperation.fdName){
+									{$
+										<p data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left")'>{%listOperation.fdName%}</p>
+									$}
+									}else{
+									{$
+										<p data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left")'>{%lang['listview.action.item']%}{%temp%}</p>
+									$}
+									}
+								}
+								var moreLen = 0;
+								if(listOperationsLen < 2 && listOperationsLen > 0){
+									var restLen = 2-listOperationsLen;
+									for(var i=restLen; i>0; i--){
+										var index = 2-i+1;
+										var temp = index-1;
+										{$
+											<p  class='disabled' data-lui-position='fdOperation-{%temp%}'>{%lang['listview.action.item']%}{%index%}</p>
+										$}
+									}
+								}else if(listOperationsLen<=0){
+									{$
+										<p  class='disabled' data-lui-position='fdOperation-1'>{%lang['listview.action.item']%}1</p>
+										<p  class='disabled' data-lui-position='fdOperation-2'>{%lang['listview.action.item']%}2</p>
+									$}		
+								}else{
+									moreLen = listOperationsLen - 2;
+								}
+								if(moreLen > 0){
+							{$
+								<p class='dots' onclick='showMoreItem(this,"fdOperation_more")'>...</p>
+							$}	
+								}else{
+							{$
+								<p class='dots disabled'>...</p>
+							$}
+								}
+								if(moreLen > 0){
+									{$
+										<div id='fdOperation_more' style="display:none">
+										<ul>
+									$}
+										for(var i=0; i<moreLen; i++){
+											var index = 2+i;
+											var temp = 2+i+1;
+											var listOperation = listOperations[index];
+									if(listOperation.fdName){
+									{$
+										<li data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdOperation_more")'>{%listOperation.fdName%}</li>
+									$}
+									}else{
+									{$
+										<li data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdOperation_more")'>{%lang['listview.action.item']%}{%temp%}</li>
+									$}
+									}
+										}
+									{$
+										</ul></div>
+									$}
+								}
+								{$
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="model-edit-view-content-bottom" data-lui-position="fdDisplay" onclick='switchSelectPosition(this,"left")'>
+					<div class="model-edit-view-subtitle">{%lang['modelingAppListview.fdDisplay']%}<i></i></div>
+					<div class="model-edit-view-table">
+						<table>
+							<thead>
+								<tr>
+								$}
+								var fdDisplaysLen = fdDisplays.length;
+								var len = fdDisplaysLen;
+								if(fdDisplaysLen > 4){
+									len = 4;
+								}
+								for(var i=0; i<len; i++){
+									var fdDisplay = fdDisplays[i];
+									var index = i;
+									var temp = i+1;
+									if(fdDisplay.text){
+									{$
+										<td>
+											<div class="fdDisplay_preview" data-lui-position='fdDisplay-{%index%}' onclick='switchSelectPosition(this,"left")' title='{%fdDisplay.text%}'>{%fdDisplay.text%}</div>
+										</td>
+									$}
+									}else{
+									{$
+										<td>
+											<div data-lui-position='fdDisplay-{%index%}' onclick='switchSelectPosition(this,"left")'>{%lang['modelingAppListview.fdDisplay']%}{%temp%}</div>
+										</td>
+									$}
+									}
+								}
+								var moreLen = 0;
+								if(fdDisplaysLen < 4 && fdDisplaysLen > 0){
+									var restLen = 4-fdDisplaysLen;
+									for(var i=restLen; i>0; i--){
+										var index = 4-i+1;
+										var temp = index-1;
+										{$
+											<td>
+												<div class='disabled' data-lui-position='fdDisplay-{%temp%}'>{%lang['modelingAppListview.fdDisplay']%}{%index%}</div>
+											</td>
+										$}
+									}
+								}else if(fdDisplaysLen<=0){
+									{$
+										<td>
+											<div class='disabled' data-lui-position='fdDisplay-1'>{%lang['modelingAppListview.fdDisplay']%}1</div>
+										</td>
+										<td>
+											<div class='disabled' data-lui-position='fdDisplay-2'>{%lang['modelingAppListview.fdDisplay']%}2</div>
+										</td>
+										<td>
+											<div class='disabled' data-lui-position='fdDisplay-3'>{%lang['modelingAppListview.fdDisplay']%}3</div>
+										</td>
+										<td>
+											<div class='disabled' data-lui-position='fdDisplay-4'>{%lang['modelingAppListview.fdDisplay']%}4</div>
+										</td>
+									$}		
+								}else{
+									moreLen = fdDisplaysLen - 4;
+								}
+								if(moreLen > 0){
+							{$
+								<td>
+									<div class='dots' onclick='showMoreItem(this,"fdDisplay_more")'>...</div>
+								</td>
+							$}	
+								}else{
+							{$
+								<td>
+									<div class='dots disabled'>...</div>
+								</td>
+							$}
+								}
+								if(moreLen > 0){
+									{$
+										<div id='fdDisplay_more' style="display:none">
+										<ul>
+									$}
+										for(var i=0; i<moreLen; i++){
+											var index = 4+i;
+											var temp = 4+i+1;
+											var fdDisplay = fdDisplays[index];
+									if(fdDisplay.text){
+									{$
+										<li data-lui-position='fdDisplay-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdDisplay_more")'>{%fdDisplay.text%}</li>
+									$}
+									}else{
+									{$
+										<li data-lui-position='fdDisplay-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdDisplay_more")'>{%lang['modelingAppListview.fdDisplay']%}{%temp%}</li>
+									$}
+									}
+										}
+									{$
+										</ul></div>
+									$}
+								}
+								{$
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<div class="model-edit-view-fir-rec"></div>
+									</td>
+									<td>
+										<div class="model-edit-view-sec-rec"></div>
+									</td>
+									<td>
+										<div class="model-edit-view-thr-rec"></div>
+									</td>
+									<td>
+										<div class="model-edit-view-for-rec"></div>
+									</td>
+									<td>
+										<div></div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="model-edit-view-fir-rec"></div>
+									</td>
+									<td>
+										<div class="model-edit-view-sec-rec"></div>
+									</td>
+									<td>
+										<div class="model-edit-view-thr-rec"></div>
+									</td>
+									<td>
+										<div class="model-edit-view-for-rec"></div>
+									</td>
+									<td>
+										<div></div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="model-edit-view-fir-rec"></div>
+									</td>
+									<td>
+										<div class="model-edit-view-sec-rec"></div>
+									</td>
+									<td>
+										<div class="model-edit-view-thr-rec"></div>
+									</td>
+									<td>
+										<div class="model-edit-view-for-rec"></div>
+									</td>
+									<td>
+										<div></div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="model-edit-view-content-bottom model-edit-view-content-bottom-footStatistics" data-lui-position="fdFootStatistics" onclick='switchSelectPosition(this,"left")'>
+					<div class="model-edit-view-subtitle">{%lang['listview.data.statistics']%}<i></i></div>
+					<div class="model-edit-view-table">
+						<table>
+							<thead>
+							<tr>
+								$}
+								var fdDisplaysLen = fdDisplays.length;
+								var len = fdDisplaysLen;
+								if(fdDisplaysLen > 4){
+									len = 4;
+								}
+								for(var i=0; i<len; i++){
+									var fdDisplay = fdDisplays[i];
+									var index = i;
+									var temp = i+1;
+									var b = false;
+									var footStatisticsTypeText = '';
+									for(var j=0;j<fdFootStatistics.length;j++){
+										if(fdFootStatistics[j].field == fdDisplay.field){
+											footStatisticsTypeText = fdFootStatistics[j].statisticsType;
+											footStatisticsTypeText = footStatisticsTypeText.replace('1',"{%lang['listview.data.sum']%}");
+											footStatisticsTypeText = footStatisticsTypeText.replace('2',"{%lang['listview.data.average']%}");
+											footStatisticsTypeText = footStatisticsTypeText.replace('3',"{%lang['listview.find.the.minimum']%}");
+											footStatisticsTypeText = footStatisticsTypeText.replace('4',"{%lang['listview.find.the.maximum']%}");
+											b = true;
+											break;
+										}
+									}
+									if(fdDisplay.text&& b ){
+										{$
+										<td>
+											<div class="fdDisplay_preview" style="width: 40px;height: 16px;" data-lui-position='fdFootStatistics-{%index%}' onclick='switchSelectPosition(this,"left")' title='{%footStatisticsTypeText%}'>{%footStatisticsTypeText%}</div>
+											<div class="fdDisplay_preview" style="width: 40px;height: 16px;" data-lui-position='fdFootStatistics-{%index%}' onclick='switchSelectPosition(this,"left")' title='{%fdDisplay.text%}'>{%fdDisplay.text%}</div>
+										</td>
+										$}
+									}else{
+										{$
+										<td>
+											<div style="width: 40px;height: 16px;background: #F0F0F0;"></div>
+											<div style="width: 40px;height: 16px;background: #F0F0F0;"></div>
+										</td>
+										$}
+									}
+								}
+								var moreLen = 0;
+								if(fdDisplaysLen < 4 && fdDisplaysLen > 0){
+								var restLen = 4-fdDisplaysLen;
+								for(var i=restLen; i>0; i--){
+								var index = 4-i+1;
+								var temp = index-1;
+								{$
+								<td>
+									<div style="width: 40px;height: 16px;background: #F0F0F0;"></div>
+									<div style="width: 40px;height: 16px;background: #F0F0F0;"></div>
+								</td>
+								$}
+								}
+								}else if(fdDisplaysLen<=0){
+								{$
+								<td>
+									<div style="width: 40px;height: 16px;background: #F0F0F0;"></div>
+									<div style="width: 40px;height: 16px;background: #F0F0F0;"></div>
+								</td>
+								<td>
+									<div style="width: 40px;height: 16px;background: #F0F0F0;"></div>
+									<div style="width: 40px;height: 16px;background: #F0F0F0;"></div>
+								</td>
+								<td>
+									<div style="width: 40px;height: 16px;background: #F0F0F0;"></div>
+									<div style="width: 40px;height: 16px;background: #F0F0F0;"></div>
+								</td>
+								<td>
+									<div style="width: 40px;height: 16px;background: #F0F0F0;"></div>
+									<div style="width: 40px;height: 16px;background: #F0F0F0;"></div>
+								</td>
+								$}
+								}else{
+								moreLen = fdDisplaysLen - 4;
+								}
+								if(moreLen > 0){
+								{$
+								<td>
+									<div class='dots' onclick='showMoreItem(this,"fdFootStatistics_more",true)'>...</div>
+								</td>
+								$}
+								}else{
+								{$
+								<td>
+									<div class='dots disabled'>...</div>
+								</td>
+								$}
+								}
+								if(moreLen > 0){
+								{$
+								<div id='fdFootStatistics_more' style="display:none">
+									<ul>
+										$}
+										for(var i=0; i<moreLen; i++){
+											var index = 4+i;
+											var temp = 4+i+1;
+											var fdDisplay = fdDisplays[index];
+											var b = false;
+											var footStatisticsTypeText = '';
+											for(var j=0;j<fdFootStatistics.length;j++){
+												if(fdFootStatistics[j].field == fdDisplay.field){
+													footStatisticsTypeText = fdFootStatistics[j].statisticsType;
+													footStatisticsTypeText = footStatisticsTypeText.replace('1',"{%lang['listview.data.sum']%}");
+													footStatisticsTypeText = footStatisticsTypeText.replace('2',"{%lang['listview.data.average']%}");
+													footStatisticsTypeText = footStatisticsTypeText.replace('3',"{%lang['listview.find.the.minimum']%}");
+													footStatisticsTypeText = footStatisticsTypeText.replace('4',"{%lang['listview.find.the.maximum']%}");
+													b = true;
+													break;
+												}
+											}
+											if(fdDisplay.text){
+												if(b){
+													{$
+													<li data-lui-position='fdFootStatistics-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdFootStatistics_more")'  title='{%footStatisticsTypeText%}'>{%fdDisplay.text%}</li>
+													$}
+												}else{
+													{$
+													<li style="background: #F0F0F0;">{%fdDisplay.text%}</li>
+													$}
+												}
+											}else{
+												{$
+												<li data-lui-position='fdFootStatistics-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdFootStatistics_more")'>显示项{%temp%}</li>
+												$}
+											}
+										}
+										{$
+									</ul></div>
+								$}
+								}
+								{$
+							</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+				<div class="model-edit-pagination" data-lui-position="fdPagination" onclick='switchSelectPosition(this,"left")'><div></div></div>
+				<div id="moreList" class='moreList' style="display: none"></div>
+			</div>
+		</div>
+	</div>
+$}

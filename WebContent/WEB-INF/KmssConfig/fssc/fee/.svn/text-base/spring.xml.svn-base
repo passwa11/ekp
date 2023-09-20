@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="fsscFeeTemplateDao" 
+        class="com.landray.kmss.fssc.fee.dao.hibernate.FsscFeeTemplateDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.fee.model.FsscFeeTemplate</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeTemplateTarget" 
+        class="com.landray.kmss.fssc.fee.service.spring.FsscFeeTemplateServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscFeeTemplateDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeTemplateService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscFeeTemplateTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeMainDao" 
+        class="com.landray.kmss.fssc.fee.dao.hibernate.FsscFeeMainDaoImp" 
+        parent="KmssExtendDataDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.fee.model.FsscFeeMain</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeMainTarget" 
+        class="com.landray.kmss.fssc.fee.service.spring.FsscFeeMainServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscFeeMainDao"/>
+        </property>
+        <property name="sysNumberFlowService">
+            <ref bean="sysNumberFlowService"/>
+        </property>
+        <property name="fsscFeeMappService">
+            <ref bean="fsscFeeMappService"/>
+        </property>
+        <property name="fsscFeeExpenseItemService">
+            <ref bean="fsscFeeExpenseItemService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeMainService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscFeeMainTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeExpenseItemDao" 
+        class="com.landray.kmss.fssc.fee.dao.hibernate.FsscFeeExpenseItemDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.fee.model.FsscFeeExpenseItem</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeExpenseItemTarget" 
+        class="com.landray.kmss.fssc.fee.service.spring.FsscFeeExpenseItemServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscFeeExpenseItemDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeExpenseItemService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscFeeExpenseItemTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeTemplateTreeService" 
+        class="com.landray.kmss.sys.category.service.SysCategoryTemplateTreeService">
+        <property 
+            name="serviceImp">
+            <ref 
+                bean="fsscFeeTemplateService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeDataService" 
+        class="com.landray.kmss.fssc.fee.service.spring.FsscFeeDataService">
+        <property name="fsscFeeMainService">
+            <ref  bean="fsscFeeMainService"/>
+        </property>
+        <property name="eopBasedataCompanyService">
+            <ref  bean="eopBasedataCompanyService"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscFeeSendToCtripListener"
+        class="com.landray.kmss.fssc.fee.listener.FsscFeeSendToCtripListener">
+        <property name="sysOrgCoreService">
+            <ref bean="sysOrgCoreService"/>
+        </property>
+        <property name="eopBasedataPassportService">
+            <ref bean="eopBasedataPassportService"/>
+        </property>
+        <property name="eopBasedataExpenseItemService">
+            <ref bean="eopBasedataExpenseItemService"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscCommonFeeService"
+        class="com.landray.kmss.fssc.fee.service.spring.FsscCommonFeeServiceImp">
+        <property name="fsscFeeMainService">
+            <ref bean="fsscFeeMainService"/>
+        </property>
+        <property name="fsscFeeLedgerService">
+            <ref bean="fsscFeeLedgerService"/>
+        </property>
+    </bean>
+
+    <bean
+        id="fsscFeeSysDictExtendModelService"
+        class="com.landray.kmss.fssc.fee.service.spring.FsscFeeSysDictExtendModelService">
+        <property name="loader">
+            <ref bean="sysFormDictLoadService" />
+        </property>
+        <property name="fsscFeeTemplateService">
+            <ref bean="fsscFeeTemplateService" />
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeLedgerDao" 
+        class="com.landray.kmss.fssc.fee.dao.hibernate.FsscFeeLedgerDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.fee.model.FsscFeeLedger</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeLedgerTarget" 
+        class="com.landray.kmss.fssc.fee.service.spring.FsscFeeLedgerServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscFeeLedgerDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeLedgerService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscFeeLedgerTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeMappDao" 
+        class="com.landray.kmss.fssc.fee.dao.hibernate.FsscFeeMappDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.fee.model.FsscFeeMapp</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeMappTarget" 
+        class="com.landray.kmss.fssc.fee.service.spring.FsscFeeMappServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscFeeMappDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeMappService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscFeeMappTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeFormEvent" 
+        class="com.landray.kmss.fssc.fee.service.spring.FsscFeeFormEvent" >
+        <property name="fsscFeeMappService">
+            <ref  bean="fsscFeeMappService"/>
+        </property>
+        <property name="fsscFeeLedgerService">
+            <ref  bean="fsscFeeLedgerService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeFinishEvent" 
+        class="com.landray.kmss.fssc.fee.listener.FsscFeeFinishEvent">
+        <property name="fsscFeeMappService">
+            <ref  bean="fsscFeeMappService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeAbandonEvent" 
+        class="com.landray.kmss.fssc.fee.listener.FsscFeeAbandonEvent">
+    </bean>
+    <bean 
+        id="fsscFeeEnterNodeEvent" 
+        class="com.landray.kmss.fssc.fee.listener.FsscFeeEnterNodeEvent">
+    </bean>
+    <bean 
+        id="fsscFeeDraftorReturnEvent" 
+        class="com.landray.kmss.fssc.fee.listener.FsscFeeDraftorReturnEvent">
+    </bean>
+    <bean 
+        id="fsscFeeDraftorSubmitEvent" 
+        class="com.landray.kmss.fssc.fee.listener.FsscFeeDraftorSubmitEvent">
+        <property name="fsscFeeMappService">
+            <ref  bean="fsscFeeMappService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeMobileConfigDao" 
+        class="com.landray.kmss.fssc.fee.dao.hibernate.FsscFeeMobileConfigDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.fee.model.FsscFeeMobileConfig</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeMobileConfigTarget" 
+        class="com.landray.kmss.fssc.fee.service.spring.FsscFeeMobileConfigServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscFeeMobileConfigDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeMobileConfigService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscFeeMobileConfigTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeMobileService" 
+        class="com.landray.kmss.fssc.fee.service.spring.FsscFeeMobileService" >
+         <property name="fsscFeeMappService">
+            <ref  bean="fsscFeeMappService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscFeeCompanyImportParser" 
+        class="com.landray.kmss.fssc.fee.xform.impt.parsers.FsscFeeCompanyImportParser" >
+    </bean>
+    <bean 
+        id="fsscFeeCurrencyImportParser" 
+        class="com.landray.kmss.fssc.fee.xform.impt.parsers.FsscFeeCurrencyImportParser" >
+    </bean>
+    <bean 
+        id="fsscFeeDayCountImportParser" 
+        class="com.landray.kmss.fssc.fee.xform.impt.parsers.FsscFeeDayCountImportParser" >
+    </bean>
+    <bean 
+        id="fsscFeeAccountMoneyImportParser" 
+        class="com.landray.kmss.fssc.fee.xform.impt.parsers.FsscFeeAccountMoneyImportParser" >
+    </bean>
+    <bean 
+        id="fsscFeeCostCenterImportParser" 
+        class="com.landray.kmss.fssc.fee.xform.impt.parsers.FsscFeeCostCenterImportParser" >
+    </bean>
+    <bean 
+        id="fsscFeeExpenseItemImportParser" 
+        class="com.landray.kmss.fssc.fee.xform.impt.parsers.FsscFeeExpenseItemImportParser" >
+    </bean>
+    <bean 
+        id="fsscFeeInternalOrderImportParser" 
+        class="com.landray.kmss.fssc.fee.xform.impt.parsers.FsscFeeInternalOrderImportParser" >
+    </bean>
+    <bean 
+        id="fsscFeeWbsImportParser" 
+        class="com.landray.kmss.fssc.fee.xform.impt.parsers.FsscFeeWbsImportParser" >
+    </bean>
+    <bean 
+        id="fsscFeeProjectImportParser" 
+        class="com.landray.kmss.fssc.fee.xform.impt.parsers.FsscFeeProjectImportParser" >
+    </bean>
+    <bean 
+        id="fsscFeeVehicleBerthImportParser" 
+        class="com.landray.kmss.fssc.fee.xform.impt.parsers.FsscFeeVehicleBerthImportParser" >
+    </bean>
+    <bean 
+        id="fsscFeeAreaCategoryImportParser" 
+        class="com.landray.kmss.fssc.fee.xform.impt.parsers.FsscFeeAreaCategoryImportParser" >
+    </bean>
+    <bean 
+        id="fsscFeeMainFinishEvent" 
+        class="com.landray.kmss.fssc.fee.listener.FsscFeeMainFinishEvent">
+    </bean>
+</beans>

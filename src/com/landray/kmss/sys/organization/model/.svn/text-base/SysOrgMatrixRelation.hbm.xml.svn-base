@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrgMatrixRelation"
+		table="sys_org_matrix_relation">
+		<!-- 主结构配置 -->
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<!-- 简单属性 -->
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			length="200"
+			access="com.landray.kmss.sys.organization.lang.SysOrgCommonAccessor" />
+		<!-- 字段名称 -->
+		<property
+			name="fdFieldName"
+			column="fd_field_name"
+			update="true"
+			insert="true"
+			length="50" />
+		<!-- 字段名称(区间结束) -->
+		<property
+			name="fdFieldName2"
+			column="fd_field_name2"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="50" />
+		<!-- 条件(结果)类型 -->
+		<property
+			name="fdType"
+			column="fd_type"
+			update="true"
+			insert="true"
+			length="50" />
+		<!-- 是否结果 -->
+		<property
+			name="fdIsResult"
+			column="fd_is_result"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 主数据(条件)类型 -->
+		<property
+			name="fdMainDataType"
+			column="fd_main_data_type"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="50" />
+		<!-- 排序号 -->
+		<property
+			name="fdOrder"
+			column="fd_order"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 匹配时包含子部门 -->
+		<property
+			name="fdIncludeSubDept"
+			column="fd_include_sub_Dept"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 是否唯一性校验 -->
+		<property
+			name="fdIsUnique"
+			column="fd_is_unique"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 列宽 -->
+		<property
+			name="fdWidth"
+			column="fd_width"
+			update="true"
+			insert="true"
+			length="50" />
+		<!-- 对象属性 -->
+		<many-to-one
+			name="fdMatrix"
+			column="fd_matrix_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+	</class>
+</hibernate-mapping>

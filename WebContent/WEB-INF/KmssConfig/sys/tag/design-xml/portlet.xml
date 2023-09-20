@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+	
+	<!-- 标签云 -->
+	<portlet
+		id="sysTagTop.portlet"
+		name="{sys-tag:sysTagTop.portlet}"
+		module="{sys-tag:sysTag.tree.title}">
+		<source format="sys.ui.iframe" type="Static">
+			<code>
+				<![CDATA[
+					{"src":"/sys/tag/sys_tag_top/tag_top_cloud_portlet.jsp"}
+				]]>
+			</code>
+		</source>
+		<operations>
+			<operation href="/sys/profile/index.jsp#app/mechanism/tag" name="{operation.more}" type="more"/>
+		</operations>
+	</portlet>
+	
+	<!-- 最热标签 -->
+	<portlet
+		id="sys.tagss.hot"
+		name="{sys-tag:sys.tagss.hot.name}"
+		module="{sys-tag:sysTag.tree.title}">
+		<source  format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/sys/tag/sys_tag_portlet/sysTagPortlet.jsp?rowsize=!{num}",
+					"formatKey":"html"
+					}
+				]]>
+			</code>
+		</source>
+		<vars>
+		    <var name="{sys-tag:sys.tagss.hot.tagnum}" key="num" kind="int" default="16" required="true"/>
+		</vars>
+		<operations>
+			<operation href="/sys/profile/index.jsp#app/mechanism/tag" name="{operation.more}" type="more"/>
+		</operations>
+	</portlet>
+	
+	<!-- 最新标签 -->
+	<portlet
+		id="sys.tagss.new"
+		name="{sys-tag:sys.tagss.new.name}"
+		module="{sys-tag:sysTag.tree.title}">
+		<source  format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/sys/tag/sys_tag_portlet/sysTagPortlet_new.jsp?rowsize=!{num}",
+					"formatKey":"html"
+					}
+				]]>
+			</code>
+		</source>
+		<vars>
+		    <var name="{sys-tag:sys.tagss.hot.tagnum}" key="num" kind="int" default="16" required="true"/>
+		</vars>
+		<operations>
+			<operation href="/sys/profile/index.jsp#app/mechanism/tag" name="{operation.more}" type="more"/>
+		</operations>
+	</portlet>
+
+	<!-- 我使用的标签 -->
+	<portlet
+		id="sys.tagss.used"
+		name="{sys-tag:sys.tagss.used.name}"
+		module="{sys-tag:sysTag.tree.title}">
+		<source  format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/sys/tag/sys_tag_portlet/sysTagPortlet_used.jsp?rowsize=!{num}",
+					"formatKey":"html"
+					}
+				]]>
+			</code>
+		</source>
+		<vars>
+		    <var name="{sys-tag:sys.tagss.hot.tagnum}" key="num" kind="int" default="16" required="true"/>
+		</vars>
+		<operations>
+			<operation href="/sys/profile/index.jsp#app/mechanism/tag" name="{operation.more}" type="more"/>
+		</operations>
+	</portlet>
+
+	<!-- 我创建的标签 -->
+	<portlet
+		id="sys.tagss.created"
+		name="{sys-tag:sys.tagss.created.name}"
+		module="{sys-tag:sysTag.tree.title}">
+		<source  format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/sys/tag/sys_tag_portlet/sysTagPortlet_created.jsp?rowsize=!{num}",
+					"formatKey":"html"
+					}
+				]]>
+			</code>
+		</source>
+		<vars>
+		    <var name="{sys-tag:sys.tagss.hot.tagnum}" key="num" kind="int" default="16" required="true"/>
+		</vars>
+		<operations>
+			<operation href="/sys/profile/index.jsp#app/mechanism/tag" name="{operation.more}" type="more"/>
+		</operations>
+	</portlet>
+
+	<!-- 我关注的标签  -->
+	<portlet
+		id="sys.tagss.followed"
+		name="{sys-tag:sys.tagss.followed.name}"
+		module="{sys-tag:sysTag.tree.title}">
+		<source  format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/sys/tag/sys_tag_portlet/sysTagPortlet_followed.jsp?rowsize=!{num}",
+					"formatKey":"html"
+					}
+				]]>
+			</code>
+		</source>
+		<vars>
+		    <var name="{sys-tag:sys.tagss.hot.tagnum}" key="num" kind="int" default="16" required="true"/>
+		</vars>
+		<operations>
+			<operation href="/sys/profile/index.jsp#app/mechanism/tag" name="{operation.more}" type="more"/>
+		</operations>
+	</portlet>
+
+	<!-- 新版标签 多种呈现方式 sys.tagss.tagx  -->
+	<portlet
+		id="sys.tagss.tagx"
+		name="{sys-tag:sys.tagss.tagx}"
+		description="{sys-tag:sys.tagss.tagx.desc}"
+		module="{sys-tag:sysTag.tree.title}">
+		<source format="sys.tagss.tag" type="AjaxJson">
+			<code>
+			<![CDATA[
+				{url:"/sys/tag/sys_tag_portlet/sysTagPortlet.do?method=getHotTags&dataInfoType=!{type}&rowsize=!{rowsize}"}
+			]]>
+			</code>
+		</source>
+		<vars>
+			<var name="标签数量" key="rowsize" kind="int" default="16" required="true"/>
+			<var name="类型" key="type" kind="enumValue" default="cloud">
+		    	{
+		    		"values":[
+		    			{"text":"{sys-tag:sysTagTop.portlet}", "value":"cloud"},
+		    			{"text":"{sys-tag:sys.tagss.hot.name}", "value":"hot"},
+						{"text":"{sys-tag:sys.tagss.new.name}", "value":"new"},
+						{"text":"{sys-tag:sys.tagss.created.name}", "value":"created"},
+						{"text":"{sys-tag:sys.tagss.followed.name}", "value":"followed"},
+						{"text":"{sys-tag:sys.tagss.used.name}", "value":"used"},
+		    		],
+		    		"showType":"radio"
+		    	}
+			</var>
+		</vars>
+		<operations>
+			<operation href="/sys/profile/index.jsp#app/mechanism/tag" name="{operation.more}" type="more"/>
+		</operations>
+	</portlet>
+</root>

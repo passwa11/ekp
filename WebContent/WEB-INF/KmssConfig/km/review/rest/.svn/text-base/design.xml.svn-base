@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module urlPrefix="/km/review/">
+		<!-- 主文档权限 -->
+		<request
+            path="kmReviewMain/*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.review.model.KmReviewMain,templatemodel=com.landray.kmss.km.review.model.KmReviewTemplate">
+        <!-- 复制 -->
+        <query
+            queryString="add&amp;fdReviewId=*"
+            validator="kmReviewAreaValidator()&amp;[areaRoleValidator(role=ROLE_KMREVIEW_COPY)|authFieldValidator(type=creator,recid=fdReviewId)]" />
+        <!-- 新增 -->
+        <query
+            queryString="add&amp;fdTemplateId=*"
+            validator="areaRoleValidator(role=ROLE_KMREVIEW_CREATE)&amp;authCategoryReaderValidator(templateid=fdTemplateId)" />
+        <!-- 保存 -->
+        <query
+            queryString="save|saveadd|saveDraft"
+            validator="areaRoleValidator(role=ROLE_KMREVIEW_CREATE)&amp;authCategoryReaderValidator(templateid=fdTemplateId)" />
+        <!-- 阅读 -->
+        <query
+            queryString="view"
+            validator="sysRecycleAuthFieldValidator(type=recycle)|authFieldValidator(type=SYS_READER,isArea=true)|authCategoryEditorValidator(property=fdTemplate)" />
+        <!-- 编辑、更新 -->
+        <query
+            queryString="edit|update"
+            validator="authFieldValidator(type=SYS_EDITOR)|[areaRoleValidator(role=ROLE_KMREVIEW_CHANGRIGHT)&amp;[authCategoryEditorValidator(property=fdTemplate,role=ROLE_KMREVIEW_OPTALL)|areaRoleValidator(role=ROLE_KMREVIEW_CATEGORY_MAINTAINER)|areaRoleValidator(role=ROLE_SYSCATEGORY_MAINTAINER)]]"/>
+        <!-- 删除 -->
+        <query
+            queryString="delete"
+            validator="fieldValueValidator(fieldproperty=docStatus,value=10)&amp;authFieldValidator(type=creator)&amp;kmReviewDraftValidator()|areaRoleValidator(role=ROLE_KMREVIEW_DELETE)&amp;[authCategoryEditorValidator(property=fdTemplate,role=ROLE_KMREVIEW_OPTALL)|areaRoleValidator(role=ROLE_KMREVIEW_CATEGORY_MAINTAINER)|areaRoleValidator(role=ROLE_SYSCATEGORY_MAINTAINER)]" />
+        <!-- 删除所有 -->
+        <query
+            queryString="deleteall&amp;draft=true"
+            validator="roleValidator(role=ROLE_KMREVIEW_DEFAULT)" />
+        <!-- 删除所有其他视图 -->
+        <query
+            queryString="deleteall"
+            validator="roleValidator(role=ROLE_KMREVIEW_DELETE)&amp;[fieldValueValidator(field=nodeType,value=CATEGORY)&amp;authCategoryEditorValidator(cateid=categoryId)|fieldValueValidator(field=nodeType,value=TEMPLATE)&amp;authCategoryEditorValidator(templateid=categoryId)|roleValidator(role=ROLE_KMREVIEW_OPTALL)|roleValidator(role=ROLE_KMREVIEW_CATEGORY_MAINTAINER)|roleValidator(role=ROLE_SYSCATEGORY_MAINTAINER)]" />
+        <!-- 打印 -->
+        <query
+            queryString="print"
+            validator="[roleValidator(role=ROLE_KMREVIEW_PRINT)&amp;[sysRecycleAuthFieldValidator(type=recycle)|authFieldValidator(type=SYS_READER,isArea=true)|authCategoryEditorValidator(property=fdTemplate)]]|sysSubFormValidator(property=fdTemplate)" />
+        <!-- 批量打印 -->
+        <query
+            queryString="printBatch"
+            validator="roleValidator(role=ROLE_KMREVIEW_PRINTBATCH)" />
+        <!-- 修改权限 -->
+        <query
+            queryString="editRight"
+            validator="fieldValueValidator(fieldproperty=docStatus,value=30;31)&amp;areaRoleValidator(role=ROLE_KMREVIEW_CHANGRIGHT)&amp;[authCategoryEditorValidator(property=fdTemplate,role=ROLE_KMREVIEW_OPTALL)|areaRoleValidator(role=ROLE_KMREVIEW_CATEGORY_MAINTAINER)|areaRoleValidator(role=ROLE_SYSCATEGORY_MAINTAINER)]" />
+        <!-- 转移模板按钮 -->
+        <query
+            queryString="changeTemplate&amp;nodeType=*"
+            validator="roleValidator(role=ROLE_KMREVIEW_CHANGETEMPLATE)&amp;[fieldValueValidator(field=nodeType,value=CATEGORY)&amp;authCategoryEditorValidator(cateid=categoryId)|fieldValueValidator(field=nodeType,value=TEMPLATE)&amp;authCategoryEditorValidator(templateid=categoryId)|roleValidator(role=ROLE_KMREVIEW_OPTALL)|roleValidator(role=ROLE_KMREVIEW_CATEGORY_MAINTAINER)|roleValidator(role=ROLE_SYSCATEGORY_MAINTAINER)]" />
+        <!-- 转移模板提交 -->
+        <query
+            queryString="changeTemplate&amp;categoryId=*"
+            validator="areaRoleValidator(role=ROLE_KMREVIEW_CHANGETEMPLATE)" />
+        <!-- 维护界面 -->
+        <query
+            queryString="manageList"
+            validator="roleValidator(role=ROLE_KMREVIEW_CATEGORY_MAINTAINER)|roleValidator(role=ROLE_SYSCATEGORY_MAINTAINER)|fieldValueValidator(field=nodeType,value=CATEGORY)&amp;authCategoryEditorValidator(cateid=categoryId)|fieldValueValidator(field=nodeType,value=TEMPLATE)&amp;authCategoryEditorValidator(templateid=categoryId)" />
+		</request>
+    </module>
+</configs>

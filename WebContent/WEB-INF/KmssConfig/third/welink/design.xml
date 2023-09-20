@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/third/welink/" 
+        messageKey="third-welink:module.third.welink" 
+        defaultValidator="roleValidator(role=ROLE_THIRDWELINK_SETTING)">
+        <roles>ROLE_THIRDWELINK_DEFAULT;ROLE_THIRDWELINK_SETTING</roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+        <request 
+            path="third_welink_dept_mapping/thirdWelinkDeptMapping.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.welink.model.ThirdWelinkDeptMapping" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWELINK_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_DEFAULT)"/>
+        </request>
+        <request 
+            path="third_welink_person_mapping/thirdWelinkPersonMapping.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.welink.model.ThirdWelinkPersonMapping" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWELINK_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_DEFAULT)"/>
+        </request>
+        <request 
+            path="third_welink_dept_no_mapping/thirdWelinkDeptNoMapping.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.welink.model.ThirdWelinkDeptNoMapping" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWELINK_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_DEFAULT)"/>
+        </request>
+        <request 
+            path="third_welink_person_no_mapp/thirdWelinkPersonNoMapp.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.welink.model.ThirdWelinkPersonNoMapp" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWELINK_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_DEFAULT)"/>
+        </request>
+        <request 
+            path="third_welink_notify_log/thirdWelinkNotifyLog.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.welink.model.ThirdWelinkNotifyLog" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWELINK_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_DEFAULT)"/>
+        </request>
+        <request 
+            path="third_welink_notify_queue_err/thirdWelinkNotifyQueueErr.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.welink.model.ThirdWelinkNotifyQueueErr" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWELINK_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)"/>
+        </request>
+    </module>
+
+    <!-- 后台配置权限 -->
+    <module
+            messageKey=""
+            urlPrefix="/sys/appconfig/">
+        <request path="sys_appconfig/sysAppConfig*">
+            <query
+                    queryString="modelName=com.landray.kmss.third.welink.model.ThirdWelinkConfig"
+                    validator="roleValidator(role=ROLE_THIRDWELINK_SETTING)" />
+        </request>
+    </module>
+
+
+    <homePage 
+        messageKey="third-welink:module.third.welink" 
+        urlPrefix="third/welink" 
+        url="/third/welink/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/third/welink/tree.jsp"/>
+    <profileConfig 
+        key="third/welink" 
+        messageKey="{third-welink:module.third.welink}" 
+        url="/third/welink/profile.jsp" 
+        icon="km_comminfo" 
+        type="mobile" 
+        order="8"
+        description="{third-welink:module.third.welink.description}"/>
+    
+    <quartz
+		messageKey="third-welink:third.welink.synchroOrg2Welink.title"
+		jobService="synchroOrg2Welink"
+		cronExpression="0 0 22 * * ?"
+		jobMethod="triggerSynchro"
+		enable="true" />
+	<quartz
+		messageKey="third-welink:third.welink.notifyQueueError.resend.title"
+		jobService="thirdWelinkNotifyQueueErrService"
+		jobMethod="updateRunErrorQueue"
+		cronExpression="0 0/10 * * * ?" 
+		description="third-welink:third.welink.notifyQueueError.resend.description" />
+		
+			
+	<quartz
+		messageKey="third-welink:third.welink.notifyQueueError.clear.title"
+		jobService="thirdWelinkNotifyQueueErrService"
+		jobMethod="clearNotifyQueueError"
+		cronExpression="0 0 4 * * ?" 
+		description="third-welink:third.welink.notifyQueueError.clear.description" />
+	
+	<quartz
+		messageKey="third-welink:third.welink.personMapping.build.title"
+		jobService="thirdWelinkPersonMappingService"
+		jobMethod="addMapping"
+		cronExpression="0 0 5 * * ?"
+		enable="false"
+		description="third-welink:third.welink.personMapping.build.description" />
+			
+</configs>

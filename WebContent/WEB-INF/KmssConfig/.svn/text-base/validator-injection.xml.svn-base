@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validator>
+	<!-- 默认过滤的关键字是 ",',<,>,(,),+,\,[,] -->
+	<urlscan enable="true" param="method;method_GET;fdModelName;s_css;modelName"
+		keyword="&quot;;&apos;;&lt;;&gt;;(;);+;\;[;]">
+		<!--
+		<item url="AntPath匹配模式的URL，必须">
+			<param>参数名，可选，默认取urlscan的param</param>
+			<keyword>不允许出现的字符，可选，默认取urlscan的param，多值以;分隔，若要过滤;，请用reject定义，注意该参数不会自动清理空白字符</keyword>
+		</item>
+		-->
+		<item url="/**/*.jsp">
+		</item>
+		<item url="/**/*.do">
+		</item>
+	</urlscan>
+	<reject>
+		<!--
+		<pattern url="AntPath匹配模式的URL，默认全匹配"
+			param="参数名，默认全匹配，多值;分隔，可以带*号，但*只能出现在最前面或最后面">
+			正则表达式，若匹配，则进行拦截
+		</pattern>
+		-->
+		<pattern param="*Id;*Ids">
+			<![CDATA[
+			["'<>\(\)\+\\\[\]]
+			]]>
+		</pattern>
+		<pattern>
+			<![CDATA[
+			(?:\u0000|\ufffd)
+			]]>
+		</pattern>
+		
+		<pattern>
+			<![CDATA[
+			<(?:script|iframe|/script|/iframe)(?:[\s\u0000][^>]*>?|/[^>]*>?|>?)
+			
+			]]>
+		</pattern>
+		
+		<pattern>
+			<![CDATA[
+			>[^<]*<(?:script|iframe|/script|/iframe)(?:[\s\u0000]|/|$)
+			]]>
+		</pattern>
+		<pattern>
+			<![CDATA[
+			<[a-z][^>]*[^>\w]+(?:onload|onmouseover|onmouseout|onerror|onanimation[a-z]+)[\s\u0000]*=[\s\u0000]*[^>\s\u0000]+
+			]]>
+		</pattern>
+		<pattern>
+			<![CDATA[
+			>[^<]*<[a-z][^>]*[^>\w]+(?:onload|onmouseover|onmouseout|onerror|onanimation[a-z]+)[\s\u0000]*=[\s\u0000]*[^>\s\u0000]+
+			]]>
+		</pattern>
+		<pattern>
+			<![CDATA[
+			(?:^|\s|\u0000)+(?:src|href)[\s\u0000]*=[\s\u0000]*['"]?[\s\u0000]*javascript[\s\u0000]*:\s*\S+
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			<(?:script|link|iframe)[\s|\S]*?<\/\1>
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			<(?:form|input|select|option)[^>]*>
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			<(?:[a-z][^>]*)[\s|\\]+?on[a-z]+\s*=\s*(?:"[^"]+"|'[^']+'|[^\s]+)(?:[^>]*)>
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			<(?:[a-z][^>]*)\sformaction\s*=\s*(?:"[^"]+"|'[^']+'|[^\s]+)([^>]*)>
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			<(?:[a-z][^>]*)\s(?:href|src)\s*=\s*(?:"\s*(javascript|vbscript):[^"]+"|'\s*(?:javascript|vbscript):[^']+'|(?:javascript|vbscript):[^\s]+)(?:[^>]*)>
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			<(?:[a-z][^>]*)\s(?:href)\s*=\s*(?:"\s*(data):[^"]+"|'\s*(?:data):[^']+'|(?:data):[^\s]+)(?:[^>]*)>
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			<(?:[a-z][^>]*)\stype\s*=\s*(?:"hidden"|'hidden'|hidden)(?:[^>]*)>
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			(?:<div)\sid\s*=\s*"attachmentObject_[\s|\S]*?_content_div"\s*?(?:>)
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			<(?:[a-z][^>]*)(?:width|height)\s*=\s*(?:"\s*"|'\s*')(?:[^>]*)>
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			<(?:[b-z][^>][^param]*)\sname\s*=\s*(?:"[^"]+"|'[^']+'|[^\s]+)([^>]*)>
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			position\s*:\s*absolute
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			<!--[\s\S]*?-->
+			]]>
+		</pattern>
+		<pattern for="rtf">
+			<![CDATA[
+			(?:<object[^>]*?)(?:data\s*=\s*["|'][\s\S]*?["|'])([^>]*>)
+			]]>
+		</pattern>
+	</reject>
+	<sqlreject>
+		<pattern param="orderby">
+			<![CDATA[
+			["';@=\-<>\\\[\]]|\b(?:union|create|select|insert|delete|update|truncate|table|column|set|from|where|group|order|left|right|join|into|commit|values)\b
+			]]>
+		</pattern>
+	</sqlreject>
+	<converter>
+		<item class="com.landray.kmss.web.filter.security.ConvertorBase64" id="rtf">
+		</item>
+		<item class="com.landray.kmss.web.filter.security.ConvertorDes" id="login">
+		</item>
+		<item class="com.landray.kmss.web.filter.security.ConvertorAes" id="login2">
+		</item>
+		<item class="com.landray.kmss.web.filter.security.ConvertorSM2" id="login3">
+		</item>
+	</converter>
+</validator>

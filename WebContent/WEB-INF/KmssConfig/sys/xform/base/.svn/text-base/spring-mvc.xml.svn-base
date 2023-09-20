@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/xform/sys_form_common_template/sysFormCommonTemplate.do"
+		class="com.landray.kmss.sys.xform.base.actions.SysFormCommonTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.xform.base.forms.SysFormCommonTemplateForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/xform/sys_form_common_template/sysFormCommonTemplate_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/xform/sys_form_common_template/sysFormCommonTemplate_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/xform/sys_form_common_template/sysFormCommonTemplate_list.jsp" />
+				<entry
+					key="listUi"
+					value="/sys/xform/sys_form_common_template/sysFormCommonTemplate_list_new.jsp" />
+				<entry
+					key="data"
+					value="/sys/xform/sys_form_common_template/sysFormCommonTemplate_data.jsp" />
+				<entry
+					key="historyList"
+					value="/sys/xform/sys_form_common_template/sysFormCommonTemplateHistory_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- 权限细化需要 -->
+	<bean
+		name="/sys/xform/sys_form_common_template_new/sysFormCommonTemplate.do"
+		class="com.landray.kmss.sys.xform.base.actions.SysFormCommonTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.xform.base.forms.SysFormCommonTemplateForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/sys/xform/sys_form_common_template/sysFormCommonTemplate_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/xform/sys_form_common_template_history/sysFormCommonTemplateHistory.do"
+		class="com.landray.kmss.sys.xform.base.actions.SysFormCommonTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.xform.base.forms.SysFormCommonTempHistoryForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="historyView"
+					value="/sys/xform/sys_form_common_template/sysFormCommonTemplateHistoryVersion_view.jsp" />
+				<entry
+					key="historyEdit"
+					value="/sys/xform/sys_form_common_template/sysFormCommonTemplateHistoryVersion_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/xform/base/sys_form_db_table/sysFormDbTable.do"
+		class="com.landray.kmss.sys.xform.base.actions.SysFormDbTableAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.xform.base.forms.SysFormDbTableForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/xform/base/sys_form_db_table/sysFormDbTableSelect_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/xform/base/sys_form_db_table/sysFormDbTableSelect_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/xform/base/sys_form_db_table/sysFormDbTable_list.jsp" />
+				<entry
+					key="listUi"
+					value="/sys/xform/base/sys_form_db_table/sysFormDbTable_list_new.jsp" />
+				<entry
+					key="listChildren"
+					value="/sys/xform/base/sys_form_db_table/sysFormDbTable_list.jsp" />
+				<entry
+					key="redirect"
+					value="/sys/xform/base/sys_form_db_table/sysFormDbTable.do" />
+				<entry
+					key="prompt"
+					value="/sys/xform/base/sys_form_db_table/sysFormDbTable_prompt.jsp" />
+				<entry
+					key="auto"
+					value="/sys/xform/base/sys_form_db_table/sysFormDbTableAuto_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/xform/sys_form_template/sysFormTemplate.do"
+		class="com.landray.kmss.sys.xform.base.actions.SysFormTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/xform/sys_form_template/sysFormRefCommonTemplate.do"
+		class="com.landray.kmss.sys.xform.base.actions.SysFormTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="refList"
+					value="/sys/xform/sys_form_common_template/sysFormRefCommonTemplate_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/xform/base/sys_form_template_history/sysFormTemplateHistory.do"
+		class="com.landray.kmss.sys.xform.base.actions.SysFormTemplateHistoryAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.xform.base.forms.SysFormTemplateHistoryForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/xform/base/sys_form_template_history/sysFormTemplateHistoryVersion_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/xform/base/sys_form_template_history/sysFormTemplateHistoryVersion_edit.jsp" />
+				<entry
+					key="historyRefMainList"
+					value="/sys/xform/base/sys_form_template_history/sysFormTemplateHistoryRefMain_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/xform/sys_form/formulaCalculation.do"
+		class="com.landray.kmss.sys.xform.base.actions.controls.formulaCalculation.SysFormControlFormulaCalculationAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<!-- 表单主文档数据导入 -->
+	<bean
+		name="/sys/xform/sys_form/sysFormMainImport.do"
+		class="com.landray.kmss.sys.xform.actions.SysFormMainImportAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.transport.form.SysTransportImportUploadForm" />
+	</bean>
+	<!-- 预览 -->
+	<bean
+		name="/sys/xform/sys_form_template/sysFormTemplatePreview.do"
+		class="com.landray.kmss.sys.xform.base.actions.SysFormTemplatePreviewAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="preview"
+					value="/sys/xform/base/sysFormTemplatePreview.jsp" />
+			</map>
+		</property>
+	</bean>
+		
+	<!-- 表单变更日志 start -->
+	<bean
+		name="/sys/xform/base/sysFormModifiedLogAction.do"
+		class="com.landray.kmss.sys.xform.base.actions.SysFormModifiedLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.xform.base.forms.SysFormModifiedLogForm" />
+		<property name="forwards">
+			<map>
+				<entry key="view" value="/sys/xform/include/sysFormModifiedLog_view.jsp" />
+				<entry key="data" value="/sys/xform/include/sysFormModifiedLog_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- 表单变更日志 end -->
+	<!-- 模板附件 -->
+	<bean
+		name="/sys/xform/sys_xform/sysFormTemplateAttachmentAction.do"
+		class="com.landray.kmss.sys.xform.base.actions.controls.templateAttachment.SysFormTemplateAttachmentAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+    <bean
+        name="/sys/xform/sys_xform/sysFormTemplateHtml.do"
+        class="com.landray.kmss.sys.xform.base.actions.SysFormTemplateHtmlAction"
+        lazy-init="true"
+        parent="KmssBaseAction">
+    </bean>
+	<bean
+		name="/sys/xform/base/sysFormUpdateRecordAction.do"
+		class="com.landray.kmss.sys.xform.base.actions.SysFormUpdateRecordAction"
+		lazy-init="true"
+		parent="KmssBaseAction"></bean>
+</beans>

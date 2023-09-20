@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/recycle/softDeleteConfig.do"
+		class="com.landray.kmss.sys.recycle.actions.SoftDeleteConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.recycle.forms.SoftDeleteConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/sys/recycle/config/config.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/recycle/sys_recycle_doc/sysRecycle.do"
+		class="com.landray.kmss.sys.recycle.actions.SysRecycleAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.recycle.forms.SysRecycleLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="listDoc"
+					value="/sys/recycle/sys_recycle_doc/sysRecycleDoc_list.jsp" />
+				<entry
+					key="view"
+					value="/sys/recycle/sys_recycle_doc/sysRecycleDoc_view.jsp" />
+				<entry
+					key="listModelDoc"
+					value="/sys/recycle/import/sysRecycle_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/recycle/sys_recycle_log/sysRecycleLog.do"
+		class="com.landray.kmss.sys.recycle.actions.SysRecycleLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.recycle.forms.SysRecycleLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/recycle/sys_recycle_log/sysRecycleLog_list.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

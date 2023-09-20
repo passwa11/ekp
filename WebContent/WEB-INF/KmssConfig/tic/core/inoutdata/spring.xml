@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 导入导出spring配置开始 -->
+	<bean
+		id="ticCoreInoutdataBean"
+		class="com.landray.kmss.tic.core.inoutdata.service.spring.TicCoreInoutdataBean">
+		<property name="ticCoreInoutdataCategoryService">
+			<ref bean="ticCoreInoutdataCategoryService"/>
+		</property>
+	</bean>
+		
+	<bean
+		id="ticCoreInoutdataService"
+		class="com.landray.kmss.tic.core.inoutdata.service.spring.TicCoreInoutdataServiceImp">
+		<property name="ticCoreInoutdataProcessService">
+			<ref bean="ticCoreInoutdataProcessService" />
+		</property>
+		<property name="dispatchCoreService">
+			<ref bean="dispatchCoreService" />
+		</property> 
+	</bean>
+	
+	<bean
+		id="ticCoreInoutdataProcessTarget"
+		class="com.landray.kmss.tic.core.inoutdata.service.spring.TicCoreInoutdataProcessServiceImp">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ticCoreInoutdataProcessService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="ticCoreInoutdataProcessTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="importFile*">PROPAGATION_REQUIRES_NEW</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean
+		id="ticCoreInoutdataXMLDataBean"
+		class="com.landray.kmss.tic.core.inoutdata.service.spring.TicCoreInoutdataXMLDataBean">
+		<property name="ticCoreInoutdataService" ref="ticCoreInoutdataService"/>
+	</bean>
+	<bean
+		id="ticCoreInoutdataCategoryService"
+		class="com.landray.kmss.tic.core.inoutdata.service.spring.TicCoreInoutdataCategoryServiceImp">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="sysCategoryMainService">
+			<ref bean="sysCategoryMainService"/>
+		</property>
+		<property name="sysAuthAreaService">
+			<ref bean="sysAuthAreaService"/>
+		</property>
+		 	
+	</bean>
+	<!-- 导入导出spring配置结束 -->	
+		
+</beans>

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+    <extension-point id="com.landray.kmss.sys.lbpmperson.create">
+        <item name="data">
+            <param name="moduleText" kind="string" required="true">
+                <description>模块名称，值为messagekey</description>
+            </param>
+            <param name="key" kind="string" required="true">
+                <description>模块部署流程使用的key</description>
+            </param>
+            <param name="isSimpleCategory" kind="boolean">
+                <description>是否为简单分类，若是简单分类则不会有子级，值为true/false，可以不填，默认为false</description>
+            </param>
+            <param name="showTemp" kind="boolean">
+                <description>点击模块时是否加载模板信息，值为true/false，可以不填，默认为false</description>
+            </param>
+            <param name="templateModelName" kind="string" required="true">
+                <description>模板modelName</description>
+            </param>
+            <param name="beanName" kind="string" required="true">
+                <description>目标bean注入到Spring的名称</description>
+            </param>
+            <param name="getCateMethodName" kind="string">
+                <description>
+                    <![CDATA[
+                        获取分类的目标方法，用于构建分类树结构
+                        参数例子：
+                            类型：String（json字符串）
+                            结构：{
+                                    "parentId":"",//上一级分类ID，用于请求子集数据
+                                    "parentType":"", //上一级分类类型，这个是为了让数据提供方清楚上一级节点是什么类型的
+                                    "key":"" //部署流程用到的key，这个主要用于一个模板对应多个主文档的情况，非这种情况可以不获取
+                                 }
+                        结果例子：
+                            类型：String（json数组字符串）
+                            结构：[
+                                    {
+                                        "text":"分类1", //必须，名称
+                                        "value":"17f202af4188236aaeb734a496a947b9", //必须，fdId
+                                        "nodeType":"category", //必须，只能是module（模块）、category（全局分类）、simpleCategory（简单分类）、app（应用）、bCategory（业务分类）
+                                        "key":"modelingApp", //必须，部署流程用到的key
+                                        "hasChildren":true/false, //必须，是否有子节点
+                                        "showTemp":true/false //必须，点击节点是否进行模板数据加载
+                                    }
+                                 ]
+                    ]]>
+                </description>
+            </param>
+            <param name="searchCateMethodName" kind="string">
+                <description>
+                    <![CDATA[
+                        获取分类的目标方法，用于构建分类树结构
+                        参数例子：
+                            类型：String（json字符串）
+                            结构：{
+                                    "searchText":"" //搜索的内容
+                                 }
+                        结果例子：
+                            类型：String（json数组字符串）
+                            结构：[
+                                    {
+                                        "text":"分类1", //必须，名称
+                                        "value":"17f202af4188236aaeb734a496a947b9", //必须，fdId
+                                        "nodeType":"module", //必须，只能是module（模块）、category（全局分类）、simpleCategory（简单分类）、app（应用）、bCategory（业务分类）
+                                        "key":"modelingApp", //必须，部署流程用到的key
+                                        "hasChildren":true/false, //必须，是否有子节点
+                                        "showTemp":true/false //必须，点击节点是否进行模板数据加载
+                                        "childrens":[
+                                                       {
+                                                            text":"分类1", //必须，名称
+                                                            "value":"17f202af4188236aaeb734a496a947b9", //必须，fdId
+                                                            "nodeType":"category", //必须，只能是module（模块）、category（全局分类）、simpleCategory（简单分类）、app（应用）、bCategory（业务分类）
+                                                            "key":"modelingApp", //必须，部署流程用到的key
+                                                            "hasChildren":true/false, //必须，是否有子节点
+                                                            "showTemp":true/false //必须，点击节点是否进行模板数据加载
+                                                            "childrens":[
+                                                                            ...
+                                                                        ]
+                                                        },
+                                                        {
+                                                            text":"分类1", //必须，名称
+                                                            "value":"17f202af4188236aaeb734a496a947b9", //必须，fdId
+                                                            "nodeType":"category", //必须，只能是module（模块）、category（全局分类）、simpleCategory（简单分类）、app（应用）、bCategory（业务分类）
+                                                            "key":"modelingApp", //必须，部署流程用到的key
+                                                            "hasChildren":true/false, //必须，是否有子节点
+                                                            "showTemp":true/false //必须，点击节点是否进行模板数据加载
+                                                            "childrens":[
+                                                                            ...
+                                                                        ]
+                                                        }
+                                                    ]
+                                    }
+                                 ]
+                    ]]>
+                </description>
+            </param>
+            <param name="getTempMethodName" kind="string">
+                <description>
+                    <![CDATA[
+                        获取模板的目标方法
+                        参数例子：
+                            类型：String（json字符串）
+                            结构：{
+                                    "parentId":"",//上一级分类ID，用于请求子集数据
+                                    "parentType":"", //上一级分类类型，这个是为了让数据提供方清楚上一级节点是什么类型的
+                                    "key":"", //部署流程用到的key，这个主要用于一个模板对应多个主文档的情况，非这种情况可以不获取
+                                    "level":2  //层级，需要请求的数据层级，比如2表示2级分类（注意这里的2不包括模板级）
+                                 }
+                        结果例子：
+                            类型：String（json数组字符串）
+                            结构：[
+                                    {
+                                        "text":"分类1", //必须，名称
+                                        "value":"17f202af4188236aaeb734a496a947b9", //必须，fdId
+                                        "nodeType":"category",   //必须，只能是module（模块）、category（全局分类）、simpleCategory（简单分类）、app（应用）、bCategory（业务分类）,form（表单）
+                                        "key":"reviewMainDoc",    //必须，部署流程用到的key
+                                        "childrens":[          //子集可以包含分类或者模板，如果有分类，分类的信息和父级一样，如果没有则只需要提供模板的即可
+                                                        {
+                                                            "text":"模板1", //名称
+                                                            "value":"17f202af4188236aaeb734a496a947b9", //fdId
+                                                            "nodeType":"template",   //必须，只能是module（模块）、category（全局分类）、simpleCategory（简单分类）、app（应用）、bCategory（业务分类）,form（表单）,template(模板）
+                                                            "key":"reviewMainDoc",    //必须，部署流程用到的key
+                                                            "addUrl":"km/review/...",   //非必须，但建议提供，如果在数据字典有配置，则不需要提供，否则需要提供新增主文档的路径，不需要包括项目根路径
+                                                            "fdIcon":"/ekp/km/review/...",   //非必须，如果有模板图标，则提供路径，全路径，包括项目根路径，如果没有则不需要提供
+                                                            "path":"父分类 > 子分类 > 子子分类" //必须，模板对应分类的层级，如果只有一级，则直接返回名称
+                                                        },
+                                                        {
+                                                            "text":"分类1", //必须，名称
+                                                            "value":"17f202af4188236aaeb734a496a947b9", //必须，fdId
+                                                            "nodeType":"category",   //必须，只能是module（模块）、category（全局分类）、simpleCategory（简单分类）、app（应用）、bCategory（业务分类）,form（表单）
+                                                            "key":"reviewMainDoc",    //必须，部署流程用到的key
+                                                            "childrens":[          //子集可以包含分类或者模板，如果有分类，分类的信息和父级一样，如果没有则只需要提供模板的即可
+                                                                            {
+                                                                                "text":"模板1", //名称
+                                                                                "value":"17f202af4188236aaeb734a496a947b9", //fdId
+                                                                                "nodeType":"template",   //必须，只能是module（模块）、category（全局分类）、simpleCategory（简单分类）、app（应用）、bCategory（业务分类）,form（表单）,template(模板）
+                                                                                "key":"reviewMainDoc",    //必须，部署流程用到的key
+                                                                                "addUrl":"km/review/...",   //非必须，但建议提供，如果在数据字典有配置，则不需要提供，否则需要提供新增主文档的路径，不需要包括项目根路径
+                                                                                "fdIcon":"/ekp/km/review/...",   //非必须，如果有模板图标，则提供路径，全路径，包括项目根路径，如果没有则不需要提供
+                                                                                "path":"父分类 > 子分类 > 子子分类" //必须，模板对应分类的层级，如果只有一级，则直接返回名称
+                                                                            },
+
+                                                                        ]
+                                                        }
+                                                    ]
+                                    }
+                                 ]
+
+                    ]]>
+                </description>
+            </param>
+            <param name="searchTempMethodName" kind="string">
+                <description>
+                    <![CDATA[
+                        搜索模板的目标方法
+                        参数例子：
+                            类型：String（json字符串）
+                            结构：{
+                                    "searchText":"" //搜索的内容
+                                 }
+                        结果例子：
+                            类型：String（json数组字符串）
+                            结构：[
+                                    {
+                                        "text":"模板1", //必须，名称
+                                        "value":"17f202af4188236aaeb734a496a947b9", //必须，fdId
+                                        "nodeType":"template",   //必须，只能是template(模板）
+                                        "key":"reviewMainDoc",    //必须，部署流程用到的key
+                                        "addUrl":"km/review/...",   //非必须，但建议提供，如果在数据字典有配置，则不需要提供，否则需要提供新增主文档的路径，不需要包括项目根路径
+                                        "fdIcon":"/ekp/km/review/...",   //非必须，如果有模板图标，则提供路径，全路径，包括项目根路径，如果没有则不需要提供
+                                        "path":"父分类 > 子分类 > 子子分类" //必须，模板对应分类的层级，如果只有一级，则直接返回名称
+                                    }
+                                 ]
+
+                    ]]>
+                </description>
+            </param>
+            <description>数据扩展，需要其他分全局分类或者简单分类模块提供数据，比如低代码平台</description>
+        </item>
+        <description>个人流程中心流程发起页相关扩展</description>
+    </extension-point>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-fast-review-todo-list.js" />
+			<param name="targetFile" value="/sys/lbpmperson/mobile/resource/js/mui-fast-review-todo-list.js" />
+			<param name="srcFold" value="/sys/lbpmperson/mobile/resource/js" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="mui-fast-review-todo-list.css" />
+            <param name="targetFile" value="/sys/lbpmperson/mobile/resource/css/FastReviewTodoList.css" />
+		</item>		
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.config">
+		<item name="info">
+			<param name="name" value="{sys-lbpmperson:module.sys.lbpmperson}" />
+			<param name="modelName" value="com.landray.kmss.sys.lbpmperson.model.LbpmPersonMyProcess" />
+			<param name="defaultUrl" value="/sys/lbpmperson/mobile/nav.json" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item 
+			name="css-file">
+			<param 
+				name="name" 
+				value="mui-lbpmperson-list.css" />
+			<param 
+				name="targetFile" 
+				value="/sys/lbpmperson/mobile/resource/css/list.css" />
+		</item>
+	</extension>
+	 <!-- 前后端分离列表字段信息 -->
+    <extension point="com.landray.kmss.sys.list.field.config"
+               model="com.landray.kmss.sys.lbpmperson.actions.SysLbpmPersonMyProcessAction">
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdId"></param>
+            <param name="title" value="{sys-lbpmperson:lbpmperson.person.fdId}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="url"></param>
+            <param name="title" value=""></param>
+            <param name="convertor" value="sysLbpmPersonMyProcessConvertor"></param>
+            <param name="convertorProps" value="type:url"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="docSubject"></param>
+            <param name="title" value="{sys-lbpmperson:lbpmperson.person.docSubject}"></param>
+            <param name="convertor" value="sysLbpmPersonMyProcessConvertor"></param>
+            <param name="convertorProps" value="type:subject"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdModule"></param>
+            <param name="title" value="{sys-lbpmperson:lbpmperson.person.module}"></param>
+            <param name="convertor" value="sysLbpmPersonMyProcessConvertor"></param>
+            <param name="convertorProps" value="type:module"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdNumber"></param>
+            <param name="title" value="{sys-lbpmperson:lbpmperson.person.fdNumber}"></param>
+            <param name="convertor" value="sysLbpmPersonMyProcessConvertor"></param>
+            <param name="convertorProps" value="type:number"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdCreator.fdName"></param>
+            <param name="title" value="{sys-lbpmperson:lbpmperson.person.creator}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdCreateTime"></param>
+            <param name="title" value="{sys-lbpmperson:lbpmperson.person.creatorTime}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="nodeName"></param>
+            <param name="title" value="{sys-lbpmperson:lbpmperson.person.nodeName}"></param>
+            <param name="convertor" value="lbpmPropertyValueConvertor"></param>
+            <param name="convertorProps" value="idValue:fdId;propertyName:nodeName"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="handlerName"></param>
+            <param name="title" value="{sys-lbpmperson:lbpmperson.person.handlerName}"></param>
+            <param name="convertor" value="lbpmPropertyValueConvertor"></param>
+            <param name="convertorProps" value="idValue:fdId;propertyName:handlerName"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fastReview"></param>
+            <param name="title" value="{sys-lbpmperson:lbpmperson.op.fastreview}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="arrivalTime"></param>
+            <param name="title" value="{sys-lbpmperson:lbpmperson.person.arrivalTime}"></param>
+            <param name="convertor" value="lbpmPropertyValueConvertor"></param>
+            <param name="convertorProps" value="idValue:fdId;propertyName:arrivalTime"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="resolveTime"></param>
+            <param name="title" value="{sys-lbpmperson:lbpmperson.person.resolveTime}"></param>
+            <param name="convertor" value="lbpmPropertyValueConvertor"></param>
+            <param name="convertorProps" value="idValue:fdId;propertyName:resolveTime"></param>
+        </item>
+    </extension>
+    <!-- 个人流程中心发起流程数量统计二级缓存扩展点 -->
+    <extension point="com.landray.kmss.sys.hibernate.cache" model="*">
+        <item name="region">
+            <param name="type" value="query"/>
+            <param name="name" value="person-process-summary"/>
+            <param name="nameMessageKey" value="sys-lbpmperson:cache.person-process-summary"/>
+            <param name="descMessageKey" value="sys-lbpmperson:cache.person-process-summary.desc"/>
+            <param name="moduleResourceKey" value="sys-lbpmperson:module.sys.lbpmperson"/>
+            <param name="ttl" value="0"/>
+            <param name="capacity" value="1000"/>
+            <param name="idle" value="10000"/>
+        </item>
+    </extension>
+</plugin>

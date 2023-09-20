@@ -1,0 +1,168 @@
+
+{
+    "global":     {
+        "modelName": "com.landray.kmss.hr.organization.model.HrOrganizationPost",
+        "messageKey": "hr-organization:table.hrOrganizationPost",
+        "serviceBean": "hrOrganizationPostService",
+        "displayProperty": "fdName",
+        "table": "hr_org_post",
+        "extendClass": "com.landray.kmss.hr.organization.model.HrOrganizationElement",
+        "url": "/hr/organization/hr_organization_post/hrOrganizationPost.do?method=view&fdId=${fdId}",
+        "discriminatorValue": "4"
+    },
+    "attrs" : {
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPost.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "unique": "false",
+            "length": "100",
+            "canSearch": "true",
+            "validate": "true",
+            "langSupport": "true"
+        },
+        "fdNamePinYin":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPost.fdNamePinYin",
+            "type": "String",
+            "column": "fd_name_pinyin",
+            "unique": "false",
+            "length": "400"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPost.fdOrder",
+            "type": "Integer",
+            "column": "fd_order",
+            "notNull": "false",
+            "unique": "false",
+            "validate": "true"
+        },
+        "fdNo":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPost.fdNo",
+            "type": "String",
+            "column": "fd_no",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdKeyword":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPost.fdKeyword",
+            "type": "String",
+            "column": "fd_keyword",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdIsAvailable":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPost.fdIsAvailable",
+            "type": "Boolean",
+            "column": "fd_is_available",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "1",
+            "enumType": "sys_org_available_result",
+            "canSearch": "true"
+        },
+        "fdIsBusiness":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPost.fdIsBusiness",
+            "type": "Boolean",
+            "column": "fd_is_business",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "1",
+            "canSearch": "true"
+        },
+        "fdMemo":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPost.fdMemo",
+            "type": "String",
+            "column": "fd_memo",
+            "notNull": "false",
+            "unique": "false",
+            "length": "4000",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "hbmThisLeader":         {
+            "propertyType": "model",
+            "messageKey": "sys-organization:sysOrgPost.fdThisLeader",
+            "type": "com.landray.kmss.hr.organization.model.HrOrganizationElement",
+            "column": "fd_this_leaderid",
+            "notNull": "false",
+            "unique": "false",
+            "where": "sysOrgElement.fdOrgType=4 or sysOrgElement.fdOrgType=8",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}', '!{nameField}', null, ORG_TYPE_POSTORPERSON);"
+        },
+        "hbmParent":         {
+            "propertyType": "model",
+            "messageKey": "sys-organization:sysOrgPost.fdParent",
+            "type": "com.landray.kmss.hr.organization.model.HrOrganizationElement",
+            "column": "fd_parentid",
+            "notNull": "false",
+            "unique": "false",
+            "canSearch": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}', '!{nameField}', null, ORG_TYPE_ORGORDEPT);",
+            "where": "sysOrgElement.fdOrgType=1 or sysOrgElement.fdOrgType=2",
+            "treeModel": "true"
+        },
+        "hbmPersons":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrgPost.fdPersons",
+            "column": "fd_postid",
+            "type": "com.landray.kmss.hr.staff.model.HrStaffPersonInfo",
+            "table": "hr_org_post_person",
+            "elementColumn": "fd_personid",
+            "dialogJS": "Dialog_Address(true, '!{idField}', '!{nameField}', null, ORG_TYPE_PERSON);"
+        },
+        "fdIsKey":         {
+            "propertyType": "simple",
+            "type": "String",
+            "column": "fd_is_key",
+            "length": "200",
+            "messageKey": "hr-organization:hrOrganizationPost.fdIsKey"
+        },
+        "fdIsSecret":         {
+            "propertyType": "simple",
+            "type": "String",
+            "column": "fd_is_secret",
+            "length": "200",
+            "messageKey": "hr-organization:hrOrganizationPost.fdIsSecret"
+        },
+        "fdIsFullCompile":         {
+            "propertyType": "simple",
+            "type": "String",
+            "column": "fd_is_full_compile",
+            "length": "200",
+            "messageKey": "hr-organization:hrOrganizationPost.fdIsFullCompile"
+        },
+        "fdPostSeq":         {
+            "propertyType": "model",
+            "type": "com.landray.kmss.hr.organization.model.HrOrganizationPostSeq",
+            "column": "fd_post_seq_id",
+            "messageKey": "hr-organization:hrOrganizationPost.fdPostSeq"
+        },
+        "fdRankMix":         {
+            "propertyType": "model",
+            "type": "com.landray.kmss.hr.organization.model.HrOrganizationRank",
+            "column": "fd_rank_mix_id",
+            "messageKey": "hr-organization:hrOrganizationPost.fdRankMix"
+        },
+        "fdRankMax":         {
+            "propertyType": "model",
+            "type": "com.landray.kmss.hr.organization.model.HrOrganizationRank",
+            "column": "fd_rank_max_id",
+            "messageKey": "hr-organization:hrOrganizationPost.fdRankMax"
+        }
+    }
+}

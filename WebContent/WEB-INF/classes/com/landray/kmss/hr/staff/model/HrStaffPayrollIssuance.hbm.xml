@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.hr.staff.model.HrStaffPayrollIssuance"
+		table="hr_staff_payroll_issuance" >
+		<!-- 主结构配置 -->
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		 
+		<property
+			name="fdSendEmail"
+			column="fd_send_email"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100"/>
+		<!-- 简单属性 -->
+		<property
+			name="fdMessageName"
+			column="fd_message_name"
+			update="true"
+			insert="true"
+			length="100"/>
+		<property
+			name="fdResultMseeage"
+			column="fd_result_message"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100"/>
+		<property
+			name="fdResultDetailMseeage"
+			column="fd_result_det_mes"
+			update="true"
+			insert="true"
+			not-null="false"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true"
+			length="1000000" />
+		<property
+			name="fdBasicWage"
+			column="fd_basic_wage"
+			update="true"
+			insert="true"
+			not-null="false" />	
+		<property
+			name="fdPositionSalary"
+			column="fd_position_salary"
+			update="true"
+			insert="true"
+			not-null="false" />	
+		<property
+			name="fdTransAllowance"
+			column="fd_trans_allowance"
+			update="true"
+			insert="true"
+			not-null="false" />	
+		<property
+			name="fdHousingFund"
+			column="fd_housing_fund"
+			update="true"
+			insert="true"
+			not-null="false" />	
+		<property
+			name="fdSocialInsuBasicMed"
+			column="fd_social_insu_basic_med"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdRemark"
+			column="fd_remark"
+			update="true"
+			insert="true"
+			not-null="false" 
+			length="200" />	
+			
+		<property
+			name="fdCreateTime"
+			column="fd_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdNotifyType"
+			column="fd_notify_type"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="20" />			
+			
+		<many-to-one
+			name="fdCreator"
+			column="fd_creator_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		
+	</class>
+</hibernate-mapping>

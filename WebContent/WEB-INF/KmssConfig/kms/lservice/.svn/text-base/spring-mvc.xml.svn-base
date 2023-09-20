@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/kms/lservice/Lservice.do"
+		class="com.landray.kmss.kms.lservice.actions.LserviceAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="refs"
+					value="/kms/lservice/refs.jsp" />
+				<entry
+					key="readers"
+					value="/kms/lservice/readers.jsp" />
+				<entry
+					key="listResult"
+					value="/kms/lservice/listResult.jsp"/>
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/kms/lservice/lserviceConfig.do"
+		class="com.landray.kmss.kms.lservice.actions.LserviceConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+	
+	<bean
+		name="/kms/lservice/LserviceMportal.do"
+		class="com.landray.kmss.kms.lservice.actions.LserviceMportalAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>				
+				<entry
+					key="getCreditAndIntegralAndLearnTimeMoudleData"
+					value="/kms/lservice/kms_lservice_module_select/creditAndIntegralAndLearnTime_listdata.jsp" />
+				<entry
+					key="getMedalAndDiplomaMoudleData"
+					value="/kms/lservice/kms_lservice_module_select/medalAndDiploma_listdata.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<bean
+		name="/kms/lservice/kmsLservicePortletAction.do"
+		class="com.landray.kmss.kms.lservice.actions.KmsLservicePortletAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+<!--				<entry key="getPrefectureData" value="/kms/lservice/portlet/kms_lservice_knowledge_prefecture.jsp" />-->
+			</map>
+		</property>
+	</bean>
+
+</beans>

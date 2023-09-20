@@ -1,0 +1,79 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.km.calendar.model.KmCalendarShareGroup",
+        "messageKey": "km-calendar:table.kmCalendarShareGroup",
+        "displayProperty": "fdName",
+        "serviceBean": "kmCalendarShareGroupService",
+        "table": "km_calendar_share_group",
+        "url": "/km/calendar/km_calendar_share_group/kmCalendarShareGroup.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "km-calendar:kmCalendarShareGroup.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "false",
+            "length": "100",
+            "validate": "true"
+        },
+        "fdDescription":         {
+            "propertyType": "simple",
+            "messageKey": "km-calendar:kmCalendarShareGroup.fdDescription",
+            "type": "String",
+            "column": "fd_description",
+            "notNull": "false",
+            "length": "1500",
+            "validate": "true"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "km-calendar:kmCalendarShareGroup.fdOrder",
+            "column": "fd_order",
+            "type": "Long",
+            "notNull": "false"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-doc:sysDocBaseInfo.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "false"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-doc:sysDocBaseInfo.docCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_creator_id",
+            "notNull": "false"
+        },
+        "fdGroupMemberIds":         {
+            "propertyType": "simple",
+            "messageKey": "km-calendar:kmCalendarShareGroup.fdGroupMemberIds",
+            "type": "String",
+            "column": "fd_group_member_ids",
+            "notNull": "false",
+            "length": "2500"
+        },
+        "fdGroupMemberNames":         {
+            "propertyType": "simple",
+            "messageKey": "km-calendar:kmCalendarShareGroup.fdGroupMemberNames",
+            "type": "String",
+            "column": "fd_group_member_names",
+            "notNull": "false",
+            "length": "2500"
+        },
+        "shareGroupMembers":         {
+            "propertyType": "list",
+            "table": "km_calendar_share_group_mem",
+            "messageKey": "km-calendar:kmCalendarShareGroup.shareGroupMembers",
+            "column": "fd_calendar_share_group_mem_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "fd_org_id"
+        }
+    }
+}

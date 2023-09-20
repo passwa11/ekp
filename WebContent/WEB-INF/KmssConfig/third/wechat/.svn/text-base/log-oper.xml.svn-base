@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="wechatLoginHelperOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.wechat.model.WechatConfig"
+            action="/third/wechat/wechatLoginHelper.do">
+            <query
+				method="kmsUrlData" 
+				logPoint="Base_UrlParam;kmsUrlData"/>
+			<query
+				method="toBindSystem" 
+				logPoint="Base_UrlParam;toBindSystem"
+				messageKey="thrid-wechat:wechat.toBind"/>
+			<query
+				method="toLogin" 
+				logPoint="Base_UrlParam;toLogin"/>
+			<query
+				method="wechatDownload" 
+				logPoint="Base_UrlParam;wechatDownload"/>
+        </oper>
+        <oper
+            id="wechatConfig"
+            extends="BaseOperLog"
+            model="*"
+            action="/third/wechat/wechatConfig.do">
+        </oper>
+		<oper
+            id="wechatMainConfig"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/third/wechat/wechatMainConfig.do">
+            <query
+				method="edit" 
+				logPoint="Base_UrlParam;Action_Find"
+				messageKey="button.edit"/>
+        </oper>
+		<oper
+            id="wechatNotify"
+            model="*"
+            action="/third/wechat/wechatNotify.do">
+            <query
+				method="doSendNotify" 
+				logPoint="Base_UrlParam;doSendNotify"/>
+        </oper>        
+	</logset>
+</log-oper>

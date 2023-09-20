@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 查主文档与对应表单的HQL语句的拼装器 -->
+	<bean
+		id="modelingHQLBuilder"
+		class="com.landray.kmss.sys.modeling.main.dao.ModelingHQLBuilderImp" />
+	<bean id="modelingAuthHQLBuilder" class="com.landray.kmss.sys.modeling.main.dao.ModelingHQLCombiner">
+		<property name="hqlBuilder" ref="modelingHQLBuilder"/>
+        <property name="hqlParts">
+            <set>
+                <ref bean="authHQLPart" />
+            </set>
+        </property>	
+	</bean>
+		
+	<!-- 主文档 end -->
+	<bean
+		id="modelingAppModelMainDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.sys.modeling.main.dao.hibernate.ModelingAppModelMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain" />
+		<property name="hqlBuilder">
+			<ref bean="modelingAuthHQLBuilder" />
+		</property>
+	</bean>
+
+	<bean
+		id="modelingAppModelMainServiceTarget"
+		parent="modelingAppMainBaseTarget"
+		class="com.landray.kmss.sys.modeling.main.service.spring.ModelingAppModelMainServiceImp">
+		<property name="baseDao">
+			<ref bean="modelingAppModelMainDao" />
+		</property>
+		<property name="modelingAppModelService">
+			<ref bean="modelingAppModelService" />
+		</property>
+		<property name="modelingAppFlowService">
+			<ref bean="modelingAppFlowService" />
+		</property>
+		<property name="lbpmProcessCoreService">
+			<ref bean="lbpmProcessCoreService" />
+		</property>
+		<property name="rightCoreService">
+			<ref bean="rightCoreService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="modelingAppModelMainService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="modelingAppModelMainServiceTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="modelingAppModelMainOprServiceTarget"
+		parent="modelingAppModelMainServiceTarget"
+		class="com.landray.kmss.sys.modeling.main.service.spring.ModelingAppModelMainOprServiceImp">
+	</bean>
+	<bean
+		id="modelingAppModelMainOprService"
+		parent="modelingAppModelMainService">
+		<property name="target">
+			<ref bean="modelingAppModelMainOprServiceTarget" />
+		</property>
+	</bean>
+
+	<!-- 主文档 end -->
+	
+	<!-- 无流程主文档 start -->
+	<bean
+		id="modelingAppSimpleMainDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.sys.modeling.main.dao.hibernate.ModelingAppSimpleMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.modeling.main.model.ModelingAppSimpleMain" />
+		<property name="hqlBuilder">
+			<ref bean="modelingAuthHQLBuilder" />
+		</property>
+	</bean>
+
+	<bean
+		id="modelingAppSimpleMainServiceTarget"
+		parent="modelingAppMainBaseTarget"
+		class="com.landray.kmss.sys.modeling.main.service.spring.ModelingAppSimpleMainServiceImp">
+		<property name="baseDao">
+			<ref bean="modelingAppSimpleMainDao" />
+		</property>
+		<property name="modelingAppModelService">
+			<ref bean="modelingAppModelService" />
+		</property>
+	</bean>
+	
+	<bean id="modelingAppSimpleMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="modelingAppSimpleMainServiceTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="modelingAppSimpleMainOprServiceTarget"
+		parent="modelingAppSimpleMainServiceTarget"
+		class="com.landray.kmss.sys.modeling.main.service.spring.ModelingAppSimpleMainOprServiceImp">
+	</bean>
+	<bean
+		id="modelingAppSimpleMainOprService"
+		parent="modelingAppSimpleMainService">
+		<property name="target">
+			<ref bean="modelingAppSimpleMainOprServiceTarget" />
+		</property>
+	</bean>
+
+	<!-- 无流程主文档 end -->
+	
+	
+	<!-- 权限校验器 -->
+	<bean id="modelingAuthMainEditorValidator"
+		class="com.landray.kmss.sys.modeling.main.service.validator.ModelingAuthMainValidator">
+		<property name="fieldType" value="Editors"/>
+	</bean>
+	<bean id="modelingAuthMainReaderValidator"
+		class="com.landray.kmss.sys.modeling.main.service.validator.ModelingAuthMainValidator">
+		<property name="fieldType" value="Readers"/>
+	</bean>
+
+	<bean
+			id="modelingAppMainBaseDao"
+			parent="KmssExtendDataAreaDao"
+			class="com.landray.kmss.sys.modeling.main.dao.hibernate.ModelingAppMainBaseDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMainBase" />
+		<property name="hqlBuilder" ref="modelingAuthHQLBuilder"/>
+	</bean>
+
+	<bean
+			id="modelingAppMainBaseTarget"
+			parent="KmssExtendDataTarget"
+			class="com.landray.kmss.sys.modeling.main.service.spring.ModelingAppMainBaseService">
+		<property name="baseDao">
+			<ref bean="modelingAppMainBaseDao" />
+		</property>
+	</bean>
+	<bean id="modelingAppMainBaseService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="modelingAppMainBaseTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="abstractTriggerActionTarget"
+		abstract="true"
+		class="com.landray.kmss.sys.modeling.main.service.action.AbstractBizTriggerAction">
+	</bean>
+	<bean
+		id="abstractTriggerAction"
+		lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="abstractTriggerActionTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="execute*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<bean
+		id="addTriggerActionTarget"
+		parent="abstractTriggerActionTarget"
+		class="com.landray.kmss.sys.modeling.main.service.action.AddTriggerAction">
+	</bean>
+	<bean
+		id="addTriggerAction"
+		parent="abstractTriggerAction">
+		<property name="target">
+			<ref bean="addTriggerActionTarget" />
+		</property>
+	</bean>
+	<bean
+		id="updateTriggerActionTarget"
+		parent="abstractTriggerActionTarget"
+		class="com.landray.kmss.sys.modeling.main.service.action.UpdateTriggerAction">
+	</bean>
+	<bean
+		id="updateTriggerAction"
+		parent="abstractTriggerAction">
+		<property name="target">
+			<ref bean="updateTriggerActionTarget" />
+		</property>
+	</bean>
+	<bean
+		id="detailUpdateTriggerActionTarget"
+		parent="abstractTriggerActionTarget"
+		class="com.landray.kmss.sys.modeling.main.service.action.DetailUpdateTriggerAction">
+	</bean>
+	<bean
+		id="detailUpdateTriggerAction"
+		parent="abstractTriggerAction">
+		<property name="target">
+			<ref bean="detailUpdateTriggerActionTarget" />
+		</property>
+	</bean>
+	<bean
+		id="deleteTriggerActionTarget"
+		parent="abstractTriggerActionTarget"
+		class="com.landray.kmss.sys.modeling.main.service.action.DeleteTriggerAction">
+	</bean>
+	<bean
+		id="deleteTriggerAction"
+		parent="abstractTriggerAction">
+		<property name="target">
+			<ref bean="deleteTriggerActionTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sendTriggerActionTarget"
+		parent="abstractTriggerActionTarget"
+		class="com.landray.kmss.sys.modeling.main.service.action.SendTriggerAction">
+	</bean>
+	<bean
+		id="sendTriggerAction"
+		parent="abstractTriggerAction">
+		<property name="target">
+			<ref bean="sendTriggerActionTarget" />
+		</property>
+	</bean>
+	<bean
+			id="saveEcoElementTriggerActionTarget"
+			parent="abstractTriggerActionTarget"
+			class="com.landray.kmss.sys.modeling.main.service.action.customize.SaveEcoElementTriggerAction">
+	</bean>
+	<bean
+			id="saveEcoElementTriggerAction"
+			parent="abstractTriggerAction">
+		<property name="target">
+			<ref bean="saveEcoElementTriggerActionTarget" />
+		</property>
+	</bean>
+
+
+
+
+	<bean
+		id="bizTriggerBehaviorTarget"
+		class="com.landray.kmss.sys.modeling.main.service.operation.BizTriggerBehaviorImp">
+	</bean>
+	<bean
+		id="bizTriggerBehavior"
+		lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="bizTriggerBehaviorTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="do*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<bean
+		id="bizTriggerOperationTarget"
+		class="com.landray.kmss.sys.modeling.main.service.operation.BizTriggerOperationImp">
+	</bean>
+	<bean
+		id="bizTriggerOperation"
+		lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="bizTriggerOperationTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="do*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<bean
+		id="bizTriggerScenesTarget"
+		class="com.landray.kmss.sys.modeling.main.service.operation.BizTriggerScenesImp">
+	</bean>
+	<bean
+		id="bizTriggerScenes"
+		lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="bizTriggerScenesTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="do*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean
+		id="bizTriggerLoadData"
+		class="com.landray.kmss.sys.modeling.main.service.operation.BizTriggerLoadDataImp">
+	</bean>
+	
+	<bean
+		id="modelingAppFlowMainServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.modeling.main.service.spring.ModelingAppFlowMainServiceImp">
+		<property name="modelingAppFlowService">
+			<ref bean="modelingAppFlowService" />
+		</property>
+	</bean>
+	
+	<bean id="modelingAppFlowMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="modelingAppFlowMainServiceTarget" />
+		</property>
+	</bean>
+
+	<!-- 表单控件 start -->
+	<bean id="modelingAppXFormMainService" class="com.landray.kmss.sys.modeling.main.service.spring.ModelingAppXFormMainServiceImp">
+		<property  name="sysModelingRelationService">
+            <ref  bean="sysModelingRelationService"/>
+        </property>
+	</bean>
+	<!-- 表单控件 end -->
+
+	<bean
+		id="sampleTriggerAction"
+		class="com.landray.kmss.sys.modeling.main.service.action.SampleTriggerAction">
+	</bean>
+
+	<bean id="modelingAppStatusFilter" class="com.landray.kmss.sys.modeling.main.filter.ModelingAppStatusFilter">
+	</bean>
+
+	<bean id="modelingMainFilter" class="com.landray.kmss.sys.modeling.common.filter.ModelingMainFilter">
+	</bean>
+
+	<bean id="modelingBaseFilter" class="com.landray.kmss.sys.modeling.common.filter.ModelingBaseFilter">
+	</bean>
+	
+	<bean
+		id="modelingAppModelMainTreeTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.modeling.main.service.spring.ModelingAppModelMainTreeServiceImp">
+		<property name="baseDao">
+			<ref bean="modelingAppModelMainTreeDao" />
+		</property>
+	</bean>
+	<bean
+		id="modelingAppModelMainTreeService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="modelingAppModelMainTreeTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="modelingAppModelMainTreeDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.sys.modeling.main.dao.hibernate.ModelingAppModelMainTreeDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMainTree" />
+	</bean>
+	
+	<!-- 数据校验 -->
+	<bean
+		id="modelingAppDataValidateMainServiceImpTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.modeling.main.service.spring.ModelingAppDataValidateMainServiceImp">
+	</bean>
+	
+	<bean id="modelingAppDataValidateMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="modelingAppDataValidateMainServiceImpTarget" />
+		</property>
+	</bean>
+
+	<!--自定义业务建模请求-->
+	<bean id="dynamicLinkFilter" class="com.landray.kmss.sys.modeling.base.filter.DynamicLinkFilter">
+	</bean>
+	<!--操作日志end-->
+	
+	<!-- 流程文档全文检索 -->
+	<bean
+		id="modelingAppModelMainDaoProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property
+			name="beanNames">
+			<value>modelingAppModelMainDao</value>
+		</property>
+		<property
+			name="interceptorNames">
+			<list>
+				<value>luceneCreateAdvisor</value>
+				<value>luceneSaveAdvisor</value>
+				<value>luceneDeleteAdvisor</value>
+				<value>docKeyWriteAdvice</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 无流程文档全文检索 -->
+	<bean
+		id="modelingAppSimpleMainDaoProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property
+			name="beanNames">
+			<value>modelingAppSimpleMainDao</value>
+		</property>
+		<property
+			name="interceptorNames">
+			<list>
+				<value>luceneCreateAdvisor</value>
+				<value>luceneSaveAdvisor</value>
+				<value>luceneDeleteAdvisor</value>
+				<value>docKeyWriteAdvice</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 业务触发动作队列 -->
+	<bean
+			id="sysModelingQueueDao"
+			parent="KmssBaseDao"
+			class="com.landray.kmss.sys.modeling.main.queue.dao.hibernate.SysModelingQueueDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.sys.modeling.main.queue.model.SysModelingQueue" />
+	</bean>
+
+	<bean
+			id="sysModelingQueueServiceTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.sys.modeling.main.queue.service.spring.SysModelingQueueServiceImp">
+		<property name="baseDao">
+			<ref bean="sysModelingQueueDao" />
+		</property>
+	</bean>
+
+	<bean
+			id="sysModelingQueueService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysModelingQueueServiceTarget" />
+		</property>
+	</bean>
+	<bean
+			id="sysModelingQueueErrorDao"
+			parent="KmssBaseDao"
+			class="com.landray.kmss.sys.modeling.main.queue.dao.hibernate.SysModelingQueueErrorDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.sys.modeling.main.queue.model.SysModelingQueueError" />
+	</bean>
+
+	<bean
+			id="sysModelingQueueErrorServiceTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.sys.modeling.main.queue.service.spring.SysModelingQueueErrorServiceImp">
+		<property name="baseDao">
+			<ref bean="sysModelingQueueErrorDao" />
+		</property>
+	</bean>
+
+	<bean
+			id="sysModelingQueueErrorService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysModelingQueueErrorServiceTarget" />
+		</property>
+	</bean>
+	<bean
+			id="sysModelingQueueLogDao"
+			parent="KmssBaseDao"
+			class="com.landray.kmss.sys.modeling.main.queue.dao.hibernate.SysModelingQueueLogDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.sys.modeling.main.queue.model.SysModelingQueueLog" />
+	</bean>
+
+	<bean
+			id="sysModelingQueueLogServiceTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.sys.modeling.main.queue.service.spring.SysModelingQueueLogServiceImp">
+		<property name="baseDao">
+			<ref bean="sysModelingQueueLogDao" />
+		</property>
+	</bean>
+
+	<bean
+			id="sysModelingQueueLogService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysModelingQueueLogServiceTarget" />
+		</property>
+	</bean>
+	<bean id="modelingQueueExecuteServiceTarget"
+		  class="com.landray.kmss.sys.modeling.main.queue.service.spring.ModelingQueueExecuteServiceImp">
+		<property name="sysModelingQueueErrorService">
+			<ref bean="sysModelingQueueErrorService"/>
+		</property>
+		<property name="sysModelingQueueService">
+			<ref bean="sysModelingQueueService"/>
+		</property>
+		<property name="sysModelingQueueLogService">
+			<ref bean="sysModelingQueueLogService"/>
+		</property>
+		<property name="backgroundAuthService">
+			<ref bean="backgroundAuthService" />
+		</property>
+	</bean>
+	<bean id="modelingQueueExecuteService" lazy-init="true"
+		  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="modelingQueueExecuteServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="active*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="doExecute*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="modelingQueueExecuteDispatcher"
+		  class="com.landray.kmss.sys.modeling.main.queue.service.spring.ModelingQueueExecuteDispatcher">
+		<property name="modelingQueueExecuteService">
+			<ref bean="modelingQueueExecuteService" />
+		</property>
+	</bean>
+	<bean id="behaviorExecutorTarget"
+		  class="com.landray.kmss.sys.modeling.main.provider.BehaviorExecutor">
+	</bean>
+	<bean id="behaviorExecutor" lazy-init="true"
+		  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="behaviorExecutorTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="execute*">PROPAGATION_REQUIRES_NEW</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="scenesExecutorTarget"
+		  class="com.landray.kmss.sys.modeling.main.provider.ScenesExecutor">
+	</bean>
+	<bean id="scenesExecutor" lazy-init="true"
+		  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="scenesExecutorTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="execute*">PROPAGATION_REQUIRES_NEW</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<bean
+			id="modelingArchivesAutoFileListener"
+			class="com.landray.kmss.sys.modeling.main.listener.ModelingArchivesAutoFileListener">
+		<!-- 异步线程等待时长（毫秒） -->
+		<property name="joinTime" value="3000"></property>
+	</bean>
+
+	<bean id="modelingCopyFlowMainValidator" class="com.landray.kmss.sys.modeling.main.service.validator.ModelingCopyFlowMainValidator">
+		<property name="modelingAppModelMainService">
+			<ref bean="modelingAppModelMainService" />
+		</property>
+	</bean>
+
+	<bean id="modelingFlowTemplateValidator" class="com.landray.kmss.sys.modeling.main.service.validator.ModelingFlowTemplateValidator">
+		<property name="modelingAppModelMainService">
+			<ref bean="modelingAppModelMainService" />
+		</property>
+		<property name="modelingAppFlowService">
+			<ref bean="modelingAppFlowService" />
+		</property>
+	</bean>
+
+	<bean id="modelingAuthFieldValidator" class="com.landray.kmss.sys.modeling.main.service.validator.ModelingAuthFieldValidator">
+		<property name="baseDao" ref="KmssBaseDao"/>
+		<property name="hqlBuilder" ref="kmssAuthHQLBuilder"/>
+	</bean>
+
+
+</beans>

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <extension 
+        point="com.landray.kmss.sys.number.config" 
+        model="*">
+        <item 
+            name="extend">
+            <param 
+                name="modelName" 
+                value="com.landray.kmss.fssc.loan.model.FsscLoanMain"/>
+            <param 
+                name="templatePropertyName" 
+                value="docTemplate"/>
+            <param 
+                name="moduleName" 
+                value="{fssc-loan:module.fssc.loan}"/>
+        </item>
+        <item 
+            name="extend">
+            <param 
+                name="modelName" 
+                value="com.landray.kmss.fssc.loan.model.FsscLoanRepayment"/>
+            <param 
+                name="templatePropertyName" 
+                value="docTemplate"/>
+            <param 
+                name="moduleName" 
+                value="{fssc-loan:module.fssc.loan}"/>
+        </item>
+        <item 
+            name="extend">
+            <param name="modelName" value="com.landray.kmss.fssc.loan.model.FsscLoanTransfer"/>
+            <param name="templatePropertyName" value=""/>
+            <param name="moduleName" value="{fssc-loan:module.fssc.loan}"/>
+			<param name="isReform" value="true"/>
+			<param name="order" value="10"/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.fssc.credit">
+		<item name="fsscCreditPoint">
+			<param name="unid" value="loan" />
+			<param name="text" value="fssc-loan:loanPastForRepayment" />
+			<param name="service" value="fsscCommonLoanService" />
+			<param name="method" value="getLoanPastDayToCredit" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.fssc.loan.model.FsscLoanMain;com.landray.kmss.fssc.loan.model.FsscLoanRepayment;com.landray.kmss.fssc.loan.model.FsscLoanTransfer">
+		<item name="listener">
+            <param name="unid" value="fsscLoanFinishListener"/>
+            <param name="messageKey" value="fssc-loan:listener.fsscLoanFinishListener"/>
+            <param name="eventTypes" value="lbpmProcessFinishEvent"/>
+			<param name="listener" value="fsscLoanFinishListener"/>
+			<param name="enforce" value="true"/>
+		</item>
+	</extension>
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.fssc.loan.model.FsscLoanMain">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="FsscLoanArchivesAutoFileEvent" />
+			<param
+					name="messageKey"
+					value="fssc-loan:fsscLoanMain.event.lbpmEndOnfile" />
+			<param
+					name="eventTypes"
+					value="lbpmProcessFinishEvent" />
+			<param
+					name="listener"
+					value="FsscLoanArchivesAutoFileEvent" />
+			<param
+					name="conditionJsp"
+					value="/fssc/loan/fssc_loan_main/fsscLoanMain_archives.jsp" />
+			<param
+					name="description"
+					value="fssc-loan:fsscLoanMain.event.lbpmEndOnfileDescription" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.fssc.loan.model.FsscLoanRepayment;com.landray.kmss.fssc.loan.model.FsscLoanTransfer">
+		<item name="listener">
+            <param name="unid" value="fsscLoanAbandonListener"/>
+            <param name="messageKey" value="fssc-loan:listener.fsscLoanAbandonListener"/>
+            <param name="eventTypes" value="lbpmProcessAbandonEvent"/>
+			<param name="listener" value="fsscLoanAbandonListener"/>
+			<param name="enforce" value="true"/>
+		</item>
+		<item name="listener">
+            <param name="unid" value="fsscLoanDraftorSubmitListener"/>
+            <param name="messageKey" value="fssc-loan:listener.fsscLoanDraftorSubmitListener"/>
+            <param name="eventTypes" value="drafterSubmitEvent"/>
+			<param name="listener" value="fsscLoanDraftorSubmitListener"/>
+			<param name="enforce" value="true"/>
+		</item>
+        <item name="listener">
+            <param name="unid" value="fsscLoanEnterNodeListener"/>
+            <param name="messageKey" value="fssc-loan:listener.fsscLoanEnterNodeListener"/>
+            <param name="eventTypes" value="enterNodeEvent"/>
+            <param name="listener" value="fsscLoanEnterNodeListener"/>
+            <param name="enforce" value="false"/>
+        </item>
+	</extension>
+	<extension 
+        point="com.landray.kmss.sys.listshow.listShowConfig" 
+        model="com.landray.kmss.fssc.loan.model.FsscLoanMain">
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="list.create"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.loan.model.FsscLoanMain"/>
+            <param 
+                name="page" 
+                value="/listCreate"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;fdLoanMoney;fdLoanPerson.name;docCreateTime;docStatus.name;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-loan:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-loan:lbpm.currentHandler"/>
+        </item>
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="list.alldoc"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.loan.model.FsscLoanMain"/>
+            <param 
+                name="page" 
+                value="/listAll"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;fdLoanMoney;fdLoanPerson.name;docCreateTime;docStatus.name;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-loan:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-loan:lbpm.currentHandler"/>
+        </item>
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="list.approved"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.loan.model.FsscLoanMain"/>
+            <param 
+                name="page" 
+                value="/listApproved"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;fdLoanMoney;fdLoanPerson.name;docCreateTime;docStatus.name;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-loan:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-loan:lbpm.currentHandler"/>
+        </item>
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="list.approval"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.loan.model.FsscLoanMain"/>
+            <param 
+                name="page" 
+                value="/listApproval"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;fdLoanMoney;fdLoanPerson.name;docCreateTime;docStatus.name;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-loan:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-loan:lbpm.currentHandler"/>
+        </item>
+    </extension>
+	<extension 
+        point="com.landray.kmss.sys.listshow.listShowConfig" 
+        model="com.landray.kmss.fssc.loan.model.FsscLoanRepayment">
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="fssc-loan:table.fsscLoanRepayment"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.loan.model.FsscLoanRepayment"/>
+            <param 
+                name="page" 
+                value="repayment"/>
+            <param 
+                name="default" 
+                value="docSubject;docNumber;docCreator.name;fdRepaymentPerson.name;docCreateTime;fdRepaymentMoney;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler;docStatus.name"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-loan:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-loan:lbpm.currentHandler"/>
+        </item>
+    </extension>
+	<extension 
+        point="com.landray.kmss.sys.listshow.listShowConfig" 
+        model="com.landray.kmss.fssc.loan.model.FsscLoanTransfer">
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="fssc-loan:table.fsscLoanTransfer"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.loan.model.FsscLoanTransfer"/>
+            <param 
+                name="page" 
+                value="transfer"/>
+            <param 
+                name="default" 
+                value="docSubject;docNumber;fdTurnOut.name;fdReceive.name;fdTransferMoney;docStatus.name;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-loan:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-loan:lbpm.currentHandler"/>
+        </item>
+    </extension>
+    
+    <extension
+		point="com.landray.kmss.sys.workflow.support.oa.subprocess"
+		model="*">		
+		<item
+			name="subprocess">
+			<param
+				name="modelName"
+				value="com.landray.kmss.fssc.loan.model.FsscLoanMain" />
+			<param
+				name="createParam"
+				value="fdTemplateId=!{cateid}" />
+		</item>
+	</extension>
+	
+	 <!-- 表单关联控件的模块扩展点 -->
+	<extension point="com.landray.kmss.sys.xform.base.service.controls.relevance" model="*">
+		<item name="node">
+			<param name="modelName" value="com.landray.kmss.fssc.loan.model.FsscLoanMain" />
+			<param name="templateModelName" value="com.landray.kmss.fssc.loan.model.FsscLoanCategory" />
+			<param name="key" value="loanMainDoc" />
+			<param name="templatePropertyName" value="docTemplate" />
+			<param name="moduleMessageKey" value="fssc-loan:module.fssc.loan" />
+		</item>
+		<item name="node">
+			<param name="modelName" value="com.landray.kmss.fssc.loan.model.FsscLoanRepayment" />
+			<param name="templateModelName" value="com.landray.kmss.fssc.loan.model.FsscLoanReCategory" />
+			<param name="key" value="repaymentDoc" />
+			<param name="templatePropertyName" value="docTemplate" />
+			<param name="moduleMessageKey" value="fssc-loan:table.fsscLoanRepayment" />
+		</item>
+	</extension>
+	<!-- 软删除功能扩展点实现 -->
+	<extension point="com.landray.kmss.sys.recycle">
+		<item name="softDelete">
+			<!-- 模块(文档)名称 -->
+			<param
+				name="modelName"
+				value="fssc-loan:table.fsscLoanMain" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.fssc.loan.model.FsscLoanMain" />
+			<!-- 主文档对应的分类(模板)全名称 -->
+			<param
+				name="categoryClassName"
+				value="com.landray.kmss.fssc.loan.model.FsscLoanCategory" />
+			<!-- 主文档中分类(模板)的属性名称 -->
+			<param
+				name="categoryField"
+				value="docTemplate" />
+			<!-- 主文档中标题的属性名称 -->
+			<param
+				name="titleField"
+				value="docSubject" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.recycle">
+		<item name="softDelete">
+			<!-- 模块(文档)名称 -->
+			<param
+				name="modelName"
+				value="fssc-loan:table.fsscLoanRepayment" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.fssc.loan.model.FsscLoanRepayment" />
+			<!-- 主文档对应的分类(模板)全名称 -->
+			<param
+				name="categoryClassName"
+				value="com.landray.kmss.fssc.loan.model.FsscLoanReCategory" />
+			<!-- 主文档中分类(模板)的属性名称 -->
+			<param
+				name="categoryField"
+				value="docTemplate" />
+			<!-- 主文档中标题的属性名称 -->
+			<param
+				name="titleField"
+				value="docSubject" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.recycle">
+		<item name="softDelete">
+			<!-- 模块(文档)名称 -->
+			<param
+				name="modelName"
+				value="fssc-loan:table.fsscLoanTransfer" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.fssc.loan.model.FsscLoanTransfer" />
+			<!-- 主文档对应的分类(模板)全名称 -->
+			<param
+				name="categoryClassName"
+				value="" />
+			<!-- 主文档中分类(模板)的属性名称 -->
+			<param
+				name="categoryField"
+				value="" />
+			<!-- 主文档中标题的属性名称 -->
+			<param
+				name="titleField"
+				value="docSubject" />
+		</item>
+	</extension>
+
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.fssc.loan.model.FsscLoanRepayment">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="fsscLoanRepaymentArchivesAutoFileEvent" />
+			<param
+					name="messageKey"
+					value="fssc-loan:fsscLoanRepayment.event.lbpmEndOnfile" />
+			<param
+					name="eventTypes"
+					value="lbpmProcessFinishEvent" />
+			<param
+					name="listener"
+					value="fsscLoanRepaymentArchivesAutoFileEvent" />
+			<param
+					name="conditionJsp"
+					value="/fssc/loan/fssc_loan_repayment/fsscLoanRepayment_archives.jsp" />
+			<param
+					name="description"
+					value="fssc-loan:fsscLoanRepayment.event.lbpmEndOnfileDescription" />
+		</item>
+	</extension>
+	
+</plugin>

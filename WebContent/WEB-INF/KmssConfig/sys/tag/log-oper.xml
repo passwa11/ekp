@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+
+		<!-- 标签筛选器 -->
+		<oper id="sysTagGroupOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagGroup" action="/sys/tag/sys_tag_group/sysTagGroup.do">
+			<query method="getTagGroupJsonByModelName" logPoint="Base_UrlParam;Action_Find;Action_FindAll"
+				messageKey="button.list" />
+		</oper>
+
+		<!-- 标签 -->
+		<oper id="sysTagTagsOperLog" extends="BaseOperLog" model="*"
+			action="/sys/tag/sys_tag_tags/sysTagTags.do">
+
+			<!-- 批量失效 -->
+			<query method="saveInvalidateTags" logPoint="Base_UrlParam;saveInvalidateTags"
+				messageKey="sys-tag:sysTag.tree.status.false" />
+
+			<!-- 批量生效 -->
+			<query method="saveValidateTags" logPoint="Base_UrlParam;saveValidateTags"
+				messageKey="sys-tag:sysTag.tree.status.true" />
+
+			<!-- 生效 -->
+			<query method="saveValidateTag" logPoint="Base_UrlParam;saveValidateTags"
+				messageKey="sys-tag:sysTag.tree.status.true" />
+
+			<!-- 失效 -->
+			<query method="saveInvalidateTag" logPoint="Base_UrlParam;saveInvalidateTags"
+				messageKey="sys-tag:sysTag.tree.status.false" />
+
+			<!-- 置为特殊标签 -->
+			<query method="saveSpecialTags" logPoint="Base_UrlParam;saveSpecialTags"
+				messageKey="sys-tag:sysTagTags.button.saveSpecialTags" />
+
+			<!-- 置为普通标签 -->
+			<query method="saveCommonTags" logPoint="Base_UrlParam;saveCommonTags"
+				messageKey="sys-tag:sysTagTags.button.saveCommonTags" />
+
+			<!--调整分类 -->
+			<query method="saveMoveTags" logPoint="Base_UrlParam;saveMoveTags"
+				messageKey="sys-tag:sysTagTags.button.updateCategory" />
+
+			<!-- 合并标签 -->
+			<query method="saveMergerTags" logPoint="Base_UrlParam;saveMergerTags"
+				messageKey="sys-tag:sysTagTags.button.mergerTags" />
+			<!-- 别名标签移出 -->
+			<query method="saveRemoveAliasTags" logPoint="Base_UrlParam;saveRemoveAliasTags"
+				messageKey="sys-tag:sysTagTags.button.removeTag" />
+			<!-- 重置主标签 -->
+			<query method="saveResetMainTag" logPoint="Base_UrlParam;saveResetMainTag"
+				messageKey="sys-tag:sysTagTags.button.resetTag" />
+			<!-- 置为公有 -->
+			<query method="updateFromPriToPubInList|updateFromPriToPub" logPoint="Base_UrlParam"
+				messageKey="sys-tag:sysTagTags.button.updateFromPriToPub" />
+
+			<!-- 标签云设置 -->
+			<query method="selectedtag" logPoint="selectedtag;Service_Delete"
+				messageKey="sys-tag:sysTag.tags.cloud.setting" />
+
+			<!-- 标签云移除单个标签 -->
+			<query method="deletag" logPoint="Service_Delete"
+				messageKey="sys-tag:sysTag.tags.cloud.delete" />
+			<!-- 标签云移除所有标签 -->
+			<query method="deletagall" logPoint="Service_DeleteAll"
+				messageKey="sys-tag:sysTag.tags.cloud.delete" />
+				
+			<query method="listOverView" logPoint="Base_UrlParam;Action_Find;Action_FindAll"
+				messageKey="button.list" />
+				
+
+		</oper>
+
+		<!-- 门户 -->
+		<oper id="sysTagPortletOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagTags" action="/sys/tag/sys_tag_portlet/sysTagPortlet.do">
+			<query method="getHotTags" logPoint="getHotTags"
+				messageKey="sys-tag:sysTagCategory.button.addTags" />
+		</oper>
+
+		<!-- 标签分类 -->
+		<oper id="sysTagCategoryOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagCategory" action="/sys/tag/sys_tag_category/sysTagCategory.do">
+			<query method="saveAddTags" logPoint="saveAddTags"
+				messageKey="sys-tag:sysTagCategory.button.addTags" />
+			<query method="saveRemoveTags" logPoint="saveRemoveTags"
+				messageKey="sys-tag:sysTagCategory.button.removeTags" />
+			<query
+				method="list|data|listChildren|manageList"
+				logPoint="Base_UrlParam;Action_Find;Action_FindAll" 
+				messageKey="button.list" />
+		</oper>
+		
+		<oper id="sysTagApplicationLogOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagApplicationLog"
+			action="/sys/tag/sys_tag_application_log/sysTagApplicationLog.do">
+		</oper>
+		<oper id="sysTagCommentOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagComment"
+			action="/sys/tag/sys_tag_comment/sysTagComment.do">
+		</oper>
+		<oper id="sysTagDayLogOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagDayLog"
+			action="/tag/sys_tag_day_log/sysTagDayLog.do">
+		</oper>
+		<oper id="sysTagMonthLogOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagMonthLog"
+			action="/tag/sys_tag_month_log/sysTagMonthLog.do">
+		</oper>
+		<oper id="sysTagWeekLogOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagWeekLog"
+			action="/tag/sys_tag_week_log/sysTagWeekLog.do">
+		</oper>
+		<oper id="sysTagYearLogOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagYearLog"
+			action="/tag/sys_tag_year_log/sysTagYearLog.do">
+		</oper>
+		<oper id="sysTagSearchRecordOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagSearchRecord"
+			action="/tag/sys_tag_search_record/sysTagSearchRecord.do">
+		</oper>
+		<oper id="sysTagSeasonLogOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagSeasonLog"
+			action="/tag/sys_tag_season_log/sysTagSeasonLog.do">
+		</oper>
+		<oper id="sysTagMainOperLog"
+			extends="BaseOperLog"
+			model="*"
+			action="/sys/tag/sys_tag_main/sysTagMain.do">
+			<query
+				method="searchMain|searchRelaTag|searchRelaTagCube|search|searchByCube"
+				logPoint="Base_UrlParam;Action_Find;Action_FindAll" 
+				messageKey="button.search" />
+			<query
+				method="updateTag"
+				logPoint="Base_UrlParam;Action_Find;Action_FindAll" 
+				messageKey="sys-tag:sysTagMain.edit" />
+			<query
+				method="saveTag"
+				logPoint="Base_UrlParam;Action_Find;Action_FindAll" 
+				messageKey="sys-tag:sysTagCategory.button.addTags" />
+			<query
+				method="list|data|listChildren|manageList|listOverView"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+		</oper>
+		<oper id="sysTagMainRelationOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagMainRelation"
+			action="/sys/tag/sys_tag_main_relation/sysTagMainRelation.do">
+			<query
+				method="list|data|listChildren|manageList|getTagNames"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+		</oper>
+		<oper id="sysTagTemplateOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.tag.model.SysTagTemplate"
+			action="/sys/tag/sys_tag_template/sysTagTemplate.do">
+		</oper>
+		<oper id="sysTagTopLogOperLog"
+			extends="BaseOperLog"
+			model="*"
+			action="/sys/tag/sys_tag_top_log/sysTagTopLog.do">
+			<query
+				method="searchTop|searchListUpFirst|searchListUpSecond|searchListUpThird|searchListUpFourth|searchCloud"
+				logPoint="Base_UrlParam;Action_Find;Action_FindAll" 
+				messageKey="button.search" />
+		</oper>
+
+	</logset>
+</log-oper>

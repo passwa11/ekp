@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.third.ding.model.ThirdDingOmsPost"
+		table="third_ding_oms_post">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="fdContent"
+			column="fd_content"
+			update="true"
+			insert="true"
+			length="4000"
+			not-null="false" />
+		
+		<property
+			name="docContent"
+			column="doc_content"
+			update="true"
+			insert="true"
+			not-null="false"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true"
+			length="1000000" />
+
+	</class>
+</hibernate-mapping>

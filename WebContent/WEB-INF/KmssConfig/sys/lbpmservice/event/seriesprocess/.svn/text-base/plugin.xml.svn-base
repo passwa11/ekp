@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../plugin.xsd ">
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="lbpmStartSeriesProcessListener" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-event-seriesprocess:lbpm.listener.seriesprocess.lbpmStartSeriesProcess" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessFinishEvent" />
+			<param
+				name="listener"
+				value="lbpmStartSeriesProcessListener" />
+			<param
+				name="conditionJsp"
+				value="/sys/lbpmservice/listener/seriesProcess.jsp" />
+			<param
+				name="description"
+				value="sys-lbpmservice-event-seriesprocess:lbpm.listener.seriesprocess.lbpmStartSeriesProcessDescription" />
+		</item>
+		
+		<!-- 串联流程启动事件监听器 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="lbpmSeriesProcessStartListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="processStartEvent;enterNodeEvent" />
+			<param
+				name="listener"
+				value="lbpmSeriesProcessStartListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+		<!-- 进入起草工作项事件监听器 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="lbpmSeriesProcessNotifyDrafterListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="enterWorkitemEvent" />
+			<param
+				name="listener"
+				value="lbpmSeriesProcessNotifyDrafterListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+		<!-- 串联流程自动提交事件监听器 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="lbpmSeriesProcessDrafterSubmitAddNoteListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="drafterSubmitEvent" />
+			<param
+				name="listener"
+				value="lbpmSeriesProcessDrafterSubmitAddNoteListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+</plugin>

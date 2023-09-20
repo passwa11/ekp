@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		name="/tic/core/sync/tic_core_sync_temp_func/ticCoreSyncTempFunc.do"
+		class="com.landray.kmss.tic.core.sync.actions.TicCoreSyncTempFuncAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.tic.core.sync.forms.TicCoreSyncTempFuncForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list_table"
+					value="/tic/core/sync/tic_core_sync_temp_func/ticCoreSync_index_table_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/tic/core/sync/tic_core_sync_job/ticCoreSyncJob.do"
+		class="com.landray.kmss.tic.core.sync.actions.TicCoreSyncJobAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.tic.core.sync.forms.TicCoreSyncJobForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/tic/core/sync/tic_core_sync_job/ticCoreSyncJob_edit.jsp" />
+				<entry
+					key="list"
+					value="/tic/core/sync/tic_core_sync_job/ticCoreSyncJob_list.jsp" />
+				<entry
+					key="tableList"
+					value="/tic/core/sync/tic_core_sync_job/ticCoreSyncJob_table_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/tic/core/sync/tic_core_sync_temp_func/ticDbSyncTempFunc.do"
+		class="com.landray.kmss.tic.core.sync.actions.TicDbSyncTempFuncAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+</beans>

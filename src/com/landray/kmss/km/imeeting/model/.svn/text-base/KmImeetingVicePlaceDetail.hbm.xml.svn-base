@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.imeeting.model.KmImeetingVicePlaceDetail"
+		table="km_imeeting_vice_place_detail">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<many-to-one
+			name="fdMeeting" 
+			column="fd_meeting_id" 
+			update="true" 
+			insert="true" />
+		
+		<many-to-one
+			name="fdPlace" 
+			column="fd_place_id" 
+			update="true" 
+			insert="true" />
+	
+		<property 
+            name="fdOtherPlace" 
+            column="fd_other_place" 
+            update="true" 
+            insert="true" 
+            length="1000"/>
+            
+        <property 
+            name="fdOtherPlaceCoordinate" 
+            column="fd_other_place_coord" 
+            update="true" 
+            insert="true" 
+            length="36"/>
+
+		<property
+			name="meetingIndex"
+			column="meeting_index"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="36" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="modelingAppDatainitService"
+          class="com.landray.kmss.sys.modeling.datainit.service.spring.ModelingAppDatainitServiceImp">
+        <property name="modelingApplicationService" ref="modelingApplicationService"/>
+        <property name="modelingAppVersionService" ref="modelingAppVersionService"/>
+        <property name="processRuntimeManager" ref="processRuntimeManager"/>
+    </bean>
+
+    <bean id="modelingFormDatainitService"
+          class="com.landray.kmss.sys.modeling.datainit.service.spring.ModelingFormDatainitServiceImp">
+        <property name="modelingAppModelService" ref="modelingAppModelService"/>
+        <property name="modelingDatainitProcessService" ref="modelingDatainitProcessService"/>
+    </bean>
+
+    <!-- 多线程处理 -->
+    <bean id="processRuntimeManager"
+          class="com.landray.kmss.sys.modeling.datainit.service.spring.ProcessRuntimeManager">
+        <property name="modelingDatainitProcessService" ref="modelingDatainitProcessService"/>
+        <property name="processRuntimeThreadExecutor" ref="processRuntimeThreadExecutor"/>
+    </bean>
+
+    <!-- 多线程处理 -->
+    <bean id="processRuntimeThreadExecutor"
+          class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="8"/>
+        <property name="maxPoolSize" value="16"/>
+        <property name="keepAliveSeconds" value="200"/>
+        <property name="queueCapacity" value="100"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
+        </property>
+    </bean>
+
+    <!-- base模块各model转换器申明 start -->
+    <bean id="dbEchartsChartConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.dbecharts.DbEchartsChartConvertor">
+        <property name="dbEchartsChartService" ref="dbEchartsChartService"/>
+        <property name="dbEchartsTotalService" ref="dbEchartsTotalService"/>
+    </bean>
+
+    <bean id="dbEchartsChartSetConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.dbecharts.DbEchartsChartSetConvertor">
+        <property name="dbEchartsChartSetService" ref="dbEchartsChartSetService"/>
+        <property name="dbEchartsTotalService" ref="dbEchartsTotalService"/>
+    </bean>
+
+    <bean id="dbEchartsTableConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.dbecharts.DbEchartsTableConvertor">
+        <property name="dbEchartsTableService" ref="dbEchartsTableService"/>
+        <property name="dbEchartsTotalService" ref="dbEchartsTotalService"/>
+    </bean>
+
+    <bean id="dbEchartsTemplateConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.dbecharts.DbEchartsTemplateConvertor">
+        <property name="dbEchartsTemplateService" ref="dbEchartsTemplateService"/>
+    </bean>
+
+    <bean id="modelingAppListviewConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingAppListviewConvertor">
+        <property name="modelingAppListviewService" ref="modelingAppListviewService"/>
+    </bean>
+
+    <bean id="modelingAppCollectionViewConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingAppCollectionViewConvertor">
+        <property name="modelingAppCollectionViewService" ref="modelingAppCollectionViewService"/>
+    </bean>
+
+    <bean id="modelingTreeViewConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingTreeViewConvertor">
+        <property name="modelingTreeViewService" ref="modelingTreeViewService"/>
+        <property name="relationHandler" ref="modelingTreeviewRelationHandler"/>
+    </bean>
+
+    <bean id="modelingMindMapConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingMindMapConvertor">
+        <property name="modelingMindMapService" ref="modelingMindMapService"/>
+        <property name="relationHandler" ref="modelingMindMapRelationHandler"/>
+    </bean>
+
+    <bean id="modelingAppViewConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingAppViewConvertor">
+        <property name="modelingAppViewService" ref="modelingAppViewService"/>
+        <property name="relationHandler" ref="modelingAppViewRelationHandler"/>
+    </bean>
+
+    <bean id="modelingImportConfigConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingImportConfigConvertor">
+        <property name="modelingImportConfigService" ref="modelingImportConfigService"/>
+        <property name="modelingAppModelService" ref="modelingAppModelService"/>
+    </bean>
+
+    <bean id="modelingAppCategoryConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.base.ModelingAppCategoryConvertor">
+        <property name="modelingAppCategoryService" ref="modelingAppCategoryService"/>
+        <property name="modelingApplicationService" ref="modelingApplicationService"/>
+    </bean>
+
+    <bean id="modelingAppFlowConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.base.ModelingAppFlowConvertor">
+        <property name="modelingAppFlowService" ref="modelingAppFlowService"/>
+        <property name="relationHandler" ref="modelingAppFlowRelationHandler"/>
+    </bean>
+
+    <bean id="modelingApplicationConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.base.ModelingApplicationConvertor">
+        <property name="modelingApplicationService" ref="modelingApplicationService"/>
+    </bean>
+
+    <bean id="modelingAppModelConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingAppModelConvertor">
+        <property name="modelingAppModelService" ref="modelingAppModelService"/>
+        <property name="sysModelingOperationService" ref="sysModelingOperationService"/>
+        <property name="modelingDbTableService" ref="modelingDbTableService"/>
+        <property name="relationHandler" ref="modelingAppModelRelationHandler"/>
+    </bean>
+
+    <bean id="modelingAppNavConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingAppNavConvertor">
+        <property name="modelingAppNavService" ref="modelingAppNavService"/>
+    </bean>
+
+    <bean id="modelingAppSpaceConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingAppSpaceConvertor">
+        <property name="modelingAppSpaceService" ref="modelingAppSpaceService"/>
+    </bean>
+
+    <bean id="modelingPortletCfgConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingPortletCfgConvertor">
+        <property name="modelingPortletCfgService" ref="modelingPortletCfgService"/>
+    </bean>
+
+    <bean id="sysModelingAuthRoleConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.SysModelingAuthRoleConvertor">
+        <property name="sysModelingAuthRoleService" ref="sysModelingAuthRoleService"/>
+    </bean>
+
+    <bean id="sysModelingBehaviorConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.SysModelingBehaviorConvertor">
+        <property name="sysModelingBehaviorService" ref="sysModelingBehaviorService"/>
+        <property name="relationHandler" ref="sysModelingBehaviorRelationHandler"/>
+    </bean>
+
+    <bean id="sysModelingOperationConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.SysModelingOperationConvertor">
+        <property name="sysModelingOperationService" ref="sysModelingOperationService"/>
+        <property name="relationHandler" ref="sysModelingOperationRelationHandler"/>
+    </bean>
+
+    <bean id="sysModelingRelationConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.SysModelingRelationConvertor">
+        <property name="sysModelingRelationService" ref="sysModelingRelationService"/>
+        <property name="relationHandler" ref="sysModelingRelationRelationHandler"/>
+    </bean>
+
+    <bean id="modelingPAMListViewConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingPAMListViewConvertor">
+        <property name="modelingPcAndMobileListViewService" ref="modelingPcAndMobileListViewService"/>
+    </bean>
+    <bean id="modelingPAMViewConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingPAMViewConvertor">
+        <property name="modelingPcAndMobileViewService" ref="modelingPcAndMobileViewService"/>
+    </bean>
+
+    <bean id="sysModelingRightConfigConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.SysModelingRightConfigConvertor">
+        <property name="sysModelingRightConfigService" ref="sysModelingRightConfigService"/>
+    </bean>
+
+    <bean id="sysModelingScenesConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.SysModelingScenesConvertor">
+        <property name="sysModelingScenesService" ref="sysModelingScenesService"/>
+        <property name="relationHandler" ref="sysModelingScenesRelationHandler"/>
+    </bean>
+
+    <bean id="modelingAppMobileListViewConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingAppMobileListViewConvertor">
+        <property name="modelingAppMobileListViewService" ref="modelingAppMobileListViewService"/>
+    </bean>
+
+    <bean id="modelingAppMobileConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingAppMobileConvertor">
+        <property name="modelingAppMobileService" ref="modelingAppMobileService"/>
+        <property name="relationHandler" ref="modelingAppMobileHandler"/>
+
+    </bean>
+
+    <bean id="modelingAppVersionConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.base.ModelingAppVersionConvertor">
+        <property name="modelingAppVersionService" ref="modelingAppVersionService"/>
+    </bean>
+    <bean id="modelingResourcePanelConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingResourcePanelConvertor">
+        <property name="modelingResourcePanelService" ref="modelingResourcePanelService"/>
+        <property name="relationHandler" ref="modelingResourcePanelRelationHandler"/>
+    </bean>
+    <bean id="modelingGanttConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingGanttConvertor">
+        <property name="modelingGanttService" ref="modelingGanttService"/>
+    </bean>
+    <bean id="modelingCalendarConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingCalendarConvertor">
+        <property name="modelingCalendarService" ref="modelingCalendarService"/>
+    </bean>
+    <bean id="modelingAutomaticFillConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingAutomaticFillConvertor">
+        <property name="modelingAutomaticFillService" ref="modelingAutomaticFillService"/>
+    </bean>
+    <bean id="ModelingAutoTimeoutStrategyConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingAutoTimeoutStrategyConvertor">
+        <property name="modelingAutoTimeoutStrategyService" ref="modelingAutoTimeoutStrategyService"/>
+    </bean>
+    <bean id="ModelingExternalShareConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingExternalShareConvertor">
+        <property name="modelingExternalShareService" ref="modelingExternalShareService"/>
+    </bean>
+    <bean id="modelingExternalQueryConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingExternalQueryConvertor">
+        <property name="modelingExternalQueryService" ref="modelingExternalQueryService"/>
+    </bean>
+    <bean id="ModelingAppDataValidateConvertor"
+          class="com.landray.kmss.sys.modeling.datainit.service.convertor.ModelingAppDataValidateConvertor">
+        <property name="modelingAppDataValidateService" ref="modelingAppDataValidateService"/>
+    </bean>
+    <!-- base模块各model转换器申明 end -->
+
+    <!-- 关联关系检查处理器 start-->
+    <bean id="modelingAppViewRelationHandler"
+          class="com.landray.kmss.sys.modeling.datainit.service.relation.ModelingAppViewRelationHandler">
+        <property name="modelingAppViewtabService" ref="modelingAppViewtabService"/>
+    </bean>
+
+    <bean id="sysModelingBehaviorRelationHandler"
+          class="com.landray.kmss.sys.modeling.datainit.service.relation.SysModelingBehaviorRelationHandler">
+        <property name="sysModelingBehaviorService" ref="sysModelingBehaviorService"/>
+    </bean>
+
+    <bean id="sysModelingOperationRelationHandler"
+          class="com.landray.kmss.sys.modeling.datainit.service.relation.SysModelingOperationRelationHandler">
+        <property name="sysModelingOperationService" ref="sysModelingOperationService"/>
+    </bean>
+
+    <bean id="sysModelingRelationRelationHandler"
+          class="com.landray.kmss.sys.modeling.datainit.service.relation.SysModelingRelationRelationHandler">
+        <property name="sysModelingRelationService" ref="sysModelingRelationService"/>
+    </bean>
+
+    <bean id="sysModelingScenesRelationHandler"
+          class="com.landray.kmss.sys.modeling.datainit.service.relation.SysModelingScenesRelationHandler">
+        <property name="sysModelingScenesService" ref="sysModelingScenesService"/>
+    </bean>
+
+    <bean id="modelingAppFlowRelationHandler"
+          class="com.landray.kmss.sys.modeling.datainit.service.relation.ModelingAppFlowRelationHandler">
+        <property name="modelingAppFlowService" ref="modelingAppFlowService"/>
+    </bean>
+    <bean id="modelingResourcePanelRelationHandler"
+          class="com.landray.kmss.sys.modeling.datainit.service.relation.ModelingResourcePanelRelationHandler">
+        <property name="modelingResourcePanelService" ref="modelingResourcePanelService"/>
+    </bean>
+    <bean id="modelingAppModelRelationHandler"
+          class="com.landray.kmss.sys.modeling.datainit.service.relation.ModelingAppModelRelationHandler">
+        <property name="modelingAppModelService" ref="modelingAppModelService"/>
+    </bean>
+    <bean id="modelingAppMobileHandler"
+          class="com.landray.kmss.sys.modeling.datainit.service.relation.ModelingAppMobileHandler">
+        <property name="modelingAppMobileService" ref="modelingAppMobileService"/>
+        <property name="modelingAppCollectionViewService" ref="modelingAppCollectionViewService"/>
+    </bean>
+    <bean id="modelingMindMapRelationHandler"
+          class="com.landray.kmss.sys.modeling.datainit.service.relation.ModelingMindMapRelationHandler">
+        <property name="modelingMindMapService" ref="modelingMindMapService"/>
+        <property name="modelingAppModelService" ref="modelingAppModelService"/>
+    </bean>
+    <bean id="modelingTreeviewRelationHandler"
+          class="com.landray.kmss.sys.modeling.datainit.service.relation.ModelingTreeviewRelationHandler">
+        <property name="modelingTreeViewService" ref="modelingTreeViewService"/>
+        <property name="modelingAppModelService" ref="modelingAppModelService"/>
+    </bean>
+
+    <!-- 关联关系检查处理器 end-->
+
+    <bean id="modelingDatainitXMLDataBean"
+          class="com.landray.kmss.sys.modeling.datainit.service.spring.ModelingDatainitXMLDataBean">
+        <property name="modelingAppDatainitService" ref="modelingAppDatainitService"/>
+    </bean>
+
+    <bean
+            id="modelingDatainitProcessService"
+            class="com.landray.kmss.sys.modeling.datainit.service.spring.ModelingDatainitProcessServiceImp">
+    </bean>
+
+    <!--历史遗留数据初始化类-->
+    <bean
+            id="modelingAppDatainitLegacyDataHandler"
+            class="com.landray.kmss.sys.modeling.datainit.service.spring.ModelingAppDatainitLegacyDataHandler">
+        <property name="modelingApplicationService" ref="modelingApplicationService"/>
+        <property name="modelingAppVersionService" ref="modelingAppVersionService"/>
+    </bean>
+
+    <!--    导入/应用安装日志日志 -->
+    <bean
+            id="modelingApplicationInstallLogDao"
+            class="com.landray.kmss.sys.modeling.datainit.mall.dao.hibernate.ModelingApplicationInstallLogDaoImp"
+            parent="KmssBaseDao">
+        <property
+                name="modelName"
+                value="com.landray.kmss.sys.modeling.datainit.mall.model.ModelingApplicationInstallLog"/>
+    </bean>
+    <bean
+            id="modelingApplicationInstallLogTarget"
+            class="com.landray.kmss.sys.modeling.datainit.mall.service.spring.ModelingApplicationInstallLogServiceImp"
+            parent="KmssBaseTarget">
+        <property name="baseDao" ref="modelingApplicationInstallLogDao"/>
+        <property name="modelingAppDatainitService" ref="modelingAppDatainitService"/>
+        <property name="sysAttMainService" ref="sysAttMainService"/>
+        <property name="modelingApplicationService" ref="modelingApplicationService"/>
+    </bean>
+    <bean
+            id="modelingApplicationInstallLogService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="modelingApplicationInstallLogTarget"/>
+        </property>
+    </bean>
+
+</beans>

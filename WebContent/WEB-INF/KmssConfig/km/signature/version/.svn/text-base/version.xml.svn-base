@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<version xmlns="http://www.example.org/version-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/version-config ../../../version.xsd">
+	<modifies>
+		<modify>
+			<description>#171494 修复 审批意见按照节点表格显示的时候，没有按照设置的样式显示</description>
+			<author>徐文辉</author>
+			<revision-time>2022-08-17</revision-time>
+			<baseline>V16.0.6.R.20220729</baseline>
+		</modify>
+		<modify>
+			<description>#159261 打印机制word书签打印，支持审批意见控件中的审批意见的打印</description>
+			<author>谭昌香</author>
+			<revision-time>2022-06-20</revision-time>
+			<baseline>V16.0.6.R.20220729</baseline>
+		</modify>
+		<modify>
+			<description>#166563 优化 兼容签章历史密码特殊字符</description>
+			<author>熊翅辉</author>
+			<revision-time>2022-06-09</revision-time>
+			<baseline>V16.0.6.R.20220729</baseline>
+		</modify>
+		<modify>
+			<description>#164857 修复 起草节点的审批意见没有显示</description>
+			<author>徐文辉</author>
+			<revision-time>2022-05-13</revision-time>
+			<baseline>V16.0.5.R.20220527</baseline>
+		</modify>
+		<modify>
+			<description>#163912 修复 签名出现多次重复</description>
+			<author>熊翅辉</author>
+			<revision-time>2022-04-25</revision-time>
+			<baseline>V16.0.5.R.20220527</baseline>
+		</modify>
+		<modify>
+			<description>#161074 修复 Postgres数据库查询电子签章异常</description>
+			<author>潘永辉</author>
+			<revision-time>2022-03-17</revision-time>
+			<baseline>V16.0.4.R.20220318</baseline>
+		</modify>
+		<modify>
+			<description>#161074 修复 Postgres数据库查询电子签章异常</description>
+			<author>潘永辉</author>
+			<revision-time>2022-03-17</revision-time>
+			<baseline>V16.0.4.R.20220318</baseline>
+		</modify>
+		<modify>
+			<description>#155551 修复 EKP低版本升级到高版本（比如V15升级到V16）,新增的必填字段，启动系统会导致新增字段未创建成功</description>
+			<author>魏泽钧</author>
+			<revision-time>2021-12-13</revision-time>
+			<relation>
+				<relation-module>core</relation-module>
+			</relation>
+			<baseline>V16.0.3.R.20211231</baseline>
+		</modify>
+		<modify>
+			<description>#155060 修复 新建签章设置密码，然后进行重置密码，进行使用的时候提示密码错误</description>
+			<author>潘永辉</author>
+			<revision-time>2021-11-29</revision-time>
+			<baseline>V16.0.3.R.20211231</baseline>
+		</modify>
+		<modify>
+			<description>#143347 优化 审批意见控件，要选择到嵌入式子流程的节点</description>
+			<author>王逍</author>
+			<revision-time>2021-07-30</revision-time>
+			<relation>
+				<relation-module>sys/lbpm</relation-module>
+				<relation-module>sys/lbpmservice</relation-module>
+			</relation>
+			<baseline>V16.0.1.R.20210910</baseline>
+		</modify>
+		<modify>
+			<description>#145497 修复 新建签章设置密码，然后进行重置密码，进行使用的时候提示密码错误</description>
+			<author>潘永辉</author>
+			<revision-time>2021-07-28</revision-time>
+			<baseline>V16.0.1.R.20210910</baseline>
+		</modify>
+		<modify>
+			<description>#141180 修复 公文环境无法使用正文盖章，获取不到数据</description>
+			<author>潘永辉</author>
+			<revision-time>2021-06-19</revision-time>
+			<baseline>V16.0.0.R.20210716</baseline>
+		</modify>
+		<modify>
+			<description>#140697 修复 SQL参数化</description>
+			<author>苏运彬</author>
+			<revision-time>2021-06-03</revision-time>
+			<baseline>V16.0.0.R.20210716</baseline>
+		</modify>
+		<modify>
+			<description>#137779 修复 签章页面存在sql注入和xss攻击的风险</description>
+			<author>谭昌香</author>
+			<revision-time>2021-04-10</revision-time>
+			<baseline>V16.0.0.B3.20210507</baseline>
+		</modify>
+		<modify>
+			<description>#136388 修复 签章新建（编辑）页xss漏洞</description>
+			<author>潘永辉</author>
+			<revision-time>2021-03-22</revision-time>
+			<baseline>V16.0.0.B3.20210507</baseline>
+		</modify>
+		<modify>
+			<description>#135134 修复 新建个人、单位签章，报错</description>
+			<author>潘永辉</author>
+			<revision-time>2021-03-11</revision-time>
+			<baseline>V16.0.0.B3.20210507</baseline>
+		</modify>
+		<modify>
+			<description>#133553 修复 签章管理密码重置使用加密传输</description>
+			<author>沈林玉</author>
+			<revision-time>2021-03-05</revision-time>
+			<baseline>V16.0.0.B2.20210305</baseline>
+		</modify>
+		<modify>
+			<description>#126840 修复 审批意见里的头像做隐藏设置开关，不然表单做了缩小处理，打印未做缩小处理</description>
+			<author>李文昌</author>
+			<revision-time>2020-11-25</revision-time>
+			<baseline>V16.0.0.B1.20201231</baseline>
+		</modify>
+		<modify>
+			<description>#122830 修复 当人员兼职岗位信息过多时，新建签章保存失败</description>
+			<author>潘永辉</author>
+			<revision-time>2020-10-26</revision-time>
+			<baseline>V15.5.0.B3.20201111</baseline>
+		</modify>
+		<modify>
+			<description>#115716 新增 蓝凌钉钉流程融合</description>
+			<author>严明镜</author>
+			<revision-time>2020-09-19</revision-time>
+			<baseline>V15.5.0.B2.20200930</baseline>
+		</modify>
+		<modify>
+			<description>#102036 新增 安证通集成</description>
+			<author>黄伟强</author>
+			<revision-time>2020-06-11</revision-time>
+			<baseline>V15.5.0.B1.20200710</baseline>
+		</modify>
+		<modify>
+			<description>#95491 修复 正文签章是输入错误或者正确，提示信息都显示的是中文</description>
+			<author>张成才</author>
+			<revision-time>2020-04-09</revision-time>
+			<baseline>V15.0.4.R.20200410</baseline>
+		</modify>
+		<modify>
+			<description>#94101 优化 进入模块，点击“后台配置”目录，请求的url需要显示在地址栏中</description>
+			<author>钟清学</author>
+			<revision-time>2020-02-15</revision-time>
+			<baseline>V15.0.4.R.20200410</baseline>
+		</modify>
+		<modify>
+			<description>#82561 修复 选择签章时，搜索后报错</description>
+			<author>黄泽凯</author>
+			<revision-time>2019-10-15</revision-time>
+			<baseline>V15.0.2.R.20191108</baseline>
+		</modify>
+		<modify>
+			<description>#80624 修复 签章管理引入了知识中心的代码</description>
+			<author>郑操辉</author>
+			<revision-time>2019-09-03</revision-time>
+			<baseline>V15.0.1.R.20190906</baseline>
+		</modify>
+		<modify>
+			<description>#76290 修复 修复安全漏洞</description>
+			<author>郑操辉</author>
+			<revision-time>2019-08-02</revision-time>
+			<baseline>V15.0.1.R.20190906</baseline>
+		</modify>
+		<modify>
+			<description>#77275 修复 个人设置中，我的电子签章显示不正确问题</description>
+			<author>朱湖强</author>
+			<revision-time>2019-07-22</revision-time>
+			<baseline>V15.0.1.R.20190906</baseline>
+		</modify>
+		<modify>
+			<description>#74366 修复 图片名字包含点导致签章无法加载问题</description>
+			<author>朱湖强</author>
+			<revision-time>2019-07-11</revision-time>
+			<baseline>V15.0.0.R.20190712</baseline>
+		</modify>
+		<modify>
+			<description>#70861 优化 工作交接明细列表添加按标题搜索功能</description>
+			<author>杨铮</author>
+			<revision-time>2019-07-06</revision-time>
+			<relation>
+				<relation-module>sys/handover</relation-module>
+			</relation>
+			<baseline>V15.0.0.R.20190712</baseline>
+		</modify>
+		<modify>
+			<description>#72054 优化 正文签章列表中不显示免密签章</description>
+			<author>蒋志广</author>
+			<revision-time>2019-05-07</revision-time>
+			<baseline>V15.0.0.R.20190712</baseline>
+		</modify>
+		<modify>
+			<description>#70937 修复 如果是授权给岗位，岗位人员在正文签章时无法选择到印章</description>
+			<author>蒋志广</author>
+			<revision-time>2019-04-23</revision-time>
+			<baseline>V15.0.0.R.20190712</baseline>
+		</modify>
+		<modify>
+			<description>#65428 新增 部署事项（业务）工作交接，交接字段为“授权用户”</description>
+			<author>潘永辉</author>
+			<revision-time>2019-04-09</revision-time>
+			<relation>
+				<relation-module>sys/handover</relation-module>
+			</relation>
+			<baseline>V15.0.0.B3.20190412</baseline>
+		</modify>
+		<modify>
+			<description>优化 统一升级系统Spring版本到3.2.18</description>
+			<author>陈进科</author>
+			<revision-time>2019-03-05</revision-time>
+			<relation>
+				<relation-module>core</relation-module>
+			</relation>
+			<baseline>V15.0.0.B3.20190412</baseline>
+		</modify>
+		<modify>
+			<description>#67558 修复 谷歌浏览器下政务公文正文签章时签章列表显示为空，ie浏览器正常</description>
+			<author>张成才</author>
+			<revision-time>2019-02-20</revision-time>
+			<baseline>V15.0.0.B3.20190412</baseline>
+		</modify>
+		<modify>
+			<description>#58455 优化 Word书签打印，支持打印表格化的审批记录</description>
+			<author>李文昌</author>
+			<revision-time>2019-01-16</revision-time>
+			<baseline>V15.0.0.B2.20190118</baseline>
+		</modify>
+		<modify>
+			<description>优化 审批意见展示控件，支持获取指定节点的某些审批人的意见</description>
+			<author>李文昌</author>
+			<revision-time>2018-11-06</revision-time>
+			<baseline>V15.0.0.B1.20181109</baseline>
+		</modify>
+		<modify>
+			<description>修复 当样式包含电子签名，审批意见不显示</description>
+			<author>李文昌</author>
+			<revision-time>2018-11-06</revision-time>
+			<baseline>V15.0.0.B1.20181109</baseline>
+		</modify>
+		<modify>
+			<description>优化 新地址本js重构</description>
+			<author>郑超</author>
+			<revision-time>2018-10-22</revision-time>
+			<relation>
+				<relation-module>core</relation-module>
+			</relation>
+			<baseline>V15.0.0.B1.20181109</baseline>
+		</modify>
+		<modify>
+			<description>优化 审批意见控件，增加按审批人的排序号进行排序</description>
+			<author>王逍</author>
+			<revision-time>2018-10-09</revision-time>
+			<relation>
+				<relation-module>sys/xform</relation-module>
+			</relation>
+			<baseline>V15.0.0.B1.20181109</baseline>
+		</modify>
+		<modify>
+			<description>修复 签章后台，不管是点个人签名还是单位印章，都显示全部</description>
+			<author>陈尉建</author>
+			<revision-time>2018-07-19</revision-time>
+			<baseline>V15.0.0.B1.20181109</baseline>
+		</modify>
+		<modify>
+			<description>新增 金格控件2015集成部署</description>
+			<author>张成才</author>
+			<revision-time>2018-07-04</revision-time>
+			<baseline>V14.0.1.R.20180706</baseline>
+		</modify>
+		<modify>
+			<description>修复 表单审批意见控件问题</description>
+			<author>王逍</author>
+			<revision-time>2018-06-26</revision-time>
+			<relation>
+				<relation-module>sys/lbpmservice</relation-module>
+			</relation>
+			<baseline>V14.0.1.R.20180706</baseline>
+		</modify>
+		<modify>
+			<description>优化 签章图片值支持上传可支持的的图片类型</description>
+			<author>朱湖强</author>
+			<revision-time>2018-04-28</revision-time>
+			<relation>
+				<relation-module>sys/attachment</relation-module>
+			</relation>
+			<baseline>V14.0.1.R.20180706</baseline>
+		</modify>
+		<modify>
+			<description>修复 V13.5审批意见控件，按节点展示（带节点表格），表格无法固定宽度，导致显示体验不好</description>
+			<author>王逍</author>
+			<revision-time>2018-04-28</revision-time>
+			<relation>
+				<relation-module>sys/xform</relation-module>
+			</relation>
+			<baseline>V14.0.1.R.20180706</baseline>
+		</modify>
+		<modify>
+			<description>修复 在列表选择多个签章进行置为无效操作无效</description>
+			<author>陈尉建</author>
+			<revision-time>2018-03-08</revision-time>
+			<baseline>V14.0.0.R.20180413</baseline>
+		</modify>
+		<modify>
+			<description>优化 审批意见展示控件补充签章模块支持展示起草节点的意见，节点配置支持选择起草节点</description>
+			<author>王逍</author>
+			<revision-time>2018-03-02</revision-time>
+			<baseline>V14.0.0.R.20180413</baseline>
+		</modify>
+		<modify>
+			<description>修复 表单审批意见控件起草人提取不到电子签名的问题</description>
+			<author>王逍</author>
+			<revision-time>2018-03-01</revision-time>
+			<relation>
+				<relation-module>sys/xform</relation-module>
+			</relation>
+			<baseline>V14.0.0.R.20180413</baseline>
+		</modify>
+		<modify>
+			<description>优化 自定义审批意见样式，查看页面没有和新建页面保持一致</description>
+			<author>王逍</author>
+			<revision-time>2018-01-11</revision-time>
+			<relation>
+				<relation-module>sys/lbpmservice</relation-module>
+			</relation>
+			<baseline>V14.0.0.B2.20180112</baseline>
+		</modify>
+		<modify>
+			<description>修复 复制流程，导致原有表单里面的电子签章意见重复显示</description>
+			<author>朱国荣</author>
+			<revision-time>2017-11-28</revision-time>
+			<baseline>V14.0.0.B2.20180112</baseline>
+		</modify>
+		<modify>
+			<description>修复 移动端，带节点表格的审批意见，展现方式中含有电子签章时，报错</description>
+			<author>王逍</author>
+			<revision-time>2017-11-24</revision-time>
+			<baseline>V14.0.0.B2.20180112</baseline>
+		</modify>
+		<modify>
+			<description>优化 地址本人员便捷选择，类似exchage\coremail邮件系统</description>
+			<author>郑超</author>
+			<revision-time>2017-11-08</revision-time>
+			<relation>
+				<relation-module>core</relation-module>
+			</relation>
+			<baseline>V14.0.0.B1.20171110</baseline>
+		</modify>
+		<modify>
+			<description>优化 流程意见中的附件建议增加全部下载功能</description>
+			<author>王逍</author>
+			<revision-time>2017-11-08</revision-time>
+			<baseline>V14.0.0.B1.20171110</baseline>
+		</modify>
+		<modify>
+			<description>修复 签章类型切换时，地址本选择问题</description>
+			<author>朱湖强</author>
+			<revision-time>2017-11-06</revision-time>
+			<baseline>V14.0.0.B1.20171110</baseline>
+		</modify>
+		<modify>
+			<description>优化 图片签章显示在表单和显示在审批意见样式不一致，显示在表单的时候，签章图片有被拉长</description>
+			<author>王逍</author>
+			<revision-time>2017-10-09</revision-time>
+			<baseline>V14.0.0.B1.20171110</baseline>
+		</modify>
+		<modify>
+			<description>优化 审批意见控件样式由用户自定义</description>
+			<author>王逍</author>
+			<revision-time>2017-08-25</revision-time>
+			<relation>
+				<relation-module>sys/xform</relation-module>
+			</relation>
+			<baseline>V13.5.0.R.20170915</baseline>
+		</modify>
+		<modify>
+			<description>修复 签章的筛选为多选时，同时选中是和否时进行筛选不起作用，单独筛选签章的有效性时正常，签章类型的多选筛选也有问题</description>
+			<author>张佳奇</author>
+			<revision-time>2017-05-24</revision-time>
+			<baseline>V13.5.0.B2.20170707</baseline>
+		</modify>
+		<modify>
+			<description>修复 后台签章路径显示问题</description>
+			<author>朱湖强</author>
+			<revision-time>2017-05-22</revision-time>
+			<baseline>V13.5.0.B2.20170707</baseline>
+		</modify>
+		<modify>
+			<description>优化 公文Word正文中加盖印章，调用的是金格控件的接口，在签章的下拉框中过滤png格式的图片章</description>
+			<author>张成才</author>
+			<revision-time>2017-04-17</revision-time>
+			<baseline>V13.5.0.B1.20170512</baseline>
+		</modify>
+		<modify>
+			<description>优化 左侧菜单增加选中效果</description>
+			<author>张建忠</author>
+			<revision-time>2017-04-12</revision-time>
+			<relation>
+				<relation-module>sys/ui</relation-module>
+			</relation>
+			<baseline>V13.5.0.B1.20170512</baseline>
+		</modify>
+		<modify>
+			<description>修复 电子印章，输入错误的密码点击盖章，没有报错提示</description>
+			<author>张成才</author>
+			<revision-time>2017-03-30</revision-time>
+			<baseline>V13.5.0.B1.20170512</baseline>
+		</modify>
+		<modify>
+			<description>优化 签章查看界面重置密码窗口，“确认密码”一行显示</description>
+			<author>张建忠</author>
+			<revision-time>2017-03-27</revision-time>
+			<baseline>V13.5.0.B1.20170512</baseline>
+		</modify>
+		<modify>
+			<description>优化 审批意见展示控件，意见中有手写签批的图片放置在左边，同流程审批样式</description>
+			<author>朱国荣</author>
+			<revision-time>2017-03-24</revision-time>
+			<relation>
+				<relation-module>sys/lbpmservice</relation-module>
+			</relation>
+			<baseline>V13.5.0.B1.20170512</baseline>
+		</modify>
+		<modify>
+			<description>修复 编辑签章，将免密修改成否，输入密码之后，点击提交提示操作失败，报非法字符</description>
+			<author>张建忠</author>
+			<revision-time>2017-03-20</revision-time>
+			<baseline>V13.5.0.B1.20170512</baseline>
+		</modify>
+		<modify>
+			<description>修复 应用中心下进入各个业务模块，中间帧的字体可随主题包样式</description>
+			<author>陈经纬</author>
+			<revision-time>2017-03-08</revision-time>
+			<baseline>V13.0.0.R.20170310</baseline>
+		</modify>
+		<modify>
+			<description>优化 图片上传提示信息</description>
+			<author>朱湖强</author>
+			<revision-time>2017-02-23</revision-time>
+			<baseline>V13.0.0.R.20170310</baseline>
+		</modify>
+		<modify>
+			<description>修复 给没授权过的用户新建签章，并设置为默认时报错</description>
+			<author>朱湖强</author>
+			<revision-time>2017-01-20</revision-time>
+			<baseline>V13.0.0.R.20170310</baseline>
+		</modify>
+		<modify>
+			<description>修复 管理员无法同时帮不同用户创建默认签章问题</description>
+			<author>朱湖强</author>
+			<revision-time>2017-01-11</revision-time>
+			<baseline>V13.0.0.R.20170310</baseline>
+		</modify>
+		<modify>
+			<description>优化 ie下图文按钮显示问题</description>
+			<author>朱湖强</author>
+			<revision-time>2017-01-06</revision-time>
+			<baseline>V13.0.0.R.20170310</baseline>
+		</modify>
+		<modify>
+			<description>优化 表单配置控件多语言</description>
+			<author>朱国荣</author>
+			<revision-time>2016-12-27</revision-time>
+			<baseline>V13.0.0.B3.20161230</baseline>
+		</modify>
+		<modify>
+			<description>优化 签章管理，禁用签章时弹出的提示信息未翻译</description>
+			<author>张佳奇</author>
+			<revision-time>2016-12-22</revision-time>
+			<relation>
+				<relation-module>core</relation-module>
+			</relation>
+			<baseline>V13.0.0.B3.20161230</baseline>
+		</modify>
+		<modify>
+			<description>修复 list列表页操作栏中的“删除”按钮调整命名为“批量删除”</description>
+			<author>潘永辉</author>
+			<revision-time>2016-10-20</revision-time>
+			<baseline>V13.0.0.B3.20161230</baseline>
+		</modify>
+		<modify>
+			<description>优化 二级页面中，当签章类型为单位印章时，不显示“默认签名”和“免密签名”字段</description>
+			<author>朱湖强</author>
+			<revision-time>2016-10-20</revision-time>
+			<baseline>V13.0.0.B3.20161230</baseline>
+		</modify>
+		<modify>
+			<description>优化 签章管理个人设置》我的电子签章list页面的【删除】按钮调整为【批量删除】</description>
+			<author>陈晓文</author>
+			<revision-time>2016-10-19</revision-time>
+			<baseline>V13.0.0.B3.20161230</baseline>
+		</modify>
+		<modify>
+			<description>优化 后台配置中心由“后台管理”角色控制</description>
+			<author>朱湖强</author>
+			<revision-time>2016-10-17</revision-time>
+			<baseline>V13.0.0.B3.20161230</baseline>
+		</modify>
+		<modify>
+			<description>新增 后台配置新UED及样式调整</description>
+			<author>崔文坚</author>
+			<revision-time>2016-09-21</revision-time>
+			<baseline>V13.0.0.B2.20160930</baseline>
+		</modify>
+		<modify>
+			<description>修复 免密签名和需要密码签名切换时，免密图片出不来问题</description>
+			<author>朱湖强</author>
+			<revision-time>2016-08-25</revision-time>
+			<baseline>V13.0.0.B2.20160930</baseline>
+		</modify>
+		<modify>
+			<description>修复 对签章操作“置为无效”时采用“置为已办”的效果，不打开新的页面</description>
+			<author>崔文坚</author>
+			<revision-time>2016-08-25</revision-time>
+			<baseline>V13.0.0.B2.20160930</baseline>
+		</modify>
+		<modify>
+			<description>修复 从公文模块新建签单和个人设置页面新建我的电子签章还是显示有类别</description>
+			<author>李启龙</author>
+			<revision-time>2016-08-25</revision-time>
+			<relation>
+				<relation-module>sys/lbpmservice</relation-module>
+			</relation>
+			<baseline>V13.0.0.B2.20160930</baseline>
+		</modify>
+		<modify>
+			<description>优化 去掉签章分类关联字段，签章对象增加自动签名，默认设置个人签名两个字段，并且在审批意见中自动获取个人签名，不用确认密码的动作</description>
+			<author>李启龙</author>
+			<revision-time>2016-08-25</revision-time>
+			<relation>
+				<relation-module>sys/lbpmservice</relation-module>
+			</relation>
+			<baseline>V13.0.0.B2.20160930</baseline>
+		</modify>
+		<modify>
+			<description>修复 表单中审批意见展示控件，对结束节点的实际处理人没有为null判断</description>
+			<author>朱国荣</author>
+			<revision-time>2016-08-23</revision-time>
+			<baseline>V13.0.0.B2.20160930</baseline>
+		</modify>
+		<modify>
+			<description>修复 审批意见展示控件过滤空意见，应该考虑移动端的 手写签批</description>
+			<author>朱国荣</author>
+			<revision-time>2016-08-09</revision-time>
+			<baseline>V13.0.0.B2.20160930</baseline>
+		</modify>
+		<modify>
+			<description>优化 帅选器的用户名改成创建者</description>
+			<author>李启龙</author>
+			<revision-time>2016-07-11</revision-time>
+			<baseline>V13.0.0.B2.20160930</baseline>
+		</modify>
+		<modify>
+			<description>修复 模块首页常用查询中点击授权我的，后台报错</description>
+			<author>李启龙</author>
+			<revision-time>2016-05-04</revision-time>
+			<baseline>V13.0.0.B2.20160930</baseline>
+		</modify>
+		<modify>
+			<description>优化 签章重置密码窗口，保存和取消按钮大小不一致，请统一</description>
+			<author>李启龙</author>
+			<revision-time>2016-05-04</revision-time>
+			<baseline>V13.0.0.B2.20160930</baseline>
+		</modify>
+		<modify>
+			<description>修复 新建签章主文档未过滤可使用者</description>
+			<author>李启龙</author>
+			<revision-time>2016-05-03</revision-time>
+			<baseline>V13.0.0.B2.20160930</baseline>
+		</modify>
+		<modify>
+			<description>修复 新建签章页面会生成一个文档fdid,保存后又生成了一个新fdid，保存后应该还是取原来的fdid</description>
+			<author>李启龙</author>
+			<revision-time>2016-05-03</revision-time>
+			<baseline>V13.0.0.B2.20160930</baseline>
+		</modify>
+		<modify>
+			<description>修复 签章图片把下面的发文单位和日期盖住</description>
+			<author>朱国荣</author>
+			<revision-time>2016-03-23</revision-time>
+			<relation>
+				<relation-module>km/imissive</relation-module>
+			</relation>
+			<baseline>V13.0.0.B1.20160429</baseline>
+		</modify>
+		<modify>
+			<description>修复 list列表的删除按钮点击没反应</description>
+			<author>李启龙</author>
+			<revision-time>2016-02-25</revision-time>
+			<baseline>V12.0.9.R.20160325</baseline>
+		</modify>
+		<modify>
+			<description>修复 审批意见展示控件，审批意见+签章+时间，当节点意见包含签章的时候，意见无法按照表格展示出来</description>
+			<author>朱国荣</author>
+			<revision-time>2016-01-15</revision-time>
+			<relation>
+				<relation-module>sys/xform</relation-module>
+			</relation>
+			<baseline>V12.0.9.R.20160325</baseline>
+		</modify>
+	</modifies>
+</version>

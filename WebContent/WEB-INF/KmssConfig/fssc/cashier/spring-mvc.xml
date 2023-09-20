@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/fssc/cashier/fssc_cashier_payment/fsscCashierPayment.do"
+		class="com.landray.kmss.fssc.cashier.actions.FsscCashierPaymentAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.cashier.forms.FsscCashierPaymentForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/fssc/cashier/fssc_cashier_payment/fsscCashierPayment_data.jsp" />
+				<entry
+					key="edit"
+					value="/fssc/cashier/fssc_cashier_payment/fsscCashierPayment_edit.jsp" />
+				<entry
+					key="view"
+					value="/fssc/cashier/fssc_cashier_payment/fsscCashierPayment_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/cashier/fssc_cashier_payment_detail/fsscCashierPaymentDetail.do"
+		class="com.landray.kmss.fssc.cashier.actions.FsscCashierPaymentDetailAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.cashier.forms.FsscCashierPaymentDetailForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/fssc/cashier/fssc_cashier_payment_detail/fsscCashierPaymentDetail_data.jsp" />
+				<entry
+					key="detailData"
+					value="/fssc/cashier/fssc_cashier_payment_detail/fsscCashierPaymentDetail_detailData.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/cashier/fssc_cashier_model_config/fsscCashierModelConfig.do"
+		class="com.landray.kmss.fssc.cashier.actions.FsscCashierModelConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.cashier.forms.FsscCashierModelConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/fssc/cashier/fssc_cashier_model_config/fsscCashierModelConfig_data.jsp" />
+				<entry
+					key="edit"
+					value="/fssc/cashier/fssc_cashier_model_config/fsscCashierModelConfig_edit.jsp" />
+				<entry
+					key="view"
+					value="/fssc/cashier/fssc_cashier_model_config/fsscCashierModelConfig_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/cashier/fssc_cashier_model_config/fsscCashierModelConfigData.do"
+		class="com.landray.kmss.fssc.cashier.actions.FsscCashierModelConfigDataAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.cashier.forms.FsscCashierModelConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="fdCashierPaymentModelConfig"
+					value="/fssc/cashier/fssc_cashier_model_config/fsscCashierModelConfig_dialog_fdCashierPaymentModelConfig.jsp" />
+				<entry
+					key="fdCategory"
+					value="/fssc/cashier/fssc_cashier_model_config/fsscCashierModelConfig_dialog_fdCategory.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/cashier/fssc_cashier_rule_config/fsscCashierRuleConfig.do"
+		class="com.landray.kmss.fssc.cashier.actions.FsscCashierRuleConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.cashier.forms.FsscCashierRuleConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/fssc/cashier/fssc_cashier_rule_config/fsscCashierRuleConfig_data.jsp" />
+				<entry
+					key="edit"
+					value="/fssc/cashier/fssc_cashier_rule_config/fsscCashierRuleConfig_edit.jsp" />
+				<entry
+					key="view"
+					value="/fssc/cashier/fssc_cashier_rule_config/fsscCashierRuleConfig_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		class="com.landray.kmss.fssc.cashier.actions.FsscCashierPortletAction"
+		parent="KmssBaseAction"
+		name="/fssc/cashier/fssc_cashier_portlet/fsscCashierPortle.do"
+		lazy-init="true">
+		<property name="forwards">
+			<map>
+				<entry key="listApproved"
+					   value="/fssc/cashier/fssc_cashier_portlet/fssc_cashier_pay.jsp" />
+				<entry key="listApproval"
+					   value="/fssc/cashier/fssc_cashier_portlet/fssc_cashier_to_pay.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

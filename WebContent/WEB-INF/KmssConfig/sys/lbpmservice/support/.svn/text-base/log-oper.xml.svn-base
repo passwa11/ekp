@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+    <logset>
+        <!-- 流程模板操作日志 -->
+        <oper id="lbpmTemplateOperLog" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmTemplate"
+            action="/sys/lbpmservice/support/lbpm_template/lbpmTemplate.do">
+            <query method="setDefault" logPoint="Base_UrlParam;Service_Update"
+            	messageKey="sys-lbpmservice-support:lbpmTemplate.fdIsDefault.button"/>
+            <query 
+                method="viewHistory"
+                logPoint="Base_UrlParam;Action_Find"
+                messageKey="button.view"/>
+            <query 
+                method="getTemplateRefCommon"
+                logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="sys-lbpmservice-support:lbpmTemplate.templateRefCommon"/>
+            <query 
+                method="doUpdateAuditor"
+                logPoint="Base_UrlParam;doUpdateAuditor"
+                messageKey="sys-lbpmservice-support:lbpmTemplate.updateAuditor.button"/>
+        </oper>
+        
+        <oper id="lbpmNodes2Excel" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmTemplate"
+            action="/sys/lbpmservice/support/lbpm_template/lbpmNodes2Excel.do">
+            <query 
+                method="doExportNodesExcel"
+                logPoint="Base_UrlParam;doExportNodesExcel"/>
+        </oper>
+         
+         <oper id="lbpmPrivileger" extends="lbpmTemplateOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmTemplate"
+            action="/sys/lbpmservice/support/lbpm_template/lbpmPrivileger.do">
+            <query 
+                method="doUpdatePrivileger"
+                logPoint="Base_UrlParam;doUpdatePrivileger"
+                messageKey="sys-lbpmservice-support:lbpmTemplate.updatePrivileger.button"/>
+        </oper>
+        <oper id="lbpmTemplateChangeHistory" extends="BaseOperLog"
+            action="/sys/lbpmservice/support/lbpm_template_change_history/lbpmTemplateChangeHistory.do"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmTemplateChangeHistory">
+        
+        </oper> 
+        <!-- 流程实例操作日志 -->
+        <oper id="lbpmProcessOperLog" desc="" extends="BaseOperLog"
+            model="*"
+            action="/sys/lbpmservice/support/lbpm_process/lbpmProcess.do">
+            <query 
+                method="updateByPanel"  
+                logPoint="Service_Update" 
+                messageKey="sys-lbpmservice-support:lbpm.process.status.processHandle"/>
+            <query method="saveDraft" logPoint="saveDraft" messageKey="button.savedraft"/>
+        </oper>
+         <oper id="lbpmUsageOperLog" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmUsage"
+            action="/sys/lbpmservice/support/lbpm_usage/lbpmUsage.do">
+            <query method="updateDefinePerson"  logPoint="Service_Update"
+           		messageKey="sys-lbpmservice:lbpmUsage.logOper.updateDefinePerson"/>
+        </oper>
+        <oper id="lbpmOperationsOperLog" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmOperations"
+            action="/sys/lbpmservice/support/lbpm_operations/lbpmOperations.do">
+        </oper>
+        <oper id="lbpmOperMainOperLog" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmOperMain"
+            action="/sys/lbpmservice/support/lbpm_oper_main/lbpmOperMain.do">
+        </oper>
+        
+        <oper id="SysLbpmPersonSetOperLog" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmPersonSet"
+            action="/sys/lbpmservice/support/person_set/SysLbpmPersonSet.do">
+            <query method="updateDefaultIdentity"  logPoint="updateDefaultIdentity"
+            	messageKey="sys-lbpmservice:SysLbpmPersonSet.logOper.updateDefaultIdentity"/>
+        </oper>
+        
+        <oper id="lbpmTemplateExportAndImportOperLog" desc="" extends="BaseOperLog"
+            model="*"
+            action="/sys/lbpmservice/support/lbpm_template_exportandimport/lbpmTemplateExportAndImport.do">
+            <query method="importDefinition"  logPoint="importDefinition"
+                messageKey="sys-lbpmservice:lbpmTemplate.import.title"/>
+            <query method="exportDefinition"  logPoint="exportDefinition"
+                messageKey="sys-lbpmservice:lbpmTemplate.export.button"/>
+        </oper>
+        <oper id="lbpmFollowOperLog" desc="" extends="BaseOperLog"
+            model="*"
+            action="/sys/lbpmservice/support/lbpm_follow/lbpmFollow.do">
+            <query method="recordFollow"  logPoint="recordFollow"
+                messageKey="sys-lbpmservice:table.lbpmFollow"/>
+            <query method="cancelFollow"  logPoint="cancelFollow"
+                messageKey="sys-lbpmservice:lbpmFollow.button.cancelFollow"/>
+        </oper>
+        
+        <oper id="lbpmAuditNote" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmAuditNote"
+            action="/sys/lbpmservice/support/lbpm_audit_note/lbpmAuditNote.do">
+            <query method="listNote"  logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="button.list"/>
+            <query method="listFlowLog"  logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="button.list"/>
+            <query method="updateAuditNote"  logPoint="Base_UrlParam;Service_Update"
+                messageKey="button.update"/>
+            <query method="viewHistory"  logPoint="Base_UrlParam;viewHistory"
+                messageKey="button.view"/>
+        </oper>
+        
+        <oper id="lbpmSimulationExampleServiceLog" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmSimulationExample"
+            action="/sys/lbpmservice/support/lbpm_simulation_exampleService/lbpmSimulationExampleService.do">
+            <query 
+                method="saveExample"
+                logPoint="Base_UrlParam;saveExample"
+                messageKey="sys-lbpmservice-support:lbpmFlowSimulation.save">
+            </query>
+            <query 
+                method="findList"
+                logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="button.list">
+            </query>
+            <query 
+                method="deleteExample"
+                logPoint="Base_UrlParam;deleteExample"
+                messageKey="sys-lbpmservice:lbpmFlowSimulation.delete">
+            </query>
+            <query 
+                method="queryExampleList|queryExampleByIds|queryExampleByPlanId"
+                logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="button.list">
+            </query>
+            
+        </oper>
+        
+        <oper id="lbpmSubFormActionLog" desc="" extends="BaseOperLog"
+            model="*"
+            action="/sys/lbpmservice/support/lbpmSubFormAction.do">
+        </oper>
+        <oper id="lbpmProcessRestartActionLog" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpm.engine.persistence.model.LbpmProcess"
+            action="/sys/lbpmservice/support/lbpmProcessRestartAction.do">
+            <query 
+                method="restartProcess"
+                logPoint="Base_UrlParam;restartProcess"
+                messageKey="sys-lbpmmonitor:button.process.restart">
+            </query>
+        </oper>
+        
+        <oper id="lbpmSimulationPlanRecordLog" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmSimulationPlanRecord"
+            action="/sys/lbpmservice/support/lbpm_simulation_plan_record/lbpmSimulationPlanRecord.do">
+            <query 
+                method="findListByPlanId"
+                logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="button.list">
+            </query>
+        </oper>
+        <oper id="lbpmSimulationExampleLog" desc="" extends="lbpmSimulationExampleServiceLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmSimulationExample"
+            action="/sys/lbpmservice/support/lbpmSimulationExample.do">
+        </oper>
+        <oper id="lbpmSimulationPlanLog" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmSimulationPlan"
+            action="/sys/lbpm/lbpm_simulation_plan/lbpmSimulationPlan.do">
+            <query 
+                method="savePlan"
+                logPoint="Base_UrlParam;Service_Add"
+                messageKey="button.save">
+            </query>
+            <query 
+                method="deletePlan"
+                logPoint="Base_UrlParam;Service_Delete"
+                messageKey="button.delete">
+            </query>
+            <query 
+                method="deleteAllPlan"
+                logPoint="Base_UrlParam;Service_Delete;Service_DeleteAll"
+                messageKey="button.deleteall">
+            </query>
+            <query 
+                method="findList"
+                logPoint="Base_UrlParam;findList;Action_FindAll"
+                messageKey="button.list">
+            </query>
+            <query 
+                method="queryExampleByPlanId"
+                logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="button.list">
+            </query>
+        </oper>
+        
+        <oper id="lbpmSimulationLogLog" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmSimulationLog"
+            action="/sys/lbpmservice/support/lbpm_simulation_log/lbpmSimulationLog.do">
+        </oper>
+        <oper id="lbpmSimulationNodeTestLogLog" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpmservice.support.model.LbpmSimulationNodeTestLog"
+            action="/sys/lbpmservice/support/lbpm_simulation_node_test_log/lbpmSimulationNodeTestLog.do">
+            <query 
+                method="findLogDetailByLogId|findLogDetailsByLogId|findPageByLogId"
+                logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="button.list">
+            </query>
+        </oper>
+        <oper id="lbpmHistoryWorkitemActionLog" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpm.engine.persistence.model.LbpmHistoryWorkitem"
+            action="/sys/lbpmservice/support/lbpmHistoryWorkitemAction.do">
+            <query 
+                method="findList"
+                logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="button.list">
+            </query>
+            <query 
+                method="updateIsLook"
+                logPoint="Base_UrlParam;updateIsLook"
+                messageKey="button.update">
+            </query>
+            <query 
+                method="press"
+                logPoint="Base_UrlParam;press"
+                model="com.landray.kmss.sys.lbpm.engine.persistence.model.LbpmWorkitem"
+                messageKey="sys-lbpmservice:lbpm.operation.drafter_press">
+            </query>
+            
+        </oper>
+        
+        <!-- 流程小工具（管理员工具箱） -->
+        <oper
+            id="lbpmCostTimeOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/lbpmservice/support/lbpm_cost_time/lbpmCostTime.do">
+            <query 
+                method="updateCostTimeData"
+                logPoint="Base_UrlParam"
+                messageKey="button.update">
+            </query>
+        </oper>
+        <oper
+            id="LbpmToolsOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/lbpmservice/support/LbpmToolsAction.do">
+            <query 
+                method="listFingerPrint"
+                logPoint="Base_UrlParam"
+                messageKey="button.list">
+            </query>
+            <query 
+                method="updateFingerPrint"
+                logPoint="Base_UrlParam"
+                messageKey="button.update">
+            </query>
+            <query 
+				method="listFacePrint"
+				logPoint="Base_UrlParam"
+				messageKey="button.list">
+			</query>
+			<query 
+				method="updateFingerPrint"
+				logPoint="Base_UrlParam"
+				messageKey="button.update">
+			</query>
+            <query 
+                method="listNodeName"
+                logPoint="Base_UrlParam"
+                messageKey="button.list">
+            </query>
+            <query 
+                method="updateNodeName"
+                logPoint="Base_UrlParam"
+                messageKey="button.update">
+            </query>
+            <query 
+                method="listNodeTimeout"
+                logPoint="Base_UrlParam"
+                messageKey="button.list">
+            </query>
+            <query 
+                method="updateNodeTimeout"
+                logPoint="Base_UrlParam"
+                messageKey="button.update">
+            </query>
+        </oper>
+    </logset>
+</log-oper>

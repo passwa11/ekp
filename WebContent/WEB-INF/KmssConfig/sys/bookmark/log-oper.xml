@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+
+		<oper id="sysBookmarkMainOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.bookmark.model.SysBookmarkMain" action="/sys/bookmark/sys_bookmark_main/sysBookmarkMain.do">
+			<!-- 暂未看到入口 -->
+			<!-- <query method="CheckBookedInAllCate" logPoint="Base_UrlParam" messageKey="sys-bookmark:sysBookmarkMain.checkBooked" 
+				/> -->
+
+			<!-- 暂未看到入口 -->
+			<!-- <query method="updateBookmarkAll" logPoint="updateBookmarkAll" messageKey="sys-bookmark:sysBookmarkMain.updateBookmarkAll" 
+				/> -->
+
+			<query method="portlet" logPoint="portlet"
+				messageKey="sys-bookmark:sysBookmarkMain.portlet" />
+
+			<!-- 个人中心重定向，现在无效 -->
+			<query method="editAll" logPoint="buildBookmarkAllJsonData"
+				messageKey="sys-bookmark:sysBookmarkMain.editAll" />
+
+			<!-- 检查是否收藏，PC端文档阅读页面 -->
+			<query method="CheckBooked" logPoint="Base_UrlParam"
+				messageKey="sys-bookmark:sysBookmarkMain.checkBooked" />
+
+			<!-- 分类转移 -->
+			<query method="setCategory" logPoint="setCategory"
+				messageKey="sys-bookmark:sysBookmarkMain.setCategory" />
+
+			<!-- 新建/更新收藏文档 -->
+			<query method="updateBookmark" logPoint="updateBookmark;buildBookmarkAllJsonData"
+				messageKey="sys-bookmark:sysBookmarkMain.updateBookmark" />
+
+			<!-- 新建/更新收藏分类 -->
+			<query method="updateCatogory" logPoint="updateCatogory;buildBookmarkAllJsonData"
+				messageKey="sys-bookmark:sysBookmarkMain.updateCatogory" />
+
+			<!-- 删除收藏分类 -->
+			<query method="deleteCategory" logPoint="Base_UrlParam;buildBookmarkAllJsonData"
+				messageKey="sys-bookmark:sysBookmarkMain.deleteCategory" />
+
+			<!-- 删除收藏日志 -->
+			<query method="deleteBookmark"
+				logPoint="Base_UrlParam;Service_Delete;buildBookmarkAllJsonData"
+				messageKey="sys-bookmark:sysBookmarkMain.deleteBookmark" />
+
+			<!-- 是否收藏过 -->
+			<query method="isBooked" logPoint="Base_UrlParam"
+				messageKey="sys-bookmark:sysBookmarkMain.isBooked" />
+
+		</oper>
+
+		<!-- 公共分类 -->
+		<oper id="sysBookmarkCategoryOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.bookmark.model.SysBookmarkPublicCategory"
+			action="/sys/bookmark/sys_bookmark_public_category/sysBookmarkPublicCategory.do">
+		</oper>
+
+	</logset>
+</log-oper>

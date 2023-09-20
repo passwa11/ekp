@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.km.archives.model.KmArchivesDetails" 
+        table="km_archives_details">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property 
+            name="fdAuthorityRange" 
+            column="fd_authority_range" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+        <property 
+            name="fdStatus" 
+            column="fd_status" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+        <property 
+            name="fdReturnDate" 
+            column="fd_return_date" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="fdRenewReturnDate" 
+            column="fd_renew_return_date" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="fdBorrower" 
+            column="fd_borrower_id" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="fdArchives" 
+            column="fd_archives_id" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="docMain" 
+            column="doc_main_id" 
+            update="true" 
+            insert="true"/>
+    </class>
+</hibernate-mapping>

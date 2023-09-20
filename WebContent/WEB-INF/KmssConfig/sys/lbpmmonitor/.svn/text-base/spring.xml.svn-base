@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="sysLbpmMonitorModuleTreeService"
+		class="com.landray.kmss.sys.lbpmmonitor.service.spring.SysLbpmMonitorModuleTreeService" />
+
+	<bean
+		id="sysLbpmMonitorFlowTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmmonitor.service.spring.SysLbpmMonitorFlowServiceImp">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+		<property name="processExecuteService">
+			<ref bean="lbpmProcessExecuteService" />
+		</property>
+		<property name="lbpmProcessService">
+			<ref bean="lbpmProcessService" />
+		</property>
+		<property name="sysCategoryMainService">
+			<ref bean="sysCategoryMainService" />
+		</property>
+		<property name="expecterLogService">
+			<ref bean="lbpmExpecterLogService" />
+		</property>
+		<property name="processServiceManager">
+			<ref bean="lbpmProcessServiceManager" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="accessManager">
+			<ref bean="accessManager" />
+		</property>
+		<property name="lbpmTemplateService">
+			<ref bean="lbpmTemplateService" />
+		</property>
+	</bean>
+	<bean
+		id="sysLbpmMonitorFlowService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysLbpmMonitorFlowTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="lbpmAnalysisConfigServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmmonitor.service.spring.LbpmAnalysisConfigServiceImpl">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+	</bean>
+	
+	<bean
+		id="lbpmAnalysisConfigService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="lbpmAnalysisConfigServiceTarget" />
+		</property>
+		
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop key="batchDeleteLbpmAnalysisConfig">PROPAGATION_REQUIRED</prop>
+				<prop key="batchSaveLbpmAnalysisConfig">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+		
+	</bean>
+	
+	<bean
+		id="sysLbpmMonitorPortletService"
+		class="com.landray.kmss.sys.lbpmmonitor.service.spring.SysLbpmMonitorPortletService">
+	</bean>
+	<bean
+		id="sysLbpmMonitorQueueTaskService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysLbpmMonitorQueueTaskTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysLbpmMonitorQueueTaskTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmmonitor.service.spring.SysLbpmMonitorQueueTaskServiceImp">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+		<property name="accessManager">
+			<ref bean="accessManager" />
+		</property>
+		<property name="flowQueueLock">
+			<ref bean="flowQueueLock" />
+		</property>
+		<property name="distributeLoader">
+			<ref bean="distributeLoader" />
+		</property>
+	</bean>
+	
+	<bean
+		id="interfacelogDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.sys.lbpmmonitor.dao.hibernate.InterfacelogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.lbpmmonitor.model.Interfacelog" />
+	</bean>
+
+	<bean
+		id="interfacelogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmmonitor.service.spring.InterfacelogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="interfacelogDao" />
+
+		</property>
+		<property name="accessManager">
+			<ref bean="accessManager" />
+		</property>
+	</bean>
+	<bean
+		id="interfacelogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="interfacelogTarget" />
+		</property>
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop key="add">PROPAGATION_REQUIRES_NEW</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/readlog/sys_read_log/sysReadLog.do"
+		class="com.landray.kmss.sys.readlog.actions.SysReadLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.readlog.forms.SysReadLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/readlog/sys_read_log/sysReadLog_view.jsp" />
+				<entry
+					key="viewReadLog"
+					value="/sys/readlog/sys_read_log/sysReadLog_viewReadLog.jsp" />
+				<entry
+					key="listdata"
+					value="/sys/readlog/sys_read_log/sysReadLog_listdata.jsp" />
+				<entry
+					key="listdata.4m"
+					value="/sys/readlog/mobile/list.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

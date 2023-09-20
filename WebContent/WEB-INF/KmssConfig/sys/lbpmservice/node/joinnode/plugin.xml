@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../plugin.xsd ">
+
+	<extension
+		point="com.landray.kmss.lbpm.engine.node">
+		<!-- 并行分支人工回收 -->
+		<item
+			name="taskType"
+			id="joinNodeTask">
+			<param
+				name="type"
+				value="joinNodeTask" />
+			<param
+				name="taskBehaviour"
+				value="joinNodeWorkitemBehaviourService" />
+			<param
+				name="taskDataAccess"
+				value="joinWorkitemDataAccess" />
+			<param
+				name="taskDesc"
+				value="joinNodeWorkitemDesc" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/workitem/workitem_common.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/workitem/workitem_common.jsp" />
+		</item>
+	</extension>
+
+	<extension
+		point="com.landray.kmss.lbpm.engine.operation">
+		<!-- 确认 人工回收分支 -->
+		<item
+			name="operation"
+			id="operation_handler_confirmconbranch">
+			<param
+				name="type"
+				value="handler_confirmconbranch" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-node-joinnode:lbpmOperations.fdOperType.processor.joinnode.confirmconbranch" />
+			<param
+				name="behaviour"
+				value="handlerConfirmconbranchBehaviour" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/node/joinnode/operation_handler_confirmconbranch.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/node/joinnode/operation_handler_confirmconbranch.jsp" />
+			<param
+				name="handlerType"
+				value="handler" />
+			<param
+				name="apiHelpPage"
+				value="" />
+			<param
+				name="binder"
+				value="handlerConbranchOperationBinder" />
+		</item>
+		<!-- 启动新分支 人工回收分支 -->
+		<item
+			name="operation"
+			id="operation_handler_restartconbranch">
+			<param
+				name="type"
+				value="handler_restartconbranch" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-node-joinnode:lbpmOperations.fdOperType.processor.joinnode.restartconbranch" />
+			<param
+				name="behaviour"
+				value="handlerRestartconbranchBehaviour" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/node/joinnode/operation_handler_restartconbranch.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/node/joinnode/operation_handler_restartconbranch.jsp" />
+			<param
+				name="handlerType"
+				value="handler" />
+			<param
+				name="apiHelpPage"
+				value="" />
+			<param
+				name="binder"
+				value="handlerConbranchOperationBinder" />
+		</item>
+		<!-- 取消指定分支 人工回收分支 -->
+		<item
+			name="operation"
+			id="operation_handler_cancelconbranch">
+			<param
+				name="type"
+				value="handler_cancelconbranch" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-node-joinnode:lbpmOperations.fdOperType.processor.joinnode.cancelconbranch" />
+			<param
+				name="behaviour"
+				value="handlerCancelconbranchBehaviour" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/node/joinnode/operation_handler_cancelconbranch.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/node/joinnode/operation_handler_cancelconbranch.jsp" />
+			<param
+				name="handlerType"
+				value="handler" />
+			<param
+				name="apiHelpPage"
+				value="" />
+			<param
+				name="binder"
+				value="handlerConbranchOperationBinder" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.lbpmservice.custom.notify" model="*">
+		<item name="customNotify">
+			<param name="nodeType" value="joinNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.conbranche}" />
+			<param name="messageKey" value="sys-lbpmservice-node-joinnode:lbpmProcess.joinnode.conbranche.notify.handler" />
+		</item>
+	</extension>
+</plugin>

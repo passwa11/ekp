@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+	<extension-point
+		id="com.landray.kmss.lbpm.authorize.scopetree.extend">
+		<item
+			name="data">
+			<param 
+				name="dataBean" 
+				kind="spring"
+				required="true"
+				basedOn="com.landray.kmss.sys.lbpmext.authorize.service.ILbpmAuthorizeScopeTreeExtendService">
+				<description>提供数据的服务</description>
+			</param>
+			<param 
+				name="modelName" 
+				kind="string">
+				<description>业务模块modelName，需要和flowDef的modelName一致</description>
+			</param>
+			<description>提供流程授权选择范围数据扩展</description>
+		</item>
+		<description>流程授权选择模块范围数据扩展，只支持按流程信息授权的方式</description>
+	</extension-point>
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<item
+			name="event">
+			<param
+				name="type"
+				value="authorizeResultsEvent" />
+			<param
+				name="messageKey"
+				value="sys-lbpmext-authorize:lbpm.eventType.authorizeResultsEvent" />
+			<param
+				name="monitors"
+				value="com.landray.kmss.sys.lbpmext.authorize.service.spring.AuthorizeResultsEvent" />
+			<param
+				name="display"
+				value="false" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.person.mobile.my">
+		<item name="config">
+			<param name="message" value="{sys-lbpmext-authorize:lbpmAuthorize.moduleName}" />
+			<param name="url" value="/sys/lbpmext/authorize/mobile/index.jsp" />
+		</item>
+	</extension>
+		<extension point="com.landray.kmss.sys.mobile.config">
+		<item name="info">
+			<param name="name" value="{sys-lbpmext-authorize:module.sys.lbpmext.authorize}" />
+			<param name="modelName" value="com.landray.kmss.sys.lbpmext.authorize.model.LbpmAuthorize" />
+			<param name="defaultUrl" value="/sys/lbpmext/authorize/mobile/nav.json" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-sys-lbpmext-authorize.js" />
+			<param name="targetFile" value="/sys/lbpmext/authorize/mobile/js/list/mui-sys-lbpmext-authorize.js" />
+			<param name="srcFold" value="/sys/lbpmext/authorize/mobile/js/list" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="mui-sys-lbpmext-authorize.css" />
+			<param name="targetFile" value="/sys/lbpmext/authorize/mobile/resource/css/index.css" />
+		</item>
+	</extension>	
+</plugin>

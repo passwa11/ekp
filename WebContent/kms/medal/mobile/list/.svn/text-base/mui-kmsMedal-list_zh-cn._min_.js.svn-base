@@ -1,0 +1,1 @@
+define([],function(){return{"kmsMedalMobile.list.page":"列表页","kmsMedalMobile.medal.get":"获得","kmsMedalMobile.has.no.medal":"还没有获得勋章","kmsMedalMobile.medal.disable":"失效","kmsMedalMobile.classifier":"枚","kmsMedalMobile.my.medal":"的勋章"}});

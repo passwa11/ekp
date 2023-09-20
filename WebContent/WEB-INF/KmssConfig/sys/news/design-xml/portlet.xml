@@ -1,0 +1,1398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root
+	xmlns="http://www.landray.com.cn/schema/lui"
+	xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+<!-- 最新新闻 -->
+	<portlet
+		id="sys.news.main.withAtt"
+		name="{sys-news:sysNewsMain.portlet.new}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.tablesimple.des}">
+		<source format="sys.ui.classic" type="AjaxXml">
+			<code>
+				<![CDATA[
+					{"url":"/sys/common/dataxml.jsp?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize}&type=!{type}&scope=!{scope}"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"企业年度评优，就“数”这一招狠","created":"2020-01-02","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"员工穿越戈壁活动心得分享","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"爱心图书角走进江西贫困小学","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"揭秘公司的数字化转型之道","created":"2020-01-02","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"打造一体化综合管理平台","created":"2020-01-02","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"美食节—此生唯美食不可辜负","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"每一位加班人都值得被关爱","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"儿童节爱心图书征集","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"公司元旦放假通知","created":"2019-12-25","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"广东2019年GDP超10.5万亿元，为首个破10万亿大关省份","created":"2019-12-24","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"教育行业的2019：兵荒马乱，变革新生","created":"2019-12-24","href":"#","catename":"公司新闻","creator":"郑操辉"},{"text":"2019党政机关与关键信息基础设施云服务安全论坛在京举行","created":"2019-12-23","href":"#","catename":"公司新闻","creator":"林宇超"},{"text":"人民日报评论员：推动不忘初心牢记使命制度落实落地 ","created":"2019-12-21","href":"#","catename":"公司新闻","creator":"林宇超"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.linkAddress}" key="type" kind="enumValue" default="main">
+			  {    "values":[{ "text":"{sys-news:sysNewsMain.portlet.mainDoc}", "value":"main" },{ "text":"{sys-news:sysNewsMain.portlet.attach}", "value":"att" }],
+	               "showType":"radio"
+                }
+			</var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="javascript:(function(){seajs.use(['sys/news/sys_news_ui/js/create'], function(create) { 
+							create.addDoc('!{cateid}');
+					 });})();"
+			    target="_self" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>
+	
+	<!-- 图片新闻，幻灯片 -->
+	<portlet
+		id="sys.news.main.withImg"
+		name="{sys-news:sysNewsMain.portlet.withImg}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.imageSlide.des}">
+		<source
+			format="sys.ui.slide"
+			type="AjaxXml">
+			<code>
+				<![CDATA[
+					{"url":"/sys/common/dataxml.jsp?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize}&type=pic&scope=!{scope}"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/sys/news/sys_news_pic2.jpg$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+		</vars>
+	</portlet>
+
+	<!-- 图文新闻，图片并排 -->
+	<portlet
+		id="sys.news.main.image"
+		name="{sys-news:sysNewsMain.portlet.image}"
+		module="{sys-news:news.moduleName}"
+		description="{portlet.list.desc3}">
+		<source
+			format="sys.ui.image"
+			type="AjaxXml">
+			<code>
+				<![CDATA[
+					{"url":"/sys/common/dataxml.jsp?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize}&type=pic&scope=!{scope}"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/sys/news/sys_news_pic4.jpg$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+		</vars>
+	</portlet>
+
+	<!-- 图文新闻 -->
+	<portlet
+		id="sys.news.main.imgAndText"
+		name="{sys-news:sysNewsMain.portlet.withImgAndText}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.imgAndText.des}">
+		<source
+			format="sys.ui.html"
+			type="AjaxText">
+			<code>
+			   <![CDATA[
+					{"url":"/sys/news/sys_news_ui/sysNewsMainPortletCombin.jsp?cateid=!{cateid}&rowsize_image=!{rowsize_image}&rowsize_text=!{rowsize_text}&rate=!{rate}&stretch=!{stretch}&showTitle=!{showTitle}&height=!{height}&showCreator=!{showCreator}&showCreated=!{showCreated}&showCate=!{showCate}&cateSize=!{cateSize}&newDay=!{newDay}&highlight=!{highlight}&target=!{target}&scope=!{scope}",
+					"formatKey":"html"
+					}
+			     ]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/sys/news/sys_news_pic5.jpg$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		   <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+            </var>
+		    <var name="{sys-news:sysNewsMain.portlet.numberOfImageNews}" key="rowsize_image" kind="rowsize"/>
+			<var name="{sys-news:sysNewsMain.portlet.numberOfTextNews}" key="rowsize_text" kind="rowsize"/>
+			<var name="{sys-news:sysNewsMain.portlet.rateOfImageNews}" key="rate" kind="int" default="50">
+			      {"help":"%"}
+		    </var>
+		    <var name="{sys-news:sysNewsMain.portlet.imageIsStretch}" key="stretch" kind="enumValue" default="true">
+		      {"values":[{ "text":"{sys-news:sysNewsMain.portlet.yes}", "value":"true" }],
+	               "showType":"checkbox"
+                }
+		    </var>
+		    <var name="{sys-news:sysNewsMain.portlet.imageShowTitle}" key="showTitle" kind="enumValue" default="true">
+		        {"values":[{ "text":"{sys-news:sysNewsMain.portlet.yes}", "value":"true" }],
+	               "showType":"checkbox"
+                }
+		    </var>
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var key="highlight" kind="enumValue" name="{sys-news:sysNewsMain.portlet.firstLineHighlight}">
+				{"values":[{"text":"{sys-news:sysNewsMain.portlet.yes}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showCreator" kind="enumValue" name="{sys-news:sysNewsMain.portlet.var.docCreator}" default="true">
+				{"values":[{"text":"{sys-news:sysNewsMain.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showCreated" kind="enumValue" name="{sys-news:sysNewsMain.docCreateTime}" default="true">
+				{"values":[{"text":"{sys-news:sysNewsMain.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showCate" kind="enumValue" name="{sys-news:news.template.info}" default="true">
+				{"values":[{"text":"{sys-news:sysNewsMain.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="cateSize" kind="int" name="{sys-news:sysNewsMain.portlet.categoryLimit}" default="0">
+				{"help":"{sys-news:sysNewsMain.portlet.categoryLimit.help}"}
+			</var>
+			<var key="newDay" kind="int" name="{sys-news:sysNewsMain.portlet.newIcon}" default="0">
+				{"help":"{sys-news:sysNewsMain.portlet.newIcon.help}"}
+			</var>
+			<var key="target" kind="enumType" name="{sys-news:sysNewsMain.portlet.targetWindow}" default="_blank">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+		</vars>
+			<operations>
+				 <operation
+					name="{operation.create}"
+					type="create"
+					href="javascript:(function(){seajs.use(['sys/news/sys_news_ui/js/create'], function(create) { 
+							create.addDoc('!{cateid}');
+					 });})();"
+			    	target="_self" />
+			    <operation
+					name="{operation.more}"
+					type="more"
+					href="/sys/news/?categoryId=!{cateid}"/>
+			</operations>
+	</portlet>
+	
+	<!-- 图片摘要 -->
+	<portlet
+		id="sys.news.main.imgAndDescription"
+		name="{sys-news:sysNewsMain.portlet.imgAndDescription}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.imgAndDescription.des}">
+		<source
+			format="sys.ui.classic.imageDesc"
+			type="AjaxText">
+			<code>
+			   <![CDATA[
+					{"url":"/sys/news/sys_news_ui/sysNewsMainPortletImageDesc.jsp?&width=!{width}&height=!{height}&cateid=!{cateid}&rowsize=!{rowsize}&scope=!{scope}&showCreator=!{showCreator}&showCreated=!{showCreated}&sumSize=!{sumSize}",
+					"formatKey":"html"
+					}
+			     ]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/sys/news/sys_news_pic3.jpg$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		   <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+            </var>
+            <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.image.width}" key="width" kind="int" default="200">
+			      {"help":"px"}
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.image.height}" key="height" kind="int" default="140">
+			      {"help":"px"}
+			</var>
+			<var key="showCreator" kind="enumValue" name="{sys-news:sysNewsMain.docCreatorId}" default="true">
+				{"values":[{"text":"{sys-news:sysNewsMain.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showCreated" kind="enumValue" name="{sys-news:sysNewsMain.docCreateTime}" default="true">
+				{"values":[{"text":"{sys-news:sysNewsMain.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="sumSize" kind="string" name="{sys-news:sysNewsMain.portlet.summaryLimit}" default="0">
+				{"help":"{sys-news:sysNewsMain.portlet.summaryLimit.help}"}
+			</var>
+	    </vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="javascript:(function(){seajs.use(['sys/news/sys_news_ui/js/create'], function(create) { 
+						create.addDoc('!{cateid}');
+				 });})();"
+		    	target="_self" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>
+	
+	<!-- 我的新闻 -->
+	<portlet
+		id="sys.news.main.MyNews"
+		name="{sys-news:sysNewsMain.portlet.mine}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.tableList.des}">
+		<source
+			format="sys.ui.listtable"
+			type="AjaxJson">
+			<code>
+			<![CDATA[
+			{"url":"/sys/news/sys_news_main/sysNewsMainPortlet.do?method=listPortlet&rowsize=!{rowsize}&myNews=!{myNews}&scope=!{scope}"}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"fdId"},{"title":"新闻名称","property":"docSubject","headerStyle":"text-align:left;min-width:100px"},{"title":"所属分类","property":"fdTemplate.fdName","headerStyle":"width80"},{"title":"阅读量","property":"docHits","headerStyle":"width40"},{"title":"发布时间","property":"docPublishTime","headerStyle":"width80"}],"datas":[[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">广东2019年GDP超10.5万亿元，为首个破10万亿大关省份</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"新闻资讯","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">99+</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-14","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">教育行业的2019：兵荒马乱，变革新生</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"行业新闻","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">20</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-14","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">人民日报评论员：推动不忘初心牢记使命制度落实落地</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"文化窗口","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">82</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-14","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">2019党政机关与关键信息基础设施云服务安全论坛在京举行</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"文华窗口","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">99+</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-14","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">揭秘公司的数字化转型之道</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"行业新闻","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">84</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-09","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">政务协同平台：让会议更简</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"行业新闻"},{"col":"docHits","value":"<font class=\"com_number\">53</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-09","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">企业年度评优，就“数”这一招狠</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"行业新闻","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">96</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-09","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">员工穿越戈壁活动心得分享</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"文化窗口","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">88</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-09","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">爱心图书角走进江西贫困小学</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"文化窗口","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">96</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-09","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">公司元旦放假通知</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"公司新闻","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">99+</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-09","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">广东2019年GDP超10.5万亿元，为首个破10万亿大关省份</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"广东新闻","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">99+</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-10","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">教育行业的2019：兵荒马乱，变革新生</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"教育新闻","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">99+</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-12","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">2019党政机关与关键信息基础设施云服务安全论坛在京举行</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"政务新闻","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">99+</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-16","styleClass":"width80"}],[{"col":"fdId","value":""},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" href=\"#\">人民日报评论员：推动不忘初心牢记使命制度落实落地</a>","style":"text-align:left;min-width:100px"},{"col":"fdTemplate.fdName","value":"社会新闻","styleClass":"width80"},{"col":"docHits","value":"<font class=\"com_number\">99+</font>","styleClass":"width40"},{"col":"docPublishTime","value":"2020-01-18","styleClass":"width80"}]]}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+      		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-news:sysNewsMain.portlet.mine}" key="myNews" kind="enumValue" default="myPublish">
+			  {    "values":[{ "text":"{sys-news:sysNewsMain.portlet.myPublish}", "value":"myPublish" },{ "text":"{sys-news:sysNewsMain.portlet.myEnv}", "value":"myEv" }],
+	               "showType":"radio"
+                }
+			</var>
+		</vars>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				href="/sys/news/sys_news_main/sysNewsMain.do?method=add" />    
+			<operation
+				name="{operation.more}"
+				type="more"
+			    href="/sys/news/"  />
+		</operations>
+	</portlet>
+	<!--图片摘要 -->
+	<portlet id="sys.news.main.imgListDescription"
+		     name="{sys-news:sysNewsMain.portlet.imgListDescription}"
+		     module="{sys-news:news.moduleName}"
+			 description="{sys-news:sysNewsMain.portlet.imgListDescription.des}">
+		<source
+			format="sys.ui.html"
+			type="AjaxText">
+			<code>
+			   <![CDATA[
+					{"url":"/sys/news/sys_news_ui/sysNewsMainPortletImgDescCombin.jsp?cateid=!{cateid}&rowsize_image=!{rowsize_image}&rowsize_text=!{rowsize_text}&rate=!{rate}&stretch=!{stretch}&newDay=!{newDay}&target=!{target}&scope=!{scope}",
+					"formatKey":"html"
+					}
+			     ]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/sys/news/sys_news_pic7.jpg$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		   <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+            </var>
+		    <var name="{sys-news:sysNewsMain.portlet.numberOfImageNews}" key="rowsize_image" kind="rowsize"/>
+			<var name="{sys-news:sysNewsMain.portlet.numberOfTextNews}" key="rowsize_text" kind="rowsize"/>
+			<var name="{sys-news:sysNewsMain.portlet.rateOfImageNews}" key="rate" kind="int" default="50">
+			      {"help":"%"}
+		    </var>
+		    <var name="{sys-news:sysNewsMain.portlet.imageIsStretch}" key="stretch" kind="enumValue" default="true">
+		      {"values":[{ "text":"{sys-news:sysNewsMain.portlet.yes}", "value":"true" }],
+	               "showType":"checkbox"
+                }
+		    </var>
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var key="newDay" kind="int" name="{sys-news:sysNewsMain.portlet.newIcon}" default="0">
+				{"help":"{sys-news:sysNewsMain.portlet.newIcon.help}"}
+			</var>
+			<var key="target" kind="enumType" name="{sys-news:sysNewsMain.portlet.targetWindow}" default="_blank">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+		</vars>
+			<operations>
+				 <operation
+					name="{operation.create}"
+					type="create"
+					href="javascript:(function(){seajs.use(['sys/news/sys_news_ui/js/create'], function(create) { 
+							create.addDoc('!{cateid}');
+					 });})();"
+			    	target="_self" />
+			    <operation
+					name="{operation.more}"
+					type="more"
+					href="/sys/news/?categoryId=!{cateid}"/>
+			</operations>
+	</portlet>
+	<!-- 图片摘要（首行图片） -->
+	<portlet
+		id="sys.news.main.imgAndDescriptionFirst"
+		name="{sys-news:sysNewsMain.portlet.imgAndDescriptionFirst}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.imgAndDescription.first}">
+		<source
+			format="sys.ui.classic.imageFirst"
+			type="AjaxXml">
+			<code>
+				<![CDATA[
+					{"url":"/sys/common/dataxml.jsp?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize}&type=firstPic&scope=!{scope}"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/sys/news/sys_news_pic1.jpg$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		   <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+            </var>
+            <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+	    </vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="javascript:(function(){seajs.use(['sys/news/sys_news_ui/js/create'], function(create) { 
+						create.addDoc('!{cateid}');
+				 });})();"
+			    target="_self"/>		
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>
+	<!-- 卡片新闻 -->
+	<portlet
+		id="sys.news.main.card"
+		name="{sys-news:sysNewsMain.portlet.card}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.card}">
+		<source format="sys.ui.card" type="AjaxXml">
+			<code>
+				<![CDATA[
+					{"url":"/sys/common/dataxml.jsp?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize}&type=!{type}&scope=!{scope}"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"公司元旦放假通知","created":"2019-12-25","href":"#","description":"元旦放假一天","catename":"公司新闻","creator":"张小雨","docreadcount":"999+"},{"text":"企业年度评优，就“数”这一招狠","description":"又是一年岁末时，各类年终考核、先进评比、优秀推选纷至沓来","created":"2020-01-02","href":"#","catename":"公司新闻","creator":"张小雨","docreadcount":"200"},{"text":"员工穿越戈壁活动心得分享","description":"去做，让改变发生！","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"520"},{"text":"爱心图书角走进江西贫困小学","created":"2020-01-02","description":" 希望每一本书都能为孩子开启一个新的世界","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"877"},{"text":"揭秘公司的数字化转型之道","created":"2020-01-02","description":" 推动整个行业数字化转型更顺畅","href":"#","catename":"公司新闻","creator":"张小雨","docreadcount":"361"},{"text":"打造一体化综合管理平台","created":"2020-01-02","description":"少开会、开短会，开管用","href":"#","catename":"公司新闻","creator":"张小雨","docreadcount":"687"},{"text":"美食节—此生唯美食不可辜负","created":"2020-01-02","description":"百种美味，一种幸福","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"999+"},{"text":"每一位加班人都值得被关爱","description":"今天是个好日子","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"999+"},{"text":"儿童节爱心图书征集","created":"2020-01-02","description":"凌基金走进贫困小学","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"999+"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize"/>
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.linkAddress}" key="type" kind="enumValue" default="main">
+			  {    "values":[{ "text":"{sys-news:sysNewsMain.portlet.mainDoc}", "value":"main" },{ "text":"{sys-news:sysNewsMain.portlet.attach}", "value":"att" }],
+	               "showType":"radio"
+                }
+			</var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="javascript:(function(){seajs.use(['sys/news/sys_news_ui/js/create'], function(create) { 
+							create.addDoc('!{cateid}');
+					 });})();"
+			    target="_self" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>
+	<!-- 图文摘要 -->
+	<portlet
+		id="sys.news.image.desc"
+		name="{sys-news:sysNewsMain.portlet.image.desc}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.image.desc}">
+		<source format="sys.ui.image.desc" type="AjaxXml">
+			<code>
+				<![CDATA[
+					{"url":"/sys/common/dataxml.jsp?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize}&type=image&scope=!{scope}"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/sys/news/sys_news_pic6.jpg$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize"/>
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="javascript:(function(){seajs.use(['sys/news/sys_news_ui/js/create'], function(create) { 
+							create.addDoc('!{cateid}');
+					 });})();"
+			    target="_self" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>
+	<!-- 附件新闻 -->
+	<portlet
+		id="sys.news.main.att"
+		name="{sys-news:sysNewsMain.portlet.att}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.tablesimple.des}">
+		<source format="sys.ui.classic" type="AjaxXml">
+			<code>
+				<![CDATA[
+					{"url":"/sys/common/dataxml.jsp?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize}&type=!{type}&scope=!{scope}"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"公司元旦放假通知","created":"2019-12-25","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"企业年度评优，就“数”这一招狠","created":"2020-01-02","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"员工穿越戈壁活动心得分享","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"爱心图书角走进江西贫困小学","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"揭秘公司的数字化转型之道","created":"2020-01-02","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"打造一体化综合管理平台","created":"2020-01-02","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"美食节—此生唯美食不可辜负","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"每一位加班人都值得被关爱","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"儿童节爱心图书征集","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"广东2019年GDP超10.5万亿元，为首个破10万亿大关省份","created":"2020-01-10","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"教育行业的2019：兵荒马乱，变革新生","created":"2020-01-12","href":"#","catename":"公司新闻","creator":"郑超超"},{"text":"2019党政机关与关键信息基础设施云服务安全论坛在京举行","created":"2020-01-18","href":"#","catename":"公司新闻","creator":"林宇超"},{"text":"人民日报评论员：推动不忘初心牢记使命制度落实落地 ","created":"2020-01-21","href":"#","catename":"公司新闻","creator":"林宇超"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.linkAddress}" key="type" kind="enumValue" default="att">
+			  	{  "values":[{ "text":"{sys-news:sysNewsMain.portlet.attach}", "value":"att" }],
+	               "showType":"radio"
+                }
+			</var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="javascript:(function(){seajs.use(['sys/news/sys_news_ui/js/create'], function(create) { 
+							create.addDoc('!{cateid}');
+					 });})();"
+			    target="_self" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>
+	
+<!-- 以下为支持cloud数据源 -->
+<!-- 最新新闻 -->
+	<portlet
+		id="sys.news.main.withAtt"
+		name="{sys-news:sysNewsMain.portlet.new}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.tablesimple.des}" forSystem="cloud" varExtend="sys.news.main.withAtt">
+		<source id="sys-news.mainWithAtt" format="data.list" type="xml">
+			<code>
+				<![CDATA[
+					{"url":"/data/sys-common/dataxml?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize}&type=!{type}&scope=!{scope}&isnew=!{isnew}"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"全力构建智慧组织，打造“中国制造”的新名片","href":"#","statusInfo":"置顶","statusColor":"warning","cateName":"市场新闻","cateHref":"#","creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":1562375640164,"icon":{"name":"new","type":"bitmap"}},{"text":"挑战不可能——2019蓝凌戈壁精英挑战赛圆满收官！","href":"#","cateName":"蓝文化","cateHref":"#","creator":{"fdId":"t00174742","fdName":"郑超","fdLoginName":"tangchao_kf"},"created":1560403200164,"icon":{"name":"new","type":"bitmap"}},{"text":"简单管、轻松教、高效学，蓝凌OA赋能企业人才快成长","href":"#","cateName":"市场新闻","cateHref":"#","creator":{"fdId":"t00174742","fdName":"周梓凡","fdLoginName":"tangchao_kf"},"created":1557132149164},{"text":"【专访】中国500强企业眼中的“数字化办公”","href":"#","cateName":"专题报道","cateHref":"#","creator":{"fdId":"t00174742","fdName":"杨建宏","fdLoginName":"tangchao_kf"},"created":1552290000164},{"text":"阿里钉钉无招：钉钉+蓝凌，共同赋能企业数字化转型","href":"#","cateName":"公司新闻","cateHref":"#","creator":{"fdId":"t00174742","fdName":"易荣烽","fdLoginName":"tangchao_kf"},"created":1547345700164},{"text":"拥抱变化，一路向前——2019蓝凌再出发","href":"#","cateName":"活动报道","cateHref":"#","creator":{"fdId":"t00174742","fdName":"张社丽","fdLoginName":"tangchao_kf"},"created":1547345700164}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{sys-ui:render.var.ishot}" key="isnew" kind="int" default="0">
+	           {"suffix":"{sys-ui:render.var.hotday.suffix}","help":"{sys-ui:render.var.hotday.help}"}
+	       </var>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.linkAddress}" key="type" kind="enumValue">
+			  {    "values":[{ "text":"{sys-news:sysNewsMain.allNews}", "value":"" },{ "text":"{sys-news:sysNewsMain.portlet.image}", "value":"pic" }],
+	               "showType":"radio"
+                }
+			</var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/sys/news/sys_news_main/sysNewsMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/sys/news/mobile/index.jsp#query=categoryId%3A!{cateid}"
+				href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>
+	<!-- 最新新闻 new-->
+	<portlet
+			id="sys.news.main.withAtt.new"
+			name="{sys-news:sysNewsMain.portlet.new.new}"
+			module="{sys-news:news.moduleName}"
+			description="{sys-news:sysNewsMain.portlet.tablesimple.des}" forSystem="cloud" varExtend="sys.news.main.withAtt">
+		<source id="sys-news.mainWithAtt.new" format="data.fieldlist" type="xml">
+			<code>
+				<![CDATA[
+					{"url":"/data/sys-common/dataxml?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize}&type=!{type}&scope=!{scope}&isnew=!{isnew}&isNew2=true"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"全力构建智慧组织，打造“中国制造”的新名片","href":"#","statusInfo":{"text":"置顶","color":"warning"},"cateName":{"text":"市场新闻","href":"#"},"creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":{"text":1562375640164},"icon":{"name":"new","type":"bitmap"}},{"text":"挑战不可能——2019蓝凌戈壁精英挑战赛圆满收官！","href":"#","cateName":{"text":"蓝文化","href":"#"},"creator":{"fdId":"t00174742","fdName":"郑超","fdLoginName":"tangchao_kf"},"created":{"text":1560403200164},"icon":{"name":"new","type":"bitmap"}},{"text":"简单管、轻松教、高效学，蓝凌OA赋能企业人才快成长","href":"#","cateName":{"text":"市场新闻","href":"#"},"creator":{"fdId":"t00174742","fdName":"周梓凡","fdLoginName":"tangchao_kf"},"created":{"text":1557132149164}},{"text":"【专访】中国500强企业眼中的“数字化办公”","href":"#","cateName":{"text":"专题报道","href":"#"},"creator":{"fdId":"t00174742","fdName":"杨建宏","fdLoginName":"tangchao_kf"},"created":{"text":1552290000164}},{"text":"阿里钉钉无招：钉钉+蓝凌，共同赋能企业数字化转型","href":"#","cateName":{"text":"公司新闻","href":"#"},"creator":{"fdId":"t00174742","fdName":"易荣烽","fdLoginName":"tangchao_kf"},"created":{"text":1547345700164}},{"text":"拥抱变化，一路向前——2019蓝凌再出发","href":"#","cateName":{"text":"活动报道","href":"#"},"creator":{"fdId":"t00174742","fdName":"张社丽","fdLoginName":"tangchao_kf"},"created":{"text":1547345700164}}]
+					]]>
+				</code>
+			</example>
+			<dataFields>
+				<code>
+					<![CDATA[
+						 {
+						   "base": {
+						   "label": "基础信息",
+						   "items": [
+							{"key": "statusInfo", "text": "状态"}
+						   ]
+						   },
+						   "info": {
+						   "label": "辅助信息",
+						   "items": [
+							{"key": "created", "text": "创建时间", "type": "timestamp"},
+							{"key": "creator", "text": "作者", "type": "person"},
+							{"key": "cateName", "text": "分类", "type": "string"}
+						   ]
+						   },
+						   "tag": {
+						   "label": "标签",
+						   "items": [
+							{"key": "icon", "text": "图标", "type": "icon"}
+						   ]
+						   }
+						 }
+					]]>
+				</code>
+			</dataFields>
+		</source>
+		<vars>
+			<var name="{sys-ui:render.var.ishot}" key="isnew" kind="int" default="0">
+				{"suffix":"{sys-ui:render.var.hotday.suffix}","help":"{sys-ui:render.var.hotday.help}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+				{"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+				{ "text":"{portlet.var.date.threeMonths}", "value":"season"},
+				{ "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+				{ "text":"{portlet.var.date.oneYear}", "value":"year"},
+				{ "text":"{portlet.var.date.unlimited}", "value":"no"}],
+				"showType":"radio"
+				}
+			</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.linkAddress}" key="type" kind="enumValue">
+				{    "values":[{ "text":"{sys-news:sysNewsMain.allNews}", "value":"" },{ "text":"{sys-news:sysNewsMain.portlet.image}", "value":"pic" }],
+				"showType":"radio"
+				}
+			</var>
+		</vars>
+		<operations>
+			<operation
+					name="{operation.create}"
+					type="create"
+					href="/sys/news/sys_news_main/sysNewsMain.do?method=add" />
+			<operation
+					name="{operation.more}"
+					type="more"
+					mobileHref="/sys/news/mobile/index.jsp#query=categoryId%3A!{cateid}"
+					href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>
+<!-- 图片新闻 -->
+	<portlet
+		id="sys.news.main.withImg"
+		name="{sys-news:sysNewsMain.portlet.withImg}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.imageSlide.des}"
+		forSystem="cloud" varExtend="sys.news.main.withImg">
+		<source
+			id="sys-news.mainWithImg"
+			format="data.image.rich"
+			type="xml">
+			<code>
+				<![CDATA[
+					{"url":"/data/sys-common/dataxml?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize}&type=!{type}&scope=!{scope}&isnew=!{isnew}"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"全力构建智慧组织，打造“中国制造”的新名片","image":"@resource/image/11.png","href":"#","statusInfo":"置顶","cateName":"市场新闻","statusColor":"warning","desc":"蓝凌OA，助力五百强企业构建智慧组织，让世界重新认识“中国制造”！","creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":1562375640164,"icon":{"name":"new","type":"bitmap"}},{"text":"挑战不可能——2019蓝凌戈壁精英挑战赛圆满收官！","image":"@resource/image/12.png","href":"#","cateName":"市场新闻","desc":"去做，让改变发生！烧不死的鸟是凤凰，你永远不会知道自己的极限在哪里！这是每个横穿戈壁的蓝凌人的收获，欢迎聆听他们的心声！","creator":{"fdId":"t00174742","fdName":"郑超","fdLoginName":"tangchao_kf"},"created":1560403200164,"icon":{"name":"new","type":"bitmap"}},{"text":"简单管、轻松教、高效学，蓝凌OA赋能企业人才快成长","image":"@resource/image/13.png","href":"#","cateName":"市场新闻","desc":"组织战略目标达成，人才是关键；其不仅直接推动战略落地，更事关各类资源配置的效率，通过持续不断的培训，弥补人才能力与目标的差距，是企业最重要的工作之一。","creator":{"fdId":"t00174742","fdName":"周梓凡","fdLoginName":"tangchao_kf"},"created":1557132149164},{"text":"【专访】中国500强企业眼中的“数字化办公”","image":"@resource/image/14.png","href":"#","cateName":"市场新闻","desc":"数字化办公平台是企业数字化转型的重要载体……","creator":{"fdId":"t00174742","fdName":"杨建宏","fdLoginName":"tangchao_kf"},"created":1552290000164},{"text":"阿里钉钉无招：钉钉+蓝凌，共同赋能企业数字化转型","image":"@resource/image/15.png","href":"#","desc":"钉钉和蓝凌，帮助更多的企业打造以数字化为核心的智慧组织，实现从IT时代迈向DT时代的管理变革。","creator":{"fdId":"t00174742","fdName":"易荣烽","fdLoginName":"tangchao_kf"},"created":1547345700164},{"text":"拥抱变化，一路向前——2019蓝凌再出发","image":"@resource/image/16.png","href":"#","cateName":"市场新闻","desc":"2019年1月11日，“拥抱变化，一路向前——蓝凌2019战略大会”盛大启幕！","creator":{"fdId":"t00174742","fdName":"张社丽","fdLoginName":"tangchao_kf"},"created":1547345700164}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{sys-ui:render.var.ishot}" key="isnew" kind="int" default="0">
+	           {"suffix":"{sys-ui:render.var.hotday.suffix}","help":"{sys-ui:render.var.hotday.help}"}
+	       </var>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.linkAddress}" key="type" kind="enumValue">
+			  {    "values":[{ "text":"{sys-news:sysNewsMain.allNews}", "value":"" },{ "text":"{sys-news:sysNewsMain.portlet.image}", "value":"pic" }],
+	               "showType":"radio"
+                }
+			</var>
+		</vars>
+	    <operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/sys/news/sys_news_main/sysNewsMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/sys/news/mobile/index.jsp#query=categoryId%3A!{cateid}"
+				href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>
+
+	<!-- 图片新闻 new-->
+	<portlet
+			id="sys.news.main.withImg.new"
+			name="{sys-news:sysNewsMain.portlet.withImg.new}"
+			module="{sys-news:news.moduleName}"
+			description="{sys-news:sysNewsMain.portlet.imageSlide.des}"
+			forSystem="cloud" varExtend="sys.news.main.withImg">
+		<source
+				id="sys-news.mainWithImg.new"
+				format="data.fieldimage"
+				type="xml">
+			<code>
+				<![CDATA[
+					{"url":"/data/sys-common/dataxml?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize}&type=!{type}&scope=!{scope}&isnew=!{isnew}&isNew2=true"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"全力构建智慧组织，打造“中国制造”的新名片","image":"@resource/image/11.png","href":"#","statusInfo":{"text":"置顶","color":"warning"},"cateName":{"text":"市场新闻","href":"#"},"desc":{"text":"蓝凌OA，助力五百强企业构建智慧组织，让世界重新认识“中国制造”！"},"creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":{"text":1562375640164},"icon":{"name":"new","type":"bitmap"}},{"text":"挑战不可能——2019蓝凌戈壁精英挑战赛圆满收官！","image":"@resource/image/12.png","href":"#","cateName":{"text":"市场新闻","href":"#"},"desc":{"text":"去做，让改变发生！烧不死的鸟是凤凰，你永远不会知道自己的极限在哪里！这是每个横穿戈壁的蓝凌人的收获，欢迎聆听他们的心声！"},"creator":{"fdId":"t00174742","fdName":"郑超","fdLoginName":"tangchao_kf"},"created":{"text":1560403200164},"icon":{"name":"new","type":"bitmap"}},{"text":"简单管、轻松教、高效学，蓝凌OA赋能企业人才快成长","image":"@resource/image/13.png","href":"#","cateName":{"text":"市场新闻","href":"#"},"desc":{"text":"组织战略目标达成，人才是关键；其不仅直接推动战略落地，更事关各类资源配置的效率，通过持续不断的培训，弥补人才能力与目标的差距，是企业最重要的工作之一。"},"creator":{"fdId":"t00174742","fdName":"周梓凡","fdLoginName":"tangchao_kf"},"created":{"text":1557132149164}},{"text":"【专访】中国500强企业眼中的“数字化办公”","image":"@resource/image/14.png","href":"#","cateName":{"text":"市场新闻","href":"#"},"desc":{"text":"数字化办公平台是企业数字化转型的重要载体……"},"creator":{"fdId":"t00174742","fdName":"杨建宏","fdLoginName":"tangchao_kf"},"created":{"text":1552290000164}},{"text":"阿里钉钉无招：钉钉+蓝凌，共同赋能企业数字化转型","image":"@resource/image/15.png","href":"#","desc":{"text":"钉钉和蓝凌，帮助更多的企业打造以数字化为核心的智慧组织，实现从IT时代迈向DT时代的管理变革。"},"creator":{"fdId":"t00174742","fdName":"易荣烽","fdLoginName":"tangchao_kf"},"created":{"text":1547345700164}},{"text":"拥抱变化，一路向前——2019蓝凌再出发","image":"@resource/image/16.png","href":"#","cateName":{"text":"市场新闻","href":"#"},"desc":{"text":"2019年1月11日，“拥抱变化，一路向前——蓝凌2019战略大会”盛大启幕！"},"creator":{"fdId":"t00174742","fdName":"张社丽","fdLoginName":"tangchao_kf"},"created":{"text":1547345700164}}]
+					]]>
+				</code>
+			</example>
+			<dataFields>
+				<code>
+					<![CDATA[
+					{
+					  "base": {
+						"label": "基础信息",
+						"items": [
+						  {"key": "image", "text": "图片"},
+						  {"key": "desc", "text": "摘要"},
+						  {"key": "statusInfo", "text": "状态"}
+						]
+					  },
+					  "info": {
+						"label": "辅助信息",
+						"items": [
+						  {"key": "created", "text": "创建时间", "type": "timestamp"},
+						  {"key": "creator", "text": "作者", "type": "person"},
+						  {"key": "cateName", "text": "分类", "type": "string"}
+						]
+					  },
+					  "tag": {
+						"label": "标签",
+						"items": [
+						  {"key": "icon", "text": "图标", "type": "icon"}
+						]
+					  }
+					}
+					]]>
+				</code>
+			</dataFields>
+		</source>
+		<vars>
+			<var name="{sys-ui:render.var.ishot}" key="isnew" kind="int" default="0">
+				{"suffix":"{sys-ui:render.var.hotday.suffix}","help":"{sys-ui:render.var.hotday.help}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+				{"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+				{ "text":"{portlet.var.date.threeMonths}", "value":"season"},
+				{ "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+				{ "text":"{portlet.var.date.oneYear}", "value":"year"},
+				{ "text":"{portlet.var.date.unlimited}", "value":"no"}],
+				"showType":"radio"
+				}
+
+			</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.linkAddress}" key="type" kind="enumValue">
+				{    "values":[{ "text":"{sys-news:sysNewsMain.allNews}", "value":"" },{ "text":"{sys-news:sysNewsMain.portlet.image}", "value":"pic" }],
+				"showType":"radio"
+				}
+			</var>
+		</vars>
+		<operations>
+			<operation
+					name="{operation.create}"
+					type="create"
+					href="/sys/news/sys_news_main/sysNewsMain.do?method=add" />
+			<operation
+					name="{operation.more}"
+					type="more"
+					mobileHref="/sys/news/mobile/index.jsp#query=categoryId%3A!{cateid}"
+					href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>
+
+	<!-- 摘要新闻 -->
+	<portlet
+		id="sys.news.main.imgAndDescription"
+		name="{sys-news:sysNewsMain.portlet.imgAndDescription}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.imgAndDescription.des}"
+		forSystem="cloud">
+		<source
+			id="sys-news.mainImgAndDescription"
+			format="data.list.rich"
+			type="xml">
+			<code>
+			   <![CDATA[
+					{
+					"url":"/data/sys-common/dataxml?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize}&scope=!{scope}&isnew=!{isnew}"
+					}
+			     ]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"全力构建智慧组织，打造“中国制造”的新名片","href":"#","statusInfo":"置顶","statusColor":"warning","cateName":"市场新闻","cateHref":"#","creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":1562375640164,"icon":{"name":"new","type":"bitmap"},"desc":"蓝凌OA，助力五百强企业构建智慧组织，让世界重新认识“中国制造”！","infos":[{"title":"586","href":"#","icon":{"name":"eye"}}]},{"text":"挑战不可能——2019蓝凌戈壁精英挑战赛圆满收官！","href":"#","cateName":"蓝文化","cateHref":"#","creator":{"fdId":"t00174742","fdName":"郑超","fdLoginName":"tangchao_kf"},"created":1560403200164,"icon":{"name":"new","type":"bitmap"},"desc":"去做，让改变发生！烧不死的鸟是凤凰，你永远不会知道自己的极限在哪里！这是每个横穿戈壁的蓝凌人的收获，欢迎聆听他们的心声！","infos":[{"title":"1503","href":"#","icon":{"name":"eye"}}]},{"text":"简单管、轻松教、高效学，蓝凌OA赋能企业人才快成长","href":"#","cateName":"市场新闻","cateHref":"#","creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":1557132149164,"desc":"组织战略目标达成，人才是关键；其不仅直接推动战略落地，更事关各类资源配置的效率，通过持续不断的培训，弥补人才能力与目标的差距，是企业最重要的工作之一。","infos":[{"title":"986","href":"#","icon":{"name":"eye"}}]},{"text":"【专访】中国500强企业眼中的“数字化办公”","href":"#","cateName":"专题报道","cateHref":"#","creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":1552290000164,"desc":"数字化办公平台是企业数字化转型的重要载体……","infos":[{"title":"485","href":"#","icon":{"name":"eye"}}]},{"text":"阿里钉钉无招：钉钉+蓝凌，共同赋能企业数字化转型","href":"#","cateName":"公司新闻","cateHref":"#","creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":1547345700164,"desc":"钉钉和蓝凌，帮助更多的企业打造以数字化为核心的智慧组织，实现从IT时代迈向DT时代的管理变革。","infos":[{"title":"685","href":"#","icon":{"name":"eye"}}]},{"text":"拥抱变化，一路向前——2019蓝凌再出发","href":"#","cateName":"活动报道","cateHref":"#","creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":1547345700164,"desc":"2019年1月11日，“拥抱变化，一路向前——蓝凌2019战略大会”盛大启幕！","infos":[{"title":"582","href":"#","icon":{"name":"eye"}}]}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+	       <var name="{sys-ui:render.var.ishot}" key="isnew" kind="int" default="0">
+	           {"suffix":"{sys-ui:render.var.hotday.suffix}","help":"{sys-ui:render.var.hotday.help}"}
+	       </var>
+	       <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+            </var>
+            <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+	    </vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/sys/news/sys_news_main/sysNewsMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/sys/news/mobile/index.jsp#query=categoryId%3A!{cateid}"
+				href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>	
+	<!--图片摘要 -->
+	<portlet id="sys.news.main.imgListDescription"
+		     name="{sys-news:sysNewsMain.portlet.imgListDescription}"
+		     module="{sys-news:news.moduleName}"
+			 description="{sys-news:sysNewsMain.portlet.imgListDescription.des}"
+			 forSystem="cloud">
+		<source
+			id="sys-news.mainImgListDescription"
+			format="data.image.rich"
+			type="xml">
+			<code>
+			   <![CDATA[
+					{
+					"url":"/data/sys-common/dataxml?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize_image}&type=!{type}&scope=!{scope}&isnew=!{isnew}"
+					}
+			     ]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"全力构建智慧组织，打造“中国制造”的新名片","image":"@resource/image/11.png","href":"#","statusInfo":"置顶","statusColor":"warning","cateName":"市场新闻","cateHref":"#","creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":1562375640164,"icon":{"name":"new","type":"bitmap"},"desc":"蓝凌OA，助力五百强企业构建智慧组织，让世界重新认识“中国制造”！","infos":[{"title":"586","href":"#","icon":{"name":"eye"}}]},{"text":"挑战不可能——2019蓝凌戈壁精英挑战赛圆满收官！","image":"@resource/image/12.png","href":"#","cateName":"蓝文化","cateHref":"#","creator":{"fdId":"t00174742","fdName":"郑超","fdLoginName":"tangchao_kf"},"created":1560403200164,"icon":{"name":"new","type":"bitmap"},"desc":"去做，让改变发生！烧不死的鸟是凤凰，你永远不会知道自己的极限在哪里！这是每个横穿戈壁的蓝凌人的收获，欢迎聆听他们的心声！","infos":[{"title":"1503","href":"#","icon":{"name":"eye"}}]},{"text":"简单管、轻松教、高效学，蓝凌OA赋能企业人才快成长","image":"@resource/image/13.png","href":"#","cateName":"市场新闻","cateHref":"#","creator":{"fdId":"t00174742","fdName":"周梓凡","fdLoginName":"tangchao_kf"},"created":1557132149164,"desc":"组织战略目标达成，人才是关键；其不仅直接推动战略落地，更事关各类资源配置的效率，通过持续不断的培训，弥补人才能力与目标的差距，是企业最重要的工作之一。","infos":[{"title":"986","href":"#","icon":{"name":"eye"}}]},{"text":"【专访】中国500强企业眼中的“数字化办公”","image":"@resource/image/14.png","href":"#","cateName":"专题报道","cateHref":"#","creator":{"fdId":"t00174742","fdName":"杨建宏","fdLoginName":"tangchao_kf"},"created":1552290000164,"desc":"数字化办公平台是企业数字化转型的重要载体……","infos":[{"title":"485","href":"#","icon":{"name":"eye"}}]},{"text":"阿里钉钉无招：钉钉+蓝凌，共同赋能企业数字化转型","image":"@resource/image/15.png","href":"#","cateName":"公司新闻","cateHref":"#","creator":{"fdId":"t00174742","fdName":"易荣烽","fdLoginName":"tangchao_kf"},"created":1547345700164,"desc":"钉钉和蓝凌，帮助更多的企业打造以数字化为核心的智慧组织，实现从IT时代迈向DT时代的管理变革。","infos":[{"title":"685","href":"#","icon":{"name":"eye"}}]},{"text":"拥抱变化，一路向前——2019蓝凌再出发","image":"@resource/image/16.png","href":"#","cateName":"活动报道","cateHref":"#","creator":{"fdId":"t00174742","fdName":"张社丽","fdLoginName":"tangchao_kf"},"created":1547345700164,"desc":"2019年1月11日，“拥抱变化，一路向前——蓝凌2019战略大会”盛大启幕！","infos":[{"title":"582","href":"#","icon":{"name":"eye"}}]}]	
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+	       <var name="{sys-ui:render.var.ishot}" key="isnew" kind="int" default="0">
+	           {"suffix":"{sys-ui:render.var.hotday.suffix}","help":"{sys-ui:render.var.hotday.help}"}
+	       </var>
+	       <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+            </var>
+		    <var name="{sys-news:sysNewsMain.portlet.numberOfImageNews}" key="rowsize_image" kind="rowsize"/>
+		    <var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.linkAddress}" key="type" kind="enumValue">
+			  {    "values":[{ "text":"{sys-news:sysNewsMain.allNews}", "value":"" },{ "text":"{sys-news:sysNewsMain.portlet.image}", "value":"pic" }],
+	               "showType":"radio"
+                }
+			</var>
+	    </vars>
+		<operations>
+			 <operation
+				name="{operation.create}"
+				type="create"
+				href="/sys/news/sys_news_main/sysNewsMain.do?method=add" />
+		    <operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/sys/news/mobile/index.jsp#query=categoryId%3A!{cateid}"
+				href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>
+
+	<!--图片摘要 new-->
+	<portlet id="sys.news.main.imgListDescription.new"
+			 name="{sys-news:sysNewsMain.portlet.imgListDescription}"
+			 module="{sys-news:news.moduleName}"
+			 description="{sys-news:sysNewsMain.portlet.imgListDescription.des}"
+			 forSystem="cloud">
+		<source
+				id="sys-news.mainImgListDescription.new"
+				format="data.fieldimage"
+				type="xml">
+			<code>
+				<![CDATA[
+					{
+					"url":"/data/sys-common/dataxml?s_bean=sysNewsMainPortletService&cateid=!{cateid}&rowsize=!{rowsize_image}&type=!{type}&scope=!{scope}&isnew=!{isnew}&isNew2=true"
+					}
+			     ]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[{"text":"全力构建智慧组织，打造“中国制造”的新名片","image":"@resource/image/11.png","href":"#","statusInfo":{"text":"置顶","color":"warning"},"cateName":{"text":"市场新闻","href":"#"},"creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":{"text":1562375640164},"icon":{"name":"new","type":"bitmap"},"desc":{"text":"蓝凌OA，助力五百强企业构建智慧组织，让世界重新认识“中国制造”！"},"infos":[{"title":"586","href":"#","icon":{"name":"eye"}}]},{"text":"挑战不可能——2019蓝凌戈壁精英挑战赛圆满收官！","image":"@resource/image/12.png","href":"#","cateName":{"text":"蓝文化","href":"#"},"creator":{"fdId":"t00174742","fdName":"郑超","fdLoginName":"tangchao_kf"},"created":{"text":1560403200164},"icon":{"name":"new","type":"bitmap"},"desc":{"text":"去做，让改变发生！烧不死的鸟是凤凰，你永远不会知道自己的极限在哪里！这是每个横穿戈壁的蓝凌人的收获，欢迎聆听他们的心声！"},"infos":[{"title":"1503","href":"#","icon":{"name":"eye"}}]},{"text":"简单管、轻松教、高效学，蓝凌OA赋能企业人才快成长","image":"@resource/image/13.png","href":"#","cateName":{"text":"市场新闻","href":"#"},"creator":{"fdId":"t00174742","fdName":"周梓凡","fdLoginName":"tangchao_kf"},"created":{"text":1557132149164},"desc":{"text":"组织战略目标达成，人才是关键；其不仅直接推动战略落地，更事关各类资源配置的效率，通过持续不断的培训，弥补人才能力与目标的差距，是企业最重要的工作之一。"},"infos":[{"title":"986","href":"#","icon":{"name":"eye"}}]},{"text":"【专访】中国500强企业眼中的“数字化办公”","image":"@resource/image/14.png","href":"#","cateName":{"text":"专题报道","href":"#"},"creator":{"fdId":"t00174742","fdName":"杨建宏","fdLoginName":"tangchao_kf"},"created":{"text":1552290000164},"desc":{"text":"数字化办公平台是企业数字化转型的重要载体……"},"infos":[{"title":"485","href":"#","icon":{"name":"eye"}}]},{"text":"阿里钉钉无招：钉钉+蓝凌，共同赋能企业数字化转型","image":"@resource/image/15.png","href":"#","cateName":{"text":"公司新闻","href":"#"},"creator":{"fdId":"t00174742","fdName":"易荣烽","fdLoginName":"tangchao_kf"},"created":{"text":1547345700164},"desc":{"text":"钉钉和蓝凌，帮助更多的企业打造以数字化为核心的智慧组织，实现从IT时代迈向DT时代的管理变革。"},"infos":[{"title":"685","href":"#","icon":{"name":"eye"}}]},{"text":"拥抱变化，一路向前——2019蓝凌再出发","image":"@resource/image/16.png","href":"#","cateName":{"text":"活动报道","href":"#"},"creator":{"fdId":"t00174742","fdName":"张社丽","fdLoginName":"tangchao_kf"},"created":{"text":1547345700164},"desc":{"text":"2019年1月11日，“拥抱变化，一路向前——蓝凌2019战略大会”盛大启幕！"},"infos":[{"title":"582","href":"#","icon":{"name":"eye"}}]}]
+					]]>
+				</code>
+			</example>
+			<dataFields>
+				<code>
+					<![CDATA[
+						 {
+						   "base": {
+						   "label": "基础信息",
+						   "items": [
+							{"key": "desc", "text": "摘要"},
+							{"key": "statusInfo", "text": "状态"}
+						   ]
+						   },
+						   "info": {
+						   "label": "辅助信息",
+						   "items": [
+							{"key": "created", "text": "创建时间", "type": "timestamp"},
+							{"key": "creator", "text": "作者", "type": "person"},
+							{"key": "cateName", "text": "分类", "type": "string"}
+						   ]
+						   },
+						   "tag": {
+						   "label": "标签",
+						   "items": [
+							{"key": "icon", "text": "图标", "type": "icon"}
+						   ]
+						   }
+						 }
+					]]>
+				</code>
+			</dataFields>
+		</source>
+		<vars>
+			<var name="{sys-ui:render.var.ishot}" key="isnew" kind="int" default="0">
+				{"suffix":"{sys-ui:render.var.hotday.suffix}","help":"{sys-ui:render.var.hotday.help}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+				{"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+				{ "text":"{portlet.var.date.threeMonths}", "value":"season"},
+				{ "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+				{ "text":"{portlet.var.date.oneYear}", "value":"year"},
+				{ "text":"{portlet.var.date.unlimited}", "value":"no"}],
+				"showType":"radio"
+				}
+
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.numberOfImageNews}" key="rowsize_image" kind="rowsize"/>
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.linkAddress}" key="type" kind="enumValue">
+				{    "values":[{ "text":"{sys-news:sysNewsMain.allNews}", "value":"" },{ "text":"{sys-news:sysNewsMain.portlet.image}", "value":"pic" }],
+				"showType":"radio"
+				}
+			</var>
+		</vars>
+		<operations>
+			<operation
+					name="{operation.create}"
+					type="create"
+					href="/sys/news/sys_news_main/sysNewsMain.do?method=add" />
+			<operation
+					name="{operation.more}"
+					type="more"
+					mobileHref="/sys/news/mobile/index.jsp#query=categoryId%3A!{cateid}"
+					href="/sys/news/?categoryId=!{cateid}"/>
+		</operations>
+	</portlet>
+
+
+	<!-- 匿名门户 start -->
+	<!-- 最新匿名新闻 -->
+	<portlet
+		id="sys.news.main.withAtt.anonym"
+	    name="{sys-news:sysNewsMain.portlet.new}"
+	    module="{sys-news:news.moduleName}"
+	    anonymous="true"
+	    description="{sys-news:sysNewsMain.portlet.tablesimple.des}">
+		<source format="sys.ui.classic" type="AjaxJson">
+			<code>
+		        <![CDATA[
+		          {"url":"/sys/anonym/sysAnonymData.do?method=dataList&formatKey=classicRich&fdCategoryId=!{cateid}&fdModelName=com.landray.kmss.sys.news.model.SysNewsMain&rowsize=!{rowsize}&scope=!{scope}&ordertype=down&orderby=sysAnonymCommon.docPublishTime"}
+		        ]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"企业年度评优，就“数”这一招狠","created":"2020-01-02","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"员工穿越戈壁活动心得分享","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"爱心图书角走进江西贫困小学","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"揭秘公司的数字化转型之道","created":"2020-01-02","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"打造一体化综合管理平台","created":"2020-01-02","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"美食节—此生唯美食不可辜负","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"每一位加班人都值得被关爱","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"儿童节爱心图书征集","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨"},{"text":"公司元旦放假通知","created":"2019-12-25","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"广东2019年GDP超10.5万亿元，为首个破10万亿大关省份","created":"2019-12-24","href":"#","catename":"公司新闻","creator":"张小雨"},{"text":"教育行业的2019：兵荒马乱，变革新生","created":"2019-12-24","href":"#","catename":"公司新闻","creator":"郑操辉"},{"text":"2019党政机关与关键信息基础设施云服务安全论坛在京举行","created":"2019-12-23","href":"#","catename":"公司新闻","creator":"林宇超"},{"text":"人民日报评论员：推动不忘初心牢记使命制度落实落地 ","created":"2019-12-21","href":"#","catename":"公司新闻","creator":"林宇超"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+                          { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+                          { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+                          { "text":"{portlet.var.date.oneYear}", "value":"year"},
+                          { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+                "showType":"radio"
+                }
+			</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+	     	<var name="{sys-anonym:table.sysAnonymCate}" key="cateid" kind="dialogJs" >
+		    	{"jsp":"/sys/anonym/sys_anonym_cate/selectCate.jsp?modelName=com.landray.kmss.sys.news.model.SysNewsMain","help":""}
+		    </var>
+		</vars>
+	    <operations>
+			<operation
+		        name="{operation.more}"
+		        type="more"
+		        href="/sys/anonym/dataview/dataPage.jsp?fdCategoryId=!{cateid}&amp;fdModelName=com.landray.kmss.sys.news.model.SysNewsMain&amp;ordertype=down&amp;orderby=sysAnonymCommon.docCreateTime"/>
+		</operations>
+	</portlet>
+	
+	<!-- 图片新闻，幻灯片 -->
+	<portlet
+		id="sys.news.main.withImg.anonym"
+		name="{sys-news:sysNewsMain.portlet.withImg}"
+		module="{sys-news:news.moduleName}"
+		anonymous="true"
+		description="{sys-news:sysNewsMain.portlet.imageSlide.des}">
+		<source
+			format="sys.ui.slide"
+			type="AjaxJson">
+			<code>
+				<![CDATA[
+					{"url":"/sys/anonym/sysAnonymData.do?method=dataList&formatKey=image&fdCategoryId=!{cateid}&fdModelName=com.landray.kmss.sys.news.model.SysNewsMain&rowsize=!{rowsize}&scope=!{scope}&ordertype=down&orderby=sysAnonymCommon.docPublishTime"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/sys/news/sys_news_pic2.jpg$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-anonym:table.sysAnonymCate}" key="cateid" kind="dialogJs" >
+		    	{"jsp":"/sys/anonym/sys_anonym_cate/selectCate.jsp?modelName=com.landray.kmss.sys.news.model.SysNewsMain","help":""}
+		    </var>
+		</vars>
+	</portlet>
+	
+	<portlet
+		id="sys.news.main.card.anonym"
+		name="卡片新闻"
+		module="{sys-news:news.moduleName}"
+		anonymous="true"
+		description="卡片新闻">
+		<source format="sys.ui.card" type="AjaxJson">
+			<code>
+				<![CDATA[
+					{"url":"/sys/anonym/sysAnonymData.do?method=dataList&formatKey=classicRich&fdCategoryId=!{cateid}&fdModelName=com.landray.kmss.sys.news.model.SysNewsMain&rowsize=!{rowsize}&scope=!{scope}&ordertype=down&orderby=sysAnonymCommon.docPublishTime"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"公司元旦放假通知","created":"2019-12-25","href":"#","description":"元旦放假一天","catename":"公司新闻","creator":"张小雨","docreadcount":"999+"},{"text":"企业年度评优，就“数”这一招狠","description":"又是一年岁末时，各类年终考核、先进评比、优秀推选纷至沓来","created":"2020-01-02","href":"#","catename":"公司新闻","creator":"张小雨","docreadcount":"200"},{"text":"员工穿越戈壁活动心得分享","description":"去做，让改变发生！","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"520"},{"text":"爱心图书角走进江西贫困小学","created":"2020-01-02","description":" 希望每一本书都能为孩子开启一个新的世界","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"877"},{"text":"揭秘公司的数字化转型之道","created":"2020-01-02","description":" 推动整个行业数字化转型更顺畅","href":"#","catename":"公司新闻","creator":"张小雨","docreadcount":"361"},{"text":"打造一体化综合管理平台","created":"2020-01-02","description":"少开会、开短会，开管用","href":"#","catename":"公司新闻","creator":"张小雨","docreadcount":"687"},{"text":"美食节—此生唯美食不可辜负","created":"2020-01-02","description":"百种美味，一种幸福","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"999+"},{"text":"每一位加班人都值得被关爱","description":"今天是个好日子","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"999+"},{"text":"儿童节爱心图书征集","created":"2020-01-02","description":"凌基金走进贫困小学","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"999+"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize"/>
+			<var name="{sys-anonym:table.sysAnonymCate}" key="cateid" kind="dialogJs" >
+		    	{"jsp":"/sys/anonym/sys_anonym_cate/selectCate.jsp?modelName=com.landray.kmss.sys.news.model.SysNewsMain","help":""}
+		    </var>
+		</vars>
+		<operations>
+			<operation
+		        name="{operation.more}"
+		        type="more"
+		        href="/sys/anonym/dataview/dataPage.jsp?fdCategoryId=!{cateid}&amp;fdModelName=com.landray.kmss.sys.news.model.SysNewsMain&amp;ordertype=down&amp;orderby=sysAnonymCommon.docCreateTime"/>
+		</operations>
+	</portlet>
+
+	<!-- 图文新闻，图片并排 -->
+	<portlet
+			id="sys.news.main.image.anonym"
+			name="{sys-news:sysNewsMain.portlet.image}"
+			module="{sys-news:news.moduleName}"
+			anonymous="true"
+			description="{portlet.list.desc3}">
+		<source
+				format="sys.ui.image"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+					{"url":"/sys/anonym/sysAnonymData.do?method=dataList&formatKey=image&fdCategoryId=!{cateid}&fdModelName=com.landray.kmss.sys.news.model.SysNewsMain&rowsize=!{rowsize}&scope=!{scope}&ordertype=down&orderby=sysAnonymCommon.docPublishTime"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/sys/news/sys_news_pic4.jpg$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+				{"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+				{ "text":"{portlet.var.date.threeMonths}", "value":"season"},
+				{ "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+				{ "text":"{portlet.var.date.oneYear}", "value":"year"},
+				{ "text":"{portlet.var.date.unlimited}", "value":"no"}],
+				"showType":"radio"
+				}
+
+			</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-anonym:table.sysAnonymCate}" key="cateid" kind="dialogJs" >
+				{"jsp":"/sys/anonym/sys_anonym_cate/selectCate.jsp?modelName=com.landray.kmss.sys.news.model.SysNewsMain","help":""}
+			</var>
+		</vars>
+	</portlet>
+
+	<!-- 图文摘要 -->
+	<portlet
+			id="sys.news.image.desc.anonym"
+			name="{sys-news:sysNewsMain.portlet.image.desc}"
+			module="{sys-news:news.moduleName}"
+			anonymous="true"
+			description="{sys-news:sysNewsMain.portlet.image.desc}">
+		<source format="sys.ui.image.desc" type="AjaxJson">
+			<code>
+				<![CDATA[
+					{"url":"/sys/anonym/sysAnonymData.do?method=dataList&formatKey=classicRich&fdCategoryId=!{cateid}&fdModelName=com.landray.kmss.sys.news.model.SysNewsMain&rowsize=!{rowsize}&scope=!{scope}&ordertype=down&orderby=sysAnonymCommon.docPublishTime"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/sys/news/sys_news_pic6.jpg$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+				{"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+				{ "text":"{portlet.var.date.threeMonths}", "value":"season"},
+				{ "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+				{ "text":"{portlet.var.date.oneYear}", "value":"year"},
+				{ "text":"{portlet.var.date.unlimited}", "value":"no"}],
+				"showType":"radio"
+				}
+			</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{sys-anonym:table.sysAnonymCate}" key="cateid" kind="dialogJs" >
+				{"jsp":"/sys/anonym/sys_anonym_cate/selectCate.jsp?modelName=com.landray.kmss.sys.news.model.SysNewsMain","help":""}
+			</var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/sys/anonym/dataview/dataPage.jsp?fdCategoryId=!{cateid}&amp;fdModelName=com.landray.kmss.sys.news.model.SysNewsMain&amp;ordertype=down&amp;orderby=sysAnonymCommon.docCreateTime"/>
+		</operations>
+	</portlet>
+
+	<!-- 我的新闻 -->
+	<portlet
+			id="sys.news.main.MyNews.anonym"
+			name="{sys-news:sysNewsMain.portlet.mine}"
+			module="{sys-news:news.moduleName}"
+			anonymous="true"
+			description="{sys-news:sysNewsMain.portlet.tableList.des}">
+		<source
+				format="sys.ui.listtable"
+				type="AjaxJson">
+			<code>
+				<![CDATA[
+					{"url":"/sys/anonym/sysAnonymData.do?method=dataList&formatKey=myNews&fdCategoryId=!{cateid}&fdModelName=com.landray.kmss.sys.news.model.SysNewsMain&rowsize=!{rowsize}&scope=!{scope}&ordertype=down&orderby=sysAnonymCommon.docPublishTime"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"公司元旦放假通知","created":"2019-12-25","href":"#","description":"元旦放假一天","catename":"公司新闻","creator":"张小雨","docreadcount":"999+"},{"text":"企业年度评优，就“数”这一招狠","description":"又是一年岁末时，各类年终考核、先进评比、优秀推选纷至沓来","created":"2020-01-02","href":"#","catename":"公司新闻","creator":"张小雨","docreadcount":"200"},{"text":"员工穿越戈壁活动心得分享","description":"去做，让改变发生！","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"520"},{"text":"爱心图书角走进江西贫困小学","created":"2020-01-02","description":" 希望每一本书都能为孩子开启一个新的世界","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"877"},{"text":"揭秘公司的数字化转型之道","created":"2020-01-02","description":" 推动整个行业数字化转型更顺畅","href":"#","catename":"公司新闻","creator":"张小雨","docreadcount":"361"},{"text":"打造一体化综合管理平台","created":"2020-01-02","description":"少开会、开短会，开管用","href":"#","catename":"公司新闻","creator":"张小雨","docreadcount":"687"},{"text":"美食节—此生唯美食不可辜负","created":"2020-01-02","description":"百种美味，一种幸福","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"999+"},{"text":"每一位加班人都值得被关爱","description":"今天是个好日子","created":"2020-01-02","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"999+"},{"text":"儿童节爱心图书征集","created":"2020-01-02","description":"凌基金走进贫困小学","href":"#","catename":"文化新闻","creator":"张小雨","docreadcount":"999+"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+				{"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+				{ "text":"{portlet.var.date.threeMonths}", "value":"season"},
+				{ "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+				{ "text":"{portlet.var.date.oneYear}", "value":"year"},
+				{ "text":"{portlet.var.date.unlimited}", "value":"no"}],
+				"showType":"radio"
+				}
+
+			</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize"/>
+			<var name="{sys-anonym:table.sysAnonymCate}" key="cateid" kind="dialogJs" >
+				{"jsp":"/sys/anonym/sys_anonym_cate/selectCate.jsp?modelName=com.landray.kmss.sys.news.model.SysNewsMain","help":""}
+			</var>
+		</vars>
+		<operations>
+			<operation
+					name="{operation.more}"
+					type="more"
+					href="/sys/anonym/dataview/dataPage.jsp?fdCategoryId=!{cateid}&amp;fdModelName=com.landray.kmss.sys.news.model.SysNewsMain&amp;ordertype=down&amp;orderby=sysAnonymCommon.docCreateTime"/>
+		</operations>
+	</portlet>
+	<!-- 匿名门户 end -->
+	
+</root>

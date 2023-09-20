@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysHandoverConfigMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.handover.dao.hibernate.SysHandoverConfigMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.handover.model.SysHandoverConfigMain" />
+	</bean>
+	<bean
+		id="sysHandoverConfigMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.handover.service.spring.SysHandoverConfigMainServiceImp">
+		<property name="baseDao">
+			<ref bean="sysHandoverConfigMainDao" />
+		</property>
+		<property name="sysHandoverService">
+			<ref bean="sysHandoverService" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="sysQuartzCoreService">
+			<ref bean="sysQuartzCoreService" />
+		</property>
+		<property name="sysHandoverConfigMainDao">
+			<ref bean="sysHandoverConfigMainDao" />
+		</property>
+		<property name="sysHandoverConfigLogService">
+			<ref bean="sysHandoverConfigLogService" />
+		</property>
+	</bean>
+	<bean
+		id="sysHandoverConfigMainService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysHandoverConfigMainTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="execute">PROPAGATION_REQUIRED</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="submit*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean
+		id="sysHandoverConfigLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.handover.dao.hibernate.SysHandoverConfigLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.handover.model.SysHandoverConfigLog" />
+	</bean>
+	<bean
+		id="sysHandoverConfigLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.handover.service.spring.SysHandoverConfigLogServiceImp">
+		<property name="baseDao">
+			<ref bean="sysHandoverConfigLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysHandoverConfigLogService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysHandoverConfigLogTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysHandoverConfigLogDetailDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.handover.dao.hibernate.SysHandoverConfigLogDetailDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.handover.model.SysHandoverConfigLogDetail" />
+	</bean>
+	<bean
+		id="sysHandoverConfigLogDetailTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.handover.service.spring.SysHandoverConfigLogDetailServiceImp">
+		<property name="baseDao">
+			<ref bean="sysHandoverConfigLogDetailDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysHandoverConfigLogDetailService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysHandoverConfigLogDetailTarget" />
+		</property>
+	</bean>
+	<!--查询处理入口service -->
+	<bean
+		id="sysHandoverService"
+		class="com.landray.kmss.sys.handover.service.spring.SysHandoverServiceImp">
+		<property name="sysHandoverLogService">
+			<ref bean="sysHandoverLogService" />
+		</property>
+		<property name="sysHandoverConfigLogDetailService">
+			<ref bean="sysHandoverConfigLogDetailService" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+	</bean>
+	<!--日志入口service -->
+	<bean
+		id="sysHandoverLogService"
+		lazy-init="true"
+		class="com.landray.kmss.sys.handover.service.spring.SysHandoverLogServiceImp">
+		<property name="sysHandoverConfigMainService">
+			<ref bean="sysHandoverConfigMainService" />
+		</property>
+		<property name="sysHandoverConfigLogService">
+			<ref bean="sysHandoverConfigLogService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysHandoverConfigAuthLogDetailDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.handover.dao.hibernate.SysHandoverConfigAuthLogDetailDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.handover.model.SysHandoverConfigAuthLogDetail" />
+	</bean>
+	<bean
+		id="sysHandoverConfigAuthLogDetailServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.handover.service.spring.SysHandoverConfigAuthLogDetailServiceImp">
+		<property name="baseDao">
+			<ref bean="sysHandoverConfigAuthLogDetailDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysHandoverConfigAuthLogDetailService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysHandoverConfigAuthLogDetailServiceTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysHandoverWebService"
+		class="com.landray.kmss.sys.handover.webservice.SysHandoverWebServiceImp">
+		<property name="sysWsOrgService">
+			<ref bean="sysWsOrgService"/>
+		</property>
+		<property name="sysHandoverConfigMainService">
+			<ref bean="sysHandoverConfigMainService"/>
+		</property>
+		<property name="sysQuartzJobService">
+			<ref bean="sysQuartzJobService"/>
+		</property>
+		<property name="backgroundAuthService">
+			<ref bean="backgroundAuthService"/>
+		</property>
+	</bean>
+</beans>

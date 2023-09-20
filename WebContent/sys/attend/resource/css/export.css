@@ -1,0 +1,552 @@
+/* create 211019 导出记录 */
+/* 建议放置到公共CSS中-抽屉组件 Starts */
+.lui_drawer_wrapper {
+}
+
+.lui_drawer_header {
+    height: 55px;
+    line-height: 55px;
+    position: relative;
+    border-bottom: 1px solid #f1f1f1;
+    padding-left: 16px;
+}
+
+.lui_drawer_content{
+    position:absolute;
+    left:0;
+    top: 60px;
+    bottom:0;
+    right:0;
+    overflow:auto;
+}
+
+.lui_drawer_title {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.lui_drawer_btn_close {
+    position: absolute;
+    top: 20px;
+    right: 16px;
+    width: 16px;
+    height: 16px;
+    background: url(../img/icon_close@2x.png) no-repeat center center;
+    background-size: 16px auto;
+    cursor: pointer;
+}
+
+@media \0screen {
+    .lui_drawer_btn_close {
+        background-image: url(../img/icon_close.png);
+    }
+}
+
+/* 建议放置到公共CSS中-抽屉组件 Ends */
+.lui_export_file_list {
+    margin-bottom: 50px;
+}
+
+.lui_export_file_list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lui_export_file_list>ul>li {
+    display: table;
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    table-layout: fixed;
+    height: 45px;
+}
+
+.lui_export_file_list>ul>li:hover {
+    background: #f8f8f8;
+}
+
+.lui_export_file_icon {
+    display: table-cell;
+    vertical-align: middle;
+    width: 32px;
+    padding-left: 16px;
+}
+
+.lui_export_file_icon .lui_attach_file_icon {
+    width: 28px;
+    height: 28px;
+    background-size: 28px auto;
+}
+
+.lui_export_file_content {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 10px;
+    min-width: 139px;
+    white-space: nowrap;
+}
+
+.lui_export_status {
+    display: table-cell;
+    vertical-align: middle;
+    width: 60px;
+}
+
+.lui_export_file_opt {
+    display: table-cell;
+    vertical-align: middle;
+    padding:0px 16px;
+    width: 20px;
+}
+
+.lui_export_file_title {
+    margin: 0 0 5px;
+}
+
+.lui_export_file_time {
+    color: #999;
+    margin: 0;
+    font-size: 12px;
+}
+
+.lui_export_file_list>ul>li:hover .lui_export_file_more {
+        display: block;
+/*     opacity: 1; */
+}
+
+.lui_export_file_more {
+    position: relative;
+    display: none;
+    width: 20px;
+    height: 40px;
+    background: url(../img/icon_more@2x.png) no-repeat center;
+    background-size: 12px auto;
+/*     opacity: 0; */
+}
+
+@media \0screen {
+    .lui_export_file_more {
+        background-image: url(../img/icon_more.png);
+    }
+}
+
+.lui_export_file_more:hover ul {
+    display: block;
+}
+
+.lui_export_file_more ul {
+    display: none;
+    width: 86px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .1);
+    position: absolute;
+    top: 30px;
+    right: 0;
+    z-index: 1;
+    background: #fff;
+}
+
+.lui_export_file_more li {
+    height: 30px;
+    line-height: 30px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.lui_export_file_more li:hover {
+    background: #f8f8f8;
+}
+
+.lui_export_file_more span {
+}
+
+/* 失败 */
+.lui_export_status_error {
+    position: relative;
+}
+
+.lui_export_status_error i {
+    background: url(../img/icon_error@2x.png) no-repeat center;
+    background-size: 16px auto;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 2px;
+    /* position: absolute; */
+}
+
+@media \0screen {
+    .lui_export_status_error i {
+        background-image: url(../img/icon_error.png);
+    }
+}
+
+.lui_export_status_error:hover .lui_export_tooltip {
+    display: inline-block;
+}
+
+.lui_export_tooltip {
+    height: 27px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .1);
+    min-width: 100px;
+    position: absolute;
+    background: #fff;
+    right: 0;
+    top: -28px;
+    padding: 0 5px;
+    line-height: 27px;
+    display: none;
+    color: #666;
+    font-size: 12px;
+    position: absolute;
+    top: -25px;
+    right: 10px;
+}
+
+.lui_export_tooltip_title {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 230px;
+}
+
+.lui_export_tooltip .lui_export_tooltip_trig {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    right: 0;
+    bottom: 17px;
+}
+
+.lui_export_tooltip .lui_export_tooltip_trig:before, .lui_export_tooltip .lui_export_tooltip_trig:after {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: 3px solid transparent;
+    border-width: 5px 4px;
+    position: absolute;
+    right: 20px;
+}
+
+.lui_export_tooltip .lui_export_tooltip_trig:before {
+    border-top-color: #eaeaea;
+    bottom: -28px;
+}
+
+.lui_export_tooltip .lui_export_tooltip_trig:after {
+    border-top-color: #fff;
+    bottom: -27px;
+}
+
+.lui_export_status_error .lui_export_tooltip .lui_export_tooltip_title {
+    color: #666;
+}
+
+.lui_export_status_error span {
+    color: #F25643;
+}
+
+/* 进行中 */
+.lui_export_file_status_doing {
+    font-size: 12px;
+    border: 1px solid #4285f4;
+    display: inline-block;
+    padding: 0 7px;
+    line-height: 18px;
+    height: 18px;
+    border-radius: 10px;
+    color: #4285f4;
+    margin: 0;
+}
+
+/* 缺省状态 */
+.lui_export_noData_iframe {
+    padding-top: 200px;
+    text-align: center;
+}
+
+.lui_export_noData_icon {
+    width: 160px;
+    height: 160px;
+    background: url(../img/icon_no_data.png) no-repeat center;
+    margin-bottom: 8px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lui_export_noData_tip {
+    color: #666;
+}
+
+/* 附件图标 -- 建议搬迁到附件机制 Starts */
+.lui_attach_file_icon {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    background-size: 32px auto;
+    background-image: url(../img/file/2x/icon_documents.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_avi {
+    background-image: url(../img/file/2x/icon_avi.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_flv {
+    background-image: url(../img/file/2x/icon_flv.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_rmvb {
+    background-image: url(../img/file/2x/icon_rmvb.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_aud {
+    background-image: url(../img/file/2x/icon_aud.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_bmp {
+    background-image: url(../img/file/2x/icon_bmp.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_documents {
+    background-image: url(../img/file/2x/icon_documents.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_excel {
+    background-image: url(../img/file/2x/icon_excel.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_gif {
+    background-image: url(../img/file/2x/icon_gif.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_html {
+    background-image: url(../img/file/2x/icon_html.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_image {
+    background-image: url(../img/file/2x/icon_image.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_jpg {
+    background-image: url(../img/file/2x/icon_jpg.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_js {
+    background-image: url(../img/file/2x/icon_js.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_movie {
+    background-image: url(../img/file/2x/icon_movie.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_mp4 {
+    background-image: url(../img/file/2x/icon_mp4.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_outlook {
+    background-image: url(../img/file/2x/icon_outlook.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_pdf {
+    background-image: url(../img/file/2x/icon_pdf.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_png {
+    background-image: url(../img/file/2x/icon_png.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_ppt {
+    background-image: url(../img/file/2x/icon_ppt.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_pro {
+    background-image: url(../img/file/2x/icon_pro.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_svg {
+    background-image: url(../img/file/2x/icon_svg.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_text {
+    background-image: url(../img/file/2x/icon_text.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_tif {
+    background-image: url(../img/file/2x/icon_tif.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_video {
+    background-image: url(../img/file/2x/icon_video.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_visio {
+    background-image: url(../img/file/2x/icon_visio.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_vsd {
+    background-image: url(../img/file/2x/icon_vsd.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_word {
+    background-image: url(../img/file/2x/icon_word.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_wps {
+    background-image: url(../img/file/2x/icon_wps.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_zip {
+    background-image: url(../img/file/2x/icon_zip.png);
+}
+
+.lui_attach_file_icon.lui_attach_file_icon_raq {
+    background-image: url(../img/file/2x/icon_raq.png);
+}
+
+@media \0screen {
+    .lui_attach_file_iconi {
+        background-image: url(../img/file/1x/icon_documents.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_avi {
+        background-image: url(../img/file/1x/icon_avi.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_flv {
+        background-image: url(../img/file/1x/icon_flv.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_rmvb {
+        background-image: url(../img/file/1x/icon_rmvb.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_aud {
+        background-image: url(../img/file/1x/icon_aud.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_bmp {
+        background-image: url(../img/file/1x/icon_bmp.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_documents {
+        background-image: url(../img/file/1x/icon_documents.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_excel {
+        background-image: url(../img/file/1x/icon_excel.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_gif {
+        background-image: url(../img/file/1x/icon_gif.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_html {
+        background-image: url(../img/file/1x/icon_html.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_image {
+        background-image: url(../img/file/1x/icon_image.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_jpg {
+        background-image: url(../img/file/1x/icon_jpg.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_js {
+        background-image: url(../img/file/1x/icon_js.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_movie {
+        background-image: url(../img/file/1x/icon_movie.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_mp4 {
+        background-image: url(../img/file/1x/icon_mp4.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_outlook {
+        background-image: url(../img/file/1x/icon_outlook.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_pdf {
+        background-image: url(../img/file/1x/icon_pdf.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_png {
+        background-image: url(../img/file/1x/icon_png.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_ppt {
+        background-image: url(../img/file/1x/icon_ppt.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_pro {
+        background-image: url(../img/file/1x/icon_pro.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_svg {
+        background-image: url(../img/file/1x/icon_svg.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_text {
+        background-image: url(../img/file/1x/icon_text.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_tif {
+        background-image: url(../img/file/1x/icon_tif.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_video {
+        background-image: url(../img/file/1x/icon_video.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_visio {
+        background-image: url(../img/file/1x/icon_visio.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_vsd {
+        background-image: url(../img/file/1x/icon_vsd.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_word {
+        background-image: url(../img/file/1x/icon_word.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_wps {
+        background-image: url(../img/file/1x/icon_wps.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_zip {
+        background-image: url(../img/file/1x/icon_zip.png);
+    }
+
+    .lui_attach_file_icon.lui_attach_file_icon_raq {
+        background-image: url(../img/file/1x/icon_raq.png);
+    }
+}
+
+/* 附件图标 -- 建议搬迁到附件机制 Ends */
+.lui_log_list_open{
+    right: 0px;
+    /*display: block;*/
+}
+.lui_log_list_init{
+    right: -500px;
+}
+.lui_log_list {
+    position: fixed;
+    top: 0;
+    width: 400px;
+    height: 100%;
+    border-radius: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ebeef5;
+    background-color: #fff;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+    transition: opacity .3s,transform .3s,left .3s,right .3s,top .4s,bottom .3s;
+    overflow-x: hidden;
+}

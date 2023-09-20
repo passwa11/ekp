@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+
+
+	<extension-point
+			id="com.landray.kmss.sys.modeling.base.maintenance.checker">
+		<item
+				name="config">
+			<param
+					name="unid"
+					required="true"
+					kind="unid">
+				<description>
+					唯一标识，此标识在所有的数据库检测扩展中是唯一的，建议使用java bean的全限定名。
+				</description>
+			</param>
+			<param
+					name="name"
+					required="true"
+					kind="string">
+				<description>
+					必选，显示名称
+				</description>
+			</param>
+			<param
+					name="bean"
+					required="true"
+					kind="string"
+					basedOn="com.landray.kmss.sys.modeling.base.maintenance.schema.IModelingSchemaChecker">
+				<description>
+					必选，数据库检测实现接口
+				</description>
+			</param>
+			<param
+					name="priority"
+					kind="string"
+					restriction="LOW;NORM;MEDIUM;HIGHT;COLUMN;TABLE"
+					default="NORM">
+				<description>
+					可选，检测优先级、修复优先级默认取检测优先级。
+					TABLE和COLUMN这2个级别为内部使用，外部扩展一般不要使用。
+					级别及其级别基数范围：
+					LOW [-10 - 0)：低
+					NORM [0 - 10)：一般
+					MEDIUM [10 - 20)：中等
+					HIGHT [20 - 30)：高
+					COLUMN [30 - 40)：高
+					TABLE [40 - 50)：高
+				</description>
+			</param>
+			<description>数据库检测扩展配置</description>
+		</item>
+		<description>数据库检测扩展，请实现此扩展点。</description>
+	</extension-point>
+
+
+
+	<extension point="com.landray.kmss.sys.xform.base.service.controls" model="com.landray.kmss.sys.modeling.base.model.ModelingAppModel">
+		<item name="control">
+			<param name="class" value="com.landray.kmss.sys.modeling.base.service.controls.SysModelingPlaceholderControl" />
+			<param name="file" value="/sys/modeling/base/form/xform/controls/lang.jsp;
+									/sys/modeling/base/form/xform/controls/placeholder/placeholder.js" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.xform.base.service.controls" model="com.landray.kmss.sys.modeling.base.model.ModelingAppModel">
+		<item name="control">
+			<param name="class" value="com.landray.kmss.sys.modeling.base.service.controls.SysModelingFillingControl" />
+			<param name="file" value="/sys/modeling/base/form/xform/controls/lang.jsp;
+									/sys/modeling/base/form/xform/controls/filling/filling.js" />
+		</item>
+	</extension>
+	
+	<!--<extension point="com.landray.kmss.sys.xform.base.service.controls" model="com.landray.kmss.sys.modeling.base.model.ModelingAppModel">
+		<item name="control">
+			<param name="class" value="com.landray.kmss.sys.modeling.base.service.controls.SysModelingTreeControl" />
+			<param name="file" value="/sys/modeling/base/form/xform/controls/tree/tree.js" />
+		</item>
+	</extension>-->
+	
+	<extension point="com.landray.kmss.lbpm.engine.robot" model="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item name="robot">
+			<param name="unid" value="modelingScene" />
+			<param name="category" value="{sys-modeling-base:lbpm.robot.modeling}" />
+			<param name="type" value="{sys-modeling-base:lbpm.robot.scene}" />
+			<param name="bean" value="robotNodeScene" />
+			<param name="url" value="/sys/modeling/base/form/flow/robot/scene.jsp" />
+			<param name="class" value="others" />
+			<param name="description" value="{sys-modeling-base:lbpm.robot.des}" />
+		</item>
+		<item name="robot">
+			<param name="unid" value="modelingBehavior" />
+			<param name="category" value="{sys-modeling-base:lbpm.robot.modeling}" />
+			<param name="type" value="{sys-modeling-base:lbpm.robot.action}" />
+			<param name="bean" value="robotNodeBehavior" />
+			<param name="url" value="/sys/modeling/base/form/flow/robot/behavior.jsp" />
+			<param name="class" value="others" />
+			<param name="description" value="{sys-modeling-base:lbpm.robot.des}" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.lbpm.engine.event" model="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item name="listener">
+			<param name="unid" value="modelingProcessListener" />
+			<param name="messageKey" value="sys-modeling-base:lbpm.listener.name" />
+			<param name="eventTypes" value="*" />
+			<param name="listener" value="modelingProcessListener" />
+			<param name="conditionJsp" value="/sys/modeling/base/form/flow/event/event.jsp" />
+			<param name="description" value="sys-modeling-base:lbpm.listener.desrc" />
+		</item>
+	</extension>
+
+	<!-- e签宝回调业务处理 -->
+	<extension point="com.landray.kmss.elec.device.ansyService"
+			   model="com.landray.kmss.elec.device.client.IElecChannelRequestMessage">
+		<item name="convertor">
+			<param name="bean" value="modelingEqbSignService" />
+			<param name="channel" value="eqb" />
+			<param name="receiver" value="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain" />
+		</item>
+	</extension>
+
+	<!--E签宝 Sass服务的回调服务，新增-->
+	<extension point="com.landray.kmss.elec.device.ansyService"
+			   model="com.landray.kmss.elec.device.client.IElecChannelRequestMessage">
+		<item name="convertor">
+			<param name="bean" value="modelingEqbSaSSSignService" />
+			<param name="channel" value="eqbsaas" />
+			<param name="receiver" value="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain" />
+		</item>
+	</extension>
+
+
+	<extension
+		point="com.landray.kmss.sys.workflow.support.oa.subprocess"
+		model="*">
+		<item
+			name="subprocess">
+			<param
+				name="modelName"
+				value="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain" />
+			<param name="cateBean" value="modelingSubFlowTreeService" />
+			<param name="dictBean" value="modelingSubFlowDictService&amp;modelName=!{modelName}&amp;templateId=!{cateid}" />
+			<param name="createParam" value="!{cateid}" />
+		</item>
+	</extension>
+
+	<extension
+		point="com.landray.kmss.sys.formula"
+		model="*">
+		<item
+			name="function">
+			<param
+				name="className"
+				value="com.landray.kmss.sys.modeling.main.formula.ModelingFunction" />
+		</item>
+	</extension>
+	
+	<!--
+	<extension point="com.landray.kmss.sys.config.loader">
+		<item name="framework">
+			<param name="name" value="sysModelingAppLoader" />
+			<param name="loader" value="com.landray.kmss.sys.modeling.base.loader.SysModelingAppLoader" />
+			<param name="order" value="150" />
+		</item>
+	</extension>
+	-->
+
+	<extension point="com.landray.kmss.sys.cluster">
+		<item name="messageReceiver">
+			<param name="type"
+				value="com.landray.kmss.sys.modeling.base.service.message.SysModelingOprAuthMessage" />
+			<param name="service" value="sysModelingOprAuthMessageReceiver" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.cluster">
+		<item name="messageReceiver">
+			<param name="type"
+				value="com.landray.kmss.sys.modeling.base.service.message.SysModelingClusterMessage" />
+			<param name="service" value="sysModelingClusterMessageReceiver" />
+		</item>
+	</extension>
+	
+	<!-- 表单的模式 -->
+	<extension point="com.landray.kmss.sys.xform.mode" model="*">
+		<item name="baseConfig">
+			<param name="mainModelName" value="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain" />
+			<param name="templateModelName" value="com.landray.kmss.sys.modeling.base.model.ModelingAppModel" />
+			<param name="templatePropertyName" value="fdTemplate" />
+			<param name="fdKey" value="modelingApp" />
+			<param name="name" value="sys-xform:sysFormTemplate.fdTemplateType.define|sys-xform:sysFormTemplate.fdTemplateType.subForm" />
+			<param name="value" value="3|4" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.xform.mode" model="*">
+		<item name="baseConfig">
+			<param name="mainModelName" value="com.landray.kmss.sys.modeling.main.model.ModelingAppSimpleMain" />
+			<param name="templateModelName" value="com.landray.kmss.sys.modeling.base.model.ModelingAppModel" />
+			<param name="templatePropertyName" value="fdTemplate" />
+			<param name="fdKey" value="modelingApp" />
+			<param name="name" value="sys-xform:sysFormTemplate.fdTemplateType.define|sys-xform:sysFormTemplate.fdTemplateType.subForm" />
+			<param name="value" value="3|4" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.xform.mobile.controls" model="*">
+		<item name="control">
+			<param name="class" value="com.landray.kmss.sys.modeling.base.mobile.service.controls.MobilePlaceholderControl" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.xform.mobile.controls" model="*">
+		<item name="control">
+			<param name="class" value="com.landray.kmss.sys.modeling.base.mobile.service.controls.MobileFillingControl" />
+		</item>
+	</extension>
+
+	<extension
+		point="com.landray.kmss.sys.config.admin.do">
+		<item
+			name="config">
+			<param
+				name="jsp"
+				value="/sys/modeling/modelingConfig.jsp" />
+			<param
+				name="type"
+				value="application" />
+		</item>
+	</extension>
+
+	<extension
+		point="com.landray.kmss.sys.xform.maindata.handler">
+		<item
+			name="handler">
+			<param
+				name="bean"
+				value="modelingMainDataExtendHandler" />
+		</item>
+	</extension>
+	
+	<!--表单模板国际化导入日志扩展点-->  
+	<extension point="com.landray.kmss.sys.formMultiLang.import.log">
+		<item name="item">
+			<param name="uuid" value="com.landray.kmss.sys.modeling.base.model.ModelingAppModel" />
+			<param name="model" value="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMainBase" />
+			<param name="template" value="fdModel" />
+			<param name="name" value ="{sys-modeling-base:module.sys.modeling}"/>
+		</item>
+	</extension>
+
+	<!--用于处理操作日志-->
+	<extension point="com.landray.kmss.sys.authentication">
+		<item name="authenticationProcessingFilter">
+			<param name="bean" value="modelingOperLogFilter" />
+		</item>
+	</extension>
+
+	<!--用于处理访问业务建模请求的公共处理-->
+	<extension point="com.landray.kmss.sys.authentication">
+		<item name="authenticationProcessingFilter">
+			<param name="bean" value="modelingCommonHandlerFilter" />
+		</item>
+	</extension>
+	
+	<!-- 表单关联控件的模块扩展点 -->
+	<extension point="com.landray.kmss.sys.xform.base.service.controls.relevance.noCategory" model="*">
+		<item name="node">
+			<param name="key" value="modeling" />
+			<param name="moduleMessageKey" value="sys-modeling-base:module.sys.modeling" />
+			<param
+				name="dataBean"
+				value="modelingAppDataFormRelevanceService" />
+		</item>
+	</extension>
+
+	<!-- 业务建模的webservice-->
+	<extension
+			point="com.landray.kmss.sys.webservice2">
+		<item
+				name="registry">
+			<param name="serviceName" value="低代码平台主文档webservice" />
+			<param name="serviceClass"
+				   value="com.landray.kmss.sys.modeling.webservice.IModelingAppModelWSService" />
+			<param name="serviceBean" value="modelingAppModelWSService" />
+			<param name="serviceDoc" value="/sys/modeling/service/web/modelingAppModelWebServiceHelp.jsp" />
+		</item>
+	</extension>
+
+	<!-- 声明依赖的模块 -->
+	<extension point="com.landray.kmss.common.module.core.register.depend" model="*">
+		<item name="depend">
+			<param name="id" value="sys/modeling"/>
+			<param name="messageKey" value="sys-modeling-base:module.sys.modeling"/>
+			<param name="dependModules" value="kms/multidoc;km/archives;dbcenter/echarts;sys/number" />
+			<param name="dependModels" value="ModelingAppModel:IKmsMultidocSubsideModel;ModelingAppModel:IKmArchivesFileTemplateModel;ModelingAppModel:ISysNumberModel" />
+		</item>
+	</extension>
+	<!-- 数据迁移 start -->
+	<extension
+			point="com.landray.kmss.sys.admin.transfer">
+		<item
+				name="config">
+			<param
+					name="unid"
+					value="com.landray.kmss.sys.modeling.base.transfer.SysModelingFormDesignerTransferTask" />
+			<param
+					name="name"
+					value="{sys-modeling-base:sysModeling.transfer.name}" />
+			<param
+					name="path"
+					value="/sys/modeling/base/" />
+			<param
+					name="check"
+					value="com.landray.kmss.sys.modeling.base.transfer.SysModelingFormDesignerTransferTask" />
+			<param
+					name="upgrade"
+					value="com.landray.kmss.sys.modeling.base.transfer.SysModelingFormDesignerTransferTask" />
+			<param
+					name="description"
+					value="{sys-modeling-base:sysModeling.transfer.desc}" />
+		</item>
+		<item
+				name="config">
+			<param
+					name="unid"
+					value="com.landray.kmss.sys.modeling.base.transfer.SysModelingAutoTimeOutStrategyTransferTask" />
+			<param
+					name="name"
+					value="{sys-modeling-base:sysModeling.transfer.timeOutStrategy}" />
+			<param
+					name="path"
+					value="/sys/modeling/base/" />
+			<param
+					name="check"
+					value="com.landray.kmss.sys.modeling.base.transfer.SysModelingAutoTimeOutStrategyTransferTask" />
+			<param
+					name="upgrade"
+					value="com.landray.kmss.sys.modeling.base.transfer.SysModelingAutoTimeOutStrategyTransferTask" />
+			<param
+					name="description"
+					value="{sys-modeling-base:sysModeling.transfer.timeOutStrategy}" />
+		</item>
+	</extension>
+	<!-- 数据迁移 end-->
+
+	<!-- 个人流程中心 -->
+	<extension point="com.landray.kmss.sys.lbpmperson.create">
+		<item name="data">
+			<param name="moduleText" value="sys-modeling-base:module.sys.modeling"/>
+			<param name="key" value="modelingApp"/>
+			<param name="templateModelName" value="com.landray.kmss.sys.modeling.base.model.ModelingAppFlow"/>
+			<param name="beanName" value="modelingLbpmPersonService"/>
+			<param name="getCateMethodName" value="loadCategoryInfo"/>
+			<param name="searchCateMethodName" value="loadSysModelingApp"/>
+			<param name="getTempMethodName" value="getSysModelingAppModel"/>
+			<param name="searchTempMethodName" value="loadSysModelingAppModelFlow"/>
+		</item>
+	</extension>
+
+	<extension
+			point="com.landray.kmss.sys.modeling.base.maintenance.checker">
+		<item
+				name="config">
+			<param
+					name="unid"
+					value="com.landray.kmss.sys.modeling.base.maintenance.checker.ModelingTableChecker" />
+			<param
+					name="name"
+					value="表检测" />
+			<param
+					name="bean"
+					value="com.landray.kmss.sys.modeling.base.maintenance.checker.ModelingTableChecker" />
+			<param
+					name="priority"
+					value="TABLE" />
+		</item>
+	</extension>
+	<extension
+			point="com.landray.kmss.sys.modeling.base.maintenance.checker">
+		<item
+				name="config">
+			<param
+					name="unid"
+					value="com.landray.kmss.sys.modeling.base.maintenance.checker.ModelingPrimaryKeyChecker" />
+			<param
+					name="name"
+					value="主键检测" />
+			<param
+					name="bean"
+					value="com.landray.kmss.sys.modeling.base.maintenance.checker.ModelingPrimaryKeyChecker" />
+			<param
+					name="priority"
+					value="TABLE" />
+		</item>
+	</extension>
+	<extension
+			point="com.landray.kmss.sys.modeling.base.maintenance.checker">
+		<item
+				name="config">
+			<param
+					name="unid"
+					value="com.landray.kmss.sys.modeling.base.maintenance.checker.ModelingColumnChecker" />
+			<param
+					name="name"
+					value="字段检测" />
+			<param
+					name="bean"
+					value="com.landray.kmss.sys.modeling.base.maintenance.checker.ModelingColumnChecker" />
+			<param
+					name="priority"
+					value="COLUMN" />
+		</item>
+	</extension>
+	<extension
+			point="com.landray.kmss.sys.modeling.base.maintenance.checker">
+		<item
+				name="config">
+			<param
+					name="unid"
+					value="com.landray.kmss.sys.modeling.base.maintenance.checker.ModelingConstraintChecker" />
+			<param
+					name="name"
+					value="约束检测" />
+			<param
+					name="bean"
+					value="com.landray.kmss.sys.modeling.base.maintenance.checker.ModelingConstraintChecker" />
+			<param
+					name="priority"
+					value="HIGHT" />
+		</item>
+	</extension>
+	<extension
+			point="com.landray.kmss.sys.modeling.base.maintenance.checker">
+		<item
+				name="config">
+			<param
+					name="unid"
+					value="com.landray.kmss.sys.modeling.base.maintenance.checker.ModelingIndexChecker" />
+			<param
+					name="name"
+					value="索引检测" />
+			<param
+					name="bean"
+					value="com.landray.kmss.sys.modeling.base.maintenance.checker.ModelingIndexChecker" />
+			<param
+					name="priority"
+					value="NORM" />
+		</item>
+	</extension>
+	<extension
+			point="com.landray.kmss.sys.modeling.base.maintenance.checker">
+		<item
+				name="config">
+			<param
+					name="unid"
+					value="com.landray.kmss.sys.modeling.base.maintenance.checker.ModelingSQLServerDBChecker" />
+			<param
+					name="name"
+					value="###低代码平台sqlserver专项数据库参数检测" />
+			<param
+					name="bean"
+					value="com.landray.kmss.sys.modeling.base.maintenance.checker.ModelingSQLServerDBChecker" />
+			<param
+					name="priority"
+					value="HIGHT" />
+		</item>
+	</extension>
+
+
+</plugin>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		id="sysXformAuditshowDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.sys.xform.base.dao.controls.auditshow.hibernate.SysXformAuditshowDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.base.model.controls.auditshow.SysXformAuditshow" />
+	</bean>
+
+	<bean
+		id="sysXformAuditshowTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.sys.xform.base.service.controls.auditshow.spring.SysXformAuditshowServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysXformAuditshowDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysXformAuditshowService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysXformAuditshowTarget" />
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,1188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!--统计拓展点 -->
+	<extension-point
+		id="com.landray.kmss.km.imeeting.stat">
+		<item 
+			name="stat">
+			<param 
+				name="type" 
+				required="true"
+				kind="unid">
+				<description>查询类型，要求唯一</description>
+			</param>
+			<param 
+				name="executor" 
+				kind="spring"
+				required="true"
+				basedOn="com.landray.kmss.km.imeeting.service.stat.KmImeetingStatExecutor">
+				<description>统计查询执行器，提供此种场景下报表数据的统计查询</description>
+			</param>
+			<param 
+				name="chartType" 
+				kind="string">
+				<description>解析器展现图表类型</description>
+			</param>
+			<param 
+				name="conditionJsp" 
+				kind="string">
+				<description>条件JSP</description>
+			</param>
+			<param 
+				name="conditionJsp4m" 
+				kind="string">
+				<description>移动端条件JSP</description>
+			</param>
+			<param 
+				name="extJs" 
+				kind="string">
+				<description>拓展JS</description>
+			</param>
+			
+			<description>报表统计查询定义</description>
+		</item>
+		<description>报表统计查询定义</description>
+	</extension-point>
+	
+	<extension-point
+		id="com.landray.kmss.km.imeeting.synchro">
+		<item
+			name="out">
+			<param
+				name="key"
+				kind="unid"
+				required="true">
+				<description>扩展对应的key值，如：exchangeMeeting</description>
+			</param>
+			<param
+				name="name"
+				kind="unid"
+				required="true">
+				<description>扩展名称，如：exchange会议</description>
+			</param>
+			<param
+				name="provider"
+				kind="spring"
+				basedOn="com.landray.kmss.km.imeeting.synchro.interfaces.IMeetingSynchroProvider"
+				required="true">
+				<description>会议同步扩展实现，详见IMeetingSynchroProvider接口说明</description>
+			</param>
+			<param
+				name="bindPageUrl"
+				kind="string"
+				required="false">
+				<description>绑定设置页面的链接</description>
+			</param>
+			<param
+				name="order"
+				default="50"
+				kind="int">
+				<description>
+					排序号，序号小的优先被调用。
+				</description>
+			</param>
+			<description>
+			</description>
+		</item>
+		
+		<description>会议同步</description>
+	</extension-point>
+	
+	<extension-point
+		id="com.landray.kmss.km.imeeting.integrate.kk">
+		<item name="kk">
+			<param
+				name="key"
+				kind="unid"
+				required="true">
+				<description>扩展对应的key值，如：kk</description>
+			</param>
+			<param
+				name="name"
+				kind="unid"
+				required="true">
+				<description>扩展名称，如：kk</description>
+			</param>
+			<param
+				name="provider"
+				kind="spring"
+				basedOn="com.landray.kmss.km.imeeting.integrate.kk.interfaces.IMeetingKKProvider"
+				required="true">
+				<description>kk对接阿里云会议扩展实现，详见IMeetingKKProvider接口说明</description>
+			</param>
+			<param
+				name="order"
+				default="50"
+				kind="int">
+				<description>
+					排序号，序号小的优先被调用。
+				</description>
+			</param>
+			<description>
+			</description>
+		</item>
+		<description>kk对接阿里云会议集成</description>
+	</extension-point>
+	
+	<extension-point
+		id="com.landray.kmss.km.imeeting.integrate.boen">
+		<item
+			name="boen">
+			<param
+				name="key"
+				kind="unid"
+				required="true">
+				<description>扩展对应的key值，如：boen</description>
+			</param>
+			<param
+				name="name"
+				kind="unid"
+				required="true">
+				<description>扩展名称，如：铂恩</description>
+			</param>
+			<param
+				name="provider"
+				kind="spring"
+				basedOn="com.landray.kmss.km.imeeting.integrate.boen.interfaces.IMeetingBoenProvider"
+				required="true">
+				<description>铂恩会议扩展实现，详见IMeetingBoenProvider接口说明</description>
+			</param>
+			<param
+				name="order"
+				default="50"
+				kind="int">
+				<description>
+					排序号，序号小的优先被调用。
+				</description>
+			</param>
+			<description>
+			</description>
+		</item>
+		<description>铂恩会议集成</description>
+	</extension-point>
+	
+	<extension-point
+		id="com.landray.kmss.km.imeeting.integrate.alimeeting">
+		<item
+			name="alimeeting">
+			<param
+				name="key"
+				kind="unid"
+				required="true">
+				<description>扩展对应的key值，如：alimeeting</description>
+			</param>
+			<param
+				name="name"
+				kind="unid"
+				required="true">
+				<description>扩展名称，如：阿里云视频会议</description>
+			</param>
+			<param
+				name="provider"
+				kind="spring"
+				basedOn="com.landray.kmss.km.imeeting.integrate.aliyun.interfaces.IMeetingAliyunProvider"
+				required="true">
+				<description>阿里云视频会议扩展实现，详见IMeetingAliyunProvider接口说明</description>
+			</param>
+			<param
+				name="order"
+				default="25"
+				kind="int">
+				<description>
+					排序号，序号小的优先被调用。
+				</description>
+			</param>
+			<description>
+			</description>
+		</item>
+		<description>阿里云视频会议集成</description>
+	</extension-point>
+	
+	<extension-point
+		id="com.landray.kmss.km.imeeting.integrate">
+		<item
+			name="video">
+			<param
+				name="key"
+				kind="unid"
+				required="true">
+				<description>扩展对应的key值，如：quanshi</description>
+			</param>
+			<param
+				name="name"
+				kind="unid"
+				required="true">
+				<description>扩展名称，如：全时</description>
+			</param>
+			<param
+				name="provider"
+				kind="spring"
+				basedOn="com.landray.kmss.km.imeeting.integrate.interfaces.IMeetingVideoProvider"
+				required="true">
+				<description>视频会议扩展实现，详见IMeetingVideoProvider接口说明</description>
+			</param>
+			<param
+				name="order"
+				default="50"
+				kind="int">
+				<description>
+					排序号，序号小的优先被调用。
+				</description>
+			</param>
+			<description>
+			</description>
+		</item>
+		<description>视频会议集成</description>
+	</extension-point>
+	
+	<!--部门会议吞吐量 -->
+	<extension
+		point="com.landray.kmss.km.imeeting.stat">
+		<item name="stat">
+			<param
+				name="type"
+				value="dept.stat" />
+			<param 
+				name="executor" 
+				value="kmImeetingDeptStatExecutor"/>
+			<param
+				name="chartType"
+				value="barLine" />
+			<param
+				name="conditionJsp"
+				value="/km/imeeting/km_imeeting_stat/dept_stat/dept_stat_condition.jsp" />
+			<param
+				name="conditionJsp4m"
+				value="/km/imeeting/mobile/stat/dept_stat/dept_stat_condition.jsp" />	
+			<param
+				name="extJs"
+				value="/km/imeeting/km_imeeting_stat/dept_stat/dept_stat_ext.js" />
+		</item>
+	</extension>
+	
+	<!--部门会议吞吐量环比 -->
+	<extension
+		point="com.landray.kmss.km.imeeting.stat">
+		<item name="stat">
+			<param
+				name="type"
+				value="dept.statMon" />
+			<param 
+				name="executor" 
+				value="kmImeetingDeptStatMonExecutor"/>
+			<param
+				name="chartType"
+				value="barLine" />
+			<param
+				name="conditionJsp"
+				value="/km/imeeting/km_imeeting_stat/dept_stat/dept_statMon_condition.jsp" />
+			<param
+				name="conditionJsp4m"
+				value="/km/imeeting/mobile/stat/dept_stat/dept_statMon_condition.jsp" />		
+			<param
+				name="extJs"
+				value="/km/imeeting/km_imeeting_stat/dept_stat/dept_statMon_ext.js" />
+		</item>
+	</extension>
+	
+	<!--人员会议吞吐量 -->
+	<extension
+		point="com.landray.kmss.km.imeeting.stat">
+		<item name="stat">
+			<param
+				name="type"
+				value="person.stat" />
+			<param 
+				name="executor" 
+				value="kmImeetingPersonStatExecutor"/>
+			<param
+				name="chartType"
+				value="barLine" />
+			<param
+				name="conditionJsp"
+				value="/km/imeeting/km_imeeting_stat/person_stat/person_stat_condition.jsp" />
+			<param
+				name="conditionJsp4m"
+				value="/km/imeeting/mobile/stat/person_stat/person_stat_condition.jsp" />	
+			<param
+				name="extJs"
+				value="/km/imeeting/km_imeeting_stat/person_stat/person_stat_ext.js" />
+		</item>
+	</extension>
+	
+	<!--人员会议吞吐量环比 -->
+	<extension
+		point="com.landray.kmss.km.imeeting.stat">
+		<item name="stat">
+			<param
+				name="type"
+				value="person.statMon" />
+			<param 
+				name="executor" 
+				value="kmImeetingPersonStatMonExecutor"/>
+			<param
+				name="chartType"
+				value="barLine" />
+			<param
+				name="conditionJsp"
+				value="/km/imeeting/km_imeeting_stat/person_stat/person_statMon_condition.jsp" />
+			<param
+				name="conditionJsp4m"
+				value="/km/imeeting/mobile/stat/person_stat/person_statMon_condition.jsp" />		
+			<param
+				name="extJs"
+				value="/km/imeeting/km_imeeting_stat/person_stat/person_statMon_ext.js" />
+		</item>
+	</extension>
+	
+	<!--会议室使用率 -->
+	<extension
+		point="com.landray.kmss.km.imeeting.stat">
+		<item name="stat">
+			<param
+				name="type"
+				value="resource.stat" />
+			<param 
+				name="executor" 
+				value="kmImeetingResourceStatExecutor"/>
+			<param
+				name="chartType"
+				value="barLine" />
+			<param
+				name="conditionJsp"
+				value="/km/imeeting/km_imeeting_stat/resource_stat/resource_stat_condition.jsp" />
+			<param
+				name="conditionJsp4m"
+				value="/km/imeeting/mobile/stat/resource_stat/resource_stat_condition.jsp" />	
+			<param
+				name="extJs"
+				value="/km/imeeting/km_imeeting_stat/resource_stat/resource_stat_ext.js" />
+		</item>
+	</extension>
+	
+	<!--会议室使用率环比 -->
+	<extension
+		point="com.landray.kmss.km.imeeting.stat">
+		<item name="stat">
+			<param
+				name="type"
+				value="resource.statMon" />
+			<param 
+				name="executor" 
+				value="kmImeetingResourceStatMonExecutor"/>
+			<param
+				name="chartType"
+				value="barLine" />
+			<param
+				name="conditionJsp"
+				value="/km/imeeting/km_imeeting_stat/resource_stat/resource_statMon_condition.jsp" />
+			<param
+				name="conditionJsp4m"
+				value="/km/imeeting/mobile/stat/resource_stat/resource_statMon_condition.jsp" />	
+			<param
+				name="extJs"
+				value="/km/imeeting/km_imeeting_stat/resource_stat/resource_statMon_ext.js" />
+		</item>
+	</extension>
+	
+	
+	<!-- 编号机制 -->
+	 <extension point="com.landray.kmss.sys.number.config" model="*">
+		<item name="extend">
+	       <param name="modelName" value="com.landray.kmss.km.imeeting.model.KmImeetingMain"/>
+	       <param name="templatePropertyName" value="fdTemplate"/>
+	       <param name="moduleName" value="{km-imeeting:module.km.imeeting}"/>
+	       <param name="isReform" value="false"/>
+	       <param name="order" value="10"/>
+         </item>
+     </extension>
+     <extension point="com.landray.kmss.sys.number.config" model="*">
+		<item name="extend">
+			<param name="modelName" value="com.landray.kmss.km.imeeting.model.KmImeetingTopic"/>
+			<param name="templatePropertyName" value="fdTopicCategory"/>
+			<param name="moduleName" value="{km-imeeting:module.km.imeeting}"/>
+			<param name="isReform" value="false"/>
+		</item>
+	</extension>
+     
+     <!-- 日程机制 -->
+     <extension  point="com.landray.kmss.sys.agenda.label" model="*">		
+		<item name="label">
+			<param name="labelName" value="{km-imeeting:module.km.imeeting}" />
+			<param name="labelColor"  value="rgb(165, 191, 218)" />
+			<param name="modelName"  value="com.landray.kmss.km.imeeting.model.KmImeetingMain"/>
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.config">
+		<item name="info">
+			<param name="name" value="{km-imeeting:module.km.imeeting}" />
+			<param name="modelName" value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+		</item>
+	</extension>
+	
+	<!-- BAM2支持 -->
+	<extension 
+		point="com.landray.kmss.km.bam2.extend.work" 
+		model="*" >
+		<item 
+			name="extendModel">
+		    <param 
+		    	name="modelName" 
+		    	value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param 
+				name="templateName" 
+				value="com.landray.kmss.km.imeeting.model.KmImeetingTemplate"/>
+		    <param 
+		    	name="bamName" 
+		    	value="{km-imeeting:kmImeetingMain.relatedMeeting}" />
+		    <param 
+		    	name="subjectField" 
+		    	value="fdName" />
+		    <param 
+		    	name="cateBean" 
+		    	value="sysCategoryAuthTreeService"/>
+	    	<param 
+	    		name="viewURL" 
+	    		value="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view"/>
+			<param 
+				name="editURL" 
+				value="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=edit"/>
+			<param 
+				name="addURL" 
+				value="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add&amp;fdTemplateId=!{cateid}"/>
+			<param 
+				name="listURL" 
+				value="/km/imeeting/km_imeeting_main/kmImeetingMain_list_content.jsp"/>
+			<!-- bam2与产品集成新增参数 begin -->
+			<param name="statusField" value="docStatus" />
+			<param name="statusEnumsType" value="km_imeeting_main_doc_status"/>
+			<param name="workFinishField" value="fdWorkStatus" />
+			<!-- bam2与产品集成新增参数 end -->
+		</item>
+	  </extension>
+	  
+	  <extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-imeeting.js" />
+			<param name="targetFile" value="/km/imeeting/mobile/resource/js/mui-imeeting.js" />
+			<param name="srcFold" value="/km/imeeting/mobile/resource/js" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="mui-imeeting-view.css" />
+			<param name="targetFile" value="/km/imeeting/mobile/resource/css/view.css" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="mui-imeeting-summaryview.css" />
+			<param name="targetFile" value="/km/imeeting/mobile/resource/css/summary_view.css" />
+		</item>
+	</extension>
+	
+		<!-- 微协同文章类的扩展点的部署 -->
+	<extension
+		point="com.landray.kmss.third.ywork.extend"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingMain">
+		<item name="extend">
+			<param
+				name="modelName"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="templateName"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingTemplate" />
+			<param
+				name="title"
+				value="fdName" />
+			<param
+				name="type"
+				value="3" />
+			<param
+				name="order"
+				value="6" />
+			<param
+				name="name"
+				value="km-imeeting:kmImeetingMain.ywork.flow" />
+			<param
+				name="remark"
+				value="fdRemark" />
+			<param
+				name="creator"
+				value="docCreator" />
+			<param
+				name="createTime"
+				value="docCreateTime" />
+			<param
+				name="shareFields"
+				value='$fdHoldDate$;$fdName$;$fdPlace.fdName$+\"(\"+$fdOtherPlace$+\")\";$fdMeetingAim$;$fdHost.fdName$;$fdEmcee.fdName$;$fdAttendPersons.fdName$+\",\"+$fdOtherAttendPerson$;$fdParticipantPersons.fdName$+\",\"+$fdOtherParticipantPerson$;$fdSummaryInputPerson.fdName$' />
+			<param
+				name="shareFieldMessage"
+				value="time;title;address;purposes;host;organizers;participant;attend;recorder" />
+			<param
+				name="callbackFields"
+				value="person:fdWeiXinAttendPerson" />
+			<param
+				name="callbackStatus"
+				value="1==1" />
+		</item>
+	</extension>
+	
+      <extension point="com.landray.kmss.sys.attend" model="*">
+      		<item name="extendItem">
+      			<param name="modelKey" value="kmImeeting"/>
+      			<param name="modelName" value="com.landray.kmss.km.imeeting.model.KmImeetingMain"/>
+      			<param name="moduleName" value="{km-imeeting:module.km.imeeting}"/>
+      			<param name="initProvider" value="kmImeetingSysAttendProvider"/>
+      			<param name="initMethod" value="getInitSysAttendCategory"/>
+      		</item>
+      </extension>
+	
+	<!-- 表单关联控件可选模块扩展点实现  会议主文档流程-->
+	<extension point="com.landray.kmss.sys.xform.base.service.controls.relevance" model="*">
+		<item name="node">
+			<param name="modelName" value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param name="templateModelName" value="com.landray.kmss.km.imeeting.model.KmImeetingTemplate" />
+			<param name="key" value="kmImeeting" />
+			<param name="templatePropertyName" value="fdTemplate" />
+			<param name="moduleMessageKey" value="km-imeeting:table.kmImeetingMain" />
+			<param name="base" value="imeeting" />
+			<param name="baseDisplayMessageKey" value="km-imeeting:module.km.imeeting" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.xform.base.service.controls.relevance" model="*">
+		<item name="node">
+			<param name="modelName" value="com.landray.kmss.km.imeeting.model.KmImeetingSummary" />
+			<param name="templateModelName" value="com.landray.kmss.km.imeeting.model.KmImeetingTemplate" />
+			<param name="key" value="imeetingSummary" />
+			<param name="templatePropertyName" value="fdTemplate" />
+			<param name="moduleMessageKey" value="km-imeeting:table.kmImeetingSummary" />
+			<param name="base" value="imeeting" />
+			<param name="baseDisplayMessageKey" value="km-imeeting:module.km.imeeting" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.zone.doccount" >
+             <item name="doccount" >
+                   <param name="unid" value="kmImeeting" />
+                   <param name="order" value="4"/>
+                   <param name="title" value="{km-imeeting:module.km.imeeting.hr}" />
+                   <param name="link" value="/km/imeeting/#j_path=/myAttend&amp;cri.q=mymeeting:myHaveAttend&amp;except=docStatus:00" />
+                   <param name="bean" value="kmImeetingDocCountGetter"/>
+             </item>
+      </extension>
+      
+    
+    <!--会议管理一键选择分类扩展点实现 -->
+	<extension point="com.landray.kmss.sys.person.categoryUrl" model="com.landray.kmss.km.imeeting.model.KmImeetingMain" >
+		<item name="categoryUrl">
+			<param name="addUrl" value="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add&amp;fdTemplateId={0}" />
+			<param name="templateModel" value="com.landray.kmss.km.imeeting.model.KmImeetingTemplate" />
+		</item>
+	</extension>
+     
+     <extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeeting.tree.meeting" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="page"
+				value="/kmImeeting_fixed" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docDept.fdName;docStatus" />
+			<param
+				name="customized"
+				value="fdDate;km-imeeting:kmImeetingMain.fdDate,fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost,docStatus;km-imeeting:kmImeetingMain.docStatus,docPublishTime;km-imeeting:kmImeetingMain.docPublishTime" />	
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeeting.tree.cyclicity.meeting" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="page"
+				value="/kmImeeting_cyclicity" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdRepeatType;fdRepeatFrequency;fdRepeatUtil;docStatus" />
+			<param
+				name="customized"
+				value="fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost,fdRepeatType;km-imeeting:kmImeetingMain.fdRepeatType,fdRepeatFrequency;km-imeeting:kmImeetingMain.fdRepeatFrequency,fdRepeatUtil;km-imeeting:kmImeetingMain.fdRepeatUtil,docStatus;km-imeeting:kmImeetingMain.docStatus" />	
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeeting.tree.meeting.myAttend" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="page"
+				value="/myAttend" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docDept.fdName" />
+			<param
+				name="customized"
+				value="fdDate;km-imeeting:kmImeetingMain.fdDate,fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost,docStatus;km-imeeting:kmImeetingMain.docStatus,docPublishTime;km-imeeting:kmImeetingMain.docPublishTime" />	
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeeting.Create.my" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="page"
+				value="/drafted/myMeeting" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docDept.fdName;docStatus" />
+			<param
+				name="customized"
+				value="fdDate;km-imeeting:kmImeetingMain.fdDate,fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost,docStatus;km-imeeting:kmImeetingMain.docStatus,docPublishTime;km-imeeting:kmImeetingMain.docPublishTime" />	
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeetingSummary.summary.myApproval" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="page"
+				value="/approval/myMeeting" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docDept.fdName;docStatus" />
+			<param
+				name="customized"
+				value="fdDate;km-imeeting:kmImeetingMain.fdDate,fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost,docStatus;km-imeeting:kmImeetingMain.docStatus,docPublishTime;km-imeeting:kmImeetingMain.docPublishTime" />	
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeetingSummary.summary.myApproved" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="page"
+				value="/approvaled/myMeeting" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docDept.fdName;docStatus" />
+			<param
+				name="customized"
+				value="fdDate;km-imeeting:kmImeetingMain.fdDate,fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost,docStatus;km-imeeting:kmImeetingMain.docStatus,docPublishTime;km-imeeting:kmImeetingMain.docPublishTime" />		
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeeting.committee" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="page"
+				value="/committee" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docDept.fdName;docStatus" />
+			<param
+				name="customized"
+				value="fdDate;km-imeeting:kmImeetingMain.fdDate,fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost,docStatus;km-imeeting:kmImeetingMain.docStatus,docPublishTime;km-imeeting:kmImeetingMain.docPublishTime" />		
+		</item>
+	</extension> 
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeeting.panel.status.abandom" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="page"
+				value="/abandom/myMeeting" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docDept.fdName" />
+			<param
+				name="customized"
+				value="fdDate;km-imeeting:kmImeetingMain.fdDate,fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost" />		
+		</item>
+	</extension> 
+	
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingSummary">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeeting.tree.myHandleSummary" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingSummary" />
+			<param
+				name="page"
+				value="/myHandleSummary" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docCreateTime" />
+			<param
+				name="customized"
+				value="fdDate;km-imeeting:kmImeetingMain.fdDate,fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost" />		
+		</item>
+	</extension> 
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingSummary">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeeting.Create.my" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingSummary" />
+			<param
+				name="page"
+				value="/drafted/mySummary" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreateTime" />
+			<param
+				name="customized"
+				value="fdDate;km-imeeting:kmImeetingMain.fdDate,fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost" />		
+		</item>
+	</extension> 
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingSummary">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeetingSummary.summary.myApproval" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingSummary" />
+			<param
+				name="page"
+				value="/approval/mySummary" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docCreateTime" />
+			<param
+				name="customized"
+				value="fdDate;km-imeeting:kmImeetingMain.fdDate,fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost" />		
+		</item>
+	</extension> 
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingSummary">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeetingSummary.summary.myApproved" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingSummary" />
+			<param
+				name="page"
+				value="/approvaled/mySummary" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docCreateTime" />
+			<param
+				name="customized"
+				value="fdDate;km-imeeting:kmImeetingMain.fdDate,fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost" />		
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingSummary">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeetingSummary.panel.status.abandom" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingSummary" />
+			<param
+				name="page"
+				value="/abandom/mySummary" />
+			<param
+				name="default"
+				value="fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docCreateTime" />
+			<param
+				name="customized"
+				value="fdDate;km-imeeting:kmImeetingMain.fdDate,fdPlace;km-imeeting:kmImeetingMain.fdPlace,fdHost;km-imeeting:kmImeetingMain.fdHost" />		
+		</item>
+	</extension>	
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingTopic">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeeting.tree.myHandleTopic" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingTopic" />
+			<param
+				name="page"
+				value="/kmImeeting_topic" />
+			<param
+				name="default"
+				value="docSubject;fdTopicCategory.fdName;fdChargeUnit.fdName;fdReporter.fdName;fdAttendUnit;fdListenUnit;docCreator.fdName;docCreateTime;docStatus;fdIsAccept" />
+			<param
+				name="customized"
+				value="fdAttendUnit;km-imeeting:kmImeetingTopic.fdAttendUnit,fdListenUnit;km-imeeting:kmImeetingTopic.fdListenUnit" />		
+		</item>
+	</extension> 
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingTopic">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeeting.topic.myDrafted" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingTopic" />
+			<param
+				name="page"
+				value="/drafted/myTopic" />
+			<param
+				name="default"
+				value="docSubject;fdTopicCategory.fdName;fdChargeUnit.fdName;fdReporter.fdName;fdAttendUnit;fdListenUnit;docCreator.fdName;docCreateTime;docStatus;fdIsAccept" />
+			<param
+				name="customized"
+				value="fdAttendUnit;km-imeeting:kmImeetingTopic.fdAttendUnit,fdListenUnit;km-imeeting:kmImeetingTopic.fdListenUnit" />		
+		</item>
+	</extension> 
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingTopic">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeeting.topic.myApproval" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingTopic" />
+			<param
+				name="page"
+				value="/approval/myTopic" />
+			<param
+				name="default"
+				value="docSubject;fdTopicCategory.fdName;fdChargeUnit.fdName;fdReporter.fdName;fdAttendUnit;fdListenUnit;docCreator.fdName;docCreateTime;docStatus;fdIsAccept" />
+			<param
+				name="customized"
+				value="fdAttendUnit;km-imeeting:kmImeetingTopic.fdAttendUnit,fdListenUnit;km-imeeting:kmImeetingTopic.fdListenUnit" />		
+		</item>
+	</extension> 
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.imeeting.model.KmImeetingTopic">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-imeeting:kmImeeting.topic.myApproved" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingTopic" />
+			<param
+				name="page"
+				value="/approvaled/myTopic" />
+			<param
+				name="default"
+				value="docSubject;fdTopicCategory.fdName;fdChargeUnit.fdName;fdReporter.fdName;fdAttendUnit;fdListenUnit;docCreator.fdName;docCreateTime;docStatus;fdIsAccept" />
+			<param
+				name="customized"
+				value="fdAttendUnit;km-imeeting:kmImeetingTopic.fdAttendUnit,fdListenUnit;km-imeeting:kmImeetingTopic.fdListenUnit" />		
+		</item>
+	</extension>
+	<!--会议议题废弃箱 #168588 -->
+	<extension
+			point="com.landray.kmss.sys.listshow.listShowConfig"
+			model="com.landray.kmss.km.imeeting.model.KmImeetingTopic">
+		<item
+				name="listShowConfig">
+			<param
+					name="name"
+					value="km-imeeting:kmImeetingTopic.panel.status.abandom" />
+			<param
+					name="model"
+					value="com.landray.kmss.km.imeeting.model.KmImeetingTopic" />
+			<param
+					name="page"
+					value="/abandom/myTopic" />
+			<param
+					name="default"
+					value="docSubject;fdTopicCategory.fdName;fdChargeUnit.fdName;fdReporter.fdName;fdAttendUnit;fdListenUnit;docCreator.fdName;docCreateTime;docStatus;fdIsAccept" />
+			<param
+					name="customized"
+					value="fdAttendUnit;km-imeeting:kmImeetingTopic.fdAttendUnit,fdListenUnit;km-imeeting:kmImeetingTopic.fdListenUnit" />
+		</item>
+	</extension>
+
+	<!-- 个人中心参与的会议计数 -->
+	<extension point="com.landray.kmss.sys.portal">
+		<item name="stat">
+			<!-- 模块名称 -->
+			<param
+				name="moduleName"
+				value="km-imeeting:module.km.imeeting" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelName"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="url"
+				value="/km/imeeting/km_imeeting_main/kmImeetingMainStat.do?method=showStat" />
+			<param name="icon" value="lui_iconfont_nav_km_imeeting" />
+			<param name="viewUrl" value="/km/imeeting/#j_path=%2FmyAttend&amp;cri.q=mymeeting%3AmyHaveAttend&amp;except=docStatus%3A00" />
+		</item>
+	</extension> 
+	<!-- 会议安排启动子流程  -->
+	<extension
+		point="com.landray.kmss.sys.workflow.support.oa.subprocess"
+		model="*">		
+		<item
+			name="subprocess">
+			<param
+				name="modelName"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="createParam"
+				value="fdTemplateId=!{cateid}" />
+		</item>
+	</extension>
+	<!-- 数据中台 -RTF -->
+	<extension point="com.landray.kmss.sys.xform.maindata.rtf">
+		<item name="config">
+			<!-- 主文档全名称 -->
+			<param
+				name="modelName"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingSummary" />
+			<param
+				name="fields"
+				value="docContent" />
+		</item>
+	</extension>
+	<!-- 下属工作 -->
+	<extension point="com.landray.kmss.sys.subordinate">
+		<!-- 下属的会议 -->
+		<item name="config">
+			<param
+				name="modelName"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="messageKey"
+				value="km-imeeting:table.kmImeetingMain" />
+			<param
+				name="moduleMessageKey"
+				value="km-imeeting:module.km.imeeting" />
+			<param
+				name="type"
+				value="person" />
+			<param
+				name="provider"
+				value="com.landray.kmss.km.imeeting.subordinate.KmImeetingMainProvider" />
+			<param
+				name="indexPath"
+				value="/km/imeeting/subordinate/kmImeetingMain_index.jsp" />
+			<param
+				name="listPath"
+				value="/km/imeeting/km_imeeting_main/kmImeetingMain_list.jsp" />
+			<param
+				name="viewPath"
+				value="/km/imeeting/km_imeeting_main/kmImeetingMain_view.jsp" />
+		</item>
+		<!-- 下属的纪要 -->
+		<item name="config">
+			<param
+				name="modelName"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingSummary" />
+			<param
+				name="messageKey"
+				value="km-imeeting:table.kmImeetingSummary" />
+			<param
+				name="moduleMessageKey"
+				value="km-imeeting:module.km.imeeting" />
+			<param
+				name="type"
+				value="person" />
+			<param
+				name="provider"
+				value="com.landray.kmss.km.imeeting.subordinate.KmImeetingSummaryProvider" />
+			<param
+				name="indexPath"
+				value="/km/imeeting/subordinate/kmImeetingSummary_index.jsp" />
+			<param
+				name="listPath"
+				value="/km/imeeting/km_imeeting_summary/kmImeetingSummary_list.jsp" />
+			<param
+				name="viewPath"
+				value="/km/imeeting/km_imeeting_summary/kmImeetingSummary_view.jsp" />
+		</item>
+		<!-- 下属的预约 -->
+		<item name="config">
+			<param
+				name="modelName"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingBook" />
+			<param
+				name="messageKey"
+				value="km-imeeting:table.kmImeetingBook" />
+			<param
+				name="moduleMessageKey"
+				value="km-imeeting:module.km.imeeting" />
+			<param
+				name="type"
+				value="person" />
+			<param
+				name="provider"
+				value="com.landray.kmss.km.imeeting.subordinate.KmImeetingBookProvider" />
+			<param
+				name="indexPath"
+				value="/km/imeeting/subordinate/kmImeetingBook_index.jsp" />
+			<param
+				name="listPath"
+				value="/km/imeeting/km_imeeting_book/kmImeetingBook_list.jsp" />
+			<param
+				name="viewPath"
+				value="/km/imeeting/km_imeeting_book/kmImeetingBook_view.jsp" />
+		</item>
+	</extension>
+	
+	<extension 
+		point="com.landray.kmss.elec.device.ansyService"
+		model="com.landray.kmss.elec.device.client.IElecChannelRequestMessage">
+    	<item name="convertor">
+      		<param name="bean" value="kmImeetingYqqSignService" />
+      		<param name="channel" value="yqq" />
+      		<param name="receiver" value="km-ImeetingSummary" />
+    	</item>
+  	</extension>
+
+	<extension point="com.landray.kmss.sys.datamng">
+		<item name="config">
+			<param name="modulePrefix" value="/km/imeeting/"/>
+			<param name="modelName" value="com.landray.kmss.km.imeeting.model.KmImeetingMain"/>
+			<param name="authRange" value="self:'docCreator', orgOrDept:'docDept'"/>
+			<param name="templateName" value="com.landray.kmss.km.imeeting.model.KmImeetingTemplate"/>
+			<param name="serviceName" value="kmImeetingDatamngExtensionPointApi"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.datamng">
+		<item name="config">
+			<param name="modulePrefix" value="/km/imeeting/"/>
+			<param name="modelName" value="com.landray.kmss.km.imeeting.model.KmImeetingTopic"/>
+			<param name="authRange" value="self:'docCreator'"/>
+			<param name="templateName" value="com.landray.kmss.km.imeeting.model.KmImeetingTopicCategory"/>
+			<param name="serviceName" value="kmImeetingDatamngExtensionPointApi"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.datamng">
+		<item name="config">
+			<param name="modulePrefix" value="/km/imeeting/"/>
+			<param name="modelName" value="com.landray.kmss.km.imeeting.model.KmImeetingSummary"/>
+			<param name="authRange" value="self:'docCreator', orgOrDept:'docDept'"/>
+			<param name="templateName" value="com.landray.kmss.km.imeeting.model.KmImeetingTemplate"/>
+			<param name="serviceName" value="kmImeetingDatamngExtensionPointApi"/>
+		</item>
+	</extension>
+	<!--	会议室资源 webservice-->
+	<extension
+			point="com.landray.kmss.sys.webservice2">
+		<item
+				name="registry">
+			<param
+					name="serviceName"
+					value="{km-imeeting:kmImeetingRes.webService}" />
+			<param
+					name="serviceClass"
+					value="com.landray.kmss.km.imeeting.webservice.IKmImeetingResWebService" />
+			<param
+					name="serviceBean"
+					value="kmImeetingResWebService" />
+			<param
+					name="serviceDoc"
+					value="/km/imeeting/restService/KmImeetingResRestHelp.jsp" />
+		</item>
+	</extension>
+	<!--	会议室预定 webservice-->
+	<extension
+			point="com.landray.kmss.sys.webservice2">
+		<item
+				name="registry">
+			<param
+					name="serviceName"
+					value="{km-imeeting:kmImeetingBook.webService}" />
+			<param
+					name="serviceClass"
+					value="com.landray.kmss.km.imeeting.webservice.IKmImeetingBookWebService" />
+			<param
+					name="serviceBean"
+					value="kmImeetingBookWebService" />
+			<param
+					name="serviceDoc"
+					value="/km/imeeting/restService/KmImeetingBookRestHelp.jsp" />
+		</item>
+	</extension>
+</plugin>

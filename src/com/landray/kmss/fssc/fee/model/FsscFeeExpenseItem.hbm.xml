@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.fssc.fee.model.FsscFeeExpenseItem" 
+        table="fssc_fee_expense_item">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property 
+            name="fdIsNeedBudget" 
+            column="fd_is_need_budget" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="fdName" 
+            column="fd_name" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+        <many-to-one 
+            name="fdTemplate" 
+            column="fd_template_id" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="fdCompany" 
+            column="fd_company_id" 
+            update="true" 
+            insert="true"/>
+        <bag 
+            name="fdItemList" 
+            table="fssc_fee_expense_item_list" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem" 
+                column="fd_target_id"/>
+        </bag>
+    </class>
+</hibernate-mapping>

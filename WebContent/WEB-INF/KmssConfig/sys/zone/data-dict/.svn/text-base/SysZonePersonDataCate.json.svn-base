@@ -1,0 +1,42 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.zone.model.SysZonePersonDataCate",
+        "messageKey": "sys-zone:table.sysZonePersonDataCate",
+        "displayProperty": "fdName",
+        "serviceBean": "sysZonePersonDataCateService",
+        "table": "sys_zone_person_data_cate",
+        "url": "/sys/zone/sys_zone_person_data_cate/sysZonePersonDataCate.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePersonDataCate.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "length": "200",
+            "validate": "true"
+        },
+        "docStatus":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePersonDataCate.docStatus",
+            "type": "String",
+            "column": "doc_status",
+            "notNull": "true",
+            "length": "2",
+            "validate": "false"
+        },
+        "fdDataCateTempls":         {
+            "propertyType": "list",
+            "messageKey": "sys-zone:sysZonePersonDataCate.fdDataCateTempls",
+            "type": "com.landray.kmss.sys.zone.model.SysZonePerDataTempl",
+            "column": "fd_person_cate_id",
+            "cascade": "all-delete-orphan",
+            "table": "sys_zone_per_data_templ"
+        }
+    }
+}

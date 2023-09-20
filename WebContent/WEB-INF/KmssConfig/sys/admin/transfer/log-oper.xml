@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+	<logset>
+        <oper
+            id="sysAdminTransferTask"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.admin.transfer.model.SysAdminTransferTask"
+            action="/sys/admin/transfer/sys_admin_transfer_task/sysAdminTransferTask.do">
+            <query 
+                method="check"
+                logPoint="sysAdminTransferTaskCheck"
+                messageKey="sys-admin-transfer:module.sys.admin.transfer">
+            </query>
+        </oper>
+        <oper
+            id="sysAdminTransferTaskService"
+            model="*"
+            action="/sys/admin/resource/jsp/jsonp.jsp">
+            <query 
+                paramName="s_bean"
+                paramValue="sysAdminTransferTaskService"
+                logPoint="Base_UrlParam;sysAdminTransferTaskService"
+                messageKey="sys-admin-transfer:button.transfer">
+            </query>
+        </oper>
+	</logset>
+</log-oper>

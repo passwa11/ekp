@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+
+		<!-- 赞赏记录 -->
+		<oper id="sysPraiseMainOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.praise.model.SysPraiseMain" action="/sys/praise/sys_praise_main/sysPraiseMain.do">
+			<query method="isPraised" logPoint="Base_UrlParam"
+				messageKey="sys-praise:sysPraiseMain.isPraised">
+			</query>
+			<query method="checkPraisedByIds" logPoint="Base_UrlParam"
+				messageKey="sys-praise:sysPraiseMain.isPraised">
+			</query>
+			<query method="getPraisedPersons" logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="sys-praise:sysPraiseMain.findAll">
+			</query>
+			<query method="executePraise" logPoint="Base_UrlParam;executePraise;Service_Delete"
+				messageKey="sys-praise:sysPraiseMain.bePraise">
+			</query>
+			<query method="checkPraiseAndNegativeByIds" logPoint="Base_UrlParam"
+				messageKey="sys-praise:sysPraiseMain.checkPraiseAndNegative">
+			</query>
+			<query method="deletePraiseOnMobile" logPoint="Base_UrlParam;Service_Delete"
+				messageKey="sys-praise:sysPraiseMain.deletePraiseOnMobile">
+			</query>
+			<query method="addNewPraiseOnMobile" logPoint="Base_UrlParam;addNewPraiseOnMobile"
+				messageKey="sys-praise:sysPraiseMain.addNewPraiseOnMobile">
+			</query>
+		</oper>
+
+		<!-- 赞赏人 -->
+		<oper id="sysPraiseInfoOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.praise.model.SysPraiseInfo" action="/sys/praise/sys_praise_info/sysPraiseInfo.do">
+			<query method="saveReply" logPoint="saveReply"
+				messageKey="sys-praise:sysPraiseInfo.saveReply">
+			</query>
+			<query method="listDetail" logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="sys-praise:sysPraiseInfo.listDetail">
+			</query>
+		</oper>
+
+		<!-- 赞赏统计 -->
+		<oper id="sysPraiseInfoPersonalOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.praise.model.SysPraiseInfoPersonal"
+			action="/sys/praise/sys_praise_info_personal/sysPraiseInfoPersonal.do">
+			<query method="downExcel" logPoint="Base_UrlParam" messageKey="button.export" />
+			<query method="getRankInfo" logPoint="Base_UrlParam;getRankInfo"
+				messageKey="sys-praise:sysPraiseInfoPersonal.getRankInfo" />
+
+		</oper>
+
+		<!-- 赞赏模块开启日志 -->
+		<oper id="sysPraiseInfoConfigMainOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.praise.model.SysPraiseInfoConfig"
+			action="/sys/praise/sys_praise_info_config_main/sysPraiseInfoConfigMain.do">
+			<query method="add" logPoint="Action_FindAll;Service_Update"
+				messageKey="sys-praise:sysPraiseInfoConfig.add" />
+			<query method="save" logPoint="Service_Update"
+				messageKey="sys-praise:sysPraiseInfoConfig.save" />
+			<query method="importModule" logPoint="importModule"
+				messageKey="sys-praise:sysPraiseInfoConfig.importModule" />
+			<query method="updateCache" logPoint="updateCache"
+				messageKey="sys-praise:sysPraiseInfoConfig.updateCache" />
+		</oper>
+
+		<!-- 赞赏回复设置 -->
+		<oper id="sysPraiseReplyConfigOperLog" desc="" extends="BaseOperLog"
+			model="*" action="/sys/praise/sys_praise_reply_config/sysPraiseReplyConfig.do">
+			<query method="viewConfig" logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="sys-praise:sysPraiseReplyConfig.viewConfig" />
+			<query method="saveConfig" logPoint="saveConfig"
+				messageKey="sys-praise:sysPraiseReplyConfig.saveConfig" />
+		</oper>
+
+		<!-- 赞赏分类 -->
+		<oper id="sysPraiseInfoCategoryOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.praise.model.SysPraiseInfoCategory"
+			action="/sys/praise/sys_praise_info_category/sysPraiseInfoCategory.do">
+		</oper>
+
+	</logset>
+</log-oper>

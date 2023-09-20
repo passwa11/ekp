@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.landray.kmss.third.pda.model.PdaMessagePushInfo"
+		table="pda_msg_push_info">
+		<id name="fdId" column="fd_id" length="36">
+			<generator class="assigned" />
+		</id>
+		
+		<property name="fdNotifyId" column="fd_notify_id" update="true"
+			insert="true" length="36" not-null="false" index="idx_msgPushInfo_fdNotifyId"/>
+			
+		<property name="fdAvailable" column="fd_available" update="true"
+			insert="true" length="2" not-null="false" index="idx_fdAvailable"/>
+			
+		<property name="fdHasPushed" column="fd_has_pushed" update="true"
+			insert="true" length="2" not-null="false" index="idx_fdHasPushed"/>	
+		
+		<property name="fdCreateTime" column="fd_create_time" update="true"
+			insert="true" not-null="false" />
+			
+		<many-to-one name="fdPerson" column="fd_person_id"
+			insert="true" update="true" not-null="false" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/webservice2/sys_webservice_main/sysWebserviceMain.do"
+		class="com.landray.kmss.sys.webservice2.actions.SysWebserviceMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.webservice2.forms.SysWebserviceMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/webservice2/sys_webservice_main/sysWebserviceMain_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/webservice2/sys_webservice_main/sysWebserviceMain_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/webservice2/sys_webservice_main/sysWebserviceMain_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/webservice2/sys_webservice_init/sysWebserviceInit.do"
+		class="com.landray.kmss.sys.webservice2.actions.SysWebserviceInitAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.webservice2.forms.SysWebserviceMainForm" />
+	</bean>
+	<bean
+		name="/sys/webservice2/sys_webservice_user/sysWebserviceUser.do"
+		class="com.landray.kmss.sys.webservice2.actions.SysWebserviceUserAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.webservice2.forms.SysWebserviceUserForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/webservice2/sys_webservice_user/sysWebserviceUser_view.jsp" />
+				<entry
+					key="simple"
+					value="/sys/webservice2/sys_webservice_user/sysWebserviceUser_simple.jsp" />
+				<entry
+					key="edit"
+					value="/sys/webservice2/sys_webservice_user/sysWebserviceUser_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/webservice2/sys_webservice_user/sysWebserviceUser_list.jsp" />
+				<entry
+					key="editPassword"
+					value="/sys/webservice2/sys_webservice_user/editPassword.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/webservice2/sys_webservice_log/sysWebserviceLog.do"
+		class="com.landray.kmss.sys.webservice2.actions.SysWebserviceLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.webservice2.forms.SysWebserviceLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/webservice2/sys_webservice_log/sysWebserviceLog_view.jsp" />
+				<entry
+					key="list"
+					value="/sys/webservice2/sys_webservice_log/sysWebserviceLog_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/webservice2/sys_webservice_log_config/sysWebserviceLogConfig.do"
+		class="com.landray.kmss.sys.webservice2.actions.SysWebserviceLogConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+	<bean
+		name="/sys/webservice2/sys_webservice_rest_config/sysWebserviceRestConfig.do"
+		class="com.landray.kmss.sys.webservice2.actions.SysWebserviceRestConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.webservice2.forms.SysWebserviceRestConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/webservice2/sys_webservice_rest_config/sysWebserviceRestConfig_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/webservice2/sys_webservice_rest_config/sysWebserviceRestConfig_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/webservice2/sys_webservice_rest_config/sysWebserviceRestConfig_list.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- json转换请求拦截器 -->
+	<bean id="sysWebserviceActionInterceptor"
+		class="com.landray.kmss.sys.webservice2.interceptor.SysWebserviceActionInterceptor">
+	</bean>		
+</beans>

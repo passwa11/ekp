@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="lbpmExtAttentionDao" 
+        class="com.landray.kmss.sys.lbpmext.attention.dao.hibernate.LbpmExtAttentionDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.lbpmext.attention.model.LbpmExtAttention</value>
+        </property>
+    </bean>
+    <bean 
+        id="lbpmExtAttentionTarget" 
+        class="com.landray.kmss.sys.lbpmext.attention.service.spring.LbpmExtAttentionServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="lbpmExtAttentionDao"/>
+        </property>
+        <property
+			name="sysCategoryMainService">
+			<ref
+				bean="sysCategoryMainService" />
+		</property>
+    </bean>
+    <bean 
+        id="lbpmExtAttentionService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="lbpmExtAttentionTarget"/>
+        </property>
+    </bean>
+    <bean
+		id="lbpmExtAttentionScopeDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.lbpmext.attention.dao.hibernate.LbpmExtAttentionScopeDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.lbpmext.attention.model.LbpmExtAttentionScope" />
+	</bean>
+	<bean
+		id="lbpmExtAttentionScopeTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmext.attention.service.spring.LbpmExtAttentionScopeServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="lbpmExtAttentionScopeDao" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmExtAttentionScopeService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="lbpmExtAttentionScopeTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="lbpmExtAttentionScopeTreeService"
+		class="com.landray.kmss.sys.lbpmext.attention.service.spring.LbpmExtAttentionScopeTreeServiceImp">
+		<property
+			name="sysCategoryMainService">
+			<ref
+				bean="sysCategoryMainService" />
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 提醒模板 -->
+	<bean
+		id="sysRemindTemplateDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.remind.dao.hibernate.SysRemindTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.remind.model.SysRemindTemplate" />
+	</bean>
+	<bean
+		id="sysRemindTemplateTarget"
+		parent="KmssBaseCoreTarget"
+		class="com.landray.kmss.sys.remind.service.spring.SysRemindTemplateServiceImp">
+		<property name="baseDao">
+			<ref bean="sysRemindTemplateDao" />
+		</property>
+		<property name="sysRemindMainService">
+			<ref bean="sysRemindMainService" />
+		</property>
+		<property name="sysRemindTemplateRelationService">
+			<ref bean="sysRemindTemplateRelationService" />
+		</property>
+	</bean>
+	<bean
+		id="sysRemindTemplateService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<ref bean="sysRemindTemplateTarget" />
+		</property>
+	</bean>
+	
+	<!-- 提醒模板关系 -->
+	<bean
+		id="sysRemindTemplateRelationDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.remind.dao.hibernate.SysRemindTemplateRelationDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.remind.model.SysRemindTemplateRelation" />
+	</bean>
+	<bean
+		id="sysRemindTemplateRelationTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.remind.service.spring.SysRemindTemplateRelationServiceImp">
+		<property name="baseDao">
+			<ref bean="sysRemindTemplateRelationDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysRemindTemplateRelationService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysRemindTemplateRelationTarget" />
+		</property>
+	</bean>
+	
+	<!-- 提醒设置 -->
+	<bean
+		id="sysRemindMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.remind.dao.hibernate.SysRemindMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.remind.model.SysRemindMain" />
+	</bean>
+	<bean
+		id="sysRemindMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.remind.service.spring.SysRemindMainServiceImp">
+		<property name="baseDao">
+			<ref bean="sysRemindMainDao" />
+		</property>
+		<property name="sysRemindMainTaskService">
+			<ref bean="sysRemindMainTaskService" />
+		</property>
+		<property name="sysRemindMainTaskLogService">
+			<ref bean="sysRemindMainTaskLogService" />
+		</property>
+		<property name="sysQuartzCoreService">
+			<ref bean="sysQuartzCoreService" />
+		</property>
+		<property name="processServiceManager">
+			<ref bean="lbpmProcessServiceManager" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="sysRemindMainService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysRemindMainTarget" />
+		</property>
+	</bean>
+	
+	<!-- 提醒任务 -->
+	<bean
+		id="sysRemindMainTaskDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.remind.dao.hibernate.SysRemindMainTaskDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.remind.model.SysRemindMainTask" />
+	</bean>
+	<bean
+		id="sysRemindMainTaskTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.remind.service.spring.SysRemindMainTaskServiceImp">
+		<property name="baseDao">
+			<ref bean="sysRemindMainTaskDao" />
+		</property>
+		<property name="sysQuartzJobExecutor">
+			<ref bean="sysQuartzJobExecutor" />
+		</property>
+		<property name="sysQuartzJobService">
+			<ref bean="sysQuartzJobService" />
+		</property>
+	</bean>
+	<bean
+		id="sysRemindMainTaskService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysRemindMainTaskTarget" />
+		</property>
+		<property name="transactionAttributes">
+            <props>
+                <prop key="run*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+	</bean>
+	
+	<!-- 任务日志 -->
+	<bean
+		id="sysRemindMainTaskLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.remind.dao.hibernate.SysRemindMainTaskLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.remind.model.SysRemindMainTaskLog" />
+	</bean>
+	<bean
+		id="sysRemindMainTaskLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.remind.service.spring.SysRemindMainTaskLogServiceImp">
+		<property name="baseDao">
+			<ref bean="sysRemindMainTaskLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysRemindMainTaskLogService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysRemindMainTaskLogTarget" />
+		</property>
+	</bean>
+	
+	<!-- 机制Service -->
+	<bean
+		id="sysRemindTemplateCoreService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<bean
+				class="com.landray.kmss.sys.remind.service.spring.SysRemindTemplateCoreServiceImp">
+				<property name="sysRemindTemplateService">
+					<ref bean="sysRemindTemplateService" />
+				</property>
+				<property name="sysRemindTemplateRelationService">
+					<ref bean="sysRemindTemplateRelationService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+</beans>

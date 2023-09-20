@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean name="/kms/knowledge/kms_knowledge_batch/kmsKnowledgeModuleBatch.do"
+		class="com.landray.kmss.kms.knowledge.batch.actions.KmsKnowledgeBatchModuleAction"
+		lazy-init="true" parent="KmssBaseAction">
+	</bean>
+
+	<bean
+		class="com.landray.kmss.kms.knowledge.batch.actions.KmsKnowledgeBatchLogAction"
+		parent="KmssBaseAction" name="/kms/knowledge/kms_knowledge_batch/kmsKnowledgeBatchLog.do"
+		lazy-init="true">
+		<property name="formType"
+			value="com.landray.kmss.kms.knowledge.batch.forms.KmsKnowledgeBatchLogForm" />
+		<property name="forwards">
+			<map>
+				<entry key="data" value="/kms/knowledge/kms_knowledge_batch/data.jsp" />
+			</map>
+		</property>
+	</bean>
+
+</beans>	

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<script type="text/javascript">
+var Com_Parameter = {
+	ContextPath:parent.Com_Parameter.ContextPath,
+	ResPath:parent.Com_Parameter.ResPath,
+	Style:parent.Com_Parameter.Style,
+	StylePath:parent.Com_Parameter.StylePath,
+	JsFileList:new Array,
+	DialogLang:parent.Com_Parameter.DialogLang,
+	Lang:parent.Com_Parameter.Lang
+};
+function writeMessage(key){
+	document.write(Com_Parameter.DialogLang[key]);
+}
+function writeButtonMessage(btnIds, keys){
+	var btnArr = btnIds.split(";");
+	var keyArr = keys==null?btnArr:keys.split(";");
+	for(var i=0; i<btnArr.length;i++){
+		document.getElementById(btnArr[i]).value = Com_Parameter.DialogLang[keyArr[i]];
+	}
+}
+var dialogObject = parent.dialogObject;
+</script>
+<script type="text/javascript" src="../../../resource/js/common.js"></script>
+<script>
+Com_IncludeFile("dialog.js", "style/"+Com_Parameter.Style+"/dialog/");
+
+window.onload = function(){
+	writeButtonMessage("btnOk;btnCancel;btnSelectNone");
+}
+function Com_DialogReturnValue(){
+	var rtnVal = new Array;
+	var dataFrame = parent.document.getElementById("dataFrame");
+	if(dataFrame){
+		var selectedData = dataFrame.contentWindow.getSelectedData();
+		parent.Com_DialogReturn(selectedData);
+	}
+}
+function Com_DialogReturnEmpty(){
+	parent.Com_DialogReturn(new Array());
+}
+</script>
+</head>
+<body topmargin=10>
+<span id="Span_CurValue"></span>
+
+<table border=0 cellspacing=0 cellpadding=0 bordercolor=#003048 width=100%>
+	<tr valign=middle height=25>
+		<td align=center>
+			<input id="btnOk" type=button class="btndialog" style="width:50px"
+				onclick="Com_DialogReturnValue();">&nbsp;
+			<input id="btnCancel" type=button class="btndialog" style="width:50px"
+				onclick="parent.Com_DialogReturn();">&nbsp;
+			<input id="btnSelectNone" type=button class="btndialog" style="width:50px"
+				onclick="Com_DialogReturnEmpty();">
+		</td>
+	</tr>
+</table>
+</body>
+</html>

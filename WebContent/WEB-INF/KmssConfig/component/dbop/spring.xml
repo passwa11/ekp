@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="compDbcpDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.component.dbop.dao.hibernate.CompDbcpDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.component.dbop.model.CompDbcp" />
+	</bean>
+	<bean
+		id="compDbcpTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.component.dbop.service.spring.CompDbcpServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="compDbcpDao" />
+		</property>
+	</bean>
+	<bean
+		id="compDbcpService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="compDbcpTarget" />
+		</property>
+	</bean>
+	<bean
+		id="compDbcpXMLService"
+		class="com.landray.kmss.component.dbop.service.spring.CompDbcpXMLServiceImp">
+		<property
+			name="compDbcpService">
+			<ref
+				bean="compDbcpService" />
+		</property>
+	</bean>
+	<bean id="compDbcpRoleValidator" 
+		class="com.landray.kmss.component.dbop.service.spring.CompDbcpRoleValidator" >
+		<property
+			name="compDbcpService">
+			<ref
+				bean="compDbcpService" />
+		</property>		
+	</bean>	
+	<bean
+		id="compDbcpStartListener"
+		class="com.landray.kmss.component.dbop.service.spring.CompDbcpStartListener">
+		<property name="compDbcpService">
+			<ref bean="compDbcpService" />
+		</property>
+	</bean>		
+</beans>

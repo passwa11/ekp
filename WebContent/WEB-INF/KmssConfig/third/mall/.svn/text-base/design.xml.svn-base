@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs xmlns="http://www.example.org/design-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module 
+		messageKey="third-mall:module.third.mall" 
+		urlPrefix="/third/mall/"
+		defaultValidator="roleValidator(role=SYSROLE_USER)">
+		<roles>
+			ROLE_THIRDMALL_ADMIN,
+			ROLE_THIRDMALL_USE
+		</roles>
+		<request
+            path="thirdMallAuthorize*">
+            <query
+                queryString="method=callback"
+                validator="true" />
+        </request>
+
+		<request
+				path="thirdMallPublic.*"
+				defaultValidator="roleValidator(role=ROLE_THIRDMALL_USE)">
+		</request>
+
+	</module>
+	<module
+		messageKey=""
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.third.mall.model.ThirdMallConfig"
+				validator="roleValidator(role=ROLE_THIRDMALL_ADMIN)" />
+		</request>
+	</module>
+	<quartz
+		messageKey="third-mall:thirdMallAuthorize.token.job"
+		jobService="thirdMallAuthorizeService"
+		jobMethod="refreshAccessToken"
+		cronExpression="0 0/5 * * * ?"
+		description="third-mall:thirdMallAuthorize.token.job.desc" />
+	<!-- 云商城集成后台配置 -->
+	<profileConfig
+		key="mall"
+		messageKey="{third-mall:module.third.mall}"
+		url="/sys/appconfig/sys_appconfig/sysAppConfig.do?method=edit&amp;modelName=com.landray.kmss.third.mall.model.ThirdMallConfig"
+		icon="lui_icon_s_profile_navLeft_weixin"
+		description="{third-mall:mall.profileCfg.description}"
+		type="saas"
+		order="3" />
+		
+</configs>

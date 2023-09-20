@@ -1,0 +1,385 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+        "messageKey": "sys-organization:sysOrgElement.person",
+        "displayProperty": "fdName",
+        "serviceBean": "sysOrgPersonService",
+        "table": "sys_org_person",
+        "extendClass": "com.landray.kmss.sys.organization.model.SysOrgElement",
+        "discriminatorValue": "8",
+        "url": "/sys/organization/sys_org_person/sysOrgPerson.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "unique": "false",
+            "length": "200",
+            "canSearch": "true",
+            "validate": "true",
+            "langSupport": "true"
+        },
+        "fdNickName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdNickName",
+            "type": "String",
+            "column": "fd_nick_name",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdIsActivated":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdIsActivated",
+            "type": "Boolean",
+            "column": "fd_is_activated",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "0",
+            "enumType": "sys_org_activated_result",
+            "canSearch": "true"
+        },
+        "fdNamePinYin":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdNamePinYin",
+            "type": "String",
+            "column": "fd_name_pinyin",
+            "unique": "false",
+            "length": "400"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdOrder",
+            "type": "Integer",
+            "column": "fd_order",
+            "notNull": "false",
+            "unique": "false",
+            "validate": "true"
+        },
+        "anquanjibie":         {
+            "propertyType": "simple",
+            "messageKey": "hr-staff:hrStaffPersonInfo.anquanjibie",
+            "type": "Integer",
+            "column": "anquanjibie",
+            "notNull": "false",
+            "unique": "false",
+            "validate": "true"
+        },
+        "fdNo":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdNo",
+            "type": "String",
+            "column": "fd_no",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdSex":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdSex",
+            "type": "String",
+            "column": "fd_sex",
+            "notNull": "false",
+            "unique": "false",
+            "length": "50",
+            "enumType": "sys_org_person_sex",
+            "canSearch": "true"
+        },
+        "fdKeyword":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdKeyword",
+            "type": "String",
+            "column": "fd_keyword",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdIsAvailable":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdIsAvailable",
+            "type": "Boolean",
+            "column": "fd_is_available",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "1",
+            "enumType": "sys_org_available_result",
+            "canSearch": "true"
+        },
+        "fdIsBusiness":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdIsBusiness",
+            "type": "Boolean",
+            "column": "fd_is_business",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "1",
+            "canSearch": "true"
+        },
+        "fdMemo":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdMemo",
+            "type": "String",
+            "column": "fd_memo",
+            "notNull": "false",
+            "unique": "false",
+            "length": "4000",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "hbmParent":         {
+            "propertyType": "model",
+            "messageKey": "sys-organization:sysOrgPerson.fdParent",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_parentid",
+            "notNull": "false",
+            "unique": "false",
+            "canSearch": "true",
+            "treeModel": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}', '!{nameField}', null, ORG_TYPE_ORGORDEPT);",
+            "where": "sysOrgElement.fdOrgType=1 or sysOrgElement.fdOrgType=2"
+        },
+        "hbmPosts":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrgPerson.fdPosts",
+            "column": "fd_personid",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPost",
+            "table": "sys_org_post_person",
+            "elementColumn": "fd_postid",
+            "dialogJS": "Dialog_Address(true, '!{idField}', '!{nameField}', null, ORG_TYPE_POST);"
+        },
+        "fdMobileNo":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdMobileNo",
+            "type": "String",
+            "column": "fd_mobile_no",
+            "notNull": "false",
+            "unique": "false",
+            "length": "150",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdWorkPhone":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdWorkPhone",
+            "type": "String",
+            "column": "fd_work_phone",
+            "notNull": "false",
+            "unique": "false",
+            "length": "50",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdEmail":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdEmail",
+            "type": "String",
+            "column": "fd_email",
+            "notNull": "false",
+            "unique": "false",
+            "length": "200",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdLoginName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdLoginName",
+            "type": "String",
+            "column": "fd_login_name",
+            "notNull": "true",
+            "unique": "false",
+            "length": "200",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdPassword":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdPassword",
+            "type": "String",
+            "column": "fd_password",
+            "notNull": "false",
+            "unique": "false",
+            "length": "254",
+            "canLogShow": "2",
+            "canDisplay": "true",
+            "secret":"true"
+        },
+        "fdNewPassword":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.newPassword",
+            "type": "String",
+            "column": "fd_new_password",
+            "notNull": "true",
+            "unique": "false",
+            "length": "254",
+            "canDisplay": "false",
+            "validate": "true"
+        },
+        "fdInitPassword":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdInitPassword",
+            "type": "String",
+            "column": "fd_init_password",
+            "notNull": "false",
+            "unique": "false",
+            "length": "254",
+            "canDisplay": "false"
+        },
+        "fdRtxNo":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdRtxNo",
+            "type": "String",
+            "column": "fd_rtx_no",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdWechatNo":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdWechatNo",
+            "type": "String",
+            "column": "fd_wechat_no",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdCardNo":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdCardNo",
+            "type": "String",
+            "column": "fd_card_no",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100",
+            "canSearch": "true"
+        },
+        "fdDefaultLang":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdDefaultLang",
+            "type": "String",
+            "column": "fd_default_lang",
+            "notNull": "false",
+            "unique": "false",
+            "length": "50",
+            "canSearch": "true"
+        },
+        "fdLastChangePwd":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdLastChangePwd",
+            "type": "DateTime",
+            "column": "fd_last_change_pwd",
+            "notNull": "false",
+            "unique": "false",
+            "canDisplay": "false"
+        },
+        "fdStaffingLevel":         {
+            "propertyType": "model",
+            "messageKey": "sys-organization:sysOrgPerson.fdStaffingLevel",
+            "type": "com.landray.kmss.sys.organization.model.SysOrganizationStaffingLevel",
+            "column": "fd_staffing_level_id",
+            "notNull": "false",
+            "unique": "false",
+            "canSearch": "true"
+        },
+        "fdShortNo":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdShortNo",
+            "type": "String",
+            "column": "fd_short_no",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdDoubleValidation":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdDoubleValidation",
+            "type": "String",
+            "column": "fd_double_validation",
+            "enumType": "sys_org_double_validation",
+            "notNull": "false",
+            "canSearch": "true",
+            "unique": "false",
+            "length": "20"
+        },
+        "fdOrgEmail":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgElement.fdOrgEmail",
+            "type": "String",
+            "column": "fd_org_email",
+            "canSearch": "false",
+            "validate": "false",
+            "canDisplay": "false",
+            "length": "450"
+        },
+        "fdCanLogin":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgPerson.fdCanLogin",
+            "type": "Boolean",
+            "canSearch": "true",
+            "canDisplay": "true"
+        },
+        "fdAttendanceCardNumber":         {
+            "propertyType": "simple",
+            "type": "String",
+            "column": "fd_attendance_card_number",
+            "length": "50",
+            "canDisplay": "false",
+            "messageKey": "sys-organization:sysOrgPerson.fdAttendanceCardNumber"
+        },
+        "fdLockTime":         {
+            "propertyType": "simple",
+            "type": "DateTime",
+            "column": "fd_lock_time",
+            "canDisplay": "false",
+            "messageKey": "sys-organization:sysOrgPerson.fdLockTime"
+        },
+        "fdUserType":         {
+            "propertyType": "simple",
+            "type": "String",
+            "column": "fd_user_type",
+            "length": "1",
+            "canDisplay": "false",
+            "messageKey": "sys-organization:sysOrgPerson.fdUserType"
+        },
+        "fdHiredate":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:organization.fdHiredate",
+            "type": "DateTime",
+            "column": "fd_hiredate",
+            "notNull": "false",
+            "unique": "false",
+            "canSearch": "true"
+        },
+        "fdLeaveDate":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:organization.fdLeaveDate",
+            "type": "DateTime",
+            "column": "fd_leave_date",
+            "notNull": "false",
+            "unique": "false",
+            "canSearch": "true"
+        },
+        "fdLoginNameLower":         {
+            "propertyType": "simple",
+            "canDisplay": "false",
+            "type": "String",
+            "column": "fd_login_name_lower",
+            "length": "200",
+            "messageKey": "sys-organization:sysOrgPerson.fdLoginNameLower"
+        }
+    }
+}

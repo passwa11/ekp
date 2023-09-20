@@ -1,0 +1,116 @@
+// 文档初始化ocr控件
+
+var self = this;
+function getTitle(cardType,idCardType){
+    var title = "";
+    // duan 扩展点 title
+
+    if("idCard" == cardType){//身份证
+        if('1'==idCardType){//正面----身份证人像面
+            title = "身份证人像面"
+        }else{//反面-----身份证国徽面
+            title = "身份证国徽面"
+        }
+    }
+    if("vehicleLicense" == cardType){//驾驶证
+         title = "驾驶证"
+    }
+    if("drivingLicense" == cardType){//行驶证
+         title = "行驶证"
+    }
+    if("businessLicense" == cardType){//营业执照
+         title = "营业执照"
+    }
+    return title;
+}
+function getIconClass(remainImg,cardType){
+   var iconClass = "";
+   // duan 扩展点 iconClass
+   if(remainImg == "false"){   // 不保留图片
+       iconClass = "ocr-normal";
+   	}else {
+       if("idCard" == cardType){//身份证
+           if('1'==idCardType){//正面----身份证人像面
+               iconClass = "icon-plus-ocr"
+           }else{//反面-----身份证国徽面
+               iconClass = "icon-plus-ocr-other"
+           }
+       }
+       if("vehicleLicense" == cardType){//驾驶证
+           iconClass = "icon-plus-ocr-driving";
+       }
+       if("drivingLicense" == cardType){//行驶证
+           iconClass = "icon-plus-ocr-vehicle";
+       }
+       if("businessLicense" == cardType){//营业执照
+           iconClass = "icon-plus-ocr-business";
+       }
+   	}
+       return iconClass;
+
+}
+var params = $("[name*='extendDataFormInfo.value("+self.fdKey+"_params)']").attr("params");
+params = JSON.parse(params);
+var remainImg = params["remainImg"]; //是否保留图片
+var cardType = params["type"]; //证件类型
+var cardTypeNumber = params["cardTypeNumber"]; //证件类型
+var idCardType = params["ocrChildrenType"]; //身份证正反面
+var title = params["title"]; //证件照提示 !
+var iconClass = params["iconClass"]; //证件照模板图片
+var xuploader = $("<div id='uploader_" + self.fdKey + "'/>");
+var xcontainer = $("<div data-lui-mark='attachmentlist'/>");
+this._cardType = cardType;
+this._idCardType = idCardType;
+this._remainImg = remainImg;
+this._title = title;
+this.cardTypeNumber = cardTypeNumber;
+this._iconClass = iconClass;
+
+
+ function createUploadDiv(cardType,idCardType,remainImg,title,iconClass) {
+     //var title = getTitle(cardType,idCardType);
+
+      var title =Data_GetResourceString("third-ocr:"+title) ;
+ 	var xcontent = $("<div style='width:100%;height:100%' title="+ title +" id='uploader_" + self.fdKey + "_container' class='lui_upload_container lui_upload_container_ocr'/>");
+ 	var xicon= "";
+ 	var xtxt;
+     xtxt = $("<div style='position: absolute;height:10px;bottom: 0px;right: 2px;margin-bottom: 0px;' class='lui_upload_img_title'><div id='upload_" + self.fdKey + "_div_buttom' class='lui_text_primary'></div></div>");
+ 	//var iconClass = getIconClass(remainImg,cardType);
+ 	var iconClass =  iconClass;
+ 	if(remainImg == "false"){   // 不保留图片
+       iconClass = "ocr-normal";
+    }
+    xicon = $("<i style='background-size: 100% 100%;width:" + self.fdPicContentWidth + "px;height:" + self.fdPicContentHeight +"px' class='icon "+iconClass+"'></i>");
+ 	self.$tdDisplay = xtxt;
+ 	self.__$tdDisplay = xcontent;
+ 	xcontent.append(xicon);
+ 	xcontent.append(xtxt);
+ 	if(self.required){
+     	xtxt.append("<span style='padding-right: 2px;' class='txtstrong'> *</span>");
+     }
+ 	return xcontent;
+ }
+//编辑页和新增页
+if (this.editMode == "edit" || this.editMode == "add") {
+	//尺寸后续需改为从后台取
+    //if("businessLicense" == cardType) {
+    //	this.fdPicContentWidth = 146;
+    //	this.fdPicContentHeight = 192;
+    //}
+	var xqueueList= "";
+	if("idCard" == cardType && "0" == idCardType){
+		//身份证反面（样式）
+		xqueueList = $("<div id='uploader_" + self.fdKey + "_queueList' class='lui_upload_img_item lui_upload_img lui_queueList lui_queueList_l' style='display: inline-block;-webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center;width:" + this.fdPicContentWidth + "px;height:" + this.fdPicContentHeight +"px'/>");
+	}else{
+		xqueueList = $("<div id='uploader_" + self.fdKey + "_queueList' class='lui_upload_img_item lui_upload_img lui_queueList lui_queueList_l' style='display: inline-block;-webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center;width:" + this.fdPicContentWidth + "px;height:" + this.fdPicContentHeight +"px'/>");
+	}
+	var uploadDiv =  createUploadDiv(cardType,idCardType,remainImg,title,iconClass);
+	xqueueList.append(uploadDiv)
+	if(this.fileList.length==1 && this.fdViewType == "pic_single") {
+		xqueueList.addClass("upload_item_hide");
+	}
+	xcontainer.append(xqueueList);
+
+}
+xuploader.append(xcontainer);
+done(xuploader);

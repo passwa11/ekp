@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/lbpmmonitor/sys_lbpmmonitor_person/SysLbpmMonitorPerson.do"
+		class="com.landray.kmss.sys.lbpmmonitor.actions.SysLbpmMonitorPersonAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="listChildren"
+					value="/sys/lbpmmonitor/sys_lbpm_monitor_person/sysLbpmMonitor_personList.jsp" />
+				<entry
+					key="portlet"
+					value="/sys/lbpmmonitor/sys_lbpm_monitor_person/sysLbpmMonitorPortlet_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmmonitor/sys_lbpmmonitor_flow/SysLbpmMonitorFlow.do"
+		class="com.landray.kmss.sys.lbpmmonitor.actions.SysLbpmMonitorFlowAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmmonitor.forms.SysLbpmMonitorForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="listChildren"
+					value="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sysLbpmMonitor_flowList.jsp" />
+				<entry
+					key="view"
+					value="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sysLbpmMonitor_view.jsp" />
+				<entry
+					key="listChildrenExtend"
+					value="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sysLbpmMonitorExtend_flowList.jsp" />
+				<entry
+					key="processOverView"
+					value="/sys/lbpmmonitor/sys_lbpm_monitor_over/sysLbpmMonitor_overFlow.jsp"/>
+				<entry
+		          key="getMonitorInfo"
+		          value="/sys/lbpmmonitor/sys_lbpm_monitor_analysis/sysLbpmMonitor_analysis.jsp"/>
+		        <entry
+		          key="getProcessAnalysisList"
+		          value="/sys/lbpmmonitor/sys_lbpm_monitor_analysis/analysis_list_data.jsp"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/sys/lbpmmonitor/sys_lbpmmonitor_flow/interfacelogAction.do"
+		class="com.landray.kmss.sys.lbpmmonitor.actions.InterfacelogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmmonitor.forms.InterfacelogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="listLog"
+					value="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sys_interface_log/sysLbpmMonitor_interfaceList.jsp" />
+				<entry
+					key="interfaceLogView"
+					value="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sys_interface_log/sysLbpmMonitor_interfaceLogView.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	
+	<bean
+		name="/sys/lbpmmonitor/sys_lbpmmonitor_flow/LbpmAnalysisConfigAction.do"
+		class="com.landray.kmss.sys.lbpmmonitor.actions.LbpmAnalysisConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmmonitor.forms.LbpmAnalysisConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="lbpmAnalysisConfigPage"
+					value="/sys/lbpmmonitor/sys_lbpm_monitor_analysis/lbpmAnalysisConfig.jsp" />
+					
+				
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/sys/lbpmmonitor/sys_lbpmmonitor_criteria/SysLbpmMonitorCriteria.do"
+		class="com.landray.kmss.sys.lbpmmonitor.actions.SysLbpmMonitorCriteriaAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/lbpmmonitor/sys_lbpmmonitor_flow/SysLbpmMonitorFlowVersion.do"
+		class="com.landray.kmss.sys.lbpmmonitor.actions.SysLbpmMonitorFlowVersionAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="listChildren"
+					value="/sys/lbpmmonitor/sys_lbpm_monitor_flowVersion/sysLbpmMonitor_template_list.jsp" />
+				<entry
+					key="view"
+					value="/sys/lbpmmonitor/sys_lbpm_monitor_flowVersion/sysLbpmMonitor_template_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/lbpmmonitor/actions/SysLbpmMonitorQueueTaskAction.do"
+		class="com.landray.kmss.sys.lbpmmonitor.actions.SysLbpmMonitorQueueTaskAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/lbpmmonitor/sys_lbpm_monitor_queue/sysLbpmMonitorQueueTask_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean id="sysLbpmMonitorPortletController"
+        class="com.landray.kmss.sys.lbpmmonitor.actions.SysLbpmMonitorPortletController">
+    </bean>
+</beans>

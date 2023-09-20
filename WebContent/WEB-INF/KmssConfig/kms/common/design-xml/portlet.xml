@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+	<portlet
+		id="kms.common.intro"
+		name="{kms-common:kmsCommonIntroKnowledge.portlet}"
+		description="{kms-common:kmsCommonIntroKnowledge.portlet.des}"
+		module="{kms-common:kmsCommonIntroKnowledge.portlet}">
+		<source  format="sys.ui.slide" type="AjaxJson">
+			<code>
+				<![CDATA[
+					{"url":"/kms/common/kms_home_knowledge_intro_portlet/kmsHomeKnowledgeIntroPortlet.do?method=getHomeKnowledgeIntro&fdIds=!{fdids}&orderby=docAlterTime&ordertype=down"}
+				]]>
+			</code>
+		</source>
+		<vars> 
+			<var key="fdids" kind="dialogJs" name="{kms-common:kmsCommonIntroKnowledge.portlet.chooseTopic}" required="true">
+					{"jsp":"/kms/common/kms_home_knowledge_intro_portlet/kmsHomeKnowledgeIntroPortlet.jsp"}
+			</var>
+		</vars>
+	</portlet>
+	
+	
+	<portlet
+		id="kms.common.intro.cate"
+		name="{kms-common:kmsCommonIntroKnowledge.portlet}"
+		description="{kms-common:kmsCommonIntroKnowledge.portlet.cate.des}"
+		module="{kms-common:kmsCommonIntroKnowledge.portlet}">
+		<source  format="sys.ui.slide" type="AjaxJson">
+			<code>
+				<![CDATA[
+					{"url":"/kms/common/kms_home_knowledge_intro_portlet/kmsHomeKnowledgeIntroPortlet.do?method=getHomeKnowledgeIntro&categoryId=!{categoryId}&rowsize=!{rowsize}&orderby=docCreateTime&ordertype=down"}
+				]]>
+			</code>
+		</source>
+		<vars> 
+			<var name="{kms-common:kmsCommonIntroKnowledge.portlet.rowsize}" key="rowsize" kind="rowsize" default="6"/>
+			<var
+				name="{portlet.cate}"
+				key="categoryId"
+				kind="sys.simplecategory">
+				{
+				 "model":"com.landray.kmss.kms.common.model.KmsHomeKnowledgeIntroCategory",
+				 "title":"{button.select}"
+				}
+			</var>
+		</vars>
+	</portlet>
+	
+	
+	<!-- 学习笔记 -->
+	<portlet
+		id="kms.course.notes"
+		name="{kms-common:kmsCommon.courseNotes}"
+		module="{kms-common:module.kms.courseNotes}"
+		description="{kms-common:description.kmsCommon.courseNotes}">
+		<source format="sys.ui.html"
+			type="AjaxText">
+			<code>
+			<![CDATA[
+				{
+					"url":"/kms/common/kms_course_notes/notes_porlet/kmsCourseNotes_portlet_courseNotes.jsp?mode=!{mode}&displayType=!{displayType}",
+					"formatKey":"html"
+				}
+			]]>
+			</code>
+		</source>
+		<vars> 
+			<var key="mode" name="{kms-common:kmsCourseNotes.fdType}" kind="enumValue" default="myNotes" required="true">
+				{
+		    		"values":[{"text":"{kms-common:kmsCommon.myNotes}", "value":"myNotes"},
+		    					{"text":"{kms-common:kmsCommon.shareNotes}", "value":"hotNotes"}],
+		    					
+		    		"showType":"radio"
+		    	}
+			</var>
+			<var key="displayType" name="{kms-common:kmsCourseNotes.portlet.display.type}" kind="enumValue" default="0" required="true">
+				{
+		    		"values":[{"text":"{kms-common:kmsCourseNotes.portlet.tile}", "value":"0"},
+		    					{"text":"{kms-common:kmsCourseNotes.portlet.slide}", "value":"1"}],
+		    					
+		    		"showType":"radio"
+		    	}
+			</var>
+		</vars>
+	</portlet>
+	
+	<!-- 外部数据源 -->
+	<!-- 可直接选择需要展现的推荐知识 -->
+	<portlet
+		id="kms.common.intro"
+		name="{kms-common:kmsCommonIntroKnowledge.portlet}"
+		description="{kms-common:kmsCommonIntroKnowledge.portlet.des}"
+		module="{kms-common:kmsCommonIntroKnowledge.portlet}"
+		forSystem="cloud" 
+		varExtend="kms.common.intro">
+		<source  format="data.image" type="json" id="kms-common.intro">
+			<code>
+				<![CDATA[
+				    {"url":"/data/kms-common/kmsHomeKnowledgeIntroPortlet/getHomeKnowledgeIntro?fdIds=!{fdids}&orderby=docAlterTime&ordertype=down"}
+				]]>
+			</code>
+		</source>
+		<vars> 
+			<var key="fdids" kind="list" name="{kms-common:kmsCommonIntroKnowledge.portlet.chooseTopic}" required="true">
+				<![CDATA[
+					{
+					"url":"/data/kms-common/kmsHomeKnowledgeIntroPortlet/list?orderby=docAlterTime&ordertype=down",
+					"method":"get",
+					"dataType":"json",
+					"model":"com.landray.kmss.kms.common.model.KmsHomeKnowledgeIntro",
+					"idProperty":"fdId",
+					"nameProperty":"fdName",
+					"displayProperty":"fdName",
+					"multi":true,
+					"split":","
+					}
+				]]>
+			</var>
+		</vars>
+	</portlet>
+	
+	<!-- 按分类展现最新的推荐知识 -->
+	<portlet
+		id="kms.common.intro.cate"
+		name="{kms-common:kmsCommonIntroKnowledge.portlet.category}"
+		description="{kms-common:kmsCommonIntroKnowledge.portlet.cate.des}"
+		module="{kms-common:kmsCommonIntroKnowledge.portlet}"
+		forSystem="cloud" 
+		varExtend="kms.common.intro.cate">
+		<source  format="data.image" type="json" id="kms-common.intro.cate">
+			<code>
+				<![CDATA[
+				    {"url":"/data/kms-common/kmsHomeKnowledgeIntroPortlet/getHomeKnowledgeIntro?categoryId=!{categoryId}&rowsize=!{rowsize}&orderby=docCreateTime&ordertype=down"}
+				]]>
+			</code>
+		</source>
+		<vars> 
+			<var name="{kms-common:kmsCommonIntroKnowledge.portlet.rowsize}" key="rowsize" kind="rowsize" default="6"/>
+			<var
+				name="{portlet.cate}"
+				key="categoryId"
+				kind="sys.simplecategory">
+				{
+				 "model":"com.landray.kmss.kms.common.model.KmsHomeKnowledgeIntroCategory",
+				 "title":"{button.select}"
+				}
+			</var>
+		</vars>
+	</portlet>
+	
+	<!-- 知识统计 -->
+	<portlet
+		id="kms.common.knowledge.statistics"
+		name="{kms-common:kmsKnowledge.porlet.knowledge.statis}"
+		module="{kms-common:kmsKnowledge.porlet.knowledge.statis}"
+		description="{kms-common:kmsKnowledge.porlet.knowledge.statis.desc}">
+		<source format="sys.ui.html" type="AjaxText">
+			<code>
+			<![CDATA[
+				{
+					"url":"/kms/common/kms_common_portlet/kms_common_knowledge_statistics_portlet.jsp?content=!{content}&LUIID=!{lui.element.id}",
+					"formatKey":"html"
+				}
+			]]>
+			</code>
+		</source>
+		<vars>
+			<var name="{kms-common:kmsKnowledge.porlet.show.content}" key="content" kind="custom">
+		    	{
+		    		"file":'/kms/common/kms_common_portlet/kms_common_knowledge_statistics_portlet_enumValue.jsp'
+				}
+			</var>
+		</vars>
+	</portlet> 
+	
+	
+
+</root>

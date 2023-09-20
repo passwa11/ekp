@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		id="sysSubordinateMappingDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.subordinate.dao.hibernate.SysSubordinateMappingDaoImpl">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.subordinate.model.SysSubordinateMapping" />
+	</bean>
+	<bean
+		id="sysSubordinateMappingTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.subordinate.service.spring.SysSubordinateMappingServiceImpl">
+		<property name="baseDao">
+			<ref bean="sysSubordinateMappingDao" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService"/>
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService"/>
+		</property>
+	</bean>
+	<bean
+		id="sysSubordinateMappingService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysSubordinateMappingTarget" />
+		</property>
+	</bean>
+	
+	<bean id="modelTreeService"
+		class="com.landray.kmss.sys.subordinate.service.spring.ModelTreeService">
+	</bean>
+	<bean id="subordinateValidator"
+		class="com.landray.kmss.sys.subordinate.service.spring.SubordinateValidator">
+	</bean>
+	<bean id="subordinateModuleValidator"
+		class="com.landray.kmss.sys.subordinate.service.spring.SubordinateModuleValidator">
+	</bean>
+	<bean id="subordinateViewValidator"
+		class="com.landray.kmss.sys.subordinate.service.spring.SubordinateViewValidator">
+		<property name="sysSubordinateService">
+			<ref bean="sysSubordinateService"/>
+		</property>
+	</bean>
+	<bean id="sysOrgElementTreeService"
+		class="com.landray.kmss.sys.subordinate.service.spring.SysOrgElementTreeService">
+		<property name="sysSubordinateMappingService">
+			<ref bean="sysSubordinateMappingService"/>
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService"/>
+		</property>
+	</bean>
+	
+	<bean
+		id="sysSubordinateService"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.subordinate.service.spring.SysSubordinateServiceImpl">
+		<property name="baseService">
+			<ref bean="KmssBaseService"/>
+		</property>
+		<property name="sysSubordinateMappingService">
+			<ref bean="sysSubordinateMappingService"/>
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService"/>
+		</property>
+	</bean>
+	
+	<bean id="sysSubordinateController"
+          class="com.landray.kmss.sys.subordinate.rest.controller.SysSubordinateController">
+    </bean>
+
+	<!-- 附件权限校验 -->
+	<bean id="sysSubordinateAttachmentValidator"
+		  class="com.landray.kmss.sys.subordinate.service.spring.SysSubordinateAttachmentValidator">
+		<property name="sysSubordinateService">
+			<ref bean="sysSubordinateService"/>
+		</property>
+	</bean>
+</beans>

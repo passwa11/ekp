@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+	<logset>
+        <oper
+            id="sysNotifyMainIndexOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/notify/sys_notify_todo/sysNotifyMainIndex.do">
+        </oper>
+        <oper
+            id="sysNotifyTodoOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/notify/sys_notify_todo/sysNotifyTodo.do">
+            <query 
+                method="doStar"  logPoint="Base_UrlParam;doStar">
+            </query>
+            <query
+				method="deleteall" logPoint="Base_UrlParam;deleteall" >
+			</query>
+			<query
+				method="view"
+				logPoint="Base_UrlParam;Action_Find" />
+			<query
+				method="getCount"
+				logPoint="Base_UrlParam"
+				messageKey="sys-notify:sysNotifyTodo.logOper.getCount" />
+			<query
+				method="listByGraphic"
+				logPoint="Base_UrlParam;Action_FindAll" /> 
+			<query
+				method="listDatasByCate"
+				logPoint="Base_UrlParam;Action_FindAll" />	
+			<query
+				method="listByTable"
+				logPoint="Base_UrlParam;Action_FindAll"/>
+			<query
+				method="mngList"
+				logPoint="Base_UrlParam;Action_FindAll"/>
+        </oper>
+        <oper
+            id="sysNotifyConfig"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/sys/notify/sys_notify_todo/sysNotifyConfig.do">
+        </oper>
+        <oper
+            id="sysNotifyMailSetting"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/sys/notify/sysNotifyMailSetting.do">
+        </oper>
+        <oper
+            id="sysNotifyMailTestOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/notify/sys_notify_main/sysNotifyMailTest.do">
+            <query
+				method="sendMailTest"
+				logPoint="Base_UrlParam"
+				messageKey="sys-notify:sysNotify.config.emailtest" />
+        </oper>
+	</logset>
+</log-oper>

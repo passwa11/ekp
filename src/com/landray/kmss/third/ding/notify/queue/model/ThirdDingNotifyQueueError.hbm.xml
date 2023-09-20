@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.third.ding.notify.queue.model.ThirdDingNotifyQueueError"
+		table="third_ding_notify_queue_err">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<property
+			name="fdAppName"
+			column="fd_app_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100"/>
+		<property
+			name="fdTodoId"
+			column="fd_todo_id"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100"
+			index="idx_ThirdDingNotify_fdTodoId"/>
+		<property
+			name="fdSubject"
+			column="fd_subject"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="800" />
+		
+		<property
+			name="fdMethod"
+			column="fd_method"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="50" />
+		
+		<property
+			name="fdJson"
+			column="fd_json"
+			update="true"
+			insert="true"
+			not-null="false"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true"
+			length="1000000" />
+		<property
+			name="fdErrorMsg"
+			column="fd_error_msg"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="3000" />
+		<property
+			name="fdRepeatHandle"
+			column="fd_repeat_handle"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdFlag"
+			column="fd_flag"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="50" />
+		<property
+			name="fdMD5"
+			column="fd_md5"
+			update="true"
+			insert="true"
+			not-null="false"
+			index="idx_ThirdDingNotify_fdMD5"
+			length="32" />
+		<property
+			name="fdCreateTime"
+			column="fd_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdSendTime"
+			column="fd_send_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdDingUserId"
+			column="fd_ding_user_id"
+			update="true"
+			insert="true"
+			not-null="false"
+			index="idx_ThirdDingNotify_userId"
+			length="200"/>
+			
+		<property
+			name="fdSystemId"
+			column="fd_system_id"
+			update="true"
+			insert="true"
+			not-null="false"
+			index="idx_ThirdDingNotify_systemId"
+			length="100"/>
+
+		<property
+				name="fdDeleteMapping"
+				column="fd_delete_mapping"
+				update="true"
+				insert="true"
+				not-null="false"/>
+			
+		<many-to-one 
+            name="fdUser" 
+            column="fd_user_id" 
+            update="true" 
+            insert="true"/>
+						
+	</class>
+</hibernate-mapping>

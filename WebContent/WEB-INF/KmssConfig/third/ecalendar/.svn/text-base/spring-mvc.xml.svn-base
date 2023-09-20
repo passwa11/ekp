@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/third/ecalendar/ecalendar_bind_data/ecalendarBindData.do"
+		class="com.landray.kmss.third.ecalendar.actions.EcalendarBindDataAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.ecalendar.forms.EcalendarBindDataForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/ecalendar/ecalendar_bind_data/ecalendarBindData_view.jsp" />
+				<entry
+					key="edit"
+					value="/third/ecalendar/ecalendar_bind_data/ecalendarBindData_edit.jsp" />
+				<entry
+					key="list"
+					value="/third/ecalendar/ecalendar_bind_data/ecalendarBindData_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/ecalendar/ecalendar.do"
+		class="com.landray.kmss.third.ecalendar.actions.EcalendarAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="getNewMailInfos"
+					value="/third/ecalendar/newMailInfos.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/ecalendar/config.do"
+		class="com.landray.kmss.third.ecalendar.actions.ConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formName"
+			value="configForm" />
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.config.form.SysConfigAdminForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="configView"
+					value="/third/ecalendar/config_view.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

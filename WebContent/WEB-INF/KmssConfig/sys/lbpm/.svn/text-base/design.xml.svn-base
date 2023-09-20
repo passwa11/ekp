@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="sys-lbpm-engine:module.sysLbpmCoreEngine"
+		urlPrefix="/sys/lbpm/">
+		<request
+			path="engine/jsonp.jsp*"
+			defaultValidator="ajaxRoleValidator(role=SYSROLE_USER)">
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				queryString="s_bean=flowSimulationService" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleEngineParser" />
+		</request>
+	</module>
+</configs>

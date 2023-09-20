@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <subclass 
+        name="com.landray.kmss.hr.ratify.model.HrRatifyTransfer" 
+        extends="com.landray.kmss.hr.ratify.model.HrRatifyMain"
+        discriminator-value="com.landray.kmss.hr.ratify.model.HrRatifyTransfer">
+        <join table="hr_ratify_transfer">
+	        <key
+				column="fd_id"></key>
+	        <property 
+	            name="fdTransferDate" 
+	            column="fd_transfer_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdTransferReason" 
+	            column="fd_transfer_reason" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdTransferLeaveLeaderView" 
+	            column="fd_transfer_leave_leader_view" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdTransferEnterLeaderView" 
+	            column="fd_transfer_enter_leader_view" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdTransferHrView" 
+	            column="fd_transfer_hr_view" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdTransferRemark" 
+	            column="fd_transfer_remark" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <many-to-one 
+	            name="fdTransferStaff" 
+	            column="fd_transfer_staff_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one 
+	            name="fdTransferLeaveDept" 
+	            column="fd_transfer_leave_dept_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one 
+	            name="fdTransferEnterDept" 
+	            column="fd_transfer_enter_dept_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one
+				name="fdTransferOldLevel"
+				column="fd_transfer_old_level_id"
+				insert="true"
+				update="true"
+				not-null="false" />
+			<many-to-one
+				name="fdTransferNewLevel"
+				column="fd_transfer_new_level_id"
+				insert="true"
+				update="true"
+				not-null="false" />
+			<property 
+	            name="fdTransferLeaveSalary" 
+	            column="fd_transfer_leave_salary" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdTransferEnterSalary" 
+	            column="fd_transfer_enter_salary" 
+	            update="true" 
+	            insert="true"/>
+        </join>
+    </subclass>
+</hibernate-mapping>

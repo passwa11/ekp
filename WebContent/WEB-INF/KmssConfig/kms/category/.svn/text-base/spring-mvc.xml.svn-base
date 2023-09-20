@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		name="/kms/category/kms_category_main/kmsCategoryMain.do"
+		class="com.landray.kmss.kms.category.actions.KmsCategoryMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.kms.category.forms.KmsCategoryMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/kms/category/kms_category_main/kmsCategoryMain_edit.jsp" />
+				<entry
+					key="view"
+					value="/kms/category/kms_category_main/kmsCategoryMain_view.jsp" />
+				<entry
+					key="checkCategoryTagView"
+					value="/kms/category/kms_category_main/kmsCategoryMain_category_tag_check_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/kms/category/kms_category_main/kmsCategoryMainData.do"
+		class="com.landray.kmss.kms.category.actions.KmsCategoryMainDataAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.kms.category.forms.KmsCategoryMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="category"
+					value="/kms/category/kms_category_main/kmsCategoryMain_dialog_category.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/kms/category/kms_category_knowledge_rel/kmsCategoryKnowledgeRel.do"
+		class="com.landray.kmss.kms.category.actions.KmsCategoryKnowledgeRelAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.kms.category.forms.KmsCategoryKnowledgeRelForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/kms/category/kms_category_knowledge_rel/kms_category_knowledge_rel_list.jsp" />
+				<entry
+					key="view"
+					value="/kms/category/kms_category_knowledge_rel/kms_category_knowledge_rel_view.jsp" />
+				<entry
+					key="data"
+					value="/kms/category/kms_category_knowledge_rel/kms_category_knowledge_rel_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	
+	<bean
+		name="/kms/category/kmsCategoryMainConfig.do"
+		class="com.landray.kmss.kms.category.actions.KmsCategoryMainConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+	
+	<bean
+		name="/kms/category/kms_category_main_ui/kmsCategoryIndex.do"
+		class="com.landray.kmss.kms.category.actions.KmsCategoryIndexAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.kms.category.forms.KmsCategoryKnowledgeRelForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="listChildren"
+					value="/kms/category/kms_category_main_ui/kms_category_knowledge_list.jsp" />
+				<entry
+					key="readLogdata"
+					value="/kms/category/readLog/readLog_data.jsp" />
+				<entry
+					key="attList"
+					value="/kms/knowledge/kms_knowledge_ui/kmsKnowledge_att_list.jsp" />
+				<entry
+					key="listChildren.4m"
+					value="/kms/category/mobile/data.jsp" />
+				<!-- <entry
+					key="listChildren.4pda"
+					value="/kms/knowledge/kms_knowledge_ui/kmsKnowledge_list.jsp" />
+				<entry
+					key="listChildren.4m"
+					value="/kms/knowledge/mobile/list.jsp" />
+				<entry
+					key="attList"
+					value="/kms/knowledge/kms_knowledge_ui/kmsKnowledge_att_list.jsp" /> -->
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/kms/category/kms_category_portlet/kmsCategoryPortlet.do"
+		class="com.landray.kmss.kms.category.actions.KmsCategoryPortletAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/kms/category/kms_category_portlet/kms_category_portlet_listView.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>	

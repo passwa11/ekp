@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="dbcenter-echarts:module.dbcenter.piccenter"
+		urlPrefix="/dbcenter/echarts/"
+		defaultValidator="roleValidator(role=ROLE_DBCENTERECHARTS_DEFAULT)">
+		<roles>
+			<!-- 默认权限，后台管理权限，excel导出权限 -->
+			ROLE_DBCENTERECHARTS_DEFAULT;
+			ROLE_DBCENTERECHARTS_BACKSTAGE_MANAGER;
+			ROLE_DBCENTERECHARTS_EXPORT
+		</roles>
+		<areaRoles>
+			<!-- 类别维护,分类权限扩充 -->
+			ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER;
+			ROLE_DBCENTERECHARTS_OPTALL;
+			
+			<!-- 统计图表_新建权限,统计图表_查看权限, 统计图表_编辑权限, 统计图表_删除权限 -->
+			ROLE_DBCENTERECHARTS_CHART_ADD;
+			ROLE_DBCENTERECHARTS_CHART_VIEW;
+			ROLE_DBCENTERECHARTS_CHART_EDIT;
+			ROLE_DBCENTERECHARTS_CHART_DELETE;
+			
+			<!-- 统计列表_新建权限, 统计列表_查看权限, 统计列表_编辑权限, 统计列表_删除权限 -->
+			ROLE_DBCENTERECHARTS_TABLE_ADD;
+			ROLE_DBCENTERECHARTS_TABLE_VIEW;
+			ROLE_DBCENTERECHARTS_TABLE_EDIT;
+			ROLE_DBCENTERECHARTS_TABLE_DELETE;
+			
+			<!-- 自定义数据_新建权限, 自定义数据_查看权限, 自定义数据_编辑权限, 自定义数据_删除权限 -->
+			ROLE_DBCENTERECHARTS_CUSTOM_ADD;
+			ROLE_DBCENTERECHARTS_CUSTOM_VIEW;
+			ROLE_DBCENTERECHARTS_CUSTOM_EDIT;
+			ROLE_DBCENTERECHARTS_CUSTOM_DELETE;
+			
+			<!-- 统计图表集_新建权限, 统计图表集_查看权限, 统计图表集_编辑权限, 统计图表集_删除权限 -->
+			ROLE_DBCENTERECHARTS_CHARTSET_ADD;
+			ROLE_DBCENTERECHARTS_CHARTSET_VIEW;
+			ROLE_DBCENTERECHARTS_CHARTSET_EDIT;
+			ROLE_DBCENTERECHARTS_CHARTSET_DELETE;
+		</areaRoles>
+		
+		<request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_DBCENTERECHARTS_BACKSTAGE_MANAGER)"/>
+
+		<request
+			path="db_echarts_chart_set/dbEchartsChartSet*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.dbcenter.echarts.model.DbEchartsChartSet,cateModel=com.landray.kmss.dbcenter.echarts.model.DbEchartsTemplate,adminRoleName=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER">
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=SYS_READER)|authSimpleCategoryEditorValidator(property=dbEchartsTemplate)" />
+			<query
+				queryString="method=list"
+				validator="roleValidator(role=ROLE_DBCENTERECHARTS_DEFAULT)" />
+			<!-- 新建 -->
+			<query
+				queryString="method=add"
+				validator="areaRoleValidator(role=ROLE_DBCENTERECHARTS_CHARTSET_ADD)" />
+			<!-- 保存 -->
+			<query
+				queryString="method=save|saveadd"
+				validator="areaRoleValidator(role=ROLE_DBCENTERECHARTS_CHARTSET_ADD)&amp;authSimpleCategoryReaderValidator(cateId=fdTemplateId)" />
+			<!-- 编辑 -->
+			<query
+				queryString="method=edit|update|clone"
+				validator="authFieldValidator(type=SYS_EDITOR)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_CHARTSET_EDIT)&amp;[areaRoleValidator(role=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_OPTALL)|authSimpleCategoryEditorValidator(property=dbEchartsTemplate)]" />
+			<!-- 删除 -->
+			<query
+				queryString="method=delete"
+				validator="authFieldValidator(type=creator)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_CHARTSET_DELETE)&amp;[areaRoleValidator(role=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_OPTALL)|authSimpleCategoryEditorValidator(property=dbEchartsTemplate)]" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_DBCENTERECHARTS_CHARTSET_DELETE)&amp;[roleValidator(role=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER)|roleValidator(role=ROLE_DBCENTERECHARTS_OPTALL)|authSimpleCategoryEditorValidator(cateId=categoryId)]" />
+		</request>
+		
+		<request
+			path="db_echarts_custom/dbEchartsCustom*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.dbcenter.echarts.model.DbEchartsCustom,cateModel=com.landray.kmss.dbcenter.echarts.model.DbEchartsTemplate,adminRoleName=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER">
+			<query
+				queryString="method=view|getCustomTextByFdId"
+				validator="authFieldValidator(type=SYS_READER)|authSimpleCategoryEditorValidator(property=dbEchartsTemplate)" />
+			<query
+				queryString="method=list"
+				validator="roleValidator(role=ROLE_DBCENTERECHARTS_DEFAULT)" />
+			<!-- 新建 不再带分类id，故不需再校验分类的可阅读者-->
+			<query
+				queryString="method=add"
+				validator="areaRoleValidator(role=ROLE_DBCENTERECHARTS_CUSTOM_ADD)" />
+			<!-- 保存 -->
+			<query
+				queryString="method=save|saveadd"
+				validator="areaRoleValidator(role=ROLE_DBCENTERECHARTS_CUSTOM_ADD)&amp;authSimpleCategoryReaderValidator(cateId=fdTemplateId)" />
+			<!-- 编辑 -->
+			<query
+				queryString="method=edit|update|clone"
+				validator="authFieldValidator(type=SYS_EDITOR)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_CUSTOM_EDIT)&amp;[areaRoleValidator(role=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_OPTALL)|authSimpleCategoryEditorValidator(property=dbEchartsTemplate)]" />
+			<!-- 删除 -->
+			<query
+				queryString="method=delete"
+				validator="authFieldValidator(type=creator)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_CUSTOM_DELETE)&amp;[areaRoleValidator(role=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_OPTALL)|authSimpleCategoryEditorValidator(property=dbEchartsTemplate)]" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_DBCENTERECHARTS_CUSTOM_DELETE)&amp;[roleValidator(role=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER)|roleValidator(role=ROLE_DBCENTERECHARTS_OPTALL)|authSimpleCategoryEditorValidator(cateId=categoryId)]" />
+		</request>
+
+		<request
+			path="db_echarts_chart/dbEchartsChart*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.dbcenter.echarts.model.DbEchartsChart,cateModel=com.landray.kmss.dbcenter.echarts.model.DbEchartsTemplate,adminRoleName=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER">
+			<query
+				queryString="method=view|chartData"
+				validator="authFieldValidator(type=SYS_READER)|authSimpleCategoryEditorValidator(property=dbEchartsTemplate)" />
+			<query
+				queryString="method=list"
+				validator="roleValidator(role=ROLE_DBCENTERECHARTS_DEFAULT)" />
+			<!-- 新建 不再带分类id，故不需再校验分类的可阅读者-->
+			<query
+				queryString="method=add"
+				validator="areaRoleValidator(role=ROLE_DBCENTERECHARTS_CHART_ADD)" />
+			<!-- 保存 -->
+			<query
+				queryString="method=save|saveadd"
+				validator="areaRoleValidator(role=ROLE_DBCENTERECHARTS_CHART_ADD)&amp;authSimpleCategoryReaderValidator(cateId=fdTemplateId)" />
+			<!-- 编辑 -->
+			<query
+				queryString="method=edit|update|clone"
+				validator="authFieldValidator(type=SYS_EDITOR)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_CHART_EDIT)&amp;[areaRoleValidator(role=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_OPTALL)|authSimpleCategoryEditorValidator(property=dbEchartsTemplate)]" />
+			<!-- 删除 -->
+			<query
+				queryString="method=delete"
+				validator="authFieldValidator(type=creator)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_CHART_DELETE)&amp;[areaRoleValidator(role=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_OPTALL)|authSimpleCategoryEditorValidator(property=dbEchartsTemplate)]" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_DBCENTERECHARTS_CHART_DELETE)&amp;[roleValidator(role=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER)|roleValidator(role=ROLE_DBCENTERECHARTS_OPTALL)|authSimpleCategoryEditorValidator(cateId=categoryId)]" />
+			<!-- 导出excel -->
+			<query queryString="method=exportInfo"
+				validator="roleValidator(role=ROLE_DBCENTERECHARTS_EXPORT)"/>
+		</request>
+		
+		<request
+			path="db_echarts_table/dbEchartsTable*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.dbcenter.echarts.model.DbEchartsTable,cateModel=com.landray.kmss.dbcenter.echarts.model.DbEchartsTemplate">
+			<query
+				queryString="method=view|data|viewRpt"
+				validator="authFieldValidator(type=SYS_READER)|authSimpleCategoryEditorValidator(property=dbEchartsTemplate)" />
+			<query
+				queryString="method=list"
+				validator="roleValidator(role=ROLE_DBCENTERECHARTS_DEFAULT)" />
+			<!-- 新建 不再带分类id，故不需再校验分类的可阅读者-->
+			<query
+				queryString="method=add"
+				validator="areaRoleValidator(role=ROLE_DBCENTERECHARTS_TABLE_ADD)" />
+			<!-- 保存 -->
+			<query
+				queryString="method=save|saveadd"
+				validator="areaRoleValidator(role=ROLE_DBCENTERECHARTS_TABLE_ADD)&amp;authSimpleCategoryReaderValidator(cateId=fdTemplateId)" />
+			<!-- 编辑 -->
+			<query
+				queryString="method=edit|update|clone"
+				validator="authFieldValidator(type=SYS_EDITOR)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_TABLE_EDIT)&amp;[areaRoleValidator(role=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_OPTALL)|authSimpleCategoryEditorValidator(property=dbEchartsTemplate)]" />
+			<!-- 删除 -->
+			<query
+				queryString="method=delete"
+				validator="authFieldValidator(type=creator)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_TABLE_DELETE)&amp;[areaRoleValidator(role=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER)|areaRoleValidator(role=ROLE_DBCENTERECHARTS_OPTALL)|authSimpleCategoryEditorValidator(property=dbEchartsTemplate)]" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_DBCENTERECHARTS_TABLE_DELETE)&amp;[roleValidator(role=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER)|roleValidator(role=ROLE_DBCENTERECHARTS_OPTALL)|authSimpleCategoryEditorValidator(cateId=categoryId)]" />
+			<!-- 导出excel -->
+			<query queryString="method=exportInfo"
+				validator="roleValidator(role=ROLE_DBCENTERECHARTS_EXPORT)"/>
+		</request>
+
+		<request
+			path="db_echarts_template/dbEchartsTemplate*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.dbcenter.echarts.model.DbEchartsTemplate,adminRoleName=ROLE_DBCENTERECHARTS_TEMPLATE_MAINTAINER">
+			<!-- 保存 -->
+			<query
+				queryString="method=add"
+				validator="sysSimpleCategoryEditorValidator(recid=parentId)" />
+			<!-- 阅读 -->
+			<query
+				queryString="method=view"
+				validator="sysSimpleCategoryReaderValidator()" />
+			<!-- 编辑和删除 -->
+			<query
+				queryString="method=edit|update|delete"
+				validator="sysSimpleCategoryEditorValidator()" />
+			<query
+				queryString="method=copy"
+				validator="sysSimpleCategoryEditorValidator(recid=fdCopyId)" />
+		</request>
+		
+		<filters modelName="com.landray.kmss.dbcenter.echarts.model.DbEchartsCustom">
+			<filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_DBCENTERECHARTS_CUSTOM_VIEW)" />
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=authAllReaders.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="flagFieldFilter(field=authReaderFlag,value=1)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="authFieldFilter(field=authAllEditors.fdId)" />
+		</filters>
+
+		<filters modelName="com.landray.kmss.dbcenter.echarts.model.DbEchartsChart">
+			<filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_DBCENTERECHARTS_CHART_VIEW)" />
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=authAllReaders.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="flagFieldFilter(field=authReaderFlag,value=1)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="authFieldFilter(field=authAllEditors.fdId)" />
+		</filters>
+		
+		<filters modelName="com.landray.kmss.dbcenter.echarts.model.DbEchartsTable">
+			<filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_DBCENTERECHARTS_TABLE_VIEW)" />
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=authAllReaders.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="flagFieldFilter(field=authReaderFlag,value=1)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="authFieldFilter(field=authAllEditors.fdId)" />
+		</filters>
+		
+		<filters modelName="com.landray.kmss.dbcenter.echarts.model.DbEchartsChartSet">
+			<filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_DBCENTERECHARTS_CHARTSET_VIEW)" />
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=authAllReaders.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="flagFieldFilter(field=authReaderFlag,value=1)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="authFieldFilter(field=authAllEditors.fdId)" />
+		</filters>
+		
+		<!-- 导航树 start -->
+		<filters modelName="com.landray.kmss.dbcenter.echarts.application.model.DbEchartsNavTreeChart">
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=fdTemplate.authAllReaders.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="flagFieldFilter(field=fdTemplate.authReaderFlag,value=1)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="authFieldFilter(field=fdTemplate.authAllEditors.fdId)" />
+		</filters>
+		<filters modelName="com.landray.kmss.dbcenter.echarts.application.model.DbEchartsNavTreeCustom">
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=fdTemplate.authAllReaders.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="flagFieldFilter(field=fdTemplate.authReaderFlag,value=1)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="authFieldFilter(field=fdTemplate.authAllEditors.fdId)" />
+		</filters>
+		<!-- 导航树 end -->
+	</module>
+
+	<!-- 主文档全文搜索 -->
+	<ftSearch
+		modelName="com.landray.kmss.dbcenter.echarts.model.DbEchartsTotal"
+		boost="2.0"
+		timeField="fdLastModifiedTime">
+		<luceneField
+			name="fdName"
+			property="fdName"
+			type="text" />
+	</ftSearch>
+
+	<homePage
+		urlPrefix="dbcenter/echarts"
+		config="/moduleindex_notopic.jsp?nav=/dbcenter/echarts/tree.jsp"
+		url="/sys/portal/page.jsp#j_start=/dbcenter/echarts/index.jsp&amp;j_target=_iframe"
+		messageKey="dbcenter-echarts:module.dbcenter.piccenter" />
+	
+	<profileConfig
+		key="dbcenter/echarts"
+		messageKey="{dbcenter-echarts:module.dbcenter.piccenter}"
+		url="/sys/profile/moduleindex.jsp?nav=/dbcenter/echarts/tree.jsp"
+		icon="dbcenter_echarts"
+		type="report"
+		order="1" 
+		userType="1"
+		description="{dbcenter-echarts:dbcenterEcharts.profileCfg.description}" /> 
+</configs>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+        <oper
+        	id="kmComminfoMainOperLog"
+        	extends="BaseOperLog"
+        	model="com.landray.kmss.km.comminfo.model.KmComminfoMain"
+        	action="/km/comminfo/km_comminfo_main/kmComminfoMain.do">
+        	<query
+        		method="view"
+        		logPoint="Base_UrlParam;Action_Find;Action_FindAll">
+        	</query>
+        </oper>
+        <oper
+        	id="kmComminfoMainIndexOperLog"
+        	extends="BaseOperLog"
+        	model="com.landray.kmss.km.comminfo.model.KmComminfoMain"
+        	action="/km/comminfo/km_comminfo_main/kmComminfoMainIndex.do">
+        	<query
+        		method="listMobile"
+        		logPoint="Base_UrlParam;Action_FindAll">
+        	</query>
+        </oper>
+        <oper
+        	id="kmComminfoPortletOperLog"
+        	extends="BaseOperLog"
+        	model="*"
+        	action="/sys/common/dataxml.jsp">
+        	<query
+            	paramName="s_bean"
+            	paramValue="kmComminfoPortletService"
+            	logPoint="Base_UrlParam;kmComminfoPortletService"
+            	messageKey="km-comminfo:kmComminfo.tree.model">
+            </query>
+        </oper>
+	</logset>
+</log-oper>

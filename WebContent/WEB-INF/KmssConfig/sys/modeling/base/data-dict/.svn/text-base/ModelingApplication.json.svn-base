@@ -1,0 +1,186 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.modeling.base.model.ModelingApplication",
+        "messageKey": "sys-modeling-base:module.application",
+        "table": "modeling_application",
+        "serviceBean": "modelingApplicationService",
+        "displayProperty": "fdName",
+        "url": "/sys/modeling/base/modelingApplication.do?method=appIndex&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdAppName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingApplication.fdAppName",
+            "type": "String",
+            "column": "fd_app_name",
+            "length": "200",
+            "notNull": "true"
+        },
+        "fdCategory":         {
+            "propertyType": "model",
+            "messageKey": "sys-modeling-base:modelingApplication.fdCategory",
+            "type": "com.landray.kmss.sys.modeling.base.model.ModelingAppCategory",
+            "column": "fd_category_id",
+            "notNull": "false",
+            "length": "36"
+        },
+        "fdAppDesc":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingApplication.fdAppDesc",
+            "type": "String",
+            "column": "fd_app_desc",
+            "length": "4000"
+        },
+        "fdUrl":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingApplication.fdUrl",
+            "type": "String",
+            "column": "fd_url",
+            "length": "200"
+        },
+        "fdIcon":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingApplication.fdIcon",
+            "type": "String",
+            "column": "fd_icon",
+            "length": "200"
+        },
+        "fdModels":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modelingApplication.fdModels",
+            "type": "com.landray.kmss.sys.modeling.base.model.ModelingAppModel",
+            "column": "fd_application_id",
+            "table": "modeling_app_model",
+            "cascade": "all-delete-orphan",
+            "inverse": "false"
+        },
+        "authReaderFlag":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingApplication.authReaderFlag",
+            "canDisplay": "false",
+            "type": "Boolean",
+            "column": "auth_reader_flag",
+            "length": "1"
+        },
+        "authNotReaderFlag":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingApplication.authNotReaderFlag",
+            "canDisplay": "false",
+            "type": "Boolean",
+            "column": "auth_not_reader_flag",
+            "length": "1"
+        },
+        "authOtherReaders":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modelingApplication.authOtherReaders",
+            "canDisplay": "false",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_app_id",
+            "elementColumn": "auth_other_reader_id",
+            "table": "modeling_app_oreader"
+        },
+        "authOtherEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modelingApplication.authOtherEditors",
+            "canDisplay": "false",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_app_id",
+            "elementColumn": "auth_other_editor_id",
+            "table": "modeling_app_oeditor"
+        },
+        "authAllEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modelingApplication.authAllEditors",
+            "canDisplay": "false",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_app_id",
+            "elementColumn": "auth_all_editor_id",
+            "table": "modeling_app_aeditor"
+        },
+        "authAllReaders":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modelingApplication.authAllReaders",
+            "canDisplay": "false",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_app_id",
+            "elementColumn": "auth_all_reader_id",
+            "table": "modeling_app_areader"
+        },
+        "authEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modelingApplication.authEditors",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_app_id",
+            "elementColumn": "auth_editor_id",
+            "table": "modeling_app_editor"
+        },
+        "authReaders":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modelingApplication.authReaders",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_app_id",
+            "elementColumn": "auth_reader_id",
+            "table": "modeling_app_reader"
+        },
+        "fdEnableDbCenter":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingApplication.fdEnableDbCenter",
+            "type": "Boolean",
+            "column": "fd_enable_dbCenter",
+            "length": "1"
+        },
+        "fdValid":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingApplication.fdValid",
+            "type": "Boolean",
+            "column": "fd_valid",
+            "length": "1"
+        },
+        "fdPublish":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingApplication.fdPublish",
+            "type": "Boolean",
+            "column": "fd_publish",
+            "length": "1"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingApplication.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "true"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-modeling-base:modelingApplication.docCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_creator_id",
+            "notNull": "true"
+        },
+        "fdVersion":         {
+            "propertyType": "model",
+            "messageKey": "sys-modeling-base:modelingApplication.fdVersion",
+            "type": "com.landray.kmss.sys.modeling.base.model.ModelingAppVersion",
+            "column": "fd_version"
+        },
+        "fdSourceId":         {
+            "propertyType": "simple",
+            "type": "String",
+            "column": "fd_source_id",
+            "length": "200",
+            "messageKey": "sys-modeling-base:modelingApplication.fdSourceId"
+        },
+        "fdBusinessAdmins":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modeling.app.businessAdministrator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_app_id",
+            "elementColumn": "auth_bus_admin_id",
+            "table": "modeling_app_bus_admin"
+        }
+    }
+}

@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="ticJdbcTaskManageDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.jdbc.dao.hibernate.TicJdbcTaskManageDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.jdbc.model.TicJdbcTaskManage" />
+	</bean>
+	<bean
+		id="ticJdbcTaskManageTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.jdbc.service.spring.TicJdbcTaskManageServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticJdbcTaskManageDao" />
+		</property>
+		<property name="sysQuartzJobService">
+		    <ref bean="sysQuartzJobTarget"/>
+	</property>
+	</bean>
+	<bean
+		id="ticJdbcTaskManageService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticJdbcTaskManageTarget" />
+		</property>
+	</bean>
+
+   <!-- ticJdbcTaskCategory任务分类树service -->
+	<bean id="ticJdbcTaskCategoryTreeService"
+		class="com.landray.kmss.tic.jdbc.service.bean.TicJdbcTaskCategoryTreeServiceImp">
+		<property name="ticJdbcTaskCategoryService">
+			<ref bean="ticJdbcTaskCategoryTarget" />
+		</property>
+	</bean>
+
+ <!-- ticJdbcMappCategory映射分类树service -->
+	<bean id="ticJdbcMappCategoryTreeService"
+		class="com.landray.kmss.tic.jdbc.service.bean.TicJdbcMappCategoryTreeServiceImp">
+		<property name="ticJdbcMappCategoryService">
+			<ref bean="ticJdbcMappCategoryTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ticJdbcRelationDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.jdbc.dao.hibernate.TicJdbcRelationDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.jdbc.model.TicJdbcRelation" />
+	</bean>
+	<bean
+		id="ticJdbcRelationTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.jdbc.service.spring.TicJdbcRelationServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticJdbcRelationDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticJdbcRelationService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticJdbcRelationTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticJdbcTaskCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.jdbc.dao.hibernate.TicJdbcTaskCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.jdbc.model.TicJdbcTaskCategory" />
+	</bean>
+	<bean
+		id="ticJdbcTaskCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.jdbc.service.spring.TicJdbcTaskCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticJdbcTaskCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticJdbcTaskCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticJdbcTaskCategoryTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticJdbcMappCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.jdbc.dao.hibernate.TicJdbcMappCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.jdbc.model.TicJdbcMappCategory" />
+	</bean>
+	<bean
+		id="ticJdbcMappCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.jdbc.service.spring.TicJdbcMappCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticJdbcMappCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticJdbcMappCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticJdbcMappCategoryTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticJdbcMappManageDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.jdbc.dao.hibernate.TicJdbcMappManageDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.jdbc.model.TicJdbcMappManage" />
+	</bean>
+	<bean
+		id="ticJdbcMappManageTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.jdbc.service.spring.TicJdbcMappManageServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticJdbcMappManageDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticJdbcMappManageService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticJdbcMappManageTarget" />
+		</property>
+	</bean>
+
+
+
+	<!--获取table信息 bean Service -->
+	<bean id="ticJdbcLoadDBTablService" class="com.landray.kmss.tic.jdbc.service.bean.TicJdbcLoadDBTablService"></bean>
+	<!--获取table的field信息 bean Service -->	
+    <bean id="ticJdbcLoadTableFieldService" class="com.landray.kmss.tic.jdbc.service.bean.TicJdbcLoadTableFieldService"></bean>
+	<!-- 获取mappManageList数据 -->	
+	<bean id="ticJdbcMappManageBeanService" class="com.landray.kmss.tic.jdbc.service.bean.TicJdbcMappManageBeanService"></bean>
+
+	<!-- 获取数据源数据 -->	
+	<bean id="ticJdbcLoadDBDataSourceService" class="com.landray.kmss.tic.jdbc.service.bean.TicJdbcLoadDBDataSourceService"></bean>
+	
+	<!-- 全量同步 -->	
+	<bean id="ticJdbcTaskRunFullSync" 
+		  class="com.landray.kmss.tic.jdbc.iface.impl.TicJdbcTaskRunFullSync">
+		<property name="ticJdbcTaskManageService">
+			<ref bean="ticJdbcTaskManageService"/>
+		</property>
+	</bean>
+	
+	<!-- 增量同步 -->	
+	<bean id="ticJdbcTaskRunIncrementSync" 
+		  class="com.landray.kmss.tic.jdbc.iface.impl.TicJdbcTaskRunIncrementSync">
+		<property name="ticJdbcTaskManageService">
+			<ref bean="ticJdbcTaskManageService"/>
+		</property>
+	</bean>
+	
+	<!-- 日志同步 -->	
+	<bean id="ticJdbcTaskRunLogSync" 
+		  class="com.landray.kmss.tic.jdbc.iface.impl.TicJdbcTaskRunLogSync">
+	</bean>
+	<!-- 函数表达式列表 -->	
+	<bean id="ticJdbcExpressionBean" 
+		  class="com.landray.kmss.tic.jdbc.service.bean.TicJdbcExpressionBean">
+	</bean>
+
+	<!-- JDBC定时任务 -->	
+	<bean id="ticJdbcSyncUniteQuartzService" 
+		  class="com.landray.kmss.tic.jdbc.service.spring.TicJdbcSyncUniteQuartServiceImp">
+	 </bean>
+	 
+	<!-- 校验删除条件 -->	
+	<bean id="ticJdbcDeleteValidateBean" 
+		  class="com.landray.kmss.tic.jdbc.service.bean.TicJdbcDeleteValidateBean">
+	</bean>
+	 
+	<!-- 数据集管理分类 -->	
+	<bean
+		id="ticJdbcDataSetCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.jdbc.dao.hibernate.TicJdbcDataSetCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.jdbc.model.TicJdbcDataSetCategory" />
+	</bean>
+	<bean
+		id="ticJdbcDataSetCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.jdbc.service.spring.TicJdbcDataSetCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticJdbcDataSetCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticJdbcDataSetCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticJdbcDataSetCategoryTarget" />
+		</property>
+	</bean>
+	 
+	<!-- JDBC数据集 -->
+	<bean
+		id="ticJdbcDataSetDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.jdbc.dao.hibernate.TicJdbcDataSetDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.jdbc.model.TicJdbcDataSet" />
+	</bean>
+	<bean
+		id="ticJdbcDataSetTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.jdbc.service.spring.TicJdbcDataSetServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticJdbcDataSetDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticJdbcDataSetService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticJdbcDataSetTarget" />
+		</property>
+	</bean>
+	<bean id="ticJdbcDataSetParamBean"
+		class="com.landray.kmss.tic.jdbc.service.bean.TicJdbcDataSetParamBean">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- 
+	<bean id="ticJdbcControlTreeInfo"
+		class="com.landray.kmss.tic.jdbc.control.TicJdbcControlTreeInfo">
+		<property name="ticJdbcDataSetService">
+			<ref bean="ticJdbcDataSetService" />
+		</property>
+		<property name="ticJdbcDataSetCategoryService">
+			<ref bean="ticJdbcDataSetCategoryService" />
+		</property>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	 -->
+	
+	<bean id="ticJdbcDataSetCategoryTreeService"
+		class="com.landray.kmss.tic.jdbc.service.bean.TicJdbcDataSetCategoryTreeServiceImp">
+		<property name="ticJdbcDataSetCategoryService">
+			<ref bean="ticJdbcDataSetCategoryService" />
+		</property>
+	</bean>
+	
+	<bean id="ticJdbcDataSetTreeService"
+		class="com.landray.kmss.tic.jdbc.service.bean.TicJdbcDataSetTreeBean">
+		<property name="ticJdbcDataSetCategoryService">
+			<ref bean="ticJdbcDataSetCategoryService" />
+		</property>
+		<property name="ticJdbcDataSetService">
+			<ref bean="ticJdbcDataSetService" />
+		</property>
+	</bean>
+	
+	<bean id="ticJdbcDataSetJsonBean"
+		class="com.landray.kmss.tic.jdbc.service.bean.TicJdbcDataSetJsonBean">
+		<property name="ticJdbcDataSetService">
+			<ref bean="ticJdbcDataSetService" />
+		</property>
+	</bean>
+	
+	<!-- 自定义表单控件 bean-->
+	<bean
+		id="ticJdbcSqlSelectDataBean"
+		class="com.landray.kmss.tic.jdbc.control.sql.TicJdbcFormTemplateSQLSelectDataBean">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="compDbcpService">
+			<ref bean="compDbcpService" />
+		</property>
+	</bean>
+	<bean
+		id="ticJdbcFormSQLSelectDBServiceImp"
+		class="com.landray.kmss.tic.jdbc.control.sql.TicJdbcFormSQLSelectDBServiceImp">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 多数据源 -->
+	<bean
+		id="ticJdbcFromTemplateDataRresourcesImp"
+		class="com.landray.kmss.tic.jdbc.control.sql.TicJdbcFromTemplateDataRresourcesImp">
+		<property name="compDbcpService">
+			<ref bean="compDbcpService" />
+		</property>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- tic适配处理器 -->
+	<bean id="jdbcDispatcherExecutor"
+		class="com.landray.kmss.tic.jdbc.executor.JdbcDispatcherExecutor"></bean>
+		
+	<!-- 函数查询 -->
+	<bean id="ticJdbcQueryDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.jdbc.dao.hibernate.TicJdbcQueryDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.jdbc.model.TicJdbcQuery" />
+	</bean>
+	<bean id="ticJdbcQueryTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.jdbc.service.spring.TicJdbcQueryServiceImp">
+		<property name="baseDao">
+			<ref bean="ticJdbcQueryDao" />
+		</property>
+	</bean>
+	<bean id="ticJdbcQueryService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticJdbcQueryTarget" />
+		</property>
+	</bean>
+</beans>

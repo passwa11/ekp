@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!-- 个人中心 -->
+	<extension point="com.landray.kmss.sys.portal">
+		<item name="stat">
+			<!-- 模块名称 -->
+			<param
+				name="moduleName"
+				value="sys-time:module.sys.time" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelName"
+				value="com.landray.kmss.sys.time.model.SysTimeLeaveAmount" />
+			<param
+				name="url"
+				value="/sys/time/sys_time_leave_amount/sysTimeLeaveAmount.do?method=showStat" />
+			<param name="icon" value="lui_iconfont_nav_sys_time" />
+			<param name="viewUrl" value="/sys/time" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.time.transfer.SysTimeLeaveAmountTransferTask" />
+			<param
+				name="name"
+				value="{sys-time:sysTimeLeaveAmount.transfer.name}" />
+			<param
+				name="path"
+				value="/sys/time/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.time.transfer.SysTimeLeaveAmountTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.time.transfer.SysTimeLeaveAmountTransferTask" />
+			<param
+				name="description"
+				value="{sys-time:sysTimeLeaveAmount.transfer.desc}" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.time.transfer.SysTimeAmountTransferTask" />
+			<param
+				name="name"
+				value="{sys-time:sysTimeLeaveAmount.transfer.auth.name}" />
+			<param
+				name="path"
+				value="/sys/time/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.time.transfer.SysTimeAmountTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.time.transfer.SysTimeAmountTransferTask" />
+			<param
+				name="description"
+				value="{sys-time:sysTimeLeaveAmount.transfer.auth.desc}" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.time.transfer.SysTimeOverTimeTransferTask" />
+			<param
+				name="name"
+				value="排班管理跨天排班数据迁移" />
+			<param
+				name="path"
+				value="/sys/time/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.time.transfer.SysTimeOverTimeTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.time.transfer.SysTimeOverTimeTransferTask" />
+			<param
+				name="description"
+				value="考勤跨天排班新增字段填充，避免旧数据报错" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.datainit" model="*">
+		<item name="datainit">
+			<param name="bean" value="sysTimeDatainitService" />
+			<param name="order" value="1" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.time.transfer.SysTimeLeaveAmountItemTransferTask" />
+			<param
+				name="name"
+				value="排班管理上周期假期额度修复数据迁移" />
+			<param
+				name="path"
+				value="/sys/time/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.time.transfer.SysTimeLeaveAmountItemTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.time.transfer.SysTimeLeaveAmountItemTransferTask" />
+			<param
+				name="description"
+				value="修复当前年份用户假期额度表中上周期剩余已用天数大于剩余总天数问题" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.lbpm.engine.robot" model="*">
+		<item name="robot">
+			<param
+					name="unid"
+					value="sysTimeRuleProlongExpire" />
+			<param
+					name="category"
+					value="{sys-time:module.sys.time}" />
+			<param
+					name="type"
+					value="{sys-time:sysTimeRule.type.prolongExpire}" />
+			<param
+					name="bean"
+					value="sysTimeRuleProlongExpireService" />
+			<param
+					name="url"
+					value="/sys/time/sys_time_leave_rule/robot/robotnode_move_form_mapping.jsp" />
+			<param
+					name="class"
+					value="app" />
+			<param
+					name="description"
+					value="{sys-time:sysTimeRule.type.prolongExpire.desc}" />
+		</item>
+	</extension>
+</plugin>

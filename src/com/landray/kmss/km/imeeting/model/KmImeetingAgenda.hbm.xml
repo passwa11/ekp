@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.imeeting.model.KmImeetingAgenda"
+		table="km_imeeting_agenda">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="docSubject"
+			column="doc_subject"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+		<property
+			name="fdNo"
+			column="fd_no"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200" />
+
+		<property
+			name="fdExpectStartTime"
+			column="fd_expect_starttime"
+			update="true"
+			insert="true"
+			not-null="false"
+			index="idx_imeeting_agenda_StartTime"/>
+			
+		<property
+			name="docReporterTime"
+			column="doc_reporter_time"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+		<property
+			name="fdFromTopicId"
+			column="fd_fromtopic_id"
+			update="true"
+			insert="true"
+			length="36"
+			not-null="false" />
+		<property
+			name="attachmentName"
+			column="attachment_name"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="attachmentId"
+			column="attachment_id"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="attachmentSubmitTime"
+			column="attachment_submit_time"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+
+		<property
+			name="fdIsPublic"
+			column="fd_is_public"
+			update="true"
+			insert="true"
+			length="32"
+			not-null="false" />
+
+		<many-to-one
+			name="fdMain"
+			column="fd_main_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<many-to-one
+			name="fdChargeUnit"
+			column="fd_charge_unit_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+			
+		<many-to-one
+			name="docReporter"
+			column="doc_reporter_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+		<many-to-one
+			name="docRespons"
+			column="doc_respons_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<list
+			name="fdAttendUnit"
+			table="km_imeeting_agenda_au"
+			lazy="true">
+			<key column="fd_main_id" />
+			<index column="position"></index>
+			<many-to-many
+				class="com.landray.kmss.sys.unit.model.KmImissiveUnit"
+				column="fd_unit_id" />
+		</list>
+		<list
+			name="fdListenUnit"
+			table="km_imeeting_agenda_lu"
+			lazy="true">
+			<key column="fd_main_id" />
+			<index column="position"></index>
+			<many-to-many
+				class="com.landray.kmss.sys.unit.model.KmImissiveUnit"
+				column="fd_unit_id" />
+		</list>
+		
+		<property
+			name="fdBallotResult"
+			column="fd_ballot_result"
+			update="true"
+			insert="true"
+			length="1000000"
+			not-null="false"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true" />
+
+	</class>
+</hibernate-mapping>

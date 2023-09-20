@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+
+		<!-- 个人设置 -->
+		<oper id="sysPersonCfgLinkOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.person.model.SysPersonCfgLink" action="/sys/person/sys_person_cfg_link/sysPersonCfgLink.do">
+			<query method="edit" logPoint="Base_UrlParam;edit" messageKey="button.edit" />
+			<query method="clearAll" logPoint="Base_UrlParam"
+				messageKey="sys-person:sys.person.cfglink.restore" />
+
+		</oper>
+
+		<!-- 导航设置 -->
+		<oper id="sysPersonSysNavCategoryOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.person.model.SysPersonSysNavCategory"
+			action="/sys/person/sys_person_sysnav_category/sysPersonSysNavCategory.do">
+			<!-- 启用停用 -->
+			<query method="updateStatus" logPoint="updateStatus"
+				messageKey="sys-person:status.stoped" />
+		</oper>
+
+		<!-- 窗口设置 -->
+		<oper id="sysPersonSysTabCategoryOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.person.model.SysPersonSysTabCategory"
+			action="/sys/person/sys_person_systab_category/sysPersonSysTabCategory.do">
+			<!-- 启用停用 -->
+			<query method="updateStatus" logPoint="updateStatus"
+				messageKey="sys-person:status.stoped" />
+		</oper>
+
+		<!-- 个人设置 -->
+		<oper id="sysPersonSettingOperLog" extends="BaseOperLog" model="*"
+			action="/sys/person/setting.do">
+		</oper>
+
+		<!-- 我的导航设置 -->
+		<oper id="sysPersonMyNavCategoryOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.person.model.SysPersonMyNavCategory"
+			action="/sys/person/sys_person_mynav_category/sysPersonMyNavCategory.do">
+			<!--保存排序 -->
+			<query method="updateOrder" logPoint="updateOrder" messageKey="sys-person:btn.saveorder" />
+			<!-- 启用停用 -->
+			<query method="updateStatus" logPoint="updateStatus"
+				messageKey="sys-person:status.stoped" />
+			<!-- 查询我的导航 -->
+			<query method="listMyNav" logPoint="listMyNav" messageKey="button.list"></query>
+		</oper>
+
+		<!-- 我的窗口设置 -->
+		<oper id="sysPersonMyTabCategoryOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.person.model.SysPersonMyTabCategory"
+			action="/sys/person/sys_person_mytab_category/sysPersonMyTabCategory.do">
+			<!-- 保存排序 -->
+			<query method="updateOrder" logPoint="updateOrder" messageKey="sys-person:btn.saveorder" />
+			<!-- 启用停用 -->
+			<query method="updateStatus" logPoint="updateStatus"
+				messageKey="sys-person:status.stoped" />
+			<!-- 查询 -->
+			<query method="all" logPoint="Action_FindAll" messageKey="button.list" />
+
+		</oper>
+
+		<!-- 我关注的分类 -->
+		<oper id="sysPersonFavoriteCategoryOperLog" extends="BaseOperLog"
+			model="com.landray.kmss.sys.person.model.SysPersonFavoriteCategory"
+			action="/sys/person/sys_person_favorite_category/sysPersonFavoriteCategory.do">
+			<query method="update" logPoint="Service_Update" messageKey="sys-person:favorite.setting" />
+			<query method="quickAdd" logPoint="quickAdd"
+				messageKey="sys-person:favorite.setting.quickAdd" />
+			<query method="quickRemove" logPoint="quickRemove"
+				messageKey="sys-person:favorite.setting.quickRemove" />
+			<query method="favorite" logPoint="favorite" messageKey="sys-person:favorite" />
+		</oper>
+
+	</logset>
+</log-oper>

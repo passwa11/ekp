@@ -1,0 +1,117 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.lbpmservice.support.model.LbpmDynamicSubFlow",
+        "messageKey": "sys-lbpmservice-support:table.lbpmEmbeddedSubFlow",
+        "displayProperty": "fdName",
+        "serviceBean": "lbpmDynamicSubFlowService",
+        "table": "lbpm_dynamic_subflow",
+        "url": "/sys/lbpmservice/support/lbpmDynamicSubFlow.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmservice-support:lbpmDynamicSubFlow.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "length": "200",
+            "validate": "true"
+        },
+        "fdDesc":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmservice-support:lbpmDynamicSubFlow.fdDesc",
+            "type": "String",
+            "column": "fd_desc",
+            "notNull": "false",
+            "length": "1500",
+            "validate": "true"
+        },
+        "fdIsAvailable":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmservice-support:lbpmDynamicSubFlow.state",
+            "type": "Boolean",
+            "column": "fd_is_available",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "1",
+            "canSearch": "true"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmservice-support:lbpmDynamicSubFlow.fdOrder",
+            "type": "Integer",
+            "column": "fd_order",
+            "notNull": "true",
+            "length": "19",
+            "validate": "false"
+        },
+        "fdCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmservice-support:lbpmDynamicSubFlow.docCreateTime",
+            "type": "DateTime",
+            "column": "fd_create_time",
+            "notNull": "false",
+            "unique": "false"
+        },
+        "fdAlteror":         {
+            "propertyType": "model",
+            "messageKey": "sys-lbpmservice-support:lbpmDynamicSubFlow.docAlteror",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "fd_alteror_id",
+            "notNull": "false",
+            "unique": "false"
+        },
+        "fdCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-lbpmservice-support:lbpmDynamicSubFlow.docCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "fd_creator_id",
+            "notNull": "false",
+            "unique": "false"
+        },
+        "fdAlterTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmservice-support:lbpmDynamicSubFlow.docAlterTime",
+            "type": "DateTime",
+            "column": "fd_alter_time",
+            "notNull": "false",
+            "unique": "false"
+        },
+        "fdParamSetContent":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmservice-support:lbpmDynamicSubFlow.param",
+            "type": "RTF",
+            "column": "fd_param_content",
+            "notNull": "false",
+            "length": "1000000"
+        },
+        "docCategory":         {
+            "propertyType": "model",
+            "messageKey": "sys-lbpmservice-support:lbpmDynamicSubFlow.docCategory",
+            "type": "com.landray.kmss.sys.lbpmservice.support.model.LbpmEmbeddedSubFlowCategory",
+            "column": "fd_category_id",
+            "notNull": "true"
+        },
+        "authEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-lbpmservice-support:lbpmDynamicSubFlow.authEditors",
+            "column": "fd_dynamicsubflow_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_editor_id",
+            "table": "lbpm_dynamicsubflow_editor"
+        },
+        "nodeGroupList":         {
+            "propertyType": "list",
+            "messageKey": "sys-lbpmservice-support:lbpmDynamicSubFlow.nodeGroup",
+            "column": "doc_dynamic_id",
+            "type": "com.landray.kmss.sys.lbpmservice.support.model.LbpmDynamicSubFlowNodeGroup",
+            "cascade": "all",
+            "inverse": "false",
+            "table": "lbpm_dynamic_subflow_nodegroup"
+        }
+    }
+}

@@ -1,0 +1,31 @@
+if(!data){
+	return;
+}
+var dataValue = data.value || {};
+var dataValidate = data.validate || {};
+var wgt = render.parent;
+var lang = wgt.getModelingLang();
+{$
+<div class="list-block">
+	<div class="content_item_form_element content_choose">
+		<p class="content_body_title">列表视图</p>
+		<input name="{%data.uuId%}_listView" title="列表视图" value="{%dataValue.listView%}" type="hidden" data-update-event="change" data-validate="{%dataValidate.listView%}"/>
+		<input name="{%data.uuId%}_listViewText" value="{%dataValue.listViewText%}" type="hidden" />
+		<input name="{%data.uuId%}_listViewAppId" value="{%dataValue.listViewAppId%}" type="hidden" />
+		<input name="{%data.uuId%}_nodeType" value="{%dataValue.nodeType%}" type="hidden" />
+		<div class="content_opt listVieElement">
+			<p class="listViewText">{%dataValue.listViewText || '请选择'%}</p>
+			<i class="listViewIcon"></i>
+		</div>
+		<p class="content_opt_info"></p>
+	</div>$}
+	if(wgt.isCount){
+		{$<div class="content_item_form_element content_select" style="display: none">
+			<p class="content_body_title">tab</p>
+			<div class="lvCountWrap"></div>
+			<input name='{%data.uuId%}_countLv' title="tab" data-update-event='change' type='hidden' value="{%dataValue.countLv%}" data-validate="{%dataValidate.countLv%}"/>
+			<input name="{%data.uuId%}_lvCollection" type="hidden" data-validate="{%dataValidate.lvCollection%}"/>
+			<p class="content_opt_info"></p>
+		</div>$}
+	}
+{$</div>$}

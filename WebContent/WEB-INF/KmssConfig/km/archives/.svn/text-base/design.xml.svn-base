@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/km/archives/" 
+        messageKey="km-archives:module.km.archives" 
+        defaultValidator="roleValidator(role=ROLE_KMARCHIVES_DEFAULT)">
+        <roles>
+        	ROLE_KMARCHIVES_DEFAULT;
+        	ROLE_KMARCHIVES_SETTING;
+        	ROLE_KMARCHIVES_VIEW_ALL;
+        	ROLE_KMARCHIVES_VIEW_ALLFILE;
+        	ROLE_KMARCHIVES_CATEGORY_EXTEND;
+        	ROLE_KMARCHIVES_IMPORT;
+        	ROLE_KMARCHIVES_EDIT;
+        	ROLE_KMARCHIVES_CREATE_NEW;
+        	ROLE_KMARCHIVES_DELETE;
+        	ROLE_KMARCHIVES_CREATE;
+        	ROLE_KMARCHIVES_BATCH_UPDATE;
+        	ROLE_KMARCHIVES_BATCH_UPDATE_AUTH;
+        	ROLE_KMARCHIVES_CHANGECATE;
+        	ROLE_KMARCHIVES_CATEGORY_MAINTAINER;
+        	ROLE_KMARCHIVES_DESTROY;
+        	ROLE_KMARCHIVES_VIEWALL_DESTROY;
+        	ROLE_KMARCHIVES_PRINT_DESTROY;
+        	ROLE_KMARCHIVES_DELETE_DESTROY;
+        	ROLE_KMARCHIVES_APPRAISE;
+        	ROLE_KMARCHIVES_VIEWALL_APPRAISE;
+        	ROLE_KMARCHIVES_PRINT_APPRAISE;
+        	ROLE_KMARCHIVES_DELETE_APPRAISE;
+        	ROLE_KMARCHIVES_VIEWALL_BORROW;
+        	ROLE_KMARCHIVES_DELETE_BORROW;
+        	ROLE_KMARCHIVES_CREATE_BORROW;
+        	ROLE_KMARCHIVES_TRANSPORT_EXPORT;
+        	ROLE_KMARCHIVES_BACKSTAGE_MANAGER;
+        	ROLE_KMARCHIVES_PREFILE_MANAGER
+        </roles>
+        <request 
+            path="/km_archives_main/kmArchivesFileSign.do*" 
+            defaultValidator="true"/>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_BACKSTAGE_MANAGER)"/>
+        <!-- 导入档案页面路径 -->
+        <request 
+            path="km_archives_main/kmArchivesMain_upload.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_IMPORT)"/>
+        <!-- 批量更新页面路径 -->
+        <request 
+            path="km_archives_main/kmArchivesMain_batchUpdate.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_BATCH_UPDATE)"/>
+        <!-- 档案主文档 -->
+        <request 
+            path="km_archives_main/kmArchivesMain.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesMain,cateModel=com.landray.kmss.km.archives.model.KmArchivesCategory,adminRoleName=ROLE_KMARCHIVES_CATEGORY_MAINTAINER" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_DEFAULT)">
+            <query
+				queryString="method=addBorrow"
+				validator="roleValidator(role=ROLE_KMARCHIVES_CREATE)&amp;kmArchivesBorrowValidator()" />
+			<query
+				queryString="method=add"
+				validator="roleValidator(role=ROLE_KMARCHIVES_CREATE)&amp;authSimpleCategoryReaderValidator(cateId=i.docTemplate)" />
+			<!-- 保存新版本 -->
+			<query
+				queryString="method=save|saveadd&amp;originId=*"
+				validator="areaRoleValidator(role=ROLE_KMARCHIVES_CREATE_NEW)|authFieldValidator(type=creator,recid=originId)|authFieldValidator(recid=originId,type=SYS_EDITOR)|areaRoleValidator(role=ROLE_KMARCHIVES_EDIT)|roleValidator(role=ROLE_KMARCHIVES_CREATE)" />
+			<!-- 保存 -->
+			<query
+				queryString="method=save|saveadd"				
+				validator="roleValidator(role=ROLE_KMARCHIVES_CREATE)&amp;[authSimpleCategoryReaderValidator(cateId=i.docTemplate)|roleValidator(role=ROLE_KMARCHIVES_CATEGORY_EXTEND)]" />
+           <!--  <query 
+                queryString="method=add|save|saveadd&amp;i.docTemplate=*" 
+                validator="authSimpleCategoryReaderValidator(cateId=i.docTemplate)|roleValidator(role=ROLE_KMARCHIVES_CATEGORY_EXTEND)"/> -->
+            <!-- 查看 -->
+            <query 
+                queryString="method=view" 
+                validator="sysRecycleAuthFieldValidator(type=recycle)|authFieldValidator(type=SYS_READER)|authSimpleCategoryEditorValidator(property=docTemplate)"/>
+            <!-- 编辑、更新 -->
+            <query 
+                queryString="method=edit|update" 
+                validator="authFieldValidator(type=SYS_EDITOR)|lbpmCurHandlerValidator(method=update)|areaRoleValidator(role=ROLE_KMARCHIVES_CATEGORY_MAINTAINER)|roleValidator(role=ROLE_KMARCHIVES_CATEGORY_EXTEND)"/>
+            <!-- 删除 -->
+           	<query
+				queryString="method=delete"				
+				validator="fieldValueValidator(fieldproperty=docStatus,value=10)&amp;authFieldValidator(type=creator)|areaRoleValidator(role=ROLE_KMARCHIVES_DELETE)&amp;[areaRoleValidator(role=ROLE_KMARCHIVES_CATEGORY_MAINTAINER)|areaRoleValidator(role=ROLE_KMARCHIVES_CATEGORY_EXTEND)|authSimpleCategoryEditorValidator(property=docTemplate)]" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_KMARCHIVES_DELETE)&amp;[areaRoleValidator(role=ROLE_KMARCHIVES_CATEGORY_MAINTAINER)|areaRoleValidator(role=ROLE_KMARCHIVES_CATEGORY_EXTEND)|authSimpleCategoryEditorValidator(cateId=docTemplate)]" />	
+            <!-- 导入档案 -->
+            <query 
+                queryString="method=importArchives" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_IMPORT)"/>
+            <!-- 批量更新 -->
+            <query 
+                queryString="method=batchUpdate" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_BATCH_UPDATE)"/>
+            <!-- 新版本页面权限 -->
+			<query
+				queryString="method=newEdition"
+				validator="areaRoleValidator(role=ROLE_KMARCHIVES_CREATE_NEW)|authFieldValidator(recid=originId,model=com.landray.kmss.km.archives.model.KmArchivesMain,cateModel=com.landray.kmss.km.archives.model.KmArchivesCategory,type=creator)|authFieldValidator(recid=originId,model=com.landray.kmss.km.archives.model.KmArchivesMain,cateModel=com.landray.kmss.km.archives.model.KmArchivesCategory,type=SYS_EDITOR)|areaRoleValidator(role=ROLE_KMARCHIVES_EDIT)&amp;[areaRoleValidator(role=ROLE_KMARCHIVES_CATEGORY_MAINTAINER)|areaRoleValidator(role=ROLE_KMARCHIVES_CATEGORY_EXTEND)|authSimpleCategoryEditorValidator(recid=originId,model=com.landray.kmss.km.archives.model.KmArchivesMain,cateModel=com.landray.kmss.km.archives.model.KmArchivesCategory,property=docTemplate)]"/>
+        	<!-- 导入档案 -->
+            <query 
+                queryString="method=listPreFile|updateChangeCate|updateChangeCates|deleteallPreFile" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_PREFILE_MANAGER)"/>
+            <query 
+                queryString="method=editPreFile|viewPreFile|deletePreFile"
+                validator="roleValidator(role=ROLE_KMARCHIVES_PREFILE_MANAGER)&amp;fieldValueValidator(fieldproperty=docStatus,value=10)&amp;fieldValueValidator(fieldproperty=fdIsPreFile,value=true) "/> 
+        </request>
+        <!-- 档案信息分类 -->
+        <request 
+            path="km_archives_category/kmArchivesCategory.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesCategory,adminRoleName=ROLE_KMARCHIVES_CATEGORY_MAINTAINER">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="sysSimpleCategoryEditorValidator(recid=parentId)"/>
+            <query 
+                queryString="method=view" 
+                validator="sysSimpleCategoryReaderValidator()"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=delete" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)"/>
+        </request>
+        <!-- 年度 -->
+        <request 
+            path="km_archives_period/kmArchivesPeriod.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesPeriod" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)"/>
+        </request>
+        <!-- 单位 -->
+        <request 
+            path="km_archives_unit/kmArchivesUnit.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesUnit" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)"/>
+        </request>
+        <!-- 卷库 -->
+        <request 
+            path="km_archives_library/kmArchivesLibrary.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesLibrary" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)"/>
+            <query 
+                queryString="method=criteria" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_DEFAULT)"/>
+        </request>
+        <!-- 密级程度 -->
+        <request 
+            path="km_archives_dense/kmArchivesDense.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesDense" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)"/>
+            <query 
+                queryString="method=criteria" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_DEFAULT)"/>
+        </request>
+        <!-- 鉴定 -->
+        <request 
+            path="km_archives_appraise/kmArchivesAppraise.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesAppraise" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_DEFAULT)">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_APPRAISE)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="authFieldValidator(type=SYS_EDITOR)|lbpmCurHandlerValidator(method=update)"/>
+            <query
+				queryString="method=delete"				
+				validator="fieldValueValidator(fieldproperty=docStatus,value=10)&amp;authFieldValidator(type=creator)|roleValidator(role=ROLE_KMARCHIVES_DELETE_APPRAISE)" />
+			 <query
+				queryString="method=deleteall"				
+				validator="roleValidator(role=ROLE_KMARCHIVES_DELETE_APPRAISE)" />
+            <!-- 打印鉴定订单 -->
+            <query 
+                queryString="method=printAppraiseList" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_PRINT_APPRAISE)"/>
+        </request>
+        <!-- 销毁 -->
+        <request 
+            path="km_archives_destroy/kmArchivesDestroy.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesDestroy" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_DEFAULT)">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_DESTROY)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="authFieldValidator(type=SYS_EDITOR)|lbpmCurHandlerValidator(method=update)"/>
+            <query
+				queryString="method=delete"				
+				validator="fieldValueValidator(fieldproperty=docStatus,value=10)&amp;authFieldValidator(type=creator)|roleValidator(role=ROLE_KMARCHIVES_DELETE_DESTROY)" />
+			 <query
+				queryString="method=deleteall"				
+				validator="roleValidator(role=ROLE_KMARCHIVES_DELETE_DESTROY)" />
+            <!-- 打印销毁订单 -->
+            <query 
+                queryString="method=printDestroyList" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_PRINT_DESTROY)"/>
+        </request>
+        <!-- 借阅申请 -->
+        <request 
+            path="km_archives_borrow/kmArchivesBorrow.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesBorrow,cateModel=com.landray.kmss.km.archives.model.KmArchivesTemplate,adminRoleName=ROLE_KMARCHIVES_CATEGORY_MAINTAINER" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_DEFAULT)">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_CREATE_BORROW)"/>
+            <query 
+                queryString="method=view" 
+                validator="sysRecycleAuthFieldValidator(type=recycle)|authFieldValidator(type=SYS_READER)"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="authFieldValidator(type=SYS_EDITOR)|lbpmCurHandlerValidator(method=update)"/>
+            <!-- 删除 -->
+			<query
+				queryString="method=delete"				
+				validator="fieldValueValidator(fieldproperty=docStatus,value=10)&amp;authFieldValidator(type=creator)|roleValidator(role=ROLE_KMARCHIVES_DELETE_BORROW)" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_KMARCHIVES_DELETE_BORROW)" />
+			<query 
+                queryString="method=renew" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_CREATE_BORROW)&amp;kmArchivesRenewValidator()"/>
+        </request>
+        <!-- 借阅模板 -->
+        <request 
+            path="km_archives_template/kmArchivesTemplate.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesTemplate">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="authFieldValidator(type=SYS_EDITOR)"/>
+            <query 
+                queryString="method=delete" 
+                validator="authFieldValidator(type=SYS_EDITOR)"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)"/>
+        </request>
+        <!-- 鉴定模板 -->
+        <request 
+            path="km_archives_appraise_template/kmArchivesAppraiseTemplate.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesAppraiseTemplate">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="authFieldValidator(type=SYS_EDITOR)"/>
+            <query 
+                queryString="method=delete" 
+                validator="authFieldValidator(type=SYS_EDITOR)"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)"/>
+        </request>
+        <!-- 鉴定模板 -->
+        <request 
+            path="km_archives_destroy_template/kmArchivesDestroyTemplate.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesDestroyTemplate">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="authFieldValidator(type=SYS_EDITOR)"/>
+            <query 
+                queryString="method=delete" 
+                validator="authFieldValidator(type=SYS_EDITOR)"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)"/>
+        </request>
+        <!-- 基础设置 -->
+        <request 
+            path="km_archives_config/kmArchivesConfig_edit.jsp"
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_SETTING)">
+        </request>
+        <!-- 续借 -->
+        <request 
+            path="km_archives_renew/kmArchivesRenew.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesRenew" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_CREATE_BORROW)">
+        </request>
+        <!-- 借阅详情 -->
+        <!-- <request 
+            path="km_archives_details/kmArchivesDetails.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.km.archives.model.KmArchivesDetails" 
+            defaultValidator="roleValidator(role=ROLE_KMARCHIVES_DEFAULT)">
+        </request> -->
+        <!-- 档案信息过滤 -->
+        <filters 
+            modelName="com.landray.kmss.km.archives.model.KmArchivesMain">
+            <filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+            <filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_KMARCHIVES_VIEW_ALL)" />
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_KMARCHIVES_VIEW_ALLFILE)" />
+			 <filter
+				type="SYS_READER"
+					expression="authFieldFilter(field=fdStorekeeper.fdId)" />
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <!-- 借阅申请过滤 -->
+        <filters 
+            modelName="com.landray.kmss.km.archives.model.KmArchivesBorrow">
+            <filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+            <filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_KMARCHIVES_VIEWALL_BORROW)" />
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+         <!-- 鉴定申请过滤 -->
+        <filters 
+            modelName="com.landray.kmss.km.archives.model.KmArchivesAppraise">
+            <filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+            <filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_KMARCHIVES_VIEWALL_APPRAISE)" />
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+         <!-- 销毁申请过滤 -->
+        <filters 
+            modelName="com.landray.kmss.km.archives.model.KmArchivesDestroy">
+            <filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+            <filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_KMARCHIVES_VIEWALL_DESTROY)" />
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <!-- 借用模板过滤 -->
+        <filters 
+            modelName="com.landray.kmss.km.archives.model.KmArchivesTemplate">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_KMARCHIVES_SETTING)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_KMARCHIVES_SETTING)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <!-- 鉴定模板过滤 -->
+        <filters 
+            modelName="com.landray.kmss.km.archives.model.KmArchivesAppraiseTemplate">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_KMARCHIVES_SETTING)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_KMARCHIVES_SETTING)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <!-- 销毁模板过滤 -->
+        <filters 
+            modelName="com.landray.kmss.km.archives.model.KmArchivesDestroyTemplate">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_KMARCHIVES_SETTING)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_KMARCHIVES_SETTING)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+    </module>
+    <!-- 参数设置 -->
+	<module messageKey="" urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.km.archives.model.KmArchivesConfig"
+				validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)" />
+			<query
+				queryString="modelName=com.landray.kmss.km.archives.model.KmArchivesFileConfig"
+				validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)" />
+		</request>
+	</module>
+	<module urlPrefix="/sys/transport/">
+		<request path="sys_transport_export/SysTransportExport*">
+			<query validator="roleValidator(role=ROLE_KMARCHIVES_TRANSPORT_EXPORT)"
+				queryString="fdModelName=com.landray.kmss.km.archives.model.KmArchivesMain|com.landray.kmss.km.archives.model.KmArchivesBorrow" />
+		</request>
+	</module>
+    <!-- 软删除配置 -->
+	<module urlPrefix="/sys/recycle/">
+		<request path="sys_recycle_doc/sysRecycle*"
+		   validatorParameter="recid=modelId,model=modelName">
+			<query
+			    queryString="modelName=com.landray.kmss.km.archives.model.KmArchivesMain|com.landray.kmss.km.archives.model.KmArchivesBorrow&amp;method=hardDelete|recover" 
+				validator="sysRecycleAuthFieldValidator(type=SYS_EDITOR)|sysRecycleAuthFieldValidator(type=recycle)|areaRoleValidator(role=ROLE_SYS_RECYCLE_BACKSTAGE_MANAGER)"/>
+		</request>
+		<request path="sys_recycle_log/sysRecycleLog*">
+			<query
+			    queryString="modelName=com.landray.kmss.km.archives.model.KmArchivesMain|com.landray.kmss.km.archives.model.KmArchivesBorrow" 
+				validator="areaRoleValidator(role=ROLE_SYS_RECYCLE_BACKSTAGE_MANAGER)"/>
+		</request>	
+	</module>
+	<!-- 流程模板相关权限设置 -->
+    <module urlPrefix="/sys/lbpmservice/">
+		<request 
+			path="support/lbpm_template/lbpmTemplate*">
+			<query
+				queryString="fdModelName=com.landray.kmss.km.archives.model.KmArchivesTemplate|com.landray.kmss.km.archives.model.KmArchivesCategory|com.landray.kmss.km.archives.model.KmArchivesDestroyTemplate|com.landray.kmss.km.archives.model.KmArchivesAppraiseTemplate"
+				validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)" />
+		</request>
+		<request 
+			path="support/lbpm_template/lbpmPrivileger*">
+			<query
+				queryString="fdModelName=com.landray.kmss.km.archives.model.KmArchivesTemplate|com.landray.kmss.km.archives.model.KmArchivesCategory|com.landray.kmss.km.archives.model.KmArchivesDestroyTemplate|com.landray.kmss.km.archives.model.KmArchivesAppraiseTemplate"
+				validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)" />
+		</request>
+	</module>
+    <!-- 转移分类权限 -->
+	<module urlPrefix="/sys/sc/">
+		<request path="cateChg*">
+			<query
+				queryString="method=cateChgEdit&amp;cateModelName=com.landray.kmss.km.archives.model.KmArchivesCategory"
+				validator="roleValidator(role=ROLE_KMARCHIVES_CHANGECATE)&amp;[roleValidator(role=ROLE_KMARCHIVES_CATEGORY_MAINTAINER)|roleValidator(role=ROLE_KMARCHIVES_CATEGORY_EXTEND)|authSimpleCategoryEditorValidator(cateId=categoryId,cateModel=com.landray.kmss.km.archives.model.KmArchivesCategory)]" />
+		</request>
+	</module>
+	<!-- 编号机制权限 -->
+    <module 
+        urlPrefix="/sys/number/">
+        <request 
+            path="sys_number_main/sysNumberMain*">
+            <query 
+                queryString="modelName=com.landray.kmss.km.archives.model.KmArchivesMain" 
+                validator="roleValidator(role=ROLE_KMARCHIVES_SETTING)"/>
+        </request>
+    </module>
+    <!-- 档案列表批量修改权限 -->
+	<module urlPrefix="/sys/right/">
+		<request path="rightCateChange*">
+			<query
+				queryString="method=cateRightEdit&amp;cateModelName=com.landray.kmss.km.archives.model.KmArchivesCategory"
+				validator="roleValidator(role=ROLE_KMARCHIVES_CATEGORY_MAINTAINER)|sysSimpleCategoryEditorBatchValidator(recid=fdIds,model=com.landray.kmss.km.archives.model.KmArchivesCategory)"/>
+		</request>
+		<request path="rightDocChange*">
+			<query
+				queryString="method=docRightEdit&amp;modelName=com.landray.kmss.km.archives.model.KmArchivesMain"
+				validator="roleValidator(role=ROLE_KMARCHIVES_BATCH_UPDATE_AUTH)&amp;[roleValidator(role=ROLE_KMARCHIVES_CATEGORY_MAINTAINER)|roleValidator(role=ROLE_KMARCHIVES_CATEGORY_EXTEND)|authSimpleCategoryEditorValidator(cateId=categoryId,cateModel=com.landray.kmss.km.archives.model.KmArchivesCategory)]"/>
+		</request>
+	</module>
+    
+    <!-- 创建新版本 -->
+	<module urlPrefix="/sys/edition/">
+		<request 
+			path="sys_edition_main/sysEditionMain*">
+			<query
+				queryString="method=newVersion&amp;fdModelName=com.landray.kmss.km.archives.model.KmArchivesMain"																																																																																			
+				validator="areaRoleValidator(role=ROLE_KMARCHIVES_CREATE_NEW)|authFieldValidator(recid=fdModelId,model=com.landray.kmss.km.archives.model.KmArchivesMain,cateModel=com.landray.kmss.km.archives.model.KmArchivesCategory,type=creator)|authFieldValidator(recid=fdModelId,model=com.landray.kmss.km.archives.model.KmArchivesMain,cateModel=com.landray.kmss.km.archives.model.KmArchivesCategory,type=SYS_EDITOR)|areaRoleValidator(role=ROLE_KMARCHIVES_EDIT)&amp;[areaRoleValidator(role=ROLE_KMARCHIVES_CATEGORY_MAINTAINER)|areaRoleValidator(role=ROLE_KMARCHIVES_CATEGORY_EXTEND)|authSimpleCategoryEditorValidator(recid=fdModelId,model=com.landray.kmss.km.archives.model.KmArchivesMain,cateModel=com.landray.kmss.km.archives.model.KmArchivesCategory,property=docTemplate)]"/>
+		</request>
+	</module>
+    
+    <!-- 定时任务 发送档案到期提醒 -->
+	<quartz
+		cronExpression="0 0 4 * * ?"
+		jobService="kmArchivesMainService"
+		messageKey="km-archives:kmArchivesMain.quartz.task"
+		jobMethod="sendExpireWarn"/>
+		
+	<!-- 定时任务 发送借阅归还提醒 -->
+	<quartz
+		cronExpression="0 0 4 * * ?"
+		jobService="kmArchivesDetailsService"
+		messageKey="km-archives:kmArchivesDetails.quartz.task"
+		jobMethod="sendBorrowReturnWarn"/>
+		
+	<!-- 定时任务 强制收回已过期的借阅 -->
+	<quartz
+		cronExpression="0 0 0 * * ?"
+		jobService="kmArchivesDetailsService"
+		messageKey="km-archives:kmArchivesDetails.quartz.task.expired"
+		jobMethod="borrowStatusSetExpeired"/>
+		
+		<!-- 主文档全文搜索 -->
+	<ftSearch
+		modelName="com.landray.kmss.km.archives.model.KmArchivesMain"
+		boost="2.0"
+		timeField="fdLastModifiedTime">
+		<luceneField
+			name="subject"
+			property="docSubject"
+			type="text" />
+		<luceneField name="attAuthPermissions" type="text" property="authFileReaders"
+		  property-value-getter="com.landray.kmss.km.archives.service.spring.KmArchivesAttFtsearchPermissions"/>
+	</ftSearch>
+	
+			<!-- 借阅全文搜索 -->
+	<ftSearch
+		modelName="com.landray.kmss.km.archives.model.KmArchivesBorrow"
+		boost="2.0"
+		timeField="fdLastModifiedTime">
+		<luceneField
+			name="subject"
+			property="docSubject"
+			type="text" />
+	</ftSearch>
+		
+	<!-- 鉴定全文搜索 -->
+	<ftSearch
+		modelName="com.landray.kmss.km.archives.model.KmArchivesAppraise"
+		boost="2.0"
+		timeField="docCreateTime">
+		<luceneField
+			name="subject"
+			property="docSubject"
+			type="text" />
+	</ftSearch>
+			
+	<!-- 销毁全文搜索 -->
+	<ftSearch
+		modelName="com.landray.kmss.km.archives.model.KmArchivesDestroy"
+		boost="2.0"
+		timeField="docCreateTime">
+		<luceneField
+			name="subject"
+			property="docSubject"
+			type="text" />
+	</ftSearch>
+	
+	<!-- 借阅详情全文搜索 -->
+	<ftSearch
+		modelName="com.landray.kmss.km.archives.model.KmArchivesDetails"
+		boost="2.0"
+		timeField="fdReturnDate">
+		<luceneField name="subject" property="fdArchives.docSubject" type="text" />
+	</ftSearch>
+	
+    <homePage 
+        messageKey="km-archives:module.km.archives" 
+        urlPrefix="km/archives" 
+        url="/sys/portal/page.jsp#j_start=/km/archives/index.jsp&amp;j_target=_iframe"
+        config="/moduleindex_notopic.jsp?nav=/km/archives/tree.jsp"/>
+    <flowDef 
+        modelName="com.landray.kmss.km.archives.model.KmArchivesMain" 
+        key="kmArchivesMain" 
+        type="oa" 
+        templatePropertyName="docTemplate" 
+        moduleMessageKey="km-archives:module.km.archives" 
+        templateModelName="com.landray.kmss.km.archives.model.KmArchivesCategory"/>
+    <flowDef 
+        modelName="com.landray.kmss.km.archives.model.KmArchivesBorrow" 
+        key="kmArchivesBorrow" 
+        type="oa" 
+        templatePropertyName="docTemplate" 
+        moduleMessageKey="km-archives:table.kmArchivesBorrow" 
+        templateModelName="com.landray.kmss.km.archives.model.KmArchivesTemplate">
+        <!-- 稿纸签章 -->
+		<variant
+			name="modifyAuthRange"
+			key="km-archives:kmArchivesBorrow.flowDef.modifyAuthRange" />
+    </flowDef> 
+    <flowDef 
+        modelName="com.landray.kmss.km.archives.model.KmArchivesAppraise" 
+        key="kmArchivesAppraise" 
+        type="oa" 
+        templatePropertyName="docTemplate" 
+        moduleMessageKey="km-archives:table.kmArchivesAppraise" 
+        templateModelName="com.landray.kmss.km.archives.model.KmArchivesAppraiseTemplate"/>
+    <flowDef 
+        modelName="com.landray.kmss.km.archives.model.KmArchivesDestroy" 
+        key="kmArchivesDestroy" 
+        type="oa" 
+        templatePropertyName="docTemplate" 
+        moduleMessageKey="km-archives:table.kmArchivesDestroy" 
+        templateModelName="com.landray.kmss.km.archives.model.KmArchivesDestroyTemplate"/>
+    <profileConfig 
+        key="km/archives" 
+        messageKey="{km-archives:module.km.archives}" 
+        url="/sys/profile/moduleindex.jsp?nav=/km/archives/tree.jsp" 
+        icon="km_archives" 
+        type="ekp" 
+        description="{km-archives:module.km.archives.description}"
+        order="106"/>
+</configs>

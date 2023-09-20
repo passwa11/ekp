@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        class="com.landray.kmss.sys.lbpmext.attention.actions.LbpmExtAttentionAction" 
+        parent="KmssBaseAction" 
+        name="/sys/lbpmext/attention/lbpmExtAttention.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.sys.lbpmext.attention.forms.LbpmExtAttentionForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry 
+                    key="data" 
+                    value="/sys/lbpmext/attention/lbpmext_attention/lbpmExtAttention_data.jsp"/>
+                <entry 
+                    key="edit" 
+                    value="/sys/lbpmext/attention/lbpmext_attention/lbpmExtAttention_edit.jsp"/>
+                <entry 
+                    key="view" 
+                    value="/sys/lbpmext/attention/lbpmext_attention/lbpmExtAttention_view.jsp"/>
+                 <entry 
+                    key="docpage" 
+                    value="/sys/lbpmext/attention/lbpmext_attention/lbpmExtAttentionDocPage_edit.jsp"/>
+            </map>
+        </property>
+    </bean>
+    <bean
+		name="/sys/lbpmext/attention/lbpmExtAttentionScope.do"
+		class="com.landray.kmss.sys.lbpmext.attention.actions.LbpmExtAttentionScopeAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmext.attention.forms.LbpmExtAttentionScopeForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/sys/lbpmext/attention/lbpm_attention_scope/lbpmExtAttentionScope_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

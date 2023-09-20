@@ -1,0 +1,49 @@
+var self = this;
+
+function createUploadDiv() {
+	var xcontent = $("<div id='uploader_" + self.fdKey + "_container' class='lui_upload_img_txt lui_upload_container'/>");
+	var xtxt;
+	if(self.supportDnd() && window.navigator.userAgent.indexOf("Chrome") == -1) {
+		xtxt = $("<div class='lui_upload_img_title'>"+Attachment_MessageInfo["layout.upload.note4"]+"<div id='upload_" + self.fdKey + "_div_buttom' class='lui_text_primary'>"+Attachment_MessageInfo["layout.upload"]+"</div></div>");
+	} else {
+		xtxt = $("<div class='lui_upload_img_title'>"+Attachment_MessageInfo["layout.upload.note5"]+"<div id='upload_" + self.fdKey + "_div_buttom' class='lui_text_primary'>"+Attachment_MessageInfo["layout.upload"]+"</div></div>");
+	}
+	var xdesc = $("<p class='lui_upload_desc'><em>"+Attachment_MessageInfo["layout.upload.note6"]+"</em><span>"+Attachment_MessageInfo["layout.upload.note7"]+"<span class='lui_upload_img_support'></span>"+Attachment_MessageInfo["layout.upload.note8"]+"<span class='lui_upload_img_size'></span></span></p>");
+	var xicon= $("<i class='icon icon-plus'></i>");
+	xcontent.append(xicon);
+	xcontent.append(xtxt);
+	xcontent.append(xdesc);
+	self.$tdDisplay = xtxt;
+	self.__$tdDisplay = xcontent;
+	if(self.required){
+		xtxt.append("<span class='txtstrong'> *</span>");
+	}
+	return xcontent;
+}
+
+var xuploader = $("<div id='uploader_" + self.fdKey + "'/>");
+if (self.canMove && self.fdMulti) {
+	xuploader.append("<div class='lui_upload_tip tip_info upload_item_hide'><i></i>"+Attachment_MessageInfo["layout.upload.note11"]+"</div>");
+}
+var xcontainer = $("<div data-lui-mark='attachmentlist'/>");
+if (this.editMode == "edit" || this.editMode == "add") {
+	if(!self.fdMulti) {
+		// 单附件上传时，在选择了一个文件后，出现提示信息
+		xuploader.append("<div class='lui_upload_tip tip_info upload_item_hide'><i></i>"+Attachment_MessageInfo["layout.upload.note3"]+"</div>");
+	}
+	var divWidth = parseInt(self.fdPicContentWidth) < 240?240:self.fdPicContentWidth;
+	var divHeight = parseInt(self.fdPicContentHeight) <180?180:self.fdPicContentHeight;
+	if(self.fdPicContentWidth && self.fdPicContentHeight) {
+		var xqueueList = $("<div id='uploader_" + self.fdKey + "_queueList' class='lui_upload_img_item lui_upload_img lui_queueList lui_queueList_l' style='display: -webkit-flex;display: flex;-webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center;width:" + divWidth + "px;height:" + divHeight +"px'/>");
+	} else {
+		var xqueueList = $("<div id='uploader_" + self.fdKey + "_queueList' class='lui_upload_img_item lui_upload_img lui_queueList lui_queueList_l' style='display: -webkit-flex;display: flex;-webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center;'/>");
+	}
+	
+	xqueueList.append(createUploadDiv())
+	if(this.fileList.length==1 && this.fdViewType == "pic_single") {
+		xqueueList.addClass("upload_item_hide");
+	}
+	xcontainer.append(xqueueList);
+}
+xuploader.append(xcontainer);
+done(xuploader);

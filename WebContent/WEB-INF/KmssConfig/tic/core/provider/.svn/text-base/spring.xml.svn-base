@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="ticCoreIfaceDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.provider.dao.hibernate.TicCoreIfaceDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.core.provider.model.TicCoreIface" />
+	</bean>
+	<bean id="ticCoreIfaceTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.provider.service.spring.TicCoreIfaceServiceImp">
+		<property name="baseDao">
+			<ref bean="ticCoreIfaceDao" />
+		</property>
+		
+		<property name="ticCoreTagService">
+			<ref bean="ticCoreTagService" />
+		</property>
+		
+	</bean>
+	<bean id="ticCoreIfaceService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticCoreIfaceTarget" />
+		</property>
+	</bean>
+
+	<bean id="ticCoreNodeDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.provider.dao.hibernate.TicCoreNodeDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.core.provider.model.TicCoreNode" />
+	</bean>
+	<bean id="ticCoreNodeTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.provider.service.spring.TicCoreNodeServiceImp">
+		<property name="baseDao">
+			<ref bean="ticCoreNodeDao" />
+		</property>
+	</bean>
+	<bean id="ticCoreNodeService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticCoreNodeTarget" />
+		</property>
+	</bean>
+
+	<bean id="ticCoreTagDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.provider.dao.hibernate.TicCoreTagDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.core.provider.model.TicCoreTag" />
+	</bean>
+	<bean id="ticCoreTagTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.provider.service.spring.TicCoreTagServiceImp">
+		<property name="baseDao">
+			<ref bean="ticCoreTagDao" />
+		</property>
+	</bean>
+	<bean id="ticCoreTagService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticCoreTagTarget" />
+		</property>
+	</bean>
+
+
+	<!-- provider 相关spring注册 -->
+	<bean id="ticSysTransportInfo"
+		class="com.landray.kmss.tic.core.provider.process.provider.interfaces.impl.TicSysTransportInfo"></bean>
+
+	<bean id="ticSysTransportProvider"
+		class="com.landray.kmss.tic.core.provider.process.provider.interfaces.impl.TicSysTransportProvider"></bean>
+	
+	<!-- 选择分类 -->	
+	<bean id="ticCoreIfaceRefBean"
+		class="com.landray.kmss.tic.core.provider.service.spring.TicCoreIfaceRefBean"></bean>
+		
+	<bean id="ticSysEventProxy"
+		class="com.landray.kmss.tic.core.provider.process.provider.interfaces.impl.TicSysEventProxy"></bean>	
+
+	<bean id="ticCoreTagsListBean"
+		class="com.landray.kmss.tic.core.provider.service.spring.TicCoreTagsListBean"></bean>
+
+	<!-- 获取模版XML -->	
+	<bean id="ticCoreIfaceTemplateBean"
+		class="com.landray.kmss.tic.core.provider.service.spring.TicCoreIfaceTemplateBean"></bean>
+	
+	<!-- 获取扩展点配置信息 -->	
+	<bean id="ticCoreIfacePluginsBean"
+		class="com.landray.kmss.tic.core.provider.service.spring.TicCoreIfacePluginsBean"></bean>
+
+	<!-- 接口实现 -->
+	<bean id="ticUnitInterface"
+		class="com.landray.kmss.tic.core.provider.interfaces.impl.TicUnitInterfaceImpl">
+		<property name="ticCoreDispatcher">
+		  <ref bean="ticCoreDispatcher"/>
+		</property>
+		<property name="ticCoreIfaceService">
+		  <ref bean="ticCoreIfaceService"/>
+		</property>
+	</bean>
+		
+	<bean id="ticCoreDispatcher"
+		class="com.landray.kmss.tic.core.provider.process.dispatcher.TicCoreDispatcher"></bean>	
+	
+	<bean
+		id="ticCoreIfaceImplDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.provider.dao.hibernate.TicCoreIfaceImplDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.provider.model.TicCoreIfaceImpl" />
+	</bean>
+	<bean
+		id="ticCoreIfaceImplTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.provider.service.spring.TicCoreIfaceImplServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticCoreIfaceImplDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticCoreIfaceImplService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticCoreIfaceImplTarget" />
+		</property>
+	</bean>
+	<!-- 通过接口ID获取xml树 -->
+	<bean id="ticCoreIfaceXmlBean"
+		class="com.landray.kmss.tic.core.provider.service.spring.TicCoreIfaceXmlBean">
+		<property name="ticCoreIfaceService">
+			<ref bean="ticCoreIfaceService" />
+		</property>
+	</bean>
+</beans>

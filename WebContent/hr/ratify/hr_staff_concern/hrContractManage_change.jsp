@@ -1,0 +1,236 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/sys/ui/jsp/common.jsp"%>
+<%@ taglib uri="/WEB-INF/KmssConfig/sys/person/person.tld"
+	prefix="person"%>
+<template:include ref="default.dialog">
+	<template:replace name="head">
+		<link rel="stylesheet"
+			href="${LUI_ContextPath}/hr/ratify/resource/style/lib/form.css">
+		<link rel="stylesheet"
+			href="${LUI_ContextPath}/hr/ratify/resource/style/hr.css">
+	</template:replace>
+	<template:replace name="content">
+		<script type="text/javascript">
+			Com_IncludeFile("validation.jsp|validation.js|plugin.js|eventbus.js|xform.js", null, "js");
+		</script>
+		<div class="hr_contract_change_warp">
+			<div class="lui_hr_personInfo_wrap">
+				<!--左边图片Starts-->
+				<div class="lui_hr_person_pic">
+					<img src="${LUI_ContextPath}/sys/person/resource/images/head${not empty hrStaffPersonInfo.fdSex?(hrStaffPersonInfo.fdSex eq 'M'?"_man":"_lady"):""}.png"
+						 width="48" height="48"/>
+				</div>
+				<!--左边图片Ends-->
+				<!--右边详细Starts-->
+				<div class="lui_hr_person_info">
+					<div class="lui_hr_person_info_content">
+						<span class="lui_hr_person_name">${hrStaffPersonInfo.fdName}</span>
+						<span class="lui_hr_sex lui_hr_${not empty hrStaffPersonInfo.fdSex?(hrStaffPersonInfo.fdSex eq 'M'?"man":"female"):""}"></span>
+						<!--说明：lui_hr_female是女性的类名，男性的类名把lui_hr_female换成lui_hr_man -->
+					</div>
+					<div class="lui_hr_department">
+						<span class="lui_hr_depart lui_hr_secondary_txt">${hrStaffPersonInfo.fdOrgParentsName}</span>
+						<span class="lui_hr_status"><sunbor:enumsShow value="${ hrStaffPersonInfo.fdStatus }" enumsType="hrStaffPersonInfo_fdStatus" /></span>
+					</div>
+				</div>
+				<!--右边详细Ends-->
+			</div>
+			<!--离职人员信息Ends-->
+
+			<!--离职表格信息Starts-->
+			<html:form action="/hr/staff/hr_staff_person_experience/contract/hrStaffPersonExperienceContract.do">
+				<div class="lui_hr_tb_simple_wrap">
+					<table class="tb_simple lui_hr_tb_simple">
+						<tr>
+							<td class="tr_normal_title"><span class="txtstrong">*</span>
+								${ lfn:message('hr-staff:hrStaffPersonExperience.contract.fdName') }</td>
+							<td>${hrStaffPersonExperienceContractForm.fdName }</td>
+						</tr>
+						<tr>
+							<td class="tr_normal_title"><span class="txtstrong">*</span>
+								${ lfn:message('hr-staff:hrStaffPersonExperience.contract.fdContType') }</td>
+							<td>
+								<xform:select property="fdStaffContTypeId" showPleaseSelect="true" showStatus="edit" value="${hrStaffPersonExperienceContractForm.fdStaffContTypeId }">
+									<xform:beanDataSource serviceBean="hrStaffContractTypeService" selectBlock="fdId,fdName" orderBy="fdOrder" />
+								</xform:select>
+							</td>
+						</tr>
+						<tr>
+							<td class="tr_normal_title">
+								${ lfn:message('hr-staff:hrStaffPersonExperience.contract.fdBeginDate') }</td>
+							<td>
+								<xform:datetime property="fdBeginDate" dateTimeType="date" validators="compareDate" required="true" showStatus="edit" value="${hrStaffPersonExperienceContractForm.fdBeginDate }"></xform:datetime>
+							</td>
+						</tr>
+						<tr>
+							<td class="tr_normal_title">
+								${ lfn:message('hr-staff:hrStaffPersonExperience.contract.fdEndDate') }
+							</td>
+							<td>
+								<xform:datetime property="fdEndDate" dateTimeType="date" validators="compareDate checkLongterm" showStatus="edit" value="${hrStaffPersonExperienceContractForm.fdEndDate }"></xform:datetime>
+							</td>
+						</tr>
+						<tr>
+							<td class="tr_normal_title">
+									${ lfn:message('hr-staff:hrStaffPersonExperience.contract.fdIsLongtermContract') }
+							</td>
+							<td>
+								<xform:checkbox property="fdIsLongtermContract" value="${hrStaffPersonExperienceContractForm.fdIsLongtermContract}" onValueChange="cancelEndDate" showStatus="edit">
+									<xform:simpleDataSource value="true"><bean:message bundle="hr-staff" key="hrStaffPersonExperience.contract.fdIsLongtermContract.1"/></xform:simpleDataSource>
+								</xform:checkbox>
+							</td>
+						</tr>
+						<tr>
+							<td class="tr_normal_title">
+								${ lfn:message('hr-staff:hrStaffPersonExperience.contract.fdHandleDate') }
+							</td>
+							<td>
+								<xform:datetime property="fdHandleDate" dateTimeType="date" validators="compareDate" showStatus="edit" value="${hrStaffPersonExperienceContractForm.fdHandleDate }"></xform:datetime>
+							</td>
+						</tr>
+						<tr>
+							<td class="tr_normal_title">
+								${ lfn:message('hr-staff:hrStaffPersonExperience.fdMemo') }
+							</td>
+							<td>
+								<xform:textarea property="fdMemo" style="width:70%;height:50px;" showStatus="edit"/>
+							</td>
+						</tr>
+						<tr>
+							<!-- 合同附件 -->
+							<td class="td_normal_title">
+								<bean:message bundle="hr-staff" key="hrStaffPersonExperience.contract.autoHashMap" />
+							</td>
+							<td colspan="3" style="width: 70%;">
+								<c:import url="/sys/attachment/sys_att_main/sysAttMain_edit.jsp" charEncoding="UTF-8">
+									<c:param name="fdKey" value="attHrExpCont"/>
+									<c:param name="formBeanName" value="hrStaffPersonExperienceContractForm" />
+								</c:import>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</html:form>
+		</div>
+		<div class="lui_hr_footer_btnGroup">
+            <ui:button text="${lfn:message('hr-ratify:hrRatify.concern.change.ok') }" onclick="_submit();"></ui:button>
+            <ui:button text="${lfn:message('button.cancel') }" onclick="$dialog.hide(null);" styleClass="lui_toolbar_btn_gray"></ui:button>
+        </div>
+	</template:replace>
+</template:include>
+<script type="text/javascript">
+	// 表单校验
+	var _validation = $KMSSValidation();
+
+	seajs.use( [ 'lui/jquery', 'lui/dialog', 'hr/staff/resource/js/dateUtil' ], function($, dialog, dateUtil) {
+		// 表单序列化成JSON对象
+			$.fn.serializeObject = function() {
+				var o = {};
+				var a = this.serializeArray();
+				$.each(a, function() {
+					if (o[this.name] !== undefined) {
+						if (!o[this.name].push) {
+							o[this.name] = [ o[this.name] ];
+						}
+						o[this.name].push(this.value || '');
+					} else {
+						o[this.name] = this.value || '';
+					}
+				});
+				return o;
+			};
+
+			// 确认提交
+			window._submit = function() {
+				if ($KMSSValidation().validate()) {
+					var method = Com_GetUrlParameter(location.href,'method');
+					var fdEndDate = $('[name="fdEndDate"]').val();
+					var fdBeginDate = $('[name="fdBeginDate"]').val();
+					var fdIsLongtermContract = $('[name="fdIsLongtermContract"]').val();
+					var fdStaffContTypeId = $('select[name="fdStaffContTypeId"] option:selected').val();
+					$.ajax({
+						url : "${LUI_ContextPath}/hr/staff/hr_staff_person_experience/contract/hrStaffPersonExperienceContract.do?method=getRepeatContract",
+						type : 'POST',
+						data: {
+							"personInfoId":"${hrStaffPersonInfo.fdId}",
+							"fdId":"${HtmlParam.fdId}",
+							"fdContType":fdStaffContTypeId,
+							"fdName":"${hrStaffPersonExperienceContractForm.fdName}",
+							"fdBeginDate":fdBeginDate,
+							"fdEndDate":fdEndDate,
+							"fdIsLongtermContract":fdIsLongtermContract
+						},
+						dataType : 'json',
+						success: function(data) {
+							if(data.result){
+								if(method == 'add'){
+									Com_Submit(document.hrStaffPersonExperienceContractForm,'save');
+								} else {
+									Com_Submit(document.hrStaffPersonExperienceContractForm,'update');
+								}
+							}else{
+								dialog.alert("${ lfn:message('hr-staff:hrStaff.import.error.contract.repeat') }");
+							}
+						}
+					});
+				}
+			};
+
+			// 取消
+			window._cancel = function() {
+				window.$dialog.hide();
+			};
+
+			var compareDateMsg = '${ lfn:message("hr-staff:hrStaffPersonExperience.compareDate.error1") }';
+			switch('${JsParam.type}'){
+			case 'contract':{
+				compareDateMsg = '${ lfn:message("hr-staff:hrStaffPersonExperience.compareDate.error2") }';
+				break;
+			}
+			case 'education':{
+				compareDateMsg = '${ lfn:message("hr-staff:hrStaffPersonExperience.compareDate.error3") }';
+				break;
+			}
+			case 'qualification':{
+				compareDateMsg = '${ lfn:message("hr-staff:hrStaffPersonExperience.compareDate.error4") }';
+				break;
+			}
+			}
+
+			// 日期区间校验
+			_validation.addValidator('compareDate', compareDateMsg, function(v, e, o) {
+				var fdBeginDate = $('[name="fdBeginDate"]');
+				var fdEndDate = $('[name="fdEndDate"]');
+				var result = true;
+				if (fdBeginDate.val() && fdEndDate.val()) {
+					var start = dateUtil.parseDate(fdBeginDate.val());
+					var end = dateUtil.parseDate(fdEndDate.val());
+					if (start.getTime() > end.getTime()) {
+						result = false;
+					}
+				}
+				return result;
+			});
+
+			// 勾选长期有效校验
+			_validation.addValidator('checkLongterm', "${ lfn:message("hr-staff:hrStaffPersonExperience.contract.fdIsLongtermContract.error") }", function(v, e, o) {
+				var result = true;
+				var longtermContract = $('[name="fdIsLongtermContract"]').val();
+				if(v){
+					if(longtermContract == 'true'){
+						result = false;
+					}
+				}
+				return result;
+			});
+
+			// 长期有效勾选清空到期时间
+			window.cancelEndDate = function() {
+				var longtermContract = $('[name="fdIsLongtermContract"]').val();
+				if(longtermContract == 'true'){
+					$('[name="fdEndDate"]').val('');
+				}
+			}
+		});
+</script>

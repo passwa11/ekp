@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<!-- 主文档点评 -->
+		<oper id="sysEvaluationMainOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.evaluation.model.SysEvaluationMain"
+			action="/sys/evaluation/sys_evaluation_main/sysEvaluationMain.do">
+			<!--获取点评文档标题 -->
+			<query method="getEvalDocNames" logPoint="Base_UrlParam;getEvalDocNames"
+				messageKey="sys-evaluation:sysEvaluationMain.getEvalDocNames" />
+			<!-- 点评 -->
+			<query method="save" logPoint="Service_Add"
+				messageKey="sys-evaluation:sysEvaluationMain.button.evaluation" />
+			<!-- 我的点评,补充点评，点评总览 -->
+			<query method="listMyEva|getEvaluationByParentIds|listOverView"
+				logPoint="Base_UrlParam;Action_FindAll" messageKey="button.list" />
+			<!-- 点评平均分 -->
+			<query method="score" logPoint="Base_UrlParam"
+				messageKey="sys-evaluation:sysEvaluationMain.score" />
+			<!-- 获取点评相关信息，移动端使用 -->
+			<query method="dataScore" logPoint="Base_UrlParam"
+				messageKey="sys-evaluation:sysEvaluationMain.dataScore" />
+
+		</oper>
+
+		<!-- 点评回复 -->
+		<oper id="sysEvaluationReplyOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.evaluation.model.SysEvaluationReply"
+			action="/sys/evaluation/sys_evaluation_main/sysEvaluationReply.do">
+
+			<!-- 回复 -->
+			<query method="save" logPoint="save"
+				messageKey="sys-evaluation:sysEvaluation.reply.ct" />
+			<!-- 显示回复列表 -->
+			<query method="listReplyInfo" logPoint="Action_FindAll"
+				messageKey="button.list" />
+			<!--显示回复数 -->
+			<query method="listReplyCount" logPoint="Action_FindAll"
+				messageKey="sys-evaluation:sysEvaluationMain.fdReplyCount" />
+
+		</oper>
+
+		<!-- 段落点评 -->
+		<oper id="sysEvaluationNotesOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.evaluation.model.SysEvaluationNotes"
+			action="/sys/evaluation/sys_evaluation_main/sysEvaluationNotes.do">
+
+			<!-- 段落点评总览 -->
+			<query method="listOverView|listView" logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="button.list" />
+
+			<!-- 段落点评 -->
+			<query method="saveEvalNotes" logPoint="Service_Add"
+				messageKey="sys-evaluation:sysEvaluationNotes.moduleName" />
+
+			<!-- 更新正文 -->
+			<query method="updateContent" logPoint="updateContent"
+				messageKey="sys-evaluation:sysEvaluationNotes.updateContent" />
+		</oper>
+		<oper
+            id="sysEvaluationNotesConfig"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/sys/evaluation/sys_evaluation_notes/sysEvaluationNotesConfig.do">
+        </oper>
+	</logset>
+</log-oper>

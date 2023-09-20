@@ -1,0 +1,806 @@
+<wsdl:definitions xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="$address$" 
+xmlns:intf="$address$" 
+xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="urn:client.glwebservicefacade" 
+xmlns:tns2="http://app.gl.fi.eas.kingdee.com" 
+xmlns:tns3="urn:client.wsvoucher" 
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+ xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="$address$">
+ <!--
+WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)
+-->
+<wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:client.glwebservicefacade">
+<import namespace="http://app.gl.fi.eas.kingdee.com"/>
+<import namespace="urn:client.wsvoucher"/>
+<import namespace="$address$"/>
+<import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+<complexType name="WSInvokeException">
+<sequence/>
+</complexType>
+<complexType name="WSBean">
+<sequence/>
+</complexType>
+</schema>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://app.gl.fi.eas.kingdee.com">
+<import namespace="urn:client.glwebservicefacade"/>
+<import namespace="urn:client.wsvoucher"/>
+<import namespace="$address$"/>
+<import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+<complexType name="WSWSAccountBalance">
+<complexContent>
+<extension base="tns1:WSBean">
+<sequence>
+<element name="debitFor" type="xsd:double"/>
+<element name="yearDebitFor" type="xsd:double"/>
+<element name="debitQty" type="xsd:double"/>
+<element name="yearDebitLocal" type="xsd:double"/>
+<element name="creditRpt" type="xsd:double"/>
+<element name="creditLocal" type="xsd:double"/>
+<element name="orgUnitNumber" nillable="true" type="xsd:string"/>
+<element name="yearDebitRpt" type="xsd:double"/>
+<element name="beginBalanceLocal" type="xsd:double"/>
+<element name="periodYear" type="xsd:int"/>
+<element name="creditQty" type="xsd:double"/>
+<element name="monthPnLRpt" type="xsd:double"/>
+<element name="yearPnLLocal" type="xsd:double"/>
+<element name="periodNumber" type="xsd:int"/>
+<element name="yearDebitQty" type="xsd:double"/>
+<element name="yearCreditLocal" type="xsd:double"/>
+<element name="endBalanceFor" type="xsd:double"/>
+<element name="debitLocal" type="xsd:double"/>
+<element name="yearCreditRpt" type="xsd:double"/>
+<element name="currencyNumber" nillable="true" type="xsd:string"/>
+<element name="yearPnLRpt" type="xsd:double"/>
+<element name="balType" type="xsd:int"/>
+<element name="accountNumber" nillable="true" type="xsd:string"/>
+<element name="beginBalanceFor" type="xsd:double"/>
+<element name="creditFor" type="xsd:double"/>
+<element name="monthPnLFor" type="xsd:double"/>
+<element name="endQty" type="xsd:double"/>
+<element name="monthPnLLocal" type="xsd:double"/>
+<element name="yearCreditQty" type="xsd:double"/>
+<element name="yearCreditFor" type="xsd:double"/>
+<element name="endBalanceRpt" type="xsd:double"/>
+<element name="endBalanceLocal" type="xsd:double"/>
+<element name="debitRpt" type="xsd:double"/>
+<element name="beginQty" type="xsd:double"/>
+<element name="beginBalanceRpt" type="xsd:double"/>
+<element name="yearPnLFor" type="xsd:double"/>
+</sequence>
+</extension>
+</complexContent>
+</complexType>
+<complexType name="WSWSAssistBalance">
+<complexContent>
+<extension base="tns1:WSBean">
+<sequence>
+<element name="yearDebitFor" type="xsd:double"/>
+<element name="debitQty" type="xsd:double"/>
+<element name="creditRpt" type="xsd:double"/>
+<element name="creditLocal" type="xsd:double"/>
+<element name="orgUnitNumber" nillable="true" type="xsd:string"/>
+<element name="yearDebitRpt" type="xsd:double"/>
+<element name="creditQty" type="xsd:double"/>
+<element name="monthPnLRpt" type="xsd:double"/>
+<element name="yearPnLLocal" type="xsd:double"/>
+<element name="yearDebitQty" type="xsd:double"/>
+<element name="yearCreditLocal" type="xsd:double"/>
+<element name="endBalanceFor" type="xsd:double"/>
+<element name="currencyNumber" nillable="true" type="xsd:string"/>
+<element name="yearPnLRpt" type="xsd:double"/>
+<element name="asstActType5" nillable="true" type="xsd:string"/>
+<element name="asstActType6" nillable="true" type="xsd:string"/>
+<element name="asstActType7" nillable="true" type="xsd:string"/>
+<element name="asstActType8" nillable="true" type="xsd:string"/>
+<element name="asstActType1" nillable="true" type="xsd:string"/>
+<element name="balType" type="xsd:int"/>
+<element name="asstActType2" nillable="true" type="xsd:string"/>
+<element name="asstActType3" nillable="true" type="xsd:string"/>
+<element name="asstActType4" nillable="true" type="xsd:string"/>
+<element name="creditFor" type="xsd:double"/>
+<element name="endQty" type="xsd:double"/>
+<element name="endBalanceRpt" type="xsd:double"/>
+<element name="endBalanceLocal" type="xsd:double"/>
+<element name="debitRpt" type="xsd:double"/>
+<element name="debitFor" type="xsd:double"/>
+<element name="yearDebitLocal" type="xsd:double"/>
+<element name="asstActNumber1" nillable="true" type="xsd:string"/>
+<element name="asstActNumber2" nillable="true" type="xsd:string"/>
+<element name="beginBalanceLocal" type="xsd:double"/>
+<element name="asstActNumber3" nillable="true" type="xsd:string"/>
+<element name="asstActNumber4" nillable="true" type="xsd:string"/>
+<element name="periodYear" type="xsd:int"/>
+<element name="asstActNumber5" nillable="true" type="xsd:string"/>
+<element name="asstActNumber6" nillable="true" type="xsd:string"/>
+<element name="asstActNumber7" nillable="true" type="xsd:string"/>
+<element name="asstActNumber8" nillable="true" type="xsd:string"/>
+<element name="periodNumber" type="xsd:int"/>
+<element name="debitLocal" type="xsd:double"/>
+<element name="yearCreditRpt" type="xsd:double"/>
+<element name="accountNumber" nillable="true" type="xsd:string"/>
+<element name="beginBalanceFor" type="xsd:double"/>
+<element name="monthPnLFor" type="xsd:double"/>
+<element name="asstActName1" nillable="true" type="xsd:string"/>
+<element name="yearCreditFor" type="xsd:double"/>
+<element name="yearCreditQty" type="xsd:double"/>
+<element name="monthPnLLocal" type="xsd:double"/>
+<element name="asstActName7" nillable="true" type="xsd:string"/>
+<element name="asstActName6" nillable="true" type="xsd:string"/>
+<element name="asstActName8" nillable="true" type="xsd:string"/>
+<element name="beginQty" type="xsd:double"/>
+<element name="asstActName3" nillable="true" type="xsd:string"/>
+<element name="asstActName2" nillable="true" type="xsd:string"/>
+<element name="asstActName5" nillable="true" type="xsd:string"/>
+<element name="beginBalanceRpt" type="xsd:double"/>
+<element name="yearPnLFor" type="xsd:double"/>
+<element name="asstActName4" nillable="true" type="xsd:string"/>
+</sequence>
+</extension>
+</complexContent>
+</complexType>
+</schema>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="$address$">
+<import namespace="urn:client.glwebservicefacade"/>
+<import namespace="http://app.gl.fi.eas.kingdee.com"/>
+<import namespace="urn:client.wsvoucher"/>
+<import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+<complexType name="ArrayOf_tns2_WSWSAccountBalance">
+<complexContent>
+<restriction base="soapenc:Array">
+<attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:WSWSAccountBalance[]"/>
+</restriction>
+</complexContent>
+</complexType>
+<complexType name="ArrayOf_tns2_WSWSAssistBalance">
+<complexContent>
+<restriction base="soapenc:Array">
+<attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:WSWSAssistBalance[]"/>
+</restriction>
+</complexContent>
+</complexType>
+<complexType name="ArrayOf_xsd_string">
+<complexContent>
+<restriction base="soapenc:Array">
+<attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+</restriction>
+</complexContent>
+</complexType>
+<complexType name="ArrayOf_tns3_WSWSVoucher">
+<!-- <restriction base="soapenc:Array">
+<attribute ref="soapenc:arrayType" wsdl:arrayType="tns3:WSWSVoucher[]"/>
+</restriction> -->
+<sequence>
+<element minOccurs="0" maxOccurs="unbounded" name="Voucher" nillable="true" type="tns3:WSWSVoucher"/>
+</sequence>
+</complexType>
+<complexType name="ArrayOfArrayOf_xsd_string">
+<complexContent>
+<restriction base="soapenc:Array">
+<attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[][]"/>
+</restriction>
+</complexContent>
+</complexType>
+</schema>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:client.wsvoucher">
+<import namespace="urn:client.glwebservicefacade"/>
+<import namespace="http://app.gl.fi.eas.kingdee.com"/>
+<import namespace="$address$"/>
+<import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+<complexType name="WSWSVoucher">
+<complexContent>
+<extension base="tns1:WSBean">
+<sequence>
+<element name="cashAsstActType5" nillable="true" type="xsd:string"/>
+<element name="oppAccountSeq" type="xsd:int"/>
+<element name="cashAsstActType4" nillable="true" type="xsd:string"/>
+<element name="cashAsstActType3" nillable="true" type="xsd:string"/>
+<element name="cashflowAmountOriginal" type="xsd:double"/>
+<element name="cashAsstActType2" nillable="true" type="xsd:string"/>
+<element name="bizDate" nillable="true" type="xsd:string"/>
+<element name="cashAsstActType1" nillable="true" type="xsd:string"/>
+<element name="cashflowAmountLocal" type="xsd:double"/>
+<element name="bizNumber" nillable="true" type="xsd:string"/>
+<element name="companyNumber" nillable="true" type="xsd:string"/>
+<element name="voucherType" nillable="true" type="xsd:string"/>
+<element name="attaches" type="xsd:int"/>
+<element name="tempNumber" nillable="true" type="xsd:string"/>
+<element name="cashAsstActType8" nillable="true" type="xsd:string"/>
+<element name="cashAsstActType6" nillable="true" type="xsd:string"/>
+<element name="cashAsstActType7" nillable="true" type="xsd:string"/>
+<element name="cussent" type="xsd:int"/>
+<element name="entrySeq" type="xsd:int"/>
+<element name="currencyNumber" nillable="true" type="xsd:string"/>
+<element name="supplyCoef" type="xsd:double"/>
+<element name="asstActType5" nillable="true" type="xsd:string"/>
+<element name="asstSeq" type="xsd:int"/>
+<element name="asstActType6" nillable="true" type="xsd:string"/>
+<element name="asstActType7" nillable="true" type="xsd:string"/>
+<element name="asstActType8" nillable="true" type="xsd:string"/>
+<element name="asstActType1" nillable="true" type="xsd:string"/>
+<element name="bookedDate" nillable="true" type="xsd:string"/>
+<element name="asstActType2" nillable="true" type="xsd:string"/>
+<element name="asstActType3" nillable="true" type="xsd:string"/>
+<element name="asstActType4" nillable="true" type="xsd:string"/>
+<element name="assistBizDate" nillable="true" type="xsd:string"/>
+<element name="creator" nillable="true" type="xsd:string"/>
+<element name="supplyItem" nillable="true" type="xsd:string"/>
+<element name="icketNumber" nillable="true" type="xsd:string"/>
+<element name="cashflowAmountRpt" type="xsd:double"/>
+<element name="itemFlag" type="xsd:int"/>
+<element name="entryDC" type="xsd:int"/>
+<element name="cashAsstActNumber2" nillable="true" type="xsd:string"/>
+<element name="cashAsstActNumber1" nillable="true" type="xsd:string"/>
+<element name="voucherNumber" nillable="true" type="xsd:string"/>
+<element name="cashAsstActNumber4" nillable="true" type="xsd:string"/>
+<element name="cashAsstActNumber3" nillable="true" type="xsd:string"/>
+<element name="creditAmount" type="xsd:double"/>
+<element name="poster" nillable="true" type="xsd:string"/>
+<element name="cashAsstActName5" nillable="true" type="xsd:string"/>
+<element name="asstActNumber1" nillable="true" type="xsd:string"/>
+<element name="cashAsstActName6" nillable="true" type="xsd:string"/>
+<element name="asstActNumber2" nillable="true" type="xsd:string"/>
+<element name="cashAsstActName3" nillable="true" type="xsd:string"/>
+<element name="cashAsstActName4" nillable="true" type="xsd:string"/>
+<element name="asstActNumber3" nillable="true" type="xsd:string"/>
+<element name="cashAsstActName1" nillable="true" type="xsd:string"/>
+<element name="asstActNumber4" nillable="true" type="xsd:string"/>
+<element name="price" type="xsd:double"/>
+<element name="periodYear" type="xsd:int"/>
+<element name="asstActNumber5" nillable="true" type="xsd:string"/>
+<element name="cashAsstActName2" nillable="true" type="xsd:string"/>
+<element name="asstActNumber6" nillable="true" type="xsd:string"/>
+<element name="asstActNumber7" nillable="true" type="xsd:string"/>
+<element name="measurement" nillable="true" type="xsd:string"/>
+<element name="localRate" type="xsd:double"/>
+<element name="asstActNumber8" nillable="true" type="xsd:string"/>
+<element name="periodNumber" type="xsd:int"/>
+<element name="invoiceNumber" nillable="true" type="xsd:string"/>
+<element name="qty" type="xsd:double"/>
+<element name="settlementType" nillable="true" type="xsd:string"/>
+<element name="primaryItem" nillable="true" type="xsd:string"/>
+<element name="assistEndDate" nillable="true" type="xsd:string"/>
+<element name="primaryCoef" type="xsd:double"/>
+<element name="voucherAbstract" nillable="true" type="xsd:string"/>
+<element name="settlementNumber" nillable="true" type="xsd:string"/>
+<element name="debitAmount" type="xsd:double"/>
+<element name="description" nillable="true" type="xsd:string"/>
+<element name="accountNumber" nillable="true" type="xsd:string"/>
+<element name="originalAmount" type="xsd:double"/>
+<element name="asstActName1" nillable="true" type="xsd:string"/>
+<element name="type" nillable="true" type="xsd:string"/>
+<element name="isCheck" type="xsd:boolean"/>
+<element name="cashAsstActName8" nillable="true" type="xsd:string"/>
+<element name="cashAsstActName7" nillable="true" type="xsd:string"/>
+<element name="cashAsstActNumber7" nillable="true" type="xsd:string"/>
+<element name="customerNumber" nillable="true" type="xsd:string"/>
+<element name="asstActName7" nillable="true" type="xsd:string"/>
+<element name="cashAsstActNumber8" nillable="true" type="xsd:string"/>
+<element name="asstActName6" nillable="true" type="xsd:string"/>
+<element name="cashAsstActNumber5" nillable="true" type="xsd:string"/>
+<element name="cashAsstActNumber6" nillable="true" type="xsd:string"/>
+<element name="asstActName8" nillable="true" type="xsd:string"/>
+<element name="auditor" nillable="true" type="xsd:string"/>
+<element name="asstActName3" nillable="true" type="xsd:string"/>
+<element name="asstActName2" nillable="true" type="xsd:string"/>
+<element name="asstActName5" nillable="true" type="xsd:string"/>
+<element name="asstActName4" nillable="true" type="xsd:string"/>
+</sequence>
+</extension>
+</complexContent>
+</complexType>
+</schema>
+</wsdl:types>
+<wsdl:message name="checkVoucherRequest">
+<wsdl:part name="comNumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="year" type="xsd:int"> </wsdl:part>
+<wsdl:part name="periodNumber" type="xsd:int"> </wsdl:part>
+<wsdl:part name="number" type="xsd:string"> </wsdl:part>
+<wsdl:part name="amount" type="xsd:double"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="importAccountBalanceResponse">
+<wsdl:part name="importAccountBalanceReturn" type="xsd:string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getOrgResponse">
+<wsdl:part name="getOrgReturn" type="intf:ArrayOfArrayOf_xsd_string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="deleteBalanceResponse">
+<wsdl:part name="deleteBalanceReturn" type="xsd:boolean"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAsstActTypeResponse">
+<wsdl:part name="getAsstActTypeReturn" type="intf:ArrayOfArrayOf_xsd_string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="deleteVoucherByIDResponse">
+<wsdl:part name="deleteVoucherByIDReturn" type="xsd:int"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAcctTypeRequest">
+<wsdl:part name="orgNumber" type="xsd:string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="importVoucherOfReturnIDRequest">
+<wsdl:part name="col" type="intf:ArrayOf_tns3_WSWSVoucher"> </wsdl:part>
+<wsdl:part name="isSubmit" type="xsd:int"> </wsdl:part>
+<wsdl:part name="isVerify" type="xsd:int"> </wsdl:part>
+<wsdl:part name="isCashflow" type="xsd:int"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="exploreVoucherRequest">
+<wsdl:part name="companyId" type="xsd:string"> </wsdl:part>
+<wsdl:part name="year" type="xsd:int"> </wsdl:part>
+<wsdl:part name="periodNumber" type="xsd:int"> </wsdl:part>
+<wsdl:part name="voucherType" type="xsd:string"> </wsdl:part>
+<wsdl:part name="number" type="xsd:string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="findVoucherResponse">
+<wsdl:part name="findVoucherReturn" type="intf:ArrayOf_xsd_string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="deleteVoucherRequest">
+<wsdl:part name="companyNumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="period" type="xsd:string"> </wsdl:part>
+<wsdl:part name="voucherNumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="fexp" type="xsd:string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="exploreVoucherResponse">
+<wsdl:part name="exploreVoucherReturn" type="xsd:string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="deleteVoucherByIDRequest">
+<wsdl:part name="companyNumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="voucherID" type="xsd:string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="checkVoucherResponse">
+<wsdl:part name="checkVoucherReturn" type="xsd:string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAccountBalanceResponse">
+<wsdl:part name="getAccountBalanceReturn" type="intf:ArrayOfArrayOf_xsd_string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="importInitAssistBalanceRequest">
+<wsdl:part name="initAssistBalanceBalance" type="intf:ArrayOf_tns2_WSWSAssistBalance"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="importAssistBalanceResponse">
+<wsdl:part name="importAssistBalanceReturn" type="xsd:string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAssitBalanceResponse">
+<wsdl:part name="getAssitBalanceReturn" type="intf:ArrayOfArrayOf_xsd_string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAsstActTypeRequest">
+<wsdl:part name="orgNumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="acctTypeNum" type="xsd:string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="findVoucherRequest">
+<wsdl:part name="comNumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="year" type="xsd:int"> </wsdl:part>
+<wsdl:part name="periodNnumber" type="xsd:int"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAcctTypeDetailRequest">
+<wsdl:part name="orgNumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="asstActTypeNum" type="xsd:string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="deleteBalanceRequest">
+<wsdl:part name="companyNumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="year" type="xsd:int"> </wsdl:part>
+<wsdl:part name="period" type="xsd:int"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="importInitAccountBalanceRequest">
+<wsdl:part name="initAccountBalanceCol" type="intf:ArrayOf_tns2_WSWSAccountBalance"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAccountRequest">
+<wsdl:part name="orgNumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="fromRow" type="xsd:int"> </wsdl:part>
+<wsdl:part name="toRow" type="xsd:int"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAccountResponse">
+<wsdl:part name="getAccountReturn" type="intf:ArrayOfArrayOf_xsd_string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAccountBalanceRequest">
+<wsdl:part name="orgNumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="year" type="xsd:string"> </wsdl:part>
+<wsdl:part name="period" type="xsd:string"> </wsdl:part>
+<wsdl:part name="fromRow" type="xsd:int"> </wsdl:part>
+<wsdl:part name="toRow" type="xsd:int"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getOrgRequest">
+<wsdl:part name="number" type="xsd:string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="importVoucherResponse">
+<wsdl:part name="importVoucherReturn" type="intf:ArrayOf_xsd_string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getVoucherRequest">
+<wsdl:part name="orgNumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="year" type="xsd:string"> </wsdl:part>
+<wsdl:part name="period" type="xsd:string"> </wsdl:part>
+<wsdl:part name="fromRow" type="xsd:int"> </wsdl:part>
+<wsdl:part name="toRow" type="xsd:int"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="importInitAssistBalanceResponse"> </wsdl:message>
+<wsdl:message name="importVoucherRequest">
+<wsdl:part name="col" type="intf:ArrayOf_tns3_WSWSVoucher"> </wsdl:part>
+<wsdl:part name="isSubmit" type="xsd:int"> </wsdl:part>
+<wsdl:part name="isVerify" type="xsd:int"> </wsdl:part>
+<wsdl:part name="isCashflow" type="xsd:int"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="importAccountBalanceRequest">
+<wsdl:part name="accountBalanceCols" type="intf:ArrayOf_tns2_WSWSAccountBalance"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="importVoucherOfReturnIDResponse">
+<wsdl:part name="importVoucherOfReturnIDReturn" type="intf:ArrayOf_xsd_string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAssitBalanceRequest">
+<wsdl:part name="orgnumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="accountNumber" type="xsd:string"> </wsdl:part>
+<wsdl:part name="year" type="xsd:string"> </wsdl:part>
+<wsdl:part name="period" type="xsd:string"> </wsdl:part>
+<wsdl:part name="fromRow" type="xsd:int"> </wsdl:part>
+<wsdl:part name="toRow" type="xsd:int"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAcctTypeDetailResponse">
+<wsdl:part name="getAcctTypeDetailReturn" type="intf:ArrayOfArrayOf_xsd_string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAcctTypeResponse">
+<wsdl:part name="getAcctTypeReturn" type="intf:ArrayOfArrayOf_xsd_string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="importInitAccountBalanceResponse">
+<wsdl:part name="importInitAccountBalanceReturn" type="xsd:string"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="WSInvokeException">
+<wsdl:part name="fault" type="tns1:WSInvokeException"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="deleteVoucherResponse">
+<wsdl:part name="deleteVoucherReturn" type="xsd:int"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="importAssistBalanceRequest">
+<wsdl:part name="assistBalanceCol" type="intf:ArrayOf_tns2_WSWSAssistBalance"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getVoucherResponse">
+<wsdl:part name="getVoucherReturn" type="intf:ArrayOfArrayOf_xsd_string"> </wsdl:part>
+</wsdl:message>
+<wsdl:portType name="WSGLWebServiceFacadeSrvProxy">
+<wsdl:operation name="deleteVoucher" parameterOrder="companyNumber period voucherNumber fexp">
+<wsdl:input message="intf:deleteVoucherRequest" name="deleteVoucherRequest"> </wsdl:input>
+<wsdl:output message="intf:deleteVoucherResponse" name="deleteVoucherResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="deleteVoucherByID" parameterOrder="companyNumber voucherID">
+<wsdl:input message="intf:deleteVoucherByIDRequest" name="deleteVoucherByIDRequest"> </wsdl:input>
+<wsdl:output message="intf:deleteVoucherByIDResponse" name="deleteVoucherByIDResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="importAccountBalance" parameterOrder="accountBalanceCols">
+<wsdl:input message="intf:importAccountBalanceRequest" name="importAccountBalanceRequest"> </wsdl:input>
+<wsdl:output message="intf:importAccountBalanceResponse" name="importAccountBalanceResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="exploreVoucher" parameterOrder="companyId year periodNumber voucherType number">
+<wsdl:input message="intf:exploreVoucherRequest" name="exploreVoucherRequest"> </wsdl:input>
+<wsdl:output message="intf:exploreVoucherResponse" name="exploreVoucherResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="importInitAccountBalance" parameterOrder="initAccountBalanceCol">
+<wsdl:input message="intf:importInitAccountBalanceRequest" name="importInitAccountBalanceRequest"> </wsdl:input>
+<wsdl:output message="intf:importInitAccountBalanceResponse" name="importInitAccountBalanceResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="checkVoucher" parameterOrder="comNumber year periodNumber number amount">
+<wsdl:input message="intf:checkVoucherRequest" name="checkVoucherRequest"> </wsdl:input>
+<wsdl:output message="intf:checkVoucherResponse" name="checkVoucherResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="importAssistBalance" parameterOrder="assistBalanceCol">
+<wsdl:input message="intf:importAssistBalanceRequest" name="importAssistBalanceRequest"> </wsdl:input>
+<wsdl:output message="intf:importAssistBalanceResponse" name="importAssistBalanceResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="findVoucher" parameterOrder="comNumber year periodNnumber">
+<wsdl:input message="intf:findVoucherRequest" name="findVoucherRequest"> </wsdl:input>
+<wsdl:output message="intf:findVoucherResponse" name="findVoucherResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="importInitAssistBalance" parameterOrder="initAssistBalanceBalance">
+<wsdl:input message="intf:importInitAssistBalanceRequest" name="importInitAssistBalanceRequest"> </wsdl:input>
+<wsdl:output message="intf:importInitAssistBalanceResponse" name="importInitAssistBalanceResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="deleteBalance" parameterOrder="companyNumber year period">
+<wsdl:input message="intf:deleteBalanceRequest" name="deleteBalanceRequest"> </wsdl:input>
+<wsdl:output message="intf:deleteBalanceResponse" name="deleteBalanceResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="importVoucher" parameterOrder="col isSubmit isVerify isCashflow">
+<wsdl:input message="intf:importVoucherRequest" name="importVoucherRequest"> </wsdl:input>
+<wsdl:output message="intf:importVoucherResponse" name="importVoucherResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="importVoucherOfReturnID" parameterOrder="col isSubmit isVerify isCashflow">
+<wsdl:input message="intf:importVoucherOfReturnIDRequest" name="importVoucherOfReturnIDRequest"> </wsdl:input>
+<wsdl:output message="intf:importVoucherOfReturnIDResponse" name="importVoucherOfReturnIDResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getOrg" parameterOrder="number">
+<wsdl:input message="intf:getOrgRequest" name="getOrgRequest"> </wsdl:input>
+<wsdl:output message="intf:getOrgResponse" name="getOrgResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getAcctType" parameterOrder="orgNumber">
+<wsdl:input message="intf:getAcctTypeRequest" name="getAcctTypeRequest"> </wsdl:input>
+<wsdl:output message="intf:getAcctTypeResponse" name="getAcctTypeResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getAsstActType" parameterOrder="orgNumber acctTypeNum">
+<wsdl:input message="intf:getAsstActTypeRequest" name="getAsstActTypeRequest"> </wsdl:input>
+<wsdl:output message="intf:getAsstActTypeResponse" name="getAsstActTypeResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getAcctTypeDetail" parameterOrder="orgNumber asstActTypeNum">
+<wsdl:input message="intf:getAcctTypeDetailRequest" name="getAcctTypeDetailRequest"> </wsdl:input>
+<wsdl:output message="intf:getAcctTypeDetailResponse" name="getAcctTypeDetailResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getAccount" parameterOrder="orgNumber fromRow toRow">
+<wsdl:input message="intf:getAccountRequest" name="getAccountRequest"> </wsdl:input>
+<wsdl:output message="intf:getAccountResponse" name="getAccountResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getAccountBalance" parameterOrder="orgNumber year period fromRow toRow">
+<wsdl:input message="intf:getAccountBalanceRequest" name="getAccountBalanceRequest"> </wsdl:input>
+<wsdl:output message="intf:getAccountBalanceResponse" name="getAccountBalanceResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getAssitBalance" parameterOrder="orgnumber accountNumber year period fromRow toRow">
+<wsdl:input message="intf:getAssitBalanceRequest" name="getAssitBalanceRequest"> </wsdl:input>
+<wsdl:output message="intf:getAssitBalanceResponse" name="getAssitBalanceResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getVoucher" parameterOrder="orgNumber year period fromRow toRow">
+<wsdl:input message="intf:getVoucherRequest" name="getVoucherRequest"> </wsdl:input>
+<wsdl:output message="intf:getVoucherResponse" name="getVoucherResponse"> </wsdl:output>
+<wsdl:fault message="intf:WSInvokeException" name="WSInvokeException"> </wsdl:fault>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="WSGLWebServiceFacadeSoapBinding" type="intf:WSGLWebServiceFacadeSrvProxy">
+<wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="deleteVoucher">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="deleteVoucherRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="deleteVoucherResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="deleteVoucherByID">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="deleteVoucherByIDRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="deleteVoucherByIDResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="importAccountBalance">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="importAccountBalanceRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="importAccountBalanceResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="exploreVoucher">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="exploreVoucherRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="exploreVoucherResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="importInitAccountBalance">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="importInitAccountBalanceRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="importInitAccountBalanceResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="checkVoucher">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="checkVoucherRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="checkVoucherResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="importAssistBalance">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="importAssistBalanceRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="importAssistBalanceResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="findVoucher">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="findVoucherRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="findVoucherResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="importInitAssistBalance">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="importInitAssistBalanceRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="importInitAssistBalanceResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="deleteBalance">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="deleteBalanceRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="deleteBalanceResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="importVoucher">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="importVoucherRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="importVoucherResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="importVoucherOfReturnID">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="importVoucherOfReturnIDRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="importVoucherOfReturnIDResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getOrg">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getOrgRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="getOrgResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getAcctType">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getAcctTypeRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="getAcctTypeResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getAsstActType">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getAsstActTypeRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="getAsstActTypeResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getAcctTypeDetail">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getAcctTypeDetailRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="getAcctTypeDetailResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getAccount">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getAccountRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="getAccountResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getAccountBalance">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getAccountBalanceRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="getAccountBalanceResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getAssitBalance">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getAssitBalanceRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="getAssitBalanceResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getVoucher">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getVoucherRequest">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice.app.gl.fi.eas.kingdee.com" use="encoded"/>
+</wsdl:input>
+<wsdl:output name="getVoucherResponse">
+<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="$address$" use="encoded"/>
+</wsdl:output>
+<wsdl:fault name="WSInvokeException">
+<wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="WSInvokeException" namespace="$address$" use="encoded"/>
+</wsdl:fault>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="WSGLWebServiceFacadeSrvProxyService">
+<wsdl:port binding="intf:WSGLWebServiceFacadeSoapBinding" name="WSGLWebServiceFacade">
+<wsdlsoap:address location="$address$"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

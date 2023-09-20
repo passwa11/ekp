@@ -1,0 +1,921 @@
+@charset "utf-8";
+/* CSS Document */
+
+/** 代码制作人:
+** 制作时间：
+**********************************************/
+
+html,body{
+ padding:0 !important;
+ height:100%;
+ overflow:hidden;
+}
+
+#place {
+	z-index: 10;	
+	background-color: #f5f5f5;
+}
+
+.placeContentContainer {
+  white-space: nowrap;
+}
+.placeContentitem {
+  white-space: nowrap;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  z-index: 1;
+}
+.placeContentitem .place_free,
+.placeContentitem .place_occupied,
+.placeContentitem .place_selected,
+.placeContentitem .place_half,
+.muiMeetingBookArea > ul > li{
+  width: 6rem;
+  text-align: center;
+  border-right: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.placeContentitem .place_free,
+.placeContentitem .place_occupied,
+.placeContentitem .place_selected,
+.placeContentitem .place_half,
+.muiMeetingBookTimeBar > ul > li{
+  height: 3rem;
+  line-height: 3rem;
+}
+
+.placeContentitem .place_free,
+.placeContentitem .place_occupied,
+.placeContentitem .place_half,
+.placeContentitem .place_selected{
+  /*
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  */
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: auto 2rem;
+}
+
+.placeContentitem .place_selected {
+  background-image: url(../images/place_selected.png)!important;
+}
+.placeContentitem .place_free {
+  background-image: url(../images/place_selectable.png);
+}
+.placeContentitem .place_occupied {
+  background-image: url(../images/place_occupied.png);
+}
+
+.placeContentitem .place_occupied[data-flag=late] {
+  background-image: url(../images/place_late.png) !important;
+}
+
+.placeContentitem .place_nobook {
+  background-image: url(../images/place_nobook.png) !important;
+}
+
+.placeContentitem .place_half {
+  background-image: url(../images/place_half.png);
+}
+
+.placeContentitem li.place_occupied[data-has-exam="wait"] {
+  background-image: url(../images/place_exam.png);
+}
+
+/* 会议管理 Starts
+   ========================================================================== */
+.muiMeetingBookDateList:after,
+.muiMeetingBookTimeBar > ul:after,
+.muiMeetingBookArea > ul:after,
+.muiMeetingBookList:after,
+.muiMeetingBookList > ul:after,
+.placeContentContainer:after {
+  content: '';
+  display: table;
+  visibility: hidden;
+  clear: both;
+}
+.muiMeetingBookHeader,
+.muiMeetingBookHeader *,
+.muiMeetingBookHeader *:after,
+.muiMeetingBookHeader *:before,
+.muiMeetingBookTimeBar *:after,
+.muiMeetingBookTimeBar *:before,
+.muiMeetingBookArea,
+.muiMeetingBookArea *,
+.muiMeetingBookArea *:after,
+.muiMeetingBookArea *:before,
+.muiMeetingBookList,
+.muiMeetingBookList *,
+.muiMeetingBookList *:after,
+.muiMeetingBookList *:before,
+.muiMeetingBookInfoArea,
+.muiMeetingBookInfoArea *,
+.muiMeetingBookInfoArea *:after,
+.muiMeetingBookInfoArea *:before,
+.muiMeetingBookContainer,
+.muiMeetingBookContainer *,
+.muiMeetingBookContainer *:after,
+.muiMeetingBookContainer *:before {
+  line-height: 1.42857143;
+  transition: color, background-color, width, opacity, transform .3s ease-in-out;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.muiMeetingBookHeader{
+  position: relative;
+}
+.muiMeetingBookDateWrap{}
+.muiMeetingBookDateChange{}
+.muiMeetingBookDateList{
+  margin: 0;
+  padding: 0 .5rem;
+  list-style: none;
+  position: absolute;
+  table-layout: fixed;
+  white-space: nowrap;
+  width: auto;
+  top: 0;
+  bottom: 0;
+  min-width: 100%;
+  text-align: center;  
+}
+.muiMeetingBookDateList > li{
+  padding: .5rem .3rem;
+  text-align: center;
+  font-size: 1.2rem;
+  display: inline-block;
+}
+.muiMeetingBookDateList > .muiNavbarSelected{ display: none; }
+.muiMeetingBookDateList > li > .item{
+  padding: .8rem .5rem;
+  color: #4285f4;
+  border-radius: .5rem;
+  border: 1px solid transparent;
+  background-color: #fff;
+  -webkit-box-shadow: 0 1px 5px rgba(0,0,0,.15);
+          box-shadow: 0 1px 5px rgba(0,0,0,.15);
+  display: block;
+}
+.muiMeetingBookDateList > li.muiNavitemSelected > .item{
+  color: #fff;
+  background-color: #4285f4;
+  -webkit-box-shadow: 0 2px 8px rgba(0,0,0,.35);
+          box-shadow: 0 2px 8px rgba(0,0,0,.35);
+}
+.muiMeetingBookDateList > li:nth-of-type(1) > .item{
+  border-color: #4285f4;
+  -webkit-box-shadow: 0 2px 8px rgba(0,0,0,.35);
+          box-shadow: 0 2px 8px rgba(0,0,0,.35);
+}
+
+.muiMeetingBookDateList > li .time,
+.muiMeetingBookDateList > li .date{
+  display: block;
+}
+.muiMeetingBookDateList > li .time{
+  margin-bottom: .3rem;
+  width: auto;
+  height: auto;
+  font-size: 1.6rem;
+}
+.muiMeetingBookContainer{
+  padding-top: 6.0rem;
+  padding-left: 4.5rem;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 4rem;
+  bottom: 7.45rem;
+  padding-bottom: 1rem;
+}
+.muiMeetingBookContainer:after{
+  content: '';
+  display: block;
+  border-bottom: 1px solid #ddd;
+  position: absolute;
+  left: 4.5rem;
+  right: 0;
+  bottom: 0;
+}
+.muiMeetingBookTimeBar > ul,
+.muiMeetingBookList > ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 20px;
+  font-size: 1.4rem;
+}
+.muiMeetingBookTimeBar{
+  width: 4.5rem;
+  border-right: 1px solid #ddd;
+  position: absolute;
+  left: 0;
+  top: 6rem;
+  z-index: 1;
+}
+.muiMeetingBookTimeBar > ul{}
+.muiMeetingBookTimeBar > ul > li{
+  padding: 0 .5rem;
+  text-align: right;
+  color: #595959;
+  font-size: 1.2rem;
+}
+.muiMeetingBookArea{
+  border-bottom: 1px solid #ddd;
+  position: absolute;
+  left: 4.4rem;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+.muiMeetingBookArea > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  /* white-space: nowrap; */
+  width: auto;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  font-size: 0;
+  display: flex;
+  align-items: center;
+}
+.muiMeetingBookArea > ul > li{
+	color: #666;
+	font-size: 1.2rem;
+	vertical-align: top;
+	padding-top: 0.5rem;
+}
+
+.muiMeetingBookArea > ul > li,
+.muiMeetingBookList > ul > li{
+  text-align: center;
+}
+.muiMeetingBookTimeBar > ul > li > span,
+.muiMeetingBookArea > ul > li > span,
+.muiMeetingBookList > ul > li > span{
+  margin-right: 1px;
+  margin-bottom: 1px;
+  padding: 0;
+  height: 3rem;
+  line-height: 3rem;
+  display: block;
+}
+
+.muiMeetingBookArea > ul > li > span {
+	white-space: pre-wrap;
+	max-height: 4.8rem;
+	display: -webkit-box;
+	/* padding-top: 0.6rem; */
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 4;
+	line-height: unset;
+	line-height: 1.2rem;
+	/* margin-top: 1rem; */
+	/* text-overflow: ellipsis; */
+	height: auto;
+}
+
+.muiMeetingBookArea > ul > li > span,
+.muiMeetingBookList > ul > li > span{
+  min-width: 4.5rem;
+}
+.muiMeetingBookList{
+  width: 200%;
+}
+.muiMeetingBookList > ul{
+  float: left;
+}
+.muiMeetingBookList > ul > li > span{
+  background-color: #f8f8f8;
+}
+.muiMeetingBookList > ul > li.active > span{
+  background-color: blue
+}
+/* 会议管理 Ends
+   ========================================================================== */
+
+.muiMeetingBookInfoArea{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+.muiMeetingBookInformation{
+  position: absolute;
+  bottom: 0rem;
+  left: 0;
+  right: 0;
+  height: 8rem;
+  color: #888;
+  font-size: 1.2rem;
+  background-color: white;
+}
+
+.muiMeetingBookInfoCancel {
+	position: absolute;
+	display: inline-block;
+	width: 3rem;
+	height: 2.4rem;
+	line-height: 2.4rem;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.4);
+	border-top-right-radius: 2.4rem;
+	top: -2.4rem;
+	padding-left: 0.5rem;
+}
+
+.muiMeetingBookInfoCancel i {
+	font-weight: bold;
+}
+
+.muiMeetingBookInfoToolbar {
+	height: 3rem;
+	line-height: 3rem;
+	box-sizing: border-box;
+	border-bottom: 1px solid #e9e9e9;
+	border-top: 1px solid #e9e9e9;
+	padding: 0 1rem;
+	overflow: hidden;
+}
+
+.muiMeetingBookInfoToolbar span {
+	font-family: PingFangSC-Regular;
+	font-size: 1.3rem;
+	color: #999999;
+	letter-spacing: 0;
+}
+
+.muiMeetingBookInfoToolbar span:last-child {
+	float: right;
+	line-height: 3rem;
+}
+
+.muiMeetingBookInfoMain {
+	overflow: auto;
+}
+
+.muiMeetingBookInfoHeading,
+.muiMeetingBookInfoContent,
+.muiMeetingBookInfoBtn {
+	float: left;
+	width: 20%;
+	height: 8rem; 
+}
+
+.muiMeetingBookInfoHeading, 
+.muiMeetingBookInfoContent {
+	width: 40%;
+}
+
+.muiMeetingBookInfoHeading {
+	/* padding-top: 1.2rem;
+	padding-bottom: 1.2rem; */
+	padding-left: 1rem;
+	color: #666;
+}
+
+.muiMeetingBookInfoHeadingWrapper {
+	height: 100%;
+  position: relative;
+  display: -webkit-flex;
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.muiMeetingBookInfoHeadingWrapper:after{
+  content: '';
+  display: block;
+  border-right: 1px solid #e8e8e8;
+  position: absolute;
+  right: 0;
+  top: 1.2rem;
+  bottom: 1.2rem;
+}
+
+.muiMeetingBookInfoHeading .time {
+	font-family: PingFangSC-Medium;
+	font-size: 20px;
+	letter-spacing: 0;
+	text-align: center;
+}
+
+.muiMeetingBookInfoHeading .txtbar {
+	font-family: PingFangSC-Regular;
+	font-size: 13px;
+	letter-spacing: 0;
+	/* white-space: nowrap; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+.muiMeetingBookInfoContent {
+	padding-top: 1.2rem;
+	padding-bottom: 1.2rem;
+	padding-left: 1rem;
+	font-family: PingFangSC-Regular;
+	font-size: 13px;
+	color: #666;
+	letter-spacing: 0;
+}
+
+.muiMeetingBookInfoContent li {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	height: 2rem;
+}
+
+.muiMeetingBookInfoContent .mui {
+	margin-right: 0.35rem;
+	width: 1.4rem;
+	height: 1.4rem;
+	position: relative;
+    top: -0.2rem;
+	background-size: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.muiMeetingBookInfoContent li span {
+	position: relative;
+	top: -0.1rem;
+	display: inline-block;
+	font-size: 1rem;
+	padding: 0.1rem 0.2rem;
+	border: 1px solid #999;
+	margin-left: 0.4rem;
+}
+
+.muiMeetingBookInfoContent .mui.mui-occupied {
+	background-image: url(../images/icon_occupied.png);
+}
+
+.muiMeetingBookInfoContent .mui.mui-free {
+background-image: url(../images/icon_free.png);
+}
+
+.muiMeetingBookInfoContent .mui.mui-people {
+	background-image: url(../images/icon_people.png);
+}
+
+.muiMeetingBookInfoContent .mui.mui-asset {
+	background-image: url(../images/icon_asset.png);
+}
+
+.muiMeetingBookInfoContent .mui.mui-position {
+	background-image: url(../images/icon_position.png);
+}
+
+.muiMeetingBookInfoContent .mui.mui-doc {
+	background-image: url(../images/icon_doc.png);
+}
+
+
+.muiMeetingBookInfoBtn {
+	font-family: PingFangSC-Regular;
+	font-size: 12px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.muiMeetingBookInfoBtn::before,
+.muiMeetingBookInfoBtn::after {
+	content: '';
+	position: absolute;
+	left: -1rem;
+	width: 1rem;
+	height: 50%;
+}
+
+.muiMeetingBookInfoBtn::before {
+	top: 0;
+	border-top-left-radius: 100%;
+}
+
+.muiMeetingBookInfoBtn::after {
+	bottom: 0;
+	border-bottom-left-radius: 100%;
+}
+
+.muiMeetingBookInfoBtnLabel {
+	font-size: 11px;
+	white-space: nowrap;
+	position: relative;
+}
+
+.muiMeetingBookInfoMain[data-flag=callKeeper] .muiMeetingBookInfoBtn,
+.muiMeetingBookInfoMain[data-flag=callKeeper] .muiMeetingBookInfoBtn::before,
+.muiMeetingBookInfoMain[data-flag=callKeeper] .muiMeetingBookInfoBtn::after {
+	background-color: #F5A623;
+}
+
+.muiMeetingBookInfoMain[data-flag=callKeeper] .muiMeetingBookInfoHeading .time {
+	color: #F5A623;
+}
+
+.muiMeetingBookInfoMain[data-flag=callHost] .muiMeetingBookInfoBtn,
+.muiMeetingBookInfoMain[data-flag=callHost] .muiMeetingBookInfoBtn::before,
+.muiMeetingBookInfoMain[data-flag=callHost] .muiMeetingBookInfoBtn::after {
+	background-color: #EE5555;
+}
+
+.muiMeetingBookInfoMain[data-flag=callHost] .muiMeetingBookInfoHeading .time {
+	color: #EE5555;
+}
+
+.muiMeetingBookInfoMain[data-flag=create] .muiMeetingBookInfoBtn,
+.muiMeetingBookInfoMain[data-flag=create] .muiMeetingBookInfoBtn::before,
+.muiMeetingBookInfoMain[data-flag=create] .muiMeetingBookInfoBtn::after {
+	background-color: #4285f4;
+}
+
+.muiMeetingBookInfoMain[data-flag=create] .muiMeetingBookInfoHeading .time {
+	color: #4285f4;
+}
+
+.muiMeetingBookInfoMain[data-flag=create] .muiMeetingBookInfoBtn .mui {
+	font-size: 2rem;
+    font-weight: bold;
+}
+
+.muiMeetingBookInfoMain .muiMeetingBookInfoBtn i {
+	display: block;
+	height: 26px;
+	width: 26px;
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	margin-bottom: 4px;
+}
+
+.muiMeetingBookInfoMain[data-flag=callKeeper] .muiMeetingBookInfoBtn i,
+.muiMeetingBookInfoMain[data-flag=callHost] .muiMeetingBookInfoBtn i{
+	background-image: url(../images/icon_phone.png);
+}
+
+.muiMeetingBookInfoMain[data-flag=create] .muiMeetingBookInfoBtn i{
+	background-image: url(../images/icon_next.png);
+}
+
+.muiMeetingBookStatus {
+	position: absolute;
+	bottom: 5rem;
+	left: 0;
+	right: 0;
+	background: #fff;
+	bottom: 52px;
+}
+.muiMeetingBookStatus > ul {
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+}
+.muiMeetingBookStatus > ul > li{
+  height: 3.15rem;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+.muiMeetingBookStatus > ul > li:before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: .58rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  background-size: 100% 100%;
+  position: relative;
+  top: -.1rem;
+}
+
+.muiMeetingBookStatus > ul > li[data-flag=late]:before {
+	background-image: url(../images/place_late.png);
+}
+.muiMeetingBookStatus > ul > li[data-flag=occupied]:before {
+	background-image: url(../images/place_occupied.png);
+}
+.muiMeetingBookStatus > ul > li[data-flag=selected]:before {
+	background-image: url(../images/place_selected.png);
+}
+.muiMeetingBookStatus > ul > li[data-flag=half]:before{
+	background-image: url(../images/place_half.png);
+}
+.muiMeetingBookStatus > ul > li[data-flag=exam]:before {
+	background-image: url(../images/place_exam.png);
+}
+.muiMeetingBookStatus > ul > li[data-flag=selectable]:before {
+	background-image: url(../images/place_selectable.png);
+}
+
+.meetingCreateDialog.muiDialogElement .muiDialogElementContainer{
+  border-bottom: 0;
+  background-color: #769eff;
+}
+.meetingCreateDialog.muiDialogElement .muiDialogElementTitle{
+  color: #fff;
+  right: 1rem;
+}
+.meetingCreateDialog.muiDialogElement .muiDialogElementClose {
+  margin-top: -.6rem;
+  color: #fff;
+  opacity: .5;
+}
+.meetingCreateDialog.muiDialogElement .muiDialogElementClose:active{ opacity: 1; }
+.meetingCreateDialog.muiDialogElement .muiDialogElementDiv {
+  text-align: center;
+  color: #fff;
+  border-bottom: 0;
+  background-color: transparent;
+}
+.meetingCreateDialog.muiDialogElement .muiFormSelectElement{
+  padding: 1rem;
+}
+.meetingCreateDialog.muiDialogElement .muiFieldOptions > .muiFieldText{
+  margin: .6rem 0;
+  padding: 1.2rem .5rem!important;
+  text-align: center;
+  color: #769eff;
+  border-bottom: 0;
+  border-radius: 5rem;
+  background-color: #fff;
+  -webkit-box-shadow: 0 1px 5px rgba(0,0,0,.15);
+          box-shadow: 0 1px 5px rgba(0,0,0,.15);
+}
+
+.meetingBookInfo{
+	display: block!important;
+	background-color: #fff;
+}
+.meetingBookInfo.muiAccordionPanelContent{ border-bottom: 0; }
+.meetingBookInfo .muiFieldItem > div.muiFieldOpt{ display: none; }
+.meetingBookInfo .muiSimple > tbody > tr > td,
+.meetingBookInfo .muiSimple > tr > td{ border-bottom-color: #4285f4; }
+.meetingBookInfo .muiFormContent .muiSimple:nth-child(2) > tbody > tr:last-child .muiField,
+.meetingBookInfo .muiFormContent .muiSimple:nth-child(2) > tbody > tr:last-child .muiFieldItem,
+.meetingBookInfo .muiFormContent .muiSimple:nth-child(2) > tbody > tr:last-child .muiFieldValue{
+  display: block;
+}
+.meetingBookInfo .muiFormContent .muiFormTextarea{
+  height: 15rem!important;
+  color: #333;
+  border: 1px solid #c7cad2;
+  border-radius: .5rem;
+}
+
+.meetingHeader{
+  background-color: #fff;
+  box-shadow: none;
+}
+.meetingHeader.muiHeader .muiHeaderItem {
+  min-width: auto;
+  border-right: 0;
+}
+
+html.fontSize2 .meetingHeader.muiHeader .muiSelInputRight,
+html.fontSize3 .meetingHeader.muiHeader .muiSelInputRight,
+html.fontSize4 .meetingHeader.muiHeader .muiSelInputRight{
+  margin-top: -1.1rem;
+  right: .3rem;
+}
+
+
+.meetingHeader .muiFieldItem > .muiFieldOpt {
+  display: none;
+}
+.meetingHeader .muiFormSelectContnet.muiSelectInputContnet.edit .muiFormSelectText {
+  padding-left: 3rem;
+  text-align: center;
+  color: #4285f4;
+  font-size: 1.6rem;
+}
+.meetingHeader .muiFormSelectContnet.muiSelectInputContnet.edit .muiFormSelectText:after{
+  content: '';
+  display: inline-block;
+  margin-left: .5rem;
+  border-top: 4px dashed;
+  border-top: 4px solid \9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  vertical-align: middle;
+}
+.meetingHeader .muiField{
+  padding-top: 1rem;
+}
+.meetingHeaderItem{
+	display: table-cell;
+	text-align: center;
+  padding-right: .5rem;
+  padding-left: .5rem;
+  width: 3.8rem;
+	height: 100%;
+  color: #4285f4;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+.mblBackground .muiDialogElement.placeCateSelectDialog{
+  top: 3.8rem;
+}
+
+.meetingHeader .muiFormEleWrap.showTitle .muiSelInput {
+  padding-top: 0;
+  color: #4285f4;
+  font-size: 1.6rem;
+  text-align: center;
+  line-height: 4.6rem;
+}
+.meetingHeader {
+  position: relative;
+  z-index: 100000;
+}
+.meetingHeader:after {
+  content: '';
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: #d3dce6;
+}
+.meetingHeader .muiFormSelectText:after {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 0.5rem solid transparent;
+  border-right: 0.5rem solid transparent;
+  border-top: 0.5rem solid #4285f4;
+  position: relative;
+  left: 0.5rem;
+  bottom: 0.1rem;
+}
+.meetingHeader .muiSelInput {
+  padding-right: 0;
+}
+.meetingHeader .muiFormEleWrap.popup:hover:before {
+  border: 0 !important;
+}
+
+
+.placeCateSelect{
+	height: 4rem!important;
+	display: table-cell;
+}
+
+#tabs {
+	border-top: 1px solid #e9e9e9;
+	box-sizing: border-box;
+}
+
+.muiMeetingCreateTooltip{
+	position: fixed;
+	bottom: 10.5rem;
+	right: 0;
+	z-index: 10;
+}
+.muiMeetingCreateTooltip > .muiMeetingDropToggle {
+	display: block;
+	cursor: pointer;
+}
+.muiMeetingCreateTooltip > .muiMeetingDropToggle.on .mui{
+	-webkit-transform:rotate(180deg);
+	transform:rotate(180deg);
+	transform-origin:50%;
+}
+.muiMeetingCreateTooltip > .muiMeetingDropToggle.on .mui{
+	-webkit-transform:rotate(225deg);
+	transform:rotate(225deg);
+	transform-origin:50%;
+}
+
+.muiMeetingCreateTooltip .mui{
+	
+}
+
+.muiMeetingCreateTooltip > .muiMeetingDropMenu{
+	display: none;
+	margin: 8px 0px 8px 0px;
+	border-radius: 50%/20px;
+	position: absolute;
+	/* background-color: rgba(166,169,171,.95); */
+	bottom: 5.5rem;
+}
+.muiMeetingCreateTooltip > .muiMeetingDropMenu > li:not(:last-child){
+	margin-bottom: 1.5rem;
+}
+.muiMeetingCreateTooltip > .muiMeetingDropMenu > li,
+.muiMeetingCreateTooltip > .muiMeetingDropMenu > li a{
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 2.25rem;
+    /* background-color: #4285f4; */
+    color: white;
+    text-align: center;
+    line-height: 4.5rem;
+    font-size: 0.8px;
+    overflow: visible;
+}
+.muiMeetingCreateTooltip > .muiMeetingDropMenu > li a{
+	background:url(../images/icon_create_meeting.png) no-repeat left top;
+	background-size:4.5rem auto;
+	display: inline-block;
+}
+.muiMeetingCreateTooltip > .muiMeetingDropMenu > li.create_book a{
+	background-image:url(../images/icon_create_book.png);
+}
+.muiMeetingCreateTooltip > .muiMeetingDropMenu > li.create_meeting a{
+	background-image:url(../images/icon_create_meeting.png);
+}
+.muiMeetingCreateTooltip > .muiMeetingDropMenu > li.create_video a{
+	background-image:url(../images/icon_create_video.png);
+}
+
+.muiMeetingCreateTooltip > .muiMeetingDropMenu > li a span{
+	position:relative;
+	right: 6.5rem;
+	color: #333;
+	text-align: right;
+	font-size: 14px;
+	white-space: nowrap;
+}
+
+
+.muiMeetingCreateTooltip > .muiMeetingDropMenu > li .mui{
+	margin-bottom: .3rem;
+	position: relative;
+}
+
+.muiMeetingCreateTooltip > .muiMeetingDropMenu > li.cur .mui,
+.muiMeetingCreateTooltip > .muiMeetingDropMenu > li:active .mui,
+.muiMeetingCreateTooltip > .muiMeetingDropMenu > li:focus{ background:#399be8; color:#fff;}
+
+ /* 模糊遮罩效果 
+.create_mask .muiCalendarHead,
+.create_mask .muiCalendarTable,
+.create_mask .muiCalendarBottom,
+.create_mask #tabs
+{
+	filter:blur(3px);
+} */
+
+/* #104784 */
+.placeCateSelect >.muiSelInputRight.muiSelInputRightShow {
+	height: 1.6rem;
+    top: 50%;
+    margin-top: -0.85rem;
+}

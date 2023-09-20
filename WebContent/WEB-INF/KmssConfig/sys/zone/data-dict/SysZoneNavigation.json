@@ -1,0 +1,86 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.zone.model.SysZoneNavigation",
+        "messageKey": "sys-zone:sysZoneNavigation",
+        "serviceBean": "sysZoneNavigationService",
+        "displayProperty": "fdName",
+        "table": "sys_zone_navigation",
+        "url": "/sys/zone/sys_zone_navigation/sysZoneNavigation.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-zone:sysZoneNavigation.docCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_creator_id",
+            "notNull": "false"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZoneNavigation.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "true"
+        },
+        "docAlteror":         {
+            "propertyType": "model",
+            "messageKey": "sys-zone:sysZoneNavigation.docAlteror",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_alteror_id",
+            "notNull": "false"
+        },
+        "docAlterTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZoneNavigation.docAlterTime",
+            "type": "DateTime",
+            "column": "doc_alter_time",
+            "notNull": "false"
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZoneNavigation.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "false",
+            "langSupport": "true",
+            "length": "500"
+        },
+        "fdStatus":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZoneNavigation.fdStatus",
+            "type": "Integer",
+            "column": "fd_status",
+            "notNull": "false",
+            "length": "10"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZoneNavigation.fdOrder",
+            "type": "Integer",
+            "column": "fd_order",
+            "notNull": "false",
+            "length": "10"
+        },
+        "fdLinks":         {
+            "propertyType": "list",
+            "messageKey": "sys-zone:sysZoneNavigation.fdLinks",
+            "column": "fd_cate_id",
+            "orderBy": "fd_order",
+            "type": "com.landray.kmss.sys.zone.model.SysZoneNavLink",
+            "cascade": "all-delete-orphan",
+            "inverse": "false",
+            "table": "sys_zone_nav_link"
+        },
+        "fdShowType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZoneNavigation.fdShowType",
+            "type": "String",
+            "column": "fd_show_type",
+            "length": "30"
+        }
+    }
+}

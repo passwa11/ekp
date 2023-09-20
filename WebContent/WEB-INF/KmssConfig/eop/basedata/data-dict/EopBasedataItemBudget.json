@@ -1,0 +1,149 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.eop.basedata.model.EopBasedataItemBudget",
+        "messageKey": "eop-basedata:table.eopBasedataItemBudget",
+        "table": "eop_basedata_item_budget",
+        "url": "/eop/basedata/eop_basedata_item_budget/eopBasedataItemBudget.do?method=view&fdId=${fdId}",
+        "displayProperty": "fdName",
+        "serviceBean": "eopBasedataItemBudgetService",
+        "canLogShow": "1"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "type": "DateTime",
+            "messageKey": "eop-basedata:eopBasedataItemBudget.docCreateTime",
+            "column": "doc_create_time",
+            "notNull": "true",
+            "validate": "false",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "true"
+        },
+        "docAlterTime":         {
+            "propertyType": "simple",
+            "type": "DateTime",
+            "messageKey": "eop-basedata:eopBasedataItemBudget.docAlterTime",
+            "column": "doc_alter_time",
+            "notNull": "false",
+            "validate": "false",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "true"
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "type": "String",
+            "length": "200",
+            "defaultValue": "",
+            "messageKey": "eop-basedata:eopBasedataItemBudget.fdName",
+            "column": "fd_name",
+            "notNull": "true",
+            "validate": "true",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "fdCompanyList":         {
+            "propertyType": "list",
+            "type": "com.landray.kmss.eop.basedata.model.EopBasedataCompany",
+            "table": "eop_basedata_itembudget_com",
+            "elementColumn": "fd_target_id",
+            "messageKey": "eop-basedata:eopBasedataItemBudget.fdCompanyList",
+            "column": "fd_source_id",
+            "notNull": "false",
+            "validate": "true",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "messageKey": "eop-basedata:eopBasedataItemBudget.docCreator",
+            "column": "doc_creator_id",
+            "notNull": "true",
+            "validate": "false",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_PERSON);"
+        },
+        "docAlteror":         {
+            "propertyType": "model",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "messageKey": "eop-basedata:eopBasedataItemBudget.docAlteror",
+            "column": "doc_alteror_id",
+            "notNull": "false",
+            "validate": "false",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_PERSON);"
+        },
+        "fdCategory":         {
+            "propertyType": "model",
+            "type": "com.landray.kmss.eop.basedata.model.EopBasedataBudgetScheme",
+            "messageKey": "eop-basedata:eopBasedataItemBudget.fdCategory",
+            "column": "fd_category_id",
+            "notNull": "false",
+            "validate": "true",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "fdItems":         {
+            "propertyType": "list",
+            "type": "com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem",
+            "table": "eop_basedata_item_budget_it",
+            "elementColumn": "fd_target_id",
+            "messageKey": "eop-basedata:eopBasedataItemBudget.fdItems",
+            "column": "fd_source_id",
+            "notNull": "false",
+            "validate": "true",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "fdIsAvailable":         {
+            "propertyType": "simple",
+            "type": "Boolean",
+            "defaultValue": "true",
+            "messageKey": "eop-basedata:eopBasedataItemBudget.fdIsAvailable",
+            "column": "fd_is_available",
+            "notNull": "false",
+            "validate": "true",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "fdOrgs":         {
+            "propertyType": "list",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "eop_basedata_item_budget_org",
+            "elementColumn": "fd_target_id",
+            "messageKey": "eop-basedata:eopBasedataItemBudget.fdOrgs",
+            "column": "fd_source_id",
+            "notNull": "false",
+            "validate": "true",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "false",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_ALLORG);"
+        }
+    }
+}

@@ -1,0 +1,92 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.modeling.base.formDesign.model.ModelingAutomaticFill",
+        "messageKey": "sys-modeling-base:table.modelingAutomaticFill",
+        "displayProperty": "fdName",
+        "serviceBean": "modelingAutomaticFillService",
+        "table": "modeling_auto_fill",
+        "url": "/sys/modeling/base/automaticFill.do?method=view&fdId=${fdId}&fdAppId=${fdAppId}&s_css=default"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingAutomaticFill.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "length": "200",
+            "langSupport": "true"
+        },
+        "fdIsEnable":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingAutomaticFill.fdIsEnable",
+            "type": "Integer",
+            "column": "fd_is_enabled"
+        },
+        "fdFillers":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modelingAutomaticFill.fdFillers",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "modeling_auto_fillers",
+            "column": "fd_main_id",
+            "elementColumn": "filler_id"
+        },
+        "fdNotifyType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingAutomaticFill.fdNotifyType",
+            "type": "String",
+            "column": "fd_notify_type",
+            "notNull": "true",
+            "readOnly": "false",
+            "enumType": "sys_modeling_auto_notify_type",
+            "defaultValue": "1"
+        },
+        "fdFlowId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingAutomaticFill.fdFlowId",
+            "type": "String",
+            "column": "fd_flow_id",
+            "length": "36",
+            "notNull": "true"
+        },
+        "fdIsJumpFiller":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingAutomaticFill.fdIsJumpFiller",
+            "type": "Integer",
+            "column": "fd_is_jump_filler"
+        },
+        "fdTimeCfg":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingAutomaticFill.fdTimeCfg",
+            "canDisplay": "false",
+            "type": "RTF",
+            "column": "fd_time_cfg",
+            "length": "1000000"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingAutomaticFill.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "true"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-modeling-base:modelingAutomaticFill.docCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_creator_id",
+            "notNull": "true"
+        },
+        "fdModel":         {
+            "propertyType": "model",
+            "messageKey": "sys-modeling-base:modelingAutomaticFill.fdModel",
+            "type": "com.landray.kmss.sys.modeling.base.model.ModelingAppModel",
+            "column": "fd_model_id",
+            "notNull": "true"
+        }
+    }
+}

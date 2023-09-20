@@ -1,0 +1,51 @@
+/**
+ * 创建文档
+ */
+public KmForumPostParamterForm createForm() throws Exception {
+	KmForumPostParamterForm paramterForm = new KmForumPostParamterForm();
+	// 增加附件
+	paramterForm.getAttachmentForms().addAll(createAllAtts());
+
+	// 发贴人，支持的类型有：主键（Id）、编号（PersonNo）、登录名（LoginName）、关键字（Keyword）、LDAP（LdapDN）
+	paramterForm.setFdPoster("{\"LoginName\": \"panyh\"}");
+
+	// 主题
+	paramterForm.setDocSubject("WebService推送-标题");
+
+	// 内容
+	paramterForm.setDocContent("WebService推送-内容");
+
+	return paramterForm;
+}
+
+/**
+ * 创建附件列表
+ */
+public List<AttachmentForm> createAllAtts() throws Exception {
+	List<AttachmentForm> attForms = new ArrayList<AttachmentForm>();
+	String fileName = "test1.jpg";
+	AttachmentForm attForm01 = createAtt(fileName);
+	fileName = "test2.jpg";
+	AttachmentForm attForm02 = createAtt(fileName);
+
+	attForms.add(attForm01);
+	attForms.add(attForm02);
+
+	return attForms;
+}
+
+/**
+ * 创建附件对象
+ */
+public AttachmentForm createAtt(String fileName) throws Exception {
+	AttachmentForm attForm = new AttachmentForm();
+	attForm.setFdFileName(fileName);
+	// 设置附件关键字，表单模式下为附件控件的id
+	attForm.setFdKey("attachment");
+
+	DataSource ds = new FileDataSource(new File("C:\\" + fileName));
+	DataHandler dh = new DataHandler(ds);
+	attForm.setFdAttachment(dh);
+
+	return attForm;
+}

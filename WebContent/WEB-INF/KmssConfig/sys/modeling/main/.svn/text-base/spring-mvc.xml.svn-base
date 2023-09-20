@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+			name="/sys/modeling/main/modelingAppModelMain.do"
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingAppModelMainAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.modeling.main.forms.ModelingAppModelMainForm" />
+		<property name="forwards">
+			<map>
+				<entry key="view" value="/sys/modeling/main/formview/model_main_view.jsp" />
+				<entry key="edit" value="/sys/modeling/main/formview/model_main_edit.jsp" />
+				<entry key="view.4m" value="/sys/modeling/main/mobile/formview/view.jsp" />
+				<entry key="edit.4m" value="/sys/modeling/main/mobile/formview/edit.jsp" />
+				<entry key="list" value="/sys/modeling/main/formview/list.jsp" />
+				<entry key="xform" value="/sys/modeling/main/formview/xform_view.jsp" />
+				<entry key="preview" value="/sys/modeling/main/formview/preview.jsp" />
+				<entry key="print" value="/sys/modeling/main/formview/model_main_print.jsp" />
+				<entry key="sysprint" value="/sys/modeling/main/formview/model_main_sysprint.jsp" />
+				<entry
+						key="filePrint" value="/sys/modeling/main/mechanism/sediment/modelingAppModelMain_filePrint.jsp" />
+				<entry key="printBatch" value="/sys/modeling/main/formview/main_print_batch.jsp" />
+				<entry key="printBatch_xform" value="/sys/modeling/main/formview/main_print_xform.jsp" />
+				<entry key="cusprint" value="/sys/modeling/main/formview/main_print_cusprint.jsp"></entry>
+				<entry key="sign_eqb" value="/sys/modeling/main/formview/eqb/build_in_sign_page.jsp"></entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean
+			name="/sys/modeling/main/modelingAppSimpleMain.do"
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingAppSimpleMainAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.modeling.main.forms.ModelingAppSimpleMainForm" />
+		<property name="forwards">
+			<map>
+				<entry key="view" value="/sys/modeling/main/formview/simple/simple_main_view.jsp" />
+				<entry key="edit" value="/sys/modeling/main/formview/simple/simple_main_edit.jsp" />
+				<entry key="view.4m" value="/sys/modeling/main/mobile/formview/simple/view.jsp" />
+				<entry key="edit.4m" value="/sys/modeling/main/mobile/formview/simple/edit.jsp" />
+				<entry key="list" value="/sys/modeling/main/formview/simple/list.jsp" />
+				<entry key="xform" value="/sys/modeling/main/formview/simple/xform_view.jsp" />
+				<entry key="preview" value="/sys/modeling/main/formview/simple/preview.jsp" />
+				<entry key="print" value="/sys/modeling/main/formview/simple/simple_main_print.jsp" />
+				<entry
+						key="sysprint"
+						value="/sys/modeling/main/formview/simple/simple_main_sysprint.jsp" />
+				<entry
+						key="filePrint"
+						value="/sys/modeling/main/mechanism/sediment/modelingAppSimpleMain_filePrint.jsp" />
+				<entry key="printBatch" value="/sys/modeling/main/formview/main_print_batch.jsp" />
+				<entry key="printBatch_xform" value="/sys/modeling/main/formview/main_print_xform.jsp" />
+				<entry key="cusprint" value="/sys/modeling/main/formview/main_print_cusprint.jsp"></entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean
+			name="/sys/modeling/main/modelingAppArchivesSimpleMain.do"
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingAppArchivesSimpleMainAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.modeling.main.forms.ModelingAppSimpleMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+						key="filePrint" value="/sys/modeling/main/mechanism/sediment/modelingAppSimpleMain_filePrint.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<bean
+			name="/sys/modeling/main/modelingAppArchivesModelMain.do"
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingAppArchivesModelMainAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.modeling.main.forms.ModelingAppModelMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+						key="filePrint" value="/sys/modeling/main/mechanism/sediment/modelingAppModelMain_filePrint.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- 用户从全文检索处进入应用首页 -->
+	<bean
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingApplicationAction"
+			parent="KmssBaseAction"
+			name="/sys/modeling/main/modelingApplication.do"
+			lazy-init="true">
+	</bean>
+
+	<!-- 用户进入查看视图入口 -->
+	<bean
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingAppViewAction"
+			parent="KmssBaseAction"
+			name="/sys/modeling/main/modelingAppView.do"
+			lazy-init="true">
+		<property
+				name="forwards">
+			<map>
+				<entry
+						key="setting"
+						value="/sys/modeling/main/mechanism/filing/kmArchivesFile_userSetting.jsp"/>
+			</map>
+		</property>
+	</bean>
+
+	<!-- 用户进入查看视图入口 -->
+	<bean
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingPcAndMobileViewAction"
+			parent="KmssBaseAction"
+			name="/sys/modeling/main/pcAndMobileView.do"
+			lazy-init="true">
+	</bean>
+
+	<!-- 用户进行业务操作入口 -->
+	<bean
+			class="com.landray.kmss.sys.modeling.main.actions.SysModelingOperationAction"
+			parent="KmssBaseAction"
+			name="/sys/modeling/main/sysModelingOperation.do"
+			lazy-init="true">
+	</bean>
+
+	<!-- 用户进入查看视图入口 -->
+	<bean
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingAppFlowMainAction"
+			parent="KmssBaseAction"
+			name="/sys/modeling/main/modelingAppFlowMain.do"
+			lazy-init="true">
+	</bean>
+
+	<!-- 用户进入业务空间入口 -->
+	<bean
+			name="/sys/modeling/main/modelingAppSpace.do"
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingAppSpaceAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry key="index" value="/sys/modeling/main/space/index.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- 用户进入列表视图入口 -->
+	<bean
+			name="/sys/modeling/main/listview.do"
+			class="com.landray.kmss.sys.modeling.base.actions.ListviewAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry key="index" value="/sys/modeling/base/listview/ui/index.jsp" />
+				<entry key="data" value="/sys/modeling/base/listview/ui/data.jsp" />
+				<entry key="noData" value="/sys/modeling/base/listview/ui/noData.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- 用户进入新版列表视图入口 -->
+	<bean
+			name="/sys/modeling/main/collectionView.do"
+			class="com.landray.kmss.sys.modeling.main.views.actions.ModelingAppCollectionListviewAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry key="index" value="/sys/modeling/base/listview/ui/index.jsp" />
+				<entry key="data" value="/sys/modeling/base/listview/ui/data.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- 用户进入业务场景入口 -->
+	<bean
+			name="/sys/modeling/main/business.do"
+			class="com.landray.kmss.sys.modeling.base.business.action.ModelingBusinessAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry key="resPanel" value="/sys/modeling/base/views/business/show/resPanel.jsp" />
+				<entry key="gantt" value="/sys/modeling/base/views/business/show/gantt.jsp" />
+				<entry key="mindMap" value="/sys/modeling/base/views/business/show/mindMap.jsp" />
+				<entry key="calendar" value="/sys/modeling/base/views/business/show/calendar/calendar.jsp" />
+				<entry key="treeView" value="/sys/modeling/base/views/business/show/treeView.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- 用户进入日历视图入口 -->
+	<bean
+			name="/sys/modeling/main/calendar.do"
+			class="com.landray.kmss.sys.modeling.base.business.action.ModelingCalendarAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry key="calendar" value="/sys/modeling/base/views/business/show/calendar/calendar.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- 用户进入列表（移动）视图入口 -->
+	<bean
+			name="/sys/modeling/main/listview4m.do"
+			class="com.landray.kmss.sys.modeling.base.actions.ListviewMobileAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry key="data" value="/sys/modeling/main/mobile/listView/data.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<bean
+			name="/sys/modeling/main/modelingAppXFormMain.do"
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingAppXFormMainAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+	</bean>
+
+	<!-- 数据校验 -->
+	<bean
+			name="/sys/modeling/main/modelingAppDataValidateMain.do"
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingAppDataValidateMainAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+	</bean>
+
+	<bean
+			name="/sys/modeling/main/dataValidate.do"
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingAppDataValidateMainAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.modeling.main.forms.ModelingAppModelMainBaseForm" />
+	</bean>
+
+	<!-- 对外分享 start -->
+	<bean
+			name="/sys/modeling/main/externalShare.do"
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingExternalShareAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.modeling.main.forms.ModelingAppSimpleMainForm"/>
+		<property name="forwards">
+			<map>
+				<entry key="simpleMainEdit" value="/sys/modeling/main/externalShare/simple_main_share_edit.jsp"/>
+				<entry key="simpleMainEdit.4m" value="/sys/modeling/main/mobile/externalShare/simple_main_share_edit.jsp"/>
+				<entry key="success" value="/sys/modeling/base/resources/jsp/success.jsp"/>
+				<entry key="success.4m" value="/third/pda/resource/jsp/mobile/success.jsp" />
+				<entry key="successAndRedirect" value="/sys/modeling/base/resources/jsp/successAndRedirect.jsp"/>
+				<entry key="failure" value="/sys/config/resource/error.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- 对外分享 end -->
+	<!-- 公开查询 start -->
+	<bean
+			name="/sys/modeling/main/externalQuery.do"
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingExternalQueryAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry key="index" value="/sys/modeling/main/externalQuery/index.jsp"/>
+				<entry key="index.4m" value="/sys/modeling/main/mobile/externalQuery/index.jsp"/>
+				<entry key="success" value="/sys/modeling/base/resources/jsp/success.jsp"/>
+				<entry key="success.4m" value="/third/pda/resource/jsp/mobile/success.jsp" />
+				<entry key="successAndRedirect" value="/sys/modeling/base/resources/jsp/successAndRedirect.jsp"/>
+				<entry key="failure" value="/sys/config/resource/error.jsp" />
+				<entry key="failure.4m" value="/third/pda/resource/jsp/mobile/error.jsp" />
+				<entry key="data" value="/sys/modeling/main/externalQuery/data.jsp" />
+				<entry key="data.4m" value="/sys/modeling/main/mobile/externalQuery/data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- 公开查询 end -->
+	<!-- portlet start -->
+	<bean
+			name="/sys/modeling/main/modelingPortletCfg.do"
+			class="com.landray.kmss.sys.modeling.main.actions.ModelingPortletCfgMainAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.modeling.base.forms.ModelingPortletCfgForm"/>
+		<property name="forwards">
+			<map>
+				<entry key="temListTable" value="/sys/modeling/base/portlet/tem/listtable.jsp"/>
+			</map>
+		</property>
+	</bean>
+	<bean id="modelingMKPortletController"
+		  class="com.landray.kmss.sys.modeling.main.actions.ModelingMKPortletController">
+	</bean>
+	<!-- portlet end -->
+	<bean
+			name="/sys/modeling/main/pcAndMobileListView.do"
+			class="com.landray.kmss.sys.modeling.base.pcmobile.action.ModelingListViewAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.modeling.base.pcmobile.forms.ModelingPcAndMobileListViewForm"/>
+		<property name="forwards">
+			<map>
+				<entry key="redirect" value="/sys/modeling/base/pcAndMobile/res/import/redirect.jsp"/>
+			</map>
+		</property>
+	</bean>
+</beans>

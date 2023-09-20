@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+	<logset>
+        <oper
+            id="xformMutillangOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/mutillang/import.do">
+            <query 
+                method="excelBatchExport"
+                logPoint="Base_UrlParam;excelExport"
+                messageKey="sys-xform:sysFormMultiLang.export">
+            </query>
+            <query 
+                method="excelImport"
+                logPoint="Base_UrlParam"
+                messageKey="sys-xform:sysFormMultiLang.import">
+            </query>
+            <query 
+                method="excelExport"
+                logPoint="Base_UrlParam;excelExport"
+                messageKey="sys-xform:sysFormMultiLang.export">
+            </query>
+            <query 
+                method="parseImport"
+                logPoint="parseImport"
+                messageKey="sys-xform:sysFormMultiLang.import">
+            </query>
+            
+        </oper>
+        <!-- 
+        <oper
+            id="xformImportLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/xform/import.do">
+        </oper>
+         -->
+         <oper
+            id="xformLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/xform.do">
+            <query 
+                method="updateTable"
+                messageKey="button.update"
+                logPoint="Base_UrlParam"/>
+            <query 
+                method="config"
+                messageKey="button.edit"
+                logPoint="Base_UrlParam"/>
+        </oper>
+	</logset>
+</log-oper>

@@ -1,0 +1,76 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.remind.model.SysRemindMainTaskLog",
+        "messageKey": "sys-remind:table.sysRemindMainTaskLog",
+        "serviceBean": "sysRemindMainTaskLogService",
+        "table": "sys_remind_main_task_log"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdNotifyType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMainTaskLog.fdNotifyType",
+            "type": "String",
+            "column": "fd_notify_type",
+            "notNull": "false",
+            "validate": "false",
+            "length": "50"
+        },
+        "fdCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMainTaskLog.fdCreateTime",
+            "type": "DateTime",
+            "column": "fd_create_time",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "fdIsSuccess":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMainTaskLog.fdIsSuccess",
+            "type": "Boolean",
+            "column": "fd_is_success",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "fdMessage":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMainTaskLog.fdMessage",
+            "type": "String",
+            "column": "fd_message",
+            "notNull": "true",
+            "length": "4000"
+        },
+        "fdSender":         {
+            "propertyType": "model",
+            "messageKey": "sys-remind:sysRemindMainTaskLog.fdSender",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "fd_sender_id",
+            "notNull": "false",
+            "unique": "false",
+            "canSearch": "true",
+            "canRelation": "true",
+            "dialogJS": "Dialog_Address(false, '!{idField}','!{nameField}', ';',ORG_TYPE_PERSON);"
+        },
+        "fdReceiver":         {
+            "propertyType": "model",
+            "messageKey": "sys-remind:sysRemindMainTaskLog.fdReceiver",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "fd_receiver_id",
+            "notNull": "false",
+            "unique": "false",
+            "canSearch": "true",
+            "canRelation": "true",
+            "dialogJS": "Dialog_Address(false, '!{idField}','!{nameField}', ';',ORG_TYPE_PERSON);"
+        },
+        "fdTask":         {
+            "propertyType": "model",
+            "messageKey": "sys-remind:sysRemindMainTaskLog.fdTask",
+            "type": "com.landray.kmss.sys.remind.model.SysRemindMainTask",
+            "column": "fd_task_id",
+            "notNull": "false"
+        }
+    }
+}

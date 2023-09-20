@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		name="/sys/modeling/base/mobile/modelingAppMobile.do"
+		class="com.landray.kmss.sys.modeling.base.mobile.actions.ModelingAppMobileAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="formType" value="com.landray.kmss.sys.modeling.base.mobile.forms.ModelingAppMobileForm" />
+		<property name="forwards">
+			<map>
+				<entry key="edit" value="/sys/modeling/base/mobile/edit.jsp" />
+				<entry key="data" value="/sys/modeling/base/mobile/data.jsp" />
+				<entry key="successAndRedirect" value="/sys/modeling/base/resources/jsp/successAndRedirect.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/sys/modeling/base/mobile/modelingAppMobileListView.do"
+		class="com.landray.kmss.sys.modeling.base.mobile.actions.ModelingAppMobileListViewAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="formType" value="com.landray.kmss.sys.modeling.base.mobile.forms.ModelingAppMobileListViewForm" />
+		<property name="forwards">
+			<map>
+				<entry key="edit" value="/sys/modeling/base/mobile/viewDesign/listView/config/edit.jsp" />
+				<entry key="list" value="/sys/modeling/base/mobile/viewDesign/listView/config/list.jsp" />
+				<entry key="successAndRedirect" value="/sys/modeling/base/resources/jsp/successAndRedirect.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+</beans>

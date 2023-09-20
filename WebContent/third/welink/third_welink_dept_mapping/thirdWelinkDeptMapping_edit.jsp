@@ -1,0 +1,141 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="/sys/ui/jsp/common.jsp" %>
+<%@page import="com.landray.kmss.third.welink.util.ThirdWelinkUtil" %>
+    
+        <% pageContext.setAttribute("currentUser", UserUtil.getKMSSUser());
+        pageContext.setAttribute("currentPerson", UserUtil.getKMSSUser().getUserId());
+        pageContext.setAttribute("currentPost", UserUtil.getKMSSUser().getPostIds());
+        pageContext.setAttribute("currentDept", UserUtil.getKMSSUser().getDeptId());
+        if(UserUtil.getUser().getFdParentOrg() != null) {
+            pageContext.setAttribute("currentOrg", UserUtil.getUser().getFdParentOrg().getFdId());
+        } else {
+            pageContext.setAttribute("currentOrg", "");
+        } %>
+    
+    <template:include ref="default.edit">
+        <template:replace name="head">
+            <style type="text/css">
+                
+                		.lui_paragraph_title{
+                			font-size: 15px;
+                			color: #15a4fa;
+                	    	padding: 15px 0px 5px 0px;
+                		}
+                		.lui_paragraph_title span{
+                			display: inline-block;
+                			margin: -2px 5px 0px 0px;
+                		}
+                		.inputsgl[readonly], .tb_normal .inputsgl[readonly] {
+                		    border: 0px;
+                		    color: #868686
+                		}
+                		
+            </style>
+            <script type="text/javascript">
+                var formInitData = {
+
+                };
+                var messageInfo = {
+
+                };
+
+                var initData = {
+                    contextPath: '${LUI_ContextPath}'
+                };
+                Com_IncludeFile("security.js");
+                Com_IncludeFile("domain.js");
+                Com_IncludeFile("form.js");
+                Com_IncludeFile("form_option.js", "${LUI_ContextPath}/third/welink/third_welink_dept_mapping/", 'js', true);
+                Com_IncludeFile("main_edit.js", "${LUI_ContextPath}/third/welink/resource/js/", 'js', true);
+                Com_IncludeFile("swf_attachment.js", "${KMSS_Parameter_ContextPath}sys/attachment/js/", "js", true);
+            </script>
+        </template:replace>
+
+        <template:replace name="title">
+            <c:choose>
+                <c:when test="${thirdWelinkDeptMappingForm.method_GET == 'add' }">
+                    <c:out value="${ lfn:message('operation.create') } - ${ lfn:message('third-welink:table.thirdWelinkDeptMapping') }" />
+                </c:when>
+                <c:otherwise>
+                    <c:out value="${thirdWelinkDeptMappingForm.fdWelinkId} - " />
+                    <c:out value="${ lfn:message('third-welink:table.thirdWelinkDeptMapping') }" />
+                </c:otherwise>
+            </c:choose>
+        </template:replace>
+        <template:replace name="toolbar">
+            <ui:toolbar id="toolbar" layout="sys.ui.toolbar.float" count="3">
+                <c:choose>
+                    <c:when test="${ thirdWelinkDeptMappingForm.method_GET == 'edit' }">
+                        <ui:button text="${ lfn:message('button.update') }" onclick="if(validateDetail()){Com_Submit(document.thirdWelinkDeptMappingForm, 'update');}" />
+                    </c:when>
+                    <c:when test="${ thirdWelinkDeptMappingForm.method_GET == 'add' }">
+                        <ui:button text="${ lfn:message('button.save') }" onclick="if(validateDetail()){Com_Submit(document.thirdWelinkDeptMappingForm, 'save');}" />
+                    </c:when>
+                </c:choose>
+
+                <ui:button text="${ lfn:message('button.close') }" order="5" onclick="Com_CloseWindow();" />
+            </ui:toolbar>
+        </template:replace>
+        <template:replace name="path">
+            <ui:menu layout="sys.ui.menu.nav">
+                <ui:menu-item text="${ lfn:message('home.home') }" icon="lui_icon_s_home" />
+                <ui:menu-item text="${ lfn:message('third-welink:table.thirdWelinkDeptMapping') }" />
+            </ui:menu>
+        </template:replace>
+        <template:replace name="content">
+            <html:form action="/third/welink/third_welink_dept_mapping/thirdWelinkDeptMapping.do">
+
+                    <ui:content title="${ lfn:message('third-welink:py.JiBenXinXi') }" expand="true">
+                        <div class='lui_form_title_frame'>
+                            <div class='lui_form_subject'>
+                                ${lfn:message('third-welink:table.thirdWelinkDeptMapping')}
+                            </div>
+                            <div class='lui_form_baseinfo'>
+
+                            </div>
+                        </div>
+                        <table class="tb_normal" width="100%">
+                            <tr>
+                                <td class="td_normal_title" width="15%">
+                                    ${lfn:message('third-welink:thirdWelinkDeptMapping.fdWelinkId')}
+                                </td>
+                                <td width="35%">
+                                    <%-- welink部门ID--%>
+                                    <div id="_xform_fdWelinkId" _xform_type="text">
+                                        <xform:text property="fdWelinkId"  style="width:95%;" />
+                                    </div>
+                                </td>
+                                <td class="td_normal_title" width="15%">
+                                    ${lfn:message('third-welink:thirdWelinkDeptMapping.fdWelinkName')}
+                                </td>
+                                <td width="35%">
+                                    <%-- welink部门名称--%>
+                                    <div id="_xform_fdWelinkName" _xform_type="text">
+                                        <xform:text property="fdWelinkName"  style="width:95%;" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_normal_title" width="15%">
+                                    ${lfn:message('third-welink:thirdWelinkDeptMapping.fdEkpDept')}
+                                </td>
+                                <td width="35%">
+                                    <%-- ekp组织--%>
+                                    <div id="_xform_fdEkpDeptId" _xform_type="address">
+                                        <xform:address propertyId="fdEkpDeptId" propertyName="fdEkpDeptName" orgType="ORG_TYPE_ORGORDEPT"  style="width:95%;" />
+                                    </div>
+                                </td>
+                                <td colspan="2">
+                                </td>
+                            </tr>
+                        </table>
+                    </ui:content>
+                <html:hidden property="fdId" />
+
+
+                <html:hidden property="method_GET" />
+            </html:form>
+        </template:replace>
+
+
+    </template:include>

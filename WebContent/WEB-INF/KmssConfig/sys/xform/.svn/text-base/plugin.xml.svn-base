@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<extension-point id="com.landray.kmss.sys.xform">
+		<item name="config">
+			<param name="template" kind="java" 
+				basedOn="com.landray.kmss.sys.xform.interfaces.ISysFormTemplateModel">
+				<description>模板类</description>
+			</param>
+			<param name="key" kind="string">
+				<description>fdKey</description>
+			</param>
+			<description>表单机制配置</description>
+		</item>
+		<description>
+			表单机制配置，目前不稳定
+		</description>
+	</extension-point>
+	
+	<!-- 表单模式 -->
+	<extension-point id="com.landray.kmss.sys.xform.mode">
+		<item name="baseConfig">
+			<param name="mainModelName" kind="string" required="true">
+				<description>节点主文档的modelName</description>
+			</param>
+			<param name="templateModelName" kind="string" required="true">
+				<description>节点主文档对应的模板modelName</description>
+			</param>
+			<param name="templatePropertyName" kind="string" required="true">
+				<description>主文档的model的模板属性</description>
+			</param>
+			<param name="fdKey" kind="string" required="true">
+				<description>表单对应的fdKey</description>
+			</param>
+			<param name="name" kind="string" required="true">
+				<description>选项显示名,多个选项以|分开</description>
+			</param>
+			<param name="value" kind="string" required="true">
+				<description>选项实际值,多个选项以|分开</description>
+			</param>
+			<description>模块基本属性</description>
+		</item>
+		
+		<description>
+			表单模式
+		</description>
+	</extension-point>
+
+	<!--业务模块文档状态和编号等信息转换-->
+	<extension-point id="com.landray.kmss.sys.xform.info.converter">
+		<item name="infoConverter">
+			<param name="modelName" kind="string" required="true">
+				<description>表单关联文档的modelName</description>
+			</param>
+			<param 
+				name="statusDescBean" 
+				kind="java" 
+				required="false"
+				basedOn="com.landray.kmss.sys.xform.interfaces.ISysFormRelevanceInfoConverter">
+				<description>表单关联文档的状态描述，由表单提供状态code，又业务模块继承该接口提供描述</description>
+			</param>
+			<param name="numberField" kind="string" required="false">
+				<description>表单关联文档对应的编号字段，直接提供字符串，比如fdNumber</description>
+			</param>
+			<description>模块基本属性</description>
+		</item>
+		<description>
+			表单关联文档，业务模块文档状态和编号等信息转换
+		</description>
+	</extension-point>
+	
+	<extension
+		point="com.landray.kmss.sys.config.loader">
+		<item
+			name="framework">
+			<param
+				name="name"
+				value="initFormDB" />
+			<param
+				name="loader"
+				value="com.landray.kmss.sys.xform.base.service.spring.InitFormLoader" />
+			<param
+				name="order"
+				value="5" />
+		</item>
+	</extension>
+		
+	<extension
+		point="com.landray.kmss.sys.admin.commontools">
+		<item
+			name="tools">
+			<param
+				name="name"
+				value="{sys-xform:sysFormTemplate.config.tree.reUpdate.xform}" />
+			<param
+				name="path"
+				value="/sys/xform/base/sysFormTemplateReUpdate.jsp" />
+			<param
+				name="description"
+				value="{sys-xform:sysFormTemplate.reUpdate.hit}" />
+			<param
+				name="icon"
+				value="profile_tool_form" />
+		</item>													
+	</extension>
+	<!-- 表单组织架构初始化导入导出扩展项 -->
+	<extension point="com.landray.kmss.sys.datainit" model="*">
+		<item name="datainit">
+		   <param name="bean" value="xformOrgElementDataInit"/>
+		   <param name="order" value="2"/>
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-xform.js" />
+			<param name="targetFile" value="/sys/xform/mobile/mui-xform.js" />
+			<param name="tinyId" value="xform" />
+		</item>
+	</extension>
+	
+	<extension 
+		point="com.landray.kmss.sys.lbpmservice.support.summary"
+		model="*">
+		<item name="langHandler">
+			<param name="class" value="com.landray.kmss.sys.xform.service.SysFormSummaryApprovalLangHandler" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item 
+			name="css-file">
+			<param 
+				name="name" 
+				value="sys-xform.css" />
+			<param 
+				name="targetFile" 
+				value="/sys/xform/mobile/resource/css/sys-xform.css" />
+		</item>
+	</extension>
+
+	<!--压缩合并扩展点实现-->
+	<extension point="com.landray.kmss.sys.ui.compressExecutor"
+			   model="com.landray.kmss.sys.ui.service.ISysUiCompressExecutor">
+		<item name="executor">
+			<param name="unid" value="sysFormCompressExecutor" />
+			<param name="bean" value="sysFormCompressExecutor" />
+		</item>
+	</extension>
+</plugin>

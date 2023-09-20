@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+    
+    <!-- 第三方存储实现 ：阿里云OSS  -->
+    <extension point="com.landray.kmss.sys.filestore.location">
+        <item name="location">
+            <param name="key" value="aliyun" />
+            <param name="title" value="third-oss-alioss:filestore.location.aliyun" />
+            <param name="order" value="2" />
+            <param name="directService" value="sysFileAliyunDirectService" />
+            <param name="proxyService" value="sysFileAliyunProxyService" />
+            <param name="proxyServiceClassName" value="com.landray.kmss.third.oss.alioss.service.spring.SysFileAliyunProxyServiceImpl" />
+            <param name="configJspUrl" value="/third/oss/alioss/aliyunConfig.jsp" />
+        </item>
+    </extension>
+    
+    <!-- 批量入库存储类型扩展 -->
+    <extension point="com.landray.kmss.kms.istorage.batch">
+		<item name="type">
+			<param name="unid" value="aliyun" />
+			<param name="title"
+				value="third-oss-alioss:filestore.batch.aliyun" />
+			<param name="service" value="sysFileAliyunBatchTypeService" />
+			<param name="order" value="2" />
+		</item>
+	</extension>
+	
+	<!-- 批量入库存储类型扩展 -->
+    <extension point="com.landray.kmss.kms.istorage.batch">
+		<item name="type">
+			<param name="unid" value="aliyun_custom" />
+			<param name="title"
+				value="third-oss-alioss:filestore.batch.aliyun.custom" />
+			<param name="service" value="sysFileAliyunCustomBatchTypeService" />
+			<param name="jsp" value="/sys/appconfig/sys_appconfig/sysAppConfig.do?method=edit&amp;modelName=com.landray.kmss.third.oss.alioss.model.SysFileAliyunBatchConfig" />
+			<param name="order" value="3" />
+		</item>
+	</extension>
+
+	<!-- 知识仓库批量入库存储类型扩展 -->
+	<extension point="com.landray.kmss.kms.knowledge.batch">
+		<item name="type">
+			<param name="unid" value="aliyun" />
+			<param name="title"
+				   value="third-oss-alioss:filestore.batch.aliyun" />
+			<param name="service" value="sysFileAliyunBatchTypeService" />
+			<param name="order" value="2" />
+		</item>
+	</extension>
+
+	<!-- 知识仓库批量入库存储类型扩展 -->
+	<extension point="com.landray.kmss.kms.knowledge.batch">
+		<item name="type">
+			<param name="unid" value="aliyun_custom" />
+			<param name="title"
+				   value="third-oss-alioss:filestore.batch.aliyun.custom" />
+			<param name="service" value="sysFileAliyunCustomBatchTypeService" />
+			<param name="jsp" value="/sys/appconfig/sys_appconfig/sysAppConfig.do?method=edit&amp;modelName=com.landray.kmss.third.oss.alioss.model.SysFileAliyunBatchConfig" />
+			<param name="order" value="3" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.filestore.resource">
+		<item name="config">
+			<param name="key" value="aliyun" />
+			<param name="name" value="阿里云OSS" />
+			<param name="service" value="aliyunResourceProxyServiceImpl" />
+		</item>
+	</extension>
+
+</plugin>

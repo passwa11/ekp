@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean 
+		id="packageAuthenticationValidator"
+		class="com.landray.kmss.sys.mobile.offline.authentication.PackageAuthenticationValidator" ></bean>
+	<bean
+		id="sysMobileModuleCategoryConfigDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.mobile.dao.hibernate.SysMobileModuleCategoryConfigDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.mobile.model.SysMobileModuleCategoryConfig" />
+	</bean>
+	<bean
+		id="sysMobileModuleCategoryConfigTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.mobile.service.spring.SysMobileModuleCategoryConfigServiceImp">
+		<property name="baseDao">
+			<ref bean="sysMobileModuleCategoryConfigDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysMobileModuleCategoryConfigService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysMobileModuleCategoryConfigTarget" />
+		</property>
+	</bean>
+	
+	<bean 
+		id="sysMobilePackageService"
+		class="com.landray.kmss.sys.mobile.offline.service.spring.SysMobilePackageServiceImp"></bean>
+	
+	<bean
+		id="sysMobileBaiduMapService"
+		class="com.landray.kmss.sys.mobile.service.spring.SysMobileBaiduMapServiceImp">
+	</bean>
+	
+	<bean
+		id="md5Listener"
+		class="com.landray.kmss.sys.mobile.md5.Md5Listener">
+	</bean>
+	
+	<bean
+		id="compressMessage"
+		class="com.landray.kmss.sys.mobile.compressor.CompressMessage">
+	</bean>
+	
+	<bean id="tinyCompressUtil" class="com.landray.kmss.sys.mobile.compressor.tiny.TinyCompressUtil" init-method="initParameters">
+    	<property name="ignoreCompressPaths">
+            <value>
+                sys/mobile/js/mui/device/weixin/adapter
+            </value>
+        </property>
+    </bean>
+
+	<bean
+		id="templateCategoryViewHandlerInterceptor"
+		class="com.landray.kmss.sys.mobile.interceptors.TemplateCategoryViewHandlerInterceptor">
+	</bean>
+	
+</beans>

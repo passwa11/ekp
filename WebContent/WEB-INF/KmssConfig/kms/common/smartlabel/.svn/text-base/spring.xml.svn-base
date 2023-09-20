@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="kmsSmartTagDao"
+		  parent="KmssAuthBaseDao"
+		  class="com.landray.kmss.kms.common.smartlabel.dao.hibernate.KmsSmartTagDaoImpl">
+		  <property name="modelName" value="com.landray.kmss.kms.common.smartlabel.model.SmartTag"/>
+	</bean>
+
+	<bean id="kmsSmartTagServiceTarget"
+		  parent="KmssBaseTarget"
+		  class="com.landray.kmss.kms.common.smartlabel.service.impl.KmsSmartTagServiceImpl">
+		<property name="baseDao" ref="kmsSmartTagDao"/>
+	</bean>
+
+	<bean id="kmsSmartTagService"
+		  parent="KmssBaseService">
+		<property name="target" ref="kmsSmartTagServiceTarget"/>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="kmsSmartTagCoreService"
+		  parent="KmssBaseService">
+		<property name="target">
+			<bean class="com.landray.kmss.kms.common.smartlabel.service.impl.KmsSmartTagCoreServiceImpl">
+				<property name="sysTagTagsService" ref="sysTagTagsService"/>
+				<property name="kmsSmartTagService" ref="kmsSmartTagService"/>
+			</bean>
+		</property>
+
+	</bean>
+</beans>

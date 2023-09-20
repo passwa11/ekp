@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <extension
+		point="com.landray.kmss.sys.authentication">
+		<item
+			name="authenticationProcessingFilter">
+			<param
+				name="bean"
+				value="feishuOauth2AuthProcessingFilter" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.notify">
+		<item name="todoExtend">
+			<param name="bean" value="thirdFeishuTodoMessageProvider" />
+			<param name="name" value="{third-feishu:third.feishu.extension.notify.todo}" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.profile.login.third" model="*">
+		<item name="config">
+			<param name="bean" value="feishuPcScanLogin"></param>
+		</item>
+	</extension>
+
+</plugin>

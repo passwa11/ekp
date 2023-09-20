@@ -1,0 +1,242 @@
+var listView = render.parent;
+listView.storeTemp(data);
+var lang = listView.getModelingLang();
+var selected = listView.selectedRowsMap;
+var fillingSelectedMap = listView.getFillingSelectedMap();
+var columns = data.columns;
+var drilling = listView.isDrilling();
+var multi = listView.isMulti();
+{$
+<div class="lui-listview-container">
+	<div class="lui-listview-content">
+		<table width="100%" class="lui-listview-table">
+			<thead><tr>$}
+			if(multi){
+				{$<th style="width:5px;">
+					<input type="checkbox" name="List_Select_All" />
+				</th>$}
+			}else{
+				{$<th style="width:5px;">
+				</th>$}
+				}
+			{$<th style="width:40px;">{%lang['modelingAppCategory.fdOrder']%}</th>$}
+				var detailData = [];
+				var detailColumns = [];
+
+				for(var i = 0;i < columns.length; i ++){
+					var col = columns[i];
+					if(col.hidden != 'true'){
+						{$<th>{%col.title%}</th>$}
+					}
+					if(col.type === "detail" && col.name === data.detailField){
+						detailColumns = col.columns;
+						detailData = col.data;
+					}
+				}
+				if(data.showDetail){
+					for(var i = 0 ; i< detailColumns.length;i++){
+						var col = detailColumns[i];
+						if(col.hidden == 'false'){
+							{$<th>{%col.title%}</th>$}
+						}
+					}
+				}
+				// 穿透
+				if(drilling){
+					{$<th style="width:40px;">{%lang['modeling.operate']%}</th>$}
+				}
+			{$</tr></thead>
+			<tbody>$}
+				var rowLength = 0;
+				if(columns.length > 0 && columns[0].data && columns[0].data.length > 0){
+					rowLength = columns[0].data.length;
+				}
+			if(data.showDetail){
+				var index = 0;
+				for (var i = 0; i < rowLength; i ++) {
+					for(var m=0;m < detailData.length;m++){
+						var detail = detailData[m];
+						if(detail.length > 0 && columns[0].data[i] === detail[0].mainModelId){
+							for(var n=0;n< detail.length; n++){
+								var dData = detail[n];
+								{$<tr class="lui-listview-table-tr" data-rowindex={%index%} key-id="{%dData['fdId']%}" onclick="multiSelect('{%index%}')">$}
+									if(multi){
+									{$<td>$}
+										if(fillingSelectedMap && fillingSelectedMap.indexOf(dData["fdId"]) > -1){
+										{$ <input type="checkbox" checked name="List_Selected"  /> $}
+										}else{
+										{$ <input type="checkbox" name="List_Selected" /> $}
+										}
+										{$</td>$}
+									}else{
+										{$<td><input type="radio" name="selected" $}
+													 if(fillingSelectedMap == dData['fdId']){
+													 {$ checked="checked" $}
+													 }
+													 {$ ></td>$}
+									}
+									{$<td>{%++index%}</td>
+									$}
+									for (var j = 0; j < columns.length; j ++) {
+										var col = columns[j];
+										if(col.hidden != 'true'){
+											if(col.data && col.data[i]){
+												var colVal = col.data[i];
+												// 地址本默认取名称显示
+												if(col.type.indexOf("com.landray.kmss.sys.organization") >- 1 && typeof(colVal) === "object"){
+													colVal = colVal.name;
+												}else if(typeof(colVal) === "object" && colVal.hasOwnProperty("value")){
+													// // 由于返回的类型没法区分是否是是枚举类型，只能通过值的类型来区分
+													colVal = colVal.text;
+												}else if(col.businessType === "relevance" && colVal && colVal.indexOf("[")>-1){
+													//处理关联文档显示
+													colVal = JSON.parse(colVal);
+													if(colVal.length > 0){
+														var relValue = "";
+														for(var v= 0;v< colVal.length;v++){
+															if(relValue && colVal[v].subject){
+																relValue+=";" + colVal[v].subject;
+															}else{
+																relValue += colVal[v].subject;
+															}
+														}
+														colVal = relValue;
+													}else{
+														colVal ="";
+													}
+												}
+												if(colVal){
+													colVal = colVal.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+													if(col.showThousand){
+														colVal = colVal.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g,'$1,');
+													}
+												}
+												{$<td>{%colVal%}</td>$}
+											}else{
+												{$<td>{%lang['modeling.no.data']%}</td>$}
+											}
+										}
+									}
+									for(var j = 0 ; j< detailColumns.length;j++){
+										var col = detailColumns[j];
+										if(col.hidden == 'false'){
+											if(dData && dData[col.name]){
+												var colVal = dData[col.name];
+												// 地址本默认取名称显示
+												if(col.type.indexOf("com.landray.kmss.sys.organization") >- 1 && typeof(colVal) === "object"){
+												colVal = colVal.name;
+												}else if(typeof(colVal) === "object" && colVal.hasOwnProperty("value")){
+												// // 由于返回的类型没法区分是否是是枚举类型，只能通过值的类型来区分
+												colVal = colVal.text;
+												}else if(col.businessType === "relevance" && colVal && colVal.indexOf("[")>-1){
+													//处理关联文档显示
+													colVal = JSON.parse(colVal);
+													if(colVal.length > 0){
+														var relValue = "";
+														for(var v= 0;v< colVal.length;v++){
+															if(relValue && colVal[v].subject){
+																relValue+=";" + colVal[v].subject;
+															}else{
+																relValue += colVal[v].subject;
+															}
+														}
+														colVal = relValue;
+													}else{
+														colVal ="";
+													}
+												}
+												if(colVal){
+													colVal = colVal.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+													if(col.showThousand){
+														colVal = colVal.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g,'$1,');
+													}
+												}
+												{$<td>{%colVal%}</td>$}
+											}else{
+												{$<td>{%lang['modeling.no.data']%}</td>$}
+											}
+										}
+									}
+									if(drilling){
+									{$<td><a href="javascript:void(0);" class="drilling-link">{%lang['modeling.jump']%}</a></td>$}
+									}
+									{$</tr>$}
+							}
+						}
+					}
+				}
+			}else{
+				for (var i = 0; i < rowLength; i ++) {
+					{$<tr class="lui-listview-table-tr" data-rowindex={%i%} key-id="{%columns[0].data[i]%}" onclick="multiSelect('{%i%}')">$}
+					if(multi){
+					{$<td>$}
+						if(fillingSelectedMap && fillingSelectedMap.indexOf(columns[0].data[i]) > -1){
+						{$ <input type="checkbox" checked name="List_Selected"  /> $}
+						}else{
+						{$ <input type="checkbox" name="List_Selected" /> $}
+						}
+						{$</td>$}
+					}else{
+						{$<td><input type="radio" name="selected" $}
+							if(fillingSelectedMap == columns[0].data[i]){
+								{$ checked="checked" $}
+							}
+							{$ ></td> $}
+					}
+					{$<td>{%i+1%}</td>
+					$}
+					for (var j = 0; j < columns.length; j ++) {
+						var col = columns[j];
+						if(col.hidden != 'true'){
+							if(col.data && col.data[i]){
+								var colVal = col.data[i];
+								// 地址本默认取名称显示
+								if(col.type.indexOf("com.landray.kmss.sys.organization") >- 1 && typeof(colVal) === "object"){
+								colVal = colVal.name;
+								}else if(typeof(colVal) === "object" && colVal.hasOwnProperty("value")){
+								// // 由于返回的类型没法区分是否是是枚举类型，只能通过值的类型来区分
+								colVal = colVal.text;
+								}else if(col.businessType === "relevance" && colVal && colVal.indexOf("[")>-1){
+									//处理关联文档显示
+									colVal = JSON.parse(colVal);
+									if(colVal.length > 0){
+										var relValue = "";
+										for(var v= 0;v< colVal.length;v++){
+											if(relValue && colVal[v].subject){
+												relValue+=";" + colVal[v].subject;
+											}else{
+												relValue += colVal[v].subject;
+											}
+										}
+										colVal = relValue;
+									}else{
+										colVal ="";
+									}
+								}
+								if(colVal){
+									colVal = colVal.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+									if(col.showThousand){
+										colVal = colVal.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g,'$1,');
+									}
+								}
+								{$<td>{%colVal%}</td>$}
+							}else{
+							{$<td>{%lang['modeling.no.data']%}</td>$}
+							}
+						}
+					}
+					if(drilling){
+					{$<td><a href="javascript:void(0);" class="drilling-link">{%lang['modeling.jump']%}</a></td>$}
+					}
+					{$</tr>$}
+				}
+			}
+			{$</tbody>
+		</table>
+	</div>
+	<div class="lui-listview-foot">
+		<div class="lui-listview-foot-paging"></div>
+	</div>
+</div>
+
+$}

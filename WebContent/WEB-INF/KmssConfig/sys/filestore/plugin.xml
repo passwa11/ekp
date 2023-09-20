@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	<extension-point id="com.landray.kmss.sys.filestore">
+		<item name="viewer">
+			<param name="viewerKey" kind="string" required="true">
+				<description>
+				必选，阅读器的Key
+				</description>
+			</param>
+			<param name="viewerPath" kind="filepath" required="true">
+				<description>
+				必选，阅读器的路径
+				</description>
+			</param>
+			<param name="extName" kind="string" required="true">
+				<description>
+				必选，阅读器支持的附件扩展名
+				</description>
+			</param>
+			<param name="order" kind="int" required="true">
+				<description>
+				必选，阅读器的优先级
+				</description>
+			</param>
+			<description>附件阅读器</description>
+		</item>
+		<description>附件转换器阅读器</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.sys.filestore.resource">
+		<item name="config">
+			<param name="key" kind="string" required="true">
+				<description>读写方式的key</description>
+			</param>
+			<param name="name" kind="string" required="true">
+				<description>读写方式的名称</description>
+			</param>
+			<param name="service" kind="spring" required="true"
+				   basedOn="com.landray.kmss.sys.filestore.location.interfaces.ISysFileResourceProxyService">
+				<description>读写扩展实现接口</description>
+			</param>
+			<description>读写方式和实现</description>
+		</item>
+		<description>非附件文件统一读写</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.sys.filestore.resource.buzPath">
+		<item name="config">
+			<param name="key" kind="string" required="true">
+				<description>业务路径key</description>
+			</param>
+			<param name="path" kind="string" required="true">
+				<description>业务路径</description>
+			</param>
+			<param name="provider" kind="spring" required="true"
+				   basedOn="com.landray.kmss.sys.filestore.location.interfaces.ISysFileResourceBuzPathProvider">
+				<description>业务路径实现类</description>
+			</param>
+			<description>读写路径定义</description>
+		</item>
+		<description>业务非附件文件统一读写路径配置</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.sys.filestore.convert.addQueue">
+		<item name="config">
+			<param name="key" kind="unid" required="true">
+				<description>入队类型key</description>
+			</param>
+			<param name="name" kind="string" required="true">
+				<description>入队类型名称</description>
+			</param>
+			<param name="service" kind="spring" required="true"
+				   basedOn="com.landray.kmss.sys.filestore.queue.service.ConvertAddQueueExtension">
+				<description>入队类型接口实现</description>
+			</param>
+			<description>文件加入转换队列，声明的扩展实现仅需继承AbstractConvertAddQueue，各业务场景可覆盖重写部分方法</description>
+		</item>
+		<description>文件加入转换队列</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.sys.filestore.convert.queueCallback">
+		<item name="config">
+			<param name="key" kind="unid" required="true">
+				<description>业务类型key</description>
+			</param>
+			<param name="name" kind="string" required="true">
+				<description>业务类型名称</description>
+			</param>
+			<param name="service" kind="spring" required="true"
+				   basedOn="com.landray.kmss.sys.filestore.queue.service.ConvertQueueCallbackExtension">
+				<description>转换队列转换完成回调接口</description>
+			</param>
+			<description>eg.文档中台、点聚等第三方文件转换完成后，调用接口，传入对象SysFileConvertQueue，业务处理</description>
+		</item>
+		<description>转换队列转换完成回调</description>
+	</extension-point>
+
+	<extension-point id="asyncConverter">
+		<item name="config">
+			<param name="key" kind="unid" required="true">
+				<description>异步转换key</description>
+			</param>
+			<param name="name" kind="string" required="true">
+				<description>异步转换名称</description>
+			</param>
+			<param name="service" kind="spring" required="true"
+				   basedOn="com.landray.kmss.sys.filestore.scheduler.third.wps.center.api.WPSCenterCallBusiness">
+				<description>异步转换通知业务模块接口</description>
+			</param>
+			<description>eg.异步转换通知业务模块</description>
+		</item>
+		<description>异步转换通知业务模块</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.sys.filestore.location">
+		<item name="location">
+			<param name="title" required="true" kind="string">
+				<description>存储类型名称</description>
+			</param>
+			<param name="key" required="true" kind="unid">
+				<description>存储类型标志</description>
+			</param>
+			<param name="directService" required="true" kind="string">
+				<description>
+					直连具体实现
+				</description>
+			</param>
+			<param name="proxyService" required="true" kind="string">
+				<description>
+					代理具体实现
+				</description>
+			</param>
+			<param name="proxyServiceClassName" required="true" kind="string">
+				<description>
+					代理具体实现类全路径（无对象依赖注入，构造器无参）
+				</description>
+			</param>
+			<param name="order" required="true" kind="int">
+				<description>
+					排序号
+				</description>
+			</param>
+			<param name="configJspUrl" required="true" kind="string">
+				<description>
+					配置文件路径
+				</description>
+			</param>
+			<description>存储扩展点定义。</description>
+		</item>
+		<description>存储扩展点。</description>
+	</extension-point>
+
+	<extension-point
+			id="com.landray.kmss.sys.filestore.convert.callback">
+		<item  name="callbackService">
+			<param name="bean" required="true" kind="spring"
+				   basedOn="com.landray.kmss.sys.filestore.service.ISysFileConvertCallbackService">
+				<description>
+					附件转换成功回调bean
+				</description>
+			</param>
+			<description>附件转换成功回调</description>
+		</item>
+		<description>附件转换成功回调</description>
+	</extension-point>
+
+	<extension point="com.landray.kmss.sys.filestore.resource">
+		<item name="config">
+			<param name="key" value="server" />
+			<param name="name" value="本地存储" />
+			<param name="service" value="serverResourceProxyServiceImpl" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.filestore.resource.buzPath">
+		<item name="config">
+			<param name="key" value="tmp" />
+			<param name="path" value="tmp/" />
+			<param name="provider" value="sysFileResourceTmpPathProvider" />
+		</item>
+	</extension>
+
+
+	<extension point="com.landray.kmss.sys.filestore.convert.callback">
+		<item name="callbackService">
+			<param name="bean" value="sysFileConvertCallbackService" />
+		</item>
+	</extension>
+	<!-- 系统 默认的文件存储实现 ：文件服务器  -->
+	<extension point="com.landray.kmss.sys.filestore.location">
+		<item name="location">
+			<param name="key" value="server" />
+			<param name="title" value="sys-filestore:filestore.location.server" />
+			<param name="order" value="1" />
+			<param name="directService" value="sysFileServerDirectService" />
+			<param name="proxyService" value="sysFileServerProxyService" />
+			<param name="proxyServiceClassName" value="com.landray.kmss.sys.filestore.location.server.service.spring.SysFileServerProxyServiceImpl" />
+			<param name="configJspUrl" value="/sys/filestore/serverConfig.jsp" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.cluster">
+		<item name="dispatcher">
+			<param name="id" value="sysFileConvertDispatcher" />
+			<param name="service" value="sysFileConvertDispatcher" />
+			<param name="multi" value="false" />
+		</item>
+	</extension>
+	
+</plugin>

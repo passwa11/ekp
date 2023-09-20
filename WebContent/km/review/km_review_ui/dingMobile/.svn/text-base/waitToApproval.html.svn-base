@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>审批高级版</title>
+    <link rel="stylesheet" href="./css/lib/common.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/screen.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background: white;
+            background:#f7f7f8;
+        }
+        .ld-review-create-header {
+            position: fixed;
+            width: 100%;
+            height: 44px;
+            line-height: 44px;
+            z-index: 99;
+            display: flex;
+            justify-content: space-between;
+            background: white;
+            top:0;
+        }
+        .ld-review-list{
+            height:100%;
+            overflow: hidden;
+        }
+        /* 搜索开始 */
+        .ld-review-list-top{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 16px;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+        .ld-review-list-search{
+            background:rgba(17,31,44,0.08);
+            border-radius: 15px;
+            height:36px;
+            flex:1;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0 16px;
+        }
+        .ld-review-list-search i {
+            height:16px;
+            width:16px;
+            background: url(./images/icon-search@2x.png) no-repeat center center;
+            background-size: contain;
+            margin-right: 10px;
+        }
+        .ld-review-list-search input {
+            border: none;
+            outline: none;
+            line-height: 36px;
+            background: transparent;
+            width:100%;
+        }
+        .ld-review-list-top-cancel{
+            width:86px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height:36px;
+            border-radius: 18px;
+            border: 1px solid #eee;
+            margin-left: 12px;
+            box-sizing: border-box;
+        }
+        .ld-review-list-top-cancel i {
+            height:15px;
+            width:15px;
+            background:url(./images/category@2x.png) no-repeat center center;
+            background-size: cover;
+            margin-right: 8px;
+        }
+        /* 搜索结束 */
+        /* 审批列表开始 */
+        .ld-review-platform-list{
+            max-height:calc( 100% - 97px);
+            overflow: auto;
+        }
+        .ld-review-platform-list {
+            padding:12px 12px;
+            background:#f7f7f8;
+        }
+        .ld-review-platform-list ul li {
+            background:white;
+            margin-bottom:12px;
+            padding: 15px 15px;
+            border-radius: 6px;
+        }
+        .ld-review-platform-list-item-title{
+            font-family: PingFangSC-Regular;
+            font-size: 17px;
+            color: #111F2C;
+            letter-spacing: 0; 
+            text-align: left;
+            margin-bottom: 5px;
+        }
+        .ld-review-platform-list-item-main div {
+            margin-bottom: 3px;
+        }
+        .ld-review-platform-list-item-main span {
+            font-family: PingFangSC-Regular;
+            font-size: 13px;
+            color: rgba(17,31,44,0.40);
+            letter-spacing: 0;
+        }
+        .ld-review-platform-list-item-footer{
+            margin-top:18px;
+        }
+        .ld-review-platform-list-item-footer .ld-review-platform-list-item-footer-left {
+            float:left;
+            line-height: 20px;
+        }
+        .ld-review-platform-list-item-footer .ld-review-platform-list-item-footer-left img {
+            height:20px;
+            width:20px;
+            vertical-align: middle;
+            margin-right: 7px;
+        }
+        .ld-review-platform-list-item-footer .ld-review-platform-list-item-footer-left span {
+            font-family: PingFangSC-Regular;
+            font-size: 14px;
+            color: #111F2C;
+            letter-spacing: 0;
+            line-height: 20px;
+        }
+        .ld-review-platform-list-item-footer .ld-review-platform-list-item-footer-right {
+           float: right;
+           font-family: PingFangSC-Regular;
+           font-size: 12px;
+           letter-spacing: 0;
+        }
+        .ld-review-platform-list-item-footer .ld-review-platform-list-item-footer-right.inprocessing{
+            color:#0089ff;
+        }
+        .ld-review-platform-list-item-footer .ld-review-platform-list-item-footer-right.end{
+            color: rgba(17,31,44,0.28);
+        }
+        /* 审批列表结束 */
+        /* 排序 */
+        .ld-review-list-operation{
+            display:flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            height:40px;
+            background:white;
+        }
+        .ld-review-list-operation-sort {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .ld-review-list-operation-sort > div {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .ld-review-list-operation-sort > div i {
+            height:24px;
+            width:24px;
+            background:url(./images/sort_normal.png) no-repeat center center;
+            background-size: cover;
+        }
+        .ld-review-list-operation-screen{
+            height:18px;
+            width:18px;
+            background:url(./images/screen@2x.png) no-repeat center center;
+            background-size: cover;
+        }
+        /* 排序 */
+        /* header */
+        /* .ld-review-header {
+            position: fixed;
+            top:0;
+            left:0;
+            width:100%;
+        } */
+    </style>
+</head>
+<body>
+    <div class="ld-review-list">
+        <div class="ld-review-header">
+            <div class="ld-review-list-top">
+                <div class="ld-review-list-search">
+                    <i></i>
+                    <input type="text" class="searchInp" placeholder="请输入搜索内容">
+                </div>
+                <div class="ld-review-list-top-cancel" onClick="window.location.href='./category.html'">
+                    <i></i>
+                    <span>分类</span>
+                </div>
+            </div>
+            <div class="ld-review-list-operation">
+                <div class="ld-review-list-operation-sort">
+                    <div class="ld-review-list-operation-sort-startTime">
+                        创建时间
+                        <i></i>
+                    </div>
+                    <div class="ld-review-list-operation-sort-endTime">
+                        结束时间
+                        <i></i>
+                    </div>
+                </div>
+                <div class="ld-review-list-operation-screen" onclick="openScreenModal()"></div>
+            </div>
+        </div>
+        <!-- 审批列表 -->
+        <div class="ld-review-platform-list">
+            <ul>
+                <li class="ld-review-platform-list-item" onclick="window.location.href='./approval.html'">
+                    <div class="ld-review-platform-list-item-title">领用申请</div>
+                    <div class="ld-review-platform-list-item-main">
+                        <div class="application">
+                            <span>申请人：</span>
+                            <span>陈园园</span>
+                        </div>
+                        <div class="time">
+                            <span>发起时间：</span>
+                            <span>2020-08-03</span>
+                        </div>
+                        <div class="node">
+                            <span>流程进度：</span>
+                            <span>结束节点</span>
+                        </div>
+                    </div>
+                    <div class="ld-review-platform-list-item-footer clearfix">
+                        <div class="ld-review-platform-list-item-footer-left">
+                            <img src="./images/icon-category@2x.png" alt="">
+                            <span>由陈园园提交</span>
+                        </div>
+                        <div class="ld-review-platform-list-item-footer-right inprocessing">待审</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="ld-review-mask" onclick="closeScreenModal()">
+        <div class="ld-review-modal-screen">
+            <div class="ld-review-modal-screen-main">
+                <div class="ld-review-modal-screen-header">
+                    <i></i>
+                    <span>筛选</span>
+                </div>
+                <!-- 状态 -->
+                <div class="ld-review-modal-screen-main-status">
+                    <div class="ld-review-modal-screen-main-title">状态</div>
+                    <div class="ld-review-modal-screen-main-content">
+                        <ul>
+                            <li><span>草稿</span></li>
+                            <li><span>驳回</span></li>
+                            <li><span>待审</span></li>
+                            <li><span>结束</span></li>
+                            <li><span>已反馈</span></li>
+                            <li><span>废弃</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- 创建时间 -->
+                <div class="ld-review-modal-screen-main-time">
+                    <div class="ld-review-modal-screen-main-title">创建时间</div>
+                    <div class="ld-review-modal-screen-main-content">
+                        <ul>
+                            <li><span>近一周</span></li>
+                            <li><span>近一个月</span></li>
+                            <li><span>近三个月</span></li>
+                            <li><span>近半年</span></li>
+                            <li><span>近一年</span></li>
+                        </ul>
+                        <div class="customTime">
+                            <div class="customTimeBox">
+                                <input type="text"  placeholder="请输入时间段">
+                            </div>
+                            <i></i>
+                            <div class="customTimeBox">
+                                <input type="text"  placeholder="请输入时间段">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 结束时间 -->
+                <div class="ld-review-modal-screen-main-time">
+                    <div class="ld-review-modal-screen-main-title">结束时间</div>
+                    <div class="ld-review-modal-screen-main-content">
+                        <ul>
+                            <li><span>近一周</span></li>
+                            <li><span>近一个月</span></li>
+                            <li><span>近三个月</span></li>
+                            <li><span>近半年</span></li>
+                            <li><span>近一年</span></li>
+                        </ul>
+                        <div class="customTime">
+                            <div class="customTimeBox">
+                                <input type="text"  placeholder="请输入时间段">
+                            </div>
+                            <i></i>
+                            <div class="customTimeBox">
+                                <input type="text"  placeholder="请输入时间段">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ld-review-modal-screen-footer">
+                <div class="reset">重置</div>
+                <div class="confirm">确定</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="./js/jquery.min.js"></script>
+<script>
+     // bottom的模态框
+     function openScreenModal() {
+        $('.ld-review-mask').addClass('ld-review-mask-show')
+        var timer = setTimeout(function () {
+            $('.ld-review-modal-screen').addClass('ld-review-modal-screen-show');
+            clearInterval(timer)
+        }, 100)
+        addTouchListener()
+    }
+    function closeScreenModal() {
+        $('.ld-review-modal-screen').removeClass('ld-review-modal-screen-show');
+        var timer = setTimeout(function () {
+            $('.ld-review-mask').removeClass('ld-review-mask-show');
+            clearInterval(timer)
+        }, 100)
+        removeTouchListener()
+    }
+
+    function stopTouch(e) {
+         e.preventDefault();
+    }
+   function addTouchListener(){
+        document.body.addEventListener("touchmove", stopTouch, {
+          passive: false,
+          capture: true
+        });
+    }
+    function removeTouchListener(){
+        document.body.removeEventListener("touchmove", stopTouch, {
+          capture: true
+        });
+    }
+</script>

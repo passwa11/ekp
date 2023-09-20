@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <subclass
+		discriminator-value="4"
+		name="com.landray.kmss.hr.organization.model.HrOrganizationPost"
+		extends="com.landray.kmss.hr.organization.model.HrOrganizationElement">
+		<join
+			table="hr_org_post">
+			<key
+				column="fd_id"></key>
+				
+			<property
+				name="fdIsKey"
+				column="fd_is_key"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="200" />
+			<property
+				name="fdIsSecret"
+				column="fd_is_secret"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="200" />
+			<property
+				name="fdIsFullCompile"
+				column="fd_is_full_compile"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="200" />
+			<many-to-one 
+	            name="fdPostSeq" 
+	            column="fd_post_seq_id" 
+	            update="true" 
+	            insert="true"/>           	            
+	        <many-to-one 
+	            name="fdRankMix" 
+	            column="fd_rank_mix_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one 
+	            name="fdRankMax" 
+	            column="fd_rank_max_id" 
+	            update="true" 
+	            insert="true"/>
+		</join>
+	</subclass>
+</hibernate-mapping>

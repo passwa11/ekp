@@ -1,0 +1,64 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.mportal.model.SysMportalMenu",
+        "messageKey": "sys-mportal:table.sysMportalMenu",
+        "displayProperty": "docSubject",
+        "serviceBean": "sysMportalMenuService",
+        "table": "sys_mportal_menu",
+        "url": "/sys/mportal/sys_mportal_menu/sysMportalMenu.do?method=edit&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "docSubject":         {
+            "propertyType": "simple",
+            "messageKey": "sys-mportal:sysMportalMenu.docSubject",
+            "type": "String",
+            "column": "doc_subject",
+            "notNull": "true",
+            "length": "200",
+            "validate": "true"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-mportal:sysMportalMenu.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "docAlterTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-mportal:sysMportalMenu.docAlterTime",
+            "type": "DateTime",
+            "column": "doc_alter_time",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "fdEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-mportal:sysMportalMenu.fdEditors",
+            "column": "fd_menu_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "fd_org_id",
+            "table": "sys_mportal_menu_editors"
+        },
+        "fdSysMportalMenuItems":         {
+            "propertyType": "list",
+            "messageKey": "sys-mportal:sysMportalMenu.fdSysMportalMenuItems",
+            "type": "com.landray.kmss.sys.mportal.model.SysMportalMenuItem",
+            "column": "fd_menu_id",
+            "cascade": "all-delete-orphan",
+            "orderBy": "fd_order asc",
+            "table": "sys_mportal_menu_item"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-mportal:sysMportalMenu.docCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_creator_id"
+        }
+    }
+}

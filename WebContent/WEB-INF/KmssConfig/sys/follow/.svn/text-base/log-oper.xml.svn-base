@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+
+		<!-- 个人订阅配置 -->
+		<oper id="sysFollowPersonConfigOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.follow.model.SysFollowPersonConfig"
+			action="/sys/follow/sys_follow_person_config/sysFollowPersonConfig.do">
+			<query method="update" logPoint="update;Service_Delete"
+				messageKey="sys-follow:table.sysFollowPersonConfig">
+			</query>
+		</oper>
+
+		<!-- 我的订阅 -->
+		<oper id="sysFollowPersonDocRelatedOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.follow.model.SysFollowPersonDocRelated"
+			action="/sys/follow/sys_follow_person_doc_related/sysFollowPersonDocRelated.do">
+			<query method="listPerson" logPoint="listPerson" messageKey="button.list">
+			</query>
+		</oper>
+
+		<!-- 订阅基础配置 -->
+		<oper id="sysFollowConfigOperLog" model="*" extends="sysAppConfigOperLog"
+			action="/sys/follow/sys_follow_config/sysFollowConfig.do">
+		</oper>
+		
+		<!-- 订阅内容 -->
+		<oper id="sysFollowDocOperLog" model="*" extends="BaseOperLog"
+			action="/sys/follow/sys_follow_doc/sysFollowDoc.do">
+		</oper>
+
+	</logset>
+</log-oper>

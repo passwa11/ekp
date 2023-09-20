@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.imeeting.model.KmImeetingVote"
+		table="km_imeeting_vote">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		
+		<property
+			name="docSubject"
+			column="doc_subject"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="500" />
+		
+		<list
+			name="fdVoteObjs"
+			table="km_imeeting_vote_obj"
+			lazy="true">
+			<key column="fd_vote_id" />
+			<index column="idx"></index>
+			<element type="string" column="obj"></element>
+		</list>
+		
+		<list
+			name="fdVoteOptions"
+			table="km_imeeting_vote_option"
+			lazy="true">
+			<key column="fd_vote_id" />
+			<index column="idx"></index>
+			<element type="string" column="opt"></element>
+		</list>
+		
+		<property
+			name="fdVoteOptionType"
+			column="fd_vote_option_type"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="36" />
+		
+		<property
+			name="fdTemporaryId"
+			column="fd_temporary_id"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="36" />
+			
+		<many-to-one
+			name="fdMeetingMain"
+			column="fd_main_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+			
+		<property
+			name="fdVoteResult"
+			column="fd_vote_result"
+			update="true"
+			insert="true"
+			length="1000000"
+			not-null="false"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true" />
+		
+	</class>
+</hibernate-mapping>

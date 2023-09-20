@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	
+	<!--业务开关可配置扩展点	-->
+	<extension-point id="com.landray.kmss.sys.lbpmext.config.businessSwitch">
+    <item name="switch">
+      <param name="key"
+        kind="unid"
+        required="true">
+        <description>扩展对应的key值，如：指定唯一值</description>
+      </param>
+      <param
+        name="modelName"
+        kind="unid"
+        required="true">
+        <description>模块名称，如：com.landray.kmss.km.imissive.model.KmImissiveSendMain</description>
+      </param>
+      <param
+        name="provider"
+        kind="spring"
+        basedOn="com.landray.kmss.sys.lbpmext.configBusiness.extInterface.IBusinessSwitchConfig"
+        required="true">
+        <description>具体接口实现是否开启，详见IBusinessSwitchConfig接口说明</description>
+      </param>
+       <description>业务开关可配置</description>
+    </item>
+    <description>业务开关可配置</description>
+  </extension-point>
+  
+  
+
+	
+	<!--监听秘书预审	-->
+	<extension
+             point="com.landray.kmss.lbpm.engine.event">
+             <item
+                   name="listener">
+                   <param
+                          name="unid"
+                          value="lbpmExtNodeHanlderLeaderSecretaryListener" />
+                   <param
+                          name="messageKey"
+                          value="" />
+                   <param
+                          name="eventTypes"
+                          value="manualNodeHanlderGetterEvent" />
+                   <param
+                          name="listener"
+                          value="lbpmExtNodeHanlderLeaderSecretaryListener" />
+                   <param
+                          name="enforce"
+                          value="true" />
+             </item>
+   </extension>
+</plugin>

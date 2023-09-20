@@ -1,0 +1,130 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	String Tree_ContextPath = request.getContextPath()+"/";
+	request.setAttribute("Tree_ContextPath", Tree_ContextPath);
+%>
+<%@ include file="/resource/jsp/tree_top.jsp" %>
+</script>
+<script type="text/javascript" src="<c:url value="/sys/rule/resources/js/formula_common.js"/>"></script>
+<script type="text/javascript">
+Com_Parameter.XMLDebug = top.dialogObject.XMLDebug;
+var Data_XMLCatche = top.dialogObject.XMLCatche;
+top.document.title = '<bean:message bundle="sys-formula" key="tree.root"/>';
+function generateTree() {
+	LKSTree = new TreeView("LKSTree", "<bean:message bundle="sys-formula" key="formula.title"/>", document.getElementById("treeDiv"));
+	var n1, n2;
+	n1 = LKSTree.treeRoot;
+	n2 = n1.AppendChild(
+		"<bean:message bundle="sys-formula" key="tree.var"/>"
+	);
+	n2.FetchChildrenNode = getVars;
+	//添加其他变量
+	addOtherVars(n1);
+	
+	n2 = n1.AppendChild(
+		"<bean:message bundle="sys-formula" key="tree.func"/>"
+	);
+	n2.FetchChildrenNode = getFunctions;
+	
+	n1.isExpanded = true;
+	LKSTree.Show();
+}
+
+function getVars(){
+	var varInfo = top.dialogObject.formulaParameter.varInfo;
+	for(var i=0; i<varInfo.length; i++){
+		if(!varInfo[i].label){
+			continue
+		}
+		var textArr = varInfo[i].label.split(".");
+		var pNode = this;
+		var node;
+		for(var j=0; j<textArr.length; j++){
+			node = Tree_GetChildByText(pNode, textArr[j]);
+			if(node==null){
+				node = pNode.AppendChild(textArr[j]);
+			}
+			pNode = node;
+		}
+		node.name = varInfo[i].name;
+		node.action = opFormula;
+		node.title = varInfo[i].label + "(" + varInfo[i].type + ")"; //在提示信息里带上变量的类型
+		node.value = "$"+varInfo[i].label+"$";
+		node.summary = varInfo[i].summary;
+	}
+}
+
+function getFunctions(){
+	var funcInfo = top.dialogObject.formulaParameter.funcInfo;
+	funcInfo.sort(function(o1, o2){return o1.text==o2.text?0:(o1.text>o2.text?1:-1);});
+	for(var i=0; i<funcInfo.length; i++){
+		var textArr = funcInfo[i].text.split(".");
+		var pNode = this;
+		var node;
+		for(var j=0; j<textArr.length; j++){
+			node = Tree_GetChildByText(pNode, textArr[j]);
+			if(node==null){
+				node = pNode.AppendChild(textArr[j]);
+			}
+			pNode = node;
+		}
+		node.action = opFuncFormula;
+		node.value = funcInfo[i].value;
+		node.title = funcInfo[i].title;
+		node.summary = funcInfo[i].summary;
+		for (var n=1; n<10; n++) {
+			if(funcInfo[i]["example"+n]){
+				node["example" + n] = funcInfo[i]["example"+n];
+				node["exampleFormula" + n] = funcInfo[i]["exampleFormula"+n];
+			} else {
+				break;
+			}
+		}
+	}
+}
+
+function addOtherVars(node){
+	var otherVarInfo = getOtherVarInfos();
+	if(otherVarInfo && Object.prototype.toString.call(otherVarInfo) === '[object Array]'){
+		otherVarInfo.forEach(function(item,index){
+			var key = item.key;
+			var value = item.value;
+			var vars = item.vars;
+			var cnode = node.AppendChild(value);
+			cnode.FetchChildrenNode = getOtherVars(vars,cnode);
+		})
+	}
+}
+
+function getOtherVars(vars,cnode){
+	for(var i=0; i<vars.length; i++){
+		var textArr = vars[i].text.split(".");
+		var pNode = cnode;
+		var node;
+		for(var j=0; j<textArr.length; j++){
+			node = Tree_GetChildByText(pNode, textArr[j]);
+			if(node==null){
+				node = pNode.AppendChild(textArr[j]);
+			}
+			pNode = node;
+		}
+		node.action = opFormula;
+		node.value = "%"+vars[i].text+"%";
+		node.title = vars[i].type;
+	}
+}
+
+function opFormula(){
+	top.setCaret();
+	var area = top.document.getElementById("expression");
+	top.insertText(area, this);
+}
+
+function opFuncFormula(){
+	top.setCaret();
+	var area = top.document.getElementById("expression");
+	top.insertText(area, this);
+	top.loadFuncFormulaDetail(this);
+}
+<%@ include file="/resource/jsp/tree_down.jsp" %>

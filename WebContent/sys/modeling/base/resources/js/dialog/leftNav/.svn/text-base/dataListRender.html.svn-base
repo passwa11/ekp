@@ -1,0 +1,28 @@
+
+// 记录请求的数据
+render.parent.setRecordData(data);
+var lang = render.parent.getModelingLang();
+console.log("lang",lang);
+{$
+	<table width="100%">
+		<thead>
+			<tr>
+				<td width="50%">{%lang['modelingAppMobile.docSubject']%}</td>
+				<td width="20%">{%lang['modelingAppMobile.docCreator']%}</td>
+				<td width="30%">{%lang['modelingAppMobile.docCreateTime']%}</td>
+			</tr>
+		</thead>
+		<tbody>$}
+			for(var i = 0;i < data.length;i++){
+				var record = data[i];
+				{$
+					<tr data-record-value="{%record.value%}">
+						<td>{%record.text%}</td>
+						<td>{%record.creator%}</td>
+						<td>{%record.createtime%}</td>
+					</tr>
+				$}
+			}
+		{$</tbody>
+	</table>
+$}

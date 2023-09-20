@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="robtodoNodeBehaviourService"
+		parent="defaultManualNodeBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.robtodonode.RobTodoNodeBehaviour" />
+	<bean
+		id="robtodoNodeDesc"
+		class="com.landray.kmss.sys.lbpmservice.node.robtodonode.RobtodoNodeDesc" />
+	<bean
+		id="lbpmHandlerRobTodoBehaviour"
+		parent="abstractOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.operation.handler.LbpmHandlerRobTodoBehaviour">
+		<property name="processDefinitionService">
+			<ref bean="lbpmProcessDefinitionService" />
+		</property>
+	</bean>
+	<bean
+		id="handlerRobTodoBinder"
+		class="com.landray.kmss.sys.lbpmservice.operation.handler.LbpmHandlerRobTodoBinder">
+	</bean>
+	<bean
+		id="robtodoNodeWorkitemDesc"
+		class="com.landray.kmss.sys.lbpmservice.node.robtodonode.RobtodoNodeWorkitemDesc" />
+	<bean
+		id="robtodoNodeWorkitemBehaviourService"
+		parent="reviewNodeWorkitemBehaviourService"
+		class="com.landray.kmss.sys.lbpmservice.node.robtodonode.RobtodoNodeWorkitemBehaviour" />
+</beans>

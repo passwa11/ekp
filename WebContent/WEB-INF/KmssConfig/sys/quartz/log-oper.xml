@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="sysQuartzConfig"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/sys/quartz/sys_quartz_job/sysQuartzConfig.do">
+        </oper>
+        <oper
+        	id="sysQuartzJobOperLog"
+        	extends="BaseOperLog"
+        	model="com.landray.kmss.sys.quartz.model.SysQuartzJob"
+        	action="/sys/quartz/sys_quartz_job/sysQuartzJob.do">
+        	<query
+        		method="chgenabled"
+        		logPoint="Base_UrlParam;Action_Find">
+        	</query>
+        	<query
+        		method="run"
+        		logPoint="Base_UrlParam;Action_Find"
+        		messageKey="sys-quartz:sysQuartzJob.button.run">
+        	</query>
+        	<query
+        		method="systemInit"
+        		logPoint="systemInit"
+        		messageKey="sys-quartz:sysQuartzJob.tree.init">
+        	</query>
+        	<query
+        		method="exportJob"
+        		logPoint="Base_UrlParam;Action_FindAll"
+        		messageKey="sys-quartz:sysQuartzJob.button.export">
+        	</query>
+        	<!-- 由于标题需要另外处理，所以这里重写list方法 -->
+        	<query
+        		method="list"
+        		logPoint="Base_UrlParam;sysQuartzJobList"
+        		messageKey="button.list">
+        	</query>
+        </oper>
+	</logset>
+</log-oper>

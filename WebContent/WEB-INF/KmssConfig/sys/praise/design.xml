@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	
+	<module messageKey="sys-praise:module.sys.praise"
+			defaultValidator="roleValidator(role=ROLE_SYSPRAISE_DEFAULT)"
+			urlPrefix="/sys/praise/">
+		<roles>
+			ROLE_SYSPRAISE_DEFAULT;
+			ROLE_SYSPRAISEINFO_MAINTAINER
+		</roles>
+		
+		<request
+			path="sys_praise_info_category/sysPraiseInfoCategory*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.praise.model.SysPraiseInfoCategory,adminRoleName=ROLE_SYSPRAISEINFO_MAINTAINER">
+			<query
+				queryString="method=add|save|saveadd"
+				validator="sysSimpleCategoryEditorValidator(recid=parentId)" />
+			<query
+				queryString="method=view"
+				validator="sysSimpleCategoryReaderValidator()" />
+			<query
+				queryString="method=edit|update"
+				validator="sysSimpleCategoryEditorValidator()" />
+			<!-- 删除 -->
+			<query
+				queryString="method=delete"
+				validator="sysSimpleCategoryEditorValidator()" />
+		</request>
+		
+		<request
+			path="sys_praise_info/sysPraiseInfo*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.praise.model.SysPraiseInfo,cateModel=com.landray.kmss.sys.praise.model.SysPraiseInfoCategory">
+			<query
+				queryString="method=data"
+				validator="roleValidator(role=ROLE_SYSPRAISEINFO_MAINTAINER)" />
+		</request>
+		
+		<request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_SYSPRAISEINFO_MAINTAINER)">
+		</request>
+		
+		<request
+			path="sys_praise_info_personal/sysPraiseInfoPersonal*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.praise.model.SysPraiseInfoPersonal">
+			
+		</request>
+		
+		<request
+			path="sys_praise_info_config/sysPraiseInfoConfig*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.praise.model.SysPraiseInfoConfig">
+			<query
+				queryString="method=*"
+				validator="roleValidator(role=ROLE_SYSPRAISEINFO_MAINTAINER)" />
+		</request>
+	</module>
+	
+	<!-- 日志定时任务 -->
+	<quartz
+		cronExpression="0 0 4 * * ?"
+		jobService="sysPraiseInfoCalculateQuartz" 
+		messageKey="sys-praise:sysPraiseInfo.quartz.calculate"
+		jobMethod="execute" 
+		description="sys-praise:sysPraiseInfo.quartz.calculate.description"/>
+
+	<homePage
+		urlPrefix="sys/praise"
+		url="/sys/portal/page.jsp#j_start=/sys/praise/index.jsp&amp;j_target=_iframe"
+		messageKey="sys-praise:module.sys.praise"
+		config="/moduleindex_notopic.jsp?nav=/sys/praise/tree.jsp"
+		type="global"/>
+
+	<profileConfig
+		key="sys/praise"
+		messageKey="{sys-praise:module.sys.praiseInfo.manager}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/praise/tree.jsp" 
+		icon="sys_praise"
+		type="mechanism"
+		description="{sys-praise:sysPraiseInfo.profileCfg.description}"/>
+</configs>

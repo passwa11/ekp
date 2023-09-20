@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="third-idm:module.third.idm"
+		urlPrefix="/third/idm/"
+		defaultValidator="roleValidator(role=ROLE_IDM_BACKSTAGE_MANAGER)">
+
+		<roles>
+			<!-- 后台管理  -->
+			ROLE_IDM_BACKSTAGE_MANAGER
+		</roles>
+		<roleType>
+			<!-- 系统管理员权限 -->
+			<sysadmin>
+				ROLE_IDM_BACKSTAGE_MANAGER
+			</sysadmin>
+		</roleType>
+
+		<request path="config*" defaultValidator="roleValidator(role=ROLE_IDM_BACKSTAGE_MANAGER)">
+
+		</request>
+
+	</module>
+	
+	<!-- 后台配置权限 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.third.idm.IDMConfig"
+				validator="roleValidator(role=ROLE_IDM_BACKSTAGE_MANAGER)" />
+		</request>
+	</module>
+
+	<homePage urlPrefix="third/idm" 
+		url="/third/idm/config.do?method=config"
+		messageKey="third-idm:module.third.idm" 
+		config="/third/idm/config.do?method=config" />
+		
+	<profileConfig 
+		key="idm"
+		messageKey="{third-idm:module.third.idm}"
+		url="/sys/appconfig/sys_appconfig/sysAppConfig.do?method=edit&amp;modelName=com.landray.kmss.third.idm.IDMConfig"
+		icon="third_idm"
+		type="user"
+		order="5" 
+		userType="2"
+		description="{third-idm:idm.profileCfg.description}"/>
+
+</configs>

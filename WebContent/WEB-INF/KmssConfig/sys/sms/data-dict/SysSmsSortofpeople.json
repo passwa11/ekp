@@ -1,0 +1,74 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.sms.model.SysSmsSortofpeople",
+        "messageKey": "sys-sms:table.sysSmsSortofpeople",
+        "displayProperty": "fdName",
+        "serviceBean": "sysSmsSortofpeopleService",
+        "table": "sys_sms_sortofpeople",
+        "url": "/sys/sms/sys_sms_sortofpeople/sysSmsSortofpeople.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-sms:sysSmsSortofpeople.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "false",
+            "canSubscribe": "true",
+            "canSearch": "true",
+            "canDisplay": "true"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "sys-sms:sysSmsSortofpeople.fdOrder",
+            "type": "Double",
+            "column": "fd_order",
+            "notNull": "false",
+            "length": "10"
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-sms:sysSmsSortofpeople.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "false",
+            "length": "200",
+            "canSubscribe": "true",
+            "canSearch": "true",
+            "canDisplay": "true"
+        },
+        "fdCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-sms:sysSmsSortofpeople.fdCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "doc_creator_id",
+            "notNull": "false",
+            "canSubscribe": "true",
+            "canSearch": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}', '!{nameField}', null, ORG_TYPE_PERSON);"
+        },
+        "sortedPersons":         {
+            "propertyType": "list",
+            "messageKey": "sys-sms:sysSmsSortofpeople.sortedPersons",
+            "column": "fd_org_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "fd_sortedpersons_id",
+            "table": "sys_sms_sortedperson",
+            "canSearch": "true",
+            "canDisplay": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}', '!{nameField}', null, ORG_TYPE_PERSON);"
+        },
+        "docContent":         {
+            "propertyType": "simple",
+            "messageKey": "sys-sms:sysSmsSortofpeople.docContent",
+            "type": "RTF",
+            "column": "doc_content",
+            "length": "1000000",
+            "notNull": "false"
+        }
+    }
+}

@@ -1,0 +1,86 @@
+/* 复合组件 */
+.muiFormComposite {
+  position: relative;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-around;
+}
+/* 复合组件的子组件 */
+.muiFormCompositeContained {
+  display: block;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.muiFormCompositeContained .muiFormEleWrap{
+	text-align: left!important;
+}
+
+
+.muiFormCompositeContained::before {
+  content: " ";
+  display: block;
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  top: 50%;
+  right: 21px;
+  z-index: 11;
+  transform: scaleY(2);
+  border-right: 8px solid transparent;
+  border-left: 8px solid #fff;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  margin-top: -8px;
+}
+
+.muiFormCompositeContained::after {
+  content: " ";
+  display: block;
+  border-right: 8px solid transparent;
+  border-left: 8px solid rgba(153, 159, 183, 0.2);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  z-index: 10;
+  transform: scaleY(2);
+  margin-top: -8px;
+}
+
+.muiFormCompositeHorizontal .muiFormCompositeContained::before,
+.muiFormCompositeHorizontal .muiFormCompositeContained::after {
+  transform: scaleY(1);
+}
+
+.muiFormComposite > xformflag {
+  flex: 1;
+  width: 0;
+}
+
+.muiFormComposite .muis-to-right {
+  display: none;
+}
+
+.muiFormComposit > xformflag:not(:first-child) {
+  padding-left: 0.8rem;
+}
+
+.muiFormComposite
+  > xformflag
+  .muiFormEleWrap.popup.muiFormCompositeContained
+  > .muiSelInputRight {
+  right: 0.3rem;
+}
+
+.muiFormComposite
+  > xformflag
+  .muiFormEleWrap.popup.muiFormCompositeContained
+  > .muiFormRequired {
+  right: 0;
+  top: 1.6rem;
+}

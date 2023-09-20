@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="sys-subordinate:module.sys.subordinate"
+		urlPrefix="/sys/subordinate/"
+		defaultValidator="subordinateValidator()|roleValidator(role=ROLE_SYS_SUBORDINATE_BACKSTAGE_MANAGER)">
+		<roles>
+			ROLE_SYS_SUBORDINATE_BACKSTAGE_MANAGER
+		</roles>
+		
+		<request
+			path="sysSubordinateMappingForm*"
+			defaultValidator="roleValidator(role=ROLE_SYS_SUBORDINATE_BACKSTAGE_MANAGER)">
+		</request>
+		<request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_SYS_SUBORDINATE_BACKSTAGE_MANAGER)">
+		</request>		
+		<request path="moduleindex.jsp*"
+			validatorParameter="recmodule=moduleMessageKey"
+			defaultValidator="subordinateModuleValidator()">
+		</request>
+	</module>
+	
+	<homePage
+		urlPrefix="sys/subordinate"
+		url="/sys/portal/page.jsp#j_start=/sys/subordinate/index.jsp&amp;j_target=_iframe"
+		messageKey="sys-subordinate:module.sys.subordinate"
+		config="/moduleindex_notopic.jsp?nav=/sys/subordinate/tree.jsp" />
+	
+	<profileConfig 
+		key="subordinate"
+		messageKey="{sys-subordinate:module.sys.subordinate}"
+		url="/sys/profile/moduleindex.jsp?nav=/sys/subordinate/tree.jsp"
+		icon="sys_subordinate"
+		type="mechanism"
+		userType="1;4"
+		description="{sys-subordinate:sys.subordinate.description}" />
+		
+</configs>

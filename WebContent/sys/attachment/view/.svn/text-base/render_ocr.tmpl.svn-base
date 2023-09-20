@@ -1,0 +1,601 @@
+//ocr控件交互
+var self = this;
+
+if (this.fdViewType == "/sys/attachment/view/render_ocr.tmpl") {
+	var xdiv = $("");
+	
+	if (this.editMode == 'view') {
+		// 查看视图
+		if(this.fileList.length == 0) {
+		     var url = window.location.href;
+		     var fileObj = {"fdId":"仅用于OCR禁用图片的展示不报错用","fileName":"仅用于OCR禁用图片的展示不报错用"} ;
+		     if(url && url.indexOf("method=add")== -1 &&  self._remainImg && self._remainImg == "false"){
+		         this.fileList.push(fileObj) ;
+		     }
+		}
+		if (this.fileList.length > 0) {
+			for (var i = 0; i < this.fileList.length; i++) {
+
+			    	$("#attachmentObject_" + self.fdKey + "_content_div").prepend(createViewFileDiv(this.fileList[i]));
+
+			}
+		}
+	} else {
+		// 编辑视图
+		for (var i = 0; i < this.fileList.length; i++) {
+			if(self._remainImg && self._remainImg == "true"){
+		    	$("#attachmentObject_" + self.fdKey + "_content_div").find("[data-lui-mark='attachmentlist']").prepend(createEditFileDiv(this.fileList[i]));
+			     $("#uploader_" + self.fdKey + "_queueList")[0].style.border=0;
+			}
+		}
+	}
+	done(xdiv);
+}
+/** 上传中提示 * */
+function _uploadSuccess (){
+	seajs.use(['lui/dialog'], function (dialog) {
+		dialog.success('上传成功');
+
+		//dialog.iframe('/sys/attachment/view/ocr/render_ocr_uploadSuccess.jsp','',function(rtn){
+		//},{height:'42',width:'120',top:'60',left:'50%'});
+	});
+}
+/** 上传成功提示 * */
+function _uploading (){
+}
+self.tipRecoginz = function(){
+    	seajs.use(['lui/dialog'], function (dialog) {
+    		var picUrl = self.getHost() + Com_Parameter.ContextPath + "sys/attachment/view/img/ocr/recognize@2x.png" ;
+
+    	var htmlStr =  '<div style="margin-left: -69.5px;margin-top: -20px;position: fixed;width: 139px;height: 60px;line-height:60px;background: #EEF4FF;text-align:center;border-radius:10px;border:2px solid #4285F4"><img style="width: 30px;height: 30px;vertical-align: middle;" src="'+picUrl+'" /><span>&nbsp;'+Attachment_MessageInfo["sysAttachment.ocr.recognitioning"]+'</span></div>'
+    	  self.recoginzDialog =  dialog.build({
+            	config: {
+            	  	width: 1,
+            	  	height: 2,
+            	  	lock: true,
+            	  	cache: false,
+            	  	win: window,
+            	  	content: {
+            	    	type: "html",
+            	    	html: htmlStr
+            	  	},
+            	}
+            }).show();
+    	});
+}
+
+function recogizFailDialog(){
+     var operateFail =Attachment_MessageInfo["sysAttMain.material.operate.fail"];
+     seajs.use(['lui/dialog'], function (dialog) {
+                     var buttons  = [];
+                     if(self._remainImg && self._remainImg=="true") {
+                        buttons = [
+                             	{
+                             		name : Attachment_MessageInfo["sysAttachment.ocr.reIdentify"], value : 'selectFile', focus : true,
+                                    fn : function(value,_dialog) {
+
+                                		_dialog.hide(value);
+                                	}
+                             	},
+                                 {
+                                     name : Attachment_MessageInfo["sysAttachment.ocr.uploadPicturesOnly"], value : 'cancel', styleClass : 'lui_toolbar_btn_gray',
+                                     fn : function(value, dialog) {
+                                         dialog.hide(value);
+                                     }
+                             	},
+                                 {
+                                     name : Attachment_MessageInfo["button.cancelAll"], value : 'cancel', styleClass : 'lui_toolbar_btn_gray',
+                                     fn : function(value, dialog) {
+                                         dialog.hide(value);
+                                     }
+                                 }
+                             ]
+                     } else {
+                       buttons =  [
+                                    	{
+                                    		name : Attachment_MessageInfo["sysAttachment.ocr.reIdentify"], value : 'selectFile', focus : true,
+                                           fn : function(value,_dialog) {
+
+                                       		_dialog.hide(value);
+                                       	}
+                                    	},
+
+                                        {
+                                            name : Attachment_MessageInfo["button.cancelAll"], value : 'cancel', styleClass : 'lui_toolbar_btn_gray',
+                                            fn : function(value, dialog) {
+                                                dialog.hide(value);
+                                            }
+                                        }
+                                ]
+                     }
+
+                    var path = "/sys/attachment/view/ocr/ocr_recogniz_fail.jsp?type=recognizFail";//上传成功，但系统未能自动识别文字
+	    	   		dialog.iframe(path,'',function(value){
+	    	   			if(value == "recogniz"){     //这个if应该可以删除
+	    	   				//重新识别
+	    	   				//self.tipRecoginz();
+	    	   			    //setTimeout(function(){ uploadRecogniz(file.fdId); }, 500);
+
+	    	   			}
+	    	   			if(value == "upload"){   //这个if应该可以删除
+	    	   				//仅上传
+	    	   				//self._replaceImg();
+	    	   			}
+	    	   			if(value == "selectFile"){
+	    	   			    // 重新选择文件
+	    	   			    selectFile(self.fdKey);
+	    	   			}
+	        		},{
+	    				width : 480,
+	    				height : 230,
+	    				buttons :buttons
+	    			}).on('show', function() {
+                      		this.element.find(".lui_dialog_buttons_container").css("float","none").css("text-align","center");
+                      	});
+     });
+
+
+}
+/** 调用ocr识别并处理识别的结果集 **/
+
+function uploadRecogniz (attId){
+	var fdKey = self.fdKey;
+	var cardTypeNumber = self.cardTypeNumber;
+	var type = self._cardType;//需取出真实类型
+	var cardType = '1';//通用
+	// duan 扩展点
+	if('idCard'==type){
+		cardType= "2";
+	}
+	if('drivingLicense'==type){  //行驶证
+		cardType= "7";
+	}
+	if('vehicleLicense'==type){   //驾驶证
+		cardType= "8";
+	}
+	if('businessLicense'==type){
+		cardType= "5";
+	}
+
+	var ocrparm={};
+	ocrparm.type=cardTypeNumber;
+	ocrparm.attId=attId;
+	ocrparm.modelName='';
+	ocrparm.formName='';
+	ocrparm.docId='';
+	//调用ocr的识别接口
+	var url = Com_Parameter.ContextPath +'third/ocr/thirdOcrPart.do?method=ocrPartRecogniz';
+     $.ajax({
+        url: url,
+        type: 'post',
+        dataType: 'json',
+        data:ocrparm,
+        async: false,
+        error: function(data) {
+
+            recogizFailDialog();
+         },
+        success: function(data){
+            seajs.use(["lui/topic"], function(topic){
+                var params = JSON.parse($("[name*='extendDataFormInfo.value("+self.fdKey+"_params)']").attr("params"));
+                if(params){
+                    if(params["outputParams"]){
+                        data._key = self.fdKey;
+
+                        if(self._cardType && self._cardType == "idCard" && self._idCardType == "1" && data.back){
+                            recogizFailDialog();
+                        }else{
+                            console.log("data:"+JSON.stringify(data));
+                            topic.channel("ocr").publish("ocr.recogniz.success",JSON.stringify(data));
+                        }
+                    }
+                }else{
+                    //识别成功，但返回结果集为空（是否处理待定）
+                }
+            });
+        },
+        complete:function(xhr,status){
+             self.recoginzDialog.hide();
+        }
+    });
+}
+function selectFile(fdkey){
+     var name =  "__landray_filefd_"+fdkey.substring(3,fdkey.length);
+    //触发 文件选择的click事件
+    $("input[name='"+name+"']").trigger("click");
+    //其他code如 alert($("#file").attr("value"))
+}
+/** 查看视图 开始 * */
+function createViewFileDiv(file) {
+	var divWidth = self.fdPicContentWidth;
+	var divHeight = self.fdPicContentHeight;
+	var xdiv = "";
+	var xbox = "";
+	if(divWidth && divHeight) {
+		xdiv = $("<div id='" + file.fdId + "' class='upload_list_tr lui_upload_img_item lui_upload_img_item_view'" +  " style='width:" + divWidth + "px;height:"+ divHeight + "px '/></div>");
+		xbox = $("<div class='imgbox' " + "style='margin:0px;width:" + (divWidth-1) + "px;height:" + (divHeight-1) + "px' />");
+	} else {
+		xdiv = $("<div id='" + file.fdId + "' class='upload_list_tr lui_upload_img_item lui_upload_img_item_view'></div>");
+		xbox = $("<div class='imgbox' />");
+	}
+
+	xdiv.append(xbox);
+	var imgExtend = "";
+	if (self.fdImgHtmlProperty != null && self.fdImgHtmlProperty != "")
+		imgExtend = self.fdImgHtmlProperty;
+	var __href;
+    if(self._remainImg && self._remainImg == "false"){
+       __href = Com_Parameter.ContextPath + "sys/attachment/view/img/ocr/ocr-jinyong@2x.png"
+    } else{
+	   __href = self.getUrl("download", file.fdId);
+    }
+	var errIcon = Com_Parameter.ContextPath + "sys/attachment/view/img/upload_fail@2x.png";
+	var $___img = $("<img src=\"" + __href + "\" border=0 onerror=\"this.src='" + errIcon + "';this.className+='lui_upload_img_error'\">");
+	xbox.append($___img);
+	$___img.each(function(){
+	var img = $(this);
+	img.load(function(evt){
+		self.emit('imgLoaded', {
+			target : this
+		});
+		if (self.fdShowMsg == false)
+			return;
+	});
+    var msg = "";
+    msg = $("<p  class='name upload_pic_filename_view upload_pic_filename_view_ocr' title='"+file.fileName+"'><span>"+file.fileName+"</span></p>");
+    xdiv.append(msg);
+
+	});
+	createViewOpers(xbox, file);
+	return xdiv;
+}
+
+/** 查看视图 结束 * */
+
+/** 编辑视图 开始 * */
+function createEditFileDiv(file) {
+	if(file.isDelete == -1)
+		return;
+
+     if(self.fdPicContentWidth<140){
+         self.fdPicContentWidth = 140;
+     }
+     if(self._remainImg && self._remainImg == "false"){
+         self.fdPicContentWidth = 110;
+         self.fdPicContentHeight = 80;
+     }
+   var divWidth = self.fdPicContentWidth;
+   	var divHeight = self.fdPicContentHeight;
+   	var xdiv = "";
+   	var xbox = "";
+   	if(divWidth && divHeight) {
+   		xdiv = $("<div id='" + file.fdId + "' class='upload_list_tr lui_upload_img_item lui_upload_img_item_view'" +  " style='width:" + divWidth + "px;height:"+ divHeight + "px '/></div>");
+   		xbox = $("<div class='imgbox' " + "style='margin:0px;width:" + (divWidth-1) + "px;height:" + (divHeight-1) + "px' />");
+   	} else {
+   		xdiv = $("<div id='" + file.fdId + "' class='upload_list_tr lui_upload_img_item lui_upload_img_item_view'></div>");
+   		xbox = $("<div class='imgbox' />");
+   	}
+
+   	xdiv.append(xbox);
+	var errIcon = Com_Parameter.ContextPath + "sys/attachment/view/img/upload_fail@2x.png";
+	var $___img = $("<img src=\"" + self.getUrl("download", file.fdId) + "\"  border=0 onerror=\"this.src='" + errIcon + "';this.className+='lui_upload_img_error'\">");
+	xbox.append($___img);
+	 if(self.fdShowMsg != false){
+     		var fileName = file.fileName.substring(0, file.fileName.lastIndexOf("."));
+     		var fileExt = file.fileName.substring(file.fileName.lastIndexOf("."));
+     		var msg = "";
+     	    msg = $("<p class='name upload_pic_filename_view upload_pic_filename_view_ocr' title='"+file.fileName+"'><span class='upload_list_filename_title'>"+ fileName + "</span><span class='upload_list_filename_ext'>"+ fileExt + "</span><span class='upload_list_filename_size'>"+ self.formatSize(file.fileSize) + "</span></p>");
+     	    xdiv.append(msg);
+     	}
+	createEditOpers(xbox, file);
+	if(!self.fdMulti) {
+		$("#uploader_" + self.fdKey + " .tip_info").removeClass("upload_item_hide");
+		$("#uploader_" + self.fdKey + "_queueList")[0].style.width=0;
+        $("#uploader_" + self.fdKey + "_queueList")[0].style.height=0;
+	}
+	return xdiv;
+}
+
+function createViewOpers(xbox, file) {
+	var fileExt = file.fileName.substring(file.fileName.lastIndexOf("."));
+	var attId = file.fdTemplateAttId || file.fdId;
+	var xopt = $("<div class='lui_upload_img_item_opt lui_upload_img_item_opt_ocr' />");
+	if (self.canRead && self.fdShowMsg != false) {
+        xopt.append($("<div class='lui_upload_img_view' title='"+Attachment_MessageInfo["button.read"]+"'><span class='upload_opt_tip'><i class='upload_opt_tip_arrow'></i><i class='upload_opt_tip_inner'>"+Attachment_MessageInfo["button.read"]+"</i></span></div>").click(function(e){
+            $("#" + attId + " .upload_pic_filename_view").click();
+        }));
+	}
+	if (self.canDownload) {
+
+        xopt.append($("<div class='lui_upload_img_download' title='"+Attachment_MessageInfo["button.download"]+"'><span class='upload_opt_tip'><i class='upload_opt_tip_arrow'></i><i class='upload_opt_tip_inner'>"+Attachment_MessageInfo["button.download"]+"</i></span></div>").click(function(e){
+            self.downDoc(attId);
+        }));
+        if (self.isShowDownloadCount && self.editMode=='view') {
+            xopt.append("<span class='upload_opt_tip_count'>("+file.fileDownloadCount+")</span>");
+        }
+
+	}
+	if(self._remainImg == undefined || self._remainImg == "true"){
+	    xbox.append(xopt);
+	    xbox.append("<div class='lui_upload_img_item_mask' />");
+	}
+}
+
+function createEditOpers(xbox, file) {
+	var attId = file.fdTemplateAttId || file.fdId;
+	var uploadDiv =$("#" + self.renderId).find('[ data-lui-mark="attachmentlist"]');
+	var temp = $("<div class='lui_upload_img_item_opt lui_upload_img_item_opt_ocr' />");
+	temp.append($("<div class='lui_upload_img_view' title='"+Attachment_MessageInfo["button.read"]+"'><i></i></div>").click(function() {
+			$("#" + attId + " .upload_pic_filename_view").click();
+		}));
+    temp.append($("<div class='lui_upload_img_recogniz' title='"+Attachment_MessageInfo["sysAttachment.ocr.reIdentify"]+"'><i></i></div>").click(function() {
+			var fdKey = self.fdKey;
+			selectFile(fdKey);
+	}))
+
+	temp.append($("<div class='lui_upload_img_replace' title='"+Attachment_MessageInfo["button.replace"]+"'><i></i></div>").click(function() {
+
+			self._replaceImg();
+		}))
+		.append($("<div class='lui_upload_img_delete' title='"+Attachment_MessageInfo["button.delete"]+"'><i></i></div>").click(function() {
+			self.___delImg(file, uploadDiv);
+		}));
+	xbox.append(temp).append("<div class='lui_upload_img_item_mask' />");
+}
+
+function uploadCreateFileDiv(file) {
+	// 修改的段
+	 if(self.fdPicContentWidth<140){
+        self.fdPicContentWidth = 140;
+    }
+	if(self.fdPicContentWidth && self.fdPicContentHeight) {
+		var xdiv = $("<div id='" + file.fdId
+			+ "' class='lui_upload_img_item lui_upload_img_item_edit lui_upload_img_running lui_upload_img_running_ocr' style='width:"+ self.fdPicContentWidth + "px;height:" + self.fdPicContentHeight + "px'></div>");
+	} else {
+		var xdiv = $("<div id='" + file.fdId
+			+ "' class='lui_upload_img_item lui_upload_img_item_edit lui_upload_img_running lui_upload_img_running_ocr' ></div>");
+	}
+
+	if(self.fdPicContentWidth && self.fdPicContentHeight) {
+
+		 var ibox =$("<div class='imgbox' style='width:"+ self.fdPicContentWidth + "px;height:" + self.fdPicContentHeight  +"px'/>");
+	} else {
+		var ibox =$("<div class='imgbox' />");
+	}
+	xdiv.append(ibox);
+	var fileName = file.fileName.substring(0, file.fileName.lastIndexOf("."));
+	var fileExt = file.fileName.substring(file.fileName.lastIndexOf("."));
+	var $___name = $("<p class='name upload_pic_filename_view upload_pic_filename_view_ocr' title='"+file.fileName+"'><span class='upload_list_filename_title'>"+ fileName + "</span><span class='upload_list_filename_ext'>"+ fileExt + "</span><span class='upload_list_filename_size'>"+ self.formatSize(file.fileSize) + "</span></p>");
+	xdiv.append($___name);
+	return xdiv;
+}
+
+//替换（仅上传）
+self._replaceImg = function() {
+   $("#uploader_"+this.fdKey+"_container").addClass("img_replace");
+   selectFile(this.fdKey);
+}
+
+//重新识别  (图片上面的按钮)
+self._recognizImg = function(attId,file,uploadDiv) {
+
+         self.tipRecoginz();
+         setTimeout(function(){ uploadRecogniz(file.fdId); }, 500);
+
+}
+
+// 删除图片
+self.___delImg = function(file,uploadDiv) {
+
+	if (typeof(seajs) != 'undefined') {
+		seajs.use('lui/dialog', function(___dialog) {
+					___dialog.confirm(
+							Attachment_MessageInfo["button.confimdelte"],
+							function(___val) {
+								if (___val) {
+									file.fileStatus = -1;
+									$("#"+file.fdId).remove();
+                                    $("#uploader_" + self.fdKey + "_queueList").removeClass("upload_item_hide");
+                                    $("#uploader_" + self.fdKey + "_queueList")[0].style.width = self.fdPicContentWidth + "px";
+        							$("#uploader_" + self.fdKey + "_queueList")[0].style.height = self.fdPicContentHeight + "px";
+                                    $("#uploader_" + self.fdKey + " .tip_info").addClass("upload_item_hide");
+									self.emit('editDelete', {
+												"file" : file
+											});
+								}
+							});
+				})
+	} else {
+		if (confirm("" + Attachment_MessageInfo["button.confimdelte"] + "")) {
+			file.fileStatus = -1;
+			$("#"+file.fdId).remove();
+            $("#uploader_" + self.fdKey + "_queueList").removeClass("upload_item_hide");
+            $("#uploader_" + self.fdKey + " .tip_info").addClass("upload_item_hide");
+			self.emit('editDelete', {
+						"file" : file
+					});
+		}
+	}
+}
+
+if (this.editMode == 'view') {
+	// 查看时不需要绑定上传事件
+} else if(this.initMode){
+	this.on("md5Exists", function(data){
+		var uploadDiv =$("#" + data.renderId).find('[data-lui-mark="attachmentlist"]');
+        $("#uploader_" + self.fdKey + "_queueList").addClass("upload_item_hide");
+	});
+
+	this.on("uploadCreate", function(data) {
+		// _uploading(); //上传中
+		var file = data.file;
+		// 修改的段
+		// data.renderId.substring(17,34) +"_params"
+
+		if(remainImg(self.fdKey +"_params")==true){
+	    	$("#attachmentObject_" + self.fdKey + "_content_div").find(".lui_queueList").before(uploadCreateFileDiv(file));
+		}
+	});
+	this.on("uploadStart", function(data) {
+		// 修改的段
+		// 样式固定高度，目的将进度条放在中间
+		var topValue = (parseInt(self.fdPicContentWidth)/2-85);
+		var topValue = (parseInt(self.fdPicContentWidth)/2-85);
+		var lui_upload_progress_width = (self.fdPicContentWidth-30) + "px" ;
+		var uploadDiv =$("#" + data.renderId).find('[data-lui-mark="attachmentlist"]');
+        if(remainImg(self.fdKey +"_params")==true){
+            $("#uploader_" + self.fdKey + "_queueList").addClass("upload_item_hide");
+            $("#uploader_" + self.fdKey + "_queueList").css('display','none');// 这行代码是解决上传图片时的div残存问题
+            setTimeout(function(){
+                   $("#uploader_" + self.fdKey + "_queueList").css('display','block'); // 这行代码是解决删除图片之后无法上传新的图片的问题
+            }, 100);
+
+            $("#uploader_" + self.fdKey + "_queueList").css({"width":"0px","height":"0px"}) ;
+        }
+        if(!self.fdMulti) {
+			$("#uploader_" + self.fdKey + " .tip_info").removeClass("upload_item_hide");
+		}
+		var file = data.file;
+		var idiv = $("#" + file.fdId).find(".imgbox");
+		var paddingTop= 2/3*self.fdPicContentHeight-22 +"px" ;
+		var iprogress = $("<span class='lui_upload_sr_only' style='padding-top:"+paddingTop+"   ;position: relative;padding-bottom:0px'>0</span>");
+		idiv.append(iprogress);
+		idiv.append("<div class='lui_upload_progress' style='width:"+lui_upload_progress_width+";  margin: 0 auto;position: relative;'><div class='lui_upload_progress_bar'></div></div>");
+        var  upload_opt_cancel_Top = 2/3* self.fdPicContentHeight -18+7;
+		idiv.append($("<div style='right:10px;top:"+upload_opt_cancel_Top+"px' class='lui_upload_progress_cancel upload_opt_icon upload_opt_cancel'  title='"+Attachment_MessageInfo["button.cancelAll"]+"'><span class='upload_opt_tip'><i class='upload_opt_tip_arrow'></i><i class='upload_opt_tip_inner'>"+Attachment_MessageInfo["button.cancelAll"]+"</i></span></div>").click(function(e){
+			seajs.use(['lui/dialog'], function(dialog) {
+				dialog.confirm(Attachment_MessageInfo["button.confirmCancel"], function(value) {
+					if(value) {
+						file.fileStatus = -1;
+						file.isDelete = -1;
+						self.uploadObj.cancelFile(file.fdId);
+						var attId = file.fdTemplateAttId || file.fdId;
+						$("#"+attId).remove();
+						$("#uploader_" + self.fdKey + " .lui_queueList").removeClass("upload_item_hide");
+						$("#uploader_" + self.fdKey + " .tip_info").addClass("upload_item_hide");
+						self.emit('editDelete', { "file" : file });
+					}
+				});
+			});
+		}));
+	});
+
+    // 是否保存图片
+    function remainImg(inputName){
+        try{
+           // var inputName =    data.renderId.substring(17,34) +"_params"
+           var configParams = JSON.parse($("[name*='extendDataFormInfo.value("+inputName+")']").attr("params"));
+           var remainImg = configParams["remainImg"] ;
+           if(remainImg == "false") return false;
+           else return true;
+        } catch(e){
+           console.error("这个地方不该走这里，请查看该方法找到问题");
+           console.error(e);
+           return true;
+        }
+    }
+	this.on("uploadProgress", function(data) {
+		 // 修改的段
+		 var uploadDiv = $("#" + data.renderId).find('[data-lui-mark="attachmentlist"]');
+	     if (navigator.userAgent.indexOf('MSIE') == -1) {
+            //uploadDiv.find(".lui_queueList").addClass("upload_item_hide");
+        }
+		var file = data.file;
+		var percent = data.totalPercent;
+		var total = self.formatSize(file.fileSize);
+		var cur;
+		if(percent==null){
+			var bytesLoaded = data.bytesLoaded;
+			var bytesTotal = data.bytesTotal;
+			percent = Math.ceil((bytesLoaded / bytesTotal) * 100);
+			cur = file.fileSize * (bytesLoaded / bytesTotal);
+		}else{
+			percent = Math.ceil(percent*100);
+			cur = file.fileSize * percent;
+		}
+		cur = self.formatSize(cur/100);
+		$("#" + file.fdId).find(".upload_list_operation").removeClass("upload_item_hide");
+		$("#" + file.fdId).find(".lui_upload_sr_only").html( percent +"%");
+		$("#" + file.fdId).find(".lui_upload_progress_bar").css("width", percent + "%");
+		$("#" + file.fdId).find(".upload_list_filename_size").html(cur + "/" + total);
+	});
+
+	this.on("uploadSuccess", function(data) {
+		 // 修改的段
+
+		var uploadDiv =$("#" + data.renderId).find('[data-lui-mark="attachmentlist"]');
+		var file = data.file;
+		var idiv =$("#" + file.id);
+		idiv.removeClass(" lui_upload_img_running");
+		if(file.id!=file.fdId)
+		   idiv.attr("id",file.fdId);
+		var ibox =idiv.find(".imgbox");
+		ibox.empty();
+		var imgExtend = "";
+        if(self.fdImgHtmlProperty!=null && self.fdImgHtmlProperty!="")
+	       imgExtend = self.fdImgHtmlProperty;
+		var $___img = $("<img src=\"" + self.getUrl("download", file.fdId) + "\" "+imgExtend+"  border=0 >");
+		ibox.append($___img);
+		createEditOpers(ibox, file);
+		$("#uploader_" + self.fdKey + "_queueList")[0].style.border=0;
+		$("#" + file.fdId).find(".upload_list_filename_size").html(self.formatSize(file.fileSize));
+       console.log("fileId:"+file.fdId);
+       if(!$("#uploader_"+self.fdKey+"_container").hasClass("img_replace")){
+            self.tipRecoginz();
+            setTimeout(function(){ uploadRecogniz(file.fdId); }, 500);
+       }
+       $("#uploader_"+self.fdKey+"_container").removeClass("img_replace");
+	});
+	this.on("uploadFaied", function(data) {
+	    $("#uploader_"+this.fdKey+"_container").removeClass("img_replace");
+		var file = data.file;
+		var serverData = data.serverData;
+		var uploadDiv = $("#" + (data.renderId || self.renderId)).find('[data-lui-mark="attachmentlist"]');
+		$("#" + file.id).prop("class","lui_upload_img_item lui_upload_fail lui_upload_img_item_edit");
+		var itxt=$("<span class='lui_upload_img_txt'>"+Attachment_MessageInfo["msg.uploadFail"]+"</span>");
+		var icon =	$("<i class='icon icon-fail'></i>")
+		itxt.prepend(icon);
+		var fileName = file.fileName.substring(0, file.fileName.lastIndexOf("."));
+		var fileExt = file.fileName.substring(file.fileName.lastIndexOf("."));
+		$("#" + file.id).empty().append(itxt).append($("<div class='lui_upload_img_item_opt lui_upload_img_item_opt_ocr' />")
+			.append($("<div class='lui_upload_img_reupload' title='"+Attachment_MessageInfo["button.reupload"]+"'><i></i></div>").click(function() {
+				self.uploadObj.retry(data._file);
+			}))
+			.append($("<div class='lui_upload_img_delete' title='"+Attachment_MessageInfo["button.delete"]+"'><i></i></div>").click(function() {
+				self.___delImg(file,uploadDiv);
+			})))
+		.append($("<p class='name upload_pic_filename_view' title='"+file.fileName+"'><span class='upload_list_filename_title'>"+ fileName + "</span><span class='upload_list_filename_ext'>"+ fileExt + "</span><span class='upload_list_filename_size'>"+ self.formatSize(file.fileSize) + "</span></p>"))
+		.append("<div class='lui_upload_img_item_mask' />");
+		$("#" + file.fdId).find(".upload_list_filename_size").html(self.formatSize(file.fileSize));
+		alert(data.serverData);
+});
+	this.on("error", function(data){
+	    $(".lui_upload_container_ocr").removeClass("img_replace");
+	    var fileName = data.file.fileName || data.file.name;
+		var serverData = data.serverData;
+		$("#"+data.file.fdId).remove();
+		if("Q_EXCEED_SIZE_LIMIT"==serverData){
+			alert(Attachment_MessageInfo["error.exceedMaxSize"].replace("{0}", self.totalMaxSize+'MB'));
+		}
+		else if("F_EXCEED_SIZE"==serverData){
+			alert(Attachment_MessageInfo["error.exceedSingleMaxSize"].replace("{0}",fileName).replace("{1}",self.smallMaxSizeLimit+' MB'));
+		}
+		else{
+			alert(Attachment_MessageInfo["error.fileType"].replace("{0}", self.enabledFileType));
+		}
+		// 显示上传按钮
+		$("#uploader_" + self.fdKey + "_queueList").removeClass("upload_item_hide");
+		// 隐藏提示信息
+		$("#uploader_" + self.fdKey + " .tip_info").addClass("upload_item_hide");
+		$("#uploader_" + self.fdKey + "_queueList")[0].style.width = self.fdPicContentWidth + "px";
+		$("#uploader_" + self.fdKey + "_queueList")[0].style.height = self.fdPicContentHeight + "px";
+
+	});
+	this.on("uploadError", function(data) {
+	    $(".lui_upload_container_ocr").removeClass("img_replace");
+		var file = data.file;
+		var errorCode = data.errorCode;
+		var message = data.message;
+		$('#att_xdiv_' + self.fdKey).empty().append(Attachment_MessageInfo["msg.uploadFail"]);
+	});
+}

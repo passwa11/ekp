@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!--变量类型的扩展点定义-->
+	<extension-point
+		id="com.landray.kmss.sys.rule.varType">
+		<item
+			name="varType">
+			<param
+				name="key"
+				required="true"
+				kind="string">
+				<description>必需，指定变量所属类型的key，保证唯一，比如com.landray.kmss.sys.lbpm，com.landray.kmss.sys.xform</description>
+			</param>
+			<param
+				name="value"
+				required="true"
+				kind="string">
+				<description>必需，指定变量所属类型的value，最好保证唯一，比如流程变量，表单变量</description>
+			</param>
+			<param
+				name="className"
+				required="true"
+				kind="java"
+				basedOn="com.landray.kmss.sys.rule.parser.provider.getter.IRuleOtherVarValueGetter">
+				<description>每种变量类型都必须有自己的值获取器，统一通过RuleOtherVarProvider调用</description>
+			</param>
+			<description>
+				变量所属类型扩展
+			</description>
+		</item>
+		<description>变量类型扩展点</description>
+	</extension-point>
+	<!--对应变量类型的变量扩展点定义-->
+	<extension-point
+		id="com.landray.kmss.sys.rule.variable">
+		<item
+			name="variable">
+			<param
+				name="varType"
+				required="true"
+				kind="string">
+				<description>必需，指定变量所属类型，也就是类型扩展中的key，保证唯一，比如com.landray.kmss.sys.lbpm，com.landray.kmss.sys.xform</description>
+			</param>
+			<param
+				name="text"
+				required="true"
+				kind="string">
+				<description>必需，指定变量名称，比如提交人</description>
+			</param>
+			<param
+				name="value"
+				required="true"
+				kind="string">
+				<description>必需，指定变量的值，不允许带"."，比如creator</description>
+			</param>
+			<param
+				name="type"
+				required="true"
+				kind="string">
+				<description>必需，指定变量类型，比如com.landray.kmss.sys.organization.model.SysOrgPerson，String，参考公式定义器的类型</description>
+			</param>
+			<param
+				name="type"
+				required="true"
+				kind="string">
+				<description>必需，指定变量类型，比如com.landray.kmss.sys.organization.model.SysOrgPerson，String，参考公式定义器的类型</description>
+			</param>
+			<param
+				name="className"
+				required="false"
+				kind="java"
+				basedOn="com.landray.kmss.sys.rule.parser.provider.getter.IRuleOtherVarValueGetter">
+				<description>
+					非必需，如果需要对已经存在的变量类型添加变量的化，无法修改原有已经存在的值获取值的情况下，需要实现当前变量的值获取器，来达到扩展的效果。
+					对于已经存在的对应值获取器的变量或者可以修改原来的值获取器的情况下，可以不扩展该参数。
+				</description>
+			</param>
+			<description>
+				对应变量所属类型的变量扩展
+			</description>
+		</item>
+		<description>变量扩展点，主要给规则引擎提供内置变量</description>
+	</extension-point>
+	
+	<!--规则结果行为扩展-->
+	<extension-point
+		id="com.landray.kmss.sys.rule.behavior">
+		<item
+			name="resultBehavior">
+			<param
+				name="behaviorTypeText"
+				required="true"
+				kind="string">
+				<description>必需，指定扩展的行为所属类型text</description>
+			</param>
+			<param
+				name="behaviorTypeValue"
+				required="true"
+				kind="string">
+				<description>必需，指定扩展的行为所属类型value</description>
+			</param>
+			<param
+				name="behaviorText"
+				required="true"
+				kind="string">
+				<description>必需，指定扩展的行为text</description>
+			</param>
+			<param
+				name="behaviorValue"
+				required="true"
+				kind="string">
+				<description>必需，指定扩展的行为value，必须保证唯一</description>
+			</param>
+			<param
+				name="bean"
+				required="true"
+				kind="spring"
+				basedOn="com.landray.kmss.sys.rule.interfaces.ISysRuleResultBehaviorService">
+				<description>必需，指定扩展的行为服务</description>
+			</param>
+			<description>
+				规则结果行为扩展
+			</description>
+		</item>
+		<description>规则结果行为扩展点</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.sys.rule.clone.advice">
+		<item name="advice">
+			<param name="adviceClassName" required="true" kind="string">
+				<description>对应的增强类，这里不提供接口，避免机制之间耦合，规定实现方必须带有handle方法</description>
+			</param>
+			<description>使用方需要实现该扩展点达到增强的效果</description>
+		</item>
+		<description>规则引擎克隆方法进行增强</description>
+	</extension-point>
+	
+	<extension point="com.landray.kmss.sys.rule.varType">
+		<item name="varType">
+			<param name="key" value="com.landray.kmss.sys.lbpm" />
+			<param name="value" value="sys-rule:rule.varType.extend.lbpmVar" />
+			<param name="className" value="com.landray.kmss.sys.rule.parser.provider.getter.RuleLbpmVarValueGetter" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.rule.variable">
+		<item name="variable">
+			<param name="varType" value="com.landray.kmss.sys.lbpm" />
+			<param name="text" value="sys-rule:rule.var.extend.lbpmVar.creator" />
+			<param name="value" value="creator" />
+			<param name="type" value="com.landray.kmss.sys.organization.model.SysOrgPerson" />
+		</item>
+		<item name="variable">
+			<param name="varType" value="com.landray.kmss.sys.lbpm" />
+			<param name="text" value="sys-rule:rule.var.extend.lbpmVar.identity" />
+			<param name="value" value="identity" />
+			<param name="type" value="com.landray.kmss.sys.organization.model.SysOrgElement" />
+		</item>
+		<item name="variable">
+			<param name="varType" value="com.landray.kmss.sys.lbpm" />
+			<param name="text" value="sys-rule:rule.var.extend.lbpmVar.nodeFactId" />
+			<param name="value" value="nodeFactId" />
+			<param name="type" value="String" />
+		</item>
+		<item name="variable">
+			<param name="varType" value="com.landray.kmss.sys.lbpm" />
+			<param name="text" value="sys-rule:rule.var.extend.lbpmVar.nodeName" />
+			<param name="value" value="nodeName" />
+			<param name="type" value="String" />
+		</item>
+		<item name="variable">
+			<param name="varType" value="com.landray.kmss.sys.lbpm" />
+			<param name="text" value="sys-rule:rule.var.extend.lbpmVar.nextNodeFactId" />
+			<param name="value" value="nextNodeFactId" />
+			<param name="type" value="String" />
+		</item>
+		<item name="variable">
+			<param name="varType" value="com.landray.kmss.sys.lbpm" />
+			<param name="text" value="sys-rule:rule.var.extend.lbpmVar.nextNodeName" />
+			<param name="value" value="nextNodeName" />
+			<param name="type" value="String" />
+		</item>
+	</extension>
+	
+	<!--公式扩展-->
+    <extension
+		point="com.landray.kmss.sys.formula"
+		model="com.landray.kmss.sys.rule.model.SysRuleSetRule">
+		<item
+			name="function">
+			<param
+				name="className"
+				value="com.landray.kmss.sys.rule.parser.function.RuleExtendFunction" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.lbpmservice.support.otherContentInfo">
+		<item
+			name="handler">
+			<param
+				name="serviceName"
+				value="com.landray.kmss.sys.rule.service.spring.SysRuleUpdateQuoteInfoService" />
+			<param
+				name="serviceSpringName"
+				value="sysRuleUpdateQuoteInfoService" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.formula.parsers">
+		<item
+			name="parserData">
+			<param
+				name="className"
+				value="com.landray.kmss.sys.rule.parser.extend.RuleFormulaParse" />
+		</item>
+	</extension>
+</plugin>

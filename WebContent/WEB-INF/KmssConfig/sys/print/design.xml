@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="sys-print:module.sys.print"
+		urlPrefix="/sys/print/">
+		<request
+			path="data/sysPrintWordData*" 
+			defaultValidator="true">
+			<query 
+				queryString="method=loadQRCode|loadImage|getCovertDownload|wpssetRet|wpsclearRevisions" 
+				validator="true" />
+		</request>
+	</module>
+	<module
+		urlPrefix="/sys/common/">
+		<request
+			path="dataxml.jsp*">
+			<query
+				validator="ajaxRoleValidator(role=SYSROLE_USER)"
+				queryString="s_bean=sysPrintPropertyDictService" />
+		</request>
+	</module>
+	<homePage
+		urlPrefix="sys/print"
+		url="/moduleindex.jsp?nav=/sys/print/tree.jsp"
+		messageKey="sys-print:module.sys.print" />
+
+</configs>

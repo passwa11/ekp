@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="kmsMedalLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.medal.dao.hibernate.KmsMedalLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.kms.medal.model.KmsMedalLog" />
+	</bean>
+	<bean
+		id="kmsMedalLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.medal.service.spring.KmsMedalLogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmsMedalLogDao" />
+		</property>
+		
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+	</bean>
+	<bean
+		id="kmsMedalLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmsMedalLogTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmsMedalCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.medal.dao.hibernate.KmsMedalCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.kms.medal.model.KmsMedalCategory" />
+	</bean>
+	<bean
+		id="kmsMedalCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.medal.service.spring.KmsMedalCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmsMedalCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmsMedalCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmsMedalCategoryTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmsMedalMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.medal.dao.hibernate.KmsMedalMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.kms.medal.model.KmsMedalMain" />
+	</bean>
+	<bean
+		id="kmsMedalMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.medal.service.spring.KmsMedalMainServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmsMedalMainDao" />
+		</property>
+		<property
+			name="kmsMedalLogService">
+			<ref
+				bean="kmsMedalLogService" />
+		</property>
+		<property
+			name="kmsMedalOwnerService">
+			<ref
+				bean="kmsMedalOwnerService" />
+		</property>
+		<property
+			name="sysOrgPersonService">
+			<ref
+				bean="sysOrgPersonService" />
+		</property>
+		<property name="sysAttMainService">
+			<ref bean="sysAttMainService"/>
+		</property>		
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService"/>
+		</property>		
+		<property name="backgroundAuthService">
+			<ref bean="backgroundAuthService"/>
+		</property>								
+	</bean>
+	<bean
+		id="kmsMedalMainService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmsMedalMainTarget" />
+		</property>
+	</bean>
+	<bean
+		id="kmsMedalImageTarget"
+		class="com.landray.kmss.kms.medal.service.spring.KmsMedalImageServiceImpl">
+		<property name="sysAttMainService">
+			<ref bean="sysAttMainService" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmsMedalImageService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsMedalImageTarget" />
+		</property>
+	</bean>	
+	<bean
+		id="kmsMedalOwnerDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.medal.dao.hibernate.KmsMedalOwnerDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.kms.medal.model.KmsMedalOwner" />
+	</bean>
+	<bean
+		id="kmsMedalOwnerTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.medal.service.spring.KmsMedalOwnerServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmsMedalOwnerDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmsMedalOwnerService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmsMedalOwnerTarget" />
+		</property>
+	</bean>
+	<bean
+		id="kmsMedalValidator"
+		class="com.landray.kmss.kms.medal.service.spring.KmsMedalValidator">
+		<property name="kmsMedalMainService">
+			<ref bean="kmsMedalMainService" />
+		</property>
+	</bean>
+	
+	<bean 
+		id="kmsMedalSameInExcelValidator" 
+		class="com.landray.kmss.kms.medal.proxy.validator.impl.KmsMedalSameInExcelValidator"/>
+	<bean 
+		id="kmsMedalAvailableValidator" 
+		class="com.landray.kmss.kms.medal.proxy.validator.impl.KmsMedalAvailableValidator"/>
+	<bean 
+		id="kmsMedalSameInOwnerValidator" 
+		class="com.landray.kmss.kms.medal.proxy.validator.impl.KmsMedalSameInOwnerValidator"/>
+	 	
+	<bean 
+		id="kmsMedalServiceProxyTarget" 
+		class="com.landray.kmss.kms.medal.proxy.KmsMedalServiceProxy">
+		<property name="kmsMedalMainService">
+			<ref bean="kmsMedalMainService"/>
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService"/>
+		</property>
+	</bean>
+	
+	<bean id="kmsMedalServiceProxy" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject">
+			<ref bean="kmsMedalServiceProxyTarget"/>
+		</property>
+		<property name="targetMethod">
+			<value>addValidators</value>
+		</property>
+		<property name="arguments">
+			<list>
+				<ref bean="kmsMedalSameInExcelValidator"/>
+				<ref bean="kmsMedalAvailableValidator"/>
+				<ref bean="kmsMedalSameInOwnerValidator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="kmsMedalCheckNameOnlyServiceImpl" class="com.landray.kmss.kms.medal.service.spring.KmsMedalCheckNameOnlyServiceImpl"/>
+	
+	
+			<bean
+		id="kmsMedalLogProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>kmsMedalMainService</value>
+				<value>kmsMedalOwnerService</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>kmsPointcutAdvisorService</value>
+			</list>
+		</property>
+	</bean>	
+	
+	<bean id="kmsMedalProviderService"
+		class="com.landray.kmss.kms.medal.service.handle.KmsMedalProviderService">
+		<property name="kmsMedalMainService">
+			<ref bean="kmsMedalMainService" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+	</bean>
+	
+	 <bean id="kmsMedalPublisher" class="com.landray.kmss.kms.medal.events.KmsMedalPublisher">
+	</bean>
+	
+	
+</beans>

@@ -1,0 +1,232 @@
+data = data || {};
+var viewWgt = render.parent;
+var fieldInfos = viewWgt.getFieldInfos();
+var attachments = listviewOption.attachments;
+// 列表穿透，默认是true
+var viewFlag = data.fdViewFlag === "0" ? "0":"1";
+// 是否权限过滤，默认是true
+var authEnabled = data.fdAuthEnabled === "0" ? "0":"1";
+
+// 获取标题字段的文本值
+var fdCalendarShowField = data.fdCalendarShowField || {};
+
+//时间字段
+var fdDateField = data.fdDateField || {};
+//显示周期
+var showMode = data.showMode || "1";
+
+var lang=viewWgt.getModelingLang();
+{$
+<table class="tb_simple model-view-panel-table" width="100%">
+    <!-- 筛选项start -->
+    <tr>
+        <td class="td_normal_title" data-lui-position='fdCondition' data-lui-local='fdCondition_local'>
+           <!-- 筛选项 -->
+            {%lang['modelingAppListview.fdCondition']%}
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <div class="inputselectsgl multiSelectDialog"  data-lui-position='fdCondition' style="width:100%;height: 28px!important;">
+                <input name="fd_{%viewWgt.id%}_fdCondition" value='{%JSON.stringify(data.fdCondition)%}' type="hidden">
+                <div class="input">
+                    <input name="fd_{%viewWgt.id%}_fdConditionText" value="{%data.fdConditionText%}" type="text" style="display:none;" />
+                    <span class="selectedItem"></span>
+                </div>
+                <div class="deleteAll"></div>
+                <div class="selectitem"></div>
+            </div>
+        </td>
+    </tr>
+    <!-- 筛选项end -->
+
+    <!-- 业务操作start -->
+<!--    <tr  class="operationTr">-->
+<!--        <td class="td_normal_title" data-lui-position='fdOperation' data-lui-local='fdOperation_local'>-->
+<!--            <span class="model-edit-view-oper-title">-->
+<!--                业务操作-->
+<!--            </span>-->
+<!--            <span class="model-data-create model-data-operate">-->
+<!--                新增-->
+<!--            </span>-->
+<!--        </td>-->
+<!--    </tr>-->
+    <tr>
+        <td class="model-view-panel-table-td">
+            <div class="model-panel-table-base" style="display:none;margin-bottom:0">
+                <div class="tb_simple model-edit-view-oper-content-table" id="fd_{%viewWgt.id%}_operate" data-table-type="operate" style="width:100%;">
+                </div>
+                <input name="operationIds" type="hidden" value="" />
+                <input name="operationNames" type="hidden" value="" />
+            </div>
+        </td>
+    </tr>
+    <!-- 业务操作end -->
+
+    <!-- 日历设置 -->
+    <tr>
+        <td class="model-calendar-setting-td" data-lui-position='fdDisplay' data-lui-local='fdDisplay_local'>
+            <div class="model-calendar-setting">
+                <div class="model-calendar-setting-msg">{%lang['calendar.settings']%}</div>
+            </div>
+        </td>
+    </tr>
+    <!-- 默认显示周期start -->
+    <tr>
+        <td class="td_normal_title calendar-td-normal">
+            {%lang['respanel.default.display.period']%}
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td" data-lui-position='fdDisplay' onclick="switchSelectPosition(this,'right')">
+            <div class="item-content onlineContext">
+                <div class="view_flag_radio" view-flag-radio-value="{%showMode%}" style="display: inline-block;">
+                    <div class="view_flag_radio_item" view-flag-radio-value="0">
+                        <i class="view_flag_no view_flag_yes"></i>{%lang['automaticfill.week']%}
+                    </div>
+                    <div class="view_flag_radio_item" view-flag-radio-value="1">
+                        <i class="view_flag_no"></i>{%lang['automaticfill.month']%}
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <!-- 默认显示周期end -->
+    <!-- 日历标题start -->
+    <tr>
+        <td class="td_normal_title calendar-td-normal" >
+            {%lang['calendar.title']%}
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td" data-lui-position='fdDisplay' onclick="switchSelectPosition(this,'right')">
+            <div class="model-calendar-title">
+            </div>
+        </td>
+    </tr>
+    <!-- 日历标题end -->
+
+    <!-- 日历显示字段start -->
+    <tr>
+        <td class="td_normal_title calendar-td-normal">
+            {%lang['calendar.display.field']%}
+        </td>
+    </tr>
+    <tr class="fdCalendarShowFieldTr">
+        <td class="model-view-panel-table-td"  data-lui-position='fdDisplay' onclick="switchSelectPosition(this,'right')">
+            <div class="model-mask-panel-table-select" style="">
+                <p class="model-mask-panel-table-select-val" placeholder="请选择">{%fdCalendarShowField.text || lang['modeling.page.choose'] %}</p>
+
+                <div class="model-mask-panel-table-option">$}
+                    for(var i = 0;i < fieldInfos.length;i++){
+                        var fieldInfo = fieldInfos[i];
+                        if(!fieldInfo.isSubTableField){
+                            {$
+                            <div option-value="{%fieldInfo.field%}" data-field-type="{%fieldInfo.type%}" title="{%fieldInfo.text%}">{%fieldInfo.text%}</div>
+                            $}
+                        }
+                    }
+                    {$</div>
+                <input name="fd_{%viewWgt.id%}_fdCalendarShowField" type="text" style='display: none' data-subject="{%lang['calendar.display.field']%}" subject="{%lang['calendar.display.field']%}" validate="required" value="{%fdCalendarShowField.field%}" />
+            </div>
+            <span class="txtstrong">*</span>
+        </td>
+    </tr>
+    <!-- 日历显示字段end -->
+
+    <!-- 显示样式start -->
+    <tr id="fdDisplayCssSetTr">
+        <td class="td_normal_title td_display_add calendar-td-normal">
+            <span class="displaycss td_normal_title" data-lui-position="fdDisplayCss">{%lang['modelingAppListview.fdDisplayCssSet']%}</span>
+            <span class="displaycss_create model_select_selected" style="float: right; padding-bottom: 8px; pointer-events: auto;">{%lang['listview.set']%}
+                <div class="displaycss_create_pop" style="height: 0px; border: 0px;">
+                </div>
+            </span>
+        </td>
+    </tr>
+    <!-- 显示样式end -->
+
+    <!-- 时间字段start -->
+    <tr>
+        <td class="td_normal_title calendar-td-normal">
+            {%lang['time.field']%}
+            <span class="model-edit-calendar-tip">({%lang['calendar.content.by.field']%})</span>
+        </td>
+    </tr>
+    <tr class="fdDateFieldTr">
+        <td class="model-view-panel-table-td" data-lui-position='fdDisplay' onclick="switchSelectPosition(this,'right')">
+            <div class="model-mask-panel-table-select" style="">
+                <p class="model-mask-panel-table-select-val" placeholder="请选择">{%fdDateField.text || lang['modeling.page.choose'] %}</p>
+                <div class="model-mask-panel-table-option">$}
+                    for(var i = 0;i < fieldInfos.length;i++){
+                        var fieldInfo = fieldInfos[i];
+                        if(!fieldInfo.isSubTableField  && (fieldInfo.type === "DateTime" || fieldInfo.type === "Date")){
+                            {$
+                            <div option-value="{%fieldInfo.field%}" data-field-type="{%fieldInfo.type%}" title="{%fieldInfo.text%}">{%fieldInfo.text%}</div>
+                            $}
+                        }
+                    }
+                    {$</div>
+                <input name="fd_{%viewWgt.id%}_fdDateField" type="text" style='display: none'  data-subject="{%lang['time.field']%}" subject="{%lang['time.field']%}" validate="required" value="{%fdDateField.field%}" />
+            </div>
+            <span class="txtstrong">*</span>
+        </td>
+    </tr>
+    <!-- 时间字段end -->
+
+    <!-- 摘要项start -->
+    <tr class="summaryTr">
+        <td class="td_normal_title calendar-td-normal" >
+            <span class="model-edit-view-oper-title">{%lang['calendar.summary']%}</span>
+            <span class="model-edit-calendar-tip">({%lang['calendar.click.field.show']%})</span>
+            <span class="model-data-preview">{%lang['sysform.preview']%}</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td" data-table-type='summary' data-lui-position='fdDisplay' onclick="switchSelectPosition(this,'right')">
+        </td>
+    </tr>
+    <!-- 摘要项end -->
+
+    <!-- 视图穿透start-->
+    <tr>
+        <td class="td_normal_title viewcover-content">
+            {%lang['respanel.view.penetration']%}
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <input type="hidden" name="fd_{%viewWgt.id%}_fdViewFlag" value='{%viewFlag%}'>
+            <select class='inputsgl selectCover' name="fd_{%viewWgt.id%}_fdViewId" style="{%viewFlag === '1'?'':'display:none'%}">
+                <option value="">{%lang['sysModelingOperation.fdViewDef']%}</option>$}
+                // listviewOption.baseInfo在edit.jsp里面定义
+                for(var i = 0;i < listviewOption.baseInfo.views.length;i++){
+                var option = listviewOption.baseInfo.views[i];
+                if (!option[2]) {
+                    {$
+                    <option value="{%option[0]%}" {%data.fdViewId === option[0]?'selected':''%}>{%option[1]%}</option>
+                    $}
+                }
+                }
+                {$</select>
+        </td>
+    </tr>
+    <!-- 视图穿透end-->
+    <!-- 排序设置start -->
+    <tr>
+        <td class="td_normal_title" data-lui-position='fdOrderBy'>
+            <span class="model-edit-view-oper-title">{%lang['modelingAppListview.fdOrderBy']%}</span>
+            <span class="model-data-create model-data-order">{%lang['button.add']%}</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <div class="model-panel-table-base" style="display:none;margin-bottom:0">
+                <div class="tb_simple model-edit-view-oper-content-table" id="fd_{%viewWgt.id%}_order" data-table-type="order" style="width:100%;">
+                </div>
+            </div>
+        </td>
+    </tr>
+    <!-- 排序设置end -->
+</table>
+$}

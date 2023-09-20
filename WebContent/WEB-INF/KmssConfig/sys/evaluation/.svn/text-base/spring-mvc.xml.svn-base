@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/evaluation/sys_evaluation_main/sysEvaluationMain.do"
+		class="com.landray.kmss.sys.evaluation.actions.SysEvaluationMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.evaluation.forms.SysEvaluationMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/evaluation/sys_evaluation_main/sysEvaluationMain_view.jsp" />
+				<entry
+					key="score"
+					value="/sys/evaluation/sys_evaluation_main/sysEvaluationMain_score.jsp" />
+				<entry
+					key="edit"
+					value="/sys/evaluation/sys_evaluation_main/sysEvaluationMain_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/evaluation/sys_evaluation_main/sysEvaluationMain_list.jsp" />
+				<entry
+					key="newsList"
+					value="/sys/evaluation/sys_evaluation_main/sysEvaluationMain_news_list.jsp" />
+				<entry
+					key="edit4Doc"
+					value="/sys/evaluation/sys_evaluation_main/sysEvaluationMain_doc_edit.jsp" />
+				<entry
+					key="list4Doc"
+					value="/sys/evaluation/sys_evaluation_main/sysEvaluationMain_doc_list.jsp" />
+				<entry
+					key="listUi"
+					value="/sys/evaluation/import/sysEvaluationMain_view_list.jsp" />
+				<entry
+					key="list4Doc.4pda"
+					value="/sys/evaluation/sys_evaluation_main/sysEvaluationMain_list.4pda.jsp" />
+				<entry
+					key="mobileList"
+					value="/sys/evaluation/mobile/list.jsp" />
+				<entry
+					key="myEvaluationTopList"
+					value="/sys/evaluation/mobile/myEvaluation/myEvaluationTopList.jsp" />
+				<entry
+					key="listOverView"
+					value="/sys/evaluation/import/sysEvaluationMain_over_view_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/evaluation/sys_evaluation_main/sysEvaluationReply.do"
+		class="com.landray.kmss.sys.evaluation.actions.SysEvaluationReplyAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.evaluation.forms.SysEvaluationReplyForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="replyDialogs"
+					value="/sys/evaluation/import/sysEvaluationMain_reply_dialog.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/evaluation/sys_evaluation_main/sysEvaluationNotes.do"
+		class="com.landray.kmss.sys.evaluation.actions.SysEvaluationNotesAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.evaluation.forms.SysEvaluationNotesForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/evaluation/import/sysEvaluationNotes_view.jsp" />
+				<entry
+					key="listNotes"
+					value="/sys/evaluation/import/sysEvaluationNotes_view_list.jsp" />
+				<entry
+					key="listOverView"
+					value="/sys/evaluation/import/sysEvaluationNotes_over_view_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/evaluation/sys_evaluation_notes/sysEvaluationNotesConfig.do"
+		class="com.landray.kmss.sys.evaluation.actions.SysEvaluationNotesConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.evaluation.forms.SysEvaluationNotesConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/sys/evaluation/import/sysEvaluationNotes_config.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+    <bean 
+        class="com.landray.kmss.sys.evaluation.actions.SysEvaluationShareAction" 
+        parent="KmssBaseAction" 
+        name="/sys/evaluation/sys_evaluation_share/sysEvaluationShare.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.sys.evaluation.forms.SysEvaluationShareForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry
+                    key="listLog"
+                    value="/sys/evaluation/sys_evaluation_share/sysEvaluationShare_log_list.jsp" />
+            </map>
+        </property>
+    </bean>
+</beans>

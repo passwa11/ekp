@@ -1,0 +1,37 @@
+var datas = data;
+var columnNum = template.parent.columnNum;
+var width = 100/columnNum+'%';
+{$<table class="shortCut_UL">$}
+for (var i = 0; i < datas.length; i ++) {
+	var grid = datas[i];
+	
+	if (i % columnNum === 0){
+		{$<tr class="shortCut_li">$}
+	}
+			{$<td width="{%width%}">
+				  <div class="note_box">
+                        <div class="note_box_con">
+							<h3>{%grid['fdCourse'].text%}</h3>
+							<div class="name"><span class="date">{%grid['docCreateTime'].text%}</span>{%grid['docCreator'].text%}</div>
+							<div class="detail">{%grid['fdNotesContent'].text%}
+								<a href="/kms/common/kms_notes/kmsCourseNotes.do?method=view&fdId=" class="detail_more"><bean:message key="button.more"/></a>
+							</div>
+							<div class="discuss"> <bean:message	bundle="kms-common" key="kmsCommon.praise" />( {%grid['docPraiseCount'].text%} )&nbsp;&nbsp;|&nbsp;&nbsp;<bean:message	bundle="kms-common" key="kmsCommon.evaluate" />( {%grid['docEvalCount'].text%} )</div>
+						</div>
+                    </div>
+			</td>$}
+	if (i % columnNum === columnNum-1){
+		{$</tr>$}
+	}
+}
+var _num = datas.length % columnNum; 
+if(_num>0){
+	for(var j = 0;j<columnNum-_num;j++){
+		{$
+			<td width="{%width%}"></td>
+		$}
+	}
+	{$ </tr> $}
+}
+
+{$</table>$}

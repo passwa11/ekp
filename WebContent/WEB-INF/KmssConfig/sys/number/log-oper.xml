@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="sysNumberMainMappOperLog"
+            desc="编号机制模板类的日志配置"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.number.model.SysNumberMainMapp"
+            action="/sys/number/sys_number_main_mapp/sysNumberMainMapp.do">
+        </oper>
+        
+        <oper
+            id="sysNumberMainOperLog"
+            desc="编号机制配置"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.number.model.SysNumberMain"
+            action="/sys/number/sys_number_main/sysNumberMain.do">
+            <ignoreFields>fdContent</ignoreFields>
+            <query 
+                method="clone"
+                logPoint="Base_UrlParam;Action_Find"
+                messageKey="sys-number:sysNumberMain.btn.clone">
+            </query>
+        </oper>    
+        <oper
+            id="sysNumberMainFlowOperLog"
+            desc="编号机制流水号"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.number.model.SysNumberMainFlow"
+            action="/sys/number/sys_number_main_flow/sysNumberMainFlow.do">
+            
+            <query 
+                method="listByCreateSqlQuery"
+                logPoint="Base_UrlParam;Action_FindAll"
+                model="*"
+                messageKey="button.list">
+            </query>
+        </oper>
+	</logset>
+</log-oper>

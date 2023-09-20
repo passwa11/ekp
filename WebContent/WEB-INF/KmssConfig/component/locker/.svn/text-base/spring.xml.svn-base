@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		id="componentLockerMainDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.component.locker.dao.hibernate.ComponentLockerMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.component.locker.model.ComponentLockerMain" />
+	</bean>
+	
+	<bean
+		id="componentLockManagerTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.component.locker.service.spring.ComponentLockManagerImp">
+		<property name="baseDao">
+			<ref bean="componentLockerMainDao" />
+		</property>
+	</bean>
+	<bean
+		id="componentLockManager"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="componentLockManagerTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean
+		id="componentLockService"
+		class="com.landray.kmss.component.locker.service.spring.ComponentLockServiceImp">
+		<property name="componentLockManager">
+			<ref bean="componentLockManager" />
+		</property>
+	</bean>
+	
+	<bean
+		id="componentLockerMonitorTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.component.locker.service.spring.ComponentLockerMonitorImp">
+		<property name="baseDao">
+			<ref bean="componentLockerMainDao" />
+		</property>
+		<property name="relaseMemoryLockerManager">
+			<ref bean="componentRelaseMemoryLockerManager" />
+		</property>
+	</bean>
+	<bean
+		id="componentLockerMonitor"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="componentLockerMonitorTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="release*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="componentRelaseMemoryLockerManager" 
+		class="com.landray.kmss.component.locker.service.spring.RelaseMemoryLockerManager" >
+	</bean>
+	
+	<bean
+		id="componentLockerVersionDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.component.locker.dao.hibernate.ComponentLockerVersionDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.component.locker.model.ComponentLockerVersion" />
+	</bean>
+	<bean
+		id="componentLockerVersionTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.component.locker.service.spring.ComponentLockerVersionServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="componentLockerVersionDao" />
+		</property>
+	</bean>
+	<bean
+		id="componentLockerVersionService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="componentLockerVersionTarget" />
+		</property>
+	</bean>
+	
+	
+	<bean
+		id="componentLockerVersionLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.component.locker.dao.hibernate.ComponentLockerVersionLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.component.locker.model.ComponentLockerVersionLog" />
+	</bean>
+	<bean
+		id="componentLockerVersionLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.component.locker.service.spring.ComponentLockerVersionLogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="componentLockerVersionLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="componentLockerVersionLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="componentLockerVersionLogTarget" />
+		</property>
+	</bean>
+	
+	<bean id="componentLockerVersionCoreService" parent="KmssBaseCoreService">
+		<property name="target">
+			<bean class="com.landray.kmss.component.locker.service.spring.ComponentLockerVersionCoreServiceImpl">
+				<property name="componentLockerVersionService">
+					<ref bean="componentLockerVersionService" />
+				</property>
+				<property name="componentLockerVersionLogService">
+					<ref bean="componentLockerVersionLogService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+</beans>

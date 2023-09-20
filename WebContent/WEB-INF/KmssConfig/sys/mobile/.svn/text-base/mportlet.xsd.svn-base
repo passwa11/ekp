@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.landray.com.cn/schema/mportlet" xmlns:ui="http://www.landray.com.cn/schema/lui"
+	targetNamespace="http://www.landray.com.cn/schema/mportlet"
+	elementFormDefault="qualified">
+	<xsd:import schemaLocation="../../sys/ui/lui.xsd"
+		namespace="http://www.landray.com.cn/schema/lui"></xsd:import>
+	<xsd:complexType name="operations">
+		<xsd:sequence>
+			<xsd:element name="operation" maxOccurs="unbounded"
+				minOccurs="1">
+				<xsd:complexType>
+					<xsd:attribute name="name" type="xsd:string">
+					</xsd:attribute>
+					<xsd:attribute name="href" type="xsd:string">
+					</xsd:attribute>
+					<xsd:attribute name="type">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="random"/>
+								<xsd:enumeration value="create"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="mportlet">
+		<xsd:complexType mixed="true">
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="vars" type="ui:vars" maxOccurs="1"
+					minOccurs="0">
+				</xsd:element>
+				<xsd:element name="operations" type="operations"
+					maxOccurs="1" minOccurs="0">
+				</xsd:element>
+			</xsd:choice>
+			<xsd:attribute name="id" type="xsd:string" use="required" />
+			<xsd:attribute name="name" type="xsd:string" use="required" />
+			<xsd:attribute name="jspUrl" type="xsd:string"/>
+			<xsd:attribute name="jsUrl" type="xsd:string"/>
+			<xsd:attribute name="cssUrl" type="xsd:string"/>
+			<xsd:attribute name="module" type="xsd:string" />
+			<xsd:attribute name="moduleUrl" type="xsd:string" />
+			<xsd:attribute name="description" type="xsd:string" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="root">
+		<xsd:complexType>
+			<xsd:choice maxOccurs="unbounded" minOccurs="0">
+				<xsd:element ref="mportlet" />
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.sys.attend.model.SysAttendCategoryTargetChange"
+        table="sys_attend_category_target_bg">
+        <id
+                name="fdId"
+                column="fd_id"
+                length="36">
+            <generator
+                    class="assigned" />
+        </id>
+        <property 
+            name="fdBeginTime" 
+            column="fd_begin_time" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="fdEndTime" 
+            column="fd_end_time" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="docAlterTime" 
+            column="doc_alter_time" 
+            update="true" 
+            insert="true" 
+            index="idx_targetNew_docAlterTime"/>
+
+        <many-to-one 
+            name="fdHisCategory"
+            column="fd_his_category_id"
+            update="true" 
+            insert="true"/>
+
+        <property
+                name="fdIsAvailable"
+                column="fd_is_available"
+                update="true"
+                insert="true"
+                length="1"
+                not-null="false" />
+
+        <many-to-one 
+            name="fdOrg" 
+            column="fd_org_id" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="docAlteror" 
+            column="doc_alteror_id" 
+            update="true" 
+            insert="true"/>
+    </class>
+</hibernate-mapping>

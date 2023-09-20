@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+    <portlet id="kms.lservice.knowledge.prefecture"
+             name="{kms-lservice:kmsLservice.knowledge.prefecture.name}"
+             module="{kms-lservice:module.kms.lservice}"
+             description="{kms-lservice:kmsLservice.knowledge.prefecture.description}">
+        <source format="sys.ui.html" type="AjaxText">
+            <code>
+                <![CDATA[
+				{
+					"url":"/kms/lservice/portlet/kms_lservice_knowledge_prefecture.jsp?rowsize=!{rowsize}&learnImg=!{learnImg}&examImg=!{examImg}",
+					"formatKey":"html"
+				}
+			]]>
+            </code>
+        </source>
+        <vars>
+            <var name="{kms-lservice:kmsLservice.portlet.my.learn.doc}" key="rowsize" kind="rowsize" default="6"/>
+            <var key="learnImg" kind="custom" name="{kms-lservice:kmsLservice.portlet.my.learn.one.back}" >
+                {"file":"/kms/lservice/portlet/material.jsp"}
+            </var>
+            <var key="examImg" kind="custom" name="{kms-lservice:kmsLservice.portlet.my.learn.one.exam.back}" >
+                {"file":"/kms/lservice/portlet/material.jsp"}
+            </var>
+        </vars>
+    </portlet>
+
+    <!--  我的学习任务，当在线学习，在线考试，学习地图，线下培训，每日提醒模块都存在，该组件才能被使用 -->
+    <portlet id="kmsLservice.portlet.my.task"
+             name="{kms-lservice:kmsLservice.portlet.my.task.name}"
+             module="{kms-lservice:module.kms.lservice}"
+             description="{kms-lservice:kmsLservice.portlet.my.task.description}">
+        <source format="sys.ui.html" type="AjaxText">
+            <code>
+                <![CDATA[
+				{
+					"url":"/kms/lservice/portlet/kms_lservice_my_task.jsp?type=!{type}",
+					"formatKey":"html"
+				}
+			]]>
+            </code>
+        </source>
+        <vars>
+            <var name="{kms-lservice:kmsLservice.portlet.my.task.checkbox.name}" key="type" kind="enumValue" default="type">
+                {"values":[{"text":"{kms-lservice:kmsLservice.portlet.my.task.checkbox.name.learning}", "value":"learned"},
+                {"text":"{kms-learn:table.kmsLearnActivity}", "value":"acti"},
+                {"text":"{kms-exam:portlet.learnexam.exam.task}", "value":"exam"},
+                {"text":"{kms-lmap:module.kms.learnmap}", "value":"lmap"},
+                {"text":"{kms-train:kmsTrain.4m.plan}", "value":"train"},
+                {"text":"{kms-reminder:module.kms.reminder}", "value":"reminder"}], "showType":"checkbox"}
+            </var>
+        </vars>
+    </portlet>
+
+    <!--  导师任务看板，当在线考试，作业管理，学习地图，在线学习模块存在，该组件才能被使用 -->
+    <portlet id="kmsLservice.portlet.lecturer.task"
+             name="{kms-lservice:kmsLservice.portlet.lecturer.task.name}"
+             module="{kms-lservice:module.kms.lservice}"
+             description="{kms-lservice:kmsLservice.portlet.lecturer.task.description}">
+        <source format="sys.ui.html" type="AjaxText">
+            <code>
+                <![CDATA[
+				{
+					"url":"/kms/lservice/portlet/kms_lservice_lecturer_task.jsp?type=!{type}",
+					"formatKey":"html"
+				}
+			]]>
+            </code>
+        </source>
+        <vars>
+            <var name="{kms-lservice:kmsLservice.portlet.my.task.checkbox.name}" key="type" kind="enumValue" default="type">
+                {"values":[{"text":"{kms-lservice:kmsLservice.portlet.lecturer.task.enum.exam}", "value":"exam"},
+                {"text":"{kms-lservice:kmsLservice.portlet.lecturer.task.enum.homework}", "value":"homework"},
+                {"text":"{kms-lservice:kmsLservice.portlet.lecturer.task.enum.lmap}", "value":"lmap"},
+                {"text":"{kms-lservice:kmsLservice.portlet.lecturer.task.enum.train}", "value":"train"}], "showType":"checkbox"}
+            </var>
+        </vars>
+    </portlet>
+</root>

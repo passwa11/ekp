@@ -1,0 +1,549 @@
+var listView = render.parent;
+console.log("data",data);
+var authCreate = data.authCreate === "true" ? true : false;
+var viewType = data.viewType;
+var licenseCreate = data.licenseCreate === "true" ? true : false;
+var appInfos = listView.classifyAppInfos(data.apps);
+var tableAppInfos = listView.listTableAppInfos(data.apps);
+var tableApps= tableAppInfos.tableApps;
+var noCategorys = appInfos.noCategorys;    // 数组
+var categorys = appInfos.categorys;        // json {"xxx(categoryId)" : {"name":"xxx","order":"xxx","apps":[{...},{...}]} }
+var sort_array = [];
+var lang = listView.getModelingLang();
+for(var categoryId in categorys){
+var item = {
+val : categorys[categoryId],
+key : categoryId,
+isNull:categorys[categoryId].isNull
+};
+var order =  categorys[categoryId].order;
+var time =  categorys[categoryId].time;
+var reg = /^[0-9]+.?[0-9]*$/;
+var regNeg = /^\-[1-9][0-9]*$/; // 负整数
+if (reg.test(order) || regNeg.test(order)) {
+item.order = parseFloat(order)
+}else{
+item.order = 0
+}
+if (reg.test(time)) {
+item.time = parseFloat(time)
+}else{
+item.time = 0
+}
+sort_array.push(item)
+}
+sort_array.sort(function (a,b){
+    if(a.isNull && b.isNull){
+        return b.time-a.time;
+    }
+    if(a.isNull){
+        return -1;
+    }
+    if(b.isNull){
+        return 1;
+    }
+    if(a.order == b.order){
+        return b.time-a.time;
+    }
+    return a.order-b.order;
+})
+//console.log(categorys,sort_array);
+listView.tableAddButtonShow(authCreate,licenseCreate,viewType);
+if(viewType == "1"){
+if(noCategorys.length>0 ||sort_array.length>0){
+{$
+<div class="lui_profile_listview_content gridContent">
+    <div class="appList_nocategory">
+        <ul class="lui_profile_listview_card_page" style="float:none">
+            $}
+            // 停用应用页面不需要新建
+            if(authCreate && licenseCreate){
+            {$
+            <li class="lui_profile_block_grid_item lui_profile_block_grid_item_add" data-applist-boxtype="create"
+                style="cursor:pointer;">
+                <div class="app_add_plus">
+                    <i class="app_add_icon"></i>
+                </div>
+                <div class="app_create_des">{%lang['modeling.creat.newapp']%}</div>
+            </li>
+            $}
+
+            }
+            for(var i = 0;i < noCategorys.length;i++){
+            var item = noCategorys[i];
+            var status = listView.tmpStatus[item.status];
+            if(!item.appDesc){
+            item.appDesc = lang['modeling.no.description']
+
+            }
+            {$
+            <li class="lui_profile_block_grid_item grid_item_bg itemStyle_{%(i%6+1)%}" data-applist-id="{%item.id%}" style="position: inherit">
+                <div class="appMenu_item_block {%status.colorClass%}">
+                    <div class="appMenu_main">
+                        <div class="appMenu_status  {%status.class%}">
+                            {%status.text%}
+                        </div>
+
+                        <div class="appMenu_main_icon">
+                            <i class="iconfont_nav {%item.icon%}"></i>
+                        </div>
+                        <div class="appMenu_main_cover">
+
+
+                            <div class="modeling_app_edit" data-applist-boxtype="edit"
+                                 data-applist-id="{%item.id%}">
+
+                                <i class="modeling_app_icon"></i>
+                                <span class="modeling_app_text">{%lang['enums.operation.def.3']%}</span>
+                            </div>
+                            <div class="modeling_app_btn_bar">
+                                <div class="modeling_app_operation"
+                                     data-oper-code="{%item.status%}">
+                                    {%status.text%}
+                                    <i class="down_arrow"></i>
+                                    <i class="up_arrow"></i>
+                                </div>
+                                <div class="modeling_app_btn modeling_app_btn_more" data-script-click="more"
+                                     data-r-title="{%lang['modeling.more']%}" style=" display:{%item.status !='04'?'block':'none'%}">
+                                    <div class="modeling_app_icon_item_top">
+                                        <i class="modeling_app_icon"></i>
+                                        <div class="form_popup">
+                                            <ul class="modeling_app_operation_alert">
+                                                $}
+                                                if( item.status !='04'){
+                                                {$
+                                                <li data-script-click="export">{%lang['enums.operation.def.7']%}</li>
+                                                $}
+                                                }
+                                                if( item.selfBuild === false && item.licenseType ==='1' ){
+                                                {$
+                                                <li data-script-click="selfBuildApp">{%lang['modelingLicense.self.build']%} </li>
+                                                $}
+                                                }
+                                                {$
+                                                <!--                     暂时屏蔽后续加     <li >属性 </li>-->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                $}
+                                if(item.status!='03' && item.licenseType != '0'){
+                                {$
+                                <div class="modeling_app_btn modeling_app_btn_version" data-script-click="version"
+                                     data-r-title="{%lang['modelingApplication.fdVersion']%}">
+                                    <div class="modeling_app_icon_item_top">
+                                        $} if(item.hasNewVer){ {$
+                                        <i class="modeling_app_icon red-point"></i>
+                                        $} } else { {$
+                                        <i class="modeling_app_icon"></i>
+                                        $} } {$
+                                    </div>
+                                </div>
+                                $}
+                                }
+                                {$
+                                <div class="modeling_app_btn modeling_app_btn_index"
+                                     data-home-href="{%item.homePageUrl%}" data-r-title="{%lang['modeling.app.home']%}">
+                                    <div class="modeling_app_icon_item_top">
+                                        <i class="modeling_app_icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="appMenu_title_box">
+                        $}
+                        if(listView.env.view ==='allApps' || listView.env.view ==='editorApps'){
+                            if( item.selfBuild === false ){
+                                {$
+                                <div class="app_type_install" title="{%lang['modelingLicense.activate.install.app']%}">{%lang['modelingLicense.activate.install.app']%}</div>
+                                <div class="appMenu_title_name1 textEllipsis appMenu_titleName" title="{%item.name%}">{%item.name%}</div>
+                                $}
+                            }else{
+                                {$
+                                <div class="app_type_self" title="{%lang['modelingLicense.activate.self.build']%}">{%lang['modelingLicense.activate.self.build']%}</div>
+                                <div class="appMenu_title_name1 textEllipsis appMenu_titleName" title="{%item.name%}">{%item.name%}</div>
+                                $}
+                            }
+                        }else{
+                            {$
+                            <div class="appMenu_title_name textEllipsis appMenu_titleName" title="{%item.name%}">{%item.name%}</div>
+                            $}
+                        }
+                        {$
+                        <div class="appMenu_title_version textEllipsis" title="{%item.appVersion%}">
+                            {%item.appVersion%}
+                        </div>
+                        <p class="appMenu_title_desc textEllipsis " title="{%item.appDesc%}">{%item.appDesc%}</p>
+                        $}
+                        if(item.licenseType ==='0'){
+                            if( item.isEnd === true){
+                                {$
+                                <p class="app_endTime textEllipsis maturity_tips" >
+                                    <span class="modeling-maturity-tip"></span>
+                                    {%lang['modelingLicense.activate.endTIme']%}</p>
+                                $}
+                            }else if( item.isEnd === false && item.remainDay == 0){
+                                {$
+                                <p class="app_endTime textEllipsis maturity_tips " >
+                                    <span class="modeling-maturity-tip"></span>
+                                    {%lang['modelingLicense.expiring']%}</p>
+                                $}
+                            }else if( item.isEnd === false && item.remainDay <=7){
+                                {$
+                                <p class="app_endTime textEllipsis maturity_tips " >
+                                    <span class="modeling-maturity-tip"></span>
+                                    {%lang['modelingLicense.still.left.before.maturity']%}{%item.remainDay%}{%lang['modelingLicense.day']%}</p>
+                                $}
+                            }else{
+                                {$
+                                <p class="app_endTime_default textEllipsis maturity_tips" >
+                                    <span class="modeling-defualtTime-tip"></span>
+                                    {%item.endTime%}</p>
+                                $}
+                            }
+                            {$
+                            <p class="action_Code" data-script-click="actionCode">{%lang['modelingLicense.activate.code']%} </p>
+                            $}
+                        }
+                        {$
+                    </div>
+                </div>
+                $}
+                if(item.licenseType ==='0'){
+                {$
+                <div class="end_time_tips">{%lang['modelingLicense.endTime.cannot.use.tips']%}</div>
+                $}
+                }
+                {$
+            </li>
+            $}
+            }
+            {$
+        </ul>
+    </div>
+    $}
+    for(var j = 0;j < sort_array.length;j++){
+    var category = sort_array[j].val;
+    {$
+    <div class="appList_category">
+        <div class="appList_category_head">
+            <span class="appList_category_head_title">{%category.name%}</span>
+            <span class="appList_category_head_display">{%lang['modelingApplication.putAway']%}</span>
+            <span class="appList_category_head_arrow"></span>
+        </div>
+        <div class="appList_category_main">
+            <ul class="lui_profile_listview_card_page" style="float:none">$}
+                for(var i = 0;i < category.apps.length;i++){
+                var item = category.apps[i];
+                var status = listView.tmpStatus[item.status];
+                if(!item.appDesc){
+                item.appDesc = lang['modeling.no.description']
+                }
+                {$
+                <li class="lui_profile_block_grid_item grid_item_bg itemStyle_{%(i%6+1)%}"
+                    data-applist-id="{%item.id%}" style="position: inherit">
+                    <div class="appMenu_item_block {%status.colorClass%}">
+                        <div class="appMenu_main">
+                            <div class="appMenu_status  {%status.class%}">{%status.text%}</div>
+                            <div class="appMenu_main_icon"><i class="iconfont_nav  {%item.icon%}"></i></div>
+                            <div class="appMenu_main_cover">
+                                <div class="modeling_app_btn_bar">
+                                    <div class="modeling_app_operation "
+                                         data-oper-code="{%item.status%}">
+                                        {%status.text%} <i class="down_arrow"></i>
+                                        <i class="up_arrow"></i>
+                                    </div>
+                                    <div class="modeling_app_btn modeling_app_btn_more" data-script-click="more"
+                                         data-r-title="{%lang['modeling.more']%}">
+                                        <div class="modeling_app_icon_item_top">
+                                            <i class="modeling_app_icon"></i>
+                                            <div class="form_popup">
+                                                <ul class="modeling_app_operation_alert">
+                                                    $}
+                                                    if( item.status !='04'){
+                                                    {$
+                                                    <li data-script-click="export">{%lang['enums.operation.def.7']%}</li>
+                                                    $}
+                                                    }
+                                                    if( item.selfBuild === false && item.licenseType ==='1' ){
+                                                    {$
+                                                    <li data-script-click="selfBuildApp">{%lang['modelingLicense.self.build']%} </li>
+                                                    $}
+                                                    }
+                                                    {$
+                                                    <!--                     暂时屏蔽后续加     <li >属性 </li>-->
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    $}
+                                    if(item.status!='03' && item.licenseType != '0'){
+                                    {$
+                                    <div class="modeling_app_btn modeling_app_btn_version" data-script-click="version"
+                                         data-r-title="{%lang['modelingApplication.fdVersion']%}">
+                                        <div class="modeling_app_icon_item_top">
+                                            $} if(item.hasNewVer){ {$
+                                            <i class="modeling_app_icon red-point"></i>
+                                            $} } else { {$
+                                            <i class="modeling_app_icon"></i>
+                                            $} } {$
+                                        </div>
+                                    </div>
+                                    $}
+                                    }
+                                    {$
+                                    <div class="modeling_app_btn modeling_app_btn_index"
+                                         data-home-href="{%item.homePageUrl%}" data-r-title="{%lang['modeling.app.home']%}">
+                                        <div class="modeling_app_icon_item_top">
+                                            <i class="modeling_app_icon"></i>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="modeling_app_edit" data-applist-boxtype="edit"
+                                     data-applist-id="{%item.id%}">
+                                    <i class="modeling_app_icon"></i>
+                                    <span class="modeling_app_text">{%lang['enums.operation.def.3']%}</span>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="appMenu_title_box">
+                            $}
+                            if(listView.env.view ==='allApps' || listView.env.view ==='editorApps'){
+                            if( item.selfBuild === false ){
+                            {$
+                            <div class="app_type_install" title="{%lang['modelingLicense.activate.install.app']%}">{%lang['modelingLicense.activate.install.app']%}</div>
+                            <div class="appMenu_title_name1 textEllipsis appMenu_titleName" title="{%item.name%}">{%item.name%}</div>
+                            $}
+                            }else{
+                            {$
+                            <div class="app_type_self" title="{%lang['modelingLicense.activate.self.build']%}">{%lang['modelingLicense.activate.self.build']%}</div>
+                            <div class="appMenu_title_name1 textEllipsis appMenu_titleName" title="{%item.name%}">{%item.name%}</div>
+                            $}
+                            }
+                            }else{
+                            {$
+                            <div class="appMenu_title_name textEllipsis appMenu_titleName" title="{%item.name%}">{%item.name%}</div>
+                            $}
+                            }
+                            {$
+                            <div class="appMenu_title_version textEllipsis" title="{%item.appVersion%}">
+                                {%item.appVersion%}
+                            </div>
+                            <p class="appMenu_title_desc textEllipsis " title="{%item.appDesc%}">{%item.appDesc%}</p>
+                            $}
+                            if(item.licenseType ==='0'){
+                            if( item.isEnd === true){
+                            {$
+                            <p class="app_endTime textEllipsis maturity_tips" >
+                                <span class="modeling-maturity-tip"></span>
+                                {%lang['modelingLicense.activate.endTIme']%}</p>
+                            $}
+                            }else if( item.isEnd === false && item.remainDay == 0){
+                            {$
+                            <p class="app_endTime textEllipsis maturity_tips " >
+                                <span class="modeling-maturity-tip"></span>
+                                {%lang['modelingLicense.expiring']%}</p>
+                            $}
+                            }else if( item.isEnd === false && item.remainDay <=7){
+                            {$
+                            <p class="app_endTime textEllipsis maturity_tips " >
+                                <span class="modeling-maturity-tip"></span>
+                                {%lang['modelingLicense.still.left.before.maturity']%}{%item.remainDay%}{%lang['modelingLicense.day']%}</p>
+                            $}
+                            }else{
+                            {$
+                            <p class="app_endTime_default textEllipsis maturity_tips" >
+                                <span class="modeling-defualtTime-tip"></span>
+                                {%item.endTime%}</p>
+                            $}
+                            }
+                            {$
+                            <p class="action_Code" data-script-click="actionCode">{%lang['modelingLicense.activate.code']%} </p>
+                            $}
+                            }
+                            {$
+                        </div>
+                    </div>
+                    $}
+                    if(item.licenseType ==='0'){
+                    {$
+                    <div class="end_time_tips">{%lang['modelingLicense.endTime.cannot.use.tips']%}</div>
+                    $}
+                    }
+                    {$
+                </li>
+                $}
+                }
+                {$
+            </ul>
+        </div>
+    </div>
+
+    $}
+    }
+    {$
+</div>
+$}}
+else{
+{$
+<div class="app_empty" style="margin-top: -70px">
+    <div class="app_empty_img">
+        <div></div>
+        <p>{%lang['modeling.norecords.tip']%}</p>
+    </div>
+</div>
+$}
+}
+}else{
+    if(tableApps.length>0){
+{$
+<div>
+    <table class="app_listView_table">
+        <tr>
+            <th width="30%"> {%lang['modeling.baseinfo.ApplicationName']%}</th>
+            <th width="140"> {%lang['modeling.app.category']%}</th>
+            <th width="140"> {%lang['modelingAppVersion.fdStatus']%}</th>
+            <th width="140"> {%lang['modelingAppVersion.enum.cur']%}</th>
+            <th width="140"> {%lang['modelingApplication.fdAppType']%}</th>
+            <th width="300"> {%lang['modelingApplication.trialexpirationTime']%}
+                <span class="modeling-maturity-tip listTableMaturityTip"></span>
+                <span class="end_time_table_tips">{%lang['modelingLicense.endTime.cannot.use.tips']%}</span>
+            </th>
+            <th width="140"> {%lang['modelingAppListview.docCreator']%}</th>
+            <th width="220"> {%lang['modelingAppListview.docCreateTime']%}</th>
+            <th width="220"> {%lang['modelingAppViewopers.fdOperation']%}</th>
+        </tr>
+        $}
+        for(var i = 0;i < tableApps.length;i++){
+        var item = tableApps[i];
+        var status = listView.tmpStatus[item.status];
+        if(!item.appDesc){
+        item.appDesc = lang['modeling.no.description']
+        }
+        {$
+        <tr>
+            <td> {%item.name%}</td>
+            <td> {%item.categoryName%}</td>
+            <td> {%status.text%} </td>
+            <td> {%item.appVersion ==''?'V1.0':item.appVersion%}</td>
+            $}
+            if( item.selfBuild === false ){
+                {$
+                <td>{%lang['modelingLicense.activate.install.app']%}</td>
+                $}
+            }else{
+                {$
+                <td>{%lang['modelingLicense.activate.self.build']%}</td>
+                $}
+            }
+            {$
+            <td>
+                $}
+                if(item.licenseType ==='0'){
+                if( item.isEnd === true){
+                {$
+                <span class="modelingLicenseTips">{%lang['modelingLicense.activate.endTIme']%}</span>
+                $}
+                }else if( item.isEnd === false && item.remainDay == 0){
+                {$
+                <span  class="modelingLicenseTips">{%lang['modelingLicense.expiring']%}</span>
+                $}
+                }else if( item.isEnd === false && item.remainDay <=7){
+                {$
+                <span  class="modelingLicenseTips">{%lang['modelingLicense.still.left.before.maturity']%}{%item.remainDay%}{%lang['modelingLicense.day']%}</span>
+                $}
+                }else{
+                {$
+                <span>{%item.endTime%}</span>
+                $}
+                }
+                {$
+                <span class="action_table_Code" data-table-script-click="actionCode" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}">{%lang['modelingLicense.activate.code']%} </span>
+                $}
+                }else{
+                {$
+                <span>-</span>
+                $}
+                }
+                {$
+            </td>
+            $}
+            {$
+            <td> {%item.docCreatorName%}</td>
+            <td> {%item.docCreateTime%}</td>
+            <td>
+                <a class="btn_txt_app" data-applist-boxtype="edit" data-applist-id="{%item.id%}">{%lang['enums.operation.def.3']%}</a>
+                <a class="btn_txt_app" data-home-href="{%item.homePageUrl%}">{%lang['modeling.app.home']%}</a>
+                <a class="btn_txt_app modeling_app_table_operation" data-applist-id="{%item.id%}">
+                    {%lang['modeling.more']%}
+                    <span class="app_table_more_button" style="display: none">
+                                       <ul class="buttonOptionList">
+                                           $}
+                                           if(item.status === '00'){
+                                                {$
+                                                    <li data-table-oper-method="cancelPublish" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}" >{%lang['modelingApplication.unpublish']%}</li>
+                                                    <li data-table-oper-method="endApp" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}">{%lang['modelingApplication.disableApp']%}</li>
+                                                $}
+                                           }else if(item.status === '01'){
+                                                {$
+                                                    <li data-table-oper-method="publish" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}" >{%lang['modelingApplication.pubApp']%}</li>
+                                                    <li data-table-oper-method="endApp" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}" >{%lang['modelingApplication.disableApp']%}</li>
+                                                $}
+                                           }else if(item.status === '02'){
+                                                {$
+                                                    <li data-table-oper-method="startApp" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}" >{%lang['modelingApplication.enableApp']%}</li>
+                                                    <li data-table-oper-method="deleteByAjax" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}" >{%lang['modelingApplication.DeleteApp']%}</li>
+                                                $}
+                                           }else if(item.status === '03'){
+                                                {$
+                                                    <li data-table-oper-method="publish" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}" >{%lang['modelingApplication.pubApp']%}</li>
+                                                    <li data-table-oper-method="deleteByAjax" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}" >{%lang['modelingApplication.DeleteApp']%}</li>
+                                                    <li data-table-oper-method="deleteData" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}" >{%lang['modelingApplication.deleteData']%}</li>
+                                                $}
+                                           }else if(item.status === '04'){
+                                                {$
+                                                    <li data-table-oper-method="deleteByAjax" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}" >{%lang['modelingApplication.DeleteApp']%}</li>
+                                                $}
+                                           }
+                                           if(item.status!='03' && item.licenseType != '0'){
+                                                {$
+                                                <li data-table-oper-method="version" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}" >{%lang['modelingApplication.fdVersion']%} </li>
+                                                $}
+                                           }
+                                           if( item.status !='04'){
+                                                {$
+                                                <li data-table-oper-method="export" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}" >{%lang['enums.operation.def.7']%}</li>
+                                                $}
+                                                }
+                                                if( item.selfBuild === false && item.licenseType ==='1' ){
+                                                {$
+                                                <li data-table-oper-method="selfBuildApp" data-oper-code="{%item.status%}" data-applist-id="{%item.id%}" data-applist-name="{%item.name%}" >{%lang['modelingLicense.self.build']%} </li>
+                                                $}
+                                           }
+                                           {$
+                                       </ul>
+                                   </span>
+                </a>
+        </tr>
+        $}
+        }
+        {$ </table>
+</div>
+$}
+    }else{
+{$
+<div class="app_empty" style="margin-top: -70px">
+    <div class="app_empty_img">
+        <div></div>
+        <p>{%lang['modeling.norecords.tip']%}</p>
+    </div>
+</div>
+$}
+    }
+}
+

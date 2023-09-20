@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="sysFormCommonTemplateDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.base.dao.hibernate.SysFormCommonTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.base.model.SysFormCommonTemplate" />
+	</bean>
+	<bean
+		id="sysFormCommonTemplateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormCommonTemplateServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFormCommonTemplateDao" />
+		</property>
+		<property name="sysFormDbTableService">
+			<ref bean="sysFormDbTableService" />
+		</property>
+		<property name="sysFormGenerateService">
+			<ref bean="sysFormGenerateService" />
+		</property>
+		<property name="fileService">
+			<ref bean="fileService" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormCommonTemplateService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormCommonTemplateTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysFormCommonTemplateTreeService"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormCommonTemplateTreeService">
+		<property name="sysFormCommonTemplateService">
+			<ref bean="sysFormCommonTemplateService" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysFormCommonTemplateDeafaultService"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormCommonTemplateDeafaultService">
+		<property name="sysFormCommonTemplateService">
+			<ref bean="sysFormCommonTemplateService" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysFormTemplateDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.base.dao.hibernate.SysFormTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.base.model.SysFormTemplate" />
+	</bean>
+	<bean
+		id="sysFormTemplateTarget"
+		parent="KmssBaseCoreTarget"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormTemplateServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFormTemplateDao" />
+		</property>
+		<property name="cacheMannager">
+			<ref bean="sysFormCacheMannager" />
+		</property>
+		<property name="sysFormDbTableService">
+			<ref bean="sysFormDbTableService" />
+		</property>
+		<property name="sysFormCommonTempHistoryDao">
+			<ref bean="sysFormCommonTempHistoryDao" />
+		</property>
+		<property name="sysFormTemplateHistoryDao">
+			<ref bean="sysFormTemplateHistoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormTemplateService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<ref bean="sysFormTemplateTarget" />
+		</property>
+				<property name="transactionAttributes">
+           <props>
+              <prop key="*">PROPAGATION_REQUIRED</prop>
+              <prop key="setFdOldMetadataXml">PROPAGATION_REQUIRES_NEW</prop>
+           </props>
+	    </property>
+	</bean>
+	<bean
+		id="sysFormTemplateCoreService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<bean
+				class="com.landray.kmss.sys.xform.base.service.spring.SysFormTemplateCoreServiceImp">
+				<property name="sysFormTemplateService">
+					<ref bean="sysFormTemplateService" />
+				</property>
+				<property name="sysFormCommonTemplateService">
+					<ref bean="sysFormCommonTemplateService" />
+				</property>
+				<property name="sysFormGenerateService">
+					<ref bean="sysFormGenerateService" />
+				</property>
+				<property name="fileService">
+					<ref bean="fileService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="sysFormMainCoreService" parent="KmssBaseCoreService">
+		<property name="target">
+			<bean class="com.landray.kmss.sys.xform.base.service.spring.SysFormMainCoreServiceImp">
+			</bean>
+		</property>
+	</bean>
+	<!-- 加载元数据配置相关类 -->
+	<bean
+		id="sysFormTemplateHistoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.base.dao.hibernate.SysFormTemplateHistoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.base.model.SysFormTemplateHistory" />
+	</bean>
+	<bean
+		id="sysFormCommonTempHistoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.base.dao.hibernate.SysFormCommonTempHistoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.base.model.SysFormCommonTempHistory" />
+	</bean>
+	<!-- 事件测试 -->
+	<bean
+		id="sysFormTestEventDao"
+		class="com.landray.kmss.sys.xform.base.dao.hibernate.TestEventDao">
+	</bean>
+	
+	<!-- ======= 表单持久化字段 ========= -->
+	<!-- DAO -->
+	<bean
+		id="sysFormDbColumnDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.base.dao.hibernate.SysFormDbColumnDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.base.model.SysFormDbColumn" />
+	</bean>
+	
+	<!-- Service -->
+	<bean
+		id="sysFormDbColumnTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormDbColumnServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFormDbColumnDao" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysFormDbColumnService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormDbColumnTarget" />
+		</property>
+	</bean>
+
+	<!-- ======= 表单持久化表 ========= -->
+	<!-- DAO -->
+	<bean
+		id="sysFormDbTableDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.base.dao.hibernate.SysFormDbTableDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.base.model.SysFormDbTable" />
+	</bean>
+	<bean
+		id="sysFormDbTableTemplateDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.base.dao.hibernate.SysFormDbTableTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.base.model.SysFormDbTableTemplate" />
+	</bean>
+	
+	<bean
+		id="sysFormDbTableTemplateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormDbTableTemplateServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFormDbTableTemplateDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormDbTableTemplateService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormDbTableTemplateTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="init*">PROPAGATION_REQUIRED</prop>
+				<prop key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop key="publish*">PROPAGATION_REQUIRED</prop>
+				<prop key="cancel*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	<!-- Service -->
+	<bean
+		id="sysFormDbTableTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormDbTableServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFormDbTableDao" />
+		</property>
+		<property name="builder">
+			<ref bean="sysFormDBHbmBuilder" />
+		</property>
+		<property name="cacheManager">
+			<ref bean="sysFormCacheManager" />
+		</property>
+		<property name="sysFormDbTableTemplateService">
+			<ref bean="sysFormDbTableTemplateTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysFormDbTableService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormDbTableTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="init*">PROPAGATION_REQUIRED</prop>
+				<prop key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop key="publish*">PROPAGATION_REQUIRED</prop>
+				<prop key="cancel*">PROPAGATION_REQUIRED</prop>
+				<prop key="moveMappingHistoryData">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- Service -->
+	<bean
+		id="sysFormDbTableMoveServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormDbTableMoveServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFormDbTableDao" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysFormDbTableMoveService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormDbTableMoveServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="updateReMappingHistoryData">PROPAGATION_REQUIRES_NEW</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	<bean 
+		id="sysFormDbListService" 
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormDbTableListService">
+		<property name="tableDao">
+			<ref bean="sysFormDbTableDao" />
+		</property>
+	</bean>
+	
+	<bean 
+		id="sysFormDbSearchService" 
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormDbTableSearchService">
+		<property name="tableDao">
+			<ref bean="sysFormDbTableDao" />
+		</property>
+	</bean>
+	
+	<bean 
+		id="sysFormDbColumnListService" 
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormDbColumnListService">
+		<property name="tableDao">
+			<ref bean="sysFormDbTableDao" />
+		</property>
+	</bean>
+	
+	<bean 
+		id="sysFormDBHbmBuilder" 
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormDBFreeMarkerHbmBuilder">
+	</bean>
+	
+	<bean 
+		id="sysFormDbTableColumnListService" 
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormDbTableColumnListService">
+		<property name="sysFormDbColumnService">
+			<ref bean="sysFormDbColumnService" />
+		</property>
+		<property name="sysFormDbTableService">
+			<ref bean="sysFormDbTableService" />
+		</property>
+	</bean>
+	
+	<bean 
+		id="sysFormListService" 
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormListService">
+		<property name="sysFormTemplateService">
+			<ref bean="sysFormTemplateService" />
+		</property>
+		<property name="sysCommonTemplateService">
+			<ref bean="sysFormCommonTemplateService" />
+		</property>
+	</bean>
+	
+	<!-- 集群接收消息类  -->
+	<bean 
+		id="sysFormDbMessageReceiver" 
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormDbMessageReceiver">
+		<property name="sysFormDbTableService">
+			<ref bean="sysFormDbTableService" />
+		</property>
+	</bean>
+	
+	<!-- 表单存储事件样例 -->
+	<bean id="sysFormDataEventDemo" 
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormDataEventDemoService">
+	</bean>
+	
+	<!-- 表单重新生成JSP内容服务 -->
+	<bean
+		id="sysFormTempateJspUpdateService"
+		parent="KmssBaseService">
+		<property name="target">
+			<bean 
+				class="com.landray.kmss.sys.xform.base.service.spring.SysFormTempateJspUpdateServiceImp">
+				<property name="sysFormTemplateService">
+					<ref bean="sysFormTemplateService" />
+				</property>
+				<property name="sysFormCommonTemplateService">
+					<ref bean="sysFormCommonTemplateService" />
+				</property>
+				<property name="sysFormGenerateService">
+					<ref bean="sysFormGenerateService" />
+				</property>
+				<property name="sysLogJobService">
+					<ref bean="sysLogJobService" />
+				</property>				
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 表单HTML生成器 -->
+	<bean id="sysFormGenerateService" 
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormGenerateService">
+		<property name="cacheMannager">
+			<ref bean="sysFormCacheMannager" />
+		</property>
+	</bean>
+	<!-- 移动端表单配置界面html生成器 start -->
+	<bean id="sysMobileFormGenerateService" 
+		class="com.landray.kmss.sys.xform.mobile.designer.SysMobileFormGenerateService">
+		<property name="cacheMannager">
+			<ref bean="sysFormCacheMannager" />
+		</property>
+	</bean>
+	
+	<!-- 移动端表单配置界面html生成器 end -->
+	<bean id="sysFormTemplateJspGenerator" 
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormJspGenerator">
+	</bean>
+	<!-- 表单历史模板 -->
+	<bean id="sysFormTemplateHistoryServiceTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.sys.xform.base.service.spring.SysFormTemplateHistoryServiceImp">
+		<property name="sysFormGenerateService">
+			<ref bean="sysFormGenerateService" />
+		</property>
+		<property name="sysFormTemplateService">
+			<ref bean="sysFormTemplateService" />
+		</property>
+		<property name="fileService">
+			<ref bean="fileService" />
+		</property>
+		<property
+			name="baseDao">
+			<ref bean="sysFormTemplateHistoryDao" />
+		</property>
+		<property
+			name="sysFormModifiedLogService">
+			<ref bean="sysFormModifiedLogService" />
+		</property>
+	</bean>
+	<bean id="sysFormTemplateHistoryService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormTemplateHistoryServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+           <props>
+              <prop key="*">PROPAGATION_REQUIRED</prop>
+              <prop key="setFdOldMetadataXml">PROPAGATION_REQUIRES_NEW</prop>
+           </props>
+	    </property>
+	</bean>
+	
+	<!-- 表单重新生成JSP内容进度条 -->
+	<bean id="sysFormTempateJspUpdateXMLDataServiceImp"
+			class="com.landray.kmss.sys.xform.base.service.spring.SysFormTempateJspUpdateXMLDataServiceImp">
+	</bean>
+	<!-- 公式计算 -->
+	<bean 
+		id="forMulaCalculationService" 
+		class="com.landray.kmss.sys.xform.base.service.controls.formulaCalculation.formulaParser.FormulaCalculationParserService">
+		<property name="processServiceManager">
+			<ref bean="lbpmProcessServiceManager" />
+		</property>
+	</bean>
+	
+	<bean
+		id="forMulaCalculationMetadataParser"
+		class="com.landray.kmss.sys.xform.base.service.controls.formulaCalculation.formulaParser.FormulaCalculationMetadataParser">
+		<property name="sysDictLoader">
+			<ref bean="sysDictLoader" />
+		</property>
+		<property name="extendDataDao">
+			<ref bean="KmssExtendDataDao" />
+		</property>
+	</bean>
+	
+	<bean id="sysFormTempateJspUpdateDataBean" class="com.landray.kmss.sys.xform.base.service.spring.SysFormTempateJspUpdateDataBean">
+		<property name="sysFormTemplateService">
+			<ref bean="sysFormTemplateService" />
+		</property>
+		<property name="sysFormCommonTemplateService">
+			<ref bean="sysFormCommonTemplateService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="convertBase64ToHtmlService"
+		class="com.landray.kmss.sys.xform.base.service.spring.ConvertBase64ToHtml">
+	</bean>
+	
+	<bean
+		id="sysFormDefaultSettingService"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormDefaultSettingService">
+	</bean>
+	
+	<bean
+		id="sysFormPrintMessageReceiver"
+		class="com.landray.kmss.sys.xform.base.message.SysFormPrintMessageReceiver">
+	</bean>	
+		
+	<!-- 主数据被引用 -->
+	<bean
+		id="sysFormMainDataCitedDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.base.dao.hibernate.SysFormMainDataCitedDaomImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.base.model.SysFormMainDataCited" />
+	</bean>
+	<bean
+		id="sysFormMainDataCitedTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormMainDataCitedServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFormMainDataCitedDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormMainDataCitedService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormMainDataCitedTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysFormTemplatePostProcessor"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormTemplatePostProcessor">
+	</bean>
+	<bean
+		id="sysSubFormDataBean"
+		class="com.landray.kmss.sys.xform.mobile.designer.SysSubFormDataBean">
+	</bean>
+	
+	<!-- 表单留痕 -->
+	<bean
+		id="sysFormUpdateRecordTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormUpdateRecordServiceImpl">
+	</bean>
+	<bean
+		id="sysFormUpdateRecordService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormUpdateRecordTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysFormCommonTemplateSourceServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormCommonTemplateSourceService">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysFormCommonTemplateDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormCommonTemplateSourceService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysFormCommonTemplateSourceServiceTarget" />
+		</property>
+	</bean>
+	<!-- 表单更改日志start -->
+	<bean
+		id="sysFormModifiedLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.base.dao.hibernate.SysFormModifiedLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.base.model.SysFormModifiedLog" />
+		<property name="hqlBuilder">
+			<ref bean="kmssAuthAreaHQLBuilder" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormModifiedLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormModifiedLogServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFormModifiedLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormModifiedLogService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormModifiedLogTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysFormFieldModifiedLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.base.dao.hibernate.SysFormFieldModifiedLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.base.model.SysFormFieldModifiedLog" />
+	</bean>
+	<bean
+		id="sysFormFieldModifiedLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.base.service.spring.SysFormFieldModifiedLogServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFormFieldModifiedLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormFieldModifiedLogService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormFieldModifiedLogTarget" />
+		</property>
+	</bean>
+	<!-- 表单更改日志end -->
+
+    <bean id="sysFormXmlDictParseLoader"
+          class="com.landray.kmss.sys.xform.rest.service.parse.SysFormXmlDictParseLoader">
+    </bean>
+
+    <bean id="sysFormInputDictParse"
+          class="com.landray.kmss.sys.xform.rest.service.spring.SysFormInputDictParse">
+    </bean>
+
+    <bean id="sysFormTextareaDictParse"
+          class="com.landray.kmss.sys.xform.rest.service.spring.SysFormTextareaDictParse">
+    </bean>
+
+    <bean id="sysFormRadioDictParse"
+          class="com.landray.kmss.sys.xform.rest.service.spring.SysFormRadioDictParse">
+    </bean>
+
+    <bean id="sysFormCheckboxDictParse"
+          class="com.landray.kmss.sys.xform.rest.service.spring.SysFormCheckboxDictParse">
+    </bean>
+
+    <bean id="sysFormMulitSelectDictParse"
+          class="com.landray.kmss.sys.xform.rest.service.spring.SysFormMulitSelectDictParse">
+    </bean>
+
+    <bean id="SysFormSelectDictParse"
+          class="com.landray.kmss.sys.xform.rest.service.spring.SysFormSelectDictParse">
+    </bean>
+
+    <bean id="ysFormDateTimeDictParse"
+          class="com.landray.kmss.sys.xform.rest.service.spring.SysFormDateTimeDictParse">
+    </bean>
+</beans>

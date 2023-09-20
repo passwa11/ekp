@@ -1,0 +1,84 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.unit.model.SysUnitGroup",
+        "messageKey": "sys-unit:table.sysUnitGroup",
+        "displayProperty": "fdName",
+        "serviceBean": "sysUnitGroupService",
+        "table": "sys_unit_group",
+        "url": "/sys/unit/sys_unit_group/sysUnitGroup.do?method=view&fdId=${fdId}"
+    },
+    "attrs": {
+        "fdId": {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName": {
+            "propertyType": "simple",
+            "messageKey": "sys-unit:sysUnitGroup.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "false"
+        },
+        "fdOrder": {
+            "propertyType": "simple",
+            "messageKey": "sys-unit:sysUnitGroup.fdOrder",
+            "type": "Integer",
+            "column": "fd_order",
+            "notNull": "false"
+        },
+        "fdNo": {
+            "propertyType": "simple",
+            "messageKey": "sys-unit:sysUnitGroup.fdNo",
+            "type": "String",
+            "column": "fd_no",
+            "notNull": "false",
+            "length": "10"
+        },
+         "fdDesc": {
+            "propertyType": "simple",
+            "messageKey": "sys-unit:sysUnitGroup.desc",
+            "type": "String",
+            "column": "fd_desc",
+            "notNull": "false",
+            "length": "2000"
+        },
+        "docCreateTime": {
+            "propertyType": "simple",
+            "messageKey": "sys-unit:sysUnitSecretary.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "false"
+        },
+        "docCreator": {
+            "propertyType": "model",
+            "messageKey": "sys-unit:sysUnitSecretary.docCreateId",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_create_id",
+            "notNull": "false"
+        },
+        "kmImissiveUnits": {
+            "propertyType": "list",
+            "messageKey": "sys-unit:sysUnitGroup.kmImissiveUnits",
+            "column": "fd_group_id",
+            "type": "com.landray.kmss.sys.unit.model.KmImissiveUnit",
+            "elementColumn": "fd_unit_id",
+            "table": "sys_unit_group_unit"
+        },
+        "authReaders": {
+            "propertyType": "list",
+            "messageKey": "sys-unit:sysUnitGroup.authReaders",
+            "column": "fd_group_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_reader_id",
+            "table": "sys_unit_group_reader"
+        },
+        "authEditors": {
+            "propertyType": "list",
+            "messageKey": "sys-unit:",
+            "column": "fd_group_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_editor_id",
+            "table": "sys_unit_group_editor"
+        }
+    }
+}

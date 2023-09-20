@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="SysLbpmPersonMyProcessOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpm.engine.persistence.model.LbpmProcess"
+            action="/sys/lbpmperson/sys_lbpmperson_myprocess/SysLbpmPersonMyProcess.do">
+			<query
+				method="listDraft"
+				logPoint="Base_UrlParam;listDraft" />	
+			<query
+				method="listAbandon"
+				logPoint="Base_UrlParam;listAbandon" />	
+			<query
+				method="listCreator"
+				logPoint="Base_UrlParam;listCreator" />		
+			<query
+				method="listApproval"
+				logPoint="Base_UrlParam;listApproval" />		
+			<query
+				method="listApproved"
+				logPoint="Base_UrlParam;listApproved" />	
+			<query
+				method="listTrack"
+				logPoint="Base_UrlParam;listTrack" />					
+        </oper>
+        <oper
+            id="SysLbpmPersonCreateOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.lbpm.engine.persistence.model.LbpmProcess"
+            action="/sys/lbpmperson/SysLbpmPersonCreate.do">
+			<query
+				method="listUsual|listUsualByModule|listPortlet"
+				logPoint="Base_UrlParam;Action_FindAll" />
+		</oper>		
+	</logset>
+</log-oper>

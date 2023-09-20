@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/archives/sys_archives_file_template/sysArchivesFileTemplate.do"
+		class="com.landray.kmss.sys.archives.actions.SysArchivesFileTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.archives.forms.SysArchivesFileTemplateForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="km_setting"
+					value="/sys/archives/include/sysArchivesFile_km_userSetting.jsp" />
+				<entry
+					key="eop_setting"
+					value="/sys/archives/include/sysArchivesFile_eop_userSetting.jsp" />
+			</map>
+		</property>			
+	</bean>
+
+	<bean
+		name="/sys/archives/sys_archives_main/sysArchivesFileSign.do"
+		class="com.landray.kmss.sys.archives.actions.SysArchivesFileSignAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+
+	<bean
+		name="/sys/archives/sys_archives_main/sysArchivesConfig.do"
+		class="com.landray.kmss.sys.archives.actions.SysArchivesConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+		<property name="forwards">
+		<map>
+			<entry
+				key="sys_archives_success"
+				value="/sys/archives/config/sysArchivesConfig_success.jsp"/>
+		</map>
+		</property>
+	</bean>
+
+</beans>

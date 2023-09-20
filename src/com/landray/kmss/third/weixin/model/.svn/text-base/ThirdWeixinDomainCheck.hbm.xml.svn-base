@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.third.weixin.model.ThirdWeixinDomainCheck" 
+        table="third_weixin_domain_check">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property 
+            name="fdFileName" 
+            column="fd_file_name" 
+            update="true" 
+            insert="true" 
+            length="200" 
+            index="idx_thirdWeixinDC_FName"/>
+        <property 
+            name="fdFileContent" 
+            column="fd_file_content" 
+            update="true" 
+            insert="true" 
+            length="4000"/>
+        <property 
+            name="docCreateTime" 
+            column="doc_create_time" 
+            update="true" 
+            insert="true" 
+            index="idx_thirdWeixinDC_CTime"/>
+        <property 
+            name="docAlterTime" 
+            column="doc_alter_time" 
+            update="true" 
+            insert="true" 
+            index="idx_thirdWeixinDC_ATime"/>
+        <many-to-one 
+            name="docCreator" 
+            column="doc_creator_id" 
+            update="true" 
+            insert="true"/>
+    </class>
+</hibernate-mapping>

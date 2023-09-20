@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../plugin.xsd ">
+	<!-- 审批节点定义 -->
+	<extension
+		point="com.landray.kmss.lbpm.engine.node">
+		<item
+			name="nodeType"
+			id="reviewNode">
+			<param
+				name="type"
+				value="reviewNode" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice:lbpm.nodeType.reviewNode" />
+			<param
+				name="defClass"
+				value="com.landray.kmss.sys.lbpmservice.node.reviewnode.ReviewNode" />
+			<param
+				name="attributesJsp"
+				value="/sys/lbpmservice/node/reviewnode/node_attribute.jsp" />
+			<param
+				name="nodeDescType"
+				value="reviewNodeDesc" />
+			<param
+				name="taskDataAccess"
+				value="defaultManualNodeDataAccess" />
+			<param
+				name="subTaskType"
+				value="reviewWorkitem" />
+			<param
+				name="taskBehaviour"
+				value="reviewNodeBehaviourService" />
+		</item>
+		<item
+			name="nodeDescType"
+			id="reviewNodeDesc">
+			<param
+				name="type"
+				value="reviewNodeDesc" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/node/reviewnode/node_review.jsp" />
+			<param
+				name="chartJs"
+				value="/sys/lbpmservice/node/reviewnode/node_flowchart.js" />
+			<param
+				name="taskDesc"
+				value="reviewNodeDesc" />
+		</item>
+		<item
+			name="taskType"
+			id="reviewWorkitem">
+			<param
+				name="type"
+				value="reviewWorkitem" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/node/reviewnode/workitem_reviewworkitem.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/node/reviewnode/workitem_reviewworkitem.jsp" />
+			<param
+				name="taskBehaviour"
+				value="reviewNodeWorkitemBehaviourService" />
+			<param
+				name="taskDataAccess"
+				value="reviewWorkitemDataAccess" />
+			<param
+				name="taskDesc"
+				value="reviewNodeWorkitemDesc" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.lbpmservice.custom.notify" model="*">
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.review}" />
+			<param name="messageKey" value="sys-lbpmservice:lbpmProcess.handler.pass.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.commission}" />
+			<param name="messageKey" value="sys-lbpmservice:lbpmProcess.handler.commission.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.communicate}" />
+			<param name="messageKey" value="sys-lbpmservice-operation-communicate:lbpmProcess.handler.communicate.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.clecommunicate}" />
+			<param name="messageKey" value="sys-lbpmservice-operation-communicate:lbpmProcess.handler.clecommunicate.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.refuse.draftNode}" />
+			<param name="messageKey" value="sys-lbpmservice-node-draftnode:lbpmProcess.handler.refuse.notify.drafter" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.refuse.reviewNode}" />
+			<param name="messageKey" value="sys-lbpmservice:lbpmProcess.handler.refuse.reviewNode.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.refuse.signNode}" />
+			<param name="messageKey" value="sys-lbpmservice:lbpmProcess.handler.refuse.signNode.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.refuse.voteNode}" />
+			<param name="messageKey" value="sys-lbpmservice:lbpmProcess.handler.refuse.voteNode.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.additionSign}" />
+			<param name="messageKey" value="sys-lbpmservice:lbpmProcess.handler.additionSign.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.assign}" />
+			<param name="messageKey" value="sys-lbpmservice-operation-assignment:lbpmProcess.handler.assign.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.assign.cancel}" />
+			<param name="messageKey" value="sys-lbpmservice-operation-assignment:lbpmProcess.handler.assign.cancel.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.review.cancel}" />
+			<param name="messageKey" value="sys-lbpmservice-operation-historyhandler:lbpmProcess.historyhandler.default.notify.currhandler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.replycommunicate}" />
+			<param name="messageKey" value="sys-lbpmservice-node-communicate:lbpmProcess.handler.replycommunicate.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.assign.refuse}" />
+			<param name="messageKey" value="sys-lbpmservice-operation-assignment:lbpmProcess.handler.assign.refuse.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.assign.pass}" />
+			<param name="messageKey" value="sys-lbpmservice-node-assignment:lbpmProcess.handler.assign.pass.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.drafter.cancel}" />
+			<param name="messageKey" value="sys-lbpmservice-operation-drafter:lbpmProcess.drafter.default.notify.currhandler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="reviewNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.reminder}" />
+			<param name="messageKey" value="sys-lbpmservice-support:lbpmProcess.operation.reminder.notify.currhandler" />
+		</item>
+	</extension>
+</plugin>

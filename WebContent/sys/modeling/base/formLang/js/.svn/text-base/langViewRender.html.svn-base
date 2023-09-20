@@ -1,0 +1,52 @@
+
+data = data || [];
+var curViewKey = render.parent.config.vars.key;
+var lang = render.parent.getModelingLang();
+//var curViewKey = render.parent.config.vars.key;
+//var curLang = render.parent.config.vars.curLang;
+//var officialLang = render.parent.config.vars.officialLang;
+// 由于官方语言的字段信息是存储在default里面，故这里需要转换一层
+//curLang = officialLang === curLang ? "default" : curLang;
+//curViewKey = officialLang === curViewKey ? "default" : curViewKey;
+{$
+	<table class="tb_normal" width="100%">
+		<tbody>
+			<tr>
+				<td class="td_normal_title" width="15%">{%lang['modeling.form.ControlsName']%}</td>
+				<td class="td_normal_title" width="10%">{%lang['modeling.form.ControlTypes']%}</td>
+				<td class="td_normal_title" width="10%">{%lang['modeling.form.ControlProperties']%}</td>
+				<td class="td_normal_title" width="10%">{%lang['modeling.form.Content']%}</td>
+				<td class="td_normal_title" width="30%">{%lang['modeling.form.Translation']%}</td>
+			</tr>$}
+			for(var i = 0;i < data.length;i++){
+				var controlInfo = data[i];
+				{$<tr><td colspan="5" style="border-width: 0px;padding: 0px;"><table width="100%"><tbody>$}
+				var c_option = controlInfo.c_option;
+				for(var optionKey in c_option){
+					var len = c_option[optionKey]["default"].length;
+					for(var j = 0;j < len;j++){
+						var val = "";
+						if(c_option[optionKey][curViewKey] 
+							&& c_option[optionKey][curViewKey].length && c_option[optionKey][curViewKey].length > j){
+							val = c_option[optionKey][curViewKey][j];
+						}
+						{$
+							<tr>
+								<td width="15%">{%controlInfo.c_id%}</td>
+								<td width="10%">{%controlInfo.c_lang.control%}</td>
+								<td width="10%">{%controlInfo.c_lang[optionKey].text%}</td>
+								<td width="10%">{%c_option[optionKey]['default'][j]%}</td>
+								<td width="30%">
+									<input class="inputsgl langFormElement" style="width:80%;" type="text" value="{%val%}"
+										data-control-id="{%controlInfo.c_id%}" data-control-option="{%optionKey%}" data-control-option-index="{%j%}"/>
+								</td>
+							</tr>
+						$}
+					}
+				}
+				{$</tbody></table></td></tr>$}
+			}
+					
+		{$</tbody>
+	</table>
+$}

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="kmSmissiveMainOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.smissive.model.KmSmissiveMain"
+            action="/km/smissive/km_smissive_main/kmSmissiveMain.do">
+             <ignoreFields>fdNotifyType</ignoreFields>
+			<query
+				method="listChildren|manageList" logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="button.list" />
+			<query
+				method="print" logPoint="Action_Find"
+				messageKey="km-smissive:kmSmissiveMain.logOper.print" />
+			<query
+				method="modifyAttachmentRight" logPoint="modifyAttachmentRight"
+				messageKey="km-smissive:kmSmissiveMain.logOper.modifyAttachmentRight" />
+			<query
+				method="modifyRight" logPoint="modifyRight"
+				messageKey="km-smissive:kmSmissiveMain.logOper.modifyRight" />
+			<query
+				method="modifyIssuer" logPoint="modifyIssuer"
+				messageKey="km-smissive:kmSmissiveMain.logOper.modifyIssuer" />
+			<query
+				method="generateNumByNumberId" logPoint="Base_UrlParam"
+				messageKey="km-smissive:kmSmissiveMain.logOper.generateNumByNumberId" />
+			<query
+				method="saveDocNum" logPoint="saveDocNum"
+				messageKey="km-smissive:kmSmissiveMain.logOper.saveDocNum" />
+        </oper>
+        
+         <oper
+            id="kmSmissiveTemplateOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.smissive.model.KmSmissiveTemplate"
+            action="/km/smissive/km_smissive_template/kmSmissiveTemplate.do">
+             <ignoreFields>authAttNoprint;authAttNodownload;authAttNocopy</ignoreFields>
+            <query
+				method="copy"
+				logPoint="Base_UrlParam;Action_Find" 
+				messageKey="km-smissive:kmSmissiveTemplate.logOper.copy" />
+        </oper>
+        
+         <oper
+            id="kmSmissiveMainPortletOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.smissive.model.KmSmissiveMain"
+            action="/km/smissive/km_smissive_main/kmSmissiveMainPortlet.do">
+            <query
+				method="listPortlet" logPoint="Base_UrlParam;listPortlet" 
+				messageKey="km-smissive:smissive.myDoc"/>
+        </oper>
+        
+        <oper
+            id="kmSmissivePortletOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/common/dataxml.jsp">
+            <query
+            	paramName="s_bean"
+            	paramValue="kmSmissivePortlet"
+            	logPoint="Base_UrlParam;kmSmissivePortlet"
+            	messageKey="km-smissive:portlet.smissive.newDoc">
+            </query>
+        </oper>
+        
+	</logset>
+</log-oper>

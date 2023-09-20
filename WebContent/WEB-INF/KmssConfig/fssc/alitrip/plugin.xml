@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <extension 
+        point="com.landray.kmss.sys.listshow.listShowConfig" 
+        model="com.landray.kmss.fssc.alitrip.model.FsscAlitripOrder">
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="fssc-alitrip:table.fsscAlitripOrder"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.alitrip.model.FsscAlitripOrder"/>
+            <param 
+                name="page" 
+                value="order"/>
+            <param 
+                name="default" 
+                value="fdType;id;gmtCreate;userName;departName;costCenterName"/>
+            <param 
+                name="customized" 
+                value=""/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.lbpm.engine.event"
+		model="*">
+	
+		<!--报销流程结束修改对应的预算状态-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscAlitripSendMessageToAliService" />
+			<param
+				name="messageKey"
+				value="fssc-alitrip:flow.event.handlerPassOperationEvent" />
+			<param
+				name="eventTypes"
+				value="handlerPassOperationEvent" />
+			<param
+				name="listener"
+				value="fsscAlitripSendMessageToAliService" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+</plugin>

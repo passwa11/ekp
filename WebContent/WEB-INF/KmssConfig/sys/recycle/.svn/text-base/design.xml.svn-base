@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="sys-recycle:module.sys.recycle"
+		urlPrefix="/sys/recycle/"
+		defaultValidator="roleValidator(role=SYSROLE_USER)">
+		
+		<roles>
+			<!-- 后台管理  -->
+			ROLE_SYS_RECYCLE_BACKSTAGE_MANAGER
+		</roles> 
+		<request
+			path="sys_recycle_doc/sysRecycle*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+			<query
+				queryString="method=view|list"
+				validator="roleValidator(role=SYSROLE_USER)" />
+			<query
+				queryString="method=viewOriDoc|hardDelete|hardDeleteAll|recover|recoverAll"
+				validator="roleValidator(role=ROLE_SYS_RECYCLE_BACKSTAGE_MANAGER)" />
+		</request>
+		<request
+			path="sys_recycle_log/sysRecycleLog*"
+			defaultValidator="roleValidator(role=ROLE_SYS_RECYCLE_BACKSTAGE_MANAGER)">
+		</request>
+		
+		<request
+			path="softDeleteConfig*"
+			defaultValidator="roleValidator(role=ROLE_SYS_RECYCLE_BACKSTAGE_MANAGER)">
+		</request>
+		
+		<request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_SYS_RECYCLE_BACKSTAGE_MANAGER)">
+		</request>
+			
+	</module>
+	
+	<!-- 清理回收站 -->
+	<quartz
+		messageKey="sys-recycle:clearRecycle.job"
+		jobService="clearRecycleQuartz"
+		cronExpression="0 0 3 ? * *"
+		jobMethod="clearRecycle"
+		description="sys-recycle:clearRecycle.job.desc"/>
+		
+	<!-- 
+	<profileConfig 
+		key="recycle"
+		messageKey="软删除"
+		url="/sys/recycle/softDeleteConfig.do?method=edit"
+		icon="lui_icon_l_profile_third_idm"
+		type="mechanism"
+		description="{third-idm:idm.profileCfg.description}"/>
+	 -->	
+		
+	<profileConfig 
+		key="recycle"
+		messageKey="{sys-recycle:module.sys.recycle}"
+		url="/sys/profile/moduleindex.jsp?nav=/sys/recycle/tree.jsp"
+		icon="sys_recycle"
+		type="mechanism"
+		userType="1;4"
+		description="{sys-recycle:sys.recycle.description}" />
+		
+		
+		
+</configs>

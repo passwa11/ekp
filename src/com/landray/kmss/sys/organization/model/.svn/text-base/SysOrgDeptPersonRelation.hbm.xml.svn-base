@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrgDeptPersonRelation"
+		table="sys_org_dp_relation">
+		<!-- 主结构配置 -->
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<!-- 简单属性 -->
+		<property
+			name="fdDeptId"
+			column="fd_dept_id"
+			update="true"
+			insert="true"
+			length="100"/>
+		<property
+			name="fdPersonId"
+			column="fd_person_id"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100"
+			index="sysOrgDeptPerRelation_perId"/>
+		<property
+			name="fdOrder"
+			column="fd_order"
+			update="true"
+			insert="true"
+			not-null="false" />
+		
+	</class>
+</hibernate-mapping>

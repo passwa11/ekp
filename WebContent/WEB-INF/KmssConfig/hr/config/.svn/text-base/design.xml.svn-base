@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/hr/config/" 
+        messageKey="hr-config:module.hr.config" 
+        defaultValidator="roleValidator(role=ROLE_HRCONFIG_DEFAULT)">
+        <roles>ROLE_HRCONFIG_DEFAULT;ROLE_HRCONFIG_SETTING</roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_HRCONFIG_SETTING)"/>
+        <request 
+            path="hr_config_overtime_config/hrConfigOvertimeConfig.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.hr.config.model.HrConfigOvertimeConfig" 
+            defaultValidator="roleValidator(role=ROLE_HRCONFIG_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_HRCONFIG_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_HRCONFIG_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_HRCONFIG_DEFAULT)"/>
+        </request>
+    </module>
+    <homePage 
+        messageKey="hr-config:module.hr.config" 
+        urlPrefix="hr/config" 
+        url="/hr/config/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/hr/config/tree.jsp"/>
+    <profileConfig 
+        key="hr/config" 
+        messageKey="{hr-config:module.hr.config}" 
+        url="/sys/profile/moduleindex.jsp?nav=/hr/config/tree.jsp" 
+        icon="km_comminfo" 
+        type="hr" 
+        description="{hr-config:module.hr.config.description}"/>
+</configs>

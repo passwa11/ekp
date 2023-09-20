@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="component-locker:module.component.locker"
+		urlPrefix="/component/locker/"
+		defaultValidator="roleValidator(role=ROLE_COMPONENTLOCKER_DEFAULT)">
+		<roles>ROLE_COMPONENTLOCKER_DEFAULT</roles>
+		<!--权限分类，把roles和arearoles里权限中应该属于三员体系的分拣（复制）到以下标签 -->
+		<roleType>
+			<!-- 系统管理员权限 -->
+			<sysadmin>ROLE_COMPONENTLOCKER_DEFAULT</sysadmin>
+		</roleType>
+		<request
+			path="component_locker_*/componentLocker*"
+			defaultValidator="roleValidator(role=ROLE_COMPONENTLOCKER_DEFAULT)">
+			<query
+				validator="roleValidator(role=ROLE_COMPONENTLOCKER_DEFAULT)"
+				queryString="method=delete|deleteall|releaseLockers|releaseLocker" />
+		</request>
+	</module>
+		
+	<!-- 定时清理超时的锁 -->
+	<quartz
+		cronExpression="0 0/10 * * * ?"
+		jobService="componentLockManager"
+		messageKey="component-locker:componentLockerMain.clearTimeOutLocker"
+		jobMethod="clearTimeOutLocker"
+		description="component-locker:componentLockerMain.clearTimeOutLocker.description"/>
+
+	<!-- 定时清理一天前的版本过程记录 -->
+	<quartz
+		messageKey="component-locker:componentLockerVersion.clearHistory"
+		jobService="componentLockerVersionService"
+		jobMethod="clearHistory"
+		cronExpression="0 0 1 * * ?"
+		description="component-locker:componentLockerVersion.componentLockerMain.clearHistory.description" />	
+
+	<homePage
+		urlPrefix="component/locker"
+		url="/moduleindex.jsp?nav=/component/locker/tree.jsp&amp;main=%2Fcomponent%2Flocker%2Fcomponent_locker_main%2FcomponentLockerMain.do%3Fmethod%3DlistAllLockers%26s_path%3D!{message(component-locker:tree.componentLockerMain.all)}"
+		messageKey="component-locker:componentLocker.moduleName" />
+		
+	<profileConfig
+		key="locker"
+		messageKey="{component-locker:componentLocker.mechanism}" 
+		url="/sys/profile/moduleindex.jsp?nav=/component/locker/tree.jsp" 
+		icon=""
+		type="mechanism"
+		userType="1;2"
+		description=""/>
+		
+</configs>

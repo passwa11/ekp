@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="third-weixin:third.wx.interation"
+		urlPrefix="/third/weixin/" >
+		<roles>
+			ROLE_THIRDWEIXIN_ADMIN;
+			ROLE_THIRDWXWORK_ADMIN
+		</roles>
+	 
+		<request
+			path="profile.jsp*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWEIXIN_ADMIN)" />
+		<request
+			path="mutil/profile.jsp*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWEIXIN_ADMIN)" />	
+		<request
+			path="menu/index.jsp*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWEIXIN_ADMIN)" />
+		<request
+			path="doc/weixin-doc.docx*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWEIXIN_ADMIN)" />
+		<request
+			path="work/profile.jsp*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)" />
+		<request
+			path="work/menu/index.jsp*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)" />
+		<request
+			path="work/doc/weixin-doc.docx*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)" />
+			
+		<request
+			path="third_wx_oms_init/thirdWxOmsInit*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)" />
+			
+		<request
+			path="spi/wx_oms_relation/wxOmsRelation*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)" />
+			
+		<request
+			path="work/third_wxwork_oms_init/thirdWxworkOmsInit*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)" />
+		
+		<request
+			path="work/spi/wxwork_oms_relation/wxworkOmsRelation*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)" />
+			
+		<request
+			path="resource/images**"
+			defaultValidator="true" />
+
+		<request
+			path="work/sso/sso.jsp*"
+			defaultValidator="true" />
+		
+		<request
+			path="third_weixin_oms_post/thirdWeixinOmsPost*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWEIXIN_ADMIN)" />
+		
+		<request 
+            path="work/third_weixin_work/thirdWeixinWork.do*" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+            <query 
+                queryString="method=authCheck|updatePass" 
+                validator="true"/>
+        </request>
+
+		<request
+			path="work/third_weixin_work_living/thirdWeixinWorkLiving.do*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.work.model.ThirdWeixinWorkLiving"
+			defaultValidator="true">
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+			<query
+				queryString="method=delete|deleteall"
+				validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+			<query
+				queryString="method=data"
+				validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+            
+		<request 
+            path="work/tree_notify.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+        <request 
+            path="work/third_weixin_notify_taskcard/thirdWeixinNotifyTaskcard.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.work.model.ThirdWeixinNotifyTaskcard" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+        </request>
+        <request 
+            path="work/third_weixin_notify_log/thirdWeixinNotifyLog.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.work.model.ThirdWeixinNotifyLog" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+        </request>
+		<request
+				path="work/third_weixin_work_callback/thirdWeixinWorkCallback.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.work.model.ThirdWeixinWorkCallback"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+			<query
+				queryString="method=delete|deleteall"
+				validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+        <request 
+            path="work/third_weixin_notify_que_err/thirdWeixinNotifyQueErr.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.work.model.ThirdWeixinNotifyQueErr" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+        </request>
+        
+         <request 
+            path="work/third_weixin_auth_log/thirdWeixinAuthLog.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.work.model.ThirdWeixinAuthLog" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+        </request>
+
+		<request
+				path="mutil/sso/pc_message.jsp*"
+				defaultValidator="true">
+		</request>
+		<request
+				path="mutil/sso/pc.jsp*"
+				defaultValidator="true">
+		</request>
+		<request
+				path="work/third_weixin_work_group/thirdWeixinWorkGroup.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.work.model.ThirdWeixinWorkGroup"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=checkGroup|getCreateInfo|createGroup"
+					validator="roleValidator(role=SYSROLE_USER)"/>
+		</request>
+
+		<request
+				path="third_weixin_pay_order/thirdWeixinPayOrder.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinPayOrder"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+			<query
+					queryString="method=paySign|updateOrder"
+					validator="roleValidator(role=SYSROLE_USER)"/>
+		</request>
+		<request
+				path="third_weixin_pay_cb/thirdWeixinPayCb.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinPayCb"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_pay_log/thirdWeixinPayLog.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinPayLog"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_pay_bl/thirdWeixinPayBl.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinPayBl"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_contact_mapp/thirdWeixinContactMapp.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinContactMapp"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+
+		<request
+				path="chatdata/*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinChatDataMain"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+		</request>
+		<request
+				path="third_weixin_appchat/thirdWeixinAppchat.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinAppchat"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_chat_data_main/thirdWeixinChatDataMain.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinChatDataMain"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_chat_data_bak/thirdWeixinChatDataBak.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinChatDataBak"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_robot_msg/thirdWeixinRobotMsg.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinRobotMsg"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_group_chat/thirdWeixinGroupChat.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinGroupChat"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_chat_data_temp/thirdWeixinChatDataTemp.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinChatDataTemp"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_chat_group/thirdWeixinChatGroup.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinChatGroup"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_account/thirdWeixinAccount.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinAccount"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_chat_data/thirdWeixinChatData.do*"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+		</request>
+		<request
+				path="work/doc/*"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)" >
+		</request>
+		<request
+				path="work/third_weixin_cg_dept_mapp/thirdWeixinCgDeptMapp.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.work.model.ThirdWeixinCgDeptMapp"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="work/third_weixin_cg_user_mapp/thirdWeixinCgUserMapp.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.work.model.ThirdWeixinCgUserMapp"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+
+	</module>
+
+	<module
+		messageKey=""
+		urlPrefix="/third/wx/">
+		<request
+			path="jsapi/wxJsapi*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)" />
+		<request
+			path="pcScanLogin*"
+			defaultValidator="true" />
+		<request
+			path="menu/wxMenu*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWEIXIN_ADMIN)" />
+		<request
+			path="menu/wxMenuDefine*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWEIXIN_ADMIN)" />
+		<request
+			path="weixinSynchroOrgCheck*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWEIXIN_ADMIN)" />
+	</module>
+	<module
+		messageKey="third-weixin-work:third.wx.menu.tree"
+		urlPrefix="/third/wxwork/">
+		<request
+			path="jsapi/wxJsapi*"
+			defaultValidator="true" />
+		<request
+			path="menu/wxworkMenu*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)" />
+		<request
+			path="menu/wxMenuDefine*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)" />
+		<request
+			path="weixinSynchroOrgCheck*"
+			defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)" />
+		<request
+			path="pcScanLogin*"
+			defaultValidator="true" />
+		<request
+				path="mutil/jsapi/wxJsapi.do*"
+				defaultValidator="true" />
+
+		<request
+				path="third_weixin_appchat/thirdWeixinAppchat.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinAppchat"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_chat_data_main/thirdWeixinChatDataMain.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinChatDataMain"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_chat_data_bak/thirdWeixinChatDataBak.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinChatDataBak"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_robot_msg/thirdWeixinRobotMsg.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinRobotMsg"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_group_chat/thirdWeixinGroupChat.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinGroupChat"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_chat_data_temp/thirdWeixinChatDataTemp.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinChatDataTemp"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_chat_group/thirdWeixinChatGroup.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinChatGroup"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+		<request
+				path="third_weixin_account/thirdWeixinAccount.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.weixin.model.ThirdWeixinAccount"
+				defaultValidator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)">
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)"/>
+		</request>
+	</module>
+
+	<!-- 参数设置 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.third.weixin.model.WeixinConfig"
+				validator="roleValidator(role=ROLE_THIRDWEIXIN_ADMIN)" />
+			<query
+				queryString="modelName=com.landray.kmss.third.weixin.work.model.WeixinWorkConfig"
+				validator="roleValidator(role=ROLE_THIRDWXWORK_ADMIN)" />
+		</request>
+	</module>
+
+	<quartz
+		messageKey="third-weixin:third.wx.OMSSynchroOutTitle"
+		jobService="synchroOrg2Wx"
+		cronExpression="0 0 23 * * ?"
+		jobMethod="triggerSynchro"
+		enable="false" />
+
+	<quartz
+		messageKey="third-weixin-work:third.wx.OMSSynchroOutTitle"
+		jobService="wxworkSynchroOrg2Wx"
+		cronExpression="0 0 22 * * ?"
+		jobMethod="triggerSynchro"
+		enable="false" />
+		
+	<quartz
+		messageKey="third-weixin:third.wx.person.sync"
+		jobService="thirdWxOmsInitService"
+		cronExpression="0 0 1 * * ?"
+		jobMethod="updatePerson"
+		enable="false" />
+		
+	<quartz
+		messageKey="third-weixin-work:third.wxwork.person.sync"
+		jobService="thirdWxworkOmsInitService"
+		cronExpression="0 0 1 * * ?"
+		jobMethod="updatePerson"
+		enable="false" />
+		
+	<!-- 多企业微信定时任务 -->
+	<!--
+	<quartz
+		messageKey="third-weixin-mutil:third.wxwork.person.sync"
+		jobService="thirdMutilWxworkOmsInitService"
+		cronExpression="0 0 1 * * ?"
+		jobMethod="updatePerson"
+		enable="false" />
+	<quartz
+		messageKey="third-weixin-mutil:third.wx.OMSSynchroOutTitle"
+		jobService="mutilWxworkSynchroOrg2WxTarget"
+		cronExpression="0 0 22 * * ?"
+		jobMethod="triggerSynchro"
+		enable="false" />    
+		-->
+       
+	<!-- <quartz
+		messageKey="third-weixin:writeDynamicInfo.quartz"
+		jobService="thirdWxWriteDynamicInfoService"
+		cronExpression="0 0/30 * * * ?"
+		jobMethod="writeDynamicInfo"
+		description="third-weixin:writeDynamicInfo.quartz.description" /> -->
+
+	<homePage
+		urlPrefix="third/weixin"
+		url="/moduleindex.jsp?nav=/third/weixin/tree.jsp"
+		messageKey="third-weixin:third.wx.menu.tree"
+		config="/moduleindex_notopic.jsp?nav=/third/weixin/tree.jsp"
+		type="global" />
+
+	<!-- 微信企业号集成后台配置 -->
+	<profileConfig
+		key="weixin"
+		messageKey="{sys-profile:sys.profile.mobile.weixin}"
+		url="/third/weixin/profile.jsp"
+		icon="lui_icon_s_profile_navLeft_weixin"
+		type="mobile"
+		order="4" />
+	<!-- 企业微信集成后台配置 -->
+	<profileConfig
+		key="wxwork"
+		messageKey="{third-weixin-work:thirdWeixinWork.wxwork}"
+		url="/third/weixin/work/profile.jsp"
+		icon="lui_icon_s_profile_navLeft_weixin"
+		type="mobile"
+		order="4" />
+		<!-- 多企业微信集成后台配置 -->
+	<!-- <profileConfig
+		key="mutilwxwork"
+		messageKey="{third-weixin-mutil:thirdWeixinWork.wxwork}"
+		url="/third/weixin/mutil/profile.jsp"
+		icon="lui_icon_s_profile_navLeft_weixin"
+		type="mobile"
+		order="4" /> -->
+
+	<quartz
+		messageKey="third-weixin-work:third.weixin.work.notifyQueueError.resend.title"
+		jobService="thirdWeixinNotifyQueErrService"
+		jobMethod="updateRunErrorQueue"
+		cronExpression="30 0/10 * * * ?" 
+		enable="true"
+		runType="SINGLENODE"
+		description="third-weixin-work:third.weixin.work.notifyQueueError.resend.description" />
+		
+	<quartz
+		messageKey="third-weixin-work:third.weixin.work.notifyQueueError.clear.title"
+		jobService="thirdWeixinNotifyQueErrService"
+		jobMethod="clearNotifyQueueError"
+		cronExpression="0 30 2 * * ?" 
+		enable="true"
+		runType="SINGLENODE"
+		description="third-weixin-work:third.weixin.work.notifyQueueError.clear.description" />
+	
+	<!-- 微信组织架构接入定时任务 -->
+	<quartz messageKey="third-weixin-work:third.weixin.work.OMSSynchroWx2EkpTitle" 
+		jobService="synchroOrgWxwork2Ekp" cronExpression="0 0 0 * * ?" jobMethod="triggerSynchro" 
+		enable="false" />
+
+	<quartz
+			messageKey="third-weixin-work:third.weixin.work.chatdata.sync.title"
+			jobService="thirdWeixinChatDataService"
+			jobMethod="syncChatData"
+			cronExpression="0 30 3 * * ?"
+			enable="true"
+			runType="SINGLENODE"
+			description="third-weixin-work:third.weixin.work.chatdata.sync.description" />
+
+	<quartz messageKey="third-weixin-work:third.weixin.work.SynchroCorpgroupOrg2Ekp.title"
+			description="third-weixin-work:third.weixin.work.SynchroCorpgroupOrg2Ekp.description"
+			jobService="synchroCorpgroupOrg2Ekp" cronExpression="0 45 4 * * ?" jobMethod="triggerSynchro"
+			enable="true" />
+
+</configs>

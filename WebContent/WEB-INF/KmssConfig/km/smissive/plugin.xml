@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.smissive.model.KmSmissiveMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-smissive:smissive.create.my" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.smissive.model.KmSmissiveMain" />
+			<param
+				name="page"
+				value="/listCreate" />
+			<param
+				name="default"
+				value="docSubject;fdFileNo;docAuthor.fdName;fdMainDept.fdName;docStatus;nodeName;handlerName" />
+			<param
+				name="customized"
+				value="nodeName;km-smissive:sysWfNode.processingNode.currentProcess,handlerName;km-smissive:sysWfNode.processingNode.currentProcessor" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.smissive.model.KmSmissiveMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-smissive:smissive.approval.my" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.smissive.model.KmSmissiveMain" />
+			<param
+				name="page"
+				value="/listApproval" />
+			<param
+				name="default"
+				value="docSubject;fdFileNo;docAuthor.fdName;fdMainDept.fdName;docStatus;nodeName;handlerName" />	
+			<param
+				name="customized"
+				value="nodeName;km-smissive:sysWfNode.processingNode.currentProcess,handlerName;km-smissive:sysWfNode.processingNode.currentProcessor" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.smissive.model.KmSmissiveMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-smissive:smissive.approved.my" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.smissive.model.KmSmissiveMain" />
+			<param
+				name="page"
+				value="/listApproved" />
+			<param
+				name="default"
+				value="docSubject;fdFileNo;docAuthor.fdName;fdMainDept.fdName;docStatus;nodeName;handlerName" />	
+			<param
+				name="customized"
+				value="nodeName;km-smissive:sysWfNode.processingNode.currentProcess,handlerName;km-smissive:sysWfNode.processingNode.currentProcessor" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.smissive.model.KmSmissiveMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-smissive:smissive.tree.myJob.alldoc" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.smissive.model.KmSmissiveMain" />
+			<param
+				name="page"
+				value="/listAll" />
+			<param
+				name="default"
+				value="docSubject;fdFileNo;docAuthor.fdName;fdMainDept.fdName;docStatus;nodeName;handlerName" />
+			<param
+				name="customized"
+				value="nodeName;km-smissive:sysWfNode.processingNode.currentProcess,handlerName;km-smissive:sysWfNode.processingNode.currentProcessor" />
+		</item>
+	</extension>
+
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.smissive.model.KmSmissiveMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="sys-simplecategory:menu.sysSimpleCategory.index" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.smissive.model.KmSmissiveMain" />
+			<param
+				name="page"
+				value="/docCategory" />
+			<param
+				name="default"
+				value="docSubject;fdFileNo;docAuthor.fdName;fdMainDept.fdName;docStatus;nodeName;handlerName" />
+			<param
+				name="customized"
+				value="nodeName;km-smissive:sysWfNode.processingNode.currentProcess,handlerName;km-smissive:sysWfNode.processingNode.currentProcessor" />
+		</item>
+	</extension>
+	
+	<!-- 时钟管理扩展 -->	
+	<extension
+		point="com.landray.kmss.sys.workflow.support.oa.subprocess"
+		model="*">		
+		<item
+			name="subprocess">
+			<param
+				name="modelName"
+				value="com.landray.kmss.km.smissive.model.KmSmissiveMain" />
+			<param
+				name="createParam"
+				value="fdTemplateId=!{cateid}" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.number.config"
+		model="*">
+		<item name="extend">
+			<param name="modelName" value="com.landray.kmss.km.smissive.model.KmSmissiveMain"/>
+			<param name="templatePropertyName" value="fdTemplate"/>
+			<param name="moduleName" value="{km-smissive:table.kmSmissiveMain}"/>
+			<param name="isReform" value="true"/>
+			<param name="order" value="10"/>
+		</item>
+	</extension>
+	
+	<!-- 兼容性检测 -->
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.km.smissive.transfer.KmSmissiveChecker" />
+			<param
+				name="name"
+				value="{km-smissive:sysNumber.config.sys.admin.transfer.name}" />
+			<param
+				name="type"
+				value="notify" />
+			<param
+				name="path"
+				value="/km/smissive/" />
+			<param
+				name="description"
+				value="{km-smissive:sysNumber.config.sys.admin.transfer.description}" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.admin.transfer">
+			<item name="config">
+			<param name="unid"
+				value="com.landray.kmss.km.smissive.transfer.KmSmissiveNumChecker" />
+			<param name="name" value="{km-smissive:kmSmissive.NumChecker}" />
+			<param name="type" value="notify" />
+			<param name="path" value="/km/smissive/" />
+			<param name="description" value="{km-smissive:kmSmissive.NumChecker.desc}" />
+		</item>
+	</extension>
+	
+	<!-- 简版公文订阅管理 -->
+	<extension
+		point="com.landray.kmss.sys.follow.setting"
+		model="com.landray.kmss.km.smissive.model.KmSmissiveMain">
+		<item name="followSetting">
+			<param name="methodName" value="add" />
+			<param name="templateModel"  value="com.landray.kmss.km.smissive.model.KmSmissiveTemplate" />
+			<param name="templateField"  value="fdTemplate.fdHierarchyId" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.config">
+		<item name="info">
+			<param name="name" value="{km-smissive:module.km.smissive}" />
+			<param name="modelName" value="com.landray.kmss.km.smissive.model.KmSmissiveMain" />
+			<param name="defaultUrl" value="/km/smissive/mobile/nav.json" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-km-smissive.js" />
+			<param name="targetFile" value="/km/smissive/mobile/resource/js/mui-km-smissive.js" />
+			<param name="tinyId" value="kmSmissiveListTiny" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="mui-km-smissive.css" />
+			<param name="targetFile" value="/km/smissive/mobile/resource/css/smissive.css" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.lbpm.engine.node" model="com.landray.kmss.km.smissive.model.KmSmissiveMain">
+		<item
+			name="nodeAttributeExtend">
+			<param
+				name="nodeType"
+				value="draftNode" />
+			<param
+				name="position"
+				value="newtag" />
+			<param
+				name="includeJsp"
+				value="/km/smissive/lbpmExtend/draftNode_ext.jsp" />
+		</item>
+	</extension>
+	<!-- 表单关联控件可选模块扩展点实现 -->
+	<extension point="com.landray.kmss.sys.xform.base.service.controls.relevance" model="*">
+		<item name="node">
+			<param name="modelName" value="com.landray.kmss.km.smissive.model.KmSmissiveMain" />
+			<param name="templateModelName" value="com.landray.kmss.km.smissive.model.KmSmissiveTemplate" />
+			<param name="key" value="kmSmissive" />
+			<param name="templatePropertyName" value="fdTemplate" />
+			<param name="moduleMessageKey" value="km-smissive:table.kmSmissiveMain" />
+		</item>
+	</extension>
+	
+	<!--公文管理一键选择分类扩展点实现 -->
+	<extension point="com.landray.kmss.sys.person.categoryUrl" model="com.landray.kmss.km.smissive.model.KmSmissiveMain" >
+		<item name="categoryUrl">
+			<param name="addUrl" value="/km/smissive/km_smissive_main/kmSmissiveMain.do?method=add&amp;categoryId={0}" />
+			<param name="templateModel" value="com.landray.kmss.km.smissive.model.KmSmissiveTemplate" />
+		</item>
+	</extension>
+	
+	
+	
+	<!-- 软删除功能扩展点实现 -->
+	<extension point="com.landray.kmss.sys.recycle">
+		<item name="softDelete">
+			<!-- 模块(文档)名称 -->
+			<param
+				name="modelName"
+				value="km-smissive:module.km.smissive" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.km.smissive.model.KmSmissiveMain" />
+			<!-- 主文档对应的分类(模板)全名称 -->
+			<param
+				name="categoryClassName"
+				value="com.landray.kmss.km.smissive.model.KmSmissiveTemplate" />
+			<!-- 主文档中分类(模板)的属性名称 -->
+			<param
+				name="categoryField"
+				value="fdTemplate" />
+			<!-- 主文档中标题的属性名称 -->
+			<param
+				name="titleField"
+				value="docSubject" />
+		</item>
+	</extension>
+	
+</plugin>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<!-- 权限控制 -->
+	<module
+		messageKey="sys-unit:module.sys.unit"
+		defaultValidator="roleValidator(role=ROLE_SYSUNIT_DEFAULT;SYSROLE_USER)"
+		urlPrefix="/sys/unit/">
+		<roles>
+			ROLE_SYSUNIT_DEFAULT;
+			ROLE_SYSUNIT_CONFIG_SETTING
+		</roles>
+		<areaRoles>
+			ROLE_SYSUNIT_ADDOUTERUNIT
+		</areaRoles>
+		<!-- 单位分类设置 -->
+		<!-- 参数设置 -->
+		<request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)"/>
+		<request
+			path="km_imissive_unit_category/kmImissiveUnitCategory*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.unit.model.KmImissiveUnitCategory"
+			defaultValidator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)">
+		</request>
+		<!-- 单位设置 -->
+		<request
+			path="km_imissive_unit/kmImissiveUnit*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.unit.model.KmImissiveUnit">
+			<query
+				queryString="method=edit|update|delete"
+				validator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)&amp;sysUnitNatureValidator(recid=fdId)" />
+			<query
+				queryString="method=deleteall|updateInvalidBatch|updateTransferBatch"
+				validator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)" />
+			<query
+				queryString="method=exportUnits"
+				validator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)" />
+			<query
+				queryString="method=syncUnit"
+				validator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)" />
+			<query
+				queryString="method=checkUintAuth|checkUnique|checkUniqueByName"
+				validator="roleValidator(role=ROLE_SYSUNIT_DEFAULT)" />
+			<query
+				queryString="method=copy|add&amp;unitFlag=out"
+				validator="areaRoleValidator(role=ROLE_SYSUNIT_ADDOUTERUNIT)|roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)" />
+			<query
+				queryString="method=addUnit"
+				validator="areaRoleValidator(role=ROLE_SYSUNIT_ADDOUTERUNIT)|roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)" />
+			<query
+				queryString="method=save|saveadd"
+				validator="areaRoleValidator(role=ROLE_SYSUNIT_ADDOUTERUNIT)|roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)" />
+		</request>
+		
+		<!-- 交换单位文书设置 -->
+		<request
+			path="sys_unit_secretary/sysUnitSecretary*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.unit.model.SysUnitSecretary"
+			defaultValidator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)">
+		</request>
+		<request
+			path="sys_unit_data_center/sysUnitDataCenter*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.unit.model.SysUnitDataCenter"
+			defaultValidator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)">
+		</request>
+		<request
+			path="km_imissive_brunchleader/kmImissiveUnitBrunchLeader*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.unit.model.KmImissiveUnitBrunchLeader"
+			defaultValidator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)">
+		</request>
+		<request path="sys_unit_appconfig/sysUnitAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.sys.unit.model.SysUnitConfig"
+				validator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)" />
+		</request>
+		
+		<!-- 单位群组设置 -->
+		<request
+			path="sys_unit_group/sysUnitGroup*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.unit.model.SysUnitGroup"
+			defaultValidator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)">
+			<query queryString="method=getGroups" validator="roleValidator(role=SYSROLE_USER)" />
+		</request>
+
+		<!-- 交换中心设置 -->
+		<request
+				path="sys_unit_data_center/sysUnitDataCenter*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.sys.unit.model.SysUnitDataCenter"
+				defaultValidator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)">
+		</request>
+
+		<!-- 对接单位设置 -->
+		<request
+				path="sys_unit_data_center_unit/sysUnitDataCenterUnit*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.sys.unit.model.SysUnitDataCenterUnit"
+				defaultValidator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)">
+		</request>
+		
+		<filters modelName="com.landray.kmss.sys.unit.model.SysUnitGroup">
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_SYSUNIT_CONFIG_SETTING)" />
+			<filter
+				type="SYS_READER"
+				expression="authOrgNullReaderFilter(field=authReaders)" />	
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=authReaders.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="flagFieldFilter(field=authReaderFlag,value=1)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="authFieldFilter(field=authEditors.fdId)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="roleFilter(role=ROLE_SYSUNIT_CONFIG_SETTING)" />
+		</filters>
+	</module>	
+	
+	<module
+		messageKey=""
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.sys.unit.model.SysUnitConfig"
+				validator="roleValidator(role=ROLE_SYSUNIT_CONFIG_SETTING)" />
+		</request>
+	</module>
+	<profileConfig
+	    key="sys/unit"
+		messageKey="{sys-unit:module.sys.unit}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/unit/tree.jsp" 
+		icon="sys_unit"
+		type="mechanism"
+		description="{sys-unit:sysUnit.profileCfg.description}"/>
+</configs>

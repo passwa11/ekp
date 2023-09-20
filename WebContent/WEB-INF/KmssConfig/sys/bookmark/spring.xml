@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="sysBookmarkMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.bookmark.dao.hibernate.SysBookmarkMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.bookmark.model.SysBookmarkMain" />
+	</bean>
+	<bean
+		id="sysBookmarkMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.bookmark.service.spring.SysBookmarkMainServiceImp">
+		<property name="baseDao">
+			<ref bean="sysBookmarkMainDao" />
+		</property>
+		<property name="sysBookmarkCategoryService">
+			<ref bean="sysBookmarkCategoryService" />
+		</property>
+	</bean>
+	<bean
+		id="sysBookmarkMainService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysBookmarkMainTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysBookmarkCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.bookmark.dao.hibernate.SysBookmarkCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.bookmark.model.SysBookmarkCategory" />
+	</bean>
+	<bean
+		id="sysBookmarkCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.bookmark.service.spring.SysBookmarkCategoryServiceImp">
+		<property name="baseDao">
+			<ref bean="sysBookmarkCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysBookmarkCategoryService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysBookmarkCategoryTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysBookmarkPublicCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.bookmark.dao.hibernate.SysBookmarkPublicCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.bookmark.model.SysBookmarkPublicCategory" />
+	</bean>
+	<bean
+		id="sysBookmarkPublicCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.bookmark.service.spring.SysBookmarkPublicCategoryServiceImp">
+		<property name="baseDao">
+			<ref bean="sysBookmarkPublicCategoryDao" />
+		</property>
+		<property name="sysBookmarkCategoryService">
+			<ref bean="sysBookmarkCategoryService" />
+		</property>
+		<property name="sysBookmarkMainService">
+			<ref bean="sysBookmarkMainService" />
+		</property>
+	</bean>
+	<bean
+		id="sysBookmarkPublicCategoryService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysBookmarkPublicCategoryTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysBookmarkCategoryTreeService"
+		class="com.landray.kmss.sys.bookmark.service.spring.SysBookmarkCategoryTreeService">
+		<property name="sysBookmarkPublicCategoryService">
+			<ref bean="sysBookmarkPublicCategoryService" />
+		</property>
+		<property name="sysBookmarkPersonCategoryService">
+			<ref bean="sysBookmarkPersonCategoryService" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysBookmarkSourceTreeService"
+		class="com.landray.kmss.sys.bookmark.service.spring.SysBookmarkSourceTreeService">
+		<property name="sysBookmarkMainService">
+			<ref bean="sysBookmarkMainService" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysBookmarkSourceListService"
+		class="com.landray.kmss.sys.bookmark.service.spring.SysBookmarkSourceListService">
+		<property name="sysBookmarkMainService">
+			<ref bean="sysBookmarkMainService" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysBookmarkPersonCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.bookmark.dao.hibernate.SysBookmarkPersonCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.bookmark.model.SysBookmarkPersonCategory" />
+	</bean>
+	<bean
+		id="sysBookmarkPersonCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.bookmark.service.spring.SysBookmarkPersonCategoryServiceImp">
+		<property name="baseDao">
+			<ref bean="sysBookmarkPersonCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysBookmarkPersonCategoryService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysBookmarkPersonCategoryTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysBookmarkMainDaoProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<value>sysBookmarkMainDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>luceneCreateAdvisor</value>
+				<value>luceneSaveAdvisor</value>
+				<value>docKeyWriteAdvice</value>
+				<value>luceneDeleteAdvisor</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 我的收藏、我收藏的文档portlet -->
+	<bean id="sysBookmarkPortlet"
+		class="com.landray.kmss.sys.bookmark.service.spring.SysBookmarkPortlet">
+		<property name="sysBookmarkMainService">
+			<ref bean="sysBookmarkMainService" />
+		</property>
+	</bean>
+	
+   <!-- 发送通知 -->
+   <bean id="sysBookmarkNotifyService"
+        class="com.landray.kmss.sys.bookmark.notify.SysBookmarkNotifyServiceImp" >
+   		<property
+			name="sysNotifyMainCoreService">
+			<ref
+				bean="sysNotifyMainCoreService" />
+		</property>
+   </bean>	
+
+	<bean
+	id="sysBookmarkUpdateNoticeServiceTarget"
+        class="com.landray.kmss.sys.bookmark.service.spring.SysBookmarkUpdateNoticeService">
+        <property name="sysBookmarkMainService">
+            <ref bean="sysBookmarkMainService" />
+        </property>
+        <property name="sysBookmarkNotifyService">
+            <ref bean="sysBookmarkNotifyService" />
+        </property>
+	</bean>
+
+    <!-- 定时任务发送收藏更新给收藏者入口 -->
+	<bean
+		id="sysBookmarkUpdateNoticeService"
+		lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property
+			name="transactionManager">
+			<ref
+				bean="transactionManager" />
+		</property>
+		<property
+			name="target">
+			<ref
+				bean="sysBookmarkUpdateNoticeServiceTarget" />
+		</property>
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop
+					key="notifyCollector">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="sysBookmarkCategoryController" class="com.landray.kmss.sys.bookmark.controller.SysBookmarkCategoryController"/>
+	<bean id="sysBookmarkPersonCategoryController" class="com.landray.kmss.sys.bookmark.controller.SysBookmarkPersonCategoryController"/>
+	<bean id="sysBookmarkMainController" class="com.landray.kmss.sys.bookmark.controller.SysBookmarkMainController"/>
+	<!-- 删除收藏校验 -->
+	<bean 
+			id="sysBookmarkAuthValidator"
+			class="com.landray.kmss.sys.bookmark.service.spring.SysBookmarkAuthValidator">
+		<property
+				name="sysBookmarkMainService">
+			<ref
+					bean="sysBookmarkMainService" />
+		</property>
+	</bean>
+</beans>

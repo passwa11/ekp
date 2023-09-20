@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<log-oper>
+    <logset>
+        <oper
+            id="KmsOuterSearchOperLog"
+            desc="log for KmsOuterSearchAction"
+            extends="BaseOperLog"
+            model="*"
+            action="*">
+            <query
+				method="result"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+            <query
+				method="buildResultList"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.export" />
+            <query
+				method="condition"
+				logPoint="Base_UrlParam" />
+        </oper>
+        <oper
+            id="KmsAppConfigOperLog"
+            desc="log for KmsAppConfigAction"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="*">
+        </oper>
+        <oper
+            id="kmsCommonDatapushOperLog"
+            desc="log for kmsCommonDatapush.do"
+            extends="BaseOperLog"
+            model="*"
+            action="/kms/common/kms_common_push/kmsCommonDatapush.do">
+            <query
+            	method="accept"
+            	logPoint="Base_UrlParam;Action_FindAll;Action_Find"
+            	messageKey="kms-common:kmsCommonDataPush.title"/>
+        </oper>
+        
+        <oper
+            id="kmsBookmarkMainOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/kms/common/kms_bookmark/KmsBookmarkMain.do">
+	        <!-- 收藏 -->
+            <query
+            	method="buildLog"
+            	logPoint="Base_UrlParam;addBookmark"
+            	messageKey="kms-common:kms.common.log.bookmark.add"/>
+        </oper>
+        <oper
+            id="kmsCommonSensitiveOperLog"
+            desc="log for kmsCommonSensitive.do"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/kms/common/kms_common_sensitive/kmsCommonSensitive.do">
+			<query
+				method="edit"
+				logPoint="Base_UrlParam" />
+        </oper>
+        <oper
+            id="kmsHomeKnowledgeIntroCategoryOperLog"
+            desc="log for kmsHomeKnowledgeIntroCategory.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.common.model.KmsHomeKnowledgeIntroCategory"
+            action="/kms/common/kms_home_knowledge_intro_category/kmsHomeKnowledgeIntroCategory.do">
+        </oper>
+        <oper
+            id="kmsHomeKnowledgeIntroOperLog"
+            desc="log for kmsHomeKnowledgeIntro.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.common.model.KmsHomeKnowledgeIntro"
+            action="/kms/common/kms_home_knowledge_intro/kmsHomeKnowledgeIntro.do">
+			<query
+				method="list|data|listChildren|manageList"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+        </oper>
+        <oper
+            id="kmsHomeKnowledgeIntroPortletOperLog"
+            desc="log for kmsHomeKnowledgeIntroPortlet.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.common.model.KmsHomeKnowledgeIntro"
+            action="/kms/common/kms_home_knowledge_intro_portlet/kmsHomeKnowledgeIntroPortlet.do">
+			<query
+				method="list|data|listChildren|manageList|getHomeKnowledgeIntro"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+        </oper>
+        <oper
+            id="kmsCommentMainOperLog"
+            desc="log for kmsCommentMain.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.common.model.KmsCommentMain"
+            action="/kms/common/kms_comment_main/kmsCommentMain.do">
+			<query
+				method="list|data|listChildren|manageList|getData|listComment"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+			<query
+				method="save|saveadd"
+				logPoint="Base_UrlParam;Service_Add"
+				messageKey="kms-common:kmsCommentMain.button" />
+        </oper>
+        <oper
+            id="kmsCommonDocErrorCorrectionOperLog"
+            desc="log for kmsCommonDocErrorCorrection.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.common.model.KmsCommonDocErrorCorrection"
+            action="/kms/common/kms_common_doc_error_correction/kmsCommonDocErrorCorrection.do">
+			<query
+				method="list|data|listChildren|manageList"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+			<query
+				method="viewinfo"
+				logPoint="Base_UrlParam;Action_Find"
+				messageKey="button.view" />
+        </oper>
+        <oper
+            id="kmsCourseNotesOperLog"
+            desc="log for kmsCourseNotes.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.common.model.KmsCourseNotes"
+            action="/kms/common/kms_notes/kmsCourseNotes.do">
+			<query
+				method="list|data|listChildren|manageList|getNotesInfo|getNotes|dataIndex"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+			<query
+				method="cancelShare"
+				logPoint="Base_UrlParam;Action_Find;Service_Update" 
+				messageKey="kms-common:kmsCommon.cancelShare" />
+        </oper>
+        <oper
+            id="kmsCommonAtUserOperLog"
+            desc="log for kmsCommonAtUser.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.common.model.KmsCommonAtUser"
+            action="/kms/common/kms_common_at_users/kmsCommonAtUser.do">
+        </oper>
+        <oper
+            id="kmsCommonRecycleLogOperLog"
+            desc="log for kmsCommonRecycleLog.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.common.model.KmsCommonRecycleLog"
+            action="/kms/common/kms_common_recycle_log/kmsCommonRecycleLog.do">
+        </oper>
+        <oper
+            id="kmsPersonImportOperLog"
+            desc="log for kmsPersonImport.do"
+            extends="BaseOperLog"
+            model="*"
+            action="/kms/common/kms_common_person_import/kmsPersonImport.do">
+			<query
+				method="importData"
+				logPoint="Base_UrlParam;Action_Find;Action_FindAll" 
+				messageKey="button.import" />
+			<query
+				method="downErrExcel"
+				logPoint="Base_UrlParam;Action_Find;Action_FindAll" 
+				messageKey="kms-common:person.import.downError" />
+        </oper>
+        <oper
+            id="kmsPersonUploadOperLog"
+            desc="log for kmsPersonUpload.do"
+            extends="BaseOperLog"
+            model="*"
+            action="/kms/common/kms_common_person_import/kmsPersonUpload.do">
+			<query
+				method="uploadFile"
+				logPoint="Base_UrlParam;Action_Find" 
+				messageKey="sys-attachment:sysAttMain.button.upload" />
+			<query
+				method="downLoadTemplate"
+				logPoint="Base_UrlParam;Action_Find" 
+				messageKey="kms-common:kms.common.log.personimport.downLoadTemplate" />
+        </oper>
+        <oper
+            id="kmsShareMainOperLog"
+            desc="log for kmsShareMain.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.common.model.KmsShareMain"
+            action="/kms/common/kms_share/kmsShareMain.do">
+			<query
+				method="shareToSNS"
+				logPoint="Base_UrlParam;Service_Add" 
+				messageKey="kms-common:kmsShareMain.share" />
+			<query
+				method="saveSNSRecord"
+				logPoint="Base_UrlParam;Service_Add" 
+				messageKey="button.save" />
+			<query
+				method="shareToPerson"
+				logPoint="Base_UrlParam;Service_Add" 
+				messageKey="kms-common:kmsShareMain.shareTo.person" />
+			<query
+				method="list|data|listChildren|manageList|viewAll"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+        </oper>
+    </logset>
+</log-oper>

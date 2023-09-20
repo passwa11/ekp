@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+	<logset>
+        <oper
+            id="xFormFragmentSetCategory"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.xform.fragmentSet.model.SysFormFragmentSetCategory"
+            action="/sys/xform/fragmentSet/category/xFormFragmentSetCategory.do">
+            <query
+                method="copy"
+                logPoint="Action_Find"
+                messageKey="button.copy"/>
+        </oper>
+        <!-- 标准CRUD请求的URL -->
+        <oper
+            id="xFormFragmentSet"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.xform.fragmentSet.model.SysFormFragmentSet"
+            action="/sys/xform/fragmentSet/xFormFragmentSet.do">
+        </oper>
+        
+        <!-- 历史数据请求 -->
+        <oper
+            id="xFormFragmentSetHistory"
+            extends="xFormFragmentSet"
+            model="com.landray.kmss.sys.xform.fragmentSet.model.SysFormFragmentSetHistory"
+            action="/sys/xform/fragmentSet/history/xFormFragmentSetHistory.do">
+            <query
+                method="viewHistory"
+                logPoint="Base_UrlParam;Action_Find;viewHistory"
+                messageKey="button.view"/>
+            <query
+                method="editHistory"
+                logPoint="Base_UrlParam;Action_Find;editHistory"
+                messageKey="button.edit"/>
+        </oper>
+        
+        <oper
+            id="xFormRefFragmentSet"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.xform.base.model.SysFormTemplateHistory"
+            action="/sys/xform/fragmentSet/ref/xFormRefFragmentSet.do">
+            <query 
+                method="getTemplateRefFragmentSet"
+                logPoint="Base_UrlParam;Action_FindAll;getTemplateRefFragmentSet"
+                messageKey="button.list"/>
+        </oper>
+        <oper
+            id="xFormFragmentSetIndex"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.xform.fragmentSet.model.SysFormFragmentSet"
+            action="/sys/xform/fragmentSet/xFormFragmentSetIndex.do">
+        </oper>
+	</logset>
+</log-oper>

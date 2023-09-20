@@ -1,0 +1,26 @@
+function getUrl(url) {
+return render.env.fn.formatUrl(url);
+}
+var element = render.parent.element;
+var frag = $(document.createDocumentFragment());
+var _vars = render.vars;
+var _bg = getUrl(_vars.bg) ? 'background-image:url('+ getUrl(_vars.bg)+');' : '';
+var _bgColor = render.vars.bgColor === null ? 'transparent' : render.vars.bgColor === undefined ? '#228AFE' : render.vars.bgColor; // 背景图颜色
+var _height = _vars.height || 46;
+var _mainTitle = _vars.mainTitle || '快捷方式';
+var _style = Com_HtmlEscape(_vars.style) || '';
+
+{$
+<style>
+    #{%render.dataview.cid%}{
+    {%_style%}
+    }
+</style>
+<div class="lui-sys-decorate-wrap lui-sys-decorate-wrap-simpleTitle" style="height:{%_height%}px;{%_bg%};
+background-repeat:no-repeat;line-height:{%_height%}px;{%_style%}">
+    <div class="lui-sys-decorate-title"><h4>{%_mainTitle%}</h4></div>
+</div>
+$}
+
+
+

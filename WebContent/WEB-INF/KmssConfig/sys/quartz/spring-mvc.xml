@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/quartz/sys_quartz_job/sysQuartzJob.do"
+		class="com.landray.kmss.sys.quartz.actions.SysQuartzJobAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.quartz.forms.SysQuartzJobForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/quartz/sys_quartz_job/sysQuartzJob_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/quartz/sys_quartz_job/sysQuartzJob_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/quartz/sys_quartz_job/sysQuartzJob_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/quartz/sys_quartz_job/sysQuartzConfig.do"
+		class="com.landray.kmss.sys.quartz.actions.SysQuartzConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+</beans>

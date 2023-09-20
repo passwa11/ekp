@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!-- 业务授权 -->
+	<extension-point id="com.landray.kmss.sys.lbpmext.businessauth">
+		<item name="controlType">
+			<param name="name" kind="string" required="true">
+				<description>名称(内置 定额、定量)</description>
+			</param>
+			<param name="value" kind="string" required="true">
+				<description>实际值(1,2,3...)</description>
+			</param>
+			<param name="fieldType" kind="string" required="true">
+				<description>字段类型(仅支持数字型类型)</description>
+			</param>
+			<param name="scaleLength" kind="string" required="true">
+				<description>小数位数</description>
+			</param>
+			<description>业务授权控制方式</description>
+		</item>
+		<description>
+			业务授权
+		</description>
+	</extension-point>
+	
+	<!-- 业务授权 -->
+	<extension
+	    point="com.landray.kmss.sys.lbpmext.businessauth"
+	    model="*">
+	    <item name="controlType">
+	       <param name="name" value="{sys-lbpmext-businessauth:lbpmext.businessAuth.fdType.money}"/>
+	       <param name="value" value="1"/>
+	       <param name="fieldType" value="BigDecimal"/>
+	       <param name="scaleLength" value="2"/>
+	    </item>
+	    <item name="controlType">
+	       <param name="name" value="{sys-lbpmext-businessauth:lbpmext.businessAuth.fdType.number}"/>
+	       <param name="value" value="2"/>
+	       <param name="fieldType" value="Double"/>
+	       <param name="scaleLength" value="0"/>
+	    </item>
+	    <item name="controlType">
+	       <param name="name" value="{sys-lbpmext-businessauth:lbpmext.businessAuth.fdType.qualitative}"/>
+	       <param name="value" value="3"/>
+	       <param name="fieldType" value="BigDecimal"/>
+	       <param name="scaleLength" value="2"/>
+	    </item>
+	    <item name="controlType">
+	       <param name="name" value="{sys-lbpmext-businessauth:lbpmext.businessAuth.fdType.determined}"/>
+	       <param name="value" value="4"/>
+	       <param name="fieldType" value="BigDecimal"/>
+	       <param name="scaleLength" value="2"/>
+	    </item>
+	    <item name="controlType">
+	       <param name="name" value="{sys-lbpmext-businessauth:lbpmext.businessAuth.fdType.without}"/>
+	       <param name="value" value="0"/>
+	       <param name="fieldType" value="BigDecimal"/>
+	       <param name="scaleLength" value="2"/>
+	    </item>
+    </extension>
+	
+	<!-- 编号机制 -->
+	<extension
+	    point="com.landray.kmss.sys.number.config"
+	    model="*">
+	    <item name="extend">
+	       <param name="modelName" value="com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuth"/>
+	       <param name="templatePropertyName" value="fdCategroy"/>
+	       <param name="moduleName" value="{sys-lbpmext-businessauth:module.sys.lbpmext.businessauth}"/>
+	       <param name="order" value="15"/>
+	    </item>
+	    <!--  添加扩展businessAuthInfo的流水号 -->
+	    <item name="extend">
+	       <param name="modelName" value="com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuthInfo"/>
+	       <param name="templatePropertyName" value="fdCategroy"/>
+	       <param name="moduleName" value="{sys-lbpmext-businessauth:table.lbpmext.businessAuthInfo}"/>
+	       <param name="order" value="15"/>
+	    </item>
+    </extension>
+
+	<!--监听业务授权-->
+	<extension
+        point="com.landray.kmss.lbpm.engine.event">
+        <item name="listener">
+            <param name="unid" value="lbpmExtBusinessAuthListener" />
+            <param name="messageKey" value="" />
+            <param name="eventTypes" value="manualNodeHanlderGetterEvent" />
+            <param name="listener" value="lbpmExtBusinessAuthListener" />
+            <param name="enforce" value="true" />
+        </item>
+   </extension>
+</plugin>

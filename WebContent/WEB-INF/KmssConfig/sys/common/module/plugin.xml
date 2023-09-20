@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+        xmlns="http://www.example.org/plugin-config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+    <!-- 模块注册 -->
+    <extension-point id="com.landray.kmss.common.module.core.register.declare">
+        <item name="declare">
+            <param name="id" kind="string" required="true">
+                <description>
+                    当前模块的key
+                    (如:km-archives)
+                </description>
+            </param>
+            <param name="messageKey" kind="string" required="true">
+                <description>
+                    当前模块名称的MessageKey
+                    (如:kms-knowledge:module.kms.multidoc)
+                </description>
+            </param>
+            <!--机制信息-->
+            <param name="mechanismModels" kind="string" required="false">
+                <description>
+                    格式为 机制接口:机制Key:机制Model，多个用分号;分隔
+                    (机制接口为业务模块Model实现的接口，
+                     机制Key为机制Model.getMechanismName对应的值，作为存入业务模块Model或Form中mechanismMap的Key，
+                     机制Model为承载机制数据的Model限定类名，作为存入业务模块Model或中mechanismMap的对象，
+                     如:ISysNumberModel:sysNumberMainMapp:com.landray.kmss.sys.number.model.SysNumberMainMapp)
+                    (非机制可不声明，机制Key与机制Model非必须项)
+                </description>
+            </param>
+            <description>模块信息(如果不被其它模块依赖，可不声明)</description>
+        </item>
+        <description>模块注册</description>
+    </extension-point>
+
+    <!-- 声明依赖的模块 -->
+    <extension-point id="com.landray.kmss.common.module.core.register.depend">
+        <item name="depend">
+            <param name="id" kind="string" required="true">
+                <description>
+                    当前模块的key
+                    (如:km-archives)
+                </description>
+            </param>
+            <param name="messageKey" kind="string" required="true">
+                <description>
+                    当前模块中文名的MessageKey
+                    (如:kms-knowledge:module.kms.multidoc)
+                </description>
+            </param>
+            <param name="dependModules" kind="string" required="true">
+                <description>
+                    依赖的模块，影响项目启动模块依赖检查
+                    (如:"kms/multidoc;km/archives;dbcenter/echarts")
+                </description>
+            </param>
+            <param name="dependModels" kind="string" required="false">
+                <description>
+                    Model依赖的机制接口，用冒号:分隔，影响机制的分发逻辑，多个Model用分号;分隔
+                    (如:"modelingAppModel:IKmsMultidocSubsideModel;modelingAppModel:IKmArchivesFileTemplateModel")
+                </description>
+            </param>
+            <description>模块信息</description>
+        </item>
+        <description>声明依赖的模块(如果不依赖其它模块，可不声明)</description>
+    </extension-point>
+</plugin>

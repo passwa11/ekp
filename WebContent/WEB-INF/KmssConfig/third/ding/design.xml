@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs xmlns="http://www.example.org/design-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="third-ding:module.third.ding"
+		urlPrefix="/third/ding/"
+		>
+		<roles>
+			ROLE_THIRDDING_ADMIN;
+			ROLE_THIRDDING_PC_SHARE
+		</roles>
+		<request
+			path="profile.jsp*"
+			defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+
+	    <request
+			path="third_ding_share/send_ding_message.jsp*"
+			defaultValidator="roleValidator(role=ROLE_THIRDDING_PC_SHARE)|roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+
+		<request
+			path="doc/ding-doc.docx*"
+			defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+		<request
+			path="third_ding_oms_init/thirdDingOmsInit*"
+			defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+		<request
+			path="oms_relation_model/omsRelationModel*"
+			defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+		<request
+			path="oms2DingCheck*"
+			defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+		<request
+			path="pcScanLogin*"
+			defaultValidator="true" />
+		<request
+			path="user.do?method=login"
+			defaultValidator="true" />
+		<request
+			path="jsapi*"
+			defaultValidator="true" />
+		<request
+			path="pc/*"
+			defaultValidator="true" />
+		<request
+			path="pc/pcopen.jsp"
+			defaultValidator="true" />
+
+		<request
+			path="pc/pcpg.jsp"
+			defaultValidator="true" />
+
+		<request
+			path="pc/url_out.jsp"
+			defaultValidator="true" />
+
+		<request
+			path="pc/url_2outer.jsp"
+			defaultValidator="true" />
+
+		<request
+			path="pc/web_wnd.jsp"
+			defaultValidator="true" />
+
+		<request
+            path="third_ding_oms_error/thirdDingOmsError.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingOmsError"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+            <query
+                queryString="method=edit|update"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=delete|deleteall"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=add|save|saveadd"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=view"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+        </request>
+        <request
+            path="third_ding_error/thirdDingError.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingError"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+            <query
+                queryString="method=edit|update"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=delete|deleteall"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=add|save|saveadd"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=view"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+        </request>
+        <request
+            path="third_ding_group/thirdDingGroup.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingGroup"
+            defaultValidator="roleValidator(role=SYSROLE_USER)">
+        </request>
+        <request
+            path="third_ding_orm_temp/thirdDingOrmTemp.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingOrmTemp"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+        </request>
+        <request
+            path="third_ding_event/thirdDingEvent.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingEvent"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+        </request>
+        <request
+            path="third_ding_notify/thirdDingNotify.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingNotify"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+        </request>
+        <request
+            path="third_ding_notifylog/thirdDingNotifylog.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingNotifylog"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+        </request>
+        <request
+            path="third_ding_finstance/thirdDingFinstance.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingFinstance"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+        </request>
+        <request
+            path="third_ding_microapp/thirdingMicroApp.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingApp"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+        </request>
+        <request
+            path="third_ding_dtemplate/thirdDingDtemplate.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingDtemplate"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+            <query
+                queryString="method=edit|update"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=delete|deleteall"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=add|save|saveadd"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=view"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN;ROLE_THIRDDING_ADMIN)"/>
+        </request>
+        <request
+            path="third_ding_dinstance/thirdDingDinstance.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingDinstance"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+            <query
+                queryString="method=edit|update"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=delete|deleteall"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=add|save|saveadd"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=view"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN;ROLE_THIRDDING_ADMIN)"/>
+        </request>
+        <request
+            path="third_ding_dtask/thirdDingDtask.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingDtask"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+            <query
+                queryString="method=edit|update"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=delete|deleteall"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=add|save|saveadd"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=view"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN;ROLE_THIRDDING_ADMIN)"/>
+        </request>
+		<request
+				path="third_ding_todo_card/thirdDingTodoCard.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingTodoCard"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+			<query
+					queryString="method=edit|update"
+					validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+			<query
+					queryString="method=delete|deleteall"
+					validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+		</request>
+        <request
+            path="third_ding_leavelog/thirdDingLeavelog.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingLeavelog"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+            <query
+                queryString="method=view"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+        </request>
+         <request
+            path="third_ding_callback_log/thirdDingCallbackLog.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingCallbackLog"
+            defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+            <query
+                queryString="method=edit|update"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN"/>
+            <query
+                queryString="method=delete|deleteall"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=add|save|saveadd"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+            <query
+                queryString="method=view"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+        </request>
+		<request
+				path="third_ding_calendar_log/thirdDingCalendarLog.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingCalendarLog"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+			<query
+					queryString="method=edit|update"
+					validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+			<query
+					queryString="method=delete|deleteall"
+					validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+		</request>
+
+        <request
+			path="notify*"
+			defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+
+        <request
+			path="scenegroup*"
+			defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+
+		<request
+			path="scenegroup/third_ding_scenegroup_mapp/thirdDingScenegroupMapp.do*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+			<query
+                queryString="method=edit|update|add|save|saveadd|delete|deleteall|view"
+                validator="roleValidator(role=ROLE_THIRDDING_ADMIN)"/>
+        </request>
+
+		<request
+				path="scenegroup/third_ding_scenegroup_module/*"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+		</request>
+
+		<request
+				path="scenegroup/third_ding_groupmsg_log/*"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+		</request>
+
+		<request
+				path="tree.jsp*"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_SETTING)"/>
+		<request
+				path="third_ding_calendar/thirdDingCalendar.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingCalendar"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_DEFAULT)">
+			<query
+					queryString="method=edit|update"
+					validator="roleValidator(role=ROLE_THIRDDING_SETTING)"/>
+			<query
+					queryString="method=delete|deleteall"
+					validator="roleValidator(role=ROLE_THIRDDING_SETTING)"/>
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDDING_DEFAULT)"/>
+		</request>
+
+		<request
+				path="third_ding_card_config/thirdDingCardConfig.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingCardConfig"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_SETTING)">
+			<query
+					queryString="method=edit|update"
+					validator="roleValidator(role=ROLE_THIRDDING_SETTING)"/>
+			<query
+					queryString="method=delete|deleteall"
+					validator="roleValidator(role=ROLE_THIRDDING_SETTING)"/>
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDDING_SETTING)"/>
+		</request>
+		<request
+				path="third_ding_card_mapping/thirdDingCardMapping.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingCardMapping"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_SETTING)">
+			<query
+					queryString="method=edit|update"
+					validator="roleValidator(role=ROLE_THIRDDING_SETTING)"/>
+			<query
+					queryString="method=delete|deleteall"
+					validator="roleValidator(role=ROLE_THIRDDING_SETTING)"/>
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDDING_SETTING)"/>
+		</request>
+		<request
+				path="third_ding_card_log/thirdDingCardLog.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.third.ding.model.ThirdDingCardLog"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_SETTING)">
+			<query
+					queryString="method=edit|update"
+					validator="roleValidator(role=ROLE_THIRDDING_SETTING)"/>
+			<query
+					queryString="method=delete|deleteall"
+					validator="roleValidator(role=ROLE_THIRDDING_SETTING)"/>
+			<query
+					queryString="method=view"
+					validator="roleValidator(role=ROLE_THIRDDING_SETTING)"/>
+		</request>
+
+		<request
+				path="third_ding_notify/cleaning_tool.jsp*"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+		</request>
+		<request
+				path="third_ding_notify/cleaning_tool.jsp*"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+		</request>
+		<request
+				path="third_ding_notify_workrecord/*"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+		</request>
+		<request
+				path="third_ding_todo_template/*"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+		</request>
+		<request
+				path="third_ding_dinstance_xform/*"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+		</request>
+		<request
+				path="third_ding_work/*"
+				defaultValidator="roleValidator(role=ROLE_THIRDDING_ADMIN)">
+		</request>
+	</module>
+
+	<!-- 参数设置 -->
+	<module messageKey="" urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.third.ding.model.DingConfig"
+				validator="roleValidator(role=ROLE_THIRDDING_ADMIN)" />
+		</request>
+	</module>
+
+	<quartz
+		messageKey="third-ding:third.ding.OMSSynchroOutTitle"
+		jobService="synchroOrg2DingV2"
+		cronExpression="0 0 23 * * ?"
+		jobMethod="triggerSynchro"
+		enable="true" />
+
+     <quartz
+		messageKey="third-ding:third.ding.role.syn.quartz.title"
+		jobService="thirdDingRoleSynchronizedService"
+		runType="SINGLENODE"
+		cronExpression="* 0/30 * * * ?"
+		jobMethod="triggerSynchro"
+		enable="false" />
+
+
+	<!-- <quartz
+		messageKey="third-ding:writeDynamicInfo.quartz"
+		jobService="thirdDingWriteDynamicInfoService"
+		cronExpression="0 0/30 * * * ?"
+		jobMethod="writeDynamicInfo"
+		description="third-ding:writeDynamicInfo.quartz.description" /> -->
+
+	<quartz messageKey="third-ding:third.ding.OMSSynchroDing2EkpOutTitle"
+		jobService="synchroOrgDing2Ekp" cronExpression="0 0 23 * * ?" jobMethod="triggerSynchro"
+		enable="true" />
+
+	<quartz
+		messageKey="third-ding:third.ding.person.sync"
+		jobService="thirdDingOmsInitService"
+		cronExpression="0 0 1 * * ?"
+		jobMethod="updatePerson"
+		enable="true"/>
+
+	<!-- 定时任务清除待办日志
+	<quartz
+          messageKey="third-ding:third.ding.notifyLog.clean"
+          jobService="thirdDingNotifylogService"
+          jobMethod="clean"
+          enable="false"
+          cronExpression="0 0 5 * * ?"
+          runType="SINGLENODE"
+          description="third-ding:third.ding.notifyLog.clean.description"/>
+    -->
+
+	<!-- 异常任务兼容处理 -->
+	<quartz
+          messageKey="third-ding:thirdDingError.task"
+          jobService="thirdDingErrorService"
+          jobMethod="synchroError"
+          enable="false"
+          cronExpression="0 0/30 * * * ?"
+          runType="SINGLENODE"
+          description="third-ding:thirdDingError.task.desc"/>
+
+	<!-- 钉钉待办更新异常的兼容处理 -->
+	<quartz
+          messageKey="third-ding:thirdDingError.ding.task"
+          jobService="thirdDingNotifyService"
+          jobMethod="synchroError"
+          enable="false"
+          cronExpression="0 0/30 1 * * ?"
+          runType="SINGLENODE"
+          description="third-ding:thirdDingError.ding.task.desc"/>
+
+	<!-- 钉钉获取蓝钉的部门和人员的映射信息 -->
+	<quartz
+          messageKey="third-ding:third.lding.synch"
+          jobService="thirdDingLdingORGService"
+          jobMethod="synchro"
+          enable="true"
+          cronExpression="0 0 1,12 * * ?"
+          runType="SINGLENODE"
+          description="third-ding:third.lding.synch.desc"/>
+
+	<!-- 考勤同步到钉钉失败同步 -->
+	<quartz
+		messageKey="third-ding:third.ding.leave.sync"
+		jobService="thirdDingLeavelogSyncService"
+		cronExpression="0 0/30 2 * * ?"
+		runType="SINGLENODE"
+		jobMethod="updateLeaveSync"
+		enable="false"/>
+
+	<!-- 定时任务处理钉钉回调事件 -->
+	<quartz
+          messageKey="third-ding:third.ding.callbackLog.executeTask"
+          jobService="thirdDingCallbackLogService"
+          jobMethod="saveOrUpdateDingCallBack"
+          enable="true"
+          cronExpression="0 0 3 * * ?"
+          runType="SINGLENODE"
+          description="third-ding:third.ding.callbackLog.executeTask.description"/>
+
+	<!-- 钉钉集成后台配置 -->
+	<profileConfig
+		key="dingding"
+		messageKey="{sys-profile:sys.profile.mobile.dingding}"
+		url="/third/ding/profile.jsp"
+		icon="lui_icon_s_profile_navLeft_dingding"
+		type="mobile"
+		order="6"/>
+
+
+	<quartz
+		messageKey="third-ding-notify:third.ding.notifyQueueError.resend.title"
+		jobService="thirdDingNotifyQueueErrorService"
+		jobMethod="updateRunErrorQueue"
+		cronExpression="30 5/10 * * * ?"
+		enable="false"
+		description="third-ding-notify:third.ding.notifyQueueError.resend.description" />
+	<quartz
+		messageKey="third-ding-notify:third.ding.notifyQueueError.clear.title"
+		jobService="thirdDingNotifyQueueErrorService"
+		jobMethod="clearNotifyQueueError"
+		cronExpression="0 0 4 * * ?"
+		enable="false"
+		description="third-ding-notify:third.ding.notifyQueueError.clear.description" />
+
+	<!-- 大于500人的工作通知队列 -->
+	<quartz
+		messageKey="third-ding:third.ding.notify.queue"
+		jobService="thirdDingNotifyQueueService"
+		jobMethod="addMessage"
+		cronExpression="0 0/5 * * * ?"
+		enable="true"
+		description="third-ding:third.ding.notify.queue.tip" />
+
+</configs>

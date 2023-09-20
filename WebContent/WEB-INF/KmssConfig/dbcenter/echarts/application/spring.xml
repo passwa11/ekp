@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 图表中心应用场景 -->
+	<bean
+		id="dbEchartsApplicationTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.dbcenter.echarts.application.service.spring.DbEchartsApplicationServiceImp">
+	</bean>
+	<bean
+		id="dbEchartsApplicationService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref bean="dbEchartsApplicationTarget" />
+		</property>
+	</bean>
+	<!-- 导航树 start -->
+	<bean
+		id="dbEchartsNavTreeTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.dbcenter.echarts.application.service.spring.DbEchartsNavTreeServiceImp">
+	</bean>
+	<bean
+		id="dbEchartsNavTreeService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref bean="dbEchartsNavTreeTarget" />
+		</property>
+	</bean>
+	<!-- 导航树展示 Start -->
+	<bean
+		id="dbEchartsNavTreeShowTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.dbcenter.echarts.application.service.spring.DbEchartsNavTreeShowServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="dbEchartsNavTreeShowDao" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsNavTreeShowService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref bean="dbEchartsNavTreeShowTarget" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsNavTreeShowDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.dbcenter.echarts.application.dao.hibernate.DbEchartsNavTreeShowDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.dbcenter.echarts.application.model.DbEchartsNavTreeShow" />
+	</bean>
+	<!-- 导航树展示 end -->
+	<!-- 导航树(统计图表) start -->
+	<bean
+		id="dbEchartsNavTreeChartTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.dbcenter.echarts.application.service.spring.DbEchartsNavTreeChartServiceImp">
+		<property name="baseDao">
+			<ref bean="dbEchartsNavTreeChartDao" />
+		</property>
+		<property name="dbEchartsNavTreeShowService">
+			<ref bean="dbEchartsNavTreeShowService" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsNavTreeChartService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref bean="dbEchartsNavTreeChartTarget" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsNavTreeChartDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.dbcenter.echarts.application.dao.hibernate.DbEchartsNavTreeChartDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.dbcenter.echarts.application.model.DbEchartsNavTreeChart" />
+	</bean>
+	<!-- 导航树(统计图表) end -->
+	<!-- 导航树(统计列表) start -->
+	<bean
+		id="dbEchartsNavTreeTableTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.dbcenter.echarts.application.service.spring.DbEchartsNavTreeTableServiceImp">
+		<property name="baseDao">
+			<ref bean="dbEchartsNavTreeTableDao" />
+		</property>
+		<property name="dbEchartsNavTreeShowService">
+			<ref bean="dbEchartsNavTreeShowService" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsNavTreeTableService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref bean="dbEchartsNavTreeTableTarget" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsNavTreeTableDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.dbcenter.echarts.application.dao.hibernate.DbEchartsNavTreeTableDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.dbcenter.echarts.application.model.DbEchartsNavTreeTable" />
+	</bean>
+	<!-- 导航树(统计列表) end -->
+	<!-- 导航树(自定义数据) start -->
+	<bean
+		id="dbEchartsNavTreeCustomTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.dbcenter.echarts.application.service.spring.DbEchartsNavTreeCustomServiceImp">
+		<property name="baseDao">
+			<ref bean="dbEchartsNavTreeCustomDao" />
+		</property>
+		<property name="dbEchartsNavTreeShowService">
+			<ref bean="dbEchartsNavTreeShowService" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsNavTreeCustomService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref bean="dbEchartsNavTreeCustomTarget" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsNavTreeCustomDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.dbcenter.echarts.application.dao.hibernate.DbEchartsNavTreeCustomDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.dbcenter.echarts.application.model.DbEchartsNavTreeCustom" />
+	</bean>
+	<!-- 导航树(自定义数据) end -->
+	<!-- 导航树 end -->
+</beans>

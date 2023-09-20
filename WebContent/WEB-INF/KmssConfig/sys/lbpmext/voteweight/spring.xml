@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="lbpmVoteWeightDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.lbpmext.voteweight.dao.hibernate.LbpmVoteWeightDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.lbpmext.voteweight.model.LbpmVoteWeight" />
+	</bean>
+	<bean
+		id="lbpmVoteWeightTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmext.voteweight.service.spring.LbpmVoteWeightMainServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="lbpmVoteWeightDao" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmVoteWeightMainService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="lbpmVoteWeightTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="lbpmVoteWeightScopeDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.lbpmext.voteweight.dao.hibernate.LbpmVoteWeightScopeDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.lbpmext.voteweight.model.LbpmVoteWeightScope" />
+	</bean>
+	<bean
+		id="lbpmVoteWeightScopeTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmext.voteweight.service.spring.LbpmVoteWeightScopeServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="lbpmVoteWeightScopeDao" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmVoteWeightScopeService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="lbpmVoteWeightScopeTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="lbpmVoteWeightScopeTreeService"
+		class="com.landray.kmss.sys.lbpmext.voteweight.service.spring.LbpmVoteWeightScopeTreeServiceImp">
+		<property
+			name="sysCategoryMainService">
+			<ref
+				bean="sysCategoryMainService" />
+		</property>
+		<property
+			name="lbpmVoteWeightScopeService">
+			<ref
+				bean="lbpmVoteWeightScopeService" />
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/sys/lbpmext/attention/" 
+        messageKey="sys-lbpmext-attention:module.sys.lbpmext.attention" 
+        defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN)">
+        <roles>
+	        ROLE_SYSLBPMEXTATTENTION_DEFAULT;
+        </roles>
+        <request 
+            path="attention/lbpmExtAttention.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmext.attention.model.LbpmExtAttention" 
+            defaultValidator="roleValidator(role=ROLE_SYSLBPMEXTATTENTION_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_SYSLBPMEXTATTENTION_DEFAULT)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_SYSLBPMEXTATTENTION_DEFAULT)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_SYSLBPMEXTATTENTION_DEFAULT)"/>
+        </request>
+    </module>
+</configs>

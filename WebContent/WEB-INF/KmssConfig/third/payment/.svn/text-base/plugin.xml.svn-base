@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+        xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd"
+        xmlns="http://www.example.org/plugin-config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <extension-point
+            id="com.landray.kmss.third.payment">
+        <item
+                name="pay">
+            <param
+                    name="key"
+                    kind="unid"
+                    required="true">
+                <description>扩展对应的key值，如：wxworkpay</description>
+            </param>
+            <param
+                    name="name"
+                    kind="unid"
+                    required="true">
+                <description>扩展名称，如：微信支付</description>
+            </param>
+            <param
+                    name="provider"
+                    kind="spring"
+                    basedOn="com.landray.kmss.third.payment.service.IThirdPaymentProvider"
+                    required="true">
+                <description>支付扩展实现，详见IThirdPaymentProvider接口说明</description>
+            </param>
+            <param
+                    name="supportedClient"
+                    kind="string"
+                    required="true">
+                <description>支持的客户端类型，以分号分隔，如果不限制客户端则设置为all</description>
+            </param>
+            <param
+                    name="order"
+                    default="50"
+                    kind="int">
+                <description>
+                    排序号，序号小的优先被调用。
+                </description>
+            </param>
+            <description>
+            </description>
+        </item>
+        <description>企业支付相关拓展点</description>
+    </extension-point>
+
+    <extension
+            point="com.landray.kmss.third.payment">
+        <item
+                name="pay"
+                enable="true">
+            <param
+                    name="key"
+                    value="wxworkpay"/>
+            <param
+                    name="name"
+                    value="third-payment:payment.wxwork"/>
+            <param name="provider" value="weixinWorkPaymentProvider"/>
+            <param name="supportedClient" value="-9;6;12;"/>
+            <param name="order" value="10"/>
+        </item>
+    </extension>
+</plugin>

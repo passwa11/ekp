@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+<!-- 未还借款 -->
+<portlet
+		id="fssc.loan.porlet.not.repay"
+		name="{fssc-loan:fssc.loan.portlet.nopay}"
+		module="{fssc-loan:module.fssc.loan}"
+		description="{fssc-loan:module.fssc.loan.description}">
+		<source
+			format="sys.ui.listtable"
+			type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/fssc/loan/fssc_loan_main/fsscLoanMainPortlet.do?method=listPortlet&type=ower&fdCategoryId=!{cateid}"
+				}
+			]]>
+			</code>
+		</source>
+		<vars>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		    <var
+				name="{portlet.cate}"
+				key="cateid"
+				kind="sys.category">
+				{"model":"com.landray.kmss.fssc.loan.model.FsscLoancategory","name":"{button.select}"}
+			</var>
+		</vars>
+		<operations>
+		   <operation
+				name="{operation.create}"
+				type="create"
+				href="/fssc/loan/fssc_loan_main/fsscLoanMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/fssc/loan/#j_path=/listAll&amp;mydoc=all"/>
+	    </operations>
+</portlet>
+
+	<!-- 未清借款 -->
+	<portlet id="fssc.loan.notPayOff"
+		name="{fssc-loan:fssc.loan.portlet.not.payoff}"
+		module="{fssc-loan:module.fssc.loan}">
+		<source format="sys.ui.html" type="AjaxText">
+			<code>
+			<![CDATA[
+					{"url":"/fssc/loan/fssc_loan_main/fssc_loan_amount.jsp",
+					"formatKey":"html"}
+			]]>
+			</code>
+		</source>
+	</portlet>
+</root>

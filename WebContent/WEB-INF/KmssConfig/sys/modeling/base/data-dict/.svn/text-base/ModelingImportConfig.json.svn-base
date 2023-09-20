@@ -1,0 +1,73 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.modeling.base.model.ModelingImportConfig",
+        "messageKey": "sys-modeling-base:table.modelingImportConfig",
+        "displayProperty": "fdName",
+        "table": "modeling_import_config",
+        "serviceBean": "modelingImportConfigService"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingImportConfig.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "canLogShow": "1",
+            "length": "100"
+        },
+        "fdModel":         {
+            "propertyType": "model",
+            "messageKey": "sys-modeling-base:modelingImportConfig.fdModel",
+            "type": "com.landray.kmss.sys.modeling.base.model.ModelingAppModel",
+            "column": "fd_model_id",
+            "notNull": "true"
+        },
+        "fdCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-modeling-base:modelingImportConfig.creator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "fd_creator_id",
+            "notNull": "true"
+        },
+        "fdCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingImportConfig.createTime",
+            "type": "DateTime",
+            "column": "fd_create_time",
+            "notNull": "true"
+        },
+        "propertyList":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modelingImportConfig.propertyList",
+            "column": "fd_config_id",
+            "orderBy": "fd_order",
+            "type": "com.landray.kmss.sys.modeling.base.model.ModelingImportProperty",
+            "table": "modeling_import_property",
+            "canLogShow": "1",
+            "cascade": "all"
+        },
+        "primaryKeyPropertyList":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modelingImportConfig.primaryKeyPropertyList",
+            "column": "fd_config_id",
+            "type": "com.landray.kmss.sys.modeling.base.model.ModelingTransportPrimaryKeyProperty",
+            "table": "modeling_primary_key",
+            "canLogShow": "1",
+            "cascade": "all"
+        },
+        "fdImportType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modelingImportConfig.fdImportType",
+            "type": "Integer",
+            "column": "fd_import_type",
+            "notNull": "true",
+            "canLogShow": "1",
+            "enumType": "sysTransport_importType"
+        }
+    }
+}

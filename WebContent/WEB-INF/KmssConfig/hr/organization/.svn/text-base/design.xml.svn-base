@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/hr/organization/" 
+        messageKey="hr-organization:module.hr.organization" 
+        defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+        <roles>
+        	ROLE_HRORGANIZATION_DEFAULT;
+        	ROLE_HRORGANIZATION_SETTING;
+        	ROLE_HRORGANIZATION_ORG_ADMIN;
+        	ROLE_HRORGANIZATION_ORG_STAFFING_LEVEL;
+        	ROLE_HRORGANIZATION_ORG_POST_SEQ;
+        	ROLE_HRORGANIZATION_ORG_RANK;
+        	ROLE_HRORGANIZATION_ORG_COMPILE;
+        	ROLE_HRORGANIZATION_ORG_COMPILE_SCOPE;
+        	ROLE_HRORGANIZATION_POST_COMPILE;
+        	ROLE_HRORGANIZATION_POST_COMPILE_SCOPE;
+        	ROLE_HRORGANIZATION_TRACK_RECORD;
+        	ROLE_HRORGANIZATION_TRACK_RECORD_SCOPE;
+        	ROLE_HRORGANIZATION_ORG_PERSON;
+        	ROLE_HRORGANIZATION_ORG_PERSON_SCOPE
+        </roles>
+                
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_SETTING)"/>
+            
+        <!--人事组织员工列表页面 -->
+		<request
+			path="hr_organization_tree/person/list.jsp*"
+			defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_ORG_PERSON)|roleValidator(role=ROLE_HRORGANIZATION_ORG_PERSON_SCOPE)">
+		</request>
+		
+        <!-- 是否有新增人事组织相关数据权限效验 -->
+        <request 
+            path="addHrOrg.do*" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+             <query 
+                queryString="method=add" 
+                validator="hrOrganizationAddValidator()"/>
+        </request>
+        
+        <request 
+            path="hr_organization_element/hrOrganizationElement.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.hr.organization.model.HrOrganizationElement" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+             <query 
+                queryString="method=add" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)|roleValidator(role=ROLE_HRORGANIZATION_ORG_COMPILE)"/>
+            <query 
+                queryString="method=updateCompile" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_COMPILE)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)|roleValidator(role=ROLE_HRORGANIZATION_ORG_COMPILE_SCOPE)|hrOrgCompileValidator()"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)|roleValidator(role=ROLE_HRORGANIZATION_ORG_COMPILE_SCOPE)"/>
+        </request>
+        <request 
+            path="hr_organization_person/hrOrganizationPerson.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.hr.organization.model.HrOrganizationPerson" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+            <query 
+                queryString="method=add" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_PERSON)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)|hrOrgPersonValidator()"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)"/>
+        </request>
+        <request 
+            path="hr_organization_dept/hrOrganizationDept.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.hr.organization.model.HrOrganizationDept" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)"/>
+        </request>
+        <!-- 岗位管理权限 -->
+        <request 
+            path="hr_organization_post/hrOrganizationPost.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.hr.organization.model.HrOrganizationPost" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+            <query 
+                queryString="method=add" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_POST_COMPILE)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_POST_COMPILE)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_POST_COMPILE)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+           	<query 
+                queryString="method=setCompile" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_POST_COMPILE)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+        </request>
+        <request 
+            path="hr_organization_org/hrOrganizationOrg.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.hr.organization.model.HrOrganizationOrg" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)"/>
+        </request>
+        <request 
+            path="hr_organization_post_seq/hrOrganizationPostSeq.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.hr.organization.model.HrOrganizationPostSeq" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+            <query 
+                queryString="method=add" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_POST_SEQ)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_POST_SEQ)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)"/>
+        </request>
+        <!-- 职级职等权限 -->
+        <request 
+            path="hr_organization_rank/hrOrganizationRank.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.hr.organization.model.HrOrganizationRank" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+            <query 
+                queryString="method=add" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_RANK)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                 validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_RANK)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+            <query 
+                queryString="method=view" 
+                 validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_RANK)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+        </request>
+        <request 
+            path="hr_organization_grade/hrOrganizationGrade.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.hr.organization.model.HrOrganizationGrade" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+            <query 
+                queryString="method=add" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_RANK)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_RANK)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_RANK)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+        </request>
+        <request 
+            path="hr_organization_log/hrOrganizationLog.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.hr.organization.model.HrOrganizationLog" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)"/>
+        </request>
+        
+        <!-- 职务管理 -->
+        <request 
+            path="hr_organization_staffing_level/hrOrganizationStaffingLevel.do*" 
+            validatorParameter="recid=fdId" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+            <query 
+                queryString="method=add" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_STAFFING_LEVEL)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_ORG_STAFFING_LEVEL)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)"/>
+        </request>
+        
+        <!-- 兼岗管理权限 -->
+        <request 
+            path="hr_organization_con_post/hrOrganizationConPost.do*" 
+            validatorParameter="recid=fdId" 
+            defaultValidator="roleValidator(role=ROLE_HRORGANIZATION_DEFAULT)">
+            <query 
+                queryString="method=add|save|edit|update" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_TRACK_RECORD)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_TRACK_RECORD)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_HRORGANIZATION_TRACK_RECORD)|roleValidator(role=ROLE_HRORGANIZATION_ORG_ADMIN)"/>
+                
+        </request>
+        
+        
+        <filters modelName="com.landray.kmss.hr.organization.model.HrOrganizationRank">
+        	<filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+	    	<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_HRORGANIZATION_ORG_ADMIN)" />
+		</filters>
+		
+		<filters modelName="com.landray.kmss.hr.organization.model.HrOrganizationGrade">
+			<filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+	    	<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_HRORGANIZATION_ORG_ADMIN)" />
+		</filters>
+	
+    </module>
+    
+    
+    
+    <!-- 定时任务同步组织架构 -->
+	<quartz
+		messageKey="hr-organization:hr.organization.sync.org.content"
+		jobService="synchroOrg"
+		cronExpression="0 0 4 ? * *"
+		jobMethod="synchroOrg" 
+		description="hr-organization:hr.organization.sync.org.description"/>
+	<!-- 定时任务计算机构、部门下总人数 -->
+	<quartz
+		messageKey="hr-organization:hr.organization.personsNumber"
+		jobService="hrOrganizationChartService"
+		jobMethod="countPersonsNumber" 
+		cronExpression="0 0 2 * * ?"
+		description="hr-organization:hr.organization.personsNumber.desc"/>
+	<!-- 全量同步EKP组织架构数据 -->
+	<quartz
+		messageKey="hr-organization:hr.organization.sync.all"
+		jobService="synchroAllEkpToHr"
+		jobMethod="synchroEkpToHr" 
+		cronExpression="0 15 10 * * ? 2000"
+		description="hr-organization:hr.organization.sync.all.desc"/>
+	<quartz
+		messageKey="hr-organization:hrOrganizationRecentContact.clearOldContacts"
+		jobService="hrOrganizationRecentContactService"
+		jobMethod="clearOldContacts"
+		enable="true"
+		cronExpression="0 0 6 * * ?"
+		runType="SINGLENODE"
+		description="hr-organization:hrOrganizationRecentContact.clearOldContacts.description" />
+	<!-- 组织架构人员数据同步到员工信息 -->
+	<quartz
+		cronExpression="0 30 4 ? * *"
+		jobService="synchroOrg"
+		messageKey="hr-organization:hrStaffPersonInfo.dataSync.quartz.name"
+		jobMethod="synchroPerson" 
+		description="hr-organization:hrStaffPersonInfo.dataSync.quartz.description"/>	
+    
+    <homePage 
+        messageKey="hr-organization:module.hr.organization" 
+        urlPrefix="hr/organization" 
+        url="/hr/organization/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/hr/organization/tree.jsp"/>
+    <profileConfig 
+        key="hr/organization" 
+        messageKey="{hr-organization:module.hr.organization}" 
+        url="/sys/profile/moduleindex.jsp?nav=/hr/organization/tree.jsp" 
+        icon="km_review" 
+        type="hr" 
+        description="{hr-organization:module.hr.organization.description}"/>
+</configs>

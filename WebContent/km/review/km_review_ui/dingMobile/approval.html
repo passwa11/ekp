@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>领用申请</title>
+    <link rel="stylesheet" href="./css/lib/common.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <style>
+        /* 审批样式 */
+         /* checkbox */
+         .ld-review-popup-checkbox-item {
+            border: none;
+            float: right;
+            margin-left: 12px;
+        }
+
+        .ld-review-popup-checkbox-item .checkbox-label {
+            padding-left: 15px;
+        }
+
+        .ld-review-popup-checkbox-item input[type="checkbox"]+span:before {
+            left: -32px;
+        }
+
+        /* radio */
+        .ld-review-popup-radio-item {
+            display: inline-block;
+            margin-left: 30px;
+        }
+
+        .ld-review-popup-radio-item input[type="radio"] {
+            opacity: 0;
+        }
+
+        .ld-review-popup-radio-item input[type="radio"]+span {
+            position: relative;
+        }
+
+        .ld-review-popup-radio-item input[type="radio"]+span:before {
+            content: '';
+            position: absolute;
+            height: 14px;
+            width: 14px;
+            border: 1px solid rgba(17, 31, 44, 0.24);
+            background: transparent;
+            z-index: 8;
+            box-sizing: border-box;
+            border-radius: 100%;
+            left: -22px;
+            top: 2px;
+        }
+
+        .ld-review-popup-radio-item input[type="radio"]:checked+span:before {
+            border: 4px solid #0089FF;
+        }
+
+        .ld-review-popup-radio-item .radio-label {
+            padding-left: 4px;
+        }
+
+        .ld-review-popup-radio-item input[type="radio"]+span:before {
+            left: -22px;
+        }
+
+        /* form */
+        .ld-review-create-main-content {
+            padding: 0 16px;
+            background: white;
+        }
+        .ld-review-create-main-content > div:last-child{
+            border-bottom: none;
+        }
+        .ld-review-create-main-form-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(17, 31, 44, 0.08);
+            box-sizing: border-box;
+        }
+
+        .ld-review-create-main-form-item-title {
+            width: 110px;
+            line-height: 24px;
+            padding: 16px 0;
+            font-size: 17px;
+        }
+
+        .ld-review-create-main-form-item-content {
+            flex: 1;
+            line-height: 24px;
+            padding: 16px 0;
+            display: flex;
+            justify-content: flex-end;
+            font-size: 17px;
+        }
+
+        .ld-review-create-main-form-item-content span,
+        .ld-review-create-main-form-item-content div,
+        .ld-review-create-main-form-item-content input {
+            font-size: 17px !important;
+        }
+
+        .ld-review-create-main-form-item-content input::placeholder {
+            font-size: 17px !important;
+        }
+
+        .ld-review-create-main-form .title {
+            padding-left: 16px;
+            height: 38px;
+            line-height: 38px;
+            background: #F2F2F7;
+            color: rgba(17, 31, 44, 0.56)
+        }
+
+        .ld-review-create-main-form input {
+            outline: none;
+            border: none;
+            text-align: right;
+        }
+
+        .ld-review-create-main-form-item-textarea {
+            padding-top:24px;
+            box-sizing: border-box;
+            border-bottom: 1px solid rgba(17, 31, 44, 0.08);
+        }
+
+        .ld-review-create-main-form-item-textarea .ld-review-create-main-form-item-title {
+            padding: 0;
+        }
+
+        .ld-review-create-main-form-item-textarea .ld-review-create-main-form-item-content {
+            padding: 0;
+        }
+
+        .ld-review-create-main-form-item-textarea .ld-review-create-main-form-item-content textarea {
+            width: 100%;
+            background-color: #F2F4F5;
+            min-height: 96px;
+            max-height: 102px;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: left;
+            border: none;
+            outline: none;
+            font-size: 17px;
+        }
+
+        .ld-review-create-main-form-item-textarea .ld-review-create-main-form-item-content textarea::placeholder {
+            font-size: 17px;
+        }
+        .ld-review-create-main-form-item-textarea-list {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height:80px;
+            text-align: center;
+        }
+        .ld-review-create-main-form-item-textarea-list img {
+            height:30px;
+            width:30px;
+        }
+        .ld-review-create-main-form-item.uploadFile{
+            border-bottom: 1px solid rgba(17, 31, 44, 0.08)!important;
+        }
+        .ld-review-create-main-form-item.uploadFile .ld-review-create-main-form-item-content{
+            height:78px;
+            position: relative;
+        }
+        .ld-review-create-main-form-item.uploadFile .ld-review-create-main-form-item-content input{
+            border:none;
+            outline: none;
+            opacity: 0;
+            height:24px;
+            width:24px;
+            position: absolute;
+            right:0;
+            top:50%;
+            transform: translateY(-50%);
+            z-index: 11;
+        }
+        .ld-review-create-main-form-item.uploadFile .ld-review-create-main-form-item-content img {
+            height:24px;
+            width:24px;
+            position: absolute;
+            right:0;
+            top:50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+        /* 审批样式 */
+        .ld-review-approval-header{
+            padding: 16px;
+        }
+        h3 {
+            margin:0;
+            font-size: 20px;
+            color: #111F2C;
+            margin-bottom: 16px;
+        }
+        .approvalTitle{
+            font-family: PingFangSC-Regular;
+            font-size: 13px;
+            color: #ff9f00;
+            line-height: 18px;
+        }
+        .ld-review-approval-header div{
+            margin-bottom: 8px;
+        }
+        .ld-review-approval-header div span{
+            font-size: 13px ;
+            color: rgba(17,31,44,0.40) ;
+        }
+        .ld-review-approval-header div span:first-child{
+            margin-right: 12px;
+        }
+        .ld-review-approval-main{
+            padding-bottom: 60px;
+        }
+        .ld-review-approval-main-tab {
+            position:sticky;
+            height:42px;
+            line-height: 42px;
+            display: flex;
+            align-items: center;
+            top:0;
+            background:white;
+            border-bottom:1px solid #f7f7f7 ;
+        }
+        .ld-review-approval-main-tab div{
+            width:50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ld-review-approval-main-tab div a{
+            position: relative;
+        }
+        .ld-review-approval-main-tab div a.active{
+            font-size: 15px;
+            color:#111F2C;
+            font-weight: bold;
+        }
+        .ld-review-approval-main-tab div a.active:after{
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 3px;
+            background-color: #0089FF;
+            border-radius: 1.5px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .ld-review-process-recod {
+            height:200px;
+            background: white;
+            padding: 20px 16px;
+        }
+        
+        .ld-review-approval-footer{
+            position: fixed;
+            bottom:0;
+            height:48px;
+            line-height: 48px;
+            display: flex;
+            align-items: center;
+            width:100%;
+            background: white;
+            box-shadow: 0 0 1px rgba(0,0,0,0.45);
+            z-index:88;
+        }
+        .ld-review-approval-footer div {
+            width: 25%;
+            line-height: 48px;
+            text-align:center;
+            position: relative;
+            color:#0089FF;
+            font-size: 16px;
+        }
+        .ld-review-approval-footer div.active {
+            color:white;
+            background: #0089FF;
+        }
+        .ld-review-approval-footer div.active:after{
+            content: '';
+            height: 20px;
+            border-left: 1px solid #efefef;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            margin-top: -10px;
+        }
+        .submitSuccessModal {
+            position: fixed;
+            top:40%;
+            left:50%;
+            transform: translateX(-50%);
+            height:96px;
+            line-height: 96px;
+            width:200px;
+            background:#f2f2f6;
+            border-radius: 5px;
+            text-align: center;
+            z-index:88;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="ld-review-approval">
+        <div class="ld-review-approval-header">
+            <h3>领用申请</h3>
+            <div class="approvalTitle">等待陈园园处理</div>
+            <div class="approvalNum">
+                <span>审批编号</span>
+                <span>20201018163946</span>
+            </div>
+            <div class="createTime">
+                <span>创建时间</span>
+                <span>2020-10-18 16：39</span>
+            </div>
+        </div>
+        <div class="ld-review-approval-main">
+            <div class="ld-review-approval-main-tab">
+                <div class="approvalContent">
+                    <a href="#approvalContent" class="active">审批内容</a>
+                </div>
+                <div class="processRecord">
+                    <a href="#processRecord">流程记录</a>
+                </div>
+            </div>
+            <div class="ld-review-create-main" id="approvalContent">
+                <form class="ld-review-create-main-form">
+                    <div class="ld-review-create-main-content" >
+                        <div class="ld-review-create-main-form-item">
+                            <div class="ld-review-create-main-form-item-title">领用人</div>
+                            <div class="ld-review-create-main-form-item-content">
+                                <div>陈园园</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title">审批内容</div>
+                    <div class="ld-review-create-main-content">
+                        <div class="ld-review-create-main-form-item fixedData">
+                            <div class="ld-review-create-main-form-item-title">领用人</div>
+                            <div class="ld-review-create-main-form-item-content">
+                                <div class="fixedDataItem">
+                                    <s></s>
+                                    <span>陈园园</span>
+                                    <i></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ld-review-create-main-form-item">
+                            <div class="ld-review-create-main-form-item-title">物品类型</div>
+                            <div class="ld-review-create-main-form-item-content">
+                                <div class="ld-review-popup-option-list">
+                                    <div class="ld-review-popup-checkbox-item">
+                                        <label class="checkbox-label">
+                                            <input name="checkbox" type="checkbox" checked>
+                                            <span>打印机</span>
+                                        </label>
+                                    </div>
+                                    <div class="ld-review-popup-checkbox-item">
+                                        <label class="checkbox-label">
+                                            <input name="checkbox" type="checkbox" checked>
+                                            <span>扫码仪</span>
+                                        </label>
+                                    </div>
+                                    <div class="ld-review-popup-checkbox-item">
+                                        <label class="checkbox-label">
+                                            <input name="checkbox" type="checkbox">
+                                            <span>传真机</span>
+                                        </label>
+                                    </div>
+                                    <div class="ld-review-popup-checkbox-item">
+                                        <label class="checkbox-label">
+                                            <input name="checkbox" type="checkbox">
+                                            <span>投影仪</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ld-review-create-main-form-item">
+                            <div class="ld-review-create-main-form-item-title">事由</div>
+                            <div class="ld-review-create-main-form-item-content">
+                                <input type="text" placeholder="请输入事由">
+                            </div>
+                        </div>
+                        <div class="ld-review-create-main-form-item">
+                            <div class="ld-review-create-main-form-item-title">归还时间</div>
+                            <div class="ld-review-create-main-form-item-content">
+                                <input type="text" placeholder="归还时间">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title">流程操作</div>
+                    <div class="ld-review-create-main-content processOperation">
+                        <div class="ld-review-create-main-form-item">
+                            <div class="ld-review-create-main-form-item-title">提交身份</div>
+                            <div class="ld-review-create-main-form-item-content">
+                                <div>陈园园</div>
+                            </div>
+                        </div>
+                        <div class="ld-review-create-main-form-item">
+                            <div class="ld-review-create-main-form-item-title">即将流向</div>
+                            <div class="ld-review-create-main-form-item-content">
+                                <div>N3.结束节点</div>
+                            </div>
+                        </div>
+                        <div class="ld-review-create-main-form-item">
+                            <div class="ld-review-create-main-form-item-title">通知紧急程度</div>
+                            <div class="ld-review-create-main-form-item-content">
+                                <div class="ld-review-popup-option-list">
+                                    <div class="ld-review-popup-radio-item">
+                                        <label class="radio-label">
+                                            <input name="radio" type="radio" >
+                                            <span>紧急</span>
+                                        </label>
+                                    </div>
+                                    <div class="ld-review-popup-radio-item">
+                                        <label class="radio-label">
+                                            <input name="radio" type="radio">
+                                            <span>急</span>
+                                        </label>
+                                    </div>
+                                    <div class="ld-review-popup-radio-item">
+                                        <label class="radio-label">
+                                            <input name="radio" type="radio" checked>
+                                            <span>一般</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ld-review-create-main-form-item-textarea">
+                            <div class="ld-review-create-main-form-item-title">审批意见</div>
+                            <div class="ld-review-create-main-form-item-content">
+                                <textarea name="" id="" cols="30" rows="10"
+                                    placeholder="请输入审批意见"></textarea>
+                            </div>
+                            <div class="ld-review-create-main-form-item-textarea-list">
+                                <div class="commonUsed">
+                                    <div>
+                                        <img src="./images/mui_approval_txt.png" alt="">
+                                    </div>
+                                    <p>审批语</p>
+                                </div>
+                                <div class="commonUsed">
+                                    <div>
+                                        <img src="./images/mui_write.png" alt="">
+                                    </div>
+                                    <p>手写</p>
+                                    
+                                </div>
+                                <div class="commonUsed">
+                                    <div>
+                                        <img src="./images/mui_electronic_seal.png" alt="">
+                                    </div>
+                                    <p>电子签章</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ld-review-create-main-form-item uploadFile">
+                            <div class="ld-review-create-main-form-item-title">附件</div>
+                            <div class="ld-review-create-main-form-item-content">
+                                <input type="file">
+                                <img src="./images/mui_link.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="ld-review-process-recod" id="processRecord">
+                <p>这里是审批记录</p>
+            </div>
+        </div>
+        <div class="ld-review-approval-footer">
+            <div class="active" onClick="submit()">跳转</div>
+            <div onClick="submit()">转办</div>
+            <div onClick="submit()">通过</div>
+            <div onClick="submit()">其他</div>
+        </div>
+    </div>
+    <div class="submitSuccessModal">
+        操作成功！
+    </div>
+</body>
+</html>
+<script src="./js/jquery.min.js"></script>
+<script>
+    $('.ld-review-approval-main-tab a').click(function(){
+       $('.ld-review-approval-main-tab a').removeClass('active');
+       $(this).addClass('active')
+    })
+    $('.ld-review-approval-footer div').click(function(){
+        $('.ld-review-approval-footer div').removeClass('active');
+       $(this).addClass('active')
+    })
+    function submit(){  
+        $('.submitSuccessModal').fadeIn()
+        var timer;
+        timer = setTimeout(function(){
+            $('.submitSuccessModal').fadeOut();
+            timer = null
+            window.location.href = "./index.html";
+        },1500)
+    }
+</script>

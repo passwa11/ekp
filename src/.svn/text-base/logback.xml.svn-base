@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>ekp</contextName>
+    <property name="logPath" value="."/>
+    <property name="maxHistory" value="60"/>
+    <property name="charset" value="UTF-8" />
+
+    <!-- ConsoleAppender代表输出到控制台 -->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger:\(%L\) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 日志输出文件 -->
+    <appender name="landrayLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger:\(%L\) - %msg%n
+            </pattern>
+            <charset>${charset}</charset>
+        </encoder>
+        <file>${logPath}/info/Landray.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/info/Landray%d.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 性能相关的日志 -->
+    <appender name="performanceLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger:\(%L\) - %msg%n
+            </pattern>
+            <charset>${charset}</charset>
+        </encoder>
+        <file>${logPath}/performance.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/performance-%d.log</fileNamePattern>
+            <maxFileSize>5120KB</maxFileSize>
+            <maxHistory>20</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="webService2" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger:\(%L\) - %msg%n
+            </pattern>
+            <charset>${charset}</charset>
+        </encoder>
+        <file>${logPath}/WebService2.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/WebService2%d.log</fileNamePattern>
+            <maxFileSize>5120KB</maxFileSize>
+            <maxHistory>20</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!--操作日志-->
+    <appender name="localLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <encoder>
+            <pattern>%msg%n</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+        <file>${logPath}/operlogs/log.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/operlogs/log%d.%i</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>1000</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="errorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 只记录ERROR级别日志，添加范围过滤，可以将该类型的日志特殊记录到某个位置 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger:\(%L\) - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/error/%d.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+    </appender>
+	
+	<!-- 当ekp配置 druid 为数据链接池同时配置kmss.jdbc.stat.enabled=true时，ekp 启动的时候报很多数据库对象已经存在，可以通过下面logger屏蔽 -->
+	<logger name="druid.sql.Statement" level="fatal" additivity="false"/>
+
+    <!--hibernate日志设置-->
+    <logger name="org.hibernate" level="warn"/>
+    <logger name="org.hibernate.type" level="error"/>
+    <logger name="org.hibernate.SQL" level="warn"/>
+    <logger name="org.hibernate.engine.StatefulPersistenceContext" level="error"/>
+    <logger name="org.hibernate.engine.internal.StatefulPersistenceContext" level="error"/>
+    <logger name="org.hibernate.ps.PreparedStatementCache" level="warn"/>
+    <logger name="org.hibernate.internal.util.xml.DTDEntityResolver" level="error"/>
+    <logger name="org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl" additivity="false">
+        <level value="warn"/>
+        <appender-ref ref="errorLog"/>
+    </logger>
+
+    <!--开源组件日志设置-->
+    <logger name="com.opensymphony.oscache" level="error"/>
+    <logger name="net.sf.navigator" level="error"/>
+    <logger name="net.sf.acegisecurity" level="warn"/>
+    <logger name="net.sf.acegisecurity.intercept.event.LoggerListener" level="warn"/>
+    <logger name="org.apache.commons" level="error"/>
+    <logger name="org.apache.struts" level="warn"/>
+    <logger name="org.displaytag" level="error"/>
+    <logger name="org.springframework" level="warn"/>
+    <logger name="com.ibatis.db" level="warn"/>
+    <logger name="org.apache.velocity" level="warn"/>
+    <logger name="org.springframework.beans.GenericTypeAwarePropertyDescriptor" level="error"/>
+    <logger name="com.canoo.webtest" level="warn"/>
+    <logger name="com.eviware.soapui" level="warn"/>
+    <logger name="org.apache.cxf.wsdl.service.factory.ReflectionServiceFactoryBean" level="warn"/>
+    <logger name="org.apache.cxf.endpoint.ServerImpl" level="warn"/>
+    <logger name="org.springframework.beans.factory.xml.XmlBeanDefinitionReader" level="error"/>
+    <logger name="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" level="warn"/>
+
+    <logger name="com.landray.kmss.framework.spring.event.transaction" level="warn"/>
+    <logger name="org.springframework.transaction.support" level="warn"/>
+    <logger name="org.springframework.transaction.interceptor" level="warn"/>
+
+
+    <logger name="org.apache.jasper.compiler.TldLocationsCache.level" level="warn"/>
+    <logger name="org.apache.cxf.interceptor" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="webService2"/>
+    </logger>
+
+    <!--ekp系统日志设置-->
+    <logger name="com.landray.kmss.lding" level="warn"/>
+    <logger name="com.landray.kmss.sys.formula.parser" level="warn"/>
+    <logger name="com.landray.kmss" level="info"/>
+    <logger name="com.landray.kmss.sys.config.action" level="info"/>
+    <logger name="com.landray.kmss.sys.admin.dbchecker" level="info"/>
+    <logger name="com.landray.kmss.sys.notify.provider.SysNotifyEmailProviderImp" level="info"/>
+    <logger name="com.landray.kmss.sys.attachment.jg.SysAttJGSaveFileFunction" level="info"/>
+    <logger name="com.landray.kmss.sys.attachment.jg.SysAttJGSaveAsHtmlFunction" level="info"/>
+    <logger name="com.landray.kmss.web.servlet.RTFUploaderServlet" level="warn"/>
+    <logger name="com.landray.kmss.common.actions" level="error"/>
+    <logger name="com.landray.kmss.web.springmvc.KmssRequestMappingHandlerMapping" level="error"/>
+    <logger name="com.landray.kmss.sys.config.loader.KmssApplicationEventMulticaster" level="warn"/>
+    <logger name="com.landray.kmss.sys.hibernate.spi.HQLConverTool" level="info"/>
+    <logger name="com.landray.kmss.sys.log.msg.LocalLogWriter" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="localLog"/>
+    </logger>
+
+    <!--性能相关的类 start-->
+
+    <logger name="com.landray.kmss.util.SingleThreadMonitor">
+        <level value="WARN"/>
+        <appender-ref ref="performanceLog"/>
+    </logger>
+    <logger name="org.hibernate.stat.internal.StatisticsImpl">
+        <level value="WARN"/>
+        <appender-ref ref="performanceLog"/>
+    </logger>
+    <logger name="com.landray.kmss.web.filter.MonitorFilter">
+        <level value="WARN"/>
+        <appender-ref ref="performanceLog"/>
+    </logger>
+    <logger name="com.landray.kmss.common.test.TimeCounter">
+        <level value="WARN"/>
+        <appender-ref ref="performanceLog"/>
+    </logger>
+    <!--TRACE用于输出执行sql以及参数-->
+    <logger name="org.hibernate.engine.query.spi.HQLQueryPlan">
+        <level value="WARN"/>
+        <appender-ref ref="performanceLog"/>
+    </logger>
+    <logger name="org.hibernate.engine.spi.QueryParameters">
+        <level value="WARN"/>
+        <appender-ref ref="performanceLog"/>
+    </logger>
+    <!--性能相关的类 end-->
+
+    <root level="info">
+        <appender-ref ref="consoleLog"/>
+        <appender-ref ref="landrayLog"/>
+        <appender-ref ref="errorLog"/>
+    </root>
+</configuration>

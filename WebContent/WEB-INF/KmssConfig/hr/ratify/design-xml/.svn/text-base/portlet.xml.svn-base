@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root
+	xmlns="http://www.landray.com.cn/schema/lui"
+	xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+	
+			<!-- 人事流程中心 
+	porlet.flow.center.todo = 待办
+	porlet.flow.center.done = 已办
+	porlet.flow.center.over = 办结
+	porlet.flow.center.self = 我发起的 -->
+	<portlet
+		id="hr.ratify.flow.center"
+		name="{hr.ratify:porlet.flow.center}"
+		module="{hr.ratify:module.hr.ratify}"
+		description="{hr.ratify:porlet.flow.center.desc}">
+		<source
+			format="sys.ui.listtable"
+			type="AjaxJson">
+			<code>
+			<![CDATA[
+			 				{ 
+ 					"url":"/hr/ratify/hr_ratify_main/hrRatifyMain.do?method=listPortlet&rowsize=!{rowsize}&q.!{docStatus}" 
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"fdId"},{"title":"文档标题","property":"docSubject"},{"title":"创建人","property":"docCreator.name"},{"title":"创建日期","property":"docCreateTime"}],
+						"datas":[[{"col":"fdId","value":"16f3bcbfab6c6056c142d4346fa9d96e"},
+						{"col":"docSubject","value":"张小雨入职申请"},
+						{"col":"docCreator.name","value":"张小雨"},
+						{"col":"docCreateTime","value":"2020-01-01"}],[{"col":"fdId","value":"16f3bcbfab6c6056c142d4346fa9d96e"},
+						{"col":"docSubject","value":"李小青离职申请​"},
+						{"col":"docCreator.name","value":"李小青"},
+						{"col":"docCreateTime","value":"2020-01-02"}],[{"col":"fdId","value":"16f3bcbfab6c6056c142d4346fa9d96e"},
+						{"col":"docSubject","value":"孔繁盛的人事流程"},
+						{"col":"docCreator.name","value":"孔繁盛"},
+						{"col":"docCreateTime","value":"2020-01-03"}],[{"col":"fdId","value":"16f3bcbfab6c6056c142d4346fa9d96e"},
+						{"col":"docSubject","value":"李华入职申请"},
+						{"col":"docCreator.name","value":"李华"},
+						{"col":"docCreateTime","value":"2020-01-04"}],[{"col":"fdId","value":"16f3bcbfab6c6056c142d4346fa9d96e"},
+						{"col":"docSubject","value":"张明返聘申请流程"},
+						{"col":"docCreator.name","value":"张明"},
+						{"col":"docCreateTime","value":"2020-01-05"}],[{"col":"fdId","value":"16f3bcbfab6c6056c142d4346fa9d96e"},
+						{"col":"docSubject","value":"张小雨调岗申请"},
+						{"col":"docCreator.name","value":"张小雨"},
+						{"col":"docCreateTime","value":"2020-01-06"}],[{"col":"fdId","value":"16f3bcbfab6c6056c142d4346fa9d96e"},
+						{"col":"docSubject","value":"张三离职申请"},
+						{"col":"docCreator.name","value":"张三"},
+						{"col":"docCreateTime","value":"2020-01-07"}],[{"col":"fdId","value":"16f3bcbfab6c6056c142d4346fa9d96e"},
+						{"col":"docSubject","value":"李建明调岗申请"},
+						{"col":"docCreator.name","value":"李建明"},
+						{"col":"docCreateTime","value":"2020-01-08"}],[{"col":"fdId","value":"16f3bcbfab6c6056c142d4346fa9d96e"},
+						{"col":"docSubject","value":"张晓续签流程申请"},
+						{"col":"docCreator.name","value":"张晓"},
+						{"col":"docCreateTime","value":"2020-01-09"}],[{"col":"fdId","value":"16f3bcbfab6c6056c142d4346fa9d96e"},
+						{"col":"docSubject","value":"李四华转正申请"},
+						{"col":"docCreator.name","value":"李四华"},
+						{"col":"docCreateTime","value":"2020-01-10"}]]}	
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		   <var name="状态" key="docStatus" kind="enumValue" default="mydoc=approval">
+                 {  "values":[{ "text":"{hr.ratify:porlet.flow.status.end}", "value":"docStatus=30"},
+                              { "text":"{hr.ratify:porlet.flow.status.todo}", "value":"mydoc=approval"},
+                              { "text":"{hr.ratify:porlet.flow.status.create}", "value":"mydoc=create"},
+                              { "text":"{hr.ratify:porlet.flow.status.done}", "value":"mydoc=approved"}],
+                   "showType":"radio"
+                  }
+            </var>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		</vars>
+		<operations>
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/hr/ratify/"/>
+	    </operations>
+
+</portlet>
+
+</root>

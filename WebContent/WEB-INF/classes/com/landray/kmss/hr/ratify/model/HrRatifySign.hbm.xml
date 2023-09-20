@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <subclass 
+        name="com.landray.kmss.hr.ratify.model.HrRatifySign" 
+        extends="com.landray.kmss.hr.ratify.model.HrRatifyMain"
+        discriminator-value="com.landray.kmss.hr.ratify.model.HrRatifySign">
+        <join table="hr_ratify_sign">
+	        <key
+	        	column="fd_id"></key>
+	        <property 
+	            name="fdSignName" 
+	            column="fd_sign_name" 
+	            update="true" 
+	            insert="true" 
+	            length="200"/>
+	        <property 
+	            name="fdSignContType" 
+	            column="fd_sign_cont_type" 
+	            update="true" 
+	            insert="true" 
+	            length="50"/>
+	        <property 
+	            name="fdSignType" 
+	            column="fd_sign_type" 
+	            update="true" 
+	            insert="true" 
+	            length="50"/>
+	        <property 
+	            name="fdSignBeginDate" 
+	            column="fd_sign_begin_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdSignEndDate" 
+	            column="fd_sign_end_date" 
+	            update="true" 
+	            insert="true"/>
+			<property
+				name="fdIsLongtermContract"
+				column="fd_is_longterm_contract"
+				update="true"
+				insert="true"
+				not-null="false" />
+	        <property 
+	            name="fdSignHandleDate" 
+	            column="fd_sign_handle_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdSignRemark" 
+	            column="fd_sign_remark" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property
+				name="fdSignEnable"
+				column="fd_sign_enable"
+				update="true"
+				insert="true"
+				length="1"
+				not-null="false" />
+	        <many-to-one 
+	            name="fdSignStaff" 
+	            column="fd_sign_staff_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one 
+	            name="fdSignDept" 
+	            column="fd_sign_dept_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one
+	        	name="fdSignStaffContType"
+	        	column="fd_sign_staff_cont_type_id"
+	        	update="true"
+	        	index="idx_sign_staff_cont_type" />
+        </join>
+    </subclass>
+</hibernate-mapping>

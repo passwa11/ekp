@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">	
+	<extension
+		point="com.landray.kmss.sys.workflow.support.oa.subprocess"
+		model="*">
+		<item
+			name="subprocess">
+			<param
+				name="modelName"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param
+				name="createParam"
+				value="fdTemplateId=!{cateid}" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.help.module.configuration">
+		<item name="config">
+			<param name="moduleName" value="新闻管理"/>
+			<param name="modulePath" value="/sys/news"/>
+			<param name="defaultOpenHelpManual" value="false"/>
+			<param name="defaultOpenBusinessOverview" value=""/>
+			<param name="defaultOpenSceneExperience" value="true"/>
+			<param name="businessOverviewImage" value=""/>
+			<param name="sceneExperienceUrl" value="http://mall.landray.com.cn/core01/build/index.html#/ProcessManagement/news/sceneExperience?tabs=off"/>
+		</item>
+	</extension>
+	
+	<!-- 功能区分类实现 扩展点 -->
+	<extension point="com.landray.kmss.third.pda.extend" model="*">
+		<item name="extend">
+			<param name="modelName"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param name="templateClass"
+				value="com.landray.kmss.sys.news.model.SysNewsTemplate" />
+			<param name="filterURL"
+				value="/third/pda/pda_property_filter/pdaPropertyFilter.do?method=getPropertyFilter&amp;templateClass=SysNewsTemplate" />
+		</item>
+	</extension>
+	
+	<!-- 订阅管理 -->
+	<extension
+		point="com.landray.kmss.sys.follow.setting"
+		model="com.landray.kmss.sys.news.model.SysNewsMain">
+		<item name="followSetting">
+			<param name="methodName" value="add" />
+			<param name="templateModel"  value="com.landray.kmss.sys.news.model.SysNewsTemplate" />
+			<param name="templateField"  value="fdTemplate.fdHierarchyId" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.config">
+		<item name="info">
+			<param name="name" value="{sys-news:module.sys.news}" />
+			<param name="modelName" value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param name="defaultUrl" value="/sys/news/mobile/nav.json" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-sys-news.js" />
+			<param name="targetFile" value="/sys/news/mobile/js/mui-sys-news.js" />
+			<param name="srcFold" value="/sys/news/mobile/js" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="mui-sys-news.css" />
+			<param name="targetFile" value="/sys/news/mobile/resource/css/newsListItem.css" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="mui-news-edit.css" />
+			<param name="targetFile" value="/sys/news/mobile/resource/css/edit.css" />
+		</item>
+	</extension>
+	
+	<extension	point="com.landray.kmss.km.keydata"	model="*" >
+		<item
+			name="showKeydataUsed">
+			<param
+				name="name"
+				value="新闻管理" />
+			<param
+				name="actionUrl"
+				value="/sys/news/showKeydataUsed.jsp?keydataId=${keydataId}" />
+			<param
+				name="formName"
+				value="sysNewsMainForm" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.news.transfer.SysNewsMain" />
+			<param
+				name="name"
+				value="新闻数据迁移" />
+			<param
+				name="path"
+				value="/sys/news/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.news.transfer.SysNewsMainChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.news.transfer.SysNewsMainTask" />
+			<param
+				name="description"
+				value="原来公文推送到新闻为rtf新闻，查看时页面有一块空白，该迁移任务把新闻类型修改为word新闻"/>
+		</item>
+	</extension>
+	
+	<!-- 微协同扩展点的部署 -->
+	<extension
+		point="com.landray.kmss.third.ywork.extend"
+		model="com.landray.kmss.sys.news.model.SysNewsMain">
+		<item name="extend">
+			<param
+				name="modelName"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param
+				name="templateName"
+				value="com.landray.kmss.sys.news.model.SysNewsTemplate" />
+			<param
+				name="title"
+				value="docSubject" />
+			<param
+				name="type"
+				value="5" />
+			<param
+				name="order"
+				value="3" />
+			<param
+				name="name"
+				value="sys-news:sysNewsMain.ywork.flow" />
+			<param
+				name="remark"
+				value="fdDescription" />
+			<param
+				name="creator"
+				value="docCreator" />
+			<param
+				name="createTime"
+				value="docCreateTime" />
+			<param
+				name="updateTime"
+				value="docAlterTime" />
+			<param
+				name="titlePic"
+				value="Attachment" />
+			<param
+				name="shareFields"
+				value="$docContent$" />
+			<param
+				name="shareFieldMessage"
+				value="content" />
+		</item>
+	</extension>
+	<!-- 新闻发起的webservice，用于合同签约后调用此webservice 在新闻模块中生成一份签约喜讯-->
+	<extension
+	      point="com.landray.kmss.sys.webservice2">
+	   <item
+			name="registry">
+	      <param name="serviceName" value="新闻发起的webservice的服务" />
+			<param name="serviceClass"
+				value="com.landray.kmss.sys.news.webservice.ISysNewsWebService" />
+			<param name="serviceBean" value="sysNewsWebService" />
+			<param name="serviceDoc" value="/sys/news/sys_news_webservice/sysNews_help.jsp" />
+	   </item>
+	</extension>
+	<!-- 表单关联控件模块扩展点 -->
+	<extension point="com.landray.kmss.sys.xform.base.service.controls.relevance" model="*">
+		<item name="node">
+			<param name="modelName" value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param name="templateModelName" value="com.landray.kmss.sys.news.model.SysNewsTemplate" />
+			<param name="key" value="sysNews" />
+			<param name="templatePropertyName" value="fdTemplate" />
+			<param name="moduleMessageKey" value="sys-news:news.moduleName" />
+		</item>
+	</extension>
+	<!-- 敏感词过滤 -->
+	<extension point="com.landray.sys.profile.sensitive.config" model="*">
+		<item
+			name="sensitiveConfig">
+			<param
+				name="name" 
+				value="{sys-news:module.sys.news}" />
+			<param 
+				name="formName" 
+				value="sysNewsMainForm" />
+		</item>
+	</extension>
+	
+	<!--新闻管理一键选择分类扩展点实现 -->
+	<extension point="com.landray.kmss.sys.person.categoryUrl" model="com.landray.kmss.sys.news.model.SysNewsMain" >
+		<item name="categoryUrl">
+			<param name="addUrl" value="/sys/news/sys_news_main/sysNewsMain.do?method=add&amp;fdTemplateId={0}" />
+			<param name="templateModel" value="com.landray.kmss.sys.news.model.SysNewsTemplate" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.sys.news.model.SysNewsMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="sys-news:sysNewsMain.allNews" />
+			<param
+				name="model"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param
+				name="page"
+				value="/allNews" />
+			<param
+				name="default"
+				value="docSubject;fdImportance;docCreator.fdName;docPublishTime;docAlterTime" />
+			<param
+				name="customized"
+				value="fdTopDays;sys-news:sysNewsMain.fdTopDays" />	
+		</item>
+	</extension> 
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.sys.news.model.SysNewsMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="sys-news:sysNewsMain.myNews" />
+			<param
+				name="model"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param
+				name="page"
+				value="/myNews" />
+			<param
+				name="default"
+				value="docSubject;fdImportance;docCreator.fdName;docPublishTime;docAlterTime" />
+			<param
+				name="customized"
+				value="fdTopDays;sys-news:sysNewsMain.fdTopDays" />		
+		</item>
+	</extension> 
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.sys.news.model.SysNewsMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="list.approval" />
+			<param
+				name="model"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param
+				name="page"
+				value="/approval" />
+			<param
+				name="default"
+				value="docSubject;fdImportance;docCreator.fdName;docPublishTime;docAlterTime" />
+			<param
+				name="customized"
+				value="fdTopDays;sys-news:sysNewsMain.fdTopDays" />				
+		</item>
+	</extension> 
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.sys.news.model.SysNewsMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="list.approved" />
+			<param
+				name="model"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param
+				name="page"
+				value="/approved" />
+			<param
+				name="default"
+				value="docSubject;fdImportance;docCreator.fdName;docPublishTime;docAlterTime" />
+			<param
+				name="customized"
+				value="fdTopDays;sys-news:sysNewsMain.fdTopDays" />				
+		</item>
+	</extension> 
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.sys.news.model.SysNewsMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="sys-news:sysNewsMain.fdIsTopNews" />
+			<param
+				name="model"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param
+				name="page"
+				value="/topNews" />
+			<param
+				name="default"
+				value="docSubject;fdImportance;docCreator.fdName;docPublishTime;docAlterTime;docReadCount" />
+			<param
+				name="customized"
+				value="fdTopDays;sys-news:sysNewsMain.fdTopDays" />		
+		</item>
+	</extension>
+
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.sys.news.model.SysNewsMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="sys-simplecategory:menu.sysSimpleCategory.index" />
+			<param
+				name="model"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param
+				name="page"
+				value="/docCategory" />
+			<param
+				name="default"
+				value="docSubject;fdImportance;docCreator.fdName;docPublishTime;docAlterTime;docReadCount" />
+			<param
+				name="customized"
+				value="fdTopDays;sys-news:sysNewsMain.fdTopDays" />		
+		</item>
+	</extension>	 
+	
+	<!-- 数据中台 -RTF -->
+	<extension point="com.landray.kmss.sys.xform.maindata.rtf">
+		<item name="config">
+			<!-- 主文档全名称 -->
+			<param
+				name="modelName"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param
+				name="fields"
+				value="docContent" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.news.transfer.SysNewsAtt" />
+			<param
+				name="name"
+				value="新闻附件数据迁移" />
+			<param
+				name="path"
+				value="/sys/news/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.news.transfer.SysNewsAttChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.news.transfer.SysNewsAttTask" />
+			<param
+				name="description"
+				value="由于误改了新闻正文附件的fdKey标示，导致旧的word新闻数据无法打开，项目升级后请执行改数据迁移（迁移前请做好数据库数据备份）"/>
+		</item>
+	</extension>
+	
+	<!-- 软删除功能扩展点实现 -->
+	<extension point="com.landray.kmss.sys.recycle">
+		<item name="softDelete">
+			<!-- 模块(文档)名称 -->
+			<param
+				name="modelName"
+				value="sys-news:news.moduleName" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<!-- 主文档对应的分类(模板)全名称 -->
+			<param
+				name="categoryClassName"
+				value="com.landray.kmss.sys.news.model.SysNewsTemplate" />
+			<!-- 主文档中分类(模板)的属性名称 -->
+			<param
+				name="categoryField"
+				value="fdTemplate" />
+			<!-- 主文档中标题的属性名称 -->
+			<param
+				name="titleField"
+				value="docSubject" />
+		</item>
+	</extension>
+
+	<!-- 附件历史版本功能扩展点实现 -->
+	<extension point="com.landray.kmss.sys.attachment.history">
+		<item name="historyVersion">
+			<!-- 模块(文档)名称 -->
+			<param
+				name="modelName"
+				value="sys-news:news.moduleName" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.anonym.relation">
+		<item name="mapRelation">
+			<param name="categoryModelName" value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param name="targetModelName" value="com.landray.kmss.sys.anonym.model.SysAnonymCommon" />
+			<param name="fieldMap" value="docSubject:fdName;docCreator.fdName:docCreatorName;fdContentType:docField1;docPublishTime:docField2;fdAuthor.fdName:docAuthorName;fdDepartment.fdName:fdDeptName;fdDescription:fdSummary;docContent:docContent;editonline:fileContentKey;Attachment:filePicKey;fdAttachment:fileDocKey;fdModify.fdName:docAlterorName" />
+			<param name="viewUrl" value="/sys/news/anonym/sysNewsAnonym_view.jsp" />
+			<param name="listUrl" value="/sys/news/anonym/sysNewsAnonym_list.jsp" />
+			<param name="attContentKey" value="newsMain" />
+		</item>
+	</extension>
+	
+	<extension 
+		point="com.landray.kmss.elec.device.ansyService"
+		model="com.landray.kmss.elec.device.client.IElecChannelRequestMessage">
+    	<item name="convertor">
+      		<param name="bean" value="sysNewsYqqSignService" />
+      		<param name="channel" value="yqq" />
+      		<param name="receiver" value="sys-news" />
+    	</item>
+  	</extension>
+	
+	<extension point="com.landray.kmss.third.krobot">
+		<item name="modules">
+			<param name="moduleName" value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param name="moduleMessage" value="sys-news:module.sys.news" />
+		</item>
+	</extension>
+
+    <!-- 前后端分离列表字段信息 -->
+    <extension point="com.landray.kmss.sys.list.field.config"
+               model="com.landray.kmss.sys.news.model.SysNewsMain">
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdId"></param>
+            <param name="title" value="{sys-news:sysNewsMain.fdId}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="docSubject"></param>
+            <param name="title" value="{sys-news:sysNewsMain.docSubject}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdTemplate.fdName"></param>
+            <param name="title" value="{sys-news:sysNewsMain.fdTemplate}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdImportance"></param>
+            <param name="title" value="{sys-news:sysNewsMain.fdImportance}"></param>
+            <param name="convertor" value="enumsPropetyConvertor"></param>
+            <param name="convertorProps" value="enumsType:sysNewsMain_fdImportance"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="docCreator.fdName"></param>
+            <param name="title" value="{sys-news:sysNewsMain.docCreatorId}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="docCreateTime"></param>
+            <param name="title" value="{km-review:kmReviewMain.docCreateTime}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+            <param name="props" value="type:date"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="authArea.fdName"></param>
+            <param name="col" value="authArea.fdName"></param>
+            <param name="title" value="{sys-authorization:sysAuthArea.authArea}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+            <param name="show" value="showAuthArea"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="docPublishTime"></param>
+            <param name="title" value="{sys-news:sysNewsMain.docPublishTime}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+            <param name="props" value="type:date"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="docAlterTime"></param>
+            <param name="title" value="{sys-news:sysNewsMain.docAlterTime}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+            <param name="props" value="type:date"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="docReadCount"></param>
+            <param name="title" value="{sys-news:sysNewsMain.docHits}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdTopEndTime"></param>
+            <param name="title" value="{sys-news:sysNewsMain.fdTopDays}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+            <param name="props" value="type:date"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdDescription"></param>
+            <param name="title" value="{sys-news:sysNewsMain.fdDescription}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdDepartment.fdName"></param>
+            <param name="title" value="{sys-news:sysNewsMain.fdDepartmentIdBy}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdAuthor.fdName"></param>
+            <param name="title" value="{sys-news:sysNewsMain.fdAuthorId}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="sysTagMain"></param>
+            <param name="title" value="{sys-news:sysNewsMain.label}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="docStatus"></param>
+            <param name="title" value="{sys-news:sysNewsMain.docStatus}"></param>
+            <param name="convertor" value="enumsPropetyConvertor"></param>
+            <param name="convertorProps" value="enumsType:news_status"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdAttachment"></param>
+            <param name="title" value="{sys-news:sysNewsMain.fdAttachment}"></param>
+            <param name="convertor" value="sysNewsMainPicConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdEvalCount"></param>
+            <param name="title" value="{sys-news:sysNewsMain.fdEvalCount}"></param>
+            <param name="convertor" value="sysEvaluationCountConvertor"></param>
+        </item>
+    </extension>
+	<extension point="com.landray.kmss.sys.mobile.category.view">
+		<item name="info">
+			<param name="actionPath" value="/sys/news/sys_news_main/sysNewsMain.do"/>
+			<param name="methodName" value="add"/>
+			<param name="paramName" value="fdTemplateId"/>
+			<param name="props" value="/sys/news/mobile/props.json"/>
+		</item>
+	</extension>
+</plugin>

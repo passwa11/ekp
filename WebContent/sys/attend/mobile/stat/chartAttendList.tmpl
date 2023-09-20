@@ -1,0 +1,24 @@
+<div id="chartListView" class="chartListView" data-dojo-type='dojox/mobile/View'>
+	<div class="muiChartHead muiCommonHead" data-dojo-type="mui/header/Header" data-dojo-props="height:'2.8rem'">
+			<div class="leftArea"><span>{title}</span></div>
+			<div class="rightArea">
+				<div id="chartList_statDate" data-dojo-type="mui/form/DateTime"
+					 data-dojo-mixins="mui/datetime/_DateMixin"
+					 data-dojo-props="optClass:'mui-down-n',valueField:'nowDate',value:'{nowDate}',edit:false"></div>
+			</div>
+	</div>
+	<div id="chartScroll" data-dojo-type="mui/list/StoreScrollableView" class="">
+	    <ul
+	    	data-dojo-type="mui/list/JsonStoreList" 
+	    	data-dojo-mixins="sys/attend/mobile/resource/js/stat/AttendChartItemListMixin"
+	    	data-dojo-props="url:'/sys/attend/sys_attend_stat/sysAttendStat.do?method=list&orderby=sysAttendStat.fdTotalTime&ordertype=down&rowsize=10&opertype=chart',lazy:true">
+		</ul>
+	</div>
+		
+	<ul data-dojo-type="mui/tabbar/TabBar" fixed="bottom" style="display:none;">
+	  	<li class="muiChartBack" data-dojo-type="mui/back/BackButton"></li>	   		
+	    <li data-dojo-type="mui/tabbar/TabBarButtonGroup" data-dojo-props="icon1:'mui mui-more'">
+	    	<div data-dojo-type="mui/back/HomeButton"></div>
+	    </li>
+	</ul>
+</div>

@@ -1,0 +1,131 @@
+
+{
+    "global" : {
+        "modelName" : "com.landray.kmss.hr.ratify.model.HrRatifyRehire",
+        "messageKey" : "hr-ratify:table.hrRatifyRehire",
+        "serviceBean" : "hrRatifyRehireService",
+        "displayProperty" : "docSubject",
+        "extendClass": "com.landray.kmss.hr.ratify.model.HrRatifyMain",
+        "discriminatorValue": "com.landray.kmss.hr.ratify.model.HrRatifyRehire",
+        "table" : "hr_ratify_rehire",
+        "url" : "/hr/ratify/hr_ratify_rehire/hrRatifyRehire.do?method=view&fdId=${fdId}"
+    },
+    "attrs" : {
+        "fdId" : {
+            "propertyType" : "id",
+            "generator" : {
+                "type" : "assigned"
+            }
+        },
+        "fdRehireDate" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyRehire.fdRehireDate",
+            "type" : "Date",
+            "column" : "fd_rehire_date",
+            "notNull" : "true",
+            "readOnly" : "false",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true"
+        },
+        "fdRehireEnterDate" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyRehire.fdRehireEnterDate",
+            "type" : "Date",
+            "column" : "fd_rehire_enter_date",
+            "notNull" : "false",
+            "readOnly" : "true",
+            "validate" : "false",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true"
+        },
+        "fdRehireReason" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyRehire.fdRehireReason",
+            "type" : "String",
+            "column" : "fd_rehire_reason",
+            "notNull" : "false",
+            "readOnly" : "false",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true",
+            "length" : "2000"
+        },
+        "fdRehireLeaderView" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyRehire.fdRehireLeaderView",
+            "type" : "String",
+            "column" : "fd_rehire_leader_view",
+            "notNull" : "false",
+            "readOnly" : "false",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true",
+            "length" : "2000"
+        },
+        "fdRehireHrView" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyRehire.fdRehireHrView",
+            "type" : "String",
+            "column" : "fd_rehire_hr_view",
+            "notNull" : "false",
+            "readOnly" : "false",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true",
+            "length" : "2000"
+        },
+        "fdRehireRemark" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyRehire.fdRehireRemark",
+            "type" : "String",
+            "column" : "fd_rehire_remark",
+            "notNull" : "false",
+            "readOnly" : "false",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true",
+            "length" : "2000"
+        },
+        "fdRehireStaff" : {
+            "propertyType" : "model",
+            "messageKey" : "hr-ratify:hrRatifyRehire.fdRehireStaff",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column" : "fd_rehire_staff_id",
+            "notNull" : "true",
+            "readOnly" : "false",
+            "dialogJS" : "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_PERSON);",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true"
+        },
+        "fdRehireDept" : {
+            "propertyType" : "model",
+            "messageKey" : "hr-ratify:hrRatifyRehire.fdRehireDept",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column" : "fd_rehire_dept_id",
+            "notNull" : "true",
+            "readOnly" : "false",
+            "dialogJS" : "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_ORGORDEPT);",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true"
+        },
+        "fdRehirePosts" : {
+            "propertyType" : "list",
+            "messageKey" : "hr-ratify:hrRatifyRehire.fdRehirePosts",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPost",
+            "column" : "fd_rehire_id",
+            "table": "hr_ratify_rehire_post",
+            "elementColumn": "fd_post_id",
+            "dialogJS": "Dialog_Address(true, '!{idField}', '!{nameField}', null, ORG_TYPE_POST);"
+        }
+    }
+}

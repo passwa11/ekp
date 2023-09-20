@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+		
+	<extension point="com.landray.kmss.sys.config.design">
+		<item name="xml">
+			<param name="namespace" value="http://www.landray.com.cn/schema/mportlet" />
+			<param name="handler" value="com.landray.kmss.sys.mportal.xml.MporletNamespaceHandler" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.config.design">
+		<item name="xml">
+			<param name="namespace" value="http://www.landray.com.cn/schema/mlink" />
+			<param name="handler" value="com.landray.kmss.sys.mportal.xml.MlinkNamespaceHandler" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-portal.js" />
+			<param name="targetFile" value="/sys/mportal/mobile/mui-portal.js" />
+			<param name="tinyId" value="mportal" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-portal-portlets.js" />
+			<param name="targetFile" value="/sys/mportal/mobile/mui-portal-portlets.js" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-module.js" />
+			<param name="targetFile" value="/sys/mportal/module/mobile/mui-module.js" />
+			<param name="tinyId" value="module" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="mui-portal-portlets.css" />
+			<param name="targetFile" value="/sys/mportal/mobile/mui-portal-portlets.css" />
+		</item>
+		<item 
+			name="css-file">
+			<param 
+				name="name" 
+				value="mui-portal.css" />
+			<param 
+				name="targetFile" 
+				value="/sys/mportal/mobile/css/portal.css" />
+		</item>
+		<item 
+			name="css-file">
+			<param 
+				name="name" 
+				value="mui-module.css" />
+			<param 
+				name="targetFile" 
+				value="/sys/mportal/module/mobile/css/module.css" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.package" model="*">
+		<item name="m-pkg">
+			<param name="appId" value="sys/mportal" />
+			<param name="appName" value="{sys-mportal:module.sys.mportal}" />
+			<param name="description" value="{sys-mportal:module.sys.mportal.description}" />
+			<param name="folder" value="/sys/mportal/mobile/" />
+			<param name="homepage" value="/sys/mportal/mobile/offline/index.jsp" />
+			<param name="customProcesser" value="mobilePortalPackageProcesser" />
+		</item>
+		
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid"
+				value="com.landray.kmss.sys.mportal.transfer.SysMportalTransferTask" />
+			<param name="name" value="移动门户旧数据清空操作" />
+			<param name="path" value="/sys/mportal/" />
+			<param name="check"
+				value="com.landray.kmss.sys.mportal.transfer.SysMportalTransferChecker" />
+			<param name="upgrade"
+				value="com.landray.kmss.sys.mportal.transfer.SysMportalTransferTask" />
+			<param name="description"
+				value="个人门户的数据结构优化，预防问题出现" />
+		</item>
+	</extension>
+</plugin>

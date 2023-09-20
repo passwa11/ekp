@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="thirdWpsFileSynDao" 
+        class="com.landray.kmss.third.wps.dao.hibernate.ThirdWpsFileSynDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.wps.model.ThirdWpsFileSyn</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsFileSynTarget" 
+        class="com.landray.kmss.third.wps.service.spring.ThirdWpsFileSynServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdWpsFileSynDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsFileSynService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdWpsFileSynTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsLtpatokenDao" 
+        class="com.landray.kmss.third.wps.dao.hibernate.ThirdWpsLtpatokenDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.wps.model.ThirdWpsLtpatoken</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsLtpatokenTarget" 
+        class="com.landray.kmss.third.wps.service.spring.ThirdWpsLtpatokenServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdWpsLtpatokenDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsLtpatokenService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdWpsLtpatokenTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="thirdWpsFileMapDao" 
+        class="com.landray.kmss.third.wps.dao.hibernate.ThirdWpsFileMapDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.wps.model.ThirdWpsFileMap</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsFileMapTarget" 
+        class="com.landray.kmss.third.wps.service.spring.ThirdWpsFileMapServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdWpsFileMapDao"/>
+        </property>
+        <property 
+            name="thirdWpsFileSynService">
+            <ref 
+                bean="thirdWpsFileSynService"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsFileMapService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdWpsFileMapTarget"/>
+        </property>
+    </bean>
+     <bean 
+        id="thirdWpsOrgElementDao" 
+        class="com.landray.kmss.third.wps.dao.hibernate.ThirdWpsOrgElementDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.wps.model.ThirdWpsOrgElement</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsOrgElementTarget" 
+        class="com.landray.kmss.third.wps.service.spring.ThirdWpsOrgElementServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdWpsOrgElementDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsOrgElementService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdWpsOrgElementTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="thirdWpsFolderDao" 
+        class="com.landray.kmss.third.wps.dao.hibernate.ThirdWpsFolderDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.wps.model.ThirdWpsFolder</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsFolderTarget" 
+        class="com.landray.kmss.third.wps.service.spring.ThirdWpsFolderServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdWpsFolderDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsFolderService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdWpsFolderTarget"/>
+        </property>
+    </bean>
+     <bean id="wpsWebOfficeProvider" class="com.landray.kmss.third.wps.provider.WpsWebOfficeProvider">
+	</bean>
+	<bean id="wpsCloudProvider" class="com.landray.kmss.third.wps.provider.WpsCloudProvider">
+	</bean>
+
+    <bean id="wpsCenterLogoutProvider" class="com.landray.kmss.third.wps.provider.WpsCenterLogoutProvider">
+    </bean>
+
+	<bean 
+        id="thirdWpsOrgRecordDao" 
+        class="com.landray.kmss.third.wps.dao.hibernate.ThirdWpsOrgRecordDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.wps.model.ThirdWpsOrgRecord</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsOrgRecordTarget" 
+        class="com.landray.kmss.third.wps.service.spring.ThirdWpsOrgRecordServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdWpsOrgRecordDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsOrgRecordService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdWpsOrgRecordTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="thirdWpsConvertDao" 
+        class="com.landray.kmss.third.wps.dao.hibernate.ThirdWpsConvertDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.wps.model.ThirdWpsConvert</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsConvertTarget" 
+        class="com.landray.kmss.third.wps.service.spring.ThirdWpsConvertServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdWpsConvertDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsConvertService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdWpsConvertTarget"/>
+        </property>
+    </bean>
+
+    <bean 
+        id="thirdWpsWebhookDao" 
+        class="com.landray.kmss.third.wps.dao.hibernate.ThirdWpsWebhookDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.wps.model.ThirdWpsWebhook</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsWebhookTarget" 
+        class="com.landray.kmss.third.wps.service.spring.ThirdWpsWebhookServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdWpsWebhookDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdWpsWebhookService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdWpsWebhookTarget"/>
+        </property>
+    </bean>
+    <bean
+            id="thirdWpsCenterTokenDao"
+            class="com.landray.kmss.third.wps.dao.hibernate.ThirdWpsCenterTokenDaoImp"
+            parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.third.wps.model.ThirdWpsCenterToken</value>
+        </property>
+    </bean>
+    <bean
+            id="thirdWpsCenterTokenTarget"
+            class="com.landray.kmss.third.wps.service.spring.ThirdWpsCenterTokenServiceImp"
+            parent="KmssBaseTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="thirdWpsCenterTokenDao"/>
+        </property>
+    </bean>
+    <bean
+            id="thirdWpsCenterTokenService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="thirdWpsCenterTokenTarget"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+<!--                <prop key="add*">PROPAGATION_REQUIRED</prop>-->
+<!--                <prop key="update*">PROPAGATION_REQUIRED</prop>-->
+<!--                <prop key="save*">PROPAGATION_REQUIRED</prop>-->
+<!--                <prop key="delete*">PROPAGATION_REQUIRED</prop>-->
+                <prop key="*">PROPAGATION_REQUIRES_NEW</prop>
+            </props>
+        </property>
+
+    </bean>
+
+
+    <bean
+            id="wpsCenterProviderTarget"
+            class="com.landray.kmss.third.wps.provider.WpsCenterProvider"
+            parent="KmssBaseTarget">
+    </bean>
+    <bean
+            id="wpsCenterProvider"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="wpsCenterProviderTarget"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+
+    </bean>
+
+    <bean
+            id="wpsRestTemplate"
+          class="com.landray.kmss.third.wps.client.WpsRestTemplateFactoryBean">
+        <property name="connectionRequestTimeout"> <value>20000</value></property>
+        <property name="connectTimeout"> <value>20000</value></property>
+        <property name="socketTimeout"> <value>20000</value></property>
+        <property name="maxConnTotal"> <value>30</value></property>
+        <property name="maxConnPerRoute"> <value>5</value></property>
+    </bean>
+    <bean
+            id="wpsHandlerThread"
+            class="com.landray.kmss.third.wps.thread.WpsHandlerThread">
+    </bean>
+
+    <bean id="thirdWpsCenterAttService"
+          class="com.landray.kmss.third.wps.service.spring.ThirdWpsCenterAttServiceImp">
+    </bean>
+
+</beans>

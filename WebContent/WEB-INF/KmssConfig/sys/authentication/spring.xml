@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security 
+    http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <bean id="redissonConnectionFactory"
+          class="org.redisson.spring.data.connection.RedissonConnectionFactory">
+        <constructor-arg name="redisson" ref="redissonClient"/>
+    </bean>
+    <bean id="jedisRedisConnectionFactory" class="com.landray.kmss.sys.cache.redis.RedisConnectionFactoryFactoryBean">
+    </bean>
+    <bean id="redisSerializer"
+            class="com.landray.kmss.sys.authentication.session.serializer.ProtostuffRedisSerializer">
+        <constructor-arg index="0">
+            <list>
+                <bean class="com.landray.kmss.sys.authentication.session.serializer.strategy.LocaleDelegate"/>
+            </list>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <list>
+                <bean class="com.landray.kmss.sys.authentication.session.serializer.strategy.SubListFactory"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="redissonConnectionFactory"/>
+        <property name="KeySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="hashKeySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="defaultSerializer" ref="redisSerializer"/>
+    </bean>
+
+    <bean id="redisOperationsSessionRepository"
+          class="org.springframework.session.data.redis.RedisIndexedSessionRepository">
+        <constructor-arg ref="redisTemplate" index="0"
+                         type="org.springframework.data.redis.core.RedisOperations"/>
+        <property name="defaultMaxInactiveInterval" value="1800"/>
+        <property name="flushMode" value="IMMEDIATE"/>
+        <property name="redisKeyNamespace" value="kmss-session"/>
+    </bean>
+
+    <bean id="springSessionBackedSessionRegistry"
+          class="org.springframework.session.security.SpringSessionBackedSessionRegistry">
+        <constructor-arg ref="redisOperationsSessionRepository"/>
+    </bean>
+    <!-- 这个id是在web.xml里用到的，不能变 -->
+    <bean id="springSessionRepositoryFilter"
+          class="com.landray.kmss.sys.authentication.session.filter.KmssSessionRepositoryFilter">
+        <constructor-arg ref="redisOperationsSessionRepository"/>
+        <property name="httpSessionIdResolver" ref="packageHttpSessionIdResolver"/>
+        <property name="lightEnabled" value="true"/>
+    </bean>
+    <!--session id的返回方式，使cookie及header中同时存放-->
+    <bean id="packageHttpSessionIdResolver"
+          class="com.landray.kmss.sys.authentication.session.resolver.PackageHttpSessionIdResolver">
+        <constructor-arg>
+            <list>
+                <ref bean="cookieHttpSessionIdResolver"/>
+                <ref bean="headerHttpSessionIdResolver"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    <bean id="headerHttpSessionIdResolver" class="org.springframework.session.web.http.HeaderHttpSessionIdResolver">
+        <constructor-arg value="X-Auth-Token"/>
+    </bean>
+    <bean id="cookieHttpSessionIdResolver" class="org.springframework.session.web.http.CookieHttpSessionIdResolver">
+        <property name="cookieSerializer" ref="cookieSerializer"/>
+    </bean>
+    <bean id="cookieSerializer" class="org.springframework.session.web.http.DefaultCookieSerializer">
+        <property name="cookieName" value="SESSION"/>
+    </bean>
+
+    <!--
+    以下是Security默认的filter及其对应的配置，EKP目前不全使用这些，如果需要以后可以扩展
+    
+    别名  Filter 类    对应元素或属性
+CHANNEL_FILTER  ChannelProcessingFilter http/intercept-url@requires-channel
+SECURITY_CONTEXT_FILTER SecurityContextPersistenceFilter    http
+CONCURRENT_SESSION_FILTER   ConcurrentSessionFilter http/session-management/concurrency-control
+LOGOUT_FILTER   LogoutFilter    http/logout
+X509_FILTER X509AuthenticationFilter    http/x509
+PRE_AUTH_FILTER AstractPreAuthenticatedProcessingFilter 的子类 无
+CAS_FILTER  CasAuthenticationFilter 无
+FORM_LOGIN_FILTER   UsernamePasswordAuthenticationFilter    http/form-login
+BASIC_AUTH_FILTER   BasicAuthenticationFilter   http/http-basic
+SERVLET_API_SUPPORT_FILTER  SecurityContextHolderAwareRequestFilter http@servlet-api-provision
+JAAS_API_SUPPORT_FILTER JaasApiIntegrationFilter    http@jaas-api-provision
+REMEMBER_ME_FILTER  RememberMeAuthenticationFilter  http/remember-me
+ANONYMOUS_FILTER    AnonymousAuthenticationFilter   http/anonymous
+SESSION_MANAGEMENT_FILTER   SessionManagementFilter http/session-management
+EXCEPTION_TRANSLATION_FILTER    ExceptionTranslationFilter  http
+FILTER_SECURITY_INTERCEPTOR FilterSecurityInterceptor   http
+SWITCH_USER_FILTER  SwitchUserFilter    无
+     -->
+    <!-- SpringSecurity 配置开始 -->
+    <bean id="org.springframework.security.filterChainProxy"
+          name="springSecurityFilterChain"
+          class="org.springframework.security.web.FilterChainProxy">
+        <constructor-arg>
+            <list value-type="org.springframework.security.web.SecurityFilterChain">
+                <!-- RestApi的过滤，由于使用不同的认证方式和非会话管理，所以独立一条链路 restApiAuthFilter-->
+                <sec:filter-chain pattern="/api/**" filters="restApiAuthFilter"/>
+                <!-- 这里的静态资源声明不能因为staticResourceFilterChain而省略，因为/JG_HTML下的内容是需要权限过滤的-->
+                <sec:filter-chain request-matcher-ref="gifRequestMatcher" filters="resourceCacheFilter"/>
+                <sec:filter-chain request-matcher-ref="jpgRequestMatcher" filters="resourceCacheFilter"/>
+                <sec:filter-chain request-matcher-ref="pngRequestMatcher" filters="resourceCacheFilter"/>
+                <sec:filter-chain request-matcher-ref="bmpRequestMatcher" filters="resourceCacheFilter"/>
+                <sec:filter-chain request-matcher-ref="icoRequestMatcher" filters="resourceCacheFilter"/>
+                <sec:filter-chain request-matcher-ref="cssRequestMatcher" filters="resourceCacheFilter,gzipFilter"/>
+                <sec:filter-chain request-matcher-ref="jsRequestMatcher" filters="resourceCacheFilter,gzipFilter"/>
+                <sec:filter-chain request-matcher-ref="tmplRequestMatcher" filters="resourceCacheFilter,gzipFilter"/>
+                <sec:filter-chain request-matcher-ref="htmlRequestMatcher" filters="gzipFilter"/>
+                <sec:filter-chain pattern="/sys/admin/druid/**"
+                                  filters="securityContextPersistenceFilter,kmssProcessingFilterProxy,exceptionTranslationFilter,filterInvocationInterceptor"/>
+                <!-- 其它资源 kmssSessionManagerFilter ,webContentCacheFilter(必须是最后一个)-->
+                <sec:filter-chain pattern="/**"
+                                  filters="securityContextPersistenceFilter,
+                                  baseAppConfigFilter,
+                    sysLogOperFilter,
+                    concurrentSessionFilter,
+                    logoutFilter,
+                    kmssProcessingFilterProxy,
+                    exceptionTranslationFilter,
+                    filterInvocationInterceptor,webContentCacheFilter,checkIfTrustSiteUnknownRefererFilter,sysDatamngPointFilter"/>
+                <!--checkIfTrustSiteUnknownRefererFilter 需要放在最后，如果新增的filter带有302跳转等处理，请注意一下-->
+            </list>
+        </constructor-arg>
+        <!--<property name="firewall" ref="strictHttpFirewall"/>-->
+    </bean>
+
+    <!--
+    静态资源过滤器，优先于springSecurityFilterChain执行，并且路径匹配后会阻止请求继续传递到springSecurityFilterChain
+    这样可以减少spring-session的创建，如果没有命中，则会继续传递到springSecurityFilterChain
+    -->
+    <bean id="staticResourceFilterChain" class="com.landray.kmss.web.filter.StaticResourceFilter">
+        <constructor-arg>
+            <list value-type="org.springframework.security.web.SecurityFilterChain">
+                <!-- 静态资源，加有效期|版本号 -->
+                <sec:filter-chain request-matcher-ref="gifRequestMatcher" filters="resourceCacheFilter"/>
+                <sec:filter-chain request-matcher-ref="jpgRequestMatcher" filters="resourceCacheFilter"/>
+                <sec:filter-chain request-matcher-ref="pngRequestMatcher" filters="resourceCacheFilter"/>
+                <sec:filter-chain request-matcher-ref="bmpRequestMatcher" filters="resourceCacheFilter"/>
+                <sec:filter-chain request-matcher-ref="icoRequestMatcher" filters="resourceCacheFilter"/>
+                <sec:filter-chain request-matcher-ref="cssRequestMatcher" filters="resourceCacheFilter,gzipFilter"/>
+                <sec:filter-chain request-matcher-ref="jsRequestMatcher" filters="resourceCacheFilter,gzipFilter"/>
+                <sec:filter-chain request-matcher-ref="tmplRequestMatcher" filters="resourceCacheFilter,gzipFilter"/>
+                <sec:filter-chain request-matcher-ref="htmlRequestMatcher" filters="gzipFilter"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    <bean id="gifRequestMatcher" class="com.landray.kmss.web.filter.StaticResourceAntPathRequestMatcher">
+        <constructor-arg name="pattern" value="/**/*.gif"/>
+    </bean>
+    <bean id="jpgRequestMatcher" class="com.landray.kmss.web.filter.StaticResourceAntPathRequestMatcher">
+        <constructor-arg name="pattern" value="/**/*.jpg"/>
+    </bean>
+    <bean id="pngRequestMatcher" class="com.landray.kmss.web.filter.StaticResourceAntPathRequestMatcher">
+        <constructor-arg name="pattern" value="/**/*.png"/>
+    </bean>
+    <bean id="bmpRequestMatcher" class="com.landray.kmss.web.filter.StaticResourceAntPathRequestMatcher">
+        <constructor-arg name="pattern" value="/**/*.bmp"/>
+    </bean>
+    <bean id="icoRequestMatcher" class="com.landray.kmss.web.filter.StaticResourceAntPathRequestMatcher">
+        <constructor-arg name="pattern" value="/**/*.ico"/>
+    </bean>
+    <bean id="cssRequestMatcher" class="com.landray.kmss.web.filter.StaticResourceAntPathRequestMatcher">
+        <constructor-arg name="pattern" value="/**/*.css"/>
+    </bean>
+    <bean id="jsRequestMatcher" class="com.landray.kmss.web.filter.StaticResourceAntPathRequestMatcher">
+        <constructor-arg name="pattern" value="/**/*.js"/>
+    </bean>
+    <bean id="tmplRequestMatcher" class="com.landray.kmss.web.filter.StaticResourceAntPathRequestMatcher">
+        <constructor-arg name="pattern" value="/**/*.tmpl"/>
+    </bean>
+    <bean id="htmlRequestMatcher" class="com.landray.kmss.web.filter.StaticResourceAntPathRequestMatcher">
+        <constructor-arg name="pattern" value="/**/*.html"/>
+    </bean>
+    <!--
+    静态资源映射 
+    如果新增一种静态文件后缀，那么需要同时增加一个 staticResourceFilterChain 和 相应的entry key="/**/*.new"
+    -->
+    <bean id="staticResourceHandlerMapping"
+          class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="urlMap">
+            <map>
+                <entry key="/**/*.gif" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.jpg" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.png" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.bmp" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.ico" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.css" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.js" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.tmpl" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.html" value-ref="staticResourceHttpRequestHandler"/>
+            </map>
+        </property>
+        <property name="order" value="2147483645"/>
+    </bean>
+
+    <bean id="staticResourceHttpRequestHandler"
+          class="org.springframework.web.servlet.resource.ResourceHttpRequestHandler">
+        <property name="locations">
+            <list>
+                <value>/</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="loggerListener" class="org.springframework.security.authentication.event.LoggerListener"/>
+
+    <bean id="restApiAuthFilter" class="com.landray.kmss.sys.authentication.integration.KmssApiProcessingFilterProxy">
+    </bean>
+
+    <bean id="dataPreFilter" class="com.landray.kmss.sys.authentication.integration.KmssDataPreFilter">
+        <property name="ignoreCheckPaths">
+            <value>
+                /data/sys-attachment/sysJgWebOffice/execute
+            </value>
+        </property>
+    </bean>
+    <!-- 操作日志的过滤器 -->
+    <bean id="sysLogOperFilter" class="com.landray.kmss.sys.authentication.integration.SysLogOperFilter">
+    </bean>
+    <!-- request包装的过滤器 -->
+    <bean id="kmssDataRequestWrapperFilter"
+          class="com.landray.kmss.sys.authentication.intercept.KmssDataRequestWrapperFilter">
+    </bean>
+    <!-- 登录验证码的过滤器 -->
+    <bean id="checkVerificationCodeFilter"
+          class="com.landray.kmss.sys.authentication.integration.CheckVerificationCodeFilter">
+        <property name="authenticationEntryPoint" ref="authenticationProcessingFilterEntryPoint"/>
+        <property name="sysOrgCoreService" ref="sysOrgCoreService"/>
+        <property name="sysNotifyMainCoreService" ref="sysNotifyMainCoreService"/>
+        <property name="restAuthenticationEntryPoint" ref="restAuthenticationProcessingFilterEntryPoint"/>
+    </bean>
+    <!--锁定账号策略的过滤器-->
+    <bean id="checkAuthenticationLockFilter"
+          class="com.landray.kmss.sys.authentication.integration.CheckAuthenticationLockFilter">
+        <property name="usernameParameterName" value="j_username"/>
+    </bean>
+    <!--
+     -->
+    <bean id="kmssAuthentionFailureLogFilter"
+          class="com.landray.kmss.sys.authentication.integration.KmssAuthentionFailureLogFilter">
+        <property name="usernameParameterName" value="j_username"/>
+        <property name="loginRequestUrl" value="/j_acegi_security_check"/>
+        <property name="restLoginRequestUrl" value="/login"/>
+        <property name="restAuthenticationEntryPoint" ref="restAuthenticationProcessingFilterEntryPoint"/>
+    </bean>
+    <!-- 资源缓存 -->
+    <bean id="resourceCacheFilter" class="com.landray.kmss.web.filter.ResourceCacheFilter"/>
+    <!-- 资源文件压缩 -->
+    <bean id="gzipFilter" class="com.landray.kmss.web.filter.GZipFilter"/>
+    <!-- 检查信任站点是否为未知引用 -->
+    <bean id="checkIfTrustSiteUnknownRefererFilter"
+          class="com.landray.kmss.web.filter.CheckIfTrustSiteUnknownRefererFilter"/>
+    <!--
+        ======================== httpSessionContextIntegrationFilter
+        =======================
+    -->
+    <bean id="httpSessionSecurityContextRepository"
+          class="org.springframework.security.web.context.HttpSessionSecurityContextRepository">
+    </bean>
+    <bean id="securityContextPersistenceFilter"
+          class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
+        <constructor-arg index="0" ref="httpSessionSecurityContextRepository"/>
+    </bean>
+
+    <!--
+        ======================== authenticationProcessingFilter
+        =======================
+    -->
+    <bean id="authenticationProcessingFilter"
+          class="com.landray.kmss.sys.authentication.integration.KmssAuthenticationProcessingFilter">
+        <!-- 忽略校验的URL，多个页面用;分隔。如：强制修改密码页面不需要校验 -->
+        <property name="ignoreCheckPaths">
+            <value>
+                /login.jsp; /j_acegi_security_check; /chgPersonInfo.do; /changePwd/; /resource/; /logout.jsp;
+                /tripartiteAdminChangePwd.do; /third/dingrobot/dingrobotCover.do; /i18n.jsp
+            </value>
+        </property>
+        <!-- 强制修改密码页面 -->
+        <property name="changePasswordPath" value="/sys/common/changePwd/change_pwd.jsp"/>
+        <!-- 首次登录修改个人信息页面 -->
+        <property name="changePersonPath"
+                  value="/sys/organization/sys_org_person/chgPersonInfo.do?method=changePerson"/>
+        <!-- 强制切换浏览器页面 -->
+        <property name="changeBrowserPath" value="/resource/browser/browser_tips.jsp"/>
+        <!-- 双因子二次认证页面 -->
+        <property name="doubleValidationPath"
+                  value="/sys/organization/sys_org_retrieve_password/sysOrgRetrievePassword.do?method=toDoubleValidation"/>
+        <property name="filterProcessesUrl" value="/j_acegi_security_check"/>
+        <property name="usernameParameter" value="j_username"/>
+        <property name="passwordParameter" value="j_password"/>
+        <property name="rememberMeServices" ref="rememberMeServices"/>
+        <!-- required -->
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationFailureUrl" value="/login.jsp?login_error=1"/>
+        <property name="sessionAuthenticationStrategy" ref="kmssCompositeSessionAuthenticationStrategy"/>
+        <property name="authenticationSuccessHandler">
+            <bean class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+                <property name="redirectStrategy">
+                    <bean class="com.landray.kmss.sys.authentication.integration.KmssRedirectStrategy">
+                    </bean>
+                </property>
+                <property name="targetUrlParameter" value="j_redirectto"/>
+                <property name="requestCache" ref="httpSessionRequestCache"/>
+            </bean>
+        </property>
+    </bean>
+    <!--登录后跳转策略相关-->
+    <bean id="httpSessionRequestCache" class="org.springframework.security.web.savedrequest.HttpSessionRequestCache">
+        <property name="requestMatcher" ref="kmssAntPathRequestMatcher"/>
+    </bean>
+    <bean id="kmssAntPathRequestMatcher"
+          class="com.landray.kmss.sys.authentication.util.matcher.KmssAntPathRequestMatcher">
+        <constructor-arg index="0">
+            <list>
+                <value>/sys/ui/js/*</value>
+                <value>/sys/ui/resources/*</value>
+                <value>/resouce/anonym.jsp</value>
+                <value>/sys/common/dataxml.jsp</value>
+            </list>
+        </constructor-arg>
+    </bean>
+    <!--
+        ======================== 用户登录rest接口 =======================
+    -->
+    <bean id="restAuthenticationProcessingFilter"
+          class="com.landray.kmss.sys.authentication.integration.KmssRestAuthenticationProcessingFilter">
+        <property name="filterProcessesUrl" value="/login"/>
+        <property name="usernameParameter" value="j_username"/>
+        <property name="passwordParameter" value="j_password"/>
+        <property name="rememberMeServices" ref="rememberMeServices"/>
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="sessionAuthenticationStrategy" ref="kmssCompositeSessionAuthenticationStrategy"/>
+        <property name="authenticationSuccessHandler" ref="kmssRestAuthenticationSuccessHandler"/>
+        <property name="authenticationFailureHandler" ref="kmssRestAuthenticationFailureHandler"/>
+    </bean>
+
+    <bean id="kmssRestAuthenticationSuccessHandler"
+          class="com.landray.kmss.sys.authentication.handler.KmssRestAuthenticationSuccessHandler">
+    </bean>
+    <bean id="kmssRestAuthenticationFailureHandler"
+          class="com.landray.kmss.sys.authentication.handler.KmssRestAuthenticationFailureHandler">
+    </bean>
+
+    <!-- ================== 用户注销rest接口 =================-->
+    <bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+        <constructor-arg index="0" type="org.springframework.security.web.authentication.logout.LogoutSuccessHandler"
+                         ref="kmssRestLogoutSuccessHandler"/>
+        <constructor-arg index="1" type="org.springframework.security.web.authentication.logout.LogoutHandler[]">
+            <array>
+                <ref bean="kmssRestLogLogoutHandler"/>
+                <ref bean="cookieClearingLogoutHandler"/>
+                <ref bean="kmssSecurityContextLogoutHandler"/>
+            </array>
+        </constructor-arg>
+    </bean>
+    <bean id="cookieClearingLogoutHandler"
+          class="org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler">
+        <constructor-arg index="0">
+            <array>
+                <value>SESSION</value>
+                <value>remember-me</value>
+            </array>
+        </constructor-arg>
+    </bean>
+    <bean id="kmssRestLogoutSuccessHandler"
+          class="com.landray.kmss.sys.authentication.handler.KmssRestLogoutSuccessHandler">
+    </bean>
+    <bean id="kmssRestLogLogoutHandler"
+          class="com.landray.kmss.sys.authentication.handler.KmssRestLogLogoutHandler">
+    </bean>
+    <bean id="kmssSecurityContextLogoutHandler"
+          class="com.landray.kmss.sys.authentication.handler.KmssSecurityContextLogoutHandler">
+    </bean>
+    <!-- ======================== rememberMeProcessingFilter ======================= -->
+    <bean id="rememberMeProcessingFilter"
+          class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
+        <constructor-arg index="0" ref="authenticationManager"/>
+        <constructor-arg index="1" ref="rememberMeServices"/>
+    </bean>
+    <bean id="rememberMeServices"
+          class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+        <constructor-arg index="0" value="springRocks"/>
+        <constructor-arg index="1" ref="kmssUserDetailsService"/>
+    </bean>
+    <!-- Provider -->
+    <bean id="rememberMeAuthenticationProvider"
+          class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+        <constructor-arg index="0" value="springRocks"/>
+    </bean>
+
+    <!--
+        AnonymousAuthenticationFilter  匿名用户，EKP有自己的逻辑，这个bean暂时没用
+    -->
+    <!--<bean id="simpleGrantedAuthority" class="org.springframework.security.core.authority.SimpleGrantedAuthority">
+        <constructor-arg index="0" value="SYSROLE_ANONYMOUS"/>
+    </bean>
+    <bean id="anonymousProcessingFilter"
+        class="org.springframework.security.web.authentication.AnonymousAuthenticationFilter">
+        <constructor-arg index="0" value="foobar"/>
+        <constructor-arg index="1" value="anonymousUser"/>
+        <constructor-arg index="2">
+          <list>
+              <ref bean="simpleGrantedAuthority"/>
+          </list>
+        </constructor-arg>
+    </bean>-->
+    <!-- Provider -->
+    <bean id="anonymousAuthenticationProvider"
+          class="org.springframework.security.authentication.AnonymousAuthenticationProvider">
+        <constructor-arg index="0" value="foobar"/>
+    </bean>
+
+    <!--======================== exceptionTranslationFilter =======================-->
+    <bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+        <constructor-arg index="0" ref="authenticationProcessingFilterEntryPoint"/>
+        <constructor-arg index="1" ref="httpSessionRequestCache"/>
+        <property name="accessDeniedHandler" ref="EKPAccessDeniedHandlerImpl"/>
+    </bean>
+    <bean id="authenticationProcessingFilterEntryPoint"
+          class="com.landray.kmss.sys.authentication.integration.KmssAuthenticationEntryPoint">
+        <property name="loginFormUrl" value="/resource/anonym.jsp"/>
+        <property name="forceHttps" value="false"/>
+    </bean>
+    <bean id="EKPAccessDeniedHandlerImpl"
+          class="com.landray.kmss.sys.authentication.validate.EKPAccessDeniedHandlerImpl">
+    </bean>
+    <bean id="restAuthenticationProcessingFilterEntryPoint"
+          class="com.landray.kmss.sys.authentication.integration.KmssRestAuthenticationEntryPoint">
+        <property name="usernameParameterName" value="j_username"/>
+    </bean>
+
+    <!-- 会话管理使用的bean -->
+    <!--<bean id="sessionRegistryManager"
+        class="com.landray.kmss.sys.authentication.session.registry.KmssSessionRegistryManager">
+    </bean>-->
+    <!--刷新会话及过期会话管理-->
+    <bean id="concurrentSessionFilter"
+          class="com.landray.kmss.sys.authentication.session.filter.KmssConcurrentSessionFilter">
+        <constructor-arg index="0" ref="springSessionBackedSessionRegistry"/>
+        <property name="localExpiredUrl" value="/login.jsp?login_error=1"/>
+    </bean>
+
+    <!-- 认证成功后的组合式的session管理策略，第一个是session数限制，第二个是sessionID切换 第三个是会话存储 -->
+    <!-- 限制用户会话数量 -->
+    <bean id="kmssDefaultUserLimiter"
+          class="com.landray.kmss.sys.authentication.session.KmssDefaultUserLimiter">
+    </bean>
+    <bean id="sessionCountLimitStrategy"
+          class="com.landray.kmss.sys.authentication.session.strategy.KmssConcurrentSessionAuthenticationStrategy">
+        <constructor-arg index="0" ref="springSessionBackedSessionRegistry"/>
+        <property name="exceptionIfMaximumExceeded" value="false"/>
+        <property name="includeExpiredSessions" value="false"/>
+        <property name="userlimiter" ref="kmssDefaultUserLimiter"/>
+    </bean>
+    <!-- 更换会话ID -->
+    <bean id="changeSessionIdStrategy"
+          class="com.landray.kmss.sys.authentication.session.strategy.KmssChangeSessionAuthenticationStrategy">
+    </bean>
+    <!-- 会话存储 -->
+    <!--<bean id="sessionRegisterStrategy"
+        class="com.landray.kmss.sys.authentication.session.strategy.KmssRegisterSessionAuthenticationStrategy">
+        <constructor-arg index="0" ref="sessionRegistryManager"/>
+        <property name="userlimiter" ref="kmssDefaultUserLimiter"/>
+    </bean>-->
+    <bean id="kmssCompositeSessionAuthenticationStrategy"
+          class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
+        <constructor-arg>
+            <list>
+                <!-- 顺序不能变! -->
+                <ref bean="sessionCountLimitStrategy"/>
+                <ref bean="changeSessionIdStrategy"/>
+                <!--<ref bean="sessionRegisterStrategy"/>-->
+            </list>
+        </constructor-arg>
+    </bean>
+    <!--<bean id="kmssSessionManagerFilter"
+        class="org.springframework.security.web.session.SessionManagementFilter">
+        <constructor-arg index="0" ref="httpSessionSecurityContextRepository"/>
+        <constructor-arg index="1" ref="kmssCompositeSessionAuthenticationStrategy"/>
+    </bean>-->
+
+    <!--
+        ======================== filterInvocationInterceptor (AUTHENTICATION)
+        =======================
+    -->
+    <bean id="filterInvocationInterceptor"
+          class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="accessDecisionManager" ref="httpRequestAccessDecisionManager"/>
+        <property name="observeOncePerRequest" value="false"/>
+        <property name="securityMetadataSource" ref="filterInvocationDefinitionSource"/>
+    </bean>
+    <bean id="httpRequestAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <constructor-arg index="0">
+            <list>
+                <ref bean="roleVoter"/>
+            </list>
+        </constructor-arg>
+        <property name="allowIfAllAbstainDecisions" value="false"/>
+    </bean>
+    <!--
+        An access decision voter that reads ROLE_* configuration settings
+    -->
+    <bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
+        <property name="rolePrefix">
+            <value/>
+        </property>
+    </bean>
+    <bean id="filterInvocationDefinitionSource"
+          class="com.landray.kmss.sys.authentication.intercept.FilterInvocationDefinitionSourceImp">
+        <property name="validateCore" ref="authenticationValidateCore"/>
+        <!-- 非匿名路径，优先级比anonymousPaths高 #76679-->
+        <property name="nonAnonymousPaths">
+            <value>
+                /resource/ckeditor/images/**;/resource/fckeditor/editor/filemanager/upload/simpleuploader;/resource/config/links.jsp
+            </value>
+        </property>
+        <property name="anonymousPaths">
+            <value>
+                /login*.jsp*; /resource/**; /service/**; /ui-ext/**; /*/*.index; /logout*; /admin.do*;
+                /browser.jsp*;/third/dingrobot/dingrobotCover.do*;
+                /axis/*; /kk*; /forward.html*; /sys/webservice/*;
+                /vcode*;/sys/authentication/validate*;/ui-ext/scormcourse/**;/*.txt;
+                /sys/print/word/file/**;/elec/rmkk/rmkk.do*;/elec/yqq/callback.do*;/sys/person/image.jsp*;/elec/sgt/callback.do*;/hr/recruit/invite_qr_code/*;
+                /sysInfo*;/data/sys-attachment/sysJgWebOffice/execute;/sys/anonymous/enter/token.do*;/**/*.woff2;/**/*.woff;/**/*.ttf;/**/*.svg;/**/*.eot
+            </value>
+        </property>
+    </bean>
+    <bean id="authenticationValidateCore" parent="KmssBaseService">
+        <property name="target">
+            <bean
+                    class="com.landray.kmss.sys.authentication.intercept.AuthenticationValidateCoreImp">
+                <property name="baseService">
+                    <ref bean="KmssBaseService"/>
+                </property>
+                <property name="defaultValidator" value="roleValidator(role=SYSROLE_USER)"/>
+            </bean>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="*">PROPAGATION_REQUIRED,readOnly
+                </prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--
+        ===================== kmssProcessingFilterProxy ====================
+    -->
+    <bean id="kmssProcessingFilterProxy"
+          class="com.landray.kmss.sys.authentication.integration.KmssProcessingFilterProxy"/>
+
+    <!--
+        ===================== httpProcessingFilter (AUTHENTICATION FOR DOMINO)
+        ====================
+    -->
+    <bean id="autoLoginHelper" class="com.landray.kmss.sys.authentication.AutoLoginHelper">
+        <property name="userDetailsService" ref="kmssUserDetailsService"/>
+        <property name="key" value="springRocks1"/>
+    </bean>
+
+    <!--
+        ===================== EKPSSOClientAuthenticationFilter (AUTHENTICATION
+        FOR SSOClient) ====================
+    -->
+
+    <bean id="EKPSSOAuthenticationListener"
+          class="com.landray.kmss.sys.authentication.ssoclient.EKPSSOAuthenticationListener">
+    </bean>
+    <bean id="EKPSSOClientAuthenticationFilter"
+          class="com.landray.kmss.sys.authentication.ssoclient.EKPSSOClientAuthenticationFilter">
+        <property name="autoLoginHelper" ref="autoLoginHelper"/>
+    </bean>
+    <bean id="EKPSSOClientChgUserEventFilter"
+          class="com.landray.kmss.sys.authentication.ssoclient.EKPSSOClientChgUserEventFilter"/>
+
+
+    <!--
+        ======================== authenticationManager =======================
+    -->
+    <bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+        <constructor-arg index="0">
+            <list>
+                <ref bean="daoAuthenticationProvider"/>
+                <ref bean="anonymousAuthenticationProvider"/>
+                <ref bean="rememberMeAuthenticationProvider"/>
+            </list>
+        </constructor-arg>
+        <!-- 
+        session 和 authentication 的处理体现在
+        AbstractAuthenticationProcessingFilter#doFilter里
+        <property name="sessionController" ref="concurrentSessionController"/>
+         -->
+    </bean>
+    <!-- Provider -->
+    <bean id="daoAuthenticationProvider"
+          class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="kmssUserDetailsService"/>
+        <!-- 声明在sys-organization模块里 com.landray.kmss.sys.organization.service.spring.KmssPasswordEncoder -->
+        <property name="passwordEncoder" ref="passwordEncoder"/>
+    </bean>
+
+    <bean id="dataAccessManager" parent="KmssBaseService">
+        <property name="target">
+            <bean
+                    class="com.landray.kmss.sys.authentication.user.validate.DataAccessManagerImp">
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean
+            id="kmssUserDetailsServiceTarget"
+            class="com.landray.kmss.sys.authentication.user.KMSSUserDetailsService">
+        <property name="orgService" ref="sysOrgCoreService"/>
+        <property name="roleService" ref="sysAuthRoleService"/>
+        <property name="sysOrgPersonService" ref="sysOrgPersonService"/>
+        <property name="sysAuthDefaultAreaService" ref="sysAuthDefaultAreaService"/>
+        <property name="sysAuthAreaService" ref="sysAuthAreaService"/>
+        <property name="dataAccessManager" ref="dataAccessManager"/>
+        <property name="sysOrgPersonRestrictService" ref="sysOrgPersonRestrictService"/>
+        <property name="passwordEncoder" ref="passwordEncoder"/>
+    </bean>
+
+    <bean id="kmssUserDetailsService" parent="KmssBaseService">
+        <property name="target" ref="kmssUserDetailsServiceTarget"/>
+    </bean>
+    <!-- ===================== cacheManager ==================== -->
+    <bean id="cacheManager"
+          class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="shared" value="true"/>
+    </bean>
+    <bean id="userCacheBackend" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="cacheName" value="com.landray.kmss.userCache"/>
+    </bean>
+    <bean id="userCache"
+          class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+        <property name="cache" ref="userCacheBackend"/>
+    </bean>
+
+    <!-- Automatically receives AuthenticationEvent messages -->
+    <!--
+        <bean id="loggerListener"
+        class="org.acegisecurity.event.authentication.LoggerListener" />
+    -->
+
+    <!--
+        ===================== channelProcessingFilter (HTTP CHANNEL
+        REQUIREMENTS) ====================
+    -->
+    <!--
+        You will need to uncomment the "Acegi Channel Processing Filter"
+        <filter-mapping> in web.xml for the following beans to be used
+    
+    <bean id="channelProcessingFilter" class="org.springframework.security.web.access.channel.ChannelProcessingFilter">
+        <property name="channelDecisionManager">
+            <ref bean="channelDecisionManager" />
+        </property>
+        <property name="filterInvocationDefinitionSource">
+            <value>
+                CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+                \A/sys/.*\Z=REQUIRES_SECURE_CHANNEL
+                \A/login.jsp.*\Z=REQUIRES_SECURE_CHANNEL
+                \A/j_acegi_security_check.*\Z=REQUIRES_SECURE_CHANNEL
+                \A.*\Z=REQUIRES_INSECURE_CHANNEL
+            </value>
+        </property>
+    </bean>
+    <bean id="channelDecisionManager"
+        class="org.springframework.security.web.access.channel.ChannelDecisionManagerImpl">
+        <property name="channelProcessors">
+            <list>
+                <ref bean="secureChannelProcessor" />
+                <ref bean="insecureChannelProcessor" />
+            </list>
+        </property>
+    </bean>
+    <bean id="secureChannelProcessor" 
+        class="org.springframework.security.web.access.channel.SecureChannelProcessor" />
+    <bean id="insecureChannelProcessor"
+        class="org.springframework.security.web.access.channel.InsecureChannelProcessor" />
+-->
+
+    <!--
+        ===================== switchUserProcessingFilter (HTTP REQUEST
+        SECURITY) ====================
+    -->
+    <!--
+        Filter used to switch the user context. Note: the switch and exit url
+        must be secured based on the role granted the ability to 'switch' to
+        another user
+    -->
+    <!--
+        In this example 'marissa' has ROLE_SUPERVISOR that can switch to
+        regular ROLE_USER(s)
+    -->
+    <bean id="switchUserProcessingFilter"
+          class="org.springframework.security.web.authentication.switchuser.SwitchUserFilter">
+        <property name="userDetailsService" ref="kmssUserDetailsService"/>
+        <property name="switchUserUrl" value="/j_acegi_switch_user"/>
+        <property name="exitUserUrl" value="/j_acegi_exit_user"/>
+        <property name="targetUrl" value="/index.jsp"/>
+    </bean>
+
+    <bean id="backgroundAuthService"
+          class="com.landray.kmss.sys.authentication.background.BackgroundAuthServiceImp">
+        <property name="userDetailsService" ref="kmssUserDetailsService"/>
+        <property name="orgCoreService" ref="sysOrgCoreService"/>
+    </bean>
+    <!-- ===================== Validators ==================== -->
+    <bean id="authTemplateEditorValidator"
+          class="com.landray.kmss.sys.authentication.intercept.AuthTemplateValidator">
+        <property name="baseDao" ref="KmssBaseDao"/>
+        <property name="fieldType" value="Editors"/>
+    </bean>
+    <bean id="authTemplateReaderValidator"
+          class="com.landray.kmss.sys.authentication.intercept.AuthTemplateValidator">
+        <property name="baseDao" ref="KmssBaseDao"/>
+        <property name="fieldType" value="Readers"/>
+    </bean>
+
+    <bean id="authCategoryEditorValidator"
+          class="com.landray.kmss.sys.authentication.intercept.AuthCategoryValidator">
+        <property name="sysCategoryMainAuthService" ref="sysCategoryMainAuthService"/>
+        <property name="fieldType" value="Editors"/>
+    </bean>
+    <bean id="authCategoryReaderValidator"
+          class="com.landray.kmss.sys.authentication.intercept.AuthCategoryValidator">
+        <property name="sysCategoryMainAuthService" ref="sysCategoryMainAuthService"/>
+        <property name="fieldType" value="Readers"/>
+    </bean>
+
+    <bean id="authSimpleCategoryEditorValidator"
+          class="com.landray.kmss.sys.authentication.intercept.AuthSimpleCategoryValidator">
+        <property name="fieldType" value="Editors"/>
+    </bean>
+    <bean id="authSimpleCategoryReaderValidator"
+          class="com.landray.kmss.sys.authentication.intercept.AuthSimpleCategoryValidator">
+        <property name="fieldType" value="Readers"/>
+    </bean>
+    <bean id="roleValidator"
+          class="com.landray.kmss.sys.authentication.intercept.RoleValidator"/>
+    <bean id="uselessRoleValidator"
+          class="com.landray.kmss.sys.authentication.intercept.UselessRoleValidator"/>
+    <bean id="orgAdminValidator"
+          class="com.landray.kmss.sys.authentication.intercept.OrgAdminValidator">
+        <property name="orgService" ref="sysOrgCoreService"/>
+        <property name="checkOrg" value="true"/>
+    </bean>
+    <bean id="deptAdminValidator"
+          class="com.landray.kmss.sys.authentication.intercept.OrgAdminValidator">
+        <property name="orgService" ref="sysOrgCoreService"/>
+        <property name="checkOrg" value="false"/>
+    </bean>
+    <bean id="authFieldValidator"
+          class="com.landray.kmss.sys.authentication.intercept.AuthFieldValidator">
+        <property name="baseDao" ref="KmssBaseDao"/>
+        <property name="hqlBuilder" ref="kmssAuthHQLBuilder"/>
+    </bean>
+    <bean id="fieldValueValidator"
+          class="com.landray.kmss.sys.authentication.intercept.FieldValueValidator"/>
+    <bean id="ajaxRoleValidator"
+          class="com.landray.kmss.sys.authentication.intercept.AjaxRoleValidator"/>
+    <bean id="authReadValidator"
+          class="com.landray.kmss.sys.authentication.intercept.AuthReadValidator">
+        <property name="baseDao" ref="KmssBaseDao"/>
+    </bean>
+    <bean id="logAuditValidator"
+          class="com.landray.kmss.sys.authentication.intercept.LogAuditValidator">
+        <property name="sysLogUserOperService" ref="sysLogUserOperService"/>
+    </bean>
+    <bean id="logViewValidator"
+          class="com.landray.kmss.sys.authentication.intercept.LogViewValidator">
+        <property name="sysLogUserOperService" ref="sysLogUserOperService"/>
+    </bean>
+    <bean id="tokenValidator"
+          class="com.landray.kmss.sys.authentication.intercept.TokenValidator"/>
+    <bean id="authViewValidator"
+          class="com.landray.kmss.sys.authentication.intercept.AuthViewValidator"/>
+
+    <!-- ===================== filters ==================== -->
+    <bean id="authFieldFilter"
+          class="com.landray.kmss.sys.authentication.filter.AuthFieldFilter"/>
+    <bean id="authOrgFieldFilter"
+          class="com.landray.kmss.sys.authentication.filter.AuthOrgFieldFilter"/>
+    <bean id="flagFieldFilter"
+          class="com.landray.kmss.sys.authentication.filter.FlagFieldFilter"/>
+    <bean id="roleFilter" class="com.landray.kmss.sys.authentication.filter.RoleFilter">
+        <property name="baseService">
+            <ref bean="KmssBaseService"/>
+        </property>
+    </bean>
+
+    <!--Spring Security 安全配置项-->
+    <!--URL特殊符号拦截-->
+    <!--<bean id="strictHttpFirewall" class="org.springframework.security.web.firewall.StrictHttpFirewall">
+        &lt;!&ndash;允许;分号，Tomcat的JSESSIONID在禁用cookie的清空下会出现&ndash;&gt;
+        <property name="allowSemicolon" value="true"/>
+    </bean>-->
+
+    <!-- 系统内部优化使用  -->
+    <bean
+            id="authFieldInnerJoinFilter"
+            class="com.landray.kmss.sys.authentication.filter.AuthFieldInnerJoinFilter"/>
+
+    <bean id="authHQLPart"
+          class="com.landray.kmss.sys.authentication.filter.AuthHQLPart"/>
+
+    <bean id="kmssAuthHQLBuilder" class="com.landray.kmss.common.dao.HQLCombiner">
+        <property name="hqlBuilder" ref="kmssHQLBuilder"/>
+        <property name="hqlParts">
+            <set>
+                <ref bean="authHQLPart"/>
+            </set>
+        </property>
+    </bean>
+    <bean id="KmssAuthBaseDao" class="com.landray.kmss.common.dao.BaseDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="hqlBuilder" ref="kmssAuthHQLBuilder"/>
+    </bean>
+
+    <bean id="ekpValidateService" class="com.landray.kmss.sys.authentication.interfaces.EKPValidateService">
+        <property name="orgService" ref="sysOrgCoreService"/>
+    </bean>
+    <bean id="loginWebserviceService"
+          class="com.landray.kmss.sys.authentication.sso.LoginWebserviceService">
+    </bean>
+    <bean id="sysAuthenticationController"
+          class="com.landray.kmss.sys.authentication.rest.controller.SysAuthenticationController"/>
+    <bean id="sysAuthenticationSessionController"
+          class="com.landray.kmss.sys.authentication.rest.controller.SysAuthenticationSessionController"/>
+
+    <bean id="webContentCacheFilter"
+          class="com.landray.kmss.sys.cache.filter.WebContentCacheFilter"/>
+
+    <!-- 进行后台配置设置为全局变量操作 -->
+    <bean id="baseAppConfigFilter"
+          class="com.landray.kmss.web.filter.BaseAppConfigFilter"/>
+
+    <bean id="globalSessionAttributesProtectionListener"
+          class="com.landray.kmss.sys.authentication.session.listeners.GlobalSessionAttributesProtectionListener"/>
+    <!-- 数据权限过滤器 -->
+    <bean id="sysDatamngPointFilter"
+          class="com.landray.kmss.sys.authentication.sysDatamng.filter.SysDatamngPointFilter"/>
+</beans>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+<subclass discriminator-value="4"
+		name="com.landray.kmss.tic.jdbc.model.TicJdbcDataSet" 
+		extends="com.landray.kmss.tic.core.common.model.TicCoreFuncBase">
+		<join table="tic_jdbc_data_set">
+		
+			<key column="fd_id"></key>
+
+			
+		<property
+			name="fdDataSource"
+			column="fd_data_source"
+			update="true"
+			insert="true"
+			length="100"
+			not-null="false" />
+
+		<property
+			name="fdSqlExpression"
+			column="fd_sql_expression"
+			update="true"
+			insert="true"
+			length="3000"
+			not-null="false" />
+			
+		
+			
+		<property
+			name="fdData"
+			column="fd_data"
+			update="true"
+			insert="true"
+			length="1000000"
+			not-null="false"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true" />
+			
+		<property
+			name="fdSqlExpressionTest"
+			column="fd_sql_expression_test"
+			update="true"
+			insert="true"
+			length="3000"
+			not-null="false" />
+		</join>
+	</subclass>
+	
+</hibernate-mapping>

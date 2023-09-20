@@ -1,0 +1,251 @@
+var viewWgt = render.parent;
+var datas = viewWgt.source.config.datas || [];
+var node = viewWgt.config.node || {};
+var isBatchApprove = viewWgt.config.isBatchApprove;
+var isBatchReject = viewWgt.config.isBatchReject;
+{$
+	<div class='content'>
+		<div class='process-batch'>
+			<div class='multi-select'><input type="checkbox" onclick="selectAll(this)"><span>全选</span></div>
+			<div class='batch-btns'>
+				$}
+				if(isBatchApprove == true){
+				{$
+				<div class='batch-btns-btn batch-btns-pass' id='batchPassBtn'>批量通过</div>
+				$}
+				}
+				if(node.nodeType != 'signNode' && isBatchReject == true){
+					{$
+						<div class='batch-btns-btn batch-btns-reject' id='batchRejectBtn'>批量驳回</div>
+					$}
+				}
+				{$
+			</div>
+		</div>
+		$}
+		for(var i=0; i<datas.length; i++){
+			var data = datas[i];
+		{$
+			<div class='process-item' data-id='{%data.fdId%}' data-name='{%data.docSubject%}'>
+				<div class='process-item-base'>
+					<div class='process-item-name'>
+						<div><input type="checkbox" name="List_Selected" value="{%data.fdId%}"/></div>
+						<a href='{%Com_Parameter.ContextPath%}{%data.url%}' target="_blank">{%data.docSubject%}</a>
+					</div>
+					<div class='process-item-create'>
+						<div class='process-item-person'>
+							<div class='image'><img src="{%Com_Parameter.ContextPath%}sys/person/image.jsp?personId={%data.docCreatorId%}&size=90"/></div>
+							<div class='name'>{%data.docCreatorName%}</div>
+						</div>
+						<div class='process-item-time'>
+							{%data.docCreateTime%}
+						</div>
+					</div>
+				</div>
+				<div class='process-item-info'>
+					$}
+						if(data.summary){
+					{$
+					<div class='process-item-summary'>
+						$}
+							if(data.summary.properties){
+						{$
+						<ul class='process-item-summary-ul'>
+							$}
+							for(var j=0; j<data.summary.properties.length; j++){
+								var summaryItem = data.summary.properties[j];
+								if(summaryItem.controlType == "textarea"){
+									continue;
+								}
+							{$
+							<li class='process-item-summary-li'>
+								<div class='summary-li-key'>{%summaryItem.label%}：</div>
+								<div class='summary-li-value'>{%summaryItem.value%}<div class="summary-li-value-tip">{%summaryItem.value%}</div></div>
+							</li>
+							$}
+							}
+							{$
+						</ul>
+						$}
+							}
+							if(data.summary.properties){
+						{$
+						<ul class='process-item-summary-ul'>
+							$}
+							for(var j=0; j<data.summary.properties.length; j++){
+								var summaryItem = data.summary.properties[j];
+								if(summaryItem.controlType != "textarea"){
+									continue;
+								}
+							{$
+							<li class='process-item-summary-li-textarea'>
+								<div class='summary-li-key'>{%summaryItem.label%}：</div>
+								<div class='summary-li-value'>{%summaryItem.value%}<div class="summary-li-value-tip">{%summaryItem.value%}</div></div>
+							</li>
+							$}
+							}
+							{$
+						</ul>
+						$}
+							}
+							if(data.summary.tables){
+						{$
+						<div class='process-item-summary-table'>
+						$}
+							for(var j=0; j<data.summary.tables.length; j++){
+								var headers = data.summary.tables[j].headers;
+								var rows = data.summary.tables[j].rows;
+								var otherRows = data.summary.tables[j].otherRows;
+							{$
+								<table class='tb_normal'>
+									<tr class='tr_normal_title'>
+									$}
+										if(headers.length > 0){
+									{$
+										<td style='width:48px;text-align: left;' class='td_normal_title'>序号</td>
+									$}
+										}
+										if(headers.length > 7){
+											for(var k=0; k<7; k++){
+												{$<td style="text-align: left;" class='td_normal_title'>{%headers[k]%}</td>$}
+											}
+											{$<td style="text-align: left;" class='td_normal_title'>...</td>$}
+										}else{
+											for(var k=0; k<headers.length; k++){
+												{$<td  style="text-align: left;" class='td_normal_title'>{%headers[k]%}</td>$}
+											}
+										}
+									{$
+									</tr>
+									$}
+										var rowLen = rows.length;
+										var otherRowLen = otherRows.length;
+										var isOverRowNum = false;
+										if(rowLen > 5){
+											rowLen = 5;
+											isOverRowNum = true;
+										}else if(rowLen + otherRowLen > 5){
+											rowLen = 4;
+											otherRowLen = 1;
+											isOverRowNum = true;
+										}
+										var isOverCellNum = false;
+										for(var k=0; k<rowLen; k++){
+											var len = rows.length;
+											var row = rows[k];
+											if((isOverRowNum && rowLen == 4 && k == rowLen-1) || (isOverRowNum && rowLen == 5 && k==rowLen-2)){
+											{$
+											<tr>
+												<td class=''>...</td>
+											$}
+												if(row.length > 7){
+													for(var g=0; g<8; g++){
+														{$<td class='td_normal_content'><div>...</div></td>$}
+													}
+												}else{
+													for(var g=0; g<row.length; g++){
+														{$<td class='td_normal_content'><div>...</div></td>$}
+													}
+												}
+											{$
+											</tr>
+											$}
+											}else{
+												if(isOverRowNum && rowLen == 5 && k==rowLen-1){
+												row = rows[len-1];
+												{$
+												<tr>
+													<td class=''>{%len%}</td>
+												$}
+													if(row.length > 7){
+														for(var g=0; g<7; g++){
+															{$<td class='td_normal_content'><div class='td-value'>{%row[g]%}<div class='td-value-tip'>{%row[g]%}</div></div></td>$}
+														}
+														{$<td class='td_normal_content'><div>...</div></td>$}
+													}else{
+														for(var g=0; g<row.length; g++){
+															{$<td class='td_normal_content'><div class='td-value'>{%row[g]%}<div class='td-value-tip'>{%row[g]%}</div></div></td>$}
+														}
+													}
+												{$
+												</tr>
+												$}
+												}else{
+												{$
+												<tr>
+													<td class=''>{%k+1%}</td>
+												$}
+													if(row.length > 7){
+														for(var g=0; g<7; g++){
+															{$<td class='td_normal_content'><div class='td-value'>{%row[g]%}<div class='td-value-tip'>{%row[g]%}</div></div></td>$}
+														}
+														{$<td class='td_normal_content'><div>...</div></td>$}
+													}else{
+														for(var g=0; g<row.length; g++){
+															{$<td class='td_normal_content'><div class='td-value'>{%row[g]%}<div class='td-value-tip'>{%row[g]%}</div></div></td>$}
+														}
+													}
+												{$
+												</tr>
+												$}
+												}
+											}
+										}
+										for(var k=0; k<otherRowLen; k++){
+											var row;
+											if(isOverRowNum){
+												var len = otherRows.length;
+												row = otherRows[len-1];
+											}else{
+												row = otherRows[k];
+											}
+											{$
+											<tr>
+											$}
+												if(row.length > 0){
+													{$<td class='td_normal_content'></td>$}
+												}
+												if(row.length > 7){
+													for(var g=0; g<7; g++){
+														{$<td class='td_normal_content'><div class='td-value'>{%row[g]%}<div class='td-value-tip'>{%row[g]%}</div></div></td>$}
+													}
+													{$<td class='td_normal_content'><div>...</div></td>$}
+												}else{
+													for(var g=0; g<row.length; g++){
+														{$<td class='td_normal_content'><div class='td-value'>{%row[g]%}<div class='td-value-tip'>{%row[g]%}</div></div></td>$}
+													}
+												}
+											{$
+											</tr>
+											$}
+										}
+									{$
+								</table>
+							$}
+							}
+						{$	
+						</div>
+						$}
+							}
+						{$
+					</div>
+					$}
+						}
+					{$
+					<div class='process-item-butons'>
+					$}
+						if(data.btn.isFastApprove){
+							{$<div class='process-item-buttons-btn process-item-buttons-pass processPass'>通过</div>$}
+						}
+						if(data.btn.isFastReject){
+							{$<div class='process-item-buttons-btn process-item-buttons-reject processRefuse'>驳回</div>$}
+						}
+					{$
+					</div>
+				</div>
+			</div>
+		$}
+		}
+		{$
+	</div>
+$}

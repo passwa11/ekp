@@ -1,0 +1,268 @@
+.lui-mcalendar {
+  margin: 0 auto;
+  box-sizing: border-box;
+  border: 1px solid #dadada;
+  font-family: "Microsoft YaHei", sans-serif;
+}
+
+.lui-mcalendar * {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.lui-mcalendar-t,
+.lui-mcalendar-b {
+  position: relative;
+  font-size: 0;
+}
+
+.lui-mcalendar-t {
+  border-bottom: 1px solid #dadada;
+  box-shadow: 0 1px 1px #dadada;
+  z-index: 1;
+}
+
+.lui-mcalendar-t-l,
+.lui-mcalendar-b-l {
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-align: center;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.lui-mcalendar-t-l,
+.lui-mcalendar-b-l {
+  border-right: 1px solid #dadada;
+  box-shadow: 1px 0 1px #dadada;
+  z-index: 1;
+}
+
+.lui-mcalendar-t-r {
+  overflow: hidden;
+}
+
+.lui-mcalendar-cols,
+.lui-mcalendar-rows {
+  position: relative;
+  font-size: 0;
+  white-space: nowrap;
+}
+
+.lui-mcalendar-rows {
+  box-shadow: 1px 0 1px #dadada;
+}
+
+.lui-mcalendar-col,
+.lui-mcalendar-row {
+  display: inline-block;
+  font-size: 14px;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+}
+
+.lui-mcalendar-row {
+  border-bottom: 1px solid #dadada;
+}
+.lui-mcalendar-row div[data-type="dept"]{
+	border-right: 1px solid #dadada;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	}
+	.lui-mcalendar-row div[data-type="person"]{
+	border-right: 1px solid #dadada;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	}
+.lui-mcalendar-col {
+  border-right: 1px solid #dadada;
+}
+
+.lui-mcalendar-col.old {
+  background-color: #e9e9e9;
+}
+
+.lui-mcalendar-t-l .lui-mcalendar-col {
+  border: none;
+}
+.lui-mcalendar-t-l .lui-mcalendar-col:first-child{
+   border-right: 1px solid #dadada;
+}
+.lui-mcalendar-row {
+  display: block;
+
+}
+
+.lui-mcalendar-col span[data-type="y"],
+.lui-mcalendar-col span[data-type="x"],
+.lui-mcalendar-row {
+  line-height: 48px;
+  font-size: 18px;
+  color: black;
+}
+
+.lui-mcalendar-b-r {
+  overflow: auto;
+}
+
+.lui-mcalendar-main-row {
+  font-size: 0;
+  white-space: nowrap;
+}
+
+.lui-mcalendar-main-col {
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  border-right: 1px solid #dadada;
+  border-bottom: 1px solid #dadada;
+}
+
+.lui-mcalendar[data-mode="edit"] .lui-mcalendar-main-col {
+  cursor: pointer;
+}
+
+.lui-mcalendar-main-col:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+	background-color: black;
+	opacity: 0.1;
+}
+
+.lui-mcalendar[data-mode="edit"] .lui-mcalendar-main-col.old {
+  cursor: not-allowed;
+}
+
+.lui-mcalendar[data-mode="edit"] .lui-mcalendar-main-col.range:after,
+.lui-mcalendar[data-mode="edit"] .lui-mcalendar-main-col:hover:after {
+	display: block;
+}
+
+.lui-mcalendar-col div[data-type="date"] {
+	line-height: 26px;
+	font-size: 18px;
+	color: black;
+}
+
+.lui-mcalendar-col.old div[data-type="date"] {
+	color: #9b9b9b;
+}
+
+.lui-mcalendar-col div[data-type="day"] {
+	line-height: 17px;
+	font-size: 12px;
+	color: #9b9b9b;
+}
+
+.lui-mcalendar-main-col span[data-type="sign"],
+.lui-mcalendar-col span[data-type="sign"] {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 14px;
+	height: 14px;
+	cursor: pointer;
+	/*
+	width: 0;
+	height: 0;
+	font-size: 0;
+	border-right: 14px solid transparent;
+	border-top: 14px solid transparent;
+	*/
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+
+.lui-mcalendar-main-col span[data-type="sign"][data-date-type="2"],
+.lui-mcalendar-col span[data-type="sign"][data-date-type="4"] {
+	/*border-top-color: #e60000;*/
+	background-image: url(../images/icon_triangle_red.png);
+}
+
+.lui-mcalendar-main-col span[data-type="sign"][data-date-type="3"],
+.lui-mcalendar-col span[data-type="sign"][data-date-type="5"] {
+	/*border-top-color: #4285F4;*/
+	background-image: url(../images/icon_triangle_blue.png);
+}
+
+.lui-mcalendar-main-col span[data-type="label"] {
+	position: absolute;
+	top: 16px;
+	left: 0;
+	right: 0;
+}
+
+/******************* 右键菜单 *******************/
+.lui-mcalendar-contextmenu {
+	position: fixed;
+	z-index: 1;
+	width: 152px;
+	border: 1px solid #ccc;
+	background-color: white;
+	box-shadow: 0 0 1px #ccc;
+}
+.lui-mcalendar-contextmenu-item {
+	padding: 4px;
+    text-align: center;
+    font-size: 14px;
+    border-bottom: 1px dashed #ccc;
+    cursor: pointer;
+}
+
+.lui-mcalendar-contextmenu-item:hover {
+	background-color: #e9e9e9;
+}
+
+.lui-mcalendar-contextmenu-item[data-type="menu-title"] {
+    font-weight: bold;
+}
+
+/******************* 节假日提示 *******************/
+.lui-mcalendar-tip {
+    position: absolute;
+    z-index: 2;
+    padding: 0 8px;
+    min-width: 36px;
+    white-space: nowrap;
+    height: 26px;
+    line-height: 26px;
+    font-size: 11px;
+    opacity: 0.8;
+    border-radius: 4px;
+    background: black;
+    color: white;
+    text-align: center;
+}
+
+.lui-mcalendar-tip::after {
+	content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: -6px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid black;
+    left: 40%;
+    font-size: 0;
+}
+
+.calendar-title{
+    position: fixed;
+    background-color: #fff;
+    z-index:2;
+}
+.calendar-body{
+    margin-top:50px;
+}

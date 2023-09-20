@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../plugin.xsd ">
+
+	<extension
+		point="com.landray.kmss.lbpm.engine.node">
+		<!-- 加签任务 -->
+		<item
+			name="taskType"
+			id="142745c094e8370e3bd2c704bd7a4a65">
+			<param
+				name="type"
+				value="assignTask" />
+			<param
+				name="taskDesc"
+				value="assignTaskDesc" />
+			<param
+				name="taskBehaviour"
+				value="assignTaskBehaviour" />
+			<param
+				name="taskProvider"
+				value="assignTaskProvider" />
+			<param
+				name="taskDataAccess"
+				value="assignDataAccess" />
+		</item>
+		<!-- 加签工作项 -->
+		<item
+			name="taskType"
+			id="155e70679360319932e2a3546529e925">
+			<param
+				name="type"
+				value="assignWorkitem" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/workitem/workitem_assignworkitem.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/workitem/workitem_assignworkitem.jsp" />
+			<param
+				name="taskDesc"
+				value="assignWorkitemDesc" />
+			<param
+				name="taskBehaviour"
+				value="assignWorkitemBehaviour" />
+			<param
+				name="taskDataAccess"
+				value="assignDataAccess" />
+		</item>
+	</extension>
+
+	<extension
+		point="com.landray.kmss.lbpm.engine.operation">
+		<!-- 加签操作 -->
+		<item
+			name="operation"
+			id="142745c094e8370e3bd2c704bd7a4a66">
+			<param
+				name="type"
+				value="handler_assign" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-operation-assignment:lbpmOperations.fdOperType.processor.assign" />
+			<param
+				name="behaviour"
+				value="lbpmHandlerAssignBehaviour" />
+			<param
+				name="accessor"
+				value="lbpmHandlerAssignAccessor" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/operation/handler/operation_handler_assign.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/operation/handler/operation_handler_assign.jsp" />
+			<param
+				name="handlerType"
+				value="handler" />
+			<param
+				name="apiHelpPage"
+				value="" />
+			<param
+				name="binder"
+				value="handlerAssignBinder" />
+		</item>
+		<!-- 回复加签操作 -->
+		<item
+			name="operation"
+			id="142745c094e8370e3bd2c704bd7a4a67">
+			<param
+				name="type"
+				value="handler_assignPass" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-operation-assignment:lbpmOperations.fdOperType.processor.assign.pass" />
+			<param
+				name="behaviour"
+				value="lbpmHandlerAssignPassBehaviour" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/operation/handler/operation_handler_assign.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/operation/handler/operation_handler_assign.jsp" />
+			<param
+				name="handlerType"
+				value="handler" />
+			<param
+				name="apiHelpPage"
+				value="" />
+			<param
+				name="binder"
+				value="handlerAssignPassBinder" />
+			<param
+				name="display"
+				value="false" />
+		</item>
+		<!-- 取消加签操作 -->
+		<item
+			name="operation"
+			id="142745c094e8370e3bd2c704bd7a4a68">
+			<param
+				name="type"
+				value="handler_assignCancel" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-operation-assignment:lbpmOperations.fdOperType.processor.assign.cancel" />
+			<param
+				name="behaviour"
+				value="lbpmHandlerAssignCancelBehaviour" />
+			<param
+				name="accessor"
+				value="lbpmHandlerAssignAccessor" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/operation/handler/operation_handler_assign.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/operation/handler/operation_handler_assign.jsp" />
+			<param
+				name="handlerType"
+				value="handler" />
+			<param
+				name="apiHelpPage"
+				value="" />
+			<param
+				name="binder"
+				value="handlerAssignCancelBinder" />
+			<param
+				name="display"
+				value="false" />
+		</item>
+		<!-- 退回加签操作 -->
+		<item
+			name="operation"
+			id="142745c094e8370e3bd2c704bd7a4a69">
+			<param
+				name="type"
+				value="handler_assignRefuse" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-operation-assignment:lbpmOperations.fdOperType.processor.assign.refuse" />
+			<param
+				name="behaviour"
+				value="lbpmHandlerAssignRefuseBehaviour" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/operation/handler/operation_handler_assign.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/operation/handler/operation_handler_assign.jsp" />
+			<param
+				name="handlerType"
+				value="handler" />
+			<param
+				name="apiHelpPage"
+				value="" />
+			<param
+				name="binder"
+				value="handlerAssignRefuseBinder" />
+			<param
+				name="display"
+				value="false" />
+		</item>
+	</extension>
+	<!-- 事件 -->
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<!-- 加签操作事件   -->
+		<item
+			name="event">
+			<param
+				name="type"
+				value="lbpmHandlerAssignEvent" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-operation-assignment:lbpmOperations.fdOperType.processor.assign.event" />
+			<param
+				name="provider"
+				value="com.landray.kmss.sys.lbpmservice.operation.OperationEventProvider" />
+			<param
+				name="monitors"
+				value="com.landray.kmss.sys.lbpmservice.operation.assignment.LbpmHandlerAssignEvent" />
+			<param
+				name="display"
+				value="true" />
+			<param
+				name="description"
+				value="sys-lbpmservice-operation-assignment:lbpmOperations.fdOperType.processor.assign.event.description" />
+		</item>
+		<!-- 通过加签操作事件  -->
+		<item
+			name="event">
+			<param
+				name="type"
+				value="lbpmHandlerAssignPassEvent" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-operation-assignment:lbpmOperations.fdOperType.processor.assign.pass.event" />
+			<param
+				name="provider"
+				value="com.landray.kmss.sys.lbpmservice.operation.OperationEventProvider" />
+			<param
+				name="monitors"
+				value="com.landray.kmss.sys.lbpmservice.operation.assignment.LbpmHandlerAssignPassEvent" />
+			<param
+				name="description"
+				value="sys-lbpmservice-operation-assignment:lbpmOperations.fdOperType.processor.assign.pass.event.description" />
+		</item>
+		<!-- 收回加签事件 -->
+		<item
+			name="event">
+			<param
+				name="type"
+				value="lbpmHandlerAssignCancelEvent" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-operation-assignment:lbpmOperations.fdOperType.processor.assign.cancel.event" />
+			<param
+				name="provider"
+				value="com.landray.kmss.sys.lbpmservice.operation.OperationEventProvider" />
+			<param
+				name="monitors"
+				value="com.landray.kmss.sys.lbpmservice.operation.assignment.LbpmHandlerAssignCancelEvent" />
+			<param
+				name="description"
+				value="sys-lbpmservice-operation-assignment:lbpmOperations.fdOperType.processor.assign.cancel.event.description" />
+		</item>
+		<!-- 退回加签事件 -->
+		<item
+			name="event">
+			<param
+				name="type"
+				value="lbpmHandlerAssignRefuseEvent" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-operation-assignment:lbpmOperations.fdOperType.processor.assign.refuse.event" />
+			<param
+				name="provider"
+				value="com.landray.kmss.sys.lbpmservice.operation.OperationEventProvider" />
+			<param
+				name="monitors"
+				value="com.landray.kmss.sys.lbpmservice.operation.assignment.LbpmHandlerAssignRefuseEvent" />
+			<param
+				name="description"
+				value="sys-lbpmservice-operation-assignment:lbpmOperations.fdOperType.processor.assign.refuse.event.description" />
+		</item>
+		<!-- 加签操作监听器 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="lbpmHandlerAssignListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="lbpmHandlerAssignEvent" />
+			<param
+				name="listener"
+				value="lbpmHandlerAssignListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		<!-- 提供给加签任务的监听器 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="doForAssignTaskListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="lbpmHandlerAssignPassEvent" />
+			<param
+				name="listener"
+				value="doForAssignTaskListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+</plugin>

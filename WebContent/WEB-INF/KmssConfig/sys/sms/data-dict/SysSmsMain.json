@@ -1,0 +1,77 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.sms.model.SysSmsMain",
+        "messageKey": "sys-sms:table.sysSmsMain",
+        "serviceBean": "sysSmsMainService",
+        "url": "/sys/sms/sys_sms_main/sysSmsMain.do?method=view&fdId=${fdId}",
+        "table": "sys_sms_main"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "docContent":         {
+            "propertyType": "simple",
+            "messageKey": "sys-sms:sysSmsMain.docContent",
+            "type": "RTF",
+            "column": "doc_content",
+            "length": "1000000",
+            "notNull": "false",
+            "canSubscribe": "true",
+            "canDisplay": "true"
+        },
+        "fdNotifyType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-sms:sysSmsMain.fdNotifyType",
+            "type": "String",
+            "column": "fd_notify_type",
+            "notNull": "false",
+            "length": "100"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-sms:sysSmsMain.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "false",
+            "canSubscribe": "true",
+            "canSearch": "true",
+            "canDisplay": "true"
+        },
+        "docStatus":         {
+            "propertyType": "simple",
+            "messageKey": "sys-sms:sysSmsMain.docStatus",
+            "type": "String",
+            "enumType": "sysSmsMainDocStatus",
+            "column": "doc_status",
+            "notNull": "false",
+            "length": "2",
+            "canSubscribe": "true",
+            "canSearch": "true",
+            "canDisplay": "true"
+        },
+        "fdCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-sms:sysSmsMain.fdCreatorId",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_creator_id",
+            "notNull": "false",
+            "canSubscribe": "true",
+            "canSearch": "true",
+            "canDisplay": "true",
+            "dialogJS": "Dialog_Address(false, '!{idField}', '!{nameField}', null, ORG_TYPE_PERSON);"
+        },
+        "fdRecPersons":         {
+            "propertyType": "list",
+            "messageKey": "sys-sms:table.sysSmsRecPerson",
+            "column": "fd_rec_person_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "fd_org_id",
+            "table": "sys_sms_rec_person",
+            "canSearch": "true",
+            "canDisplay": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}', '!{nameField}', null, ORG_TYPE_PERSON);"
+        }
+    }
+}

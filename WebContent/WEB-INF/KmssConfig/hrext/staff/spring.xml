@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="hrextStaffExpandDao" 
+        class="com.landray.kmss.hrext.staff.dao.hibernate.HrextStaffExpandDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.hrext.staff.model.HrextStaffExpand</value>
+        </property>
+    </bean>
+    <bean 
+        id="hrextStaffExpandTarget" 
+        class="com.landray.kmss.hrext.staff.service.spring.HrextStaffExpandServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="hrextStaffExpandDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrextStaffExpandService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrextStaffExpandTarget"/>
+        </property>
+    </bean>
+</beans>

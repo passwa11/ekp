@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		name="/dbcenter/echarts/application/dbEchartsApplication.do"
+		class="com.landray.kmss.dbcenter.echarts.application.actions.DbEchartsApplicationAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="simpleCategory"
+					value="/dbcenter/echarts/application/common/simpleCategory.jsp" />
+				<entry
+					key="simpleCategory_portlet"
+					value="/dbcenter/echarts/application/common/simpleCategory_portlet.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- 导航树 start -->
+	<bean
+		name="/dbcenter/echarts/application/dbEchartsNavTree.do"
+		class="com.landray.kmss.dbcenter.echarts.application.actions.DbEchartsNavTreeAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.dbcenter.echarts.application.forms.DbEchartsNavTreeForm" />
+		<property name="forwards">
+			<map>
+				<entry key="treeIndex" value="/dbcenter/echarts/application/navTree/tree_index.jsp" />
+				<entry key="list" value="/dbcenter/echarts/application/navTree/dbEchartsNavTree_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/dbcenter/echarts/application/dbEchartsNavTreeShow.do"
+		class="com.landray.kmss.dbcenter.echarts.application.actions.DbEchartsNavTreeShowAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.dbcenter.echarts.application.forms.DbEchartsNavTreeShowForm" />
+		<property name="forwards">
+			<map>
+				<entry key="list" value="/dbcenter/echarts/application/navTree/treeShow/list.jsp" />
+				<entry key="edit" value="/dbcenter/echarts/application/navTree/treeShow/edit.jsp" />
+				<entry key="view" value="/dbcenter/echarts/application/navTree/treeShow/view.jsp" />
+			</map>
+		</property>
+	</bean>
+		
+	<bean
+		name="/dbcenter/echarts/application/dbEchartsNavTreeChart.do"
+		class="com.landray.kmss.dbcenter.echarts.application.actions.DbEchartsNavTreeChartAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.dbcenter.echarts.application.forms.DbEchartsNavTreeChartForm" />
+		<property name="forwards">
+			<map>
+				<entry key="edit" value="/dbcenter/echarts/application/navTree/chart/edit.jsp" />
+				<entry key="view" value="/dbcenter/echarts/application/navTree/chart/view.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/dbcenter/echarts/application/dbEchartsNavTreeCustom.do"
+		class="com.landray.kmss.dbcenter.echarts.application.actions.DbEchartsNavTreeCustomAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.dbcenter.echarts.application.forms.DbEchartsNavTreeCustomForm" />
+		<property name="forwards">
+			<map>
+				<entry key="edit" value="/dbcenter/echarts/application/navTree/custom/edit.jsp" />
+				<entry key="view" value="/dbcenter/echarts/application/navTree/custom/view.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+		<bean
+		name="/dbcenter/echarts/application/dbEchartsNavTreeTable.do"
+		class="com.landray.kmss.dbcenter.echarts.application.actions.DbEchartsNavTreeTableAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.dbcenter.echarts.application.forms.DbEchartsNavTreeTableForm" />
+		<property name="forwards">
+			<map>
+				<entry key="edit" value="/dbcenter/echarts/application/navTree/table/edit.jsp" />
+				<entry key="view" value="/dbcenter/echarts/application/navTree/table/view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- 导航树 end -->
+	<bean id="dbEchartsApplicationController" 
+		class="com.landray.kmss.dbcenter.echarts.application.actions.DbEchartsApplicationController"></bean>
+</beans>

@@ -1,0 +1,63 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.praise.model.SysPraiseInfoPersonal",
+        "messageKey": "sys-praise:table.sysPraiseInfo",
+        "serviceBean": "sysPraiseInfoPersonalService",
+        "table": "sys_praise_i_personal",
+        "url": "/sys/praise/sys_praise_info_personal/sysPraiseInfoPersonal.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdPerson":         {
+            "propertyType": "model",
+            "messageKey": "sys-praise:sysPraiseInfo.calculate.dept",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_person",
+            "dialogJS": "Dialog_Address(true,'!{idField}','!{nameField}',';',ORG_TYPE_ORGORDEPT);",
+            "notNull": "true",
+            "validate": "true",
+            "canSearch": "true"
+        },
+        "fdTotal":         {
+            "propertyType": "model",
+            "messageKey": "sys-praise:sysPraiseInfo.calculate.total",
+            "type": "com.landray.kmss.sys.praise.model.SysPraiseInfoDetail",
+            "column": "fd_total",
+            "notNull": "false",
+            "validate": "true"
+        },
+        "fdWeek":         {
+            "propertyType": "model",
+            "messageKey": "sys-praise:sysPraiseInfo.calculate.week",
+            "type": "com.landray.kmss.sys.praise.model.SysPraiseInfoDetail",
+            "column": "fd_week",
+            "notNull": "false",
+            "validate": "true"
+        },
+        "fdMonth":         {
+            "propertyType": "model",
+            "messageKey": "sys-praise:sysPraiseInfo.calculate.month",
+            "type": "com.landray.kmss.sys.praise.model.SysPraiseInfoDetail",
+            "column": "fd_month",
+            "notNull": "false",
+            "validate": "true"
+        },
+        "fdYear":         {
+            "propertyType": "model",
+            "messageKey": "sys-praise:sysPraiseInfo.calculate.year",
+            "type": "com.landray.kmss.sys.praise.model.SysPraiseInfoDetail",
+            "column": "fd_year",
+            "notNull": "false",
+            "validate": "true"
+        },
+        "fdUpdateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-praise:sysPraiseInfo.calculate.fdUpdateTime",
+            "type": "DateTime",
+            "column": "fd_update_time"
+        }
+    }
+}

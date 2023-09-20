@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="fsscEasSwitchDao" 
+        class="com.landray.kmss.fssc.eas.dao.hibernate.FsscEasSwitchDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.eas.model.FsscEasSwitch</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscEasSwitchTarget" 
+        class="com.landray.kmss.fssc.eas.service.spring.FsscEasSwitchServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscEasSwitchDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscEasSwitchService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscEasSwitchTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscEasParamDao" 
+        class="com.landray.kmss.fssc.eas.dao.hibernate.FsscEasParamDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.eas.model.FsscEasParam</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscEasParamTarget" 
+        class="com.landray.kmss.fssc.eas.service.spring.FsscEasParamServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscEasParamDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscEasParamService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscEasParamTarget"/>
+        </property>
+    </bean>
+    <bean id="fsscCommonEasService" class="com.landray.kmss.fssc.eas.service.spring.FsscCommonEasServiceImp">
+    </bean>
+</beans>

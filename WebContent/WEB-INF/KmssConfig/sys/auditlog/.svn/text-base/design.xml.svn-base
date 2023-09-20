@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="sys-auditlog:module.sys.auditlog"
+		urlPrefix="/sys/auditlog/"
+		defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SECURITY)">
+	</module>
+	<!-- 备份日志信息 -->
+	<quartz
+		messageKey="sys-auditlog:sysAuditlog.buckup.job"
+		jobService="sysAuditlogService"
+		jobMethod="backAuditLog"
+		cronExpression="0 30 1 * * ?"
+		description="sys-auditlog:sysAuditlog.buckup.job.desc"
+		runType="SINGLENODE"/>
+
+	<!-- <homePage
+		urlPrefix="sys/auditlog"
+		url="/moduleindex.jsp?nav=/sys/auditlog/tree.jsp"
+		messageKey="sys-auditlog:module.sys.auditlog"
+		config="/moduleindex_notopic.jsp?nav=/sys/auditlog/tree.jsp"/> -->
+		
+	<profileConfig
+		key="sys/auditlog"
+		messageKey="{sys-auditlog:module.sys.auditlog}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/auditlog/tree.jsp" 
+		icon="sys_auditlog"
+		type="ekp" 
+		description="{sys-auditlog:sysAuditlog.profileCfg.description}"
+		order="405"/>
+</configs>

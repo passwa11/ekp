@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--kms配置信息 -->
+	<bean id="kmsAppConfigDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsAppConfigDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.kms.common.model.KmsAppConfig" />
+		<property name="sysAuthAreaService">
+			<ref bean="sysAuthAreaService" />
+		</property>
+	</bean>
+	<bean id="kmsAppConfigTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsAppConfigServiceImp">
+		<property name="baseDao">
+			<ref bean="kmsAppConfigDao" />
+		</property>
+	</bean>
+	<bean id="kmsAppConfigService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsAppConfigTarget" />
+		</property>
+	</bean>
+
+	<bean id="kmsModuleDataBean"
+		class="com.landray.kmss.kms.common.service.spring.KmsModuleDataBean">
+	</bean>
+
+	<bean id="kmsInitService"
+		class="com.landray.kmss.kms.common.service.spring.KmsInitService">
+	</bean>
+
+	<bean id="kmsWebserviceAuthDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsWebserviceAuthDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.kms.common.model.KmsWebserviceAuth" />
+	</bean>
+	
+	<bean id="kmsWebserviceAuthTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsWebserviceAuthServiceImp">
+		<property name="baseDao">
+			<ref bean="kmsWebserviceAuthDao" />
+		</property>
+	</bean>
+	<bean id="kmsWebserviceAuthService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsWebserviceAuthTarget" />
+		</property>
+	</bean>
+
+	<!-- 推荐知识 -->
+	<bean id="kmsHomeKnowledgeIntroDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsHomeKnowledgeIntroDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.kms.common.model.KmsHomeKnowledgeIntro" />
+	</bean>
+	<bean id="kmsHomeKnowledgeIntroTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsHomeKnowledgeIntroServiceImp">
+		<property name="baseDao">
+			<ref bean="kmsHomeKnowledgeIntroDao" />
+		</property>
+		<property name="kmsHomeKnowledgeIntroCategoryService">
+			<ref bean="kmsHomeKnowledgeIntroCategoryService" />
+		</property>
+		<property name="sysAttMainCoreInnerService">
+	    	<ref bean="sysAttMainService"/>
+	    </property>
+	</bean>
+	<bean id="kmsHomeKnowledgeIntroService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsHomeKnowledgeIntroTarget" />
+		</property>
+	</bean>
+
+	
+	<!-- 推荐知识结束 -->
+
+
+
+	<bean id="kmsCommonDocErrorCorrectionDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsCommonDocErrorCorrectionDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.kms.common.model.KmsCommonDocErrorCorrection" />
+	</bean>
+	<bean id="kmsCommonDocErrorCorrectionTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsCommonDocErrorCorrectionServiceImp">
+		<property name="baseDao">
+			<ref bean="kmsCommonDocErrorCorrectionDao" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+	<bean id="kmsCommonDocErrorCorrectionService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsCommonDocErrorCorrectionTarget" />
+		</property>
+	</bean>
+
+	<!-- 回收站日志相关bean -->
+	<bean id="kmsCommonRecycleLogDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsCommonRecycleLogDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.kms.common.model.KmsCommonRecycleLog" />
+	</bean>
+	<bean id="kmsCommonRecycleLogTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsCommonRecycleLogServiceImp">
+		<property name="baseDao">
+			<ref bean="kmsCommonRecycleLogDao" />
+		</property>
+	</bean>
+	<bean id="kmsCommonRecycleLogService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsCommonRecycleLogTarget" />
+		</property>
+	</bean>
+
+	<bean id="kmsCommonDataPushDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsCommonDataPushDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.kms.common.model.KmsCommonDataPush" />
+	</bean>
+	<bean id="kmsCommonDataPushTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsCommonDataPushServiceImp">
+		<property name="baseDao">
+			<ref bean="kmsCommonDataPushDao" />
+		</property>
+	</bean>
+	<bean id="kmsCommonDataPushService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsCommonDataPushTarget" />
+		</property>
+	</bean>
+
+	<bean id="kmsShareMainDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsShareMainDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.kms.common.model.KmsShareMain" />
+	</bean>
+
+	<bean id="kmsShareMainTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsShareMainServiceImp">
+		<property name="baseDao">
+			<ref bean="kmsShareMainDao" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+	<bean id="kmsShareMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsShareMainTarget" />
+		</property>
+	</bean>
+	
+	<bean id="kmsShareLogProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>kmsShareMainService</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>kmsPointcutAdvisorService</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="kmsCommonAdviceService"
+		class="com.landray.kmss.kms.common.service.KmsCommonAdviceService">
+	</bean>
+
+	<bean id="kmsPointcutAdvisorService"
+		class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<property name="advice">
+			<ref bean="kmsCommonAdviceService" />
+		</property>
+		<property name="pattern" value=".*" />
+	</bean>
+	
+	<bean id="kmsBookMarkMainDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsBookMarkMainDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.bookmark.model.SysBookmarkMain" />
+	</bean>
+	
+	<bean id="kmsBookMarkMainTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsBookMarkMainServiceImp">
+		<property name="baseDao">
+			<ref bean="kmsBookMarkMainDao" />
+		</property>
+		<property name="sysBookmarkMainService">
+			<ref bean="sysBookmarkMainService" />
+		</property>
+		<property name="sysBookmarkPublicCategoryService">
+			<ref bean="sysBookmarkPublicCategoryService" />
+		</property>
+		<property name="sysBookmarkCategoryService">
+			<ref bean="sysBookmarkCategoryService" />
+		</property>
+	</bean>
+	<bean id="kmsBookMarkMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsBookMarkMainTarget" />
+		</property>
+	</bean>
+	<bean class="com.landray.kmss.kms.common.dao.hibernate.KmsCommentMainDaoImp"
+		id="kmsCommentMainDao" parent="KmssAuthBaseDao">
+		<property value="com.landray.kmss.kms.common.model.KmsCommentMain"
+			name="modelName" />
+	</bean>
+	<bean
+		class="com.landray.kmss.kms.common.service.spring.KmsCommentMainServiceImp"
+		id="kmsCommentMainTarget" parent="KmssBaseTarget">
+		<property name="baseDao">
+			<ref bean="kmsCommentMainDao" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="kmsCommonAtUserService">
+			<ref bean="kmsCommonAtUserService" />
+		</property>
+	</bean>
+	<bean id="kmsCommentMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsCommentMainTarget" />
+		</property>
+	</bean>
+
+	<bean id="kmsCommonAtUserDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsCommonAtUserDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.kms.common.model.KmsCommonAtUser" />
+	</bean>
+	<bean id="kmsCommonAtUserTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsCommonAtUserServiceImp">
+		<property name="baseDao">
+			<ref bean="kmsCommonAtUserDao" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+	</bean>
+	<bean id="kmsCommonAtUserService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsCommonAtUserTarget" />
+		</property>
+	</bean>
+	
+	<bean id="kmsPersonImportTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsPersonImportServiceImp">
+		
+	</bean>
+
+	<bean id="kmsPersonImportService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsPersonImportTarget" />
+		</property>
+	</bean>
+	
+	<bean id="kmsPersonUploadTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsPersonUploadServiceImp">
+		
+	</bean>
+
+	<bean id="kmsPersonUploadService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsPersonUploadTarget" />
+		</property>
+	</bean>
+	
+	<bean id="kmsCourseNotesService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsCourseNotesTarget" />
+		</property>
+	</bean>
+	<bean
+		id="kmsCourseNotesTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsCourseNotesServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="KmsCourseNotesDao" />
+		</property>
+	</bean>
+	<bean
+		id="KmsCourseNotesDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsCourseNotesDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.kms.common.model.KmsCourseNotes" />
+	</bean>
+
+	
+	
+	<bean
+		id="kmsHomeKnowledgeIntroCategoryDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsHomeKnowledgeIntroCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.kms.common.model.KmsHomeKnowledgeIntroCategory" />
+	</bean>
+
+	<bean
+		id="kmsHomeKnowledgeIntroCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsHomeKnowledgeIntroCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmsHomeKnowledgeIntroCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmsHomeKnowledgeIntroCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmsHomeKnowledgeIntroCategoryTarget" />
+		</property>
+	</bean>
+	
+	<bean id="kmsSSOTarget" parent="KmssBaseTarget"
+        class="com.landray.kmss.kms.common.service.spring.KmsSSOServiceImp">
+    </bean>
+    <bean id="kmsSSOService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="kmsSSOTarget" />
+        </property>
+    </bean>
+    
+    <!-- 知识提醒 -->
+	<bean
+		id="kmsKnowledgeRemindConfigDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsKnowledgeRemindConfigDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.kms.common.model.KmsKnowledgeRemindConfig" />
+	</bean>
+
+	<bean
+		id="kmsKnowledgeRemindConfigTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsKnowledgeRemindConfigServiceImp">
+		<property name="baseDao">
+			<ref bean="kmsKnowledgeRemindConfigDao" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="kmsKnowledgeRemindInfoService">
+			<ref bean="kmsKnowledgeRemindInfoService" />
+		</property>
+	</bean>
+	<bean
+		id="kmsKnowledgeRemindConfigService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmsKnowledgeRemindConfigTarget" />
+		</property>
+	</bean>
+	
+	<!-- KmsFileTransfer -->
+	<bean id="kmsFileTransfer" parent="KmssBaseTarget" init-method="transferClassFile"
+		class="com.landray.kmss.kms.common.transfer.KmsFileTransfer">
+		<property name="modelName" value="com.landray.kmss.kms.common.transfer.KmsFileTransfer" />
+	</bean>
+	
+	<!-- 知识提醒列表 -->
+	<bean
+		id="kmsKnowledgeRemindInfoDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.kms.common.dao.hibernate.KmsKnowledgeRemindInfoDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.kms.common.model.KmsKnowledgeRemindInfo" />
+	</bean>
+
+	<bean
+		id="kmsKnowledgeRemindInfoTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.common.service.spring.KmsKnowledgeRemindInfoServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmsKnowledgeRemindInfoDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmsKnowledgeRemindInfoService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmsKnowledgeRemindInfoTarget" />
+		</property>
+	</bean>
+
+	<bean id="kmsEditionFilter" class="com.landray.kmss.kms.common.edition.KmsEditionFilter">
+		<property name="editionCheckMap">
+			<map>
+				<entry>
+					<key><value>/kms/common</value></key>
+					<bean class="com.landray.kmss.kms.common.edition.check.impl.KmsCategoryEditionCheck">
+						<property name="filterUrlSet">
+							<set>
+								<value>kmsCommentMain_index.jsp</value>
+							</set>
+						</property>
+					</bean>
+				</entry>
+				<entry>
+					<key><value>/kms/category</value></key>
+					<bean class="com.landray.kmss.kms.common.edition.check.impl.KmsCategoryEditionCheck">
+						<property name="filterUrlSet">
+							<set>
+								<value>tree.jsp</value>
+							</set>
+						</property>
+					</bean>
+				</entry>
+				<entry>
+					<key><value>/kms/istorage</value></key>
+					<bean class="com.landray.kmss.kms.common.edition.check.impl.KmsPubEditionCheck">
+						<property name="filterUrlSet">
+							<set>
+								<value>tree.jsp</value>
+							</set>
+						</property>
+					</bean>
+				</entry>
+				<!--<entry>
+					<key><value>/sys/transport</value></key>
+					<bean class="com.landray.kmss.kms.common.edition.check.impl.KmsPubEditionCheck">
+						<property name="urlFilterChecks">
+							<list>
+								<bean class="com.landray.kmss.kms.common.edition.bean.KmsUrlFilterCheck">
+									<property name="url" value="index.jsp"/>
+									<property name="paramMap">
+										<map>
+											<entry key="fdModelName" value="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge;com.landray.kmss.kms.wiki.model.KmsWikiMain"/>
+										</map>
+									</property>
+								</bean>
+							</list>
+						</property>
+					</bean>
+				</entry>-->
+				<entry>
+					<key><value>/sys/lbpmservice</value></key>
+					<bean class="com.landray.kmss.kms.common.edition.check.impl.KmsPubEditionCheck">
+						<property name="urlFilterChecks">
+							<list>
+								<bean class="com.landray.kmss.kms.common.edition.bean.KmsUrlFilterCheck">
+									<property name="url" value="index.jsp"/>
+									<property name="paramMap">
+										<map>
+											<entry key="fdModelName" value="com.landray.kmss.kms.knowledge.borrow.model.KmsKnowledgeBorrow"/>
+										</map>
+									</property>
+								</bean>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry>
+					<key><value>/kms/multidoc</value></key>
+					<bean class="com.landray.kmss.kms.common.edition.check.impl.KmsMultidocEditionCheck">
+						<property name="filterUrlSet">
+							<set>
+								<value>tree.jsp</value>
+								<value>kms_multiple_upload.jsp</value>
+							</set>
+						</property>
+					</bean>
+				</entry>
+				<entry>
+					<key><value>/kms/knowledge</value></key>
+					<bean class="com.landray.kmss.kms.common.edition.check.impl.KmsKnowledgeEditionCheck">
+						<property name="filterUrlSet">
+							<set>
+								<value>kmsKnowledgeBorrow.do</value>
+								<value>kmsKnowledgeBorrowAttAuth.do</value>
+								<value>kmsKnowledgeDocTemplate.do</value>
+								<value>kms_multiple_upload.jsp</value>
+								<value>kmsKnowledgeWikiTemplate_list.jsp</value>
+								<value>kmsKnowledgeBatchLog.do</value>
+							</set>
+						</property>
+						<property name="filterPathSet">
+							<set>
+								<value>kms_knowledge_fs_re_detail</value>
+								<value>kms_knowledge_file_store</value>
+								<value>kms_knowledge_file_store_config</value>
+								<value>kms_knowledge_fs_record</value>
+							</set>
+						</property>
+						<property name="urlFilterChecks">
+							<list>
+								<bean class="com.landray.kmss.kms.common.edition.bean.KmsUrlFilterCheck">
+									<property name="url" value="kmsKnowledgeBaseDoc.do"/>
+									<property name="paramMap">
+										<map>
+											<entry key="method" value="checkDocPromission;editProperty"/>
+										</map>
+									</property>
+								</bean>
+								<bean class="com.landray.kmss.kms.common.edition.bean.KmsUrlFilterCheck">
+									<property name="url" value="kmsKnowledgeBaseDocIndex.do"/>
+									<property name="paramMap">
+										<map>
+											<entry key="method" value="exportExcel"/>
+										</map>
+									</property>
+								</bean>
+								<bean class="com.landray.kmss.kms.common.edition.bean.KmsUrlFilterCheck">
+									<property name="url" value="kmsMultipleUploadMain.do"/>
+									<property name="paramMap">
+										<map>
+											<entry key="method" value="forwordEditor"/>
+										</map>
+									</property>
+								</bean>
+								<bean class="com.landray.kmss.kms.common.edition.bean.KmsUrlFilterCheck">
+									<property name="url" value="kmsKnowledgeBaseDoc_list.jsp"/>
+									<property name="paramMap">
+										<map>
+											<entry key="methodName" value="manageList"/>
+											<entry key="menuType" value="byStatusFailure"/>
+										</map>
+									</property>
+								</bean>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry>
+					<key><value>/kms/wiki</value></key>
+					<bean class="com.landray.kmss.kms.common.edition.check.impl.KmsWikiEditionCheck">
+						<property name="filterUrlSet">
+							<set>
+								<value>tree.jsp</value>
+							</set>
+						</property>
+						<property name="urlFilterChecks">
+							<list>
+								<bean class="com.landray.kmss.kms.common.edition.bean.KmsUrlFilterCheck">
+									<property name="url" value="kmsWikiMain.do"/>
+									<property name="paramMap">
+										<map>
+											<entry key="wikiMethod" value="addWikiImport;viewKemLink"/>
+										</map>
+									</property>
+								</bean>
+							</list>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="kmsMultidocAuthorizationHandleServiceImpl" class="com.landray.kmss.kms.common.service.spring.KmsMultidocAuthorizationHandleServiceImpl">
+		<property name="moduleExcludeRoleMap">
+			<map>
+				<entry>
+					<key>
+						<value>/kms/multidoc</value>
+					</key>
+					<set>
+						<!--文档知识库_发布课件-->
+						<value>ROLE_KMSMULTIODC_ADD_PUBLISH_LEARNCW</value>
+						<!--文档知识库_属性维护-->
+						<value>ROLE_KMSMULTIDOC_PROPERTY_MAINTAINER</value>
+						<!--文档知识库_模板维护-->
+						<value>ROLE_KMSMULTIDOCTEMP_ADMIN</value>
+					</set>
+				</entry>
+				<entry>
+					<key>
+						<value>/kms/knowledge</value>
+					</key>
+					<set>
+						<!--知识仓库_属性维护-->
+						<value>ROLE_KMSKNOWLEDGE_PROPERTY_MAINTAINER</value>
+						<!--知识仓库_失效文档查看权限-->
+						<value>ROLE_KMSKNOWLEDGE_EFFECTIVE</value>
+						<!--知识仓库_删除文档的纠错记录-->
+						<value>ROLE_KMSKNOWLEDGE_DOCERRCORRECTION_DELETE</value>
+						<!--知识借阅_借阅默认角色-->
+						<value>ROLE_KMSKNOWLEDGE_BORROW_DEFAULT</value>
+						<!--知识仓库_附件权限申请-->
+						<value>ROLE_KMSKNOWLEDGE_BORROW_ATTAUTH_APPLICATION</value>
+					</set>
+				</entry>
+				<entry>
+					<key>
+						<value>/kms/wiki</value>
+					</key>
+					<set>
+						<!--维基知识库_模版维护-->
+						<value>ROLE_KMSWIKITEMP_ADMIN</value>
+						<!--维基知识库_词条解锁-->
+						<value>ROLE_KMSWIKIMAIN_TOUNLOCK</value>
+						<!--维基知识库_提交修改申请-->
+						<value>ROLE_KMSWIKIMAIN_SEND_APPLICATION_FLOW</value>
+						<!--维基知识库_批量生成原子知识-->
+						<value>ROLE_KMSWIKIMAIN_ONEKEYSAVEKEM</value>
+						<!--维基知识库_存为原子知识-->
+						<value>ROLE_KMSWIKIMAIN_KNOWLEDGE_ELEMENT</value>
+						<!--维基知识库_获取段落链接-->
+						<value>ROLE_KMSWIKIMAIN_GENECATEURL</value>
+					</set>
+				</entry>
+				<entry>
+					<key>
+						<value>/kms/category</value>
+					</key>
+					<set>
+						<value>ROLE_KMSCATEGORY_DEFAULT</value>
+						<value>ROLE_KMSCATEGORY_SETTING</value>
+						<value>ROLE_KMSCATEGORY_IMPORT</value>
+						<value>ROLE_KMSCATEGORY_EIDTOR</value>
+						<value>ROLE_KMSCATEGORY_BACKSTAGE_MANAGER</value>
+						<value>ROLE_KMSCATEGORY_BASIC_CONFIGURATION</value>
+					</set>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!--如果有新出的模块需要在后台管理中屏蔽整个入口，网下面加就好了-->
+	<bean id="kmsSysProfileFilterPlugin" class="com.landray.kmss.kms.common.service.spring.KmsSysProfileFilterPluginImpl">
+		<property name="messageKeys">
+			<set>
+				<value>kms-category:module.kms.category</value>
+				<value>kms-istorage:module.kms.istorage</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="kmsCommonHandleSysProfileFilterPlugin" class="com.landray.kmss.kms.common.service.spring.KmsCommonHandleSysProfileFilterPluginImpl">
+		<property name="filterMap">
+			<map>
+				<entry>
+					<key><value>app</value></key>
+					<value>kmsall</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+
+
+	<bean id="kmsRelationCfgService" class="com.landray.kmss.kms.common.service.spring.KmsRelationCfgServiceImpl">
+		<property name="editionFilters">
+			<map>
+				<entry>
+					<key><value>com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge</value></key>
+					<set>
+						<value>docEffectiveTime</value>
+						<value>docFailureTime</value>
+						<value>docExpireTime</value>
+					</set>
+				</entry>
+				<entry>
+					<key><value>com.landray.kmss.kms.wiki.model.KmsWikiMain</value></key>
+					<set>
+						<value>docEffectiveTime</value>
+						<value>docFailureTime</value>
+						<value>docExpireTime</value>
+					</set>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+   	<bean id="kmsCommonPortletService"
+		class="com.landray.kmss.kms.common.service.spring.KmsCommonPortletServiceImp">
+	</bean>
+	
+	<!-- 通用文件加解密服务 -->
+	<bean id="kmsEncryFileService" scope="singleton"
+		class="com.landray.kmss.kms.common.service.spring.KmsEncryFileServiceImpl">
+	</bean>
+
+	<!-- 自定义可使用者校验器 -->
+	<bean id="kmsAuthSimpleCategoryReaderValidator"
+		  class="com.landray.kmss.kms.common.validator.KmsAuthSimpleCategoryValidator">
+		<property name="fieldType" value="Readers"/>
+	</bean>
+
+
+	<bean id="kmsCommonHandleSysProfileConfig" class="com.landray.kmss.kms.common.model.KmsCommonHandleSysProfileConfig">
+		<property name="menuOrderInfo">
+			<value>
+				<!-- 知识资产模块 0~99 -->
+				kms/knowledge:1;kms/kem:5;kms/kmaps:10;kms/kmtopic:15;kms/ask:20;kms/socialdoc:25;kms/expert:30;kms/kcube:35;
+				sys/zone:40;kms/kmservice:45;kms/common:50;kms/category:55;kms/iso:60;kms/kcompare:65;
+				<!-- 知识运营模块  100~199	-->
+				kms/lmap:101;third/live/polyv:105;kms/learn:110;kms/train:115;kms/exam:120;kms/lecturer:125;kms/diploma:130;kms/credit:135;
+				kms/homework:140;kms/reminder:145;third/mishu:150;kms/lservice:155;kms/loperation:160;kms/tcourse:165;kms/tplan:170;kms/tutor:175;
+				<!-- 知识运营模块  200~299	-->
+				kms/evaluate:201;kms/integral:205;kms/imall:210;kms/kmatch:215;kms/cowriting:220;sns/community:225;kms/medal:230;kms/log:235;kms/cooperate:240;
+				<!-- 智能服务模块  300~399	-->
+				third/hiez:301;third/hisearch:305;third/kemyw:310;kms/istorage:315;
+			</value>
+		</property>
+		<!--
+			 知识资产模块
+			 知识仓库、原子知识、知识地图、知识专辑、知识问答、社会化知识库、专家网络、知识服务、
+			 知识比对工具、ISO文控、知识分类、员工黄页、知识组件、知识体
+		-->
+		<property name="kmsKnowledgeAssetModules">
+			<array>
+				<value>kms/knowledge</value>
+				<value>kms/kem</value>
+				<value>kms/kmaps</value>
+				<value>kms/kmtopic</value>
+				<value>kms/ask</value>
+				<value>kms/socialdoc</value>
+				<value>kms/expert</value>
+				<value>kms/kmservice</value>
+				<value>kms/kcompare</value>
+				<value>kms/iso</value>
+				<value>kms/category</value>
+				<value>sys/zone</value>
+				<value>kms/common</value>
+				<value>kms/kcube</value>
+			</array>
+		</property>
+
+		<!--
+		 	培训学习模块
+		 	学习地图、直播管理、学习管理、培训管理、考试管理、讲师管理、证书管理、学分管理、作业管理、每日提醒、
+		 	微课工具、学习服务、学习运营、培训班、培训计划、导师管理
+		 -->
+		<property name="kmsTrainLearnModules">
+			<array>
+				<value>kms/lmap</value>
+				<value>third/live/polyv</value>
+				<value>kms/learn</value>
+				<value>kms/train</value>
+				<value>kms/exam</value>
+				<value>kms/lecturer</value>
+				<value>kms/diploma</value>
+				<value>kms/credit</value>
+				<value>kms/homework</value>
+				<value>kms/reminder</value>
+				<value>third/mishu</value>
+				<value>kms/lservice</value>
+				<value>kms/loperation</value>
+				<value>kms/tcourse</value>
+				<value>kms/tplan</value>
+				<value>kms/tutor</value>
+			</array>
+		</property>
+		<!--
+			知识运营模块
+			知识评测、积分管理、积分商城、案例活动、协同写作、知识社区、勋章管理、KMS日志库、叮当答题（TODO）、文档协同
+		-->
+		<property name="kmsKnowledgeOperationModules">
+			<array>
+				<value>kms/evaluate</value>
+				<value>kms/integral</value>
+				<value>kms/imall</value>
+				<value>kms/kmatch</value>
+				<value>kms/cowriting</value>
+				<value>sns/community</value>
+				<value>kms/medal</value>
+				<value>kms/log</value>
+				<value>kms/cooperate</value>
+			</array>
+		</property>
+		<!--
+			智能服务模块
+			智能标签/分类（原智能服务，更改为智能标签/分类third/hiez）、知识云图third/hisearch、
+			云问机器人集成组件third/kemyw、知识入库引擎kms/istorage
+		-->
+		<property name="kmsIntelligenceServiceModules">
+			<array>
+				<value>third/hiez</value>
+				<value>third/hisearch</value>
+				<value>third/kemyw</value>
+				<value>kms/istorage</value>
+			</array>
+		</property>
+	</bean>
+
+
+
+</beans>

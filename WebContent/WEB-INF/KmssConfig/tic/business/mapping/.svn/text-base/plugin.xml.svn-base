@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+		<!-- 业务集成注册模块  --> 
+	<extension
+		point="com.landray.kmss.tic.core.mapping.plugins.business"
+		model="*">
+		
+		<item
+			name="ticCoreMappingBusiness">
+			<param
+				name="businessKey"
+				value="BUSINESS" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.xform.relation.params">
+		<item name="config">
+			<param name="sourceName" value="业务集成组件"></param>
+			<param name="sourceUUID" value="TIC-BUSINESS"></param>
+			<param name="sourceBean" value="ticCoreMappingControlRelation"></param>
+			<param name="paramsURL" value="tic/core/resource/jsp/dialog/dialog.jsp?springBean=ticCoreMappingControlTreeBean&amp;infoBean=ticCoreControlTreeInfo&amp;fdAppType=5"></param>
+			<param name="order" value="0"></param>
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.workflow.support.oa.robot.support"
+		model="*">
+			<item
+			name="robot">
+			<param
+				name="unid"
+				value="ticRunBusinessIntegration" />
+			<param
+				name="category"
+				value="{tic-core-mapping:tic.form.flow.mapping}" />
+			<param
+				name="type"
+				value="{tic-business:business.runIntegration}" />
+			<param
+				name="bean"
+				value="ticWfRobotNodeRunService" />
+			<param
+				name="url"
+				value="/tic/core/mapping/tic_core_mapping_robot/attribute_robotnode_mapping.jsp?fdAppType=5" />
+			<param 
+				name="class" 
+				value="integrate" />
+			<param 
+				name="description" 
+				value="{tic-business:business.runIntegration}"/>
+		</item>
+	</extension>
+	
+	
+	<!-- 流程事件扩展点 -->
+	<extension point="com.landray.kmss.lbpm.engine.event">
+		<item name="listener">
+			<param
+				name="unid"
+				value="ticBusinessResumeListener" />
+			<param
+				name="messageKey"
+				value="tic-business:ticBusinessMapping.flowRefuseListener" />
+			<param
+				name="eventTypes"
+				value="lbpmHandlerRefuseEvent;handlerPassOperationEvent;lbpmHandlerCommunicateEvent;lbpmHandlerCommissionEvent;lbpmHandlerAbandonEvent;endedNodeEvent;lbpmProcessFinishEvent;drafterSubmitEvent;drafterAbandonEvent" />
+			<param
+				name="listener"
+				value="ticCoreMappingFlowRefuseListener" />
+			<param
+				name="conditionJsp"
+				value="/tic/core/mapping/tic_core_mapping_refuse/attribute_flowRefuse_listener.jsp?fdAppType=5" />
+			<param
+				name="description"
+				value="tic-business:ticBusinessMapping.flowRefuseListenerDescription" />
+		</item>
+	</extension>
+	
+</plugin>

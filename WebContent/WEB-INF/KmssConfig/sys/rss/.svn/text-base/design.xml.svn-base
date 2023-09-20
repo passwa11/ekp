@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<!-- RSS 权限 -->
+	<module
+		messageKey="sys-rss:module.sys.rss"
+		urlPrefix="/sys/rss/"
+		defaultValidator="roleValidator(role=ROLE_SYSRSS_DEFAULT)">
+		<roles>
+			ROLE_SYSRSS_DEFAULT;
+			ROLE_SYSRSS_CATEGORY;
+			ROLE_SYSRSS_MAIN;
+			ROLE_SYSRSS_BACKSTAGE_MANAGER
+		</roles> 
+		
+		<request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_SYSRSS_BACKSTAGE_MANAGER)"/>
+		
+		<request
+			path="sys_rss_category/sysRssCategory*">
+			<query
+				queryString="method=add|save|saveadd|view|edit|update|deleteall|delete|list"
+				validator="roleValidator(role=ROLE_SYSRSS_CATEGORY)" />
+		</request>
+		<request
+			path="sys_rss_main/sysRssMain*">
+			<query
+				queryString="method=add|save|saveadd|edit|update|deleteall|delete"
+				validator="roleValidator(role=ROLE_SYSRSS_MAIN)" />
+		</request>
+		<!-- sys_rss_main/sysRssMain* 下另有 read 和 proxy 方法，只做了ROLE_SYSRSS_DEFAULT过滤 -->
+	</module>
+	
+	<!-- 模块主页 -->
+	<!-- <homePage
+		urlPrefix="sys/rss"
+		url="/moduleindex.jsp?nav=/sys/rss/tree.jsp&amp;main=%2Fsys%2Frss%2Fsys_rss_main%2Findex.jsp%3Fs_path%3D!{message(sys-rss:table.sysRssMain)}"
+		messageKey="sys-rss:home.nav.sysRssMain" 
+		config="/moduleindex_notopic.jsp?nav=/sys/rss/tree.jsp"/> -->
+		
+	<profileConfig
+	    key="sys/rss"
+		messageKey="{sys-rss:module.sys.rss}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/rss/tree.jsp"
+		icon="sys_rss"
+		description="{sys-rss:sysRss.profileCfg.description}"
+		type="ekp"
+		order="406"/>
+</configs>

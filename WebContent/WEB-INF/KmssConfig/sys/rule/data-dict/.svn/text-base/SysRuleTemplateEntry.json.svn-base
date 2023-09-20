@@ -1,0 +1,77 @@
+
+{
+    "global" : {
+        "modelName" : "com.landray.kmss.sys.rule.model.SysRuleTemplateEntry",
+        "messageKey" : "sys-rule:table.sysRuleTemplateEntry",
+        "serviceBean" : "sysRuleTemplateEntryService",
+        "displayProperty" : "fdName",
+        "table" : "sys_rule_temp_entry",
+    },
+    "attrs" : {
+        "fdId" : {
+            "propertyType" : "id",
+            "generator" : {
+                "type" : "assigned"
+            }
+        },
+        "fdName" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleTemplateEntry.fdName",
+            "type" : "String",
+            "column" : "fd_name",
+            "notNull" : "true",
+            "canSearch": "true",
+            "validate": "true",
+            "langSupport": "true",
+            "length" : "200"
+        },
+        "content" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleTemplateEntry.content",
+            "type" : "RTF",
+            "column" : "content",
+            "length" : "1000000"
+         },
+         "fdIsHistory" : {
+         	"propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleTemplateEntry.fdIsHistory",
+            "type" : "Boolean",
+            "column" : "fd_is_history"
+         },
+         "sysRuleTemplate" : {
+            "propertyType" : "model",
+            "messageKey" : "sys-rule:sysRuleTemplateEntry.sysRuleTemplate",
+            "type" : "com.landray.kmss.sys.rule.model.SysRuleTemplate",
+            "column" : "sys_rule_temp_id",
+            "notNull" : "true",
+            "validate" : "true"
+        },
+        "sysRuleSetDoc" : {
+            "propertyType" : "model",
+            "messageKey" : "sys-rule:sysRuleTemplateEntry.sysRuleSetDoc",
+            "type" : "com.landray.kmss.sys.rule.model.SysRuleSetDoc",
+            "column" : "sys_ruleset_doc_id",
+            "notNull" : "true",
+            "validate" : "true"
+        },
+        "sysRuleGlobalMappings" : {
+            "propertyType" : "list",
+            "messageKey" : "sys-rule:sysRuleTemplateEntry.sysRuleGlobalMappings",
+            "type" : "com.landray.kmss.sys.rule.model.SysRuleGlobalMapping",
+            "column" : "sys_rule_temp_entry_id",
+            "cascade": "all-delete-orphan",
+            "inverse": "false"
+        },
+        "fdNameLangJson" : {
+          "propertyType" : "simple",
+          "messageKey" : "sys-rule:sysRuleTemplateEntry.fdNameLangJson",
+          "type" : "String",
+          "column" : "fd_name_lang_json",
+          "notNull" : "true",
+          "canSearch": "true",
+          "validate": "true",
+          "langSupport": "true",
+          "length" : "4000"
+        }
+    }
+}

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.attend.model.SysAttendBusiness"
+		table="sys_attend_business">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+		
+		<property
+			name="fdProcessId"
+			column="fd_process_id"
+			update="true"
+			insert="true"
+			length="36"
+			not-null="false" />
+			
+		<property
+			name="fdProcessName"
+			column="fd_process_name"
+			update="true"
+			insert="true"
+			not-null="false" />
+		
+		<property
+			name="docUrl"
+			column="doc_url"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+		
+		<property
+			name="fdBusStartTime"
+			column="fd_bus_start_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		
+		<property
+			name="fdBusEndTime"
+			column="fd_bus_end_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdBusType"
+			column="fd_bus_type"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+			
+		<property
+			name="fdType"
+			column="fd_type"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+			
+		<property
+			name="fdCountHour"
+			column="fd_count_hour"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdStatType"
+			column="fd_stat_type"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdStartNoon"
+			column="fd_start_noon"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdEndNoon"
+			column="fd_end_noon"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+						
+		<property
+			name="fdLeaveName"
+			column="fd_leave_name"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdDelFlag"
+			column="fd_del_flag"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+
+		<property
+			name="fdOverFlag"
+			column="fd_over_flag"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+
+		<property
+			name="fdBusDetailId"
+			column="fd_bus_detail_id"
+			update="true"
+			insert="true"
+			length="36"
+			not-null="false" />
+		<property
+			name="fdWorkTime"
+			column="fd_work_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdOverHandle"
+			column="fd_over_handle"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+		<property
+			name="fdActualOverBeginTime"
+			column="fd_actual_over_begin_time"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+		<property
+			name="fdActualOverEndTime"
+			column="fd_actual_over_end_time"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+		<property
+			name="fdOverApplyTimes"
+			column="fd_over_apply_times"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+		<property
+			name="fdOverTimes"
+			column="fd_over_times"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+		<property
+			name="fdMealTimes"
+			column="fd_meal_times"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+		<bag
+			name="fdTargets"
+			table="sys_attend_business_target"
+			lazy="true">
+			<key
+				column="fd_business_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_org_id" />
+		</bag>
+
+	</class>
+</hibernate-mapping>

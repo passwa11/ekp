@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<bean id="sysIassisterItemDao"
+		class="com.landray.kmss.sys.iassister.dao.hibernate.SysIassisterItemDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.sys.iassister.model.SysIassisterItem</value>
+		</property>
+	</bean>
+	<bean id="sysIassisterItemTarget"
+		class="com.landray.kmss.sys.iassister.service.spring.SysIassisterItemServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="sysIassisterItemDao" />
+		</property>
+	</bean>
+	<bean id="sysIassisterItemService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysIassisterItemTarget" />
+		</property>
+	</bean>
+	<bean id="sysIassisterItemTreeService"
+		class="com.landray.kmss.sys.category.service.SysCategoryTemplateTreeService">
+		<property name="serviceImp">
+			<ref bean="sysIassisterItemService" />
+		</property>
+	</bean>
+	<bean id="sysIassisterCateTreeService"
+		class="com.landray.kmss.sys.iassister.service.spring.SysIassisterCateServiceImp">
+	</bean>
+	<bean id="sysIassisterTemplateDao"
+		class="com.landray.kmss.sys.iassister.dao.hibernate.SysIassisterTemplateDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.sys.iassister.model.SysIassisterTemplate</value>
+		</property>
+	</bean>
+	<bean id="sysIassisterTemplateTarget"
+		class="com.landray.kmss.sys.iassister.service.spring.SysIassisterTemplateServiceImp"
+		parent="KmssBaseTarget">
+		<property name="baseDao">
+			<ref bean="sysIassisterTemplateDao" />
+		</property>
+	</bean>
+	<bean id="sysIassisterTemplateService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysIassisterTemplateTarget" />
+		</property>
+	</bean>
+	<bean id="sysIassisterTgroupDao"
+		class="com.landray.kmss.sys.iassister.dao.hibernate.SysIassisterTgroupDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.sys.iassister.model.SysIassisterTgroup</value>
+		</property>
+	</bean>
+	<bean id="sysIassisterTgroupTarget"
+		class="com.landray.kmss.sys.iassister.service.spring.SysIassisterTgroupServiceImp"
+		parent="KmssBaseTarget">
+		<property name="baseDao">
+			<ref bean="sysIassisterTgroupDao" />
+		</property>
+	</bean>
+	<bean id="sysIassisterTgroupService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysIassisterTgroupTarget" />
+		</property>
+	</bean>
+	<bean id="sysIassisterTemplateCoreService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<bean
+				class="com.landray.kmss.sys.iassister.service.spring.SysIassisterTemplateCoreServiceImp">
+			</bean>
+		</property>
+	</bean>
+	<bean id="sysIassisterPmDao"
+		class="com.landray.kmss.sys.iassister.dao.hibernate.SysIassisterPmDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.sys.iassister.model.SysIassisterPm</value>
+		</property>
+	</bean>
+	<bean id="sysIassisterPmTarget"
+		class="com.landray.kmss.sys.iassister.service.spring.SysIassisterPmServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="sysIassisterPmDao" />
+		</property>
+	</bean>
+	<bean id="sysIassisterPmService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysIassisterPmTarget" />
+		</property>
+	</bean>
+	<!-- 规则集分类->数据服务 -->
+	<bean id="sysRuleSetTreeBean"
+		class="com.landray.kmss.sys.iassister.service.spring.SysRuleSetTreeBean">
+	</bean>
+	<!-- 规则集->数据服务 -->
+	<bean id="sysRuleSetDataBean"
+		class="com.landray.kmss.sys.iassister.service.spring.SysRuleSetDataBean">
+	</bean>
+	<!-- 规则集搜索->数据服务 -->
+	<bean id="sysRuleSetSearchBean"
+		class="com.landray.kmss.sys.iassister.service.spring.SysRuleSetSearchBean">
+	</bean>
+	<!-- 检查项分类->数据服务 -->
+	<bean id="sysIassisterItemTreeBean"
+		class="com.landray.kmss.sys.iassister.service.spring.SysIassisterItemTreeBean">
+	</bean>
+	<!-- 检查项->数据服务 -->
+	<bean id="sysIassisterItemDataBean"
+		class="com.landray.kmss.sys.iassister.service.spring.SysIassisterItemDataBean">
+	</bean>
+	<!-- 检查项搜索->数据服务 -->
+	<bean id="sysIassisterItemSearchBean"
+		class="com.landray.kmss.sys.iassister.service.spring.SysIassisterItemSearchBean">
+	</bean>
+</beans>

@@ -1,0 +1,79 @@
+var extend = (param!=null && param.extend!=null)?('_'+param.extend):'';
+
+		var content_length = layout.tabpanel.contents.length;
+		var showMore = false;
+		var v_count = content_length;
+		var morecount = 0;
+		if(layout.tabpanel.vars.count && layout.tabpanel.vars.count != '0' && content_length > parseInt(layout.tabpanel.vars.count)){
+		v_count = parseInt(layout.tabpanel.vars.count);
+		showMore = true;
+		morecount = content_length-v_count;
+		}
+
+		{$
+<div class='lui_tabpanel{%extend%}_frame'>
+<div class='lui_tabpanel{%extend%}_navs_l'>
+<div class='lui_tabpanel{%extend%}_navs_r'>
+<div class="lui_tabpanel{%extend%}_navs_c clearfloat">
+		$}
+
+		var width = (Math.floor(1000/v_count))/10.0;
+		if(showMore){
+		width = (Math.floor(1000/(v_count+1)))/10.0;
+		}
+		for(var i=0;i< v_count;i++){
+		{$
+<div style="max-width:{%width%}%;"  class='lui_tabpanel{%extend%}_navs_item_l' data-lui-mark="panel.nav.frame" data-lui-switch-class="lui_tabpanel{%extend%}_navs_item_selected">
+<div class='lui_tabpanel{%extend%}_navs_item_r'>
+<div class='lui_tabpanel{%extend%}_navs_item_c' data-lui-mark="panel.nav.title">
+</div>
+</div>
+</div>
+		$}
+		}
+
+		if(showMore){
+		{$
+<div style="max-width:{%width%}%;"  class='lui_tabpanel{%extend%}_navs_item_l lui_tabpanel_collapse_collapse_more_item' data-lui-mark="panel.nav.morenode" data-lui-switch-class="lui_tabpanel{%extend%}_navs_item_selected">
+<div class='lui_tabpanel_collapse_navs_item_r' >
+<div class='lui_tabpanel_collapse_navs_item_c'>
+<span class="lui_tabpanel_navs_item_title lui_tabpanel_collapse_more_title">更多</span>
+</div>
+</div>
+<ul class="lui_tabpanel_collapse_navs_list">
+		$}
+		for(var i=0;i< morecount;i++){
+		{$
+<li  data-more="true"  class='lui_tabpanel_collapse_navs_item_l' data-lui-mark="panel.nav.frame" data-lui-switch-class="lui_tabpanel_collapse_navs_item_selected">
+<div class='lui_tabpanel_collapse_navs_item_r'>
+<div class='lui_tabpanel_collapse_navs_item_c' data-lui-mark="panel.nav.title">
+</div>
+</div>
+</li>
+		$}
+		}
+		{$
+</ul>
+</div>
+
+		$}
+		}
+
+		{$
+</div>
+</div>
+</div>
+<div class="lui_tabpanel{%extend%}_content_l">
+<div class="lui_tabpanel{%extend%}_content_r">
+<div class="lui_tabpanel{%extend%}_content_c" data-lui-mark="panel.contents">
+</div>
+</div>
+</div>
+<div class="lui_tabpanel{%extend%}_footer_l">
+<div class="lui_tabpanel{%extend%}_footer_r">
+<div class="lui_tabpanel{%extend%}_footer_c">
+</div>
+</div>
+</div>
+</div>
+		$}

@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <extension 
+        point="com.landray.kmss.sys.number.config" 
+        model="*">
+        <item 
+            name="extend">
+            <param 
+                name="modelName" 
+                value="com.landray.kmss.fssc.fee.model.FsscFeeMain"/>
+            <param 
+                name="templatePropertyName" 
+                value="docTemplate"/>
+            <param 
+                name="moduleName" 
+                value="{fssc-fee:module.fssc.fee}"/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.sys.xform.base.service.controls" model="*">
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeCompanyControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/company_lang.jsp;/fssc/fee/fssc_fee_xform/controls/company.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeCostCenterControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/costCenter_lang.jsp;/fssc/fee/fssc_fee_xform/controls/costCenter.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeProjectControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/project_lang.jsp;/fssc/fee/fssc_fee_xform/controls/project.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeePostLevelControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/postLevel_lang.jsp;/fssc/fee/fssc_fee_xform/controls/postLevel.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeExpenseItemControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/expenseItem_lang.jsp;/fssc/fee/fssc_fee_xform/controls/expenseItem.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeVehicleBerthControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/vehicleBerth_lang.jsp;/fssc/fee/fssc_fee_xform/controls/vehicleBerth.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeBudgetRuleControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/budgetRule_lang.jsp;/fssc/fee/fssc_fee_xform/controls/budgetRule.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeStandardRuleControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/standardRule_lang.jsp;/fssc/fee/fssc_fee_xform/controls/standardRule.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeCurrencyControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/currency_lang.jsp;/fssc/fee/fssc_fee_xform/controls/currency.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeAreaCategoryControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/areaCategory_lang.jsp;/fssc/fee/fssc_fee_xform/controls/areaCategory.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeAccountMoneyControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/accountMoney_lang.jsp;/fssc/fee/fssc_fee_xform/controls/accountMoney.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeDayCountControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/dayCount_lang.jsp;/fssc/fee/fssc_fee_xform/controls/dayCount.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeWbsNumberControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/wbsNumber_lang.jsp;/fssc/fee/fssc_fee_xform/controls/wbsNumber.js" />
+		</item>
+		<item name="control">
+			<param name="class" value="com.landray.kmss.fssc.fee.xform.FsscFeeInternalOrderControl" />
+			<param name="file" value="/fssc/fee/fssc_fee_xform/lang/internalOrder_lang.jsp;/fssc/fee/fssc_fee_xform/controls/internalOrder.js" />
+		</item>
+	</extension>
+	<!--推送信息给携程-->
+	<extension point="com.landray.kmss.lbpm.engine.event" model="com.landray.kmss.fssc.fee.model.FsscFeeMain">
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscFeeMainFinishEvent" />
+			<param
+				name="messageKey"
+				value="fssc-fee:event.finish.add.publish.time" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessFinishEvent" />
+			<param
+				name="listener"
+				value="fsscFeeMainFinishEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+	</extension>
+	<!--表单事件-->
+	<extension
+		point="com.landray.kmss.sys.xform.base.service.dataEvents"
+		model="com.landray.kmss.fssc.fee.model.FsscFeeMain">
+		<item
+			name="dataEvent">
+			<param
+				name="bean"
+				value="fsscFeeFormEvent" />
+			<param
+				name="label"
+				value="{fssc-fee:fsscFeeMain.formOption}" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.fssc.fee.model.FsscFeeMain">
+	
+		<!--报销流程废弃将占用金额释放-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscFeeAbandonEvent" />
+			<param
+				name="messageKey"
+				value="fssc-fee:flow.event.abandon" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessAbandonedEvent;drafterAbandonEvent;lbpmHandlerAbandonEvent" />
+			<param
+				name="listener"
+				value="fsscFeeAbandonEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+		<!--流程驳回到起草节点将占用金额释放-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscFeeEnterNodeEvent" />
+			<param
+				name="messageKey"
+				value="fssc-fee:flow.event.node.enter.draft" />
+			<param
+				name="eventTypes"
+				value="enterNodeEvent" />
+			<param
+				name="listener"
+				value="fsscFeeEnterNodeEvent" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+		<!--起草人撤回报销流程将占用金额释放-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscFeeDraftorReturnEvent" />
+			<param
+				name="messageKey"
+				value="fssc-fee:flow.event.draftor.return" />
+			<param
+				name="eventTypes"
+				value="drafterReturnEvent" />
+			<param
+				name="listener"
+				value="fsscFeeDraftorReturnEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+		<!--起草人提交流程将占用预算金额-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscFeeDraftorSubmitEvent" />
+			<param
+				name="messageKey"
+				value="fs-fee:flow.evnet.draftor.submit" />
+			<param
+				name="eventTypes"
+				value="drafterSubmitEvent" />
+			<param
+				name="listener"
+				value="fsscFeeDraftorSubmitEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+	<extension 
+        point="com.landray.kmss.sys.listshow.listShowConfig" 
+        model="com.landray.kmss.fssc.fee.model.FsscFeeMain">
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="list.create"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.fee.model.FsscFeeMain"/>
+            <param 
+                name="page" 
+                value="/listCreate"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;docTemplate.name;fdIsClosed;docStatus.name;docCreator.name;docCreateTime;lbpm_main_listcolumn_handler;lbpm_main_listcolumn_node"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-fee:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-fee:lbpm.currentHandler"/>
+        </item>
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="list.alldoc"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.fee.model.FsscFeeMain"/>
+            <param 
+                name="page" 
+                value="/listAll"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;docTemplate.name;fdIsClosed;docStatus.name;docCreator.name;docCreateTime;lbpm_main_listcolumn_handler;lbpm_main_listcolumn_node"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-fee:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-fee:lbpm.currentHandler"/>
+        </item>
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="list.approved"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.fee.model.FsscFeeMain"/>
+            <param 
+                name="page" 
+                value="/listApproved"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;docTemplate.name;fdIsClosed;docStatus.name;docCreator.name;docCreateTime;lbpm_main_listcolumn_handler;lbpm_main_listcolumn_node"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-fee:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-fee:lbpm.currentHandler"/>
+        </item>
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="list.approval"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.fee.model.FsscFeeMain"/>
+            <param 
+                name="page" 
+                value="/listApproval"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;docTemplate.name;fdIsClosed;docStatus.name;docCreator.name;docCreateTime;lbpm_main_listcolumn_handler;lbpm_main_listcolumn_node"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-fee:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-fee:lbpm.currentHandler"/>
+        </item>
+    </extension>
+    
+    <!-- 表单关联控件的模块扩展点 -->
+	<extension point="com.landray.kmss.sys.xform.base.service.controls.relevance" model="*">
+		<item name="node">
+			<param name="modelName" value="com.landray.kmss.fssc.fee.model.FsscFeeMain" />
+			<param name="templateModelName" value="com.landray.kmss.fssc.fee.model.FsscFeeTemplate" />
+			<param name="key" value="feeMainDoc" />
+			<param name="templatePropertyName" value="docTemplate" />
+			<param name="moduleMessageKey" value="fssc-fee:module.fssc.fee" />
+		</item>
+	</extension>
+	<!-- 软删除功能扩展点实现 -->
+	<extension point="com.landray.kmss.sys.recycle">
+		<item name="softDelete">
+			<!-- 模块(文档)名称 -->
+			<param
+				name="modelName"
+				value="fssc-fee:table.fsscFeeMain" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.fssc.fee.model.FsscFeeMain" />
+			<!-- 主文档对应的分类(模板)全名称 -->
+			<param
+				name="categoryClassName"
+				value="com.landray.kmss.fssc.fee.model.FsscFeeTemplate" />
+			<!-- 主文档中分类(模板)的属性名称 -->
+			<param
+				name="categoryField"
+				value="docTemplate" />
+			<!-- 主文档中标题的属性名称 -->
+			<param
+				name="titleField"
+				value="docSubject" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.xform.impt.parser">
+		<item name="control">
+			<param 
+				name="type" 
+				value="company"/>
+			<param 
+				name="name" 
+				value="{fssc-fee:control.company.title}"/>
+			<param 
+				name="controlName"
+				value="#记账公司#"/>
+			<param 
+				name="parser" 
+				value="fsscFeeCompanyImportParser"/>
+			<param 
+				name="help" 
+				value="/fssc/fee/fssc_fee_xform/impt/help/company_help.jsp"/>
+			<param 
+				name="drawJs" 
+				value="/fssc/fee/fssc_fee_xform/impt/js/_xform_impt_company.js"/>
+		</item>
+		<item name="control">
+			<param 
+				name="type" 
+				value="areaCategory"/>
+			<param 
+				name="name" 
+				value="{fssc-fee:control.areaCategory.title}"/>
+			<param 
+				name="controlName"
+				value="#地域#"/>
+			<param 
+				name="parser" 
+				value="fsscFeeAreaCategoryImportParser"/>
+			<param 
+				name="help" 
+				value="/fssc/fee/fssc_fee_xform/impt/help/areaCategory_help.jsp"/>
+			<param 
+				name="drawJs" 
+				value="/fssc/fee/fssc_fee_xform/impt/js/_xform_impt_areaCategory.js"/>
+		</item>
+		<item name="control">
+			<param 
+				name="type" 
+				value="accountMoney"/>
+			<param 
+				name="name" 
+				value="{fssc-fee:control.accountMoney.title}"/>
+			<param 
+				name="controlName"
+				value="#本位币金额#"/>
+			<param 
+				name="parser" 
+				value="fsscFeeAccountMoneyImportParser"/>
+			<param 
+				name="help" 
+				value="/fssc/fee/fssc_fee_xform/impt/help/accountMoney_help.jsp"/>
+			<param 
+				name="drawJs" 
+				value="/fssc/fee/fssc_fee_xform/impt/js/_xform_impt_accountMoney.js"/>
+		</item>
+		<item name="control">
+			<param 
+				name="type" 
+				value="costCenter"/>
+			<param 
+				name="name" 
+				value="{fssc-fee:control.costCenter.title}"/>
+			<param 
+				name="controlName"
+				value="#成本中心#"/>
+			<param 
+				name="parser" 
+				value="fsscFeeCostCenterImportParser"/>
+			<param 
+				name="help" 
+				value="/fssc/fee/fssc_fee_xform/impt/help/costCenter_help.jsp"/>
+			<param 
+				name="drawJs" 
+				value="/fssc/fee/fssc_fee_xform/impt/js/_xform_impt_costCenter.js"/>
+		</item>
+		<item name="control">
+			<param 
+				name="type" 
+				value="currency"/>
+			<param 
+				name="name" 
+				value="{fssc-fee:control.currency.title}"/>
+			<param 
+				name="controlName"
+				value="#币种#"/>
+			<param 
+				name="parser" 
+				value="fsscFeeCurrencyImportParser"/>
+			<param 
+				name="help" 
+				value="/fssc/fee/fssc_fee_xform/impt/help/currency_help.jsp"/>
+			<param 
+				name="drawJs" 
+				value="/fssc/fee/fssc_fee_xform/impt/js/_xform_impt_currency.js"/>
+		</item>
+		<item name="control">
+			<param 
+				name="type" 
+				value="dayCount"/>
+			<param 
+				name="name" 
+				value="{fssc-fee:control.dayCount.title}"/>
+			<param 
+				name="controlName"
+				value="#天数#"/>
+			<param 
+				name="parser" 
+				value="fsscFeeDayCountImportParser"/>
+			<param 
+				name="help" 
+				value="/fssc/fee/fssc_fee_xform/impt/help/dayCount_help.jsp"/>
+			<param 
+				name="drawJs" 
+				value="/fssc/fee/fssc_fee_xform/impt/js/_xform_impt_dayCount.js"/>
+		</item>
+		<item name="control">
+			<param 
+				name="type" 
+				value="expenseItem"/>
+			<param 
+				name="name" 
+				value="{fssc-fee:control.expenseItem.title}"/>
+			<param 
+				name="controlName"
+				value="#费用类型#"/>
+			<param 
+				name="parser" 
+				value="fsscFeeExpenseItemImportParser"/>
+			<param 
+				name="help" 
+				value="/fssc/fee/fssc_fee_xform/impt/help/expenseItem_help.jsp"/>
+			<param 
+				name="drawJs" 
+				value="/fssc/fee/fssc_fee_xform/impt/js/_xform_impt_expenseItem.js"/>
+		</item>
+		<item name="control">
+			<param 
+				name="type" 
+				value="internalOrder"/>
+			<param 
+				name="name" 
+				value="{fssc-fee:control.internalOrder.title}"/>
+			<param 
+				name="controlName"
+				value="#内部订单#"/>
+			<param 
+				name="parser" 
+				value="fsscFeeInternalOrderImportParser"/>
+			<param 
+				name="help" 
+				value="/fssc/fee/fssc_fee_xform/impt/help/internalOrder_help.jsp"/>
+			<param 
+				name="drawJs" 
+				value="/fssc/fee/fssc_fee_xform/impt/js/_xform_impt_internalOrder.js"/>
+		</item>
+		<item name="control">
+			<param 
+				name="type" 
+				value="project"/>
+			<param 
+				name="name" 
+				value="{fssc-fee:control.project.title}"/>
+			<param 
+				name="controlName"
+				value="#项目#"/>
+			<param 
+				name="parser" 
+				value="fsscFeeProjectImportParser"/>
+			<param 
+				name="help" 
+				value="/fssc/fee/fssc_fee_xform/impt/help/project_help.jsp"/>
+			<param 
+				name="drawJs" 
+				value="/fssc/fee/fssc_fee_xform/impt/js/_xform_impt_project.js"/>
+		</item>
+		<item name="control">
+			<param 
+				name="type" 
+				value="vehicleBerth"/>
+			<param 
+				name="name" 
+				value="{fssc-fee:control.vehicleBerth.title}"/>
+			<param 
+				name="controlName"
+				value="#交通工具#"/>
+			<param 
+				name="parser" 
+				value="fsscFeeVehicleBerthImportParser"/>
+			<param 
+				name="help" 
+				value="/fssc/fee/fssc_fee_xform/impt/help/vehicleBerth_help.jsp"/>
+			<param 
+				name="drawJs" 
+				value="/fssc/fee/fssc_fee_xform/impt/js/_xform_impt_vehicleBerth.js"/>
+		</item>
+		<item name="control">
+			<param 
+				name="type" 
+				value="wbs"/>
+			<param 
+				name="name" 
+				value="{fssc-fee:control.wbsNumber.title}"/>
+			<param 
+				name="controlName"
+				value="#wbs#"/>
+			<param 
+				name="parser" 
+				value="fsscFeeWbsImportParser"/>
+			<param 
+				name="help" 
+				value="/fssc/fee/fssc_fee_xform/impt/help/wbs_help.jsp"/>
+			<param 
+				name="drawJs" 
+				value="/fssc/fee/fssc_fee_xform/impt/js/_xform_impt_wbs.js"/>
+		</item>
+	</extension>
+	
+</plugin>

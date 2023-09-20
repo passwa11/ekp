@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root 
+    xmlns:m="http://www.landray.com.cn/schema/mportlet" 
+    xmlns="http://www.landray.com.cn/schema/lui" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.landray.com.cn/schema/mportlet 
+	../../../sys/mobile/mportlet.xsd
+		http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd">
+	
+	<m:mportlet 
+		id="km.forum.list.mobile"
+		name="{km-forum:module.km.forum.mportlet}"
+		module= "{km-forum:module.km.forum}"
+		description="{km-forum:module.km.forum.mportlet}"
+		moduleUrl = "/km/forum/mobile/index.jsp"
+		jsUrl="/km/forum/mobile/mportal/kmForum_list.js?rowsize=!{rowsize}&amp;type=!{type}">
+		<m:vars>
+			<var name="{km-forum:kmForum.portlet.topic.amount}" key="rowsize" kind="int" default="3"/>
+			<var name="{km-forum:kmForum.portlet.topic.type}" key="type" kind="enumValue" default="latest">
+		    	{"values":
+		    		[{"text":"{km-forum:kmForum.portlet.topic.latest}", "value":"latest"},
+		    		{"text":"{km-forum:menu.kmForum.Create.my}", "value":"my"},
+		    		{"text":"{km-forum:kmForumTopic.pink.title}", "value":"pinked"},
+		    		{"text":"{km-forum:kmForumTopic.otherSearch.hot}", "value":"hot"}],
+		    		"showType":"radio"
+		    	}
+		    </var>
+		</m:vars>
+		<m:operations>
+			<m:operation name="{sys-mportal:sysMportalPage.changeBatch}" type="random" />
+		</m:operations>
+	</m:mportlet>
+	
+</root>	

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="aliMeetingProvider" class="com.landray.kmss.third.alimeeting.provider.AliMeetingProvider">
+	</bean>
+	
+	<bean id="aliyunMeetingProvider" class="com.landray.kmss.third.alimeeting.provider.AliyunMeetingProvider">
+	</bean>
+	
+	<bean
+		id="aliMeetingDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.third.alimeeting.dao.hibernate.AliyunDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.alimeeting.model.AliMeeting" />
+	</bean>
+	<bean
+		id="aliMeetingTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.third.alimeeting.service.spring.AliMeetingServiceImp">
+		<property name="baseDao">
+			<ref bean="aliMeetingDao" />
+		</property>
+	</bean>
+	<bean
+		id="aliMeetingService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="aliMeetingTarget" />
+		</property>
+	</bean>
+	
+</beans>

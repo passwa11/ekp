@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysMetadataDao"
+		class="com.landray.kmss.sys.metadata.dao.hibernate.SysMetadataDaoImp">
+		<property name="sysMetadataParser">
+			<ref bean="sysMetadataParser" />
+		</property>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean
+		id="sysMetadataParser"
+		class="com.landray.kmss.sys.metadata.dao.hibernate.SysMetadataParseImp">
+		<property name="sysDictLoader">
+			<ref bean="sysDictLoader" />
+		</property>
+		<property name="extendDataDao">
+			<ref bean="KmssExtendDataDao" />
+		</property>
+	</bean>
+	<bean
+		id="KmssExtendDataDao"
+		class="com.landray.kmss.sys.metadata.interfaces.ExtendDataDaoImp">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="hqlBuilder">
+			<ref bean="kmssAuthHQLBuilder" />
+		</property>
+		<property name="sysMetadataDao">
+			<ref bean="sysMetadataDao" />
+		</property>
+	</bean>
+	<!--KmssExtendDataAreaDao  应用了kmssAuthAreaHQLBuilder作为hqlBuilder，起到场所权限过滤的作用 -->
+	<bean
+		id="KmssExtendDataAreaDao"
+		class="com.landray.kmss.sys.metadata.interfaces.ExtendDataDaoImp">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="hqlBuilder">
+			<ref bean="kmssAuthAreaHQLBuilder" />
+		</property>
+		<property name="sysMetadataDao">
+			<ref bean="sysMetadataDao" />
+		</property>
+	</bean>
+	<bean
+		id="KmssExtendDataTarget"
+		class="com.landray.kmss.sys.metadata.interfaces.ExtendDataServiceImp">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+		<property name="dispatchCoreService">
+			<ref bean="dispatchCoreService" />
+		</property>
+		<property name="sysMetadataService">
+			<ref bean="sysMetadataService" />
+		</property>
+	</bean>
+	<bean
+		id="sysMetadataService"
+		class="com.landray.kmss.sys.metadata.service.spring.SysMetadataServiceImp">
+		<property name="sysMetadataDao">
+			<ref bean="sysMetadataDao" />
+		</property>
+		<property name="sysMetadataParser">
+			<ref bean="sysMetadataParser" />
+		</property>
+	</bean>
+	<bean
+		id="sysDictExtendElementMultiLangHandler"
+		class="com.landray.kmss.sys.metadata.service.spring.SysDictExtendElementMultiLangHandler">
+	</bean>
+	<bean
+		id="sysDictExtendMultiLangService"
+		class="com.landray.kmss.sys.metadata.service.spring.SysDictExtendMultiLangServiceImp">
+	</bean>
+	<bean
+		id="sysDictextendCustomDataMultiLangHandler"
+		class="com.landray.kmss.sys.metadata.service.spring.SysDictextendCustomDataMultiLangHandler">
+	</bean>
+</beans>

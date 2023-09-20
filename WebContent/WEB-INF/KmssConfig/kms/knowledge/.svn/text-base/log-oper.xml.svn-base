@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<log-oper>
+    <logset>
+        <oper
+            id="kmsKnowledgeCategoryOperLog"
+            desc="log for com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+            action="/kms/knowledge/kms_knowledge_category/kmsKnowledgeCategory.do">
+        </oper>
+        <oper
+            id="kmsKnowledgeCategoryCriteriaOperLog"
+            desc="log for com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+            action="/kms/knowledge/criteria/kmsKnowledgeCategoryCriteria.do">
+			<query
+				method="select"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+        </oper>
+        <oper
+            id="kmsKnowledgeCategoryPortletOperLog"
+            desc="log for com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory"
+            action="/kms/knowledge/kms_knowledge_portlet/kmsKnowledgeCategoryPortlet.do">
+			<query
+				method="portal"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+        </oper>
+        <oper
+            id="kmsKnowledgeDocTemplateOperLog"
+            desc="log for com.landray.kmss.kms.knowledge.model.KmsKnowledgeDocTemplate"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.knowledge.model.KmsKnowledgeDocTemplate"
+            action="/kms/knowledge/kms_knowledge_doc_template/kmsKnowledgeDocTemplate.do">
+        </oper>
+        <oper
+            id="kmsKnowledgeFilterConfigOperLog"
+            desc="log for com.landray.kmss.kms.knowledge.model.KmsKnowledgeFilterConfig"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/kms/knowledge/kms_knowledge_filter_config/kmsKnowledgeFilterConfig.do">
+			<query
+				method="edit"
+				logPoint="Base_UrlParam" />
+        </oper>
+        <oper
+            id="kmsKnowledgeWikiTemplateOperLog"
+            desc="log for com.landray.kmss.kms.knowledge.model.KmsKnowledgeWikiTemplate"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.knowledge.model.KmsKnowledgeWikiTemplate"
+            action="/kms/knowledge/kms_knowledge_wiki_template/kmsKnowledgeWikiTemplate.do">
+			<query
+				method="loadTemplate"
+				logPoint="Base_UrlParam;Action_Find"
+				messageKey="button.view" />
+			<query
+				method="queryListForAdd"
+				logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="button.list" />
+        </oper>
+        <oper
+            id="kmsMultipleUploadEditDocOperLog"
+            desc="log for kmsMultipleUploadEditDoc.do"
+            extends="BaseOperLog"
+            model="*"
+            action="/kms/knowledge/kms_knowledge_multiple_upload/kmsMultipleUploadEditDoc.do">
+			<query
+				method="edit"
+				logPoint="Base_UrlParam"/>
+			<query
+				method="saveDoc"
+				logPoint="Base_UrlParam;Service_Add"
+				messageKey="button.save" />
+        </oper>
+        <oper
+            id="kmsMultipleUploadMainOperLog"
+            desc="log for kmsMultipleUploadMain.do"
+            extends="BaseOperLog"
+            model="*"
+            action="/kms/knowledge/kms_knowledge_multiple_upload/kmsMultipleUploadMain.do">
+			<query
+				method="saveDoc"
+				logPoint="Service_Add"
+				messageKey="button.save" />
+			<query
+				method="getAttFileInfo"
+				logPoint="Base_UrlParam"
+				messageKey="button.view" />
+        </oper>
+        <oper
+            id="kmsKnowledgePortletOperLog"
+            desc="log for kmsKnowledgePortlet.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc"
+            action="/kms/knowledge/kms_knowledge_portlet/kmsKnowledgePortlet.do">
+			<query
+				method="list|data|listChildren|manageList|getIntroKnowledge|getKnowledge|getKnowledgeBaseDocList"
+				logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="button.list" />
+			<query
+				method="getKnowledgeInfo"
+				logPoint="Base_UrlParam" 
+				messageKey="button.view" />
+        </oper>
+        <oper
+            id="kmsKnowledgeBaseDocIndexOperLog"
+            desc="log for kmsKnowledgeBaseDocIndex.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc"
+            action="/kms/knowledge/kms_knowledge_base_doc/kmsKnowledgeBaseDocIndex.do">
+			<query
+				method="list|data|listChildren|manageList|getSysAttList|listPerson"
+				logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="button.list" />
+			<query
+				method="exportExcel"
+				logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="button.export" />
+			<query
+				method="setTop"
+				logPoint="Base_UrlParam"
+				messageKey="kms-knowledge:kmsKnowledgeBaseDoc.setTop" />
+<!-- 			<query
+				method="count"
+				logPoint="Base_UrlParam"
+				messageKey="button.list" /> -->
+        </oper>
+        <oper
+            id="kmsKnowledgeBaseDocOperLog"
+            desc="log for kmsKnowledgeBaseDoc.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc"
+            action="/kms/knowledge/kms_knowledge_base_doc/kmsKnowledgeBaseDoc.do">
+			<query
+				method="view|viewOfLearn|viewOfLearnOnMobile"
+				logPoint="Base_UrlParam;Action_Find"
+				messageKey="button.view" />
+			<query
+				method="topView"
+				logPoint="Base_UrlParam"
+				messageKey="button.view" />
+			<query
+				method="list|data|listChildren|manageList"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+			<query
+				method="cancelTops"
+				logPoint="Base_UrlParam" 
+				messageKey="kms-knowledge:kmsKnowledgeBaseDoc.cancelTops" />
+			<query
+				method="updateProperty"
+				logPoint="Base_UrlParam" 
+				messageKey="kms-knowledge:kmsKnowledge.button.editProperty" />
+			<query
+				method="recycleall"
+				logPoint="Base_UrlParam;Service_Delete" 
+				messageKey="kms-knowledge:kmsKnowledge.button.recycle" />
+			<query
+				method="updateRecover"
+				logPoint="Base_UrlParam;KmsKnowledge_UpdateRecover" 
+				messageKey="kms-knowledge:kmsKnowledge.button.recover" />
+        </oper>
+    </logset>
+</log-oper>

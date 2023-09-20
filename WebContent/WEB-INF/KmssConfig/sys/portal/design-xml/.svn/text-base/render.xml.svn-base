@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+	<!-- 自定义页面 -->
+	<render format="sys.ui.textMenu" id="sys.portal.menu"
+			name="门户页面菜单" type="Javascript"
+			for="module"
+			help="/sys/portal/header/menu-help.jsp">
+		<code src="/sys/portal/header/menu.js"/>
+	</render>
+	<!-- V16新默认页眉导航菜单，超出内容显示更多 -->
+	<render format="sys.ui.textMenu" id="sys.portal.menu.more"
+			name="单行页眉菜单" type="Javascript"
+			for="module"
+			help="/sys/portal/header/menu-help.jsp">
+		<code src="/sys/portal/template/default/default-mk-1/menu/menu.js"/>
+	</render>
+	<render format="sys.ui.textMenu" id="sys.portal.menu.anonymous"
+			name="匿名门户页面菜单" type="Javascript"
+			for="module"
+			help="/sys/portal/header/menu-help.jsp">
+		<code src="/sys/portal/template/anonymous/menu/menu.js"/>
+	</render>
+
+	<!-- 二级树呈现 -->
+	<render format="sys.ui.treeMenu2" id="sys.portal.treeMenu2"
+			name="导航二级树呈现" type="Javascript"
+			for="portal" css="theme!list"
+			thumb="/sys/portal/render/tree2.jpg" help="">
+		<vars>
+			<var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_top">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+		</vars>
+		<code src="/sys/portal/render/tree2.js"/>
+	</render>
+
+	<!-- 二级树形菜单门户风格2 -->
+	<render id="sys.ui.treeMenu2.portal2" name="{sys-ui:render.treeMenu2.portal}"
+			type="Javascript" format="sys.ui.treeMenu2"
+			thumb="/sys/ui/extend/dataview/render/help/treemenu2-portal.jpg">
+		<vars>
+			<var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+		</vars>
+		<code src="/sys/portal/render/treeMenu2.js"></code>
+	</render>
+
+	<!-- 二级树形菜单门户风格3（为支持默认页眉门户页面下平铺显示系统导航菜单） -->
+	<render id="sys.ui.treeMenu2.portal3" name="{sys-portal:render.treeMenu2.portal3}"
+			type="Javascript" format="sys.ui.treeMenu2" >
+		<code src="/sys/portal/render/treeMenu2_portal3.js"></code>
+	</render>
+
+	<render format="sys.ui.slide" id="sys.ui.slide.topic"
+			name="{sys-portal:render.slide.topic}" type="Javascript" css="theme!dataview"
+			thumb="/sys/ui/extend/dataview/render/help/slide.jpg"
+			help="/sys/ui/extend/dataview/render/help/slide-help.jsp">
+		<vars>
+			<var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+			<var name="{sys-ui:render.var.tensile}" kind="enumValue" key="stretch" default="true">
+				{
+				"values":[{
+				"text":"{sys-ui:render.var.picwinsize}",
+				"value":"true"
+				}],
+				"showType":"checkbox"
+				}
+			</var>
+			<var key="showTitle" kind="enumValue" name="{sys-ui:render.var.yestitle}" default="true">
+				{
+				"values":[{
+				"text":"{sys-ui:render.var.yes}",
+				"value":"true"
+				}],
+				"showType":"checkbox"
+				}
+			</var>
+			<var key="SwitchingFrequency" kind="int" name="{sys-portal:render.var.SwitchingFrequency}" default="5000">
+				{"help":"ms"}
+			</var>
+		</vars>
+		<code src="/sys/portal/sys_portal_topic/resource/sysPortalTopic_slide.js" />
+	</render>
+	<!-- 图标文本表格展现 -->
+	<render format="sys.ui.picMenu" id="sys.ui.picMenu.shortCut"
+			name="{sys-portal:render.picMenu.shortCut}" type="Javascript" css="theme!dataview"
+			thumb="/sys/portal/designer/images/picmenu-portlet-shortCut.png"
+	>
+		<vars>
+			<var name="{sys-ui:render.var.showmore}" kind="enumValue" key="showMore" default="true">
+				{
+				"values":[{
+				"text":"{sys-ui:render.var.displayover}",
+				"value":"true"
+				}],
+				"showType":"checkbox"
+				}
+			</var>
+			<var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+		</vars>
+		<code src="/sys/portal/designer/js/picmenu.js" iconChange="false"
+			  showMore="true" />
+	</render>
+	<render id="sys.portal.navTree.app" name="{sys-portal:render.navTree.app}"
+			type="Javascript" format="sys.ui.treeMenu2"
+			thumb="/sys/ui/extend/dataview/render/help/treemenu2-portal.jpg">
+		<code src="/sys/portal/render/navTree.js"></code>
+	</render>
+
+	<render id="sys.render.echarts.app" name="{sys-portal:render.echarts.app}"
+			type="Javascript" format="sys.ui.treeMenu2"
+			thumb="/sys/ui/extend/dataview/render/help/treemenu2-portal.jpg">
+		<code src="/sys/portal/render/navEcharts.js"></code>
+	</render>
+
+	<!-- 简约标题组件 starts -->
+	<render format="sys.portal.decorate"
+			id="portal.decorate.simpleTitle"
+			name="{sys-portal:portal.decorate.simpleTitle}"
+			type="Template" css="theme!dataview"
+			thumb="/sys/ui/extend/dataview/render/help/decorate-simpleTitle.jpg">
+		<code src="/sys/portal/render/decorate-simpleTitle.html" extend="" />
+		<vars>
+			<var key="mainTitle" kind="string" name="{sys-ui:render.var.mainTitle}" default="快捷方式">
+				{"help":""}
+			</var>
+
+			<var key="height" kind="int" name="{sys-ui:render.var.height}" default="46">
+				{"help":"px 请输入整数"}
+			</var>
+			<var key="bg" kind="custom" name="{sys-ui:render.var.bg}">
+				{"file":"/sys/ui/extend/varkind/material.jsp","help":"默认居中，图片撑满"}
+			</var>
+			<var key="style" kind="custom" name="{sys-ui:render.var.style}">
+				{"file":"/sys/ui/extend/varkind/textarea.jsp","help":"支持写css，作用在组件最外层容器上"}
+			</var>
+		</vars>
+	</render>
+	<!-- 简约标题组件 ends -->
+	<!-- 带描述标题组件 start -->
+	<render format="sys.portal.decorate"
+			id="portal.decorate.withDescTitle"
+			name="{sys-portal:portal.decorate.withDescTitle}"
+			type="Template" css="theme!dataview"
+			thumb="/sys/ui/extend/dataview/render/help/decorate-withDescTitle.jpg">
+		<code src="/sys/portal/render/decorate-withDescTitle.html" extend="" />
+		<vars>
+			<var key="mainTitle" kind="string" name="{sys-ui:render.var.mainTitle}" default="解决方案课件">
+				{"help":""}
+			</var>
+			<var key="descTitle" kind="string" name="{sys-ui:render.var.descTitle}" default="RHE SOLUTION">
+				{"help":""}
+			</var>
+			<var key="height" kind="int" name="{sys-ui:render.var.height}" default="80">
+				{"help":"px 请输入整数"}
+			</var>
+			<var key="bg" kind="custom" name="{sys-ui:render.var.icon}">
+				{"file":"/sys/ui/extend/varkind/material.jsp","help":"宽28px * 高28px"}
+			</var>
+			<var key="titlelink" kind="string" name="{sys-ui:render.var.link}" default="/">
+				{"help":""}
+			</var>
+			<var key="bgColor" kind="string" name="{sys-ui:render.var.bgColor}" default="#ffffff">
+				{"help":"#fff 十六进制，为空则透明"}
+			</var>
+			<var key="radius" kind="int" name="{sys-ui:render.var.imgRadius}"  default="4" />
+			<var key="style" kind="custom" name="{sys-ui:render.var.style}" >
+				{"file":"/sys/ui/extend/varkind/textarea.jsp","help":"写入css代码作用于父容器; eg:padding:10px;"}
+			</var>
+		</vars>
+	</render>
+	<!-- 带描述标题组件 end -->
+
+</root>

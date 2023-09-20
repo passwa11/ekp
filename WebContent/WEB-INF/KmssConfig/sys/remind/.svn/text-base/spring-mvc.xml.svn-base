@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		name="/sys/remind/sys_remind_template/sysRemindTemplate.do"
+		class="com.landray.kmss.sys.remind.actions.SysRemindTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="formType"
+			value="com.landray.kmss.sys.remind.forms.SysRemindTemplateForm" />
+	</bean>
+	
+	<bean
+		name="/sys/remind/sys_remind_template_relation/sysRemindTemplateRelation.do"
+		class="com.landray.kmss.sys.remind.actions.SysRemindTemplateRelationAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="formType"
+			value="com.landray.kmss.sys.remind.forms.SysRemindTemplateRelationForm" />
+	</bean>
+	
+	<bean
+		name="/sys/remind/sys_remind_main/sysRemindMain.do"
+		class="com.landray.kmss.sys.remind.actions.SysRemindMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="formType"
+			value="com.landray.kmss.sys.remind.forms.SysRemindMainForm" />
+		<property name="forwards">
+			<map>
+				<entry key="list" value="/sys/remind/sys_remind_main/sysRemindMain_list.jsp" />
+				<entry key="view" value="/sys/remind/sys_remind_main/sysRemindMain_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/sys/remind/sys_remind_main_task/sysRemindMainTask.do"
+		class="com.landray.kmss.sys.remind.actions.SysRemindMainTaskAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="formType"
+			value="com.landray.kmss.sys.remind.forms.SysRemindMainTaskForm" />
+		<property name="forwards">
+			<map>
+				<entry key="list" value="/sys/remind/sys_remind_main_task/sysRemindMainTask_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/sys/remind/sys_remind_main_task_log/sysRemindMainTaskLog.do"
+		class="com.landray.kmss.sys.remind.actions.SysRemindMainTaskLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="formType"
+			value="com.landray.kmss.sys.remind.forms.SysRemindMainTaskLogForm" />
+		<property name="forwards">
+			<map>
+				<entry key="list" value="/sys/remind/sys_remind_main_task_log/sysRemindMainTaskLog_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="softDeleteDataSource" class="com.landray.kmss.sys.recycle.service.spring.SoftDeleteDataSource"></bean>
+	<bean id="clearRecycleQuartz" class="com.landray.kmss.sys.recycle.service.spring.ClearRecycleQuartz"></bean>
+	
+	<bean
+		id="sysRecycleLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.recycle.dao.hibernate.SysRecycleLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.recycle.model.SysRecycleLog" />
+	</bean>
+	<bean
+		id="sysRecycleLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.recycle.service.spring.SysRecycleLogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysRecycleLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysRecycleLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysRecycleLogTarget" />
+		</property>
+	</bean>
+	
+	<bean id="sysRecycleAuthFieldValidator"
+		class="com.landray.kmss.sys.recycle.validator.SysRecycleAuthFieldValidator">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+		<property name="hqlBuilder">
+			<ref bean="kmssAuthHQLBuilder" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysRecycleServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.recycle.service.spring.SysRecycleServiceImp">
+		<property
+			name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysRecycleService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref bean="sysRecycleServiceTarget" />
+		</property>
+	</bean>
+    <bean
+        id="sysRecycleController"
+        class="com.landray.kmss.sys.recycle.rest.controller.SysRecycleController">
+    </bean>
+</beans>

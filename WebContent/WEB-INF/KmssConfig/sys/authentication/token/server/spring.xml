@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="sysTokenInfoDao" 
+        class="com.landray.kmss.sys.authentication.token.server.dao.hibernate.SysTokenInfoDaoImp"
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.authentication.token.server.model.SysTokenInfo</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysTokenInfoTarget" 
+        class="com.landray.kmss.sys.authentication.token.server.service.spring.SysTokenInfoServiceImp"
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysTokenInfoDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysTokenInfoService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysTokenInfoTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysTokenConfigDao" 
+        class="com.landray.kmss.sys.authentication.token.server.dao.hibernate.SysTokenConfigDaoImp"
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.authentication.token.server.model.SysTokenConfig</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysTokenConfigTarget" 
+        class="com.landray.kmss.sys.authentication.token.server.service.spring.SysTokenConfigServiceImp"
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysTokenConfigDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysTokenConfigService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysTokenConfigTarget"/>
+        </property>
+    </bean>
+
+    <bean
+            id="sysTokenConfigInitServiceTarget"
+            class="com.landray.kmss.sys.authentication.token.server.service.spring.SysTokenConfigInitService">
+        <property name="sysTokenConfigService" ref="sysTokenConfigService" />
+    </bean>
+
+    <bean id="sysTokenConfigInitService" parent="KmssBaseService">
+        <property name="target" ref="sysTokenConfigInitServiceTarget" />
+    </bean>
+
+    <bean
+            id="sysTokenAnonymousServiceTarget"
+            class="com.landray.kmss.sys.authentication.token.server.service.spring.SysTokenAnonymousServiceImp">
+    </bean>
+
+    <bean id="sysTokenAnonymousService" parent="KmssBaseCoreService">
+        <property name="target" ref="sysTokenAnonymousServiceTarget" />
+    </bean>
+</beans>

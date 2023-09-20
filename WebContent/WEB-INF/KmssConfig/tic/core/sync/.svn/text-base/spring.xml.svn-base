@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+
+	<bean
+		id="ticCoreSyncJobDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.sync.dao.hibernate.TicCoreSyncJobDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.sync.model.TicCoreSyncJob" />
+	</bean>
+	<bean
+		id="ticCoreSyncJobTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.sync.service.spring.TicCoreSyncJobServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticCoreSyncJobDao" />
+		</property>
+		<property name="sysQuartzJobService">
+		    <ref bean="sysQuartzJobTarget"/>
+		</property>
+		<property name="ticCoreFuncBaseService">
+		    <ref bean="ticCoreFuncBaseService"/>
+		</property>
+	</bean>
+	<bean
+		id="ticCoreSyncJobService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticCoreSyncJobTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ticCoreSyncTempFuncDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.sync.dao.hibernate.TicCoreSyncTempFuncDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.sync.model.TicCoreSyncTempFunc" />
+	</bean>
+	<bean
+		id="ticCoreSyncTempFuncTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.sync.service.spring.TicCoreSyncTempFuncServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticCoreSyncTempFuncDao" />
+		</property>
+		<property name="compDbcpService">
+			<ref bean="compDbcpService" />
+		</property>
+	</bean>
+	<bean
+		id="ticCoreSyncTempFuncService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticCoreSyncTempFuncTarget" />
+		</property>
+	</bean>
+	
+	<!-- 统一定时任务入口 -->
+	<bean
+		id="ticCoreSyncUniteQuartzService"
+		class="com.landray.kmss.tic.core.sync.service.spring.TicCoreSyncUniteQuartzServiceImpl">
+	</bean>
+	
+    <bean
+		id="ticCoreSyncLoadDBTableService"
+		class="com.landray.kmss.tic.core.sync.service.spring.TicCoreSyncLoadDBTableService">
+	</bean>
+	
+</beans>

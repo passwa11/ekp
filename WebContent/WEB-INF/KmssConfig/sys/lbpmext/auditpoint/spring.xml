@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		id="lbpmExtAuditPointDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.sys.lbpmext.auditpoint.dao.hibernate.LbpmExtAuditPointDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.lbpmext.auditpoint.model.LbpmExtAuditPoint" />
+	</bean>
+
+	<bean
+		id="lbpmExtAuditPointTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmext.auditpoint.service.spring.LbpmExtAuditPointServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="lbpmExtAuditPointDao" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmExtAuditPointService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="lbpmExtAuditPointTarget" />
+		</property>
+	</bean>
+
+</beans>

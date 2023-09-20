@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.webservice2.model.SysWebserviceMain"
+		table="sys_webservice_main">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			length="100"
+			not-null="false"
+			unique="true" />
+
+		<property
+			name="fdServiceClass"
+			column="fd_service_class"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="fdServiceBean"
+			column="fd_service_bean"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false"
+			unique="true" />
+
+		<property
+			name="fdServiceParam"
+			column="fd_service_param"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="fdAddress"
+			column="fd_address"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false"
+			unique="true" />
+
+		<property
+			name="fdAnonymous"
+			column="fd_anonymous"
+			update="true"
+			insert="true"
+			length="36"
+			not-null="false" />
+
+		<property
+			name="fdServiceStatus"
+			column="fd_service_status"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+
+		<property
+			name="fdStartupType"
+			column="fd_startup_type"
+			update="true"
+			insert="true"
+			length="2"
+			not-null="false" />
+			
+		<property
+			name="fdSoapMsgLogging"
+			column="fd_soap_msg_logging"
+			update="true"
+			insert="true"
+			length="36"
+			not-null="false" />
+
+		<property
+			name="fdMaxConn"
+			column="fd_max_conn"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+			
+		<property
+			name="fdMaxBodySize"
+			column="fd_max_body_size"
+			update="true"
+			insert="true"
+			length="8"
+			not-null="false" />
+
+		<property
+			name="fdTimeOut"
+			column="fd_time_out"
+			update="true"
+			insert="true"
+			length="8"
+			not-null="false" />
+
+		<property
+			name="fdDescription"
+			column="fd_description"
+			update="true"
+			insert="true"
+			length="500"
+			not-null="false" />
+
+		<bag
+			name="fdUser"
+			table="sys_webservice_main_user"
+			lazy="false">
+			<key
+				column="fd_service_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.webservice2.model.SysWebserviceUser"
+				column="fd_user_id" />
+		</bag>
+
+	</class>
+</hibernate-mapping>

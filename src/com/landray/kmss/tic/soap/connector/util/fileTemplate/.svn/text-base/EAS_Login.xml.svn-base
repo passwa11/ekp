@@ -1,0 +1,94 @@
+<wsdl:definitions xmlns:apachesoap="http://xml.apache.org/xml-soap"
+	xmlns:impl="$address$"
+	xmlns:intf="$address$"
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="urn:client"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="$address$">
+	<!-- WSDL created by Apache Axis version: 1.4 Built on Apr 22, 2006 (06:55:48 
+		PDT) -->
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="urn:client">
+			<import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+			<complexType name="WSContext">
+				<sequence>
+					<element name="slnName" nillable="true" type="xsd:string" />
+					<element name="password" nillable="true" type="xsd:string" />
+					<element name="dbType" type="xsd:int" />
+					<element name="userName" nillable="true" type="xsd:string" />
+					<element name="sessionId" nillable="true" type="xsd:string" />
+					<element name="dcName" nillable="true" type="xsd:string" />
+				</sequence>
+			</complexType>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="loginResponse1">
+		<wsdl:part name="loginReturn" type="tns1:WSContext">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="loginRequest1">
+		<wsdl:part name="userName" type="xsd:string">
+		</wsdl:part>
+		<wsdl:part name="password" type="xsd:string">
+		</wsdl:part>
+		<wsdl:part name="slnName" type="xsd:string">
+		</wsdl:part>
+		<wsdl:part name="dcName" type="xsd:string">
+		</wsdl:part>
+		<wsdl:part name="language" type="xsd:string">
+		</wsdl:part>
+		<wsdl:part name="dbType" type="xsd:int">
+		</wsdl:part>
+		<wsdl:part name="authPattern" type="xsd:string">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="loginResponse">
+		<wsdl:part name="loginReturn" type="tns1:WSContext">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="loginRequest">
+		<wsdl:part name="userName" type="xsd:string">
+		</wsdl:part>
+		<wsdl:part name="password" type="xsd:string">
+		</wsdl:part>
+		<wsdl:part name="slnName" type="xsd:string">
+		</wsdl:part>
+		<wsdl:part name="dcName" type="xsd:string">
+		</wsdl:part>
+		<wsdl:part name="language" type="xsd:string">
+		</wsdl:part>
+		<wsdl:part name="dbType" type="xsd:int">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="EASLoginProxy">
+		<wsdl:operation name="login"
+			parameterOrder="userName password slnName dcName language dbType authPattern">
+			<wsdl:input message="intf:loginRequest1" name="loginRequest1">
+			</wsdl:input>
+			<wsdl:output message="intf:loginResponse1" name="loginResponse1">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="EASLoginSoapBinding" type="intf:EASLoginProxy">
+		<wsdlsoap:binding style="rpc"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="login">
+			<wsdlsoap:operation soapAction="" />
+			<wsdl:input name="loginRequest1">
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+					namespace="http://login.webservice.bos.kingdee.com" use="encoded" />
+			</wsdl:input>
+			<wsdl:output name="loginResponse1">
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+					namespace="$address$"
+					use="encoded" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="EASLoginProxyService">
+		<wsdl:port binding="intf:EASLoginSoapBinding" name="EASLogin">
+			<wsdlsoap:address
+				location="$address$" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

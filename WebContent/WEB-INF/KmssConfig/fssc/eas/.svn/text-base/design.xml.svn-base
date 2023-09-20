@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/fssc/eas/" 
+        messageKey="fssc-eas:module.fssc.eas" 
+        defaultValidator="roleValidator(role=ROLE_FSSCEAS_DEFAULT)">
+        <roles>ROLE_FSSCEAS_DEFAULT;ROLE_FSSCEAS_SETTING</roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_FSSCEAS_SETTING)"/>
+        <request 
+            path="fssc_eas_switch/fsscEasSwitch.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.eas.model.FsscEasSwitch" 
+            defaultValidator="roleValidator(role=ROLE_FSSCEAS_SETTING)">
+            <query 
+                queryString="method=add|save|saveadd|edit|update" 
+                validator="roleValidator(role=ROLE_FSSCEAS_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCEAS_SETTING)"/>
+        </request>
+        <request 
+            path="fssc_eas_param/fsscEasParam.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.eas.model.FsscEasParam" 
+            defaultValidator="roleValidator(role=ROLE_FSSCEAS_SETTING)">
+            <query 
+                queryString="method=add|save|saveadd|edit|update" 
+                validator="roleValidator(role=ROLE_FSSCEAS_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCEAS_SETTING)"/>
+        </request>
+    </module>
+    <profileConfig 
+        key="fssc/eas" 
+        messageKey="{fssc-eas:module.fssc.eas}" 
+        url="/sys/profile/moduleindex.jsp?nav=/fssc/eas/tree.jsp" 
+        icon="km_comminfo" 
+        type="fs"
+        description="{fssc-eas:module.fssc.eas.description}"/>
+</configs>

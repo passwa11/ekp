@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysEvaluationMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.evaluation.dao.hibernate.SysEvaluationMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.evaluation.model.SysEvaluationMain" />
+	</bean>
+	<bean
+		id="sysEvaluationReplyDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.evaluation.dao.hibernate.SysEvaluationReplyDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.evaluation.model.SysEvaluationReply" />
+	</bean>
+	<bean
+		id="sysEvaluationMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.evaluation.service.spring.SysEvaluationMainServiceImp">
+		<property name="baseDao">
+			<ref bean="sysEvaluationMainDao" />
+		</property>
+		<property name="notifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="sysEvaluationMainService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysEvaluationMainTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysEvaluationCoreService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<bean
+				class="com.landray.kmss.sys.evaluation.service.spring.SysEvaluationCoreServiceImp">
+				<property name="sysEvaluationMainService">
+					<ref bean="sysEvaluationMainService" />
+				</property>
+				<property name="sysEvaluationNotesService">
+					<ref bean="sysEvaluationNotesService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean
+		id="sysEvaluationReplyTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.evaluation.service.spring.SysEvaluationReplyServiceImp">
+		<property name="baseDao">
+			<ref bean="sysEvaluationReplyDao" />
+		</property>
+		<property
+			name="sysOrgCoreService">
+			<ref
+				bean="sysOrgCoreService" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="sysEvaluationMainService">
+			<ref bean="sysEvaluationMainService" />
+		</property>
+	</bean>
+	<bean
+		id="sysEvaluationReplyService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysEvaluationReplyTarget" />
+		</property>
+	</bean>
+	
+	<!--段落点评-->
+	<bean
+		id="sysEvaluationNotesDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.evaluation.dao.hibernate.SysEvaluationNotesDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.evaluation.model.SysEvaluationNotes" />
+	</bean>
+	<bean
+		id="sysEvaluationNotesTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.evaluation.service.spring.SysEvaluationNotesServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysEvaluationNotesDao" />
+		</property>
+		<property name="notifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="sysEvaluationNotesService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysEvaluationNotesTarget" />
+		</property>
+	</bean>
+	
+	<bean class="com.landray.kmss.sys.evaluation.service.spring.SysEvaluationValidator" id="sysEvaluationValidator"></bean>
+
+	<!-- 分享 -->
+    <bean 
+        id="sysEvaluationShareDao" 
+        class="com.landray.kmss.sys.evaluation.dao.hibernate.SysEvaluationShareDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.evaluation.model.SysEvaluationShare</value>
+        </property>
+     </bean>
+     <bean 
+        id="sysEvaluationShareTarget" 
+        class="com.landray.kmss.sys.evaluation.service.spring.SysEvaluationShareServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysEvaluationShareDao"/>
+        </property>
+     </bean>
+     <bean 
+        id="sysEvaluationShareService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysEvaluationShareTarget"/>
+        </property>
+     </bean>
+    <bean id="sysEvaluationMainController" class="com.landray.kmss.sys.evaluation.rest.controller.SysEvaluationMainController">
+    </bean>
+    <bean id="sysEvaluationNotifyTypeController" class="com.landray.kmss.sys.evaluation.rest.controller.SysEvaluationNotifyTypeController">
+    </bean>
+    <bean id="sysEvaluationReplyController" class="com.landray.kmss.sys.evaluation.rest.controller.SysEvaluationReplyController">
+    </bean>
+    <bean id="sysEvaluationCountConvertor" class="com.landray.kmss.sys.evaluation.rest.convertor.SysEvaluationCountConvertor">
+    </bean>
+</beans>

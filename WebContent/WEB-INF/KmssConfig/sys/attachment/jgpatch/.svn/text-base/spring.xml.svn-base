@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 金格安全防护补丁 -->
+    <bean name="@replace(sysAttJGSaveFileFunction)" parent="KmssBaseService">
+		<property name="target">
+			<bean class="com.landray.kmss.sys.attachment.jg.SysAttJGSaveFileFunctionPatch">
+				<property name="sysAttMainService">
+					<ref bean="sysAttMainService" />
+				</property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="execute*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

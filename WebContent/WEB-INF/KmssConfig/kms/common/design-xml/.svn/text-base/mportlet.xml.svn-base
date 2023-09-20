@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:m="http://www.landray.com.cn/schema/mportlet" xmlns="http://www.landray.com.cn/schema/lui"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.landray.com.cn/schema/mportlet 
+	../../../sys/mobile/mportlet.xsd
+		http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd">
+
+	<m:mportlet 
+		id="kms.common.knowledgeIntro" 
+		module="{kms-common:module.kms.common}"
+		name="{kms-common:table.kmsHomeKnowledgeIntro}"
+		jsUrl="/kms/common/mobile/mportal/kmsCommonPicSlide.js?fdIds=!{fdIds}&amp;refreshtime=!{refreshtime}&amp;showSubject=!{showSubject}">
+		<m:vars>
+			<var key="fdIds" kind="dialogJs" name="选择专题" required="true">
+				{"js":"seajs.use('kms/common/mobile/mportal/kmsCommonSelectIntr',function(select){select('!{idField}','!{nameField}')})"}
+			</var>
+			<var key="refreshtime" name="刷新时间（秒）" kind="int" default="0">
+				{"help":"（为0则不自动刷新）"}
+			</var>
+			<var key="showSubject" kind="enumValue" name="显示标题" default="true">
+				{"values":[{"text":"显示", "value":"true"}],"showType":"checkbox"}
+			</var>
+		</m:vars>
+	</m:mportlet>
+	
+</root>

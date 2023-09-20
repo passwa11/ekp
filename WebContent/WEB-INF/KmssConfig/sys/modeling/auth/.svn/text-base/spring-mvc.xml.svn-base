@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		name="/sys/modeling/auth/sys_auth_role/sysModelingAuthRole.do"
+		class="com.landray.kmss.sys.modeling.auth.actions.SysModelingAuthRoleAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.modeling.auth.forms.SysModelingAuthRoleForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="editopr"
+					value="/sys/modeling/auth/sys_auth_role/sysAuthRoleOpr_edit.jsp" />
+				<entry
+					key="edit"
+					value="/sys/modeling/auth/sys_auth_role/sysAuthRole_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<bean
+		name="/sys/modeling/auth/sys_auth_role/sysModelingSimpleAuthRole.do"
+		class="com.landray.kmss.sys.modeling.auth.actions.SysModelingSimpleAuthRoleAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.modeling.auth.forms.SysModelingAuthRoleForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/modeling/auth/sys_opr_auth/list.jsp" />
+				<entry
+					key="load"
+					value="/sys/modeling/auth/sys_opr_auth/dialog.jsp" />
+				<entry
+					key="loadBatch"
+					value="/sys/modeling/auth/sys_opr_auth/dialog_batch.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<bean
+		name="/sys/modeling/auth/xform_auth/sysModelingXformRightConfig.do"
+		class="com.landray.kmss.sys.modeling.auth.actions.SysModelingXformRightConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.modeling.auth.forms.SysModelingRightConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="load4Flow"
+					value="/sys/modeling/auth/xform_auth/dialog_flow.jsp" />
+				<entry
+					key="load"
+					value="/sys/modeling/auth/xform_auth/dialog.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/sys/modeling/auth/default_auth/sysModelingDefaultRightConfig.do"
+		class="com.landray.kmss.sys.modeling.auth.actions.SysModelingDefaultAuthAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry key="load4Flow" value="/sys/modeling/auth/default_auth/dialog_flow.jsp" />
+				<entry key="load" value="/sys/modeling/auth/default_auth/dialog.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<bean
+		name="/sys/modeling/auth/flow_auth/sysModelingFlowAuth.do"
+		class="com.landray.kmss.sys.modeling.auth.actions.SysModelingFlowAuthAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="load"
+					value="/sys/modeling/auth/flow_auth/dialog.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<bean
+		name="/sys/modeling/auth/sysModelingAuthUrlCheckAction.do"
+		class="com.landray.kmss.sys.modeling.auth.actions.SysModelingAuthUrlCheckAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+</beans>

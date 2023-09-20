@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!-- 定义扩展点，kkv6模块关联群协作 -->
+	<extension-point
+		id="com.landray.kmss.km.cogroup">
+		<item
+			name="config">
+			<param name="service" kind="spring" required="true" basedOn="com.landray.kmss.km.cogroup.interfaces.ICogroupConfigService">
+				<description>需要实现ICogroupConfigService接口，但是建议继承自ICogroupConfigService</description>
+			</param>
+			<description>kk集成配置service</description>
+		</item>
+		<description>kkv6模块关联群协作</description>
+	</extension-point>
+	
+	
+	<extension point="com.landray.kmss.lbpm.engine.robot" model="*">
+		<item name="robot">
+			<param name="unid" value="com.landray.kmss.km.cogroup.service.spring.RobotNodeToKKGroupServiceImp" />
+			<param name="category" value="{km-cogroup:lbpmRobotNode.category.kk}"/>
+			<param name="type" value="{km-cogroup:lbpmRobotNode.type.sendDynamicInfoToKK}" />
+			<param name="bean" value="robotNodeToKKGroupService" />
+			<param name="url" value="/km/cogroup/robot/robotnode_config.jsp" />
+			<param name="class" value="integrate" />
+			<param name="description" value="{km-cogroup:lbpmRobotNode.type.sendDynamicInfoToKK}"/>
+		</item>
+	</extension>
+	
+	
+
+</plugin>

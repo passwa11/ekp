@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="ticCacheDbColumnDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.cacheindb.config.dao.hibernate.TicCacheDbColumnDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.cacheindb.config.model.TicCacheDbColumn" />
+	</bean>
+	<bean
+		id="ticCacheDbColumnTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.cacheindb.config.service.spring.TicCacheDbColumnServiceImp">
+		<property name="baseDao">
+			<ref bean="ticCacheDbColumnDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticCacheDbColumnService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticCacheDbColumnTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticCacheDbTableDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.cacheindb.config.dao.hibernate.TicCacheDbTableDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.cacheindb.config.model.TicCacheDbTable" />
+	</bean>
+	<bean
+		id="ticCacheDbTableTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.cacheindb.config.service.spring.TicCacheDbTableServiceImp">
+		<property name="baseDao">
+			<ref bean="ticCacheDbTableDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticCacheDbTableService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticCacheDbTableTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticCacheMainTableDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.cacheindb.spi.dao.hibernate.TicCacheMainTableDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.cacheindb.spi.model.TicCacheMainTable" />
+	</bean>
+	<bean
+		id="ticCacheMainTableTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.cacheindb.spi.service.spring.TicCacheMainTableServiceImp">
+		<property name="baseDao">
+			<ref bean="ticCacheMainTableDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticCacheMainTableService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticCacheMainTableTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticCacheInDbService"
+		class="com.landray.kmss.tic.core.cacheindb.spi.service.spring.TicCacheInDbServiceImp">
+		<property name="ticCacheMainTableService">
+			<ref bean="ticCacheMainTableService" />
+		</property>
+		<property name="ticCacheDbTableService">
+			<ref bean="ticCacheDbTableService" />
+		</property>
+		<property name="sysQuartzJobService">
+			<ref bean="sysQuartzJobService" />
+		</property>
+		<property name="ticCacheSyncJobService">
+			<ref bean="ticCacheSyncJobService" />
+		</property>
+		<property name="ticCacheParameterService">
+			<ref bean="ticCacheParameterService" />
+		</property>
+	</bean>
+
+	<bean
+		id="pageListSQLService"
+		class="com.landray.kmss.tic.core.cacheindb.datalist.service.PageListSQLServiceImp">
+	</bean>
+
+	<bean
+		id="ticCacheSyncJobDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.cacheindb.config.dao.hibernate.TicCacheSyncJobDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.cacheindb.config.model.TicCacheSyncJob" />
+	</bean>
+	<bean
+		id="ticCacheSyncJobTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.cacheindb.config.service.spring.TicCacheSyncJobServiceImp">
+		<property name="baseDao">
+			<ref bean="ticCacheSyncJobDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticCacheSyncJobService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticCacheSyncJobTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticCacheParameterDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.cacheindb.spi.dao.hibernate.TicCacheParameterDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.cacheindb.spi.model.TicCacheParameter" />
+	</bean>
+	<bean
+		id="ticCacheParameterTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.cacheindb.spi.service.spring.TicCacheParameterServiceImp">
+		<property name="baseDao">
+			<ref bean="ticCacheParameterDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticCacheParameterService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticCacheParameterTarget" />
+		</property>
+	</bean>
+
+	<bean id="ticCacheJobServiceTarget"
+		class="com.landray.kmss.tic.core.cacheindb.spi.service.spring.TicCacheJobServiceImp">
+		<property name="sysQuartzJobService">
+			<ref bean="sysQuartzJobService" />
+		</property>
+		<property name="ticCacheParameterService">
+			<ref bean="ticCacheParameterService" />
+		</property>
+		<property name="ticCacheSyncJobService">
+			<ref bean="ticCacheSyncJobService" />
+		</property>
+	</bean>
+	<bean id="ticCacheJobService" lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="ticCacheJobServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="do*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

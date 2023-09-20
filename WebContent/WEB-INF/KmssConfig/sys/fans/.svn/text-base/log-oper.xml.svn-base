@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+
+	<logset>
+
+		<oper id="sysFansMainOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.fans.model.SysFansMain" action="/sys/fans/sys_fans_main/sysFansMain.do">
+
+			<!-- 关注信息 -->
+			<query method="loadRlation" logPoint="Base_UrlParam"
+				messageKey="sys-fans:sysFansMain.loadRlation" />
+
+			<!-- 关注与取关 -->
+			<query method="addFollow" logPoint="Base_UrlParam;addFollow;Service_Delete"
+				messageKey="sys-fans:sysFansMain.addFollow" />
+
+			<!-- 查看 -->
+			<query method="dataFollow" logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="button.list" />
+
+			<!-- 取消关注，移动端 -->
+			<query method="cancelAtt" logPoint="Base_UrlParam;Service_Delete"
+				messageKey="sys-fans:sysFansMain.delFollow" />
+
+			<!-- 是否关注，只发现在员工黄页调用到 -->
+			<query method="getRelationType" logPoint="Base_UrlParam"
+				messageKey="sys-fans:sysFansMain.getRelationType" />
+
+		</oper>
+
+	</logset>
+</log-oper>

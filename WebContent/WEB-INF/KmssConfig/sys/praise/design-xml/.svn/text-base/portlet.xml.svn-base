@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+	<portlet
+		id="sys.praiseInfo.rank"
+		name="{sys-praise:sysPraiseInfo.portlet.rank}"
+		module="{sys-praise:module.sys.praise}">
+		<source format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{	
+						"url":"/sys/praise/sys_praise_info_portlet/sysPraiseInfoPortlet.do?method=getRankPortlet&deptId=!{deptId}&rowsize=!{rowsize}&ranktype=!{ranktype}",
+						"formatKey":"html"
+					}
+					
+				]]>
+			</code>
+		</source>
+		<vars>
+			<var name="排行榜类型"  required="true"
+			     key="ranktype" kind="enumValue" default="week">
+		    	{
+		    		"values":[
+		    			{"text":"{sys-praise:sysPraiseInfo.portlet.fdWeek}", "value":"week"},
+		    			{"text":"{sys-praise:sysPraiseInfo.portlet.fdMonth}", "value":"month"},
+		    			{"text":"{sys-praise:sysPraiseInfo.portlet.fdYear}","value":"year"},
+		    			{"text":"{sys-praise:sysPraiseInfo.portlet.fdTotal}","value":"total"}
+		    		],
+		    		"showType":"radio"
+		    		
+		    	}
+			</var>
+			<var name="{sys-praise:sysPraiseInfo.portlet.rowsize}" 
+			     key="rowsize" kind="rowsize" default="6"/>
+			<var key="deptId" kind="dialogJs" name="{sys-praise:sysPraiseInfo.portlet.dept}" >
+				{
+					"js":
+					"Dialog_Address(false,'!{idField}','!{nameField}',';',ORG_TYPE_DEPT)"
+				}
+			</var>
+		</vars>
+		<operations>
+		<operation
+				name="{operation.more}"
+				type="more"
+				href="/sys/praise/index_rank.jsp?#cri.q=fdTimeType:!{ranktype};;fdPerson:!{deptId}"/>
+		</operations>
+	</portlet>
+</root>

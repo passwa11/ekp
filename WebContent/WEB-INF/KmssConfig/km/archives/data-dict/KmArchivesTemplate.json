@@ -1,0 +1,160 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.km.archives.model.KmArchivesTemplate",
+        "messageKey": "km-archives:table.kmArchivesTemplate",
+        "table": "km_archives_template",
+        "url": "/km/archives/km_archives_template/kmArchivesTemplate.do?method=view&fdId=${fdId}",
+        "displayProperty": "fdName",
+        "serviceBean": "kmArchivesTemplateService"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "type": "String",
+            "length": "200",
+            "defaultValue": "",
+            "messageKey": "km-archives:kmArchivesTemplate.fdName",
+            "column": "fd_name",
+            "notNull": "true",
+            "validate": "true",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "type": "DateTime",
+            "messageKey": "km-archives:kmArchivesTemplate.docCreateTime",
+            "column": "doc_create_time",
+            "notNull": "true",
+            "validate": "false",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "true"
+        },
+        
+        "listDenseLevel":         {
+            "propertyType": "list",
+            "type": "com.landray.kmss.km.archives.model.KmArchivesDense",
+            "table": "km_archives_template_dense",
+            "elementColumn": "fd_target_id",
+            "messageKey": "km-archives:table.kmArchivesDense",
+            "column": "fd_source_id",
+            "notNull": "false",
+            "validate": "false",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "false",
+            "readOnly": "true"
+        },
+        "fdDefaultFlag":         {
+            "propertyType": "simple",
+            "messageKey": "km-archives:py.fdDefaultFlag",
+            "type": "Integer",
+            "column": "fd_default_flag",
+            "notNull": "false",
+            "length": "4",
+            "validate": "false"
+        },
+        "authReaderFlag":         {
+            "propertyType": "simple",
+            "type": "Boolean",
+            "messageKey": "km-archives:kmArchivesTemplate.authReaderFlag",
+            "column": "auth_reader_flag",
+            "notNull": "false",
+            "validate": "false",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "false",
+            "readOnly": "true"
+        },
+        "authNotReaderFlag":         {
+            "propertyType": "simple",
+            "messageKey": "km-archives:kmArchivesTemplate.authNotReaderFlag",
+            "type": "Boolean",
+            "column": "auth_not_reader_flag",
+            "notNull": "false",
+            "length": "1",
+            "canDisplay": "false"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "messageKey": "km-archives:kmArchivesTemplate.docCreator",
+            "column": "doc_creator_id",
+            "notNull": "true",
+            "validate": "false",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_PERSON);"
+        },
+        "authReaders":         {
+            "propertyType": "list",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "km_archives_template_reader",
+            "elementColumn": "fd_target_id",
+            "messageKey": "km-archives:kmArchivesTemplate.authReaders",
+            "column": "fd_source_id",
+            "notNull": "false",
+            "validate": "true",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "true",
+            "readOnly": "false",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_ALL);"
+        },
+        "authEditors":         {
+            "propertyType": "list",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "km_archives_template_editor",
+            "elementColumn": "fd_target_id",
+            "messageKey": "km-archives:kmArchivesTemplate.authEditors",
+            "column": "fd_source_id",
+            "notNull": "false",
+            "validate": "true",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "true",
+            "readOnly": "false",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_ALL);"
+        },
+        "authAllReaders":         {
+            "propertyType": "list",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "km_archives_template_areader",
+            "elementColumn": "fd_target_id",
+            "messageKey": "km-archives:kmArchivesTemplate.authAllReaders",
+            "column": "fd_source_id",
+            "notNull": "false",
+            "validate": "false",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "false",
+            "readOnly": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',null);"
+        },
+        "authAllEditors":         {
+            "propertyType": "list",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "km_archives_template_aeditor",
+            "elementColumn": "fd_target_id",
+            "messageKey": "km-archives:kmArchivesTemplate.authAllEditors",
+            "column": "fd_source_id",
+            "notNull": "false",
+            "validate": "false",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "false",
+            "readOnly": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',null);"
+        }
+    }
+}

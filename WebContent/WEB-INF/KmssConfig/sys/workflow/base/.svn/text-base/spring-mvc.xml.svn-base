@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/workflow/sys_wf_common_template/sysWfCommonTemplate.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmTemplateForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_list.jsp" />
+				<entry
+					key="listUi"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_list_new.jsp" />
+				<entry
+					key="updateAuditor"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_auditor.jsp" />
+				<entry
+					key="viewHistory"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_viewHistory.jsp" />
+				<entry
+					key="refList"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplateRefCommon_list.jsp" />
+				<entry
+					key="data"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- 细化权限需要 -->
+	<bean 
+		name="/sys/workflow/sys_wf_common_template_new/sysWfCommonTemplate.do"
+		class="com.landray.kmss.sys.lbpmservice.support.actions.LbpmTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmservice.support.forms.LbpmTemplateForm" />
+		<property name="forwards">
+			<map>
+				<entry 
+					key="data"
+					value="/sys/lbpmservice/support/lbpm_template/lbpmTemplate_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/workflow/sys_wf_approval_type/sysWfApprovalType.do"
+		class="com.landray.kmss.sys.workflow.base.actions.SysWfApprovalTypeAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.workflow.base.forms.SysWfApprovalTypeForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/workflow/sys_wf_approval_type/sysWfApprovalType_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/workflow/sys_wf_approval_type/sysWfApprovalType_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/workflow/sys_wf_approval_type/sysWfApprovalType_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/workflow/sys_wf_authorize/sysWfAuthorize.do"
+		class="com.landray.kmss.sys.lbpmext.authorize.actions.LbpmAuthorizeAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.lbpmext.authorize.forms.LbpmAuthorizeForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/lbpmext/authorize/lbpm_authorize/lbpmAuthorize_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/lbpmext/authorize/lbpm_authorize/lbpmAuthorize_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/lbpmext/authorize/lbpm_authorize/lbpmAuthorize_list.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

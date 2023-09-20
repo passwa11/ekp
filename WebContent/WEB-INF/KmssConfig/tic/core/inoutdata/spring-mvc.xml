@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/tic/core/inoutdata/ticCoreInoutdata.do"
+		class="com.landray.kmss.tic.core.inoutdata.actions.TicCoreInoutdataAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.tic.core.inoutdata.forms.TicCoreInoutdataForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="exportList"
+					value="/tic/core/inoutdata/ticCoreInoutdata_export.jsp" />
+				<entry
+					key="import"
+					value="/tic/core/inoutdata/ticCoreInoutdata_import.jsp" />
+				<entry
+					key="status"
+					value="/tic/core/inoutdata/ticCoreInoutdata_status.jsp" />
+				<entry
+					key="init"
+					value="/tic/core/inoutdata/ticCoreInoutdata_export.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

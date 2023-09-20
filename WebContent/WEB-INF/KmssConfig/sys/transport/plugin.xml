@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!--导入导出过滤扩展点 -->
+	<extension-point
+		id="com.landray.kmss.sys.transport">
+		<item 
+			name="transportFilter">
+			<param 
+				name="moduleNames"
+				kind="string">
+				<description>导入过滤modeName多个用英文逗号,或者英文分号;隔开</description>
+			</param>
+			<param 
+				name="serviceName"
+				kind="spring"
+				basedOn="com.landray.kmss.sys.transport.service.extendsion.ISysTransportFilter"
+				required="true">
+				<description>过滤逻辑bean</description>
+			</param>
+
+			<description>导入导出过滤扩展点</description>
+		</item>
+		<description>导入导出过滤扩展点</description>
+	</extension-point>
+</plugin>

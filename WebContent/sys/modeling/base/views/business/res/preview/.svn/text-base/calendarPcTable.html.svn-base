@@ -1,0 +1,447 @@
+var test = render.parent;
+var testSource = test.source;
+var config = testSource.config;
+var datas = config.datas || [];
+var views = datas.views || [];
+var fdConditions = [];//筛选项
+var listOperations = [];//业务操作
+var showMode = "1";//默认显示周期
+
+if(views && views.length > 0){
+fdConditions = views[0].fdCondition || [];//筛选项
+fdOrderBys = views[0].fdOrder || [];//排序项
+listOperations = views[0].fdOperation || [];//业务操作
+showMode = views[0].showMode || "1";
+}
+var viewWgt = render.parent;
+var lang=viewWgt.getModelingLang();
+
+{$
+<div class="model-edit-left-wrap">
+    <div class="model-edit-view">
+
+        <div class="model-edit-view-content">
+            <div class="model-edit-view-content-top" data-lui-position="fdCondition"
+                 onclick='switchSelectPosition(this,"left")'>
+                <div class="model-edit-view-subtitle">{%lang['modelingAppListview.fdCondition']%}<i></i></div>
+                <ul class="model-edit-view-btn model-edit-view-top-list">
+                    $}
+                    var fdConditionsLen = fdConditions.length;
+                    var len = fdConditionsLen;
+                    if(fdConditionsLen > 2){
+                    len = 2;
+                    }
+                    for(var i=0; i
+                    <len
+                            ; i++){
+                            var fdCondition=fdConditions[i];
+                            var index=i;
+                            var temp=i+1;
+                            if(fdCondition.text){
+                            {$
+                    <li>
+                        <div class="model-edit-view-top-list-wrap">
+                            <p class="model-edit-view-list-title" data-lui-position='fdCondition-{%index%}'
+                               onclick='switchSelectPosition(this,"left")'>{%fdCondition.text%}</p>
+                            <div class="model-edit-view-list-bg">
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    $}
+                    }else{
+                    {$
+                    <li>
+                        <div class="model-edit-view-top-list-wrap">
+                            <p class="model-edit-view-list-title" data-lui-position='fdCondition-{%index%}'
+                               onclick='switchSelectPosition(this,"left")'>{%lang['modelingAppListview.fdCondition']%}{%temp%}</p>
+                            <div class="model-edit-view-list-bg">
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    $}
+                    }
+                    }
+                    var moreLen = 0;
+                    if(fdConditionsLen < 2 && fdConditionsLen > 0){
+                    var restLen = 2-fdConditionsLen;
+                    for(var i=restLen; i>0; i--){
+                    var index = 2-i+1;
+                    var temp = index-1;
+                    {$
+                    <li>
+                        <div class="model-edit-view-top-list-wrap">
+                            <p class="model-edit-view-list-title disabled" data-lui-position='fdCondition-{%temp%}'>
+                                {%lang['modelingAppListview.fdCondition']%}{%index%}</p>
+                            <div class="model-edit-view-list-bg">
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    $}
+                    }
+                    }else if(fdConditionsLen<=0){
+                    {$
+                    <li>
+                        <div class="model-edit-view-top-list-wrap">
+                            <p class="model-edit-view-list-title disabled" data-lui-position='fdCondition-1'>{%lang['modelingAppListview.fdCondition']%}1</p>
+                            <div class="model-edit-view-list-bg">
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="model-edit-view-top-list-wrap">
+                            <p class="model-edit-view-list-title disabled" data-lui-position='fdCondition-2'>{%lang['modelingAppListview.fdCondition']%}2</p>
+                            <div class="model-edit-view-list-bg">
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    $}
+                    }else{
+                    moreLen = fdConditionsLen - 2;
+                    }
+                    {$
+                    <li>
+                        <div class="model-edit-view-top-list-wrap">
+                            $}
+                            if(moreLen > 0){
+                            {$
+                            <p class="model-edit-view-list-title dots " onclick='showMoreItem(this,"fdCondition_more")'>
+                                ...</p>
+                            $}
+                            }else{
+                            {$
+                            <p class="model-edit-view-list-title dots disabled">...</p>
+                            $}
+                            }
+                            {$
+                            <div class="model-edit-view-list-bg">
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                            </div>
+                            $}
+                            if(moreLen > 0){
+                            {$
+                            <div id='fdCondition_more' style="display:none">
+                                <ul>
+                                    $}
+                                    for(var i=0; i
+                                    <moreLen
+                                            ; i++){
+                                            var index=2+i;
+                                            var temp=2+i+1;
+                                            var fdCondition=fdConditions[index];
+                                            if(fdCondition.text){
+                                            {$
+                                    <li data-lui-position='fdCondition-{%index%}'
+                                        onclick='switchSelectPosition(this,"left");hideMoreItem("fdCondition_more")'>
+                                        {%fdCondition.text%}
+                                    </li>
+                                    $}
+                                    }else{
+                                    {$
+                                    <li data-lui-position='fdCondition-{%index%}'
+                                        onclick='switchSelectPosition(this,"left");hideMoreItem("fdCondition_more")'>
+                                        {%lang['modelingAppListview.fdCondition']%}{%temp%}
+                                    </li>
+                                    $}
+                                    }
+                                    }
+                                    {$
+                                </ul>
+                            </div>
+                            $}
+                            }
+                            {$
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="model-edit-view-content-bottom" data-lui-position="fdDisplay" onclick='switchSelectPositionItem(this,"left")'>
+                <div class="model-source" >
+                    <div class="model-edit-view-subtitle">{%lang['calendar']%}<i></i></div>
+                    <div class="model-source-wrap">
+                        <div class="model-source-msg">
+                            <div class="model-source-msg-top">
+                                <div class="model-source-data">
+                                    <ul class="model-source-data-switch" data-lui-position='showMode'
+                                        onclick='switchSelectPositionItem(this,"left")'>
+                                        $}
+                                            if(showMode == "1"){
+                                                {$
+                                                    <li >{%lang['respanel.week']%}</li>
+                                                    <li class="active">{%lang['respanel.month']%}</li>
+                                                $}
+                                            }else{
+                                                {$
+                                                    <li class="active">{%lang['respanel.week']%}</li>
+                                                    <li >{%lang['respanel.month']%}</li>
+                                                $}
+                                            }
+                                        {$
+                                    </ul>
+                                </div>
+                                <div class="model-source-headline" data-lui-position='tableTitle'
+                                     onclick='switchSelectPositionItem(this,"left")'>{%lang['calendar.title']%}
+                                </div>
+                            </div>
+
+                        </div>
+                        $}
+                        if(showMode == "1"){
+                            {$
+                                <div class="model-source-right model-source-calendar-year active" >
+                            $}
+                        }else{
+                            {$
+                                <div class="model-source-right model-source-calendar-year" >
+                            $}
+                        }
+                        {$
+                            <div class="model-source-table-msg-top">
+                                < 2021{%lang['Gantt.year']%}6{%lang['respanel.month']%} >
+                            </div>
+                            <div class="model-source-table-title">
+                                <ul class="calendar-table-abs">
+                                    <li><div>{%lang['calendar.mon']%}</div></li>
+                                    <li><div>{%lang['calendar.tue']%}</div></li>
+                                    <li><div>{%lang['calendar.wed']%}</div></li>
+                                    <li><div>{%lang['calendar.thu']%}</div></li>
+                                    <li><div>{%lang['calendar.fri']%}</div></li>
+                                    <li><div>{%lang['calendar.sat']%}</div></li>
+                                    <li><div>{%lang['calendar.sun']%}</div></li>
+                                </ul>
+                            </div>
+                            <div class="model-source-table-main">
+                                <div class="model-source-table-box">
+                                    <ul class="calendar-table-content">
+                                        $}
+                                        var now = new Date(2021,6,0);
+                                        var firstDay = new Date(2021,5,1);//所选月份第一天
+                                        var dayCount = now.getDate();//获取月份的天数
+                                        var day = firstDay.getDay(); //通过firstDay变量获取日期，再获取周几。
+                                        var preDate = new Date(2021,5,0);
+                                        var preDayCount = preDate.getDate();//获取月份的天数
+                                        for(var j=day-2;j>=0;j--){
+                                            {$
+                                                <li><div class="model-source-table-day">{%preDayCount-j%}</div></li>
+                                            $}
+                                        }
+                                        for(var i=1;i<=dayCount;i++){
+                                            if(i==1){
+                                                {$
+                                                    <li>
+                                                        <div class="model-source-data-day-content">
+                                                            <div class="model-source-table-day">{%i%}</div>
+                                                            <div class="model-source-table-day-line"></div>
+                                                            <div class="model-source-table-day-title">{%lang['calendar.display.field']%}</div>
+                                                            <div class="preview-relative">
+                                                                <div class="preview-content">
+                                                                    <div class="meeting_calendar_dialog_top">
+                                                                        <div class="model-preview-icon"></div>
+                                                                        <div class="meeting_calendar_dialog_title textEllipsis  " preview-content-mark="showTitle">{%lang['calendar.display.field']%}</div>
+                                                                    </div>
+                                                                    <div class="lui_imeeting_order_list">
+                                                                        <ul>
+                                                                            <li ><span class="preview-content-title">{%lang['calendar.time']%}：</span> <span preview-content-mark="time" class="preview-content-row odd"></span></li>
+                                                                            <li ><span class="preview-content-title">{%lang['calendar.content.csummary']%}：</span> <span preview-content-mark="summary" class="preview-content-row even"></span>
+                                                                            </li>
+                                                                            <li > <span class="preview-content-title">{%lang['calendar.initiator']%}：</span> <span preview-content-mark="person" class="preview-content-row odd"></span></li>
+                                                                            <li><span class="preview-content-title">{%lang['calendar.participants']%}：</span> <span  preview-content-mark="joiner" class="preview-content-row even"></span></li>
+                                                                            <li><span class="preview-content-title">{%lang['calendar.place']%}：</span> <span  preview-content-mark="address" class="preview-content-row odd"></span></li>
+                                                                            <li style="text-align: right;color: #699EF6"> <a><span>{%lang['behavior.Details']%}</span> <i class="right-arrow"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                $}
+                                            }else{
+                                                {$
+                                                <li><div class="model-source-table-day">{%i%}</div></li>
+                                                $}
+                                            }
+                                        }
+                                        var nextDayCount = 42-day+2-dayCount;
+                                        for(var i=1;i<nextDayCount;i++){
+                                            {$
+                                            <li><div class="model-source-table-day">{%i%}</div></li>
+                                            $}
+                                        }
+                                        {$
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>$}
+                            if(showMode == "1"){
+                                {$
+                                    <div class="model-source-right model-source-calendar-week">
+                                $}
+                            }else{
+                                {$
+                                    <div class="model-source-right model-source-calendar-week active">
+                                $}
+                            }
+                            {$<div class="model-source-table-msg-top">
+                                < 2021年5月17日 ~ 2021年5月23日 >
+                            </div>
+                            <div class="model-source-table-title">
+                                <ul class="calendar-table-abs">
+                                    $}
+                                    var now = new Date(2021,5,17);
+                                    var dayCount = now.getDate();
+                                    var day = now.getDay();
+                                    var weeks=[lang['calendar.mon'],lang['calendar.tue'],lang['calendar.wed'],lang['calendar.thu'],
+                                               lang['calendar.fri'],lang['calendar.sat'],lang['calendar.sun']];
+                                    for(var j=0;j<7;j++){
+                                        {$
+                                        <li>
+                                            <div>
+                                                <div class="model-source-table-week">{%weeks[j]%}</div>
+                                                <div class="model-source-table-day">05/{%dayCount+j%}</div>
+                                            </div>
+                                        </li>
+                                        $}
+                                    }
+                                    {$
+                                </ul>
+                            </div>
+                            <div class="model-source-table-main">
+                                <div class="model-source-table-box">
+                                    <ul class="calendar-table-content">
+                                        <li>
+                                            <div class="model-source-data-day-content">
+                                                <div class="model-source-table-day-line"></div>
+                                                <div class="model-source-table-day-title">{%lang['calendar.display.field']%}</div>
+                                                <div class="preview-relative">
+                                                    <div class="preview-content">
+                                                        <div class="meeting_calendar_dialog_top">
+                                                            <div class="model-preview-icon"></div>
+                                                            <div class="meeting_calendar_dialog_title textEllipsis  " preview-content-mark="showTitle">{%lang['calendar.display.field']%}</div>
+                                                        </div>
+                                                        <div class="lui_imeeting_order_list">
+                                                            <ul>
+                                                                <li ><span class="preview-content-title">{%lang['calendar.time']%}：</span> <span preview-content-mark="time" class="preview-content-row odd"></span></li>
+                                                                <li ><span class="preview-content-title">{%lang['calendar.content.csummary']%}：</span> <span preview-content-mark="summary" class="preview-content-row even"></span>
+                                                                </li>
+                                                                <li > <span class="preview-content-title">{%lang['calendar.initiator']%}：</span> <span preview-content-mark="person" class="preview-content-row odd"></span></li>
+                                                                <li><span class="preview-content-title">{%lang['calendar.participants']%}：</span> <span  preview-content-mark="joiner" class="preview-content-row even"></span></li>
+                                                                <li><span class="preview-content-title">{%lang['calendar.place']%}：</span> <span  preview-content-mark="address" class="preview-content-row odd"></span></li>
+                                                                <li style="text-align: right;color: #699EF6"> <a><span>{%lang['behavior.Details']%}</span> <i class="right-arrow"></i></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        $}
+
+                                        for(var i=0;i<6;i++){
+                                        {$
+                                        <li>
+                                        </li>
+                                        $}
+                                        }
+                                        {$
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="moreList" class='moreList' style="display: none"></div>
+        </div>
+    </div>
+</div>
+
+$}

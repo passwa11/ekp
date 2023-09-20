@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/sys/anonym/" 
+        messageKey="sys-anonym:module.sys.anonym" >
+        <roles>ROLE_SYSANONYM_SETTING</roles>
+        <areaRoles>
+        	ROLE_SYSANONYM_DELETE;
+        	ROLE_SYSANONYMCATE_MAINTAINER
+        </areaRoles>
+        <request 
+            path="sysAnonymData.do*" 
+            defaultValidator="true" />
+            
+        <request 
+            path="dataview/*" 
+            defaultValidator="true" />
+            
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_SYSANONYM_SETTING)"/>
+            
+        <request 
+            path="sys_anonym_main/sysAnonymMain.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.sys.anonym.model.SysAnonymMain">
+            <!-- 删除 -->
+            <query 
+                queryString="method=delete" 
+                validator="areaRoleValidator(role=ROLE_SYSANONYM_DELETE)"/>
+            <!-- 删除所有 -->
+            <query 
+                queryString="method=deleteAll" 
+                validator="areaRoleValidator(role=ROLE_SYSANONYM_DELETE)"/>
+        </request>
+          
+        <request 
+        	path="sys_anonym_cate/sysAnonymCate.do*"
+        	validatorParameter="recid=fdId,model=com.landray.kmss.sys.anonym.model.SysAnonymCate">
+        	<query
+				queryString="method=add"
+				validator="sysAnonymCateEditorValidator(recid=parentId)" />
+			<query
+				queryString="method=save|saveadd"
+				validator="sysAnonymCateEditorValidator(recid=fdParentId)" />
+			<query
+				queryString="method=savecopy"
+				validator="sysAnonymCateEditorValidator(recid=fdCopyId)" />
+			<query
+				queryString="method=edit|delete|update"
+				validator="sysAnonymCateEditorValidator()" />
+			<query
+				queryString="method=copy"
+				validator="sysAnonymCateEditorValidator(recid=fdCopyId)" />
+			<query
+				queryString="method=view"
+				validator="sysAnonymCateReaderValidator()" />
+        </request>
+    </module>
+    <profileConfig 
+        key="sys/anonym" 
+        messageKey="{sys-anonym:module.sys.anonym}" 
+        url="/sys/profile/moduleindex.jsp?nav=/sys/anonym/tree.jsp" 
+        icon="sns_event" 
+        type="mechanism" 
+        description="{sys-anonym:module.sys.anonym.description}"/>
+</configs>

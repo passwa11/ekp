@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey=""
+		urlPrefix="/sys/modeling/main/"
+		defaultValidator="roleValidator(role=ROLE_MODELING_DEFAULT)|tokenValidator(role=ROLE_MODELING_DEFAULT)" >
+	
+		<request
+			path="index*"
+			validatorParameter="recid=fdAppId,model=com.landray.kmss.sys.modeling.base.model.ModelingApplication">
+			<!--控制应用首页可使用者-->
+			<query
+				queryString="fdAppId=*"
+				validator="authFieldValidator(type=ROLE_APP_USER)|roleValidator(role=SYSROLE_ADMIN)" />
+		</request>
+
+		<request
+				path="mobile/modelingAppMainMobile.do*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.sys.modeling.base.model.ModelingApplication">
+			<!--控制应用首页可使用者（移动首页）-->
+			<query
+					queryString="method=index&amp;fdId=*"
+					validator="authFieldValidator(type=ROLE_APP_USER)|roleValidator(role=SYSROLE_ADMIN)" />
+		</request>
+
+		<request
+				path="modelingAppArchivesSimpleMain.do*"
+				defaultValidator="true"/>
+
+		<request
+				path="modelingAppArchivesModelMain.do*"
+				defaultValidator="true"/>
+
+		<request
+				path="externalQuery.do*"
+				defaultValidator="modelingExternalQueryValidator()">
+
+		</request>
+
+	</module>
+	<!-- 传阅权限 -->
+	<module
+			messageKey=""
+			urlPrefix="/sys/circulation/">
+		<request
+				path="sys_circulation_main/sysCirculationMain*">
+			<!-- 传阅权限-有流程 -->
+			<query
+					queryString="method=addCirculate|saveCirculate&amp;fdModelName=com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain"
+					validator="sysCirculateCheckValidator(recid=fdModelId,model=com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain)" />
+			<query
+					queryString="method=add|save|saveadd&amp;fdModelName=com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain"
+					validator="sysModelingCirculationAuthValidator(recid=fdModelId,model=com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain)" />
+			<query
+					queryString="fdModelName=com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain"
+					validator="roleValidator(role=ROLE_MODELING_DEFAULT)" />
+			<!-- 传阅权限-有流程end -->
+			<!-- 传阅权限-无流程 -->
+			<query
+					queryString="method=addCirculate|saveCirculate&amp;fdModelName=com.landray.kmss.sys.modeling.main.model.ModelingAppSimpleMain"
+					validator="sysCirculateCheckValidator(recid=fdModelId,model=com.landray.kmss.sys.modeling.main.model.ModelingAppSimpleMain)" />
+			<query
+					queryString="method=add|save|saveadd&amp;fdModelName=com.landray.kmss.sys.modeling.main.model.ModelingAppSimpleMain"
+					validator="sysModelingCirculationAuthValidator(recid=fdModelId,model=com.landray.kmss.sys.modeling.main.model.ModelingAppSimpleMain)" />
+			<query
+					queryString="fdModelName=com.landray.kmss.sys.modeling.main.model.ModelingAppSimpleMain"
+					validator="roleValidator(role=ROLE_MODELING_DEFAULT)" />
+			<!-- 传阅权限-无流程end -->
+		</request>
+	</module>
+
+	<!-- 流程文档全文搜索 -->
+	<ftSearch
+		modelName="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain"
+		boost="2.0"
+		timeField="fdLastModifiedTime">
+		<luceneField
+			name="subject"
+			property="docSubject"
+			type="Text" />
+		<luceneField
+			name="creator"
+			property="docCreator.fdName"
+			type="text" />
+		<luceneField
+			name="createTime"
+			property="docCreateTime"
+			type="keyword" />
+		<luceneField
+			name="keyword"
+			property="fdNumber"
+			type="text" />
+	</ftSearch>
+	
+	<!-- 无流程文档全文搜索 -->
+	<ftSearch
+		modelName="com.landray.kmss.sys.modeling.main.model.ModelingAppSimpleMain"
+		boost="2.0"
+		timeField="fdLastModifiedTime">
+		<luceneField
+			name="subject"
+			property="docSubject"
+			type="Text" />
+		<luceneField
+			name="creator"
+			property="docCreator.fdName"
+			type="text" />
+		<luceneField
+			name="createTime"
+			property="docCreateTime"
+			type="keyword" />
+		<luceneField
+			name="keyword"
+			property="fdNumber"
+			type="text" />
+	</ftSearch>
+
+	<!-- 消息队列任务调度器 -->
+	<quartz
+			messageKey="sys-modeling-main:modelingQueue.modelingQueueExecuteDispatcher"
+			jobService="modelingQueueExecuteService"
+			jobMethod="run"
+			cronExpression="0 0 * * * ?"
+			description="sys-modeling-main:modelingQueue.modelingQueueExecuteDispatcher.description" />
+
+	<!-- 发送出错重复执行 -->
+	<quartz
+			messageKey="sys-modeling-main:sysModelingQueueError.runErrorQueue"
+			jobService="sysModelingQueueErrorService"
+			jobMethod="updateRunErrorQueue"
+			cronExpression="0 0/10 * * * ?"
+			description="sys-modeling-main:sysModelingQueueError.runErrorQueue.description" />
+
+	<!-- 应用监控-统计触发日志定时器任务 -->
+	<quartz
+			messageKey="sys-modeling-main:sysModeling.modelingLoaderHandlerMonitorTask"
+			jobService="modelingLoaderHandlerMonitorTask"
+			jobMethod="doMonitorTotalTask"
+			cronExpression="0 3 0 * * ?"
+			description="sys-modeling-main:sysModeling.modelingLoaderHandlerMonitorTask.description" />
+
+	<homePage
+		urlPrefix="sys/modeling"
+		url="/sys/modeling/main/modelingApplication.do?method=appIndexPage&amp;fdId="
+		messageKey="sys-modeling-main:module.modelmain"
+	 />
+	
+</configs>

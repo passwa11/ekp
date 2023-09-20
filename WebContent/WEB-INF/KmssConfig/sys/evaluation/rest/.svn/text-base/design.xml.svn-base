@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		urlPrefix="/sys/evaluation/">
+		<request
+			path="sysEvaluationMain/*"
+			validatorParameter="recid=fdId"
+			defaultValidator="roleValidator(role=SYSROLE_ADMIN)">
+			<query
+				queryString="view"
+				validator="roleValidator(role=ROLE_SYSEVALUATION_MANAGER)|sysEvaluationValidator(model=com.landray.kmss.sys.evaluation.model.SysEvaluationMain)" />
+			<query
+				queryString="deleteall"
+				validator="roleValidator(role=ROLE_SYSEVALUATION_MANAGER)" />
+			<query
+				queryString="listOverView"
+				validator="roleValidator(role=ROLE_SYSEVALUATION_MANAGER)" />
+			<query
+				queryString="getEvalDocNames"
+				validator="roleValidator(role=ROLE_SYSEVALUATION_MANAGER)" />
+			<query
+				queryString="getAppModules"
+				validator="roleValidator(role=ROLE_SYSEVALUATION_MANAGER)" />
+			<query
+				queryString="listModelNames|getAttByIds"
+				validator="roleValidator(role=SYSROLE_USER)" />
+			<query
+				queryString="getEvalDocUrl"
+				validator="roleValidator(role=SYSROLE_USER)" />
+			<query
+				queryString="count"
+				validator="roleValidator(role=SYSROLE_USER)" />
+		</request>
+		
+		<request
+			path="sysEvaluationNotes/*"
+			defaultValidator="roleValidator(role=SYSROLE_ADMIN)">
+			<query
+				queryString="view"
+				validator="roleValidator(role=SYSROLE_USER)" />
+			<query
+				queryString="delete"
+				validator="roleValidator(role=ROLE_SYSEVALUATION_MANAGER)" />
+			<query
+				queryString="deleteall"
+				validator="roleValidator(role=ROLE_SYSEVALUATION_MANAGER)" />
+			<query
+				queryString="listOverView"
+				validator="roleValidator(role=ROLE_SYSEVALUATION_MANAGER)" />
+			<query
+				queryString="getAppModules"
+				validator="roleValidator(role=ROLE_SYSEVALUATION_MANAGER)" />
+			<query
+				queryString="listModelNames"
+				validator="roleValidator(role=SYSROLE_USER)" />
+		</request>
+	</module>
+	
+</configs>

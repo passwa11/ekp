@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.attend.model.SysAttendImportLog"
+		table="sys_attend_import_log">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<property
+			name="fdStatus"
+			column="fd_status"
+			update="true"
+			insert="true"
+			length="4"
+			index="idx_attendImptLog_fdStatus" />
+		<property
+			name="fdResultMessage"
+			column="fd_result_message"
+			update="true"
+			insert="true"
+			length="2000"
+			not-null="false" />
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="true"
+			insert="true"
+			index="idx_attendImpt_docCreateTime" 
+			not-null="false" />
+		<property
+			name="docAlterTime"
+			column="doc_alter_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<many-to-one
+			name="docCreator"
+			column="doc_creator_id"
+			insert="true"
+			update="true"/>
+	</class>
+</hibernate-mapping>

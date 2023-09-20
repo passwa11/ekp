@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="hrTurnoverAnnualDao" 
+        class="com.landray.kmss.hr.turnover.dao.hibernate.HrTurnoverAnnualDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.hr.turnover.model.HrTurnoverAnnual</value>
+        </property>
+    </bean>
+    <bean 
+        id="hrTurnoverAnnualTarget" 
+        class="com.landray.kmss.hr.turnover.service.spring.HrTurnoverAnnualServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="hrTurnoverAnnualDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrTurnoverAnnualService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrTurnoverAnnualTarget"/>
+        </property>
+    </bean>
+</beans>

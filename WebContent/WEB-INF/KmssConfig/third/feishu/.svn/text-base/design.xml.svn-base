@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/third/feishu/" 
+        messageKey="third-feishu:module.third.feishu" 
+        defaultValidator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)">
+        <roles>ROLE_THIRDFEISHU_DEFAULT;ROLE_THIRDFEISHU_SETTING</roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+        <request 
+            path="ssoRedirect.jsp*" 
+            defaultValidator="true"/>
+        <request 
+            path="third_feishu_dept_mapping/thirdFeishuDeptMapping.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.feishu.model.ThirdFeishuDeptMapping" 
+            defaultValidator="roleValidator(role=ROLE_THIRDFEISHU_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_DEFAULT)"/>
+        </request>
+        <request 
+            path="third_feishu_person_mapping/thirdFeishuPersonMapping.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.feishu.model.ThirdFeishuPersonMapping" 
+            defaultValidator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_DEFAULT)"/>
+        </request>
+        <request 
+            path="third_feishu_dept_no_mapping/thirdFeishuDeptNoMapping.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.feishu.model.ThirdFeishuDeptNoMapping" 
+            defaultValidator="roleValidator(role=ROLE_THIRDFEISHU_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_DEFAULT)"/>
+        </request>
+        <request 
+            path="third_feishu_person_no_mapp/thirdFeishuPersonNoMapp.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.feishu.model.ThirdFeishuPersonNoMapp" 
+            defaultValidator="roleValidator(role=ROLE_THIRDFEISHU_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_DEFAULT)"/>
+        </request>
+        <request 
+            path="third_feishu_notify_log/thirdFeishuNotifyLog.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.feishu.model.ThirdFeishuNotifyLog" 
+            defaultValidator="roleValidator(role=ROLE_THIRDFEISHU_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_DEFAULT)"/>
+        </request>
+        <request 
+            path="third_feishu_notify_queue_err/thirdFeishuNotifyQueueErr.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.feishu.model.ThirdFeishuNotifyQueueErr" 
+            defaultValidator="roleValidator(role=ROLE_THIRDFEISHU_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDFEISHU_DEFAULT)"/>
+        </request>
+        
+        <request 
+            path="jsapi.do*" 
+            defaultValidator="true"/>
+
+        <request
+                path="thirdFeishu.do*"
+                defaultValidator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)"/>
+    </module>
+
+    <!-- 后台配置权限 -->
+    <module
+            messageKey=""
+            urlPrefix="/sys/appconfig/">
+        <request path="sys_appconfig/sysAppConfig*">
+            <query
+                    queryString="modelName=com.landray.kmss.third.feishu.model.ThirdFeishuConfig"
+                    validator="roleValidator(role=ROLE_THIRDFEISHU_SETTING)" />
+        </request>
+    </module>
+
+    <homePage 
+        messageKey="third-feishu:module.third.feishu" 
+        urlPrefix="third/feishu" 
+        url="/third/feishu/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/third/feishu/tree.jsp"/>
+        
+    <profileConfig 
+        key="feishu" 
+        messageKey="{third-feishu:module.third.feishu}" 
+        url="/third/feishu/profile.jsp" 
+        icon="km_comminfo" 
+        type="mobile" 
+        order="7"
+        description="{third-feishu:module.third.feishu.description}"/>
+    
+    <quartz
+		messageKey="third-feishu:third.feishu.synchroOrg2Feishu.title"
+		jobService="synchroOrg2Feishu"
+		cronExpression="0 0 22 * * ?"
+		jobMethod="triggerSynchro"
+		enable="true" />
+	
+	<quartz
+		messageKey="third-feishu:third.feishu.notifyQueueError.resend.title"
+		jobService="thirdFeishuNotifyQueueErrService"
+		jobMethod="updateRunErrorQueue"
+		cronExpression="0 0/30 * * * ?" 
+		description="third-feishu:third.feishu.notifyQueueError.resend.description" />
+			
+	<quartz
+		messageKey="third-feishu:third.feishu.notifyQueueError.clear.title"
+		jobService="thirdFeishuNotifyQueueErrService"
+		jobMethod="clearNotifyQueueError"
+		cronExpression="0 0 4 * * ?" 
+		description="third-feishu:third.feishu.notifyQueueError.clear.description" />
+
+	<quartz
+		messageKey="third-feishu:third.feishu.updatePersonMapping.title"
+		jobService="thirdFeishuPersonMappingService"
+		cronExpression="0 50 22 * * ?"
+		jobMethod="updatePersonMapping"
+		enable="true" /> 	
+</configs>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/filestore/sys_filestore/sysFileInqueue.do"
+		class="com.landray.kmss.sys.filestore.actions.SysFileInQueueAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.filestore.forms.SysFileInQueueForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="select"
+					value="/sys/filestore/oldAttToQueue_select.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/filestore/sys_filestore/sysFileConvertQueue.do"
+		class="com.landray.kmss.sys.filestore.actions.SysFileConvertQueueAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.filestore.forms.SysFileConvertQueueForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/sys/filestore/convertqueue/queueListData.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/filestore/sys_filestore/sysFileConvertClient.do"
+		class="com.landray.kmss.sys.filestore.actions.SysFileConvertClientAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.filestore.forms.SysFileConvertClientForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/sys/filestore/convertclient/clientListData.jsp" />
+				<entry
+					key="edit"
+					value="/sys/filestore/convertclient/clientConfig.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/filestore/sys_filestore/sysFileConvertGlobalConfig.do"
+		class="com.landray.kmss.sys.filestore.actions.SysFileConvertGlobalConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.filestore.forms.SysFileConvertGlobalConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="config"
+					value="/sys/filestore/convertconfig/config.jsp" />
+					<entry
+					key="convertServerConfig"
+					value="/sys/filestore/convertconfig/convertServerConfig.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/filestore/sys_filestore/sysFileConvertConfig.do"
+		class="com.landray.kmss.sys.filestore.actions.SysFileConvertConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.filestore.forms.SysFileConvertConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/sys/filestore/convertconfig/data.jsp" />
+				<entry
+					key="edit"
+					value="/sys/filestore/convertconfig/edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/filestore/sys_filestore/sysFileConvertLog.do"
+		class="com.landray.kmss.sys.filestore.actions.SysFileConvertLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.filestore.forms.SysFileConvertLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/sys/filestore/convertlog/logListData.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/resource/sys_filestore_scheduler/sysFileScheduler.do"
+		class="com.landray.kmss.sys.filestore.actions.SysFileSchedulerAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/filestore/sys_filestore/sysFileConvertQueueParam.do"
+		class="com.landray.kmss.sys.filestore.actions.SysFileConvertQueueParamAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.filestore.forms.SysFileConvertQueueParamForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="setting"
+					value="/sys/filestore/convertqueue/setting.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

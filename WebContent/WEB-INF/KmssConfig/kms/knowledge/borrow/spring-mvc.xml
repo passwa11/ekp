@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        class="com.landray.kmss.kms.knowledge.borrow.actions.KmsKnowledgeBorrowAction" 
+        parent="KmssBaseAction" 
+        name="/kms/knowledge/kms_knowledge_borrow/kmsKnowledgeBorrow.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.kms.knowledge.borrow.forms.KmsKnowledgeBorrowForm"/>
+        <property 
+            name="forwards">
+           	<map>
+				<entry key="list"
+					value="/kms/knowledge/kms_knowledge_borrow/kmsKnowledgeBorrow_list.jsp" />
+				<entry key="data"
+					value="/kms/knowledge/kms_knowledge_borrow/kmsKnowledgeBorrow_data.jsp" />
+				<entry key="view"
+					value="/kms/knowledge/kms_knowledge_borrow/kmsKnowledgeBorrow_view.jsp" />
+				<entry key="edit"
+					value="/kms/knowledge/kms_knowledge_borrow/kmsKnowledgeBorrow_edit.jsp" />
+				<entry
+					key="myBorrowData"
+					value="/kms/knowledge/kms_knowledge_borrow/myBorrow_data.jsp" />
+			</map>
+        </property>
+    </bean>
+
+	<bean
+			class="com.landray.kmss.kms.knowledge.borrow.actions.KmsKnowledgeBorrowAttAuthAction"
+			parent="KmssBaseAction"
+			name="/kms/knowledge/kms_knowledge_borrow/kmsKnowledgeBorrowAttAuth.do"
+			lazy-init="true">
+		<property
+				name="formType"
+				value="com.landray.kmss.kms.knowledge.borrow.forms.KmsKnowledgeBorrowAttAuthForm"/>
+		<property
+				name="forwards">
+			<map>
+				<entry key="list"
+					   value="/kms/knowledge/kms_knowledge_borrow/att_auth/kmsKnowledgeBorrowAttAuth_list.jsp" />
+				<entry key="data"
+					   value="/kms/knowledge/kms_knowledge_borrow/att_auth/kmsKnowledgeBorrowAttAuth_data.jsp" />
+				<entry key="view"
+					   value="/kms/knowledge/kms_knowledge_borrow/att_auth/kmsKnowledgeBorrowAttAuth_view.jsp" />
+				<entry key="edit"
+					   value="/kms/knowledge/kms_knowledge_borrow/att_auth/kmsKnowledgeBorrowAttAuth_edit.jsp" />
+				<entry
+						key="myBorrowAttAuthData"
+						value="/kms/knowledge/kms_knowledge_borrow/att_auth/myBorrowAttAuth_data.jsp" />
+			</map>
+		</property>
+	</bean>
+    
+    <bean
+        name="/kms/knowledge/borrow/config/KmsKnowledgeBorrowConfig.do"
+        class="com.landray.kmss.kms.knowledge.borrow.actions.KmsKnowledgeBorrowConfigAction"
+        lazy-init="true"
+        parent="KmssBaseAction">
+        <property name="formType"
+            value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+    </bean>
+</beans>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="startSubProcessNodeBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.StartSubProcessNodeBehaviour">
+		<property name="backgroundAuthService">
+			<ref bean="backgroundAuthService" />
+		</property>
+		<property name="sysAttachmentService">
+			<ref bean="sysAttachmentService" />
+		</property>
+		<property name="sysMetadataParser">
+			<ref bean="sysMetadataParser" />
+		</property>
+	</bean>
+	<bean
+		id="startSubProcessNodeDesc"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.StartSubProcessNodeDesc" />
+
+	<bean
+		id="recoverSubProcessNodeBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.RecoverSubProcessNodeBehaviour">
+		<property name="sysMetadataParser">
+			<ref bean="sysMetadataParser" />
+		</property>
+		<property name="accessManager">
+			<ref bean="accessManager" />
+		</property>
+		<property name="sysAttMainCoreInnerService">
+			<ref bean="sysAttMainService" />
+		</property>
+		<property name="sysMetadataDao">
+			<ref bean="sysMetadataDao" />
+		</property>
+	</bean>
+	<bean
+		id="recoverSubProcessNodeDesc"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.RecoverSubProcessNodeDesc" />
+
+	<bean
+		id="adminRecoveSubProcessBehaviour"
+		parent="abstractOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.operation.AdminRecoveSubProcessBehaviour">
+		<property name="processExecuteService">
+			<ref bean="lbpmProcessExecuteService" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmAdminRecoverSubProcessAccessor"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.operation.LbpmAdminRecoverSubProcessAccessor">
+		<property name="processServiceManager">
+			<ref bean="lbpmProcessServiceManager" />
+		</property>
+	</bean>
+
+	<bean
+		id="adminRecoveSubProcessBinder"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.operation.AdminRecoveSubProcessBinder">
+	</bean>
+
+	<bean
+		id="systemRecoveSubProcessBehaviour"
+		parent="abstractOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.operation.SystemRecoveSubProcessBehaviour">
+		<property name="processServiceManager">
+			<ref bean="lbpmProcessServiceManager" />
+		</property>
+	</bean>
+
+	<bean
+		id="subProcessRecoverListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.SubProcessRecoverListener">
+		<property name="processServiceManager">
+			<ref bean="lbpmProcessServiceManager" />
+		</property>
+		<property name="processExecuteService">
+			<ref bean="lbpmProcessExecuteService" />
+		</property>
+	</bean>
+
+	<bean
+		id="processDeletionRecoverListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.ProcessDeletionRecoverListener">
+		<property name="processServiceManager">
+			<ref bean="lbpmProcessServiceManager" />
+		</property>
+		<property name="processExecuteService">
+			<ref bean="lbpmProcessExecuteService" />
+		</property>
+	</bean>
+
+	<bean
+		id="processFinishedAbandonRecoverListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.ProcessFinishedAbandonRecoverListener">
+		<property name="processExecuteService">
+			<ref bean="lbpmProcessExecuteService" />
+		</property>
+	</bean>
+
+	<bean
+		id="processAbandonRecoverListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.ProcessAbandonRecoverListener">
+		<property name="processExecuteService">
+			<ref bean="lbpmProcessExecuteService" />
+		</property>
+	</bean>
+
+	<bean
+		id="processJumpAbandonRecoverListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.ProcessJumpAbandonRecoverListener">
+		<property name="processExecuteService">
+			<ref bean="lbpmProcessExecuteService" />
+		</property>
+	</bean>
+
+	<bean
+		id="processRefusedAbandonRecoverListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.ProcessRefusedAbandonRecoverListener">
+		<property name="processExecuteService">
+			<ref bean="lbpmProcessExecuteService" />
+		</property>
+	</bean>
+
+	<bean
+		id="permissionChangedListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.PermissionChangedListener">
+	</bean>
+
+	<bean
+		id="permissionTransferListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.PermissionTransferListener">
+	</bean>
+	
+	<bean
+		id="recoverNodeEndListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.RecoverNodeEndListener">
+		<property name="processExecuteService">
+			<ref bean="lbpmProcessExecuteService" />
+		</property>
+	</bean>
+
+	<bean
+		id="sendNotifyToDrafterListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.SendNotifyToDrafterListener">
+	</bean>
+
+	<bean
+		id="subProcessExceptionListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.SubProcessExceptionListener">
+		<property name="processServiceManager">
+			<ref bean="lbpmProcessServiceManager" />
+		</property>
+	</bean>
+
+	<bean
+		id="subProcessDialogService"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.SubProcessDialogService">
+	</bean>
+
+	<bean
+		id="subProcessDictService"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.SubProcessDictService">
+		<property name="sysDictLoader">
+			<ref bean="sysDictLoader" />
+		</property>
+	</bean>
+
+	<bean
+		id="subprocessStartListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.SubprocessStartListener">
+	</bean>
+
+	<bean
+		id="drafterSubmitAddNoteListener"
+		class="com.landray.kmss.sys.lbpmservice.node.subprocess.event.DrafterSubmitAddNoteListener">
+	</bean>
+	
+	<bean
+		id="lbpmDayOfAbandonSubProcess"
+		class="com.landray.kmss.sys.lbpmservice.quartz.DayOfAbandonSubProcessListener" >
+		<property name="processExecuteService">
+			<ref bean="lbpmProcessExecuteService" />
+		</property>
+	</bean>
+</beans>

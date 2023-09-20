@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="sysMportalLogoOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.mportal.model.SysMportalLogoInfo"
+            action="/sys/mportal/sys_mportal_logo/sysMportalLogo.do">
+            <!-- logo配置 -->
+            <query 
+            	method="list"
+                logPoint="Base_UrlParam"/>
+            <!-- 上传(logo配置) -->
+            <query 
+            	method="*"
+                logPoint="Base_UrlParam;upload"
+                messageKey="sys-mportal:sysMportal.profile.logo.upload"/>
+            <!-- 删除(logo配置) -->
+            <query 
+            	method="delete"
+                logPoint="Base_UrlParam;delete"
+                messageKey="button.delete"/>
+             <!-- 删除(logo配置的验证) -->
+            <query 
+            	method="validateLogo"
+                logPoint="validateLogo"
+                messageKey="sys-mportal:delete.check"/>
+            <!-- 选择logo -->
+            <query 
+            	method="select"
+                logPoint="Base_UrlParam"
+                messageKey="sys-mportal:sysMportalLogo.log.select"/>
+        </oper>
+        
+        <oper
+            id="sysMportalCardOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.mportal.model.SysMportalCard"
+            action="/sys/mportal/sys_mportal_card/sysMportalCard.do">
+            <!-- 禁用(卡片配置) -->
+            <query 
+            	method="disableAll"
+                logPoint="Base_UrlParam"
+                messageKey="sys-mportal:btn.fdIsAvailable.off"/>
+            <!-- 启用(卡片配置) -->
+            <query 
+            	method="enableAll"
+                logPoint="Base_UrlParam"
+                messageKey="sys-mportal:btn.fdIsAvailable.on"/>
+        </oper>
+        
+        <oper
+            id="sysMportalPageOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.mportal.model.SysMportalPage"
+            action="/sys/mportal/sys_mportal_page/sysMportalPage.do">
+            <!-- 启用(门户配置) -->
+            <query 
+            	method="enableAll"
+                logPoint="Base_UrlParam"
+                messageKey="sys-mportal:btn.fdIsAvailable.on"/>
+            <!-- 禁用(门户配置) -->
+            <query 
+            	method="disableAll"
+                logPoint="Base_UrlParam"
+                messageKey="sys-mportal:btn.fdIsAvailable.off"/>
+            <query 
+            	method="saveOrUpdateHeaderSetting"
+                logPoint="Base_UrlParam"
+                messageKey="sys-mportal:header.setting"/>
+                
+        </oper>  
+          
+        <oper
+            id="sysMportalHtmlOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.mportal.model.SysMportalHtml"
+            action="/sys/mportal/sys_mportal_html/sysMportalHtml.do">
+        </oper>    
+        
+        <oper
+            id="sysMportalImgSourceOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.mportal.model.SysMportalImgSource"
+            action="/sys/mportal/sys_mportal_imgsource/sysMportalImgSource.do">
+        </oper>    
+        
+        <oper
+            id="sysMportalMenuOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.mportal.model.SysMportalMenu"
+            action="/sys/mportal/sys_mportal_menu/sysMportalMenu.do">
+            <!-- 选择 -->
+            <query
+            	method="select"
+            	logPoint="Base_UrlParam"
+                messageKey="sys-mportal:sysMportalMportlet.log.select"/>
+        </oper>    
+            
+        <oper
+            id="sysMportalMportletOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/mportal/sys_mportal_mportlet/sysMportalMportlet.do">
+            <!-- 选择 -->
+            <query
+            	method="select"
+            	logPoint="Base_UrlParam"
+                messageKey="sys-mportal:sysMportalMportlet.log.select"/>
+        </oper>
+        
+        
+        <oper
+            id="sysMportalTypeConfigOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/mportal/sys_mportal_type_config/sysMportalTypeConfig.do">
+            <!-- 门户分类 -->
+            <query
+            	method="select"
+            	logPoint="Base_UrlParam"
+                messageKey="sys-mportal:sysMportalMportlet.log.select"/>
+        </oper>
+        
+	</logset>
+</log-oper>

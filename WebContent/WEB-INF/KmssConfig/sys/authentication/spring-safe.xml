@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/authentication/ssoclient.do"
+		class="com.landray.kmss.sys.authentication.ssoclient.EKPSSOClientAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/sys/authentication/ssoclient_edit.jsp" />
+				<entry
+					key="editall"
+					value="/sys/authentication/ssoclient_editall.jsp" />
+				<entry
+					key="failure"
+					value="/sys/config/resource/error.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- 
+    静态资源映射 
+    如果新增一种静态文件后缀，那么需要同时增加一个 sec:filter-chain 和 相应的entry key="/**/*.new"
+    -->
+    <bean id="staticResourceHandlerMapping"
+        class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="urlMap">
+            <map>
+                <entry key="/**/*.gif" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.jpg" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.png" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.bmp" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.ico" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.css" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.js" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.tmpl" value-ref="staticResourceHttpRequestHandler"/>
+                <entry key="/**/*.html" value-ref="staticResourceHttpRequestHandler"/>
+            </map>
+        </property>
+        <property name="order" value="2147483645"/>
+    </bean>
+    
+    <bean id="staticResourceHttpRequestHandler"
+        class="org.springframework.web.servlet.resource.ResourceHttpRequestHandler">
+        <property name="locations">
+            <list>
+                <value>/</value>
+            </list>
+        </property>
+    </bean>
+</beans>

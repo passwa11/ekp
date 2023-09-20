@@ -1,0 +1,35 @@
+var modelView = render.parent;
+
+var infos = modelView.formateSourceData(data.datas || data.formInfos);
+var paths = modelView.getPaths();
+
+
+{$
+	<div class="item-block">
+		<div class="item-block-path">$}
+		if(paths.length > 0){
+			for(var i = 0;i < paths.length;i++){
+				var path = paths[i];
+				{$
+					<span class="item-path-txt">{%path%}</span>
+				$}
+			}
+		}
+		{$</div>
+		<div class="item-box-wrap">$}
+			for(var key in infos){
+				var boxInfo = infos[key];
+				{$
+					<div class="item-box" data-trigger='true' data-item-value="{%boxInfo.id%}">
+						<div class="item-box-content" title="{%boxInfo.name%}">
+							<div class="item-box-icon">
+								<i class="iconfont_nav {%boxInfo.icon%}"></i>
+							</div>
+							<p>{%boxInfo.name%}</p>
+						</div>
+					</div>
+				$}
+			}
+		{$</div>
+	</div>
+$}

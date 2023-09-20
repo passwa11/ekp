@@ -1,0 +1,575 @@
+@charset "utf-8";
+*{
+	padding: 0;
+	margin: 0;-webkit-tap-highlight-color:rgba(255,255,255,0);
+}
+
+ol, ul {
+	list-style: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+address, caption, cite, code, dfn, em, strong, th, var {
+	font-weight: normal;
+	font-style: normal;
+}
+/*** 会议列表 ***/
+.muiImeetingItem{ border-bottom:none;}
+
+.ImeetingScrollableView,.ImeetingList{
+	background: #f0eff5;
+}
+
+.ImeetingList .summary{
+	margin-bottom: 0!important;
+}
+
+.calendarButton {
+	height: 3.8rem;
+	line-height: 3.8rem;
+	display: table-cell;
+	text-align: center;
+	color: #4285f4;
+	min-width: 4rem;
+	height: 100%;
+	cursor: pointer;
+	width: 4rem;
+}
+
+li.muiImeetingItem {
+	padding: 1.6rem 1.4rem;
+	position: relative;  
+}
+
+li.muiImeetingItem:active {
+	background-color: #e8e8e8;
+}
+
+li.muiImeetingItem:not(:last-child) {
+	border-bottom: 1px solid #E8E8E8;
+}
+
+.muiImeetingItem .muiMeetingListContent {
+	position: relative; 
+	-webkit-tap-highlight-color:rgba(255,255,255,0);
+}
+
+.muiImeetingItem .muiMeetingListContent .title { 
+	white-space: nowrap;
+	overflow: hidden;
+	padding-right: 6rem;
+	text-overflow: ellipsis;
+	font-family: PingFangSC-Regular;
+	font-size: 1.7rem;
+	color: #333333;
+	letter-spacing: 0;
+}
+
+.muiImeetingItem .muiMeetingListContent[data-status=hold] .title {
+	color: #999;
+}
+
+.muiImeetingItem .muiMeetingListContent .detail {
+	display: flex;
+	flex-flow: row wrap;
+} 
+
+.muiImeetingItem .muiMeetingListContent .detail > div {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	font-family: PingFangSC-Regular;
+	font-size: 1.3rem;
+	color: #666666;
+	letter-spacing: 0;
+	margin-top: 0.7rem;
+	max-width: 60%;
+}
+
+.muiImeetingItem .muiMeetingListContent .detail > div > span {
+	display: inline-block;
+	max-width: 85%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.muiImeetingItem .muiMeetingListContent[data-status=hold] .detail > div {
+	color: #999;
+}
+
+.muiImeetingItem .muiMeetingListContent .detail > div:not(:last-child) {
+	margin-right: 2rem;
+}
+
+.muiImeetingItem .muiMeetingListContent .detail div.place {
+	width: 100%;
+	max-width: 100%;
+}
+
+.muiImeetingItem .muiMeetingListContent .detail div.place .span {
+	max-width: 70%;
+}
+
+.muiImeetingItem .muiMeetingListContent .detail .mui {
+	width: 1.6rem;
+	height: 1.6rem;
+	margin-right: 0.8rem;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.muiImeetingItem .muiMeetingListContent .detail .mui.mui-people {
+	background-image: url(../images/icon_people.png);
+}
+.muiImeetingItem .muiMeetingListContent .detail .mui.mui-clock {
+	background-image: url(../images/icon_clock.png);
+}
+.muiImeetingItem .muiMeetingListContent .detail .mui.mui-position {
+	background-image: url(../images/icon_position.png);
+}
+
+.muiImeetingItem .muiMeetingStatus {
+	display: inline-block;
+	border: 1px solid #C7C6C7;
+	color: #C7C6C7;
+	padding: 0px 5px;
+	font-size:1.2rem;
+	border-radius: 3px;
+	background-color: rgba(199,198,199,0.05);
+	height: 20px;
+	line-height: 20px;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.muiImeetingItem .muiMeetingStatus.unHold {
+	background-color: rgba(81,183,73,0.20);
+	color: #51b749;
+	border-color: #51b749; 
+}
+
+.muiImeetingItem .muiMeetingStatus.holding {
+	background-color: rgba(84,132,237,0.20);
+	color: #5484ed;
+	border-color: #5484ed; 
+}
+
+.muiImeetingItem .muiMeetingStatus.hold {
+	background-color: rgba(251,215,91,0.20);
+	color: #fbd75b;
+	border-color: #fbd75b; 
+}
+
+.muiImeetingItem .muiMeetingStatus[data-has-exam="wait"] {
+	background-color: rgba(249,144,90,0.20);
+	color: #F9905A !important;
+	border-color: #F9905A !important; 
+}
+
+.muiImeetingItem .muiMeetingStatus[data-has-exam="false"] {
+	background-color: rgba(199,198,199,0.20);
+	color: #C7C6C7 !important;
+	border-color: #C7C6C7 !important; 
+}
+
+.rightContent p.title a {
+	color: #454545;
+	display: inline-block;
+	width: 98%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.rightContent p.user .mui{ font-size:1.6rem; margin-top:-0.2rem;}
+.rightContent p.place .mui{ font-size:1.7rem; margin-top:-0.2rem;}
+.rightContent p.user,.rightContent p.place {
+	font-size: 1.3rem;
+	color: #898989; 
+}
+
+.muiMeetingCardItem .muiCardIcoList {
+	bottom: -2px;
+}
+.muiMeetingCardItem .muiListSummary{ border-top:0px;}
+.muiMeetingCardItem .figure.noStatusFigure{ padding-right:0rem;}
+.muiMeetingCardItem .muiCardSummary{ padding-top:0px;}
+.muiMeetingCardItem .muiCardIcoList li{ float:none;}
+.muiMeetingStatusTag{
+	text-align: center;
+	font-size: 1.2rem;
+	height: 20px;
+	line-height: 20px;
+	display: inline-block;
+	padding: 0 5px;
+	border-radius: 3px;
+	position: absolute;
+	border: 1px solid #ccc;
+	right: 0;
+}
+.muiCalendarContainer .muiListNoData{
+	background-color: #F8F8F8;
+}
+
+.muiMeetingStatusTag.muiMeetingCancel,
+.muiMeetingStatusTag.muiMeetingDraft,
+.muiMeetingStatusTag.muiMeetingUnhold{
+	background-color: rgba(81,183,73,0.20);
+	color: #51b749;
+	border-color: #51b749; 
+}
+.muiMeetingStatusTag.muiMeetingExamine,
+.muiMeetingStatusTag.muiMeetingHolding {
+	background-color: rgba(84,132,237,0.20);
+	color: #5484ed;
+	border-color: #5484ed; 
+}
+.muiMeetingStatusTag.muiMeetingDiscard {
+	background-color: rgba(249,144,90,0.20);
+	color: #F9905A !important;
+	border-color: #F9905A; 
+}
+.muiMeetingStatusTag.muiMeetingRefuse {
+	border-color: #F56B6B;
+	color: #F56B6B;
+	background-color: #fff0ee;
+}
+.muiMeetingStatusTag.muiMeetingHold {
+	background-color: rgba(251,215,91,0.20);
+	color: #fbd75b;
+	border-color: #fbd75b; 
+}
+
+/* 底部多页签 */
+.mblTabBarTabBar{
+	box-shadow:0 0 5px rgba(59,68,93,0.10);
+}
+.muiTabBarGrid.mblTabBarTabBar .mblTabBarButton:after{
+	display:none;
+}
+
+.mblTabBarButtonLabel {
+	color: #999;
+	height: 2rem;
+}
+
+.mblTabBarButtonSelected .mblTabBarButtonLabel {
+	color: #4285f4;
+}
+
+.mblTabBarButtonIconArea .mblTabBarButtonIconParent{
+	height: 2.6rem;
+	line-height: 2.6rem;
+	padding-top: .3rem;
+}
+.mblTabBarButtonIconArea .mblTabBarButtonIconParent img{
+	vertical-align: middle;
+	max-height: 2rem;
+	margin-bottom: .3rem;
+}
+.mblTabBarButtonIconArea .mblTabBarButtonIconParent .mblTabBarButtonLabel{
+	line-height: 1.2!important;
+}
+#tab2Calendar .mblTabBarButtonIconParent img {
+	/* max-height: 2rem; */
+}
+
+.muiFormSelectText {
+	line-height: 4.6rem;
+}
+
+#ImeetingCreateFrame {
+	display: none;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: -5rem;
+	z-index: 100000;
+	background-color: rgba(233,231,231,0.5);
+}
+
+#ImeetingCreateFrame > div:first-child {
+	margin-top: 8.65rem;
+}
+
+#ImeetingCreateFrame > div:not(:last-child) {
+	margin-bottom: 3.2rem;
+}
+
+#ImeetingCreateFrame > div {
+	text-align: center;
+	width: 23.2rem;
+	min-height: 8rem;
+	margin: 0 auto;
+	background-image: url(../images/bg_create.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	font-family: PingFangSC-Regular;
+	letter-spacing: 0;
+	padding-top: 2rem;
+	box-sizing: border-box;
+	line-height: normal;
+	border: none;
+	float:none;
+}
+
+#ImeetingCreateFrame > div > div:nth-child(1),
+#ImeetingCreateFrame > div .create_title {
+	font-size: 1.8rem;
+	color: #333333;
+}
+
+#ImeetingCreateFrame > div > div:nth-child(2),
+#ImeetingCreateFrame > div .create_desc {
+	margin-top: 0.6rem;
+	font-size: 1.2rem;
+	color: #666666;
+	line-height: normal;
+}
+
+
+#ImeetingCreateFrame .mblTabBarButtonIconArea{
+	display:none;
+}
+#ImeetingCreateBtn {
+	z-index: 110;
+    position: absolute;
+    right: 1.5rem;
+    bottom: 0.75rem;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 2.25rem;
+    background-color: #4285f4;
+    color: white;
+    text-align: center;
+    line-height: 4.5rem;
+    font-size: 0;
+    box-shadow: 0 0.3rem 0.5rem rgba(66, 133, 244, 0.23);
+}
+
+#ImeetingCreateBtn .mblTabBarButtonIconArea {
+	display: none;
+}
+
+#ImeetingCreateBtn .mblTabBarButtonLabel {
+	color: white;
+}
+
+#ImeetingCreateBtn .mui {
+	font-size: 1.8rem;
+	font-weight: bold;
+    transition: all 0.3s;
+}
+
+#calendar[data-create-active="true"] #ImeetingCreateBtn .mui{
+	transform: rotate(135deg);
+}
+
+#calendar[data-create-active="true"] #ImeetingCreateFrame,
+#place[data-create-active="true"] #ImeetingCreateFrame {
+	display: block;
+}
+
+#calendar[data-create-active="true"] .muiCalendarHead,
+#calendar[data-create-active="true"] .muiCalendarTable, 
+#calendar[data-create-active="true"] .muiCalendarBottom,
+#place[data-create-active="true"] .meetingHeader,
+#place[data-create-active="true"] .muiMeetingBookContainer,
+#place[data-create-active="true"] .muiMeetingBookInfoArea {
+	filter: blur(5px);
+}
+
+.otherMenuList {
+ 	background-color: #fff;
+	font-family: PingFangSC-Regular;
+	font-size: 1.5rem;
+	color: #333333;
+	letter-spacing: 0;
+}
+
+.otherMenuList li{
+	height: 4.5rem;
+	line-height: 4.5rem;
+	padding: 0 .8rem 0 .8rem;
+	background-color: white;
+	overflow: hidden;
+}
+
+.otherMenuList li:active {
+	background-color: #f5f5f5;
+}
+
+.otherMenuList li {
+	/* border-bottom: 1px solid #e8e8e8; */
+}
+
+.otherMenuList li span{
+	vertical-align:middle;
+}
+
+.otherMenuList li .mui {
+	line-height: 4.5rem;
+	float: right;
+	margin-right: 0.4rem;
+	color: #8f95b2;
+	font-size: 1.1rem;
+}
+
+#placeAuditBadge {
+	display: inline-block;
+    /* min-width: 1.5rem; */
+    height: 1.6rem;
+    line-height: 1.7rem;
+    padding: 0 0.5rem;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    background-color: #ee5555;
+    box-sizing: border-box;
+    transform: scale(.85);
+    vertical-align: 0px;
+    text-align: center;
+}
+
+.muiMeetingCardItem {
+	padding: 1.2rem 1.4rem;
+}
+.muiMeetingCardItem:hover {
+	background-color: #f5f5f5;
+}
+
+.muiMeetingCardItem:last-child {
+}
+
+.muiMeetingCardItem .title{
+	font-family: PingFangSC-Regular;
+	font-size: 1.6rem;
+	line-height: 1.6rem;
+	color: #333333;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	letter-spacing: 0;
+	margin-bottom: 0.85rem;
+}
+
+.muiMeetingCardItem .detail{
+	font-family: PingFangSC-Regular;
+	font-size: 1.3rem;
+	color: #999;
+	letter-spacing: 0;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	padding: 0.2rem 0;
+}
+
+.muiMeetingCardItem .detail > div {
+	display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.muiMeetingCardItem .detail > div .mui {
+	margin-right: 0.3rem;
+	width: 1.6rem;
+	height: 1.6rem;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: relative;
+	top: -0.2rem;
+}
+
+.muiMeetingCardItem .detail > div .mui.mui-people {
+	background-image: url(../images/icon_people.png);
+}
+
+.muiMeetingCardItem .detail > div .mui.mui-clock {
+	background-image: url(../images/icon_clock.png);
+}
+
+.muiMeetingCardItem .detail > div.person {
+	width: 8rem;
+	max-width: 8rem;
+}
+
+.muiMeetingCardItem .detail > div.time {
+	flex: 1;
+}
+
+.muiMeetingCardItem .detail > div:not(:last-child) {
+	margin-right: 1rem;
+}
+
+#summary {
+	background-color: #f7f7f7;
+}
+
+.muiDialogElement .muiDialogElementContainer_top {
+	overflow-y: scroll;
+}
+
+.muiCardItem .figure {
+	padding-left: 0;
+}
+
+.muiCardItem .figure {
+	min-height: unset;
+}
+
+.muiCardItem .figure .title {
+	height: unset;
+	position: relative;
+}
+
+.muiMeetingCardItem .muiCardIcoList li {
+	display: inline-block;
+}
+
+
+/* #83980 优化 会议名称过长问题 Starts  */
+.ImeetingList{}
+.ImeetingList .muiCardItem .figure .title{
+    padding-right: 5.2rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+}
+.ImeetingList .muiMeetingStatusTag{
+    max-width: 4rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+}
+/* #83980 优化 会议名称过长问题 Ends  */
+
+
+#ImeetingCreateFrame > div > div:nth-child(2).mblTabBarButtonLabel{
+	margin-top:0;
+}
+
+.mblTabBarButtonIconParent.mblTabBarButtonIconParent1{
+	display: block;
+}
+.mblTabBarButtonIconParent.mblTabBarButtonIconParent2{
+	display: none;
+}
+
+.mblTabBarButtonSelected .mblTabBarButtonIconParent.mblTabBarButtonIconParent1{
+	display: none;
+}
+.mblTabBarButtonSelected .mblTabBarButtonIconParent.mblTabBarButtonIconParent2{
+	display: block!important;
+}
+

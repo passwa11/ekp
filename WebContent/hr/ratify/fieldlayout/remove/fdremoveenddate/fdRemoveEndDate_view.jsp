@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/sys/ui/jsp/common.jsp"%>
+<%@ include file="/hr/ratify/fieldlayout/common/param_parser.jsp"%>
+<span class="xform_fieldlayout" style="<%=parse.getStyle()%>">
+	<c:choose>
+		<c:when test="${hrRatifyRemoveForm.fdIsLongtermContract == true }">
+			${ lfn:message('hr-staff:hrStaffPersonExperience.contract.fdIsLongtermContract.1') }
+		</c:when>
+		<c:otherwise>
+			<c:out value="${hrRatifyRemoveForm.fdRemoveEndDate}"/>
+		</c:otherwise>
+	</c:choose>
+</span>

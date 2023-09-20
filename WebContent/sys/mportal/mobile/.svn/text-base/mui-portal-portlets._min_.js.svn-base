@@ -1,0 +1,1 @@
+require({cache:{"/ekp_dev/sys/mportal/mobile/config.jsp":function(){define([],function(){return{itEnabled:"false",itUrl:"",searchHost:"",headerType:"1"}})}}});var memory={};require({cache:{"sys/mportal/mobile/mui-portal-portlets_zh-cn._min_":function(){define("",{})}}});

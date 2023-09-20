@@ -1,0 +1,888 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 开始 -->
+	<bean id="synchroInIteratorProviderRunnerTarget"
+		class="com.landray.kmss.sys.oms.in.OMSSynchroInIteratorProviderRunner">
+		<property name="orgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="orgOrgService">
+			<ref bean="sysOrgOrgService" />
+		</property>
+		<property name="orgDeptService">
+			<ref bean="sysOrgDeptService" />
+		</property>
+		<property name="orgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="orgPostService">
+			<ref bean="sysOrgPostService" />
+		</property>
+		<property name="orgGroupService">
+			<ref bean="sysOrgGroupService" />
+		</property>
+		<property name="orgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="passwordEncoder">
+			<ref bean="passwordEncoder" />
+		</property>
+		<property name="synchroOrgNotify">
+			<ref bean="synchroOrgNotify" />
+		</property>
+		<property name="sysOrgElementBakService">
+			<ref bean="sysOrgElementBakService" />
+		</property>
+		<property name="sysOmsEcoSyncService">
+			<ref bean="sysOmsEcoSyncService" />
+		</property>
+		
+		<property name="sysOmsOrgService">
+			<ref bean="sysOmsOrgService" />
+		</property>
+		<property name="sysOmsDeptService">
+			<ref bean="sysOmsDeptService" />
+		</property>
+		<property name="sysOmsPostService">
+			<ref bean="sysOmsPostService" />
+		</property>
+		<property name="sysOmsPersonService">
+			<ref bean="sysOmsPersonService" />
+		</property>
+		<property name="sysOmsGroupService">
+			<ref bean="sysOmsGroupService" />
+		</property>
+	</bean>
+	<bean id="synchroInIteratorProviderRunner" lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="synchroInIteratorProviderRunnerTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="synchro*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 结束 -->
+	<bean id="synchroInProviderRunnerTarget" class="com.landray.kmss.sys.oms.in.OMSSynchroInProviderRunner">
+		<property name="orgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="orgOrgService">
+			<ref bean="sysOrgOrgService" />
+		</property>
+		<property name="orgDeptService">
+			<ref bean="sysOrgDeptService" />
+		</property>
+		<property name="orgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="orgPostService">
+			<ref bean="sysOrgPostService" />
+		</property>
+		<property name="orgGroupService">
+			<ref bean="sysOrgGroupService" />
+		</property>
+		<property name="orgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="passwordEncoder">
+			<ref bean="passwordEncoder" />
+		</property>
+	</bean>
+
+	<bean id="synchroInProviderRunner" lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="synchroInProviderRunnerTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="synchro*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="synchroInOtherProviderRunnerTarget" class="com.landray.kmss.sys.oms.in.OMSSynchroInOtherProviderRunner">
+		
+	</bean>
+
+	<bean id="synchroInOtherProviderRunner" lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="synchroInOtherProviderRunnerTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="synchro*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="synchroInService" class="com.landray.kmss.sys.oms.in.OMSSynchroInService">
+		<property name="synchroOrgNotify">
+			<ref bean="synchroOrgNotify" />
+		</property>
+		<property name="providerRunner">
+			<ref bean="synchroInProviderRunner" />
+		</property>
+		<property name="secondProviderRunner">
+			<ref bean="synchroInIteratorProviderRunner" />
+		</property>
+		<property name="incrementProviderRunner">
+			<ref bean="synchroInIncrementProviderRunner" />
+		</property>
+		<property name="otherProviderRunner">
+			<ref bean="synchroInOtherProviderRunner" />
+		</property>
+	</bean>
+
+	<!-- synchro out -->
+	<bean id="synchroOutContextTarget" class="com.landray.kmss.sys.oms.out.OMSSynchroOutContextImp">
+		<property name="sysOMSCacheService">
+			<ref bean="sysOMSCacheService" />
+		</property>
+		<property name="services">
+			<list>
+				<ref bean="sysOrgOrgService" />
+				<ref bean="sysOrgDeptService" />
+				<ref bean="sysOrgPersonService" />
+				<ref bean="sysOrgPostService" />
+				<ref bean="sysOrgGroupService" />
+			</list>
+		</property>
+	</bean>
+	<bean id="synchroOutContext" lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="synchroOutContextTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="delete*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="update*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="synchroOutService" class="com.landray.kmss.sys.oms.out.OMSSynchroOutService">
+		<property name="kmssJobLoggerFactory">
+			<ref bean="kmssJobLoggerFactory" />
+		</property>
+		<property name="synchroOrgNotify">
+			<ref bean="synchroOrgNotify" />
+		</property>
+		<property name="synchroOutContext">
+			<ref bean="synchroOutContext" />
+		</property>
+	</bean>
+
+	<!-- notify -->
+	<bean id="orgSynchroNotifyTemplateEmptyDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.common.dao.EmptyDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.oms.notify.model.OrgSynchroNotifyTemplateEmpty" />
+	</bean>
+	<bean id="orgSynchroNotifyTemplateEmptyTarget" parent="KmssBaseTarget">
+		<property name="baseDao">
+			<ref bean="orgSynchroNotifyTemplateEmptyDao" />
+		</property>
+	</bean>
+	<bean id="orgSynchroNotifyTemplateEmptyService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="orgSynchroNotifyTemplateEmptyTarget" />
+		</property>
+	</bean>
+
+	<bean id="synchroOrgNotify"
+		class="com.landray.kmss.sys.oms.notify.service.spring.SynchroOrgNotifyImp">
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+	
+	<bean id="synchroInIncrementProviderRunnerTarget"
+		class="com.landray.kmss.sys.oms.in.OMSSynchroInIncrementProviderRunner">
+		<property name="orgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="orgOrgService">
+			<ref bean="sysOrgOrgService" />
+		</property>
+		<property name="orgDeptService">
+			<ref bean="sysOrgDeptService" />
+		</property>
+		<property name="orgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="orgPostService">
+			<ref bean="sysOrgPostService" />
+		</property>
+		<property name="orgGroupService">
+			<ref bean="sysOrgGroupService" />
+		</property>
+		<property name="orgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="passwordEncoder">
+			<ref bean="passwordEncoder" />
+		</property>
+		<property name="synchroOrgNotify">
+			<ref bean="synchroOrgNotify" />
+		</property>
+		<property name="sysOrgElementBakService">
+			<ref bean="sysOrgElementBakService" />
+		</property>
+	</bean>
+	
+	<bean id="synchroInIncrementProviderRunner" lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="synchroInIncrementProviderRunnerTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="synchro*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<!-- 组织架构接入 临时表 -->
+ <bean 
+        id="sysOmsTempDeptDao" 
+        class="com.landray.kmss.sys.oms.dao.hibernate.SysOmsTempDeptDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.oms.model.SysOmsTempDept</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempDeptTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsTempDeptServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsTempDeptDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempDeptService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysOmsTempDeptTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempPersonDao" 
+        class="com.landray.kmss.sys.oms.dao.hibernate.SysOmsTempPersonDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.oms.model.SysOmsTempPerson</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempPersonTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsTempPersonServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsTempPersonDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempPersonService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysOmsTempPersonTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempPostDao" 
+        class="com.landray.kmss.sys.oms.dao.hibernate.SysOmsTempPostDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.oms.model.SysOmsTempPost</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempPostTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsTempPostServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsTempPostDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempPostService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysOmsTempPostTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempPpDao" 
+        class="com.landray.kmss.sys.oms.dao.hibernate.SysOmsTempPpDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.oms.model.SysOmsTempPp</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempPpTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsTempPpServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsTempPpDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempPpService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysOmsTempPpTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempDpDao" 
+        class="com.landray.kmss.sys.oms.dao.hibernate.SysOmsTempDpDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.oms.model.SysOmsTempDp</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempDpTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsTempDpServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsTempDpDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempDpService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysOmsTempDpTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysOmsEcoSyncServiceTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsEcoSyncServiceImp" >
+        <property name="orgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="orgOrgService">
+			<ref bean="sysOrgOrgService" />
+		</property>
+		<property name="orgDeptService">
+			<ref bean="sysOrgDeptService" />
+		</property>
+		<property name="orgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="orgPostService">
+			<ref bean="sysOrgPostService" />
+		</property>
+		<property name="orgGroupService">
+			<ref bean="sysOrgGroupService" />
+		</property>
+		<property name="orgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="passwordEncoder">
+			<ref bean="passwordEncoder" />
+		</property>
+		<property name="sysOrgElementExternalService">
+			<ref bean="sysOrgElementExternalService" />
+		</property>
+		<property name="sysTmplService">
+			<ref bean="sysTmplService" />
+		</property>
+    </bean>
+    <bean 
+        id="sysOmsEcoSyncService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysOmsEcoSyncServiceTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysOmsTempTrxDao" 
+        class="com.landray.kmss.sys.oms.dao.hibernate.SysOmsTempTrxDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.oms.model.SysOmsTempTrx</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempTrxTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsTempTrxServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsTempTrxDao"/>
+        </property>
+        
+        <property name="sysOmsTempDeptService">
+            <ref bean="sysOmsTempDeptService"/>
+        </property>
+        <property name="sysOmsTempPersonService">
+            <ref bean="sysOmsTempPersonService"/>
+        </property>
+        <property name="sysOmsTempPostService">
+            <ref bean="sysOmsTempPostService"/>
+        </property>
+        <property name="sysOmsTempPpService">
+            <ref bean="sysOmsTempPpService"/>
+        </property>
+        <property name="sysOmsTempDpService">
+            <ref bean="sysOmsTempDpService"/>
+        </property>
+        <property name="sysOrgElementService">
+            <ref bean="sysOrgElementService"/>
+        </property>
+        <property name="sysOrgDeptService">
+            <ref bean="sysOrgDeptService"/>
+        </property>
+        <property name="sysOrgPostService">
+            <ref bean="sysOrgPostService"/>
+        </property>
+        <property name="sysOrgPersonService">
+            <ref bean="sysOrgPersonService"/>
+        </property>
+        <property name="sysOrgDeptPersonRelationService">
+            <ref bean="sysOrgDeptPersonRelationService"/>
+        </property>
+        <property name="omsTempSyncThreadExecutor">
+            <ref bean="omsTempSyncThreadExecutor"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsTempTrxService" lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="target">
+            <ref  bean="sysOmsTempTrxTarget"/>
+        </property>
+        <property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="delete*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="update*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="add*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="begin">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="end">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+    </bean>
+    <bean 
+        id="sysOmsTempTrxNewTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsTempTrxNewServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsTempTrxDao"/>
+        </property>
+        
+        <property name="sysOmsTempDeptService">
+            <ref bean="sysOmsTempDeptService"/>
+        </property>
+        <property name="sysOmsTempPersonService">
+            <ref bean="sysOmsTempPersonService"/>
+        </property>
+        <property name="sysOmsTempPostService">
+            <ref bean="sysOmsTempPostService"/>
+        </property>
+        <property name="sysOmsTempPpService">
+            <ref bean="sysOmsTempPpService"/>
+        </property>
+        <property name="sysOmsTempDpService">
+            <ref bean="sysOmsTempDpService"/>
+        </property>
+        <property name="sysOrgElementService">
+            <ref bean="sysOrgElementService"/>
+        </property>
+        <property name="sysOrgDeptService">
+            <ref bean="sysOrgDeptService"/>
+        </property>
+        <property name="sysOrgPostService">
+            <ref bean="sysOrgPostService"/>
+        </property>
+        <property name="sysOrgPersonService">
+            <ref bean="sysOrgPersonService"/>
+        </property>
+        <property name="sysOrgDeptPersonRelationService">
+            <ref bean="sysOrgDeptPersonRelationService"/>
+        </property>
+        <property name="omsTempSyncThreadExecutor">
+            <ref bean="omsTempSyncThreadExecutor"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysOmsTempTrxNewService" lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="target">
+            <ref  bean="sysOmsTempTrxNewTarget"/>
+        </property>
+        <property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="delete*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="update*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="add*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="begin">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="end">PROPAGATION_NOT_SUPPORTED
+				</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+    </bean>
+    
+        <bean 
+        id="sysOmsTempTrxSynFailTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsTempTrxSynFailServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsTempTrxDao"/>
+        </property>
+        
+        <property name="sysOmsTempDeptService">
+            <ref bean="sysOmsTempDeptService"/>
+        </property>
+        <property name="sysOmsTempPersonService">
+            <ref bean="sysOmsTempPersonService"/>
+        </property>
+        <property name="sysOmsTempPostService">
+            <ref bean="sysOmsTempPostService"/>
+        </property>
+        <property name="sysOmsTempPpService">
+            <ref bean="sysOmsTempPpService"/>
+        </property>
+        <property name="sysOmsTempDpService">
+            <ref bean="sysOmsTempDpService"/>
+        </property>
+        <property name="sysOrgElementService">
+            <ref bean="sysOrgElementService"/>
+        </property>
+        <property name="sysOrgDeptService">
+            <ref bean="sysOrgDeptService"/>
+        </property>
+        <property name="sysOrgPostService">
+            <ref bean="sysOrgPostService"/>
+        </property>
+        <property name="sysOrgPersonService">
+            <ref bean="sysOrgPersonService"/>
+        </property>
+        <property name="sysOrgDeptPersonRelationService">
+            <ref bean="sysOrgDeptPersonRelationService"/>
+        </property>
+        <property name="omsTempSyncThreadExecutor">
+            <ref bean="omsTempSyncThreadExecutor"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysOmsTempTrxSynFailService" lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="target">
+            <ref  bean="sysOmsTempTrxSynFailTarget"/>
+        </property>
+        <property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="delete*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="update*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="add*">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="begin">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="end">PROPAGATION_REQUIRES_NEW
+				</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+    </bean>
+    
+     <bean 
+        id="sysOmsTempTrxSynService" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsTempTrxSynServiceImp">
+		<property name="sysOmsTempTrxNewService">
+            <ref bean="sysOmsTempTrxNewService"/>
+        </property>
+        <property name="sysOmsTempTrxService">
+            <ref bean="sysOmsTempTrxService"/>
+        </property>
+    </bean>
+   
+    <!-- 多线程处理 -->
+    <bean 
+        id="omsTempSyncThreadExecutor"
+        class="com.landray.kmss.sys.oms.temp.OmsTempSyncThreadExecutor">
+		<property name="threadPoolTaskExecutor">
+			<ref bean="threadPoolTaskExecutor" />
+		</property>
+    </bean>
+    
+    <!-- 线程池 -->
+	<bean id="threadPoolTaskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="20" />
+		<property name="maxPoolSize" value="50" />
+		<property name="keepAliveSeconds" value="200" />
+		<property name="queueCapacity" value="250" />
+		<property name="rejectedExecutionHandler">
+			<bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+		</property>
+	</bean>
+	
+    <bean id="sysOMSTempOrgDataController" class="com.landray.kmss.sys.oms.controller.SysOMSTempOrgDataController">
+        <property name="sysOmsTempTrxService">
+            <ref  bean="sysOmsTempTrxService"/>
+        </property>
+          <property name="sysOmsTempTrxSynService">
+            <ref  bean="sysOmsTempTrxSynService"/>
+        </property>
+    </bean>
+    
+    <bean id="sysOmsTempJdbcQuartzTaskService" class="com.landray.kmss.sys.oms.service.spring.SysOmsTempJdbcQuartzTaskServiceImp" >
+         <property name="sysOmsTempTrxSynService">
+            <ref  bean="sysOmsTempTrxSynService"/>
+        </property>
+        <property name="sysAppConfigService">
+            <ref  bean="sysAppConfigService"/>
+        </property>
+    </bean>
+    
+    <bean
+		id="sysOmsExcelImportService"
+		class="com.landray.kmss.sys.oms.service.spring.SysOmsExcelImportServiceImp">
+	</bean>
+	
+	<bean 
+        id="sysOmsDeptDao" 
+        class="com.landray.kmss.sys.oms.dao.hibernate.SysOmsDeptDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.oms.model.SysOmsDept</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsDeptTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsDeptServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsDeptDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsDeptService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysOmsDeptTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsOrgDao" 
+        class="com.landray.kmss.sys.oms.dao.hibernate.SysOmsOrgDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.oms.model.SysOmsOrg</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsOrgTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsOrgServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsOrgDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsOrgService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysOmsOrgTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsPersonDao" 
+        class="com.landray.kmss.sys.oms.dao.hibernate.SysOmsPersonDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.oms.model.SysOmsPerson</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsPersonTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsPersonServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsPersonDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsPersonService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysOmsPersonTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsPostDao" 
+        class="com.landray.kmss.sys.oms.dao.hibernate.SysOmsPostDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.oms.model.SysOmsPost</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsPostTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsPostServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsPostDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsPostService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysOmsPostTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsGroupDao" 
+        class="com.landray.kmss.sys.oms.dao.hibernate.SysOmsGroupDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.oms.model.SysOmsGroup</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsGroupTarget" 
+        class="com.landray.kmss.sys.oms.service.spring.SysOmsGroupServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysOmsGroupDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysOmsGroupService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysOmsGroupTarget"/>
+        </property>
+    </bean>
+</beans>

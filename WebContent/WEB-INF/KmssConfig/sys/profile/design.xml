@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+    <module
+		urlPrefix="/sys/profile/"
+		messageKey="sys-profile:module.sys.profile"
+		defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)">
+		
+		<roles>
+			SYS_PROFILE_I18N_MANAGER;
+			SYS_PROFILE_LIST_SHOW_MANAGER;
+			SYS_PROFILE_GLOBAL_WATERMARK_SETTING
+		</roles>
+		
+		<!-- 
+			后台配置顶级菜单适配角色控制（这些角色是不允许在页面指派，只能在这里配置），请将以下菜单对应的角色放到相应的三员管理角色中：
+			SYS_PROFILE_NAVTOP_ORG			组织权限中心
+			SYS_PROFILE_NAVTOP_PORTAL		门户引擎
+			SYS_PROFILE_NAVTOP_LBPM			流程引擎
+			SYS_PROFILE_NAVTOP_FTSEARCH		搜索引擎
+			SYS_PROFILE_NAVTOP_NOTIFY		统一消息中心
+			SYS_PROFILE_NAVTOP_APP			应用中心
+			SYS_PROFILE_NAVTOP_MOBILE		移动办公
+			SYS_PROFILE_NAVTOP_INTEGRATE		集成整合中心
+			SYS_PROFILE_NAVTOP_INTELLIGENCE		智能应用
+			SYS_PROFILE_NAVTOP_MAINTENANCE		运维监控中心
+			SYS_PROFILE_NAVTOP_ADMINLOG		日志审计
+			SYS_PROFILE_NAVTOP_DATACENTER   数据分析中心
+
+		-->
+		<!--权限分类，把roles和arearoles里权限中应该属于三员体系的分拣（复制）到以下标签 -->
+		<roleType>
+			<!-- 系统管理员权限 -->
+			<sysadmin>
+				SYS_PROFILE_I18N_MANAGER;
+				SYS_PROFILE_NAVTOP_SYSTEM;
+				SYS_PROFILE_NAVTOP_ORG;
+				SYS_PROFILE_NAVTOP_LBPM;
+				SYS_PROFILE_NAVTOP_FTSEARCH;
+				SYS_PROFILE_NAVTOP_NOTIFY;
+				SYS_PROFILE_NAVTOP_APP;
+				SYS_PROFILE_NAVTOP_INTEGRATE;
+				SYS_PROFILE_NAVTOP_MAINTENANCE;
+				SYS_PROFILE_NAVTOP_DATACENTER;
+			</sysadmin>
+			<!-- 安全保密管理员权限 -->
+			<security>
+				SYS_PROFILE_NAVTOP_ORG;
+				SYS_PROFILE_NAVTOP_ADMINLOG
+			</security>
+			<!-- 安全审计管理员权限 -->
+			<auditor>
+				SYS_PROFILE_NAVTOP_ADMINLOG
+			</auditor> 
+		</roleType>
+		
+		<!-- 语言包前端配置工具 -->
+		<request
+			path="i18n/*"
+			defaultValidator="roleValidator(role=SYS_PROFILE_I18N_MANAGER)">
+			<query
+				queryString="method=resetI18n|clearFileKey|clearCache"
+				validator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)" />
+		</request>
+		
+		<!-- 系统概览只有超级管理员可见 -->
+		<request path="system/*" defaultValidator="roleValidator(role=SYSROLE_ADMIN)"/>
+		
+		<!-- 版权信息仅超管可见 -->
+		<request path="maintenance/*" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)"/>
+		
+		<!-- 三员管理修改密码 -->
+		<request path="TripartiteAdminChangePwd*" defaultValidator="roleValidator(role=SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)"/>
+		
+		<!-- 登录定制仅有门户管理_基础设置权限的用户 -->
+		<request path="sysProfileCuxTemplateAction*" defaultValidator="roleValidator(role=ROLE_SYSPORTAL_BASE_SETTING)"/>
+		
+		<!-- 组织权限中心(基础设置, 组织架构)：需要角色“组织架构与账号管理_后台入口权限” -->
+		<request path="org/basic_setting.jsp" defaultValidator="roleValidator(role=ROLE_SYSORG_DEFAULT;SYSROLE_SYSADMIN;SYSROLE_SECURITY)"/>
+		<request path="org/organizational.jsp" defaultValidator="roleValidator(role=ROLE_SYSORG_DEFAULT;SYSROLE_SECURITY)"/>
+		
+		<!-- 安全管控 -->
+		<request path="passwordSecurityConfig*" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)"/>
+
+		<request path="securityScan.jsp*" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)"/>
+
+		<request path="sysCommonSensitiveConfig*">
+			<query
+					queryString="method=edit|update"
+					validator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)" />
+		</request>
+		
+		<!-- 集成整合中心（概览） -->
+		<request path="integrate/index.jsp*" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)"/>
+		<!-- 集成整合中心（Saas云服务） -->
+		<request path="integrate/saas.jsp*" defaultValidator="roleValidator(role=SYSROLE_USER)"/>
+		<!-- 集成整合中心（其它应用集成） -->
+		<request path="integrate/other.jsp*" defaultValidator="roleValidator(role=SYSROLE_USER)"/>
+		<!-- 集成整合中心（报表集成） -->
+		<request path="integrate/report.jsp*" defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_ADMIN;SYSROLE_SYSADMIN)"/>
+		<!-- 集成整合中心（邮件集成） -->
+		<request path="integrate/mail.jsp*" defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_ADMIN;SYSROLE_SYSADMIN)"/>
+		<!-- 集成整合中心（电子合同集成） -->
+		<request path="integrate/eContract.jsp*" defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_ADMIN;SYSROLE_SYSADMIN)"/>
+		<!-- 集成整合中心（统一用户管理） -->
+		<request path="integrate/user.jsp*" defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_ADMIN;SYSROLE_SYSADMIN)"/>
+		
+		<!-- 自定义列表 -->
+		<request path="listShow/sys_listshow_category/*" defaultValidator="roleValidator(role=SYSROLE_USER)"/>
+		
+		<!-- 组织权限中心（概览） -->
+		<request path="org/index.jsp*" defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_ADMIN;SYSROLE_SYSADMIN;SYSROLE_SECURITY)"/>
+		<request path="org/orgAuthCenter.do*" defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_ADMIN;SYSROLE_SYSADMIN;SYSROLE_SECURITY)"/>
+		<!-- 组织权限中心（基础导入导出） -->
+		<request path="org/orgImport.do*" defaultValidator="roleValidator(role=ROLE_SYSORG_TRANSPORT;SYSROLE_SYSADMIN;SYSROLE_SECURITY)"/>
+		<request path="org/orgExport.do*" defaultValidator="roleValidator(role=ROLE_SYSORG_TRANSPORT;SYSROLE_SYSADMIN;SYSROLE_SECURITY)"/>
+		<!-- #91731 门户权限再次调整 门户管理（门户维护）-->
+		<!-- <request path="portal/maintenance.jsp*" defaultValidator="roleValidator(role=ROLE_SYSPORTAL_BASE_SETTING;ROLE_SYSPORTAL_PAGE_EDIT;SYSROLE_SYSADMIN;SYSROLE_SECURITY)"/> -->
+		
+		<!-- 三员管理专用 -->
+		<request path="tripartiteAdminAction.do*" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)"/>
+
+
+		<!--sys/profile模块 加密方式 -->
+		<request
+				path="sys_desEncrypt_config/SysDesEncryptConfig.do*"
+				defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)">
+			<query
+					queryString="method=generateSm2Key"
+					validator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)" />
+		</request>
+
+		<request
+				path="globalWaterMark/tree.jsp*"
+				defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYS_PROFILE_GLOBAL_WATERMARK_SETTING;SYSROLE_SYSADMIN)">
+		</request>
+
+		<!-- 复合索引配置 -->
+		<request path="common/sysCompositeIndex.do*" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)"/>
+	</module>
+	<module urlPrefix="/sys/sender/">
+		<!--发件人维护-->
+		<request
+			path="sender_email_info/sysSenderEmailInfo.do*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.profile.model.SysSenderEmailInfo"
+			defaultValidator="roleValidator(role=SYS_PROFILE_NAVTOP_NOTIFY)">
+		</request>
+	</module>
+
+	<!-- #91731 门户权限再次调整 门户管理 （素材库） -->
+	<module urlPrefix="/sys/portal/">
+		<request path="sys_portal_material_main/index.jsp">
+			<query validator="roleValidator(role=ROLE_SYSPORTAL_BASE_SETTING)"/>
+		</request>
+	</module>
+
+	<!-- 行为分析，只允许超管访问 -->
+	<module
+		urlPrefix="/sys/profile/maintenance/behavior/"
+		messageKey="sys-profile-behavior:module.sys.profile.behavior"
+		defaultValidator="roleValidator(role=SYSROLE_ADMIN)">
+	</module>
+	
+	<module
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<!-- 行为分析 -->
+			<query
+				queryString="modelName=com.landray.kmss.sys.profile.behavior.model.BehaviorSettingConfig"
+				validator="roleValidator(role=SYSROLE_ADMIN;)" />
+			<!-- 数据备份工具  管理员使用-->
+			<query
+				queryString="modelName=com.landray.kmss.tools.databackup.model.DataBackupConfig"
+				validator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN;)" />
+			<query
+				queryString="modelName=com.landray.kmss.sys.profile.model.GlobalWaterMarkConfig"
+				validator="roleValidator(role=SYS_PROFILE_GLOBAL_WATERMARK_SETTING)" />
+		</request>
+	</module>
+	
+	<!-- 记录在线人数 -->
+	<quartz
+		messageKey="sys-profile-behavior:sys.profile.behavior.online.quartz"
+		jobService="analysisOnlineReportService"
+		cronExpression="0 0/10 * * * ?"
+		jobMethod="saveOnlineReport" 
+		description="sys-profile-behavior:sys.profile.behavior.online.quartz.desc"/>
+
+	<!-- 系统概览 -->
+	<profileConfig
+		key="systemview"
+		messageKey="{sys-profile:sys.profile.overview}" 
+		url="/sys/profile/systemview/index.jsp" 
+		type="system"
+		icon="lui_icon_m_profile_navTop_system"
+		userType="4"
+		order="0"/>
+		
+		
+	<!-- 组织权限中心 -->
+	<profileConfig
+		key="overview"
+		messageKey="{sys-profile:sys.profile.overview}" 
+		url="/sys/profile/org/index.jsp" 
+		type="org"
+		icon="lui_icon_s_profile_navLeft_overview"
+		userType="4"
+		order="0"/>
+		
+	<!-- 基础设置(非三员) -->	
+	<profileConfig
+		key="baseSetting"
+		messageKey="{sys-profile:sys.profile.org.baseSetting}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/org/basic_setting.jsp" 
+		type="org"
+		icon="lui_icon_s_profile_navLeft_baseSetting"
+		onlyTripartite="false"
+		order="1"/>
+	<!-- 基础设置(三员-系统管理员) -->	
+	<profileConfig
+		key="baseSetting"
+		messageKey="{sys-profile:sys.profile.org.baseSetting}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/org/basic_setting_sysadmin.jsp" 
+		type="org"
+		icon="lui_icon_s_profile_navLeft_baseSetting"
+		userType="2"
+		onlyTripartite="true"
+		order="1"/>
+	<!-- 基础设置(三员-安全管理员) -->	
+	<profileConfig
+		key="baseSetting"
+		messageKey="{sys-profile:sys.profile.org.baseSetting}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/org/basic_setting_security.jsp" 
+		type="org"
+		icon="lui_icon_s_profile_navLeft_baseSetting"
+		userType="4"
+		onlyTripartite="true"
+		order="1"/>
+		
+	<!-- 组织架构(非三员) -->
+	<profileConfig
+		key="organizational"
+		messageKey="{sys-profile:sys.profile.org.organizational}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/org/organizational.jsp" 
+		type="org"
+		icon="lui_icon_s_profile_navLeft_organizationa"
+		onlyTripartite="false"
+		order="2"/>
+	<!-- 组织架构(三员-系统管理员) -->
+	<profileConfig
+		key="organizational"
+		messageKey="{sys-profile:sys.profile.org.organizational}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/org/organizational_sysadmin.jsp" 
+		type="org"
+		icon="lui_icon_s_profile_navLeft_organizationa"
+		onlyTripartite="true"
+		userType="2"
+		order="2"/>
+	<!-- 组织架构(三员-安全保密管理员) -->
+	<profileConfig
+		key="organizational"
+		messageKey="{sys-profile:sys.profile.org.organizational}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/org/organizational_security.jsp" 
+		type="org"
+		icon="lui_icon_s_profile_navLeft_organizationa"
+		onlyTripartite="true"
+		userType="4"
+		order="2"/>
+	<!-- 生态组织 -->	
+	<profileConfig
+		key="ecology"
+		messageKey="{sys-profile:sys.profile.org.ecology}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/organization/sys_org_element_external/tree.jsp" 
+		type="org"
+		icon="lui_icon_s_profile_navLeft_organizationa"
+		userType="4"
+		order="3"/>
+	<!-- 权限管理 -->
+	<profileConfig
+		key="authority"
+		messageKey="{sys-profile:sys.profile.org.authority}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/authorization/tree.jsp" 
+		type="org"
+		icon="lui_icon_s_profile_navLeft_authority"
+		userType="4"
+		order="3"/>
+		
+
+	<!-- 门户管理中心 
+	<profileConfig
+		key="overview"
+		messageKey="{sys-profile:sys.profile.overview}" 
+		url="/sys/profile/portal/index.jsp" 
+		icon="lui_icon_s_profile_navLeft_overview"
+		type="portal"
+		order="0"/>
+	-->
+	<!-- 门户维护 -->
+	<profileConfig
+		key="maintenance"
+		messageKey="{sys-profile:sys.profile.portal.maintenance}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/portal/maintenance.jsp" 
+		icon="lui_icon_s_profile_navLeft_maintenance"
+		type="portal"
+		order="1"/>
+	<!-- 门户主题 -->
+	<profileConfig
+		key="ext"
+		messageKey="{sys-profile:sys.profile.portal.ext}" 
+		url="/sys/ui/help/lui-ext/index.jsp" 
+		icon="lui_icon_s_profile_navLeft_ext"
+		type="portal"
+		order="2"/>
+	<!-- 门户元素 -->
+	<profileConfig
+		key="element"
+		messageKey="{sys-profile:sys.profile.portal.element}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/portal/element.jsp" 
+		icon="lui_icon_s_profile_navLeft_element"
+		type="portal"
+		order="3"/>
+	<!--模板中心-->
+	<profileConfig
+			key="templateCenter"
+			messageKey="{sys-profile:sys.portal.templcate.center}"
+			url="/sys/profile/templcate_center.jsp"
+			icon="lui_icon_s_profile_navLeft_ext"
+			type="portal"
+			order="4"/>
+	<!-- 素材库 -->
+	<profileConfig
+		key="material"
+		messageKey="{sys-profile:sys.profile.portal.material}" 
+		url="/sys/portal/sys_portal_material_main/index.jsp"
+		icon="lui_icon_m_profile_default"
+		type="portal"
+		order="5"/>
+	<!-- 个人设置 -->
+	<profileConfig
+		key="setting"
+		messageKey="{sys-profile:sys.profile.portal.setting}" 
+		url="/sys/person/sys_person_cfg_link/sysPersonCfgLink.do?method=edit" 
+		icon="lui_icon_s_profile_navLeft_personsetting"
+		type="portal"
+		order="6"/>
+
+	<!-- 流程引擎中心 
+	<profileConfig
+		key="overview"
+		messageKey="{sys-profile:sys.profile.overview}" 
+		url="/sys/profile/lbpm/index.jsp" 
+		icon="lui_icon_m_profile_13"
+		type="lbpm"
+		order="0"/>
+	-->
+	<!-- 流程引擎服务 -->
+	<profileConfig
+		key="workflow"
+		messageKey="{sys-profile:sys.profile.lbpm.workflow}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/lbpm/workflow.jsp" 
+		icon="lui_icon_s_profile_navLeft_workflow"
+		type="lbpm"
+		userType="2"
+		order="1"/>
+	<!-- 表单管理 -->
+	<profileConfig
+		key="form"
+		messageKey="{sys-profile:sys.profile.lbpm.form}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/lbpm/form.jsp" 
+		type="lbpm"
+		icon="lui_icon_s_profile_navLeft_form"
+		order="2"/>
+	<!-- 流程监控中心 -->
+	<profileConfig
+		key="monitor"
+		messageKey="{sys-profile:sys.profile.lbpm.monitor}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/lbpm/monitor.jsp" 
+		icon="lui_icon_s_profile_navLeft_monitor"
+		type="lbpm"
+		order="3"/>
+	<!-- 排班管理 -->
+	<profileConfig
+		key="timeArea"
+		messageKey="{sys-profile:sys.profile.lbpm.timeArea}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/time/tree.jsp" 
+		icon="lui_icon_s_profile_navLeft_timeArea"
+		type="lbpm"
+		order="4"/>
+	<!-- 流程集成服务 -->
+	<profileConfig
+		urlPrefix="/sys/lbpmdocking/"
+		key="services"
+		messageKey="{sys-profile:sys.profile.lbpm.services}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/lbpm/services.jsp" 
+		icon="lui_icon_s_profile_navLeft_services"
+		type="lbpm"
+		userType="1;2"
+		order="6"/>
+		
+	<!-- 移动办公中心 
+	<profileConfig
+		key="overview"
+		messageKey="{sys-profile:sys.profile.overview}" 
+		icon="lui_icon_m_profile_13"
+		url="/sys/profile/mobile/index.jsp" 
+		type="mobile"
+		order="0"/>
+		-->
+		
+	<!-- 集成整合中心 -->
+	<profileConfig
+		key="overview"
+		messageKey="{sys-profile:sys.profile.overview}" 
+		url="/sys/profile/integrate/index.jsp" 
+		icon="lui_icon_s_profile_navLeft_overview"
+		type="integrate"
+		userType="2"
+		order="0"/>
+	<profileConfig
+		key="report"
+		messageKey="{sys-profile:sys.profile.integrate.report}" 
+		url="/sys/profile/integrate/report.jsp" 
+		icon="lui_icon_s_profile_navLeft_report"
+		type="integrate"
+		userType="1;2"
+		order="1"/>
+	<!-- 
+	<profileConfig
+		key="im"
+		messageKey="{sys-profile:sys.profile.integrate.im}" 
+		url="/sys/profile/integrate/im.jsp" 
+		type="integrate"
+		order="2"/>
+	 -->
+	<profileConfig
+		key="mail"
+		messageKey="{sys-profile:sys.profile.integrate.mail}" 
+		url="/sys/profile/integrate/mail.jsp"
+		icon="lui_icon_s_profile_navLeft_mail"
+		type="integrate"
+		userType="2"
+		order="3"/>
+
+	<profileConfig
+		key="saas"
+		messageKey="{sys-profile:sys.profile.integrate.saas}" 
+		url="/sys/profile/integrate/saas.jsp" 
+		icon="lui_icon_s_profile_navLeft_saas"
+		type="integrate"
+		order="4"/>
+		
+	<profileConfig
+		key="user"
+		messageKey="{sys-profile:sys.profile.integrate.user}" 
+		url="/sys/profile/integrate/user.jsp" 
+		icon="lui_icon_s_profile_navLeft_user"
+		type="integrate"
+		userType="2"
+		order="5"/>
+		
+	
+	<profileConfig
+		key="other"
+		messageKey="{sys-profile:sys.profile.integrate.other}" 
+		url="/sys/profile/integrate/other.jsp" 
+		icon="lui_icon_s_profile_navLeft_other"
+		type="integrate"
+		order="7"/>
+	
+	<!-- 电子合同集成-->
+	<profileConfig
+		key="eContract"
+		messageKey="{sys-profile:sys.profile.integrate.eContract}" 
+		url="/sys/profile/integrate/eContract.jsp"
+		icon="lui_icon_s_profile_navLeft_eContract"
+		type="integrate"
+		order="8"/>
+
+
+	<!-- 运维监控中心 -->
+	<profileConfig
+		key="overview"
+		messageKey="{sys-profile:sys.profile.overview}" 
+		url="/sys/profile/maintenance/index.jsp" 
+		icon="lui_icon_s_profile_navLeft_overview"
+		type="maintenance"
+		urlPrefix="/sys/profile/"
+		userType="2"
+		order="0"/>
+	
+	<!-- 系统通知 -->
+	<profileConfig
+		key="appConfig"
+		messageKey="{sys-log:sysLogOnline.NotifyConfig.set}" 
+		url="/sys/appconfig/sys_appconfig/sysAppConfig.do?method=edit&amp;modelName=com.landray.kmss.sys.log.model.SysLogOnlineNotifyConfig" 
+		icon="lui_icon_s_profile_navLeft_notifyOnline"
+		type="maintenance"
+		userType="2"
+		order="1"/>
+	
+	<!-- 管理员工具箱 -->
+	<profileConfig
+		key="admin"
+		messageKey="{sys-profile:sys.profile.maintenance.admin}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/maintenance/admin.jsp" 
+		icon="lui_icon_s_profile_navLeft_admin"
+		type="maintenance"
+		userType="2"
+		order="2"/>
+	<!-- 多服务器配置 -->
+	<profileConfig
+		key="server"
+		messageKey="{sys-profile:sys.profile.maintenance.server}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/maintenance/server.jsp" 
+		icon="lui_icon_s_profile_navLeft_server"
+		type="maintenance"
+		userType="2"
+		order="3"/>
+	<!-- 安全管控 -->
+	<profileConfig
+		key="security"
+		messageKey="{sys-profile:sys.profile.org.passwordSecurityConfig}" 
+		url="/sys/profile/passwordSecurityConfig.do?method=edit&amp;modelName=com.landray.kmss.sys.profile.model.PasswordSecurityConfig" 
+		icon="lui_icon_s_profile_navLeft_authority"
+		type="maintenance"
+		userType="2"
+		order="4"/>
+	<!-- 定时任务 -->
+	<profileConfig
+		key="timing"
+		messageKey="{sys-profile:sys.profile.maintenance.timing}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/maintenance/timing.jsp" 
+		icon="lui_icon_s_profile_navLeft_timing"
+		type="maintenance"
+		userType="2"
+		order="5"/>
+	<!-- 迁移工具 -->
+	<profileConfig
+		key="transfer"
+		messageKey="{sys-profile:sys.profile.maintenance.transfer}" 
+		url="/sys/profile/maintenance/transfer.jsp" 
+		icon="lui_icon_s_profile_navLeft_transfer"
+		type="maintenance"
+		userType="2"
+		order="6"/>
+	<!-- 使用分析 -->
+	<profileConfig
+		key="action"
+		messageKey="{sys-profile:sys.profile.maintenance.action}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/maintenance/analysis.jsp" 
+		icon="lui_icon_s_profile_navLeft_action"
+		type="maintenance"
+		userType="2"
+		order="7"/>
+	<!-- 日志查询 -->
+	<profileConfig
+		key="log"
+		messageKey="{sys-profile:sys.profile.maintenance.log}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/maintenance/log.jsp" 
+		icon="lui_icon_s_profile_navLeft_log"
+		type="maintenance"
+		userType="2"
+		order="8"/>
+		
+	<!-- 统一消息中心 
+	<profileConfig
+		key="overview"
+		messageKey="{sys-profile:sys.profile.overview}" 
+		url="/sys/profile/portal/index.jsp" 
+		icon="lui_icon_m_profile_13"
+		type="notify"
+		order="0"/>
+	-->
+	<!-- 待办 -->
+	<profileConfig
+		key="notify"
+		messageKey="{sys-profile:sys.profile.notify.notify}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/notify/backlog.jsp" 
+		icon="lui_icon_s_profile_navLeft_notify"
+		type="notify"
+		userType="1;2"
+		order="1"/>
+	<!-- 邮件 -->
+	<profileConfig
+		key="mailConfig"
+		messageKey="{sys-profile:sys.profile.notify.mail}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/notify/mail.jsp" 
+		icon="lui_icon_s_profile_navLeft_mail"
+		type="notify"
+		userType="2"
+		order="3"/>
+	<!-- 消息队列出错信息 -->
+	<profileConfig
+		key="queue"
+		messageKey="{sys-profile:sys.profile.notify.queue}" 
+		url="/sys/notify/queue/index.jsp" 
+		icon="lui_icon_s_profile_navLeft_queue"
+		type="notify"
+		userType="2"
+		order="4"/>
+		
+	<!-- 应用中心 
+	<profileConfig
+		key="overview"
+		messageKey="{sys-profile:sys.profile.overview}" 
+		url="/sys/profile/app/index.jsp" 
+		icon="lui_icon_m_profile_13"
+		type="app"
+		order="0"/>
+	-->
+	<!-- 协同 -->
+	<profileConfig
+		key="ekp"
+		messageKey="{sys-profile:sys.profile.app.ekp}" 
+		url="/sys/profile/app/ekp.jsp" 
+		icon="lui_icon_s_profile_navLeft_ekp" 
+		type="app"
+		order="1"/>
+	<!-- 人事 -->
+	<profileConfig
+		key="hr"
+		messageKey="{sys-profile:sys.profile.app.hr}"
+		url="/sys/profile/app/hr.jsp"
+		icon="lui_icon_s_profile_navLeft_hr"
+		type="app"
+		order="6"/>
+	<!-- 印控中心-->
+	<profileConfig
+		key="sealcenter"
+		messageKey="{sys-profile:sys.profile.app.sealcenter}"
+		url="/sys/profile/app/sealcenter.jsp"
+		icon="lui_icon_s_profile_navLeft_ekp"
+		type="app"
+		order="7"/>
+	<!-- 法务 -->
+	<profileConfig
+		key="affairs"
+		messageKey="{sys-profile:sys.profile.app.affairs}"
+		url="/sys/profile/app/affairs.jsp"
+		icon="lui_icon_s_profile_navLeft_affairs"
+		type="app"
+		order="8"/>
+	<!-- eop -->
+	<profileConfig
+		key="eop"
+		messageKey="{sys-profile:sys.profile.app.eop}" 
+		url="/sys/profile/app/eop.jsp" 
+		icon="lui_icon_s_profile_navLeft_material" 
+		type="app"
+		order="2"/>
+	<!-- 知识 -->
+<!--	<profileConfig-->
+<!--		key="kms"-->
+<!--		messageKey="{sys-profile:sys.profile.app.kms}" -->
+<!--		url="/sys/profile/app/kms.jsp" -->
+<!--		icon="lui_icon_s_profile_navLeft_kms" -->
+<!--		type="app"-->
+<!--		order="2"/>-->
+	<!-- 费控 -->
+	<profileConfig
+		key="fs"
+		messageKey="{sys-profile:sys.profile.app.fs}" 
+		url="/sys/profile/app/costControl.jsp"
+		icon="lui_icon_s_profile_navLeft_fs" 
+		type="app"
+		order="5"/>
+	<!-- 合同 -->
+	<profileConfig
+		key="agreement"
+		messageKey="{sys-profile:sys.profile.app.agreement}"
+		url="/sys/profile/app/agreement.jsp"
+		icon="lui_icon_s_profile_navLeft_contract"
+		type="app"
+		order="5"/>
+	<!-- 采购 -->
+	<profileConfig
+		key="eps"
+		messageKey="{sys-profile:sys.profile.app.eps}" 
+		url="/sys/profile/app/eps.jsp" 
+		icon="lui_icon_s_profile_navLeft_eps" 
+		type="app"
+		order="5"/>
+	<!-- 机制 -->
+	<profileConfig
+		key="mechanism"
+		messageKey="{sys-profile:sys.profile.app.mechanism}" 
+		url="/sys/profile/app/mechanism.jsp" 
+		icon="lui_icon_s_profile_navLeft_mechanism"
+		type="app"
+		userType="1;2"
+		order="8"/>
+	
+	<!-- 多语言调试工具 -->
+	<profileConfig
+		key="langtools"
+		messageKey="{sys-profile:tools.i18n.title}" 
+		url="/sys/profile/i18n/langtools.jsp" 
+		type="mechanism"
+		icon="sys_profile"
+		userType="2"
+		description="{sys-profile:tools.i18n.desc}"/>
+		
+	<!-- 系统管理员专有菜单(系统管理员可以看到自己的日志) -->
+	<profileConfig
+		key="systemLog"
+		messageKey="{sys-log:sysLogUserOper.type.system}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/log/system_log.jsp" 
+		icon="lui_icon_s_profile_log_system"
+		type="maintenance"
+		userType="2"
+		order="8"
+		onlyTripartite="true"/>
+		
+	<!-- 安全保密管理员专有菜单 -->
+	<!-- 普通用户日志 -->
+	<profileConfig
+		key="generalLog"
+		messageKey="{sys-log:sysLogUserOper.type.general}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/log/general_log.jsp" 
+		icon="lui_icon_s_profile_log_general"
+		type="adminLog"
+		order="1"
+		userType="4"
+		onlyTripartite="true"/>
+	<!-- 安全审计员日志 -->
+	<profileConfig
+		key="auditLog"
+		messageKey="{sys-log:sysLogUserOper.type.auditor}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/log/audit_log.jsp" 
+		icon="lui_icon_s_profile_log_audit"
+		type="adminLog"
+		order="8"
+		userType="4;8"
+		onlyTripartite="true"/>
+	
+	<!-- 安全审计管理员专有菜单 -->
+	<profileConfig
+		key="systemLog"
+		messageKey="{sys-log:sysLogUserOper.type.system}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/log/system_log.jsp" 
+		icon="lui_icon_s_profile_log_system"
+		type="adminLog"
+		order="2"
+		userType="8"
+		onlyTripartite="true"/>
+	<profileConfig
+		key="secrecyLog"
+		messageKey="{sys-log:sysLogUserOper.type.secrecy}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/log/secrecy_log.jsp" 
+		icon="lui_icon_s_profile_log_secrecy"
+		type="adminLog"
+		order="4"
+		userType="4;8"
+		onlyTripartite="true"/>
+	<!-- EKP应用日志，安全保密管理员专用 -->
+	<profileConfig
+		key="ekpApplicationLog"
+		messageKey="{sys-auditlog:module.sys.auditlog}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/auditlog/tree.jsp" 
+		icon="sys_auditlog"
+		type="adminLog"
+		order="100"
+		userType="4"
+		onlyTripartite="true"/>
+
+	<profileConfig
+			key="globalWaterMark"
+			messageKey="{sys-profile:sys.profile.globalWaterMark}"
+			url="/sys/profile/moduleindex.jsp?nav=/sys/profile/globalWaterMark/tree.jsp"
+			icon="sys_profile_watermark"
+			type="mechanism"
+			description="{sys-profile:sys.profile.globalWaterMark.profileCfg.description}"/>
+
+		
+</configs>

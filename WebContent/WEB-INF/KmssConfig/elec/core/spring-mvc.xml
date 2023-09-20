@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<bean name="/elec/core/elec_core_info/elecCaInfoData.do" 
+	      class="com.landray.kmss.elec.core.certification.actions.ElecCoreInfoDataAction"
+		lazy-init="true" parent="KmssBaseAction">                                                                                                                        
+		<property name="forwards">                                                                                    
+			<map>                                                                                                       
+				<entry key="fdCaInfo"                                                                                     
+					value="/elec/core/elec_core_cert_bind/elecCaInfo_dialog_fdCaInfo.jsp" />                                         
+			</map>                                                                                                      
+		</property>                                                                                                   
+	</bean>  
+	
+	<bean
+		name="/elec/core/elec_core_certbind/elecCoreCertBind.do"
+		class="com.landray.kmss.elec.core.certification.actions.ElecCoreCertBindAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.elec.core.certification.forms.ElecCoreCertBindForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/elec/core/elec_core_cert_bind/elecCoreCertBind_view.jsp" />
+				<entry
+					key="edit"
+					value="/elec/core/elec_core_cert_bind/elecCoreCertBind_edit.jsp" />
+				<entry
+					key="data"
+					value="/elec/core/elec_core_cert_bind/elecCoreCertBind_data.jsp" />
+			</map>
+		</property>
+	</bean>
+
+    <bean name="/elec/core/personal/elecCorePersonalData.do"
+		class="com.landray.kmss.elec.core.authentication.actions.ElecCorePersonalDataAction"
+		lazy-init="true" parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry key="authenPersonInfo"
+					value="/elec/core/authentication/elecCorePersonal_dialog_authenPersonInfo.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean name="/elec/core/prise/elecCorenPriseData.do"
+		class="com.landray.kmss.elec.core.authentication.actions.ElecCorePriseDataAction"
+		lazy-init="true" parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry key="authenPriseInfo"
+					value="/elec/core/authentication/elecCorePrise_dialog_authenPriseInfo.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<!--  -->
+	<bean
+		name="/elec/core/elec_core_verify/elecCoreVerify.do"
+		class="com.landray.kmss.elec.core.authentication.actions.ElecCoreVerifyAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="face-qrCode"
+					value="/elec/core/authentication/face_verify_qrCode.jsp" />
+				<entry
+					key="faceqrCodeMobile"
+					value="/elec/core/authentication/mobile/personal_face_verify.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

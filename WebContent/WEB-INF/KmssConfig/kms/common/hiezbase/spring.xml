@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean class="com.landray.kmss.kms.common.hiezbase.restservice.KmsHiezKnowledgeController"/>
+	<bean class="com.landray.kmss.kms.common.hiezbase.restservice.KmsHiezAttachmentDownloadController">
+		<property name="sysAttMainService" ref="sysAttMainService"/>
+	</bean>
+	<bean class="com.landray.kmss.kms.common.hiezbase.restservice.KmsHiezTokenController"/>
+	<bean class="com.landray.kmss.kms.common.hiezbase.restservice.KmsHiezKnowledgeBehaviorController">
+		<property name="sysOrgPersonService" ref="sysOrgPersonService"/>
+		<property name="sysReadLogService" ref="sysReadLogService"/>
+	</bean>
+	<bean id="kmsTokenServevice" class="com.landray.kmss.kms.common.hiezbase.service.spring.KmsTokenServeviceImpl"/>
+</beans>

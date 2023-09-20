@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.filestore.model.SysAttFile"
+		table="sys_att_file">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="fdMd5"
+			column="fd_md5"
+			update="true"
+			insert="true"
+			length="50"
+			not-null="false"
+			index="idx_SysAttFile_fdMd5"/>
+
+		<property
+			name="fdFileSize"
+			column="fd_file_size"
+			update="true"
+			insert="true"
+			length="8"
+			not-null="false"
+			index="idx_SysAttFile_fdFileSize"/>
+
+		<property
+			name="fdFilePath"
+			column="fd_file_path"
+			update="true"
+			insert="true"
+			length="350"
+			not-null="false" />
+
+		<property
+			name="fdStatus"
+			column="fd_status"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+        <property
+            name="fdAttLocation"
+            column="fd_att_location"
+            update="true"
+            insert="true"
+            not-null="false"
+            length="32" />
+            
+		<many-to-one
+			name="fdCata"
+			column="fd_cata_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+	</class>
+</hibernate-mapping>

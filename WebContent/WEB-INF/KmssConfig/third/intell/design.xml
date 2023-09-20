@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		urlPrefix="/third/intell/"
+		messageKey="third-intell:intell.help"
+		defaultValidator="roleValidator(role=ROLE_THIRDINTELL_DEFAULT)">
+		
+		<roles>
+			ROLE_THIRDINTELL_DEFAULT;
+			ROLE_THIRDINTELL_ADMIN;
+		</roles> 
+		
+		<!--新增权限过滤规则-->
+		<request
+			path="intell_config.jsp*"
+			defaultValidator="roleValidator(role=ROLE_THIRDINTELL_ADMIN)" />
+		<request
+			path="labcOrgnization**"
+			defaultValidator="true">
+			<query queryString="method=intellInfo|clearMainDataIndexTime|clearSyncBehaviorTime|clearKgDataIndexTime"
+				   validator="roleValidator(role=ROLE_THIRDINTELL_ADMIN)"/>
+		</request>
+			
+	</module>
+	
+	<!-- 参数设置 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.third.intell.model.IntellConfig"
+				validator="roleValidator(role=ROLE_THIRDINTELL_ADMIN)" />
+		</request>
+	</module>
+
+	<quartz messageKey="third-intell:thirdIntell.mainDataIndexjob"
+        jobService="mainDataIndexTaskRunner" jobMethod="index" cronExpression="0 0 2 * * ?"
+        runType="SINGLENODE" description="third-intell:thirdIntell.mainDataIndexjob.description" />
+        
+    <quartz messageKey="third-intell:thirdIntell.searchInfoIndexjob"
+        jobService="searchInfoDataTaskRunner" jobMethod="run" cronExpression="0 0 2 * * ?"
+        runType="SINGLENODE" description="third-intell:thirdIntell.searchInfoIndexjob.description" />
+
+	<quartz messageKey="third-intell:thirdIntell.kgDataIndexjob"
+        jobService="kgDataTaskRunner" jobMethod="run" cronExpression="0 0 2 * * ?"
+        runType="SINGLENODE" description="third-intell:thirdIntell.kgDataIndexjob.description" />
+        
+    <quartz messageKey="third-intell:thirdIntell.dingRelationjob"
+        jobService="ekpIntellThirdOmsRelationImpl" jobMethod="sync" cronExpression="0 0 4 * * ?"
+        runType="SINGLENODE" description="third-intell:thirdIntell.dingRelationjob.description" />
+        
+    <quartz messageKey="third-intell:thirdIntell.syncUserBehaviorJob"
+        jobService="syncUserBehaviorDataTask" jobMethod="sync" cronExpression="0 0/10 * * * ?"
+        runType="SINGLENODE" description="third-intell:thirdIntell.syncUserBehaviorJob.description" />
+        
+	<!-- 企业微信集成后台配置 -->
+	<profileConfig
+		key="intell"
+		messageKey="{third-intell:intell.help}"
+		url="/sys/appconfig/sys_appconfig/sysAppConfig.do?method=edit&amp;modelName=com.landray.kmss.third.intell.model.IntellConfig"
+		icon="lui_icon_s_profile_navLeft_intell"
+		type="intelligence" 
+		order="2" />
+
+</configs>

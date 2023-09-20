@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrgPersonPrivilege"
+		table="sys_org_person_privilege">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="false"
+			insert="true"
+			not-null="false"
+			index="idx_PersonPrivilege_time" />
+		<property
+			name="fdIsExternal"
+			column="fd_is_external"
+			update="true"
+			insert="true">
+		</property>
+		<many-to-one
+			name="fdPerson"
+			column="fd_person_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+	</class>
+</hibernate-mapping>

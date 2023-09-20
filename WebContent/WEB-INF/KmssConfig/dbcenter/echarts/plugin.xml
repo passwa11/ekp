@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">	
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid"
+				value="com.landray.kmss.dbcenter.echarts.transfer.DbCenterEchartsTransferTask" />
+			<param name="name" value="图表中心数据迁移" />
+			<param name="path" value="/dbcenter/echarts/" />
+			<param name="upgrade"
+				value="com.landray.kmss.dbcenter.echarts.transfer.DbCenterEchartsTransferTask" />
+			<param name="description" value="处理图表中心旧数据" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid"
+				   value="com.landray.kmss.dbcenter.echarts.transfer.DbEchartsCollectTransferTask" />
+			<param name="name" value="图表中心数据汇总" />
+			<param name="path" value="/dbcenter/echarts/" />
+			<param name="upgrade"
+				   value="com.landray.kmss.dbcenter.echarts.transfer.DbEchartsCollectTransferTask" />
+			<param name="description" value="将分类的图表中心数据汇总" />
+		</item>
+	</extension>
+	
+	
+	<extension point="com.landray.kmss.sys.mobile.config">
+		<item name="info">
+			<param name="name" 
+				value="{dbcenter-echarts:module.dbcenter.piccenter}" />
+			<param name="modelName"
+				value="com.landray.kmss.dbcenter.echarts.model.DbEchartsChart" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-dbcenter-echarts.js" />
+			<param name="targetFile" value="/dbcenter/echarts/mobile/index.js" />
+			<param name="tinyId" value="echarts" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="mui-dbcenter-echarts.css" />
+			<param name="targetFile" value="/dbcenter/echarts/mobile/resource/css/index.css" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.config">
+		<item name="info">
+			<param name="name" value="{dbcenter-echarts:module.dbcenter.echarts}" />
+			<param name="modelName" value="com.landray.kmss.dbcenter.echarts.model.DbEchartsTotal" />
+			<param name="defaultUrl" value="/dbcenter/echarts/mobile/nav.json" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid" value="com.landray.kmss.dbcenter.echarts.transfer.DbCenterLastModifiedTimeTransferTask" />
+			<param name="name" value="图表中心最后修改时间数据迁移" />
+			<param name="path" value="/dbcenter/echarts/" />
+			<param name="check" value="com.landray.kmss.dbcenter.echarts.transfer.DbCenterLastModifiedTimeTransferChecker" />
+			<param name="upgrade" value="com.landray.kmss.dbcenter.echarts.transfer.DbCenterLastModifiedTimeTransferTask" />
+			<param name="description" value="全文检索需要最后修改时间字段，补全为数据迁移当天" />
+		</item>
+	</extension>
+
+	<!-- 模块解耦注册 -->
+	<extension point="com.landray.kmss.common.module.core.register.declare" model="*">
+		<item name="declare">
+			<param name="id" value="dbcenter/echarts" />
+			<param name="messageKey" value="dbcenter-echarts:module.dbcenter.piccenter" />
+		</item>
+	</extension>
+
+</plugin>

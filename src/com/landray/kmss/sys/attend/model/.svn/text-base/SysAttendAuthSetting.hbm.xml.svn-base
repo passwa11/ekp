@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.attend.model.SysAttendAuthSetting"
+		table="sys_attend_auth_setting">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+		
+		<bag
+			name="fdElements"
+			table="sys_attend_authsetting_elm"
+			lazy="true">
+			<key
+				column="fd_setting_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_org_id" />
+		</bag>
+		
+		<bag
+			name="fdAuthList"
+			table="sys_attend_authsetting_auths"
+			lazy="true">
+			<key
+				column="fd_setting_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_org_id" />
+		</bag>
+
+	</class>
+</hibernate-mapping>

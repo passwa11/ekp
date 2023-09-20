@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="jsonActionInterceptor"
+		class="com.landray.kmss.km.calendar.interfaces.JsonActionInterceptor">
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_base_config/kmCalendarBaseConfig.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarBaseConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarBaseConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_base_config/kmCalendarBaseConfig_edit.jsp" />
+				<entry
+					key="view"
+					value="/km/calendar/km_calendar_base_config/kmCalendarBaseConfig_view.jsp" />
+				<entry
+					key="editSynchroThreadSize"
+					value="/km/calendar/km_calendar_base_config/kmCalendarBaseConfigSynchro_edit.jsp" />
+				<entry
+					key="editAuthConfig"
+					value="/km/calendar/km_calendar_base_config/kmCalendarBaseConfigAuth_edit.jsp" />
+				<entry
+					key="editTimeParameter"
+					value="/km/calendar/km_calendar_base_config/kmCalendarBaseConfigTimeParameter_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_main/kmCalendarMain.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarMainForm" />
+		<property name="forwards">
+			<map>
+				<!-- #83621 PC端暂无view页面，跳转至二级页面 Start -->
+				<!-- <entry
+					key="view"
+					value="/km/calendar/km_calendar_main/kmCalendarMain_view.jsp" /> -->
+				<entry
+					key="view"
+					value="/km/calendar" />
+				<!-- #83621 PC端暂无view页面，跳转至二级页面 End-->
+				<entry
+					key="view.4pda"
+					value="/km/calendar/pda/kmCalendarMain_view4pda.jsp" />
+				<entry
+					key="view.4m"
+					value="/km/calendar/mobile/view.jsp" />
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_main/kmCalendarMain_edit.jsp" />
+				<entry
+					key="list"
+					value="/km/calendar/km_calendar_main/kmCalendarMain_list.jsp" />
+				<entry
+					key="page"
+					value="/km/calendar/km_calendar_main/kmCalendarMain_page.jsp" />
+				<entry
+					key="list.4app"
+					value="/km/calendar/km_calendar_main_json/kmCalendarMain_list.jsp" />
+				<entry
+					key="listOwner"
+					value="/km/calendar/km_calendar_main_json/kmCalendarMain_listOwner.jsp" />
+				<entry
+					key="listOwner.4app"
+					value="/km/calendar/km_calendar_main_json/kmCalendarMain_listOwner.jsp" />
+				<entry
+					key="data"
+					value="/km/calendar/km_calendar_main/kmCalendarMain_data.jsp" />
+				<entry
+					key="editEvent"
+					value="/km/calendar/km_calendar_main/kmCalendarMain_event.jsp" />
+				<entry
+					key="editEvent.4pda"
+					value="/km/calendar/pda/kmCalendarMain_edit4pda.jsp" />
+				<entry
+					key="editEvent.4m"
+					value="/km/calendar/mobile/edit.jsp" />
+				<entry
+					key="editNote"
+					value="/km/calendar/km_calendar_main/kmCalendarMain_note.jsp" />
+				<entry
+					key="synchroResult"
+					value="/km/calendar/resource/synchroResult.jsp" />
+				<entry
+					key="editGroupEvent"
+					value="/km/calendar/km_calendar_main/kmCalendarMain_groupEvent.jsp" />
+				<entry
+					key="editGroupEvent.4m"
+					value="/km/calendar/mobile/editGroup.jsp" />
+				<entry
+					key="notifyView"
+					value="/km/calendar/km_calendar_main/kmCalendarMain_notifyView.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_sync_bind/kmCalendarSyncBind.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarSyncBindAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarSyncBindForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/km/calendar/km_calendar_sync_bind/kmCalendarSyncBind_view.jsp" />
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_sync_bind/kmCalendarSyncBind_edit.jsp" />
+				<entry
+					key="list"
+					value="/km/calendar/km_calendar_sync_bind/kmCalendarSyncBind_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_sync_mapping/kmCalendarSyncMapping.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarSyncMappingAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarSyncMappingForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/km/calendar/km_calendar_sync_mapping/kmCalendarSyncMapping_view.jsp" />
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_sync_mapping/kmCalendarSyncMapping_edit.jsp" />
+				<entry
+					key="list"
+					value="/km/calendar/km_calendar_sync_mapping/kmCalendarSyncMapping_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_label/kmCalendarLabel.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarLabelAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarLabelForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/km/calendar/km_calendar_label/kmCalendarLabel_view.jsp" />
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_label/kmCalendarLabel_edit.jsp" />
+				<entry
+					key="list"
+					value="/km/calendar/km_calendar_label/kmCalendarLabel_list.jsp" />
+				<entry
+					key="list.4app"
+					value="/km/calendar/km_calendar_label_json/kmCalendarLabel_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_agenda_label/kmCalendarAgendaLabel.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarAgendaLabelAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarAgendaLabelForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/km/calendar/km_calendar_agenda_label/kmCalendarAgendaLabel_view.jsp" />
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_agenda_label/kmCalendarAgendaLabel_edit.jsp" />
+				<entry
+					key="list"
+					value="/km/calendar/km_calendar_agenda_label/kmCalendarAgendaLabel_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_label/kmCalendarUserLabel.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarUserLabelAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarUserLabelForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_label/kmCalendarUserLabel_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_out_cache/kmCalendarOutCache.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarOutCacheAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarOutCacheForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/km/calendar/km_calendar_out_cache/kmCalendarOutCache_view.jsp" />
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_out_cache/kmCalendarOutCache_edit.jsp" />
+				<entry
+					key="list"
+					value="/km/calendar/km_calendar_out_cache/kmCalendarOutCache_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_share_group/kmCalendarShareGroup.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarShareGroupAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarShareGroupForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/km/calendar/km_calendar_share_group/kmCalendarShareGroup_view.jsp" />
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_share_group/kmCalendarShareGroup_edit.jsp" />
+				<entry
+					key="list"
+					value="/km/calendar/km_calendar_share_group/kmCalendarShareGroup_list.jsp" />
+				<entry
+					key="list.4app"
+					value="/km/calendar/km_calendar_share_group_json/kmCalendarShareGroup_list.jsp" />
+				<entry
+					key="listGroupCalendar"
+					value="/km/calendar/km_calendar_share_group_json/kmCalendarShareGroup_listGroupCalendar.jsp" />
+				<entry
+					key="listGroupCalendar.4app"
+					value="/km/calendar/km_calendar_share_group_json/kmCalendarShareGroup_listGroupCalendar.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_share_group/kmCalendarUserShareGroup.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarUserShareGroupAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarUserShareGroupForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="update"
+					value="/km/calendar/km_calendar_share_group/kmCalendarUserShareGroup_edit.jsp" />
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_share_group/kmCalendarUserShareGroup_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_auth/kmCalendarAuth.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarAuthAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarAuthForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/km/calendar/km_calendar_auth/kmCalendarAuth_view.jsp" />
+				<entry
+					key="view.4app"
+					value="/km/calendar/km_calendar_auth_json/kmCalendarAuth_view.jsp" />
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_auth/kmCalendarAuth_edit.jsp" />
+				<entry
+					key="list"
+					value="/km/calendar/km_calendar_auth/kmCalendarAuth_list.jsp" />
+				<entry
+					key="manageList"
+					value="/km/calendar/km_calendar_auth/kmCalendarAuth_manageList.jsp" />
+				<entry
+					key="manageView"
+					value="/km/calendar/km_calendar_auth/kmCalendarAuth_manageView.jsp" />
+				<entry
+					key="manageEdit"
+					value="/km/calendar/km_calendar_auth/kmCalendarAuth_manageEdit.jsp" />
+				<entry
+					key="requestAuth"
+					value="/km/calendar/km_calendar_auth/kmCalendarAuth_requestAuth.jsp" />
+				<entry
+					key="requestAuth.4m"
+					value="/km/calendar/mobile/requestAuth.jsp" />
+				<entry
+					key="invite"
+					value="/km/calendar/km_calendar_auth/kmCalendarAuth_invite.jsp" />
+				<entry
+					key="invite.4m"
+					value="/km/calendar/mobile/invite.jsp" />
+				<entry
+					key="getAuthStatus"
+					value="/km/calendar/km_calendar_auth_json/kmCalendarAuth_getAuthStatus.jsp" />
+				<entry
+					key="getAuthStatus.json"
+					value="/km/calendar/km_calendar_auth_json/kmCalendarAuth_getAuthStatus.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_person_group/kmCalendarPersonGroup.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarPersonGroupAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarPersonGroupForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/km/calendar/km_calendar_person_group/kmCalendarPersonGroup_view.jsp" />
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_person_group/kmCalendarPersonGroup_edit.jsp" />
+				<entry
+					key="list"
+					value="/km/calendar/km_calendar_person_group/kmCalendarPersonGroup_list.jsp" />
+				<entry
+					key="groupPortlet_list"
+					value="/km/calendar/portlet/group_portlet_list.jsp" />
+					
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/km/calendar/km_calendar_request_auth/kmCalendarRequestAuth.do"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarRequestAuthAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.km.calendar.forms.KmCalendarRequestAuthForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/km/calendar/km_calendar_request_auth/kmCalendarRequestAuth_edit.jsp" />
+				<entry
+					key="edit.4m"
+					value="/km/calendar/mobile/edit_requestAuth.jsp" />
+				<entry
+					key="view"
+					value="/km/calendar/km_calendar_request_auth/kmCalendarRequestAuth_view.jsp" />
+				<entry
+					key="view.4m"
+					value="/km/calendar/mobile/view_requestAuth.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="kmCalendarMainController"
+		class="com.landray.kmss.km.calendar.actions.KmCalendarMainController">
+		<property
+			name="kmCalendarMainService">
+			<ref bean="kmCalendarMainService"/>
+		</property>
+	</bean>
+	<bean 
+        class="com.landray.kmss.km.calendar.actions.KmCalendarAuthListAction" 
+        parent="KmssBaseAction" 
+        name="/km/calendar/km_calendar_auth_list/kmCalendarAuthList.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.km.calendar.forms.KmCalendarAuthListForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry 
+                    key="data" 
+                    value="/km/calendar/km_calendar_auth_list/kmCalendarAuthList_data.jsp"/>
+                <entry 
+                    key="edit" 
+                    value="/km/calendar/km_calendar_auth_list/kmCalendarAuthList_edit.jsp"/>
+                <entry 
+                    key="view" 
+                    value="/km/calendar/km_calendar_auth_list/kmCalendarAuthList_view.jsp"/>
+            </map>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<subclass
+		discriminator-value="8"
+		name="com.landray.kmss.sys.organization.model.SysOrgPerson"
+		extends="com.landray.kmss.sys.organization.model.SysOrgElement">
+		<join
+			table="sys_org_person">
+			<key
+				column="fd_id"></key>
+			<property
+				name="fdMobileNo"
+				column="fd_mobile_no"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="150"
+				index="idx_orgPerson_mobileNo" />
+			<property
+				name="fdEmail"
+				column="fd_email"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="200"
+				index="idx_orgPerson_email" />
+			<property
+				name="fdLoginName"
+				column="fd_login_name"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="200"
+				index="idx_orgPerson_loginName" />
+			<property
+				name="fdLoginNameLower"
+				column="fd_login_name_lower"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="200"
+				index="idx_orgPerson_loginNameLower" />
+			<property
+				name="fdPassword"
+				column="fd_password"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="254" />
+			<property
+				name="fdInitPassword"
+				column="fd_init_password"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="254" />
+			<property
+				name="fdRtxNo"
+				column="fd_rtx_no"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="100" />
+			<property
+				name="fdWechatNo"
+				column="fd_wechat_no"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="100" />
+			<property
+				name="fdCardNo"
+				column="fd_card_no"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="100" />
+			<property
+				name="fdAttendanceCardNumber"
+				column="fd_attendance_card_number"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="50" />
+			<property
+				name="fdWorkPhone"
+				column="fd_work_phone"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="50" />
+			<property
+				name="fdDefaultLang"
+				column="fd_default_lang"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="50" />
+			<property
+				name="fdSex"
+				column="fd_sex"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="50" />
+			<property
+				name="fdLastChangePwd"
+				column="fd_last_change_pwd"
+				update="true"
+				insert="true"
+				not-null="false" />
+			<property
+				name="fdLockTime"
+				column="fd_lock_time"
+				update="true"
+				insert="true"
+				not-null="false" />
+			<property
+				name="fdShortNo"
+				column="fd_short_no"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="100" />
+			<property
+				name="fdDoubleValidation"
+				column="fd_double_validation"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="20" />
+			<property
+				name="fdUserType"
+				column="fd_user_type"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="1" />
+				
+			<property
+				name="fdNickName"
+				column="fd_nick_name"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="100" />
+			
+			<property
+				name="fdIsActivated"
+				column="fd_is_activated"
+				update="true"
+				insert="true"
+				not-null="false"/>
+			<property
+				name="fdHiredate"
+				column="fd_hiredate"
+				update="true"
+				insert="true"
+				not-null="false" />
+			<property
+				name="fdLeaveDate"
+				column="fd_leave_date"
+				update="true"
+				insert="true"
+				not-null="false" />
+			<property
+				name="fdCanLogin"
+				update="true"
+				insert="true"
+				not-null="false">
+				<column name="fd_can_login" default="1"/>
+			</property>
+			<many-to-one
+				name="fdStaffingLevel"
+				column="fd_staffing_level_id"
+				insert="true"
+				update="true"
+				not-null="false" />
+				
+		</join>
+	</subclass>
+</hibernate-mapping>

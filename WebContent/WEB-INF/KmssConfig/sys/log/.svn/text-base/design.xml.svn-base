@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="sys-log:module.sys.log"
+		urlPrefix="/sys/log/"
+		defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)">
+		
+		<!-- 在线人数分析 -->
+		<request
+			path="sys_log_online/**" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)">
+		</request>
+		
+		<!-- 操作日志 -->
+		<request
+			path="sys_log_app/**" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SECURITY)">
+		</request>
+		<!-- 错误日志 -->
+		<request
+			path="sys_log_error/**" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SECURITY)">
+		</request>
+		<!-- 后台日志 -->
+		<!-- 执行失败的任务 -->
+		<request
+			path="sys_log_job/**" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)">
+		</request>
+		<!-- 登录日志 -->
+		<request
+			path="sys_log_login/**" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SECURITY)">
+		</request>
+		<!-- 登出日志 -->
+		<request
+			path="sys_log_logout/**" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SECURITY)">
+		</request>
+		<!-- 组织架构操作日志 -->
+		<request
+			path="sys_log_organization/**" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SECURITY)">
+		</request>
+		<!-- 任务通知日志 -->
+		<request
+			path="sys_log_faile_job/**" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)">
+		</request>
+		
+		<!-- 新日志系统的操作日志（包含：登录、登出、操作、权限、组织架构） -->
+		<request path="sys_log_user_oper/**"
+			defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)">
+			<!-- 系统管理日志（只有安全审计员,系统管理员可以访问） -->
+			<query
+				queryString="method=listSysadmin"
+				validator="roleValidator(role=SYSROLE_AUDITOR;SYSROLE_SYSADMIN)" />
+			
+			<!-- 安全保密员日志（只有安全审计员,安全保密员可以访问） -->
+			<query
+				queryString="method=listSecadmin"
+				validator="roleValidator(role=SYSROLE_AUDITOR;SYSROLE_SECURITY)" />
+			
+			<!-- 安全审计员日志（只有安全保密员,安全审计员可以访问） -->
+			<query
+				queryString="method=listSecauditor"
+				validator="roleValidator(role=SYSROLE_SECURITY;SYSROLE_AUDITOR)" />
+				
+			<!-- 普通用户日志（只有安全保密员可以访问） -->
+			<query
+				queryString="method=listUser"
+				validator="roleValidator(role=SYSROLE_SECURITY)" />
+				
+			<!-- 组织架构日志（只有安全保密员,安全审计员可以访问） -->
+			<query
+				queryString="method=listOrg"
+				validator="roleValidator(role=SYSROLE_SECURITY;SYSROLE_AUDITOR)" />
+				
+			<!-- 权限变更日志（只有安全保密员,安全审计员可以访问） -->
+			<query
+				queryString="method=listAuth"
+				validator="roleValidator(role=SYSROLE_SECURITY;SYSROLE_AUDITOR)" />
+				
+			<!-- 未开启三员的日志（只有超级管理员可以访问） -->
+			<query
+				queryString="method=listNonTripartite"
+				validator="roleValidator(role=SYSROLE_ADMIN)" />
+			
+			<!-- 审计操作 -->
+			<query
+				queryString="method=audit&amp;List_Selected=*"
+				validator="logAuditValidator()" />
+			<!-- 审计list页面按钮 -->
+			<query
+				queryString="method=audit&amp;listMethod=*"
+				validator="logAuditValidator(method=listMethod)" />
+				
+			<!-- 查看 -->
+			<query
+				queryString="method=view&amp;fdId=*"
+				validator="logViewValidator(recId=fdId)" />
+		</request>
+		
+		<!-- 后台日志 （只有系统管理可以访问） -->
+		<request path="sys_log_system/**" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)" />
+		
+		<!-- 日志备份与恢复 （只有系统管理可以访问） -->
+		<request path="sys_log_bak/**" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)" />
+		
+		<!-- 日志导出（开启日志文件存储即可操作） -->
+        <request 
+            path="sys_log_export/sysLogExport.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.sys.log.model.SysLogExport" 
+            defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)">
+        </request>
+	</module>
+	
+	<!-- 日志Debug模式，在对应页面与action中判断是否开启debug -->
+	<module urlPrefix="/sys/logdebug/" defaultValidator="roleValidator(role=SYSROLE_USER;role=SYSROLE_ADMIN;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)" />
+	
+	<!-- 预警信息通知 -->
+	<module
+		urlPrefix="/sys/appconfig/">
+		<request
+			path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.sys.log.model.SysLogOnlineWarning&amp;todo=true"
+				validator="roleValidator(role=SYSROLE_USER)" />
+			<query
+				queryString="modelName=com.landray.kmss.sys.log.model.SysLogOnlineNotifyConfig"
+				validator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)" />
+		</request>
+	</module>
+	<!-- 备份日志 -->
+	<quartz
+		messageKey="sys-log:sysLogApp.job.backup"
+		jobService="sysLogAppService"
+		cronExpression="0 0 4 ? * *"
+		jobMethod="backup" 
+		description="sys-log:sysLogApp.job.backup.desc"/>
+	<quartz
+		messageKey="sys-log:sysLogError.job.backup"
+		jobService="sysLogErrorService"
+		cronExpression="0 0 4 ? * *"
+		jobMethod="backup" 
+		description="sys-log:sysLogError.job.backup.desc"/>
+	<quartz
+		messageKey="sys-log:sysLogJob.job.backup"
+		jobService="sysLogJobService"
+		cronExpression="0 0 4 ? * *"
+		jobMethod="backup" 
+		description="sys-log:sysLogJob.job.backup.desc"/>
+	<quartz
+		messageKey="sys-log:sysLogLogin.job.backup"
+		jobService="sysLogLoginService"
+		cronExpression="0 0 4 ? * *"
+		jobMethod="backup" 
+		description="sys-log:sysLogLogin.job.backup.desc"/>
+	<quartz
+		messageKey="sys-log:sysLogLogout.job.backup"
+		jobService="sysLogLogoutService"
+		cronExpression="0 0 4 ? * *"
+		jobMethod="backup"
+		description="sys-log:sysLogLogout.job.backup.desc" />
+	<quartz
+		messageKey="sys-log:sysLogChangePwd.job.backup"
+		jobService="sysLogChangePwdService"
+		cronExpression="0 0 4 ? * *"
+		jobMethod="backup"
+		description="sys-log:sysLogChangePwd.job.backup.desc" />
+	<!-- 备份日志 -->
+	<!-- 清除备份日志 -->
+	<quartz
+		messageKey="sys-log:sysLogApp.job.deleteBack"
+		jobService="sysLogAppService"
+		cronExpression="0 0 6 ? * *"
+		jobMethod="deleteBack" 
+		description="sys-log:sysLogApp.job.deleteBack.desc"/>
+	<quartz
+		messageKey="sys-log:sysLogError.job.deleteBack"
+		jobService="sysLogErrorService"
+		cronExpression="0 0 6 ? * *"
+		jobMethod="deleteBack"
+		description="sys-log:sysLogError.job.deleteBack"/>
+	<quartz
+		messageKey="sys-log:sysLogJob.job.deleteBack"
+		jobService="sysLogJobService"
+		cronExpression="0 0 6 ? * *"
+		jobMethod="deleteBack" 
+		description="sys-log:sysLogJob.job.deleteBack.desc"/>
+	<quartz
+		messageKey="sys-log:sysLogLogin.job.deleteBack"
+		jobService="sysLogLoginService"
+		cronExpression="0 0 6 ? * *"
+		jobMethod="deleteBack"
+		description="sys-log:sysLogLogin.job.deleteBack.desc"/>
+	<quartz
+		messageKey="sys-log:sysLogLogout.job.deleteBack"
+		jobService="sysLogLogoutService"
+		cronExpression="0 0 6 ? * *"
+		jobMethod="deleteBack" 
+		description="sys-log:sysLogLogout.job.deleteBack.desc"/>
+	<quartz
+		messageKey="sys-log:sysLogChangePwd.job.deleteBack"
+		jobService="sysLogChangePwdService"
+		cronExpression="0 0 6 ? * *"
+		jobMethod="deleteBack" 
+		description="sys-log:sysLogChangePwd.job.deleteBack.desc"/>
+	<!-- 清除备份日志 -->
+	<!-- 失败任务通知管理员 -->
+	<quartz
+		messageKey="sys-log:sysLogError.job.notifyAdminByFailureJob"
+		jobService="sysLogFaileJobService"
+		cronExpression="0 0 3 * * ?"
+		jobMethod="notifyAdminByFailureJob" 
+		description="sys-log:sysLogError.job.notifyAdminByFailureJob.desc"/>
+	<!-- 获取IP中的地点 -->
+	<quartz
+		messageKey="sys-log:sysLog.job.updateLocation"
+		jobService="sysLogJobService"
+		cronExpression="0 0 0/1 * * ?"
+		jobMethod="updateLocation" 
+		description="sys-log:sysLog.job.updateLocation.desc"/>
+		
+	<!-- 定时查询本地日志需上报文件 -->
+	<quartz
+		messageKey="sys-log:sysLogUserOper.job.reportedLog"
+		jobService="sysLogUserOperReportedTask"
+		cronExpression="0 0/15 * * * ?" 
+		jobMethod="reportedLog" 
+		description="sys-log:sysLogUserOper.job.reportedLog.desc"
+		enable="true"
+		/>
+		
+	<!-- 定时查询进行中的备份/清理/恢复操作在elastic search中的执行状态 -->
+	<quartz
+		messageKey="sys-log:sysLogBak.job.checkStatus"
+		jobService="sysLogBakService"
+		cronExpression="0 0/10 * * * ?" 
+		jobMethod="checkStatus" 
+		description="sys-log:sysLogBak.job.checkStatus.desc"
+		enable="true"
+		/>
+		
+	<!-- 定时自动备份/清理 -->
+	<quartz
+		messageKey="sys-log:sysLogBak.job.autoBackup"
+		jobService="sysLogBakService"
+		cronExpression="0 0 4 ? * *"
+		jobMethod="autoBackup" 
+		description="sys-log:sysLogBak.job.autoBackup.desc"
+		enable="true"
+		/>
+	
+	<homePage
+		urlPrefix="sys/log"
+		messageKey="sys-log:sysLog.moduleName"
+		config="/moduleindex_notopic.jsp?nav=/sys/log/tree.jsp"
+		type="sys" />
+		
+</configs>

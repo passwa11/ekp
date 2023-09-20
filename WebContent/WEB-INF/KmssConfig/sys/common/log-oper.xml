@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+	<logset>
+		<!-- 数据初始化 -->
+		<oper
+            id="systemInitOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/common/config.do">
+            <query 
+                method="systemInit"
+                logPoint="Base_UrlParam;systemInit"
+                messageKey="global.init.system">
+            </query>
+        </oper>
+        <!-- 查看数据字典 -->
+		<oper
+            id="viewDbInfoOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/common/viewDbInfo.jsp">
+            <query 
+                paramName="_t"
+                paramValue="1"
+                logPoint="Base_UrlParam;viewDbInfo"
+                messageKey="sys-config:sysAdmin.dataDict.editDbInfo.title">
+            </query>
+        </oper>
+        <!-- 查看数据字典 -->
+		<oper
+            id="configcacheclearOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/common/configcacheclear.jsp">
+            <query 
+                paramName="_t"
+                paramValue="1"
+                logPoint="configcacheclear"
+                messageKey="sys-config:sys.sysAdminCommonTools.clearConfigCache">
+            </query>
+        </oper>
+	</logset>
+</log-oper>

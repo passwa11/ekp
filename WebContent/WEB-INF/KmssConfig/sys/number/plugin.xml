@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	<extension-point
+		id="com.landray.kmss.sys.number.config"
+		type="service">
+		<item
+			name="extend">
+			<param
+				name="modelName"
+				required="true"
+				kind="string">
+				<description>model名称 如：com.landray.kmss.km.smissive.model.KmSmissiveMain</description>
+			</param>
+			<param
+				name="templatePropertyName"
+				kind="string">
+				<description>模板属性名称。</description>
+			</param>
+			<param
+				name="moduleName"
+				kind="string"
+				required="true">
+				<description>模块名称</description>						
+			</param>
+			<param
+				name="isReform"
+				kind="string"
+				required="false">
+				<description>是否改造，老模块改造时需将该属性设置为true,新模块应用编号机制时设置为false,默认为false</description>						
+			</param>
+			<param
+				name="order"
+				kind="int"
+				default="10">
+				<description>
+					可选，排序号，默认值为10
+				</description>
+			</param>
+			
+			<description>编号机制的扩展点。</description>
+		</item>
+		<description>编号机制扩展点。</description>
+	</extension-point>
+	
+	<extension
+		point="com.landray.kmss.sys.config.admin.do">
+		<item
+			name="config">
+			<param
+				name="jsp"
+				value="/sys/number/numberConfig.jsp" />
+			<param
+				name="type"
+				value="application" />
+		</item>
+	</extension>
+	<!-- 兼容性检测 -->
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid"
+				value="com.landray.kmss.sys.number.transfer.NumberTransferTask" />
+			<param name="name" value="{sys-number:sysNumber.NumChecker}" />
+			<param name="path" value="/sys/number/"/>
+			<param
+				name="check"
+				value="com.landray.kmss.sys.number.transfer.NumberTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.number.transfer.NumberTransferTask" />
+			<param
+				name="description"
+				value="{sys-number:sysNumber.NumChecker.desc}" />
+		</item>
+		<item name="config">
+			<param name="unid"
+				value="com.landray.kmss.sys.number.transfer.NumberNameTransferTask" />
+			<param name="name" value="{sys-number:sysNumber.NameChecker}" />
+			<param name="path" value="/sys/number/"/>
+			<param
+				name="check"
+				value="com.landray.kmss.sys.number.transfer.NumberNameTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.number.transfer.NumberNameTransferTask" />
+			<param
+				name="description"
+				value="{sys-number:sysNumber.NameChecker.desc}" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.datainit" model="*">
+		<item name="datainit">
+			<param name="bean" value="sysNumberDataInitService" />
+			<param name="order" value="1" />
+		</item>
+	</extension>
+
+	<!-- 模块解耦注册 -->
+	<extension point="com.landray.kmss.common.module.core.register.declare" model="*">
+		<item name="declare">
+			<param name="id" value="sys/number" />
+			<param name="messageKey" value="sys-number:module.sys.number" />
+			<param name="mechanismModels" value="ISysNumberModel:SysNumberMainMapp:com.landray.kmss.sys.number.model.SysNumberMainMapp" />
+		</item>
+	</extension>
+
+</plugin>

@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.signature.model.KmSignatureMain"
+		table="km_signature_main">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+		<!-- 是否有效 -->
+		<property
+			name="fdIsAvailable"
+			column="fd_is_available"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 是否默认 -->
+		<property
+			name="fdIsDefault"
+			column="fd_is_default"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 是否免密签名 -->
+		<property
+			name="fdIsFreeSign"
+			column="fd_is_free_sign"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 自动编号 -->
+		<property
+			name="fdSignatureId"
+			column="fd_signature_id"
+			update="true"
+			insert="true"
+			length="10" />
+		<!-- 用户名称 -->
+		<property
+			name="fdUserName"
+			column="fd_user_name"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+		<!-- 用户密码 -->
+		<property
+			name="fdPassword"
+			column="fd_password"
+			update="true"
+			insert="true"
+			length="40"
+			not-null="false" />
+		<!-- 印章名称 -->
+		<property
+			name="fdMarkName"
+			column="fd_mark_name"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+		<!-- 印章类型 -->
+		<property
+			name="fdMarkType"
+			column="fd_mark_type"
+			update="true"
+			insert="true"
+			length="40"
+			not-null="false" />
+		<!-- 印章信息 -->
+		<property
+			name="fdMarkBody"
+			column="fd_mark_body"
+			type="blob"
+			lazy="true"
+			length="1000000" />
+		<!-- 印章目录 -->
+		<property
+			name="fdMarkPath"
+			column="fd_mark_path"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+		<!-- 印章大小 -->
+		<property
+			name="fdMarkSize"
+			column="fd_mark_size"
+			update="true"
+			insert="true"
+			length="10"
+			not-null="false" />
+		<!-- 印章保存时间 -->
+		<property
+			name="fdMarkDate"
+			column="fd_mark_date"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 文档状态 -->
+		<property
+			name="docStatus"
+			column="doc_status"
+			update="true"
+			insert="true"
+			length="20" />
+		<property
+			name="fdDocType"
+			column="fd_doc_type"
+			update="true"
+			insert="true"
+			length="1" />
+		<!-- 是否有效 -->
+		<property
+			name="docInForce"
+			column="doc_in_force"
+			update="true"
+			insert="true"
+			length="1" />
+		<property
+			name="docAlterTime"
+			column="doc_alter_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="docAlterClientIp"
+			column="doc_alter_client_ip"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="30" />
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="docCreatorClientIp"
+			column="doc_creator_client_ip"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="30" />
+		<many-to-one
+			name="docAlteror"
+			column="doc_alteror_id"
+			insert="true"
+			update="true"
+			not-null="false" />			
+		<many-to-one
+			name="docCreator"
+			column="doc_creator_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<!-- 签章分类 -->
+		<!--<many-to-one
+			name="fdTemp"
+			column="fd_temp"
+			insert="true"
+			update="true"
+			not-null="false" /> -->
+		<!-- 授权用户 -->
+		<bag
+			name="fdUsers"
+			table="km_signature_users"
+			lazy="true">
+			<key
+				column="fd_signature_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_org_id" />
+		</bag>
+	</class>
+</hibernate-mapping>

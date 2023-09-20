@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/third/ldap/setting.do"
+		class="com.landray.kmss.third.ldap.action.LdapSettingAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.ldap.form.LdapSettingForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/third/ldap/setting.jsp" />
+				<entry
+					key="view"
+					value="/third/ldap/setting_view.jsp" />
+				<entry
+					key="show"
+					value="/third/ldap/show.jsp" />
+				<entry
+					key="success"
+					value="/sys/config/resource/success.jsp" />
+				<entry
+					key="failure"
+					value="/sys/config/resource/error.jsp" />
+				<entry
+					key="toValidatePass"
+					value="/third/ldap/validatePass.jsp" />
+				<entry
+					key="mappingResult"
+					value="/third/ldap/mappingResult.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/ldap/oms/in/config.do"
+		class="com.landray.kmss.third.ldap.oms.in.OMSSynchroInConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+</beans>

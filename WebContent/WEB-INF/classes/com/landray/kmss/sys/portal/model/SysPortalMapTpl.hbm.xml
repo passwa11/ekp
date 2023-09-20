@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.sys.portal.model.SysPortalMapTpl" 
+        table="sys_portal_map_tpl">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property 
+            name="fdName" 
+            column="fd_name" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+        <property 
+            name="docCreateTime" 
+            column="doc_create_time" 
+            update="true" 
+            insert="true" 
+            index="idx_portalMapTpl_docCreaTime"/>
+        <property 
+            name="tplType" 
+            column="tpl_type" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="fdIsCustom" 
+            column="fd_is_custom" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="authReaderFlag" 
+            column="auth_reader_flag" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="authEditorFlag" 
+            column="auth_editor_flag" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="docCreator" 
+            column="doc_creator_id" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="fdNav" 
+            column="fd_nav_id" 
+            update="true" 
+            insert="true"/>
+        <bag 
+            name="authReaders" 
+            table="sys_portal_map_tpl_reader" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.organization.model.SysOrgElement" 
+                column="fd_target_id"/>
+        </bag>
+        <bag 
+            name="authEditors" 
+            table="sys_portal_map_tpl_editor" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.organization.model.SysOrgElement" 
+                column="fd_target_id"/>
+        </bag>
+        <bag 
+            name="authOtherReaders" 
+            table="sys_portal_map_tpl_oreader" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.organization.model.SysOrgElement" 
+                column="fd_target_id"/>
+        </bag>
+        <bag 
+            name="authAllReaders" 
+            table="sys_portal_map_tpl_areader" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.organization.model.SysOrgElement" 
+                column="fd_target_id"/>
+        </bag>
+        <bag 
+            name="authOtherEditors" 
+            table="sys_portal_map_tpl_oeditor" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.organization.model.SysOrgElement" 
+                column="fd_target_id"/>
+        </bag>
+        <bag 
+            name="authAllEditors" 
+            table="sys_portal_map_tpl_aeditor" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.organization.model.SysOrgElement" 
+                column="fd_target_id"/>
+        </bag>
+
+        <list
+			name="fdPortalNav"
+			table="sys_portal_map_tpl_nav"
+			lazy="true" >
+			<key column="fd_tpl_id" />
+			<index column="position"></index>
+			<composite-element class="com.landray.kmss.sys.portal.model.SysPortalMapTplNav">
+				<parent name="fdMain"/>
+				<many-to-one name="fdNav" column="fd_nav_id" />
+				<property name="fdAttachmentId" column="fd_attachment_id" />
+			</composite-element>
+		</list>
+		
+		<list
+			name="fdMapInlet"
+			cascade="all-delete-orphan"
+			lazy="true">
+			<key column="fd_tpl_id" />
+			<index column="position"></index>
+			<one-to-many class="com.landray.kmss.sys.portal.model.SysPortalMapInlet"/>
+		</list>
+		
+		<list
+			name="fdNavCustom"
+			cascade="all-delete-orphan"
+			lazy="true">
+			<key column="fd_tpl_id" />
+			<index column="position"></index>
+			<one-to-many class="com.landray.kmss.sys.portal.model.SysPortalMapTplNavCustom"/>
+		</list>
+    </class>
+</hibernate-mapping>

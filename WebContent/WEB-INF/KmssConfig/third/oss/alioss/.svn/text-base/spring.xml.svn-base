@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="sysFileAliyunDirectService"
+		class="com.landray.kmss.third.oss.alioss.service.spring.SysFileAliyunDirectServiceImpl">
+	</bean>
+
+	<bean id="sysFileAliyunProxyTarget"
+		class="com.landray.kmss.third.oss.alioss.service.spring.SysFileAliyunProxyServiceImpl">
+	</bean>
+
+	<bean id="sysFileAliyunProxyService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFileAliyunProxyTarget" />
+		</property>
+	</bean>
+	
+	
+	<bean id="sysFileAliyunCustomBatchTypeTarget"
+		class="com.landray.kmss.third.oss.alioss.service.spring.SysFileAliyunCustomBatchTypeService">
+	</bean>
+
+	<bean id="sysFileAliyunCustomBatchTypeService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFileAliyunCustomBatchTypeTarget" />
+		</property>
+	</bean>
+	
+	
+	<bean id="sysFileAliyunBatchTypeTarget"
+		class="com.landray.kmss.third.oss.alioss.service.spring.SysFileAliyunBatchTypeService">
+	</bean>
+
+	<bean id="sysFileAliyunBatchTypeService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFileAliyunBatchTypeTarget" />
+		</property>
+	</bean>
+
+	<bean id="aliyunResourceProxyServiceImpl"
+		  class="com.landray.kmss.third.oss.alioss.service.spring.AliyunResourceProxyServiceImpl">
+	</bean>
+
+</beans>

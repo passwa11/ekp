@@ -1,0 +1,550 @@
+@charset "UTF-8";
+
+/**
+** 代码制作人: xiex
+** 制作时间：2016-06-17
+** 文件内容描述：Demo
+** 修改日期：无
+** 修改内容：无
+**********************************************/
+
+/**
+ * CSS Reset ******************************************************************************************
+ */
+body,div,dl,dt,dd,ul,ol,li,pre,code,legend,button,form,fieldset,input,textarea,p,blockquote,th,td,h1,h2,h3,h4,h5,h6{ padding:0; margin:0;}
+
+
+/* 表格标题及内容居左显示 */
+caption,th {text-align: left;}
+input,img,select {vertical-align:middle;}
+
+
+
+/* 特殊标记的字体和字号 */
+address,caption,cite,code,dfn,th,var{ font-weight:normal; font-style:normal;}
+b,strong { font-weight: bold;}
+dfn{ font-style: italic;}
+small{ font-size:80%;}
+
+/* 鼠标样式 */
+input[type="submit"]{ cursor:pointer;}
+button{ box-sizing:content-box; cursor: pointer;}
+
+/* 标题元素样式 */
+h1,h2,h3,h4,h5,h6{ font-size:100%; font-weight:normal;}
+
+/* 清除列表样式 */
+ol,ul{ list-style:none;}
+
+/* 设置表格的边框被合并为一个单一的边框, 指定分隔边框模型中单元格边界之间的距离为0*/
+table{ border-collapse:collapse; border-spacing:0;}
+
+/* 缩写，图片等无边框 */
+fieldset,img,abbr,acronym{ border:0;}
+abbr,acronym{ font-variant: normal;}
+img{ max-width: 100%;}
+
+/* 链接样式，颜色可酌情修改 */
+a{
+    color:#333;
+    background-color: transparent;
+    text-decoration:none;
+    transition:all 0.3s ease;
+}
+a:visited{ }
+a:hover,a:active,a:visited{ }
+
+/* 上下标 */
+sup{vertical-align:text-top;}
+sub{vertical-align:text-bottom;}
+
+/* 主体 */
+html { /*height: 100%;*/}
+body {
+    font-family:"Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
+    background-color: #fff;
+}
+@font-face {
+  font-family: 'xihei';
+  src: url('../font/font.eot?v=4.3.0');
+  src: url('../font/font.eot?#iefix&v=4.3.0') format('embedded-opentype'),
+       url('../font/font.woff?v=4.3.0') format('woff'),
+       url('../font/font.ttf?v=4.3.0') format('truetype'),
+       url('../font/font.svg?v=4.3.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/*友情链接*/
+.lui_links_wrapper{}
+.lui_links_content ul{}
+.lui_links_content ul li{ border-top: 1px solid #ebebeb; text-align: center; overflow: hidden;}
+.lui_links_content ul li:first-child{ border-top:none;}
+.lui_links_content ul li a,
+.lui_links_content ul li .link_logo{
+	display:block;
+}
+.lui_links_content ul li a{
+	padding: 15px 10px;
+	height: 47px;
+	line-height: 47px;
+	font-size: 16px;
+}
+.lui_links_content ul li img{ max-width: 90%; }
+.lui_links_content ul li.links_logo_3 img{ max-height: 95%;}
+.lui_links_content ul li a:hover{ background-color: #f8f8f8;}
+.lui_links_tabs{ border-top:1px solid #ebebeb; height:67px; line-height: 67px; text-align: center;}
+.lui_links_tabs li{ cursor: pointer; display: inline-block; width:5px; height:5px; margin:0px 5px; border-radius:50%; background:#b4b4b4;}
+.lui_links_tabs li.active{ background:#15a4fa;}
+
+.lui_links_content ul li a .links-imgbox{
+  margin-right: 5px;
+  width: 32px;
+  height: 32px;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
+.lui_links_content ul li a .links-imgbox.icon-1{ background-image: url(../images/icon-1.png);}
+.lui_links_content ul li a .links-imgbox.icon-2{ background-image: url(../images/icon-2.png);}
+.lui_links_content ul li a .links-imgbox.icon-3{ background-image: url(../images/icon-3.png);}
+.lui_links_content ul li a .links-imgbox.icon-4{ background-image: url(../images/icon-4.png);}
+.lui_links_content ul li a .links-info{ }
+
+/* 图文混合友情链接 */
+
+.lui_links_content.friendLinks_mix ul li {
+	position: relative;
+	height: 77px;
+}
+
+.lui_links_content.friendLinks_mix ul li a.exp_title {
+	position: absolute;
+	bottom: 77px;
+	left: 0px;
+	width: 100%;
+	padding: 0px;
+	height: 77px;
+	line-height: 77px;
+	font-size: 16px;
+	background: rgba(102, 104, 109, 0.8);
+	color: #fff;
+	background: #66686d\9;
+	transition: bottom 0.2s ease-in-out 0.1s;
+	-webkit-transition: bottom 0.2s ease-in-out 0.1s;
+}
+
+.lui_links_content.friendLinks_mix ul li a.exp_title i.icon_arrow {
+	display: inline-block;
+	background: url(../images/icon-arrow.png) no-repeat center;
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+	margin-left: 10px;
+}
+
+.lui_links_content.friendLinks_mix ul li .link_logo {
+	padding: 15px 10px;
+	height: 47px;
+	line-height: 47px;
+	cursor: pointer;
+}
+
+.lui_links_content.friendLinks_mix ul li:hover .exp_title {
+	bottom: 0px;
+}
+
+.lui_links_content.friendLinks_mix ul li a.exp_title:hover {
+	background: rgba(102, 104, 109, 0.8);
+}
+
+/*地产门户友情链接方式*/
+.friendLinks_type02.lui_links_wrapper  ul li a:hover {
+	background: transparent
+}
+
+.friendLinks_type02.lui_links_wrapper  {
+	position: relative;
+}
+
+.friendLinks_type02.lui_links_wrapper  .links_mask {
+	position: absolute;
+	left: 0px;
+	top: -400px;
+	height:100%;
+	right: 0px;
+	background: rgba(102, 104, 109, 0.8);
+	color:#fff;
+	font-size: 16px;
+	text-align: center;
+	transition: all 0.5s ease;
+	-webkit-transition: all 0.5s ease;
+}
+
+.friendLinks_type02.lui_links_wrapper  .links_mask p{
+	vertical-align: middle;
+	position: absolute;
+	line-height:26px;
+	left:0px;
+	top:50%;
+	width:100%;
+	margin-top:-26px;
+}
+
+.friendLinks_type02.lui_links_wrapper:hover .links_mask{
+	top:0px;
+
+}
+
+/*任务列表*/
+.lui_task_list{}
+.lui_task_list table{ width: 100%; border:1px solid #ebebeb; table-layout: fixed;}
+.lui_task_list table tr td{ border:1px solid #ebebeb; border-style:solid dashed; table-layout: fixed;  width:90px; height: 38px; cursor: pointer; position:relative; vertical-align: top;}
+.lui_task_list table tr td:first-child{ vertical-align: middle;}
+.lui_task_list table tr th{ vertical-align: bottom; border:1px solid #ebebeb; border-style:solid dashed; height:52px; padding:10px; color:#84899c; font-size: 14px; position: relative;}
+.lui_task_list table tr th.week_num{ width:109px;}
+.week_num .prev,.week_num .next{ display: block; position: absolute; bottom:5px; cursor: pointer; width:0px; height:0px; border:6px solid transparent; }
+.week_num_content{ display: block; width: 100%; height:100%; position:relative;}
+.week_num .prev{border-right-color:#8b90a2; left:0px;}
+.week_num .next{border-left-color:#8b90a2; right:-5px;}
+.week_num_content .week{ position: absolute; width:85px; text-align: center; left:14px; bottom:0px;}
+.week_num_content .week em{ font-family:"xihei","微软雅黑";font-size:36px; position:relative; top:6px; margin: 0px 3px; font-style:normal;}
+.lui_task_list .task_username{ text-align: right;}
+.lui_task_list .task_username span{ padding-right: 20px; font-size: 14px;}
+.lui_task_list tr th .lui_task_month{ padding-right:20px; text-align: right; display: block; position: relative; top:4px;}
+.lui_task_list tr th .lui_task_month em{ font-family: "xihei","微软雅黑"; font-size: 36px;font-style: normal; color:#84899c; font-weight: normal; position: relative; top:4px;}
+.lui_task_list tr th:first-child{ background:#edf5ff; width: 84px;}
+.lui_task_list tr th.cur{ color:#15a4fa;}
+.lui_task_weekname{ position: absolute; left:10px; top:10px;}
+.lui_task_date{ font-family:"xihei","微软雅黑"; position: absolute; right:10px; bottom:4px; font-size: 36px;}
+
+/*进度条*/
+.task_chartBar {
+  display: block;
+  width: 100%;
+  height: 20px;
+  line-height: 20px;
+  background: #7ae7bf;
+  cursor: pointer;
+  position: relative;
+  z-index: 11;
+  border: 1px solid #fff;
+  left: 0px;
+  top: 0px;
+  color: #fff;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-radius: 8px;
+}
+.task_chartBar.day3 {
+  width: 300%;
+}
+.task_chartBar.day4{ width: 400%;}
+.task_chartBar span{ display:block; padding:0px 8px; overflow: hidden; white-space: nowrap;
+text-overflow: ellipsis; }
+.task_chartBar.color_1{ /*background:#c19c53;*/ background:#5ea6ec;}/* 我的日历 */
+.task_chartBar.color_2{ /*background:#a5bfda;*/ background:#51c7d5;}/* 会议管理 */
+.task_chartBar.color_3{ /*background:#7ae7bf;*/ background:#fb6664;}/*任务管理*/
+
+
+/*KPI列表*/
+.lui_kpi_wrapper{ padding: 10px 20px;}
+.lui_kpi_item{ display: inline-block; width:218px; }
+.lui_kpi_item li{ margin-bottom: 5px;}
+.lui_kpi_item p,.lui_kpi_item em{ font-size: 14px; color:#636879; font-style: normal;}
+.lui_kpi_item .title p{ font-size: 16px; color:#636879; padding-top:10px;}
+.kpi_chart_bar{ height: 12px; width:130px; position: relative;}
+.kpi_chart_bar .chart{ position: absolute; left:0px; top:0px; height:100%; display: inline-block; width:0%; background: #0cc78c;}
+.lui_kpi_item.item01 .kpi_chart_bar .chart{ background:#0cc78c;}
+.lui_kpi_item.item02 .kpi_chart_bar .chart{ background:#ff6600;}
+.lui_kpi_item.item03 .kpi_chart_bar .chart{ background:#feaf05;}
+.lui_kpi_item.item04 .kpi_chart_bar .chart{ background:#86db00;}
+.lui_kpi_item.item05 .kpi_chart_bar .chart{ background:#3ebfef;}
+
+.lui_kpi_operations .lui_portlet_operation_more{}
+
+
+  /*新员工入职指南 Starts*/
+.demo-entry-handbook{
+  padding: 25px 45px;
+  min-height: 380px;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  position: relative;
+}
+.demo-entry-handbook.handbook-landedEstate{ background-image: url(../images/entry-handbook-landedEstate.jpg);}
+.demo-entry-handbook.handbook-group{ background-image: url(../images/entry-handbook-group.jpg);}
+.demo-entry-handbook-tabs{}
+.demo-entry-handbook-tab-heading{
+  margin-left: -30px;
+  margin-right: -30px;
+  padding-top: 230px;
+  font-size: 0;
+  *white-space: -1px;
+  text-align: center;
+  white-space: nowrap;
+}
+.demo-entry-handbook-tab-heading:after,
+.demo-entry-handbook-tab-heading:before{
+  content: '';
+  display: table;
+  visibility: hidden;
+}
+.demo-entry-handbook-tab-heading:after{
+  clear: both;
+}
+.demo-entry-handbook-tab-heading > li{
+  margin-left: 7px;
+  margin-right: 7px;
+  display: inline-block;
+  position: relative;
+}
+.demo-entry-handbook-tab-heading > li:after {
+  content: '';
+  width: 14px;
+  border-bottom: 1px solid #54b1fc;
+  right: -14px;
+  position: absolute;
+  top: 50%;
+  margin-top: 5px;
+  z-index: 0;
+}
+.demo-entry-handbook-tab-heading > li:last-child:after{ display: none; }
+.demo-entry-handbook-tab-heading > li > a{
+  display: block;
+  width: 56px;
+  height: 37px;
+  line-height: 44px;
+  text-align: center;
+  color: #636879;
+  font-size: 12px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  background: url(../images/entry-handbook-group-tab-bg.png) no-repeat 50% 0;
+  transition: background-color,color .3s ease-in-out;
+}
+.demo-entry-handbook-tab-heading > li > a:hover{
+  color: #15a4fa;
+}
+.demo-entry-handbook-tab-heading > li.active a,
+.demo-entry-handbook-tab-heading > li.active a:hover{
+  color: #fff;
+  background-position: 50% 100%;
+}
+.demo-entry-handbook-tab-heading > li:last-child{ margin-right: 0; }
+.demo-entry-handbook-tab-content{ padding-top: 15px; }
+.demo-entry-handbook-tab-content > .tab-pane{
+  display: none;
+  opacity: 0;
+  transition: all .3s linear;
+}
+.demo-entry-handbook-tab-content > .tab-pane.active{
+  height: inherit;
+  position: relative;
+  display: block;
+  opacity: 1;
+}
+.demo-entry-handbook-innerlist{}
+.demo-entry-handbook-innerlist:after,
+.demo-entry-handbook-innerlist:before,
+.demo-entry-handbook-innerlist > li:after{
+  content: '';
+  display: table;
+  overflow: hidden;
+}
+.demo-entry-handbook-innerlist:after,
+.demo-entry-handbook-innerlist > li:after{
+  clear: both;
+}
+.demo-entry-handbook-innerlist > li {
+  margin: 6px 0;
+  padding-left: 15px;
+  line-height: 20px;
+  position: relative;
+}
+.demo-entry-handbook-innerlist > li > a:after,
+.demo-entry-handbook-innerlist > li > a:before{
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: dashed dashed dashed solid;
+  border-color: transparent;
+  position: absolute;
+  top: 50%;
+  margin-top: -4px;
+}
+.demo-entry-handbook-innerlist > li > a:before{
+  left: 0;
+  border-width: 4px 7px;
+  border-color: transparent transparent transparent #ff7854;
+}
+.demo-entry-handbook-innerlist > li > a:after{
+  left: 0;
+  border-width: 4px 1px;
+  border-color: transparent transparent transparent #fff;
+}
+
+.demo-entry-handbook-innerlist > li > a{
+  max-width: 90%;
+  color: #636879;
+  font-size: 14px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  float: left;
+}
+.demo-entry-handbook-innerlist > li > a:hover{
+  color: #15a4fa;
+}
+.demo-entry-handbook.handbook-landedEstate .demo-entry-handbook-tab-heading > li{
+  margin-right: 23px;
+}
+.demo-entry-handbook.handbook-landedEstate .demo-entry-handbook-tab-heading > li > a{
+  width: 62px;
+  height: 30px;
+  line-height: 30px;
+  background-image: url(../images/entry-handbook-landedEstate-tab-bg.png);
+}
+.demo-entry-handbook.handbook-landedEstate .demo-entry-handbook-tab-heading > li > a:hover{
+  color: #44c084;
+}
+.demo-entry-handbook.handbook-landedEstate .demo-entry-handbook-innerlist > li > a:hover{ color: #ff7854; }
+.demo-entry-handbook.handbook-landedEstate .demo-entry-handbook-tab-heading > li.active a,
+.demo-entry-handbook.handbook-landedEstate .demo-entry-handbook-tab-heading > li.active a:hover{
+  color: #fff;
+  background-position: 50% 100%;
+}
+
+    /* 下拉菜单 begin */
+.lui_map_button_group_inner {
+  font-size: 14px;
+  color: #fff;
+  position: absolute;
+  top: 100px;
+  right: 25px;
+}
+.lui_map_button, .lui_map_options {
+  background-color: rgb(60, 59, 55);
+  opacity: 0.85;
+  filter: alpha(opacity=85);
+  border-radius: 8px;
+  width: 160px;
+  padding: 10px 0;
+}
+.lui_map_button {
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 0 4px 0 10px;
+  width: 110px;
+  height: 33px;
+}
+.lui_map_button span {
+  color: #fff;
+  text-align: center;
+  display: inline-block;
+  line-height: 33px;
+  width: 90px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.lui_map_button:after {
+  position: absolute;
+  right: 12px;
+  top: 14px;
+  content: "";
+  width: 0px;
+  height: 0px;
+  border-width: 6px 5px;
+  border-style: solid dashed dashed;
+  border-color: #fff transparent transparent;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+}
+.lui_map_options {
+  margin-top: 15px;
+  margin-left: -40px;
+  display: none;
+}
+.lui_map_options:after {
+  position: absolute;
+  top: 36px;
+  right: 20px;
+  content: "";
+  width: 0px;
+  height: 0px;
+  border-width: 6px 5px;
+  border-style: dashed dashed solid;
+  border-color: transparent transparent rgba(60, 59, 55, 0.8);
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+  color: #605955;
+}
+.lui_map_options>li {
+  padding: 3px 12px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.lui_map_options>li.active, .lui_map_options>li:hover {
+  background-color: #7F9D39;
+}
+
+    /* 下拉菜单 end */
+
+  /*新员工入职指南 Ends*/
+
+  /*邮件 Starts*/
+.mail-popup-info-box{
+  margin: 0 auto;
+  width: 320px;
+  border: 1px solid #ebebeb!important;
+  background-color: #fff;
+  box-shadow: 0 0 7px rgba(0,0,0,.15);
+  position: relative;
+}
+.mail-popup-info-list{
+  margin: 0;
+  padding: 10px 0;
+  list-style: none;
+}
+.mail-popup-info-list > li{
+  text-align: center;
+  padding: 5px 10px;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+  overflow: hidden;
+}
+.mail-popup-info-list > li img{
+  max-height: 100%;
+}
+.mail-popup-info-tip{
+  padding: 15px 10px;
+  text-align: center;
+  color: #fff;
+  background-color: #4fbdff;
+}
+.mail-popup-info-close{
+  width: 20px;
+  height: 20px;
+  background: url(../images/mail-icon-close.png) no-repeat 50%;
+  display: block;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.mail-popup-info-close:hover{
+  background-color: #f8f8f8;
+}
+  /*邮件 Ends*/

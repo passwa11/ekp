@@ -1,0 +1,101 @@
+<div class="detailTableContent">
+	<#macro detail_table isTemp=true noIndex="!{index}" rowIndex="!{index}">
+		<td class="detail_wrap_td">
+			<xform:text showStatus="noShow" property="extendDataFormInfo.value(${tableCtx.controlId}.${rowIndex}.fdId)" />
+			<table class="muiSimple muiDetailTable">
+				<tr celltr-title="true" onclick="detail_${tableCtx.controlId}_expandRow(this);">
+					<td colspan="2" align="left" valign="middle" class="muiDetailTableNo" tableName="<xform:lang id='${tableCtx.controlId}' option='label'/>">
+						<div class="muiDetailDisplayOpt muiDetailTableTitleIcon fontmuis muis-put-away"></div>
+						<span class="muiDetailTableTitle">
+							<xform:lang id='${tableCtx.controlId}' option='label'/>${noIndex}
+						</span>
+						<xform:editShow>
+							<div class="muiDetailTableDel" onclick="detail_${tableCtx.controlId}_del(this);">
+								<bean:message key="button.delete" />
+							</div>
+						</xform:editShow>
+					</td>
+				</tr>
+				<#list tableCtx.mobileRows as mobileRow>
+					<tr data-celltr="true">
+						<td class="muiTitle">
+							<#if (mobileRow.titleCell??) >
+								<#if (isTemp)>
+									${mobileRow.titleCell.templateHtml}
+								<#else>
+									${mobileRow.titleCell.contentHtml}
+								</#if>
+							</#if>
+						</td>
+						<td>
+							<#if (mobileRow.contentCell??) >
+								<#if (isTemp)>
+									${mobileRow.contentCell.templateHtml}
+								<#else>
+									${mobileRow.contentCell.contentHtml}
+								</#if>
+							</#if>
+						</td>
+					</tr>
+				</#list>
+			</table>
+		</td>
+	</#macro>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" id="${tableCtx.tableId}" >
+		<#-- doclist.js 必须要有标题行，否则index计算不正确 -->
+		<tr style="display:none;">
+			<td></td>
+		</tr>
+		<#-- 模版行 -->
+		<tr data-dojo-type="mui/form/Template" 
+			KMSS_IsReferRow="1"
+			style="display:none;" 
+			border='0'>
+			<@detail_table isTemp=true />
+		</tr>
+		<#-- 内容行 -->
+		<c:forEach 
+			items="${r"${"}_xformForm.extendDataFormInfo.formData.${tableCtx.controlId}${r"}"}" 
+			var="_xformEachBean" 
+			varStatus="vstatus">
+		<tr KMSS_IsContentRow="1">
+			<@detail_table isTemp=false noIndex=r"${vstatus.index + 1}" rowIndex=r"${vstatus.index}" />
+		</tr>
+		</c:forEach>
+
+	</table>
+</div>
+<xform:editShow>
+	<div 
+		data-dojo-type="sys/xform/mobile/controls/DetailTableAddButton" _hideIcon="true"
+		onclick="window.detail_${tableCtx.controlId}_add(event)">
+		<bean:message bundle='sys-xform-base' key='sysform.detailsTable.addDetail'/><xform:lang id='${tableCtx.controlId}' option='label'/>
+	</div>
+	<script type="text/javascript">window["_editShow_${tableCtx.controlId}"] = true</script>
+	<c:if test="${r"${"}empty _xformForm.extendDataFormInfo.formData.${tableCtx.controlId} ${r"}"}">
+		<script type="text/javascript">window["_emptyFormData_${tableCtx.controlId}"] = true</script>
+	</c:if>
+</xform:editShow>
+<script type="text/javascript">DocList_Info.push('${tableCtx.tableId}');</script>
+<script type="text/javascript">
+require(["sys/xform/mobile/controls/detailsTable/mobileDetailsTableScript"], function(){
+	window._mobileDetailsTableScript.init('${tableCtx.controlId}','${tableCtx.tableId}','1','false');
+	// 覆盖mobileDetailsTableScript里面的同名方法
+	window["detail_${tableCtx.controlId}_fixNo"] = function(){
+        var muiDetailTableNo = $('#${tableCtx.tableId}').find('.muiDetailTableNo');
+        var tableName = muiDetailTableNo.attr("tableName") || "";
+        tableName = tableName.replace(/\n/g, "");
+        muiDetailTableNo.each(function(i) {
+        	// 更新标题
+            $(this).children('span').text(tableName + (i + 1) );
+        });
+        // 如果只要一行，则不显示删除按钮
+        var rowLen = muiDetailTableNo.length;
+        if(rowLen === 1){
+			muiDetailTableNo.find(".muiDetailTableDel").hide();
+		}else{
+			muiDetailTableNo.find(".muiDetailTableDel").show();
+		}
+    }
+})
+</script>

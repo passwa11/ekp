@@ -1,0 +1,119 @@
+var extend = (param!=null && param.extend!=null)?('_'+param.extend):'',
+		h = layout.parent.config.height || 240;
+		var _vars = layout.tabpanel.config.vars;
+		var _customStyle = '';
+		var _bgColor = '';
+		var _bg = '';
+		var _padding = '';
+		var _borderRadius = '';
+		var _top = 0;
+		var _top_style = '';
+
+		if(_vars){
+		_customStyle = _vars.style || '';
+		_bgColor = _vars.bgColor === '' ? '' : (_vars.bgColor!=null) ? 'background-color:'+_vars.bgColor+';': '';
+		_bg = _vars.bg === '' ? '' : (_vars.bg!=null) ? 'background-image:url('+layout.env.fn.formatUrl(_vars.bg)+');': '';
+		_padding = _vars.padding === '' ? '' : (_vars.padding!=null) ? 'padding:'+_vars.padding+';': '';
+		_borderRadius = _vars.borderRadius == '' ? '' : _vars.borderRadius!=null ? 'border-radius:'+_vars.borderRadius+';': '';
+		_top = _vars.top || 0;
+		_top_style = _top != 0 ? 'position:relative;top:-'+_top+'px;margin-bottom:-'+_top+'px;': '';
+		}
+		if(_bgColor || _bg){
+		{$
+<style>
+	#{%layout.tabpanel.cid%} .lui_tabpanel_vertical_light_content_c{
+			background:transparent;
+			}
+</style>
+		$}
+		}
+		if(_borderRadius){
+		{$
+<style>
+				#{%layout.tabpanel.cid%} .tabPanel_frame{
+						overflow:hidden;
+						}
+</style>
+		$}
+		}
+		{$
+<div style="{% _bgColor %} {% _bg %} {% _borderRadius %} {% _top_style %} {%_customStyle%}" class='lui_tabpanel_vertical{%extend%}_frame tabPanel_frame '>
+<div class='lui_tabpanel_title'>
+<span class='lui_tabpanel_title_icon'></span>
+<span class='lui_tabpanel_title_main'></span>
+<span class='lui_tabpanel_title_subtitle'></span>
+</div>
+<div class='lui_tabpanel_vertical{%extend%}_navs_l' style="height:{%h%}px">
+<div class='lui_tabpanel_vertical{%extend%}_navs_r'>
+<div class="lui_tabpanel_vertical{%extend%}_navs_c clearfloat">
+		$}
+
+		for(var i=0;i<layout.tabpanel.contents.length;i++){
+		{$
+<div class='lui_tabpanel_vertical{%extend%}_navs_item_l '
+		data-lui-mark="panel.nav.frame" data-lui-switch-class="lui_tabpanel_vertical{%extend%}_navs_item_selected">
+<div class='lui_tabpanel_vertical{%extend%}_navs_item_r'>
+<div class='lui_tabpanel_vertical{%extend%}_navs_item_c' data-lui-mark="panel.nav.title">
+</div>
+</div>
+</div>
+		$}
+		}
+		{$
+</div>
+</div>
+</div>
+<div class="lui_tabpanel_vertical{%extend%}_content_l" style="height:{%h%}px">
+<div class="lui_tabpanel_vertical{%extend%}_content_r">
+<div class="lui_tabpanel_vertical{%extend%}_content_c" data-lui-mark="panel.contents">
+</div>
+</div>
+</div>
+<div class="lui_tabpanel_vertical{%extend%}_footer_l">
+<div class="lui_tabpanel_vertical{%extend%}_footer_r">
+<div class="lui_tabpanel_vertical{%extend%}_footer_c">
+</div>
+</div>
+</div>
+</div>
+		$}
+		seajs.use('lang!sys-ui',function(lang){
+		layout.tabpanel.setCount = function(content, countInfo){
+		if(countInfo){
+		if(!countInfo.count){
+		countInfo.count = 0;
+		}
+		if(!countInfo.more){
+		countInfo.more = false;
+		}
+		if(this.titlesNode.length>0 && (countInfo.count>=0 || countInfo.more==true)){
+		var self = this;
+		var idx = $.inArray(content,this.contents);
+		if(idx>-1){
+		if(this.titlesNode[idx]!=null){
+		var titleNode = this.titlesNode[idx];
+		var modify = false;
+		var html = "<span ";
+		if(countInfo.count>0){
+		modify = true;
+		html = html + "class='com_prompt_num'>" + (countInfo.count>99?"99+":countInfo.count);
+		}
+		if (countInfo.count==0){
+		modify = true;
+		}
+		if(countInfo.more==true){
+		modify = true;
+		html = html + "class='com_prompt_more'>";
+		}
+		html = html + "</span>";
+		if(modify)
+		titleNode.html('<span class="lui_tabpanel_navs_item_title lui_tabpanel_hasnum">' + self.contents[idx].title + '</span>' + "<span class='com_prompt'>" +  html  + "</span>");
+
+		}
+		}
+		}
+		}
+		};
+		});
+
+

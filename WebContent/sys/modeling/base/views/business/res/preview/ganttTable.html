@@ -1,0 +1,570 @@
+var test = render.parent;
+var lang = test.getModelingLang();
+var testSource = test.source;
+var config = testSource.config;
+var datas = config.datas || [];
+var fdConditions = [];//筛选项
+var fdOrderBys = [];//排序项
+var listOperations = [];//业务操作
+var fdDisplays = [];//显示项
+if(datas && datas.length > 0){
+fdConditions = datas[0].fdConditions || [];//筛选项
+fdOrderBys = datas[0].fdOrderBys || [];//排序项
+listOperations = datas[0].listOperations || [];//业务操作
+fdDisplays = datas[0].fdDisplays || [];//显示项
+}
+{$
+<div class="model-edit-left-wrap">
+    <div class="model-edit-view">
+        <div class="model-edit-view-title">
+            <div onclick="returnListPage('pc')">
+                <i></i>
+                <p>{%lang['sys.profile.modeling.homePage.back']%}</p>
+            </div>
+<!--            <div class="table-name" id="tableName" data-lui-position='tableName'-->
+<!--                 onclick='switchSelectPosition(this,"left")'>甘特图名称-->
+<!--            </div>-->
+        </div>
+
+        <div class="model-edit-view-content" >
+            <div class="model-edit-view-content-top" data-lui-position="fdCondition" onclick='switchSelectPosition(this,"left")'>
+                <div class="model-edit-view-subtitle">{%lang['modelingAppListview.fdCondition']%}<i></i></div>
+                <ul class="model-edit-view-btn model-edit-view-top-list">
+                    $}
+                    var fdConditionsLen = fdConditions.length;
+                    var len = fdConditionsLen;
+                    if(fdConditionsLen > 1){
+                    len = 1;
+                    }
+                    for(var i=0; i<len; i++){
+                    var fdCondition = fdConditions[i];
+                    var index = i;
+                    var temp = i+1;
+                    if(fdCondition.text){
+                    {$
+                    <li>
+                        <div class="model-edit-view-top-list-wrap">
+                            <p class="model-edit-view-list-title" data-lui-position='fdCondition-{%index%}' onclick='switchSelectPosition(this,"left")'>{%fdCondition.text%}</p>
+                            <div class="model-edit-view-list-bg">
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    $}
+                    }else{
+                    {$
+                    <li>
+                        <div class="model-edit-view-top-list-wrap">
+                            <p class="model-edit-view-list-title" data-lui-position='fdCondition-{%index%}' onclick='switchSelectPosition(this,"left")'>{%lang['modelingAppListview.fdCondition']%}{%temp%}</p>
+                            <div class="model-edit-view-list-bg">
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    $}
+                    }
+                    }
+                    var moreLen = 0;
+                    if(fdConditionsLen < 1 && fdConditionsLen > 0){
+                    var restLen = 1-fdConditionsLen;
+                    for(var i=restLen; i>0; i--){
+                    var index = 1-i+1;
+                    var temp = index-1;
+                    {$
+                    <li>
+                        <div class="model-edit-view-top-list-wrap">
+                            <p class="model-edit-view-list-title disabled" data-lui-position='fdCondition-{%temp%}'>{%lang['modelingAppListview.fdCondition']%}{%index%}</p>
+                            <div class="model-edit-view-list-bg">
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    $}
+                    }
+                    }else if(fdConditionsLen<=0){
+                    {$
+                    <li>
+                        <div class="model-edit-view-top-list-wrap">
+                            <p class="model-edit-view-list-title disabled" data-lui-position='fdCondition-1'>{%lang['modelingAppListview.fdCondition']%}1</p>
+                            <div class="model-edit-view-list-bg">
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    $}
+                    }else{
+                    moreLen = fdConditionsLen - 2;
+                    }
+                    {$
+                    <li>
+                        <div class="model-edit-view-top-list-wrap">
+                            $}
+                            if(moreLen > 0){
+                            {$
+                            <p class="model-edit-view-list-title dots " onclick='showMoreItem(this,"fdCondition_more")'>...</p>
+                            $}
+                            }else{
+                            {$
+                            <p class="model-edit-view-list-title dots disabled">...</p>
+                            $}
+                            }
+                            {$
+                            <div class="model-edit-view-list-bg">
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                                <div class="model-edit-view-list-bg-item">
+                                    <div></div>
+                                </div>
+                            </div>
+                            $}
+                            if(moreLen > 0){
+                            {$
+                            <div id='fdCondition_more' style="display:none">
+                                <ul>
+                                    $}
+                                    for(var i=0; i<moreLen; i++){
+                                    var index = 2+i;
+                                    var temp = 2+i+1;
+                                    var fdCondition = fdConditions[index];
+                                    if(fdCondition.text){
+                                    {$
+                                    <li data-lui-position='fdCondition-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdCondition_more")'>{%fdCondition.text%}</li>
+                                    $}
+                                    }else{
+                                    {$
+                                    <li data-lui-position='fdCondition-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdCondition_more")'>{%lang['modelingAppListview.fdCondition']%}{%temp%}</li>
+                                    $}
+                                    }
+                                    }
+                                    {$
+                                </ul></div>
+                            $}
+                            }
+                            {$
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="model-edit-view-content-center">
+                <div class="model-edit-view-content-center left" >
+                    <div class="model-edit-view-content-center-wrap"   data-lui-position="fdOrderBy" onclick='switchSelectPosition(this,"left")'>
+                        <div class="model-edit-view-subtitle">{%lang['modelingAppListview.fdOrderBy']%}<i></i></div>
+                        <div class="model-edit-view-list">
+                            $}
+                            var fdOrderBysLen = fdOrderBys.length;
+                            var len = fdOrderBysLen;
+                            if(fdOrderBysLen > 2){
+                            len = 2;
+                            }
+                            for(var i=0; i<len; i++){
+                            var fdOrderBy = fdOrderBys[i];
+                            var index = i;
+                            var temp = i+1;
+                            if(fdOrderBy.fdAttrField.text){
+                            {$
+                            <p data-lui-position='fdOrderBy-{%index%}' onclick='switchSelectPosition(this,"left")'>{%fdOrderBy.fdAttrField.text%}</p>
+                            $}
+                            }else{
+                            {$
+                            <p data-lui-position='fdOrderBy-{%index%}' onclick='switchSelectPosition(this,"left")'>{%lang['listview.sort.item']%}{%temp%}</p>
+                            $}
+                            }
+                            }
+                            var moreLen = 0;
+                            if(fdOrderBysLen <= 2 && fdOrderBysLen > 0){
+                            var restLen = 2-fdOrderBysLen;
+                            for(var i=restLen; i>0; i--){
+                            var index = 2-i+1;
+                            var temp = index-1;
+                            {$
+                            <p  class='disabled' data-lui-position='fdOrderBy-{%temp%}'>{%lang['listview.sort.item']%}{%index%}</p>
+                            $}
+                            }
+                            }else if(fdOrderBysLen<=0){
+                            {$
+                            <p  class='disabled' data-lui-position='fdOrderBy-1'>{%lang['listview.sort.item']%}1</p>
+                            <p  class='disabled' data-lui-position='fdOrderBy-2'>{%lang['listview.sort.item']%}2</p>
+                            $}
+                            }else{
+                            moreLen = fdOrderBysLen - 2;
+                            }
+                            if(moreLen > 0){
+                            {$
+                            <p class='dots' onclick='showMoreItem(this,"fdOrderBy_more")'>...</p>
+                            $}
+                            }else{
+                            {$
+                            <p class='dots disabled'>...</p>
+                            $}
+                            }
+                            if(moreLen > 0){
+                            {$
+                            <div id='fdOrderBy_more' style="display:none">
+                                <ul>
+                                    $}
+                                    for(var i=0; i<moreLen; i++){
+                                    var index = 2+i;
+                                    var temp = 2+i+1;
+                                    var fdOrderBy = fdOrderBys[index];
+                                    if(fdOrderBy.fdAttrField.text){
+                                    {$
+                                    <li data-lui-position='fdOrderBy-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdOrderBy_more")'>{%fdOrderBy.fdAttrField.text%}</li>
+                                    $}
+                                    }else{
+                                    {$
+                                    <li data-lui-position='fdOrderBy-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdOrderBy_more")'>排序项{%temp%}</li>
+                                    $}
+                                    }
+                                    }
+                                    {$
+                                </ul></div>
+                            $}
+                            }
+                            {$
+                        </div>
+                    </div>
+                </div>
+                <div class="model-edit-view-content-center right"  >
+                    <div class="model-edit-view-content-center-wrap" data-lui-position="fdOperation" onclick='switchSelectPosition(this,"left");return false;'>
+                        <div class="model-edit-view-subtitle">{%lang['modelingAppListview.listOperation']%}<i></i></div>
+                        <div class="model-edit-view-list">
+                            $}
+                            var listOperationsLen = listOperations.length;
+                            var len = listOperationsLen;
+                            if(listOperationsLen > 2){
+                            len = 2;
+                            }
+                            for(var i=0; i<len; i++){
+                            var listOperation = listOperations[i];
+                            var index = i;
+                            var temp = i+1;
+                            if(listOperation.name){
+                            {$
+                            <p data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left")'>{%listOperation.name%}</p>
+                            $}
+                            }else{
+                            {$
+                            <p data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left")'>{%lang['listview.action.item']%}{%temp%}</p>
+                            $}
+                            }
+                            }
+                            var moreLen = 0;
+                            if(listOperationsLen < 2 && listOperationsLen > 0){
+                            var restLen = 2-listOperationsLen;
+                            for(var i=restLen; i>0; i--){
+                            var index = 2-i+1;
+                            var temp = index-1;
+                            {$
+                            <p  class='disabled' data-lui-position='fdOperation-{%temp%}'>{%lang['listview.action.item']%}{%index%}</p>
+                            $}
+                            }
+                            }else if(listOperationsLen<=0){
+                            {$
+                            <p  class='disabled' data-lui-position='fdOperation-1'>{%lang['listview.action.item']%}1</p>
+                            <p  class='disabled' data-lui-position='fdOperation-2'>{%lang['listview.action.item']%}2</p>
+                            $}
+                            }else{
+                            moreLen = listOperationsLen - 2;
+                            }
+                            if(moreLen > 0){
+                            {$
+                            <p class='dots' onclick='showMoreItem(this,"fdOperation_more")'>...</p>
+                            $}
+                            }else{
+                            {$
+                            <p class='dots disabled'>...</p>
+                            $}
+                            }
+                            if(moreLen > 0){
+                            {$
+                            <div id='fdOperation_more' style="display:none">
+                                <ul>
+                                    $}
+                                    for(var i=0; i<moreLen; i++){
+                                    var index = 2+i;
+                                    var temp = 2+i+1;
+                                    var listOperation = listOperations[index];
+                                    if(listOperation.name){
+                                    {$
+                                    <li data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdOperation_more")'>{%listOperation.name%}</li>
+                                    $}
+                                    }else{
+                                    {$
+                                    <li data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdOperation_more")'>{%lang['listview.action.item']%}{%temp%}</li>
+                                    $}
+                                    }
+                                    }
+                                    {$
+                                </ul></div>
+                            $}
+                            }
+                            {$
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="model-source-wrap">
+                <div class="model-edit-view-subtitle" style="margin-top: 16px;margin-left: 16px;">{%lang['modeling.app.setting.rpt']%}<i></i></div>
+                <div class="model-source-left">
+                    <div class="model-source-table-main"  data-lui-position="fdDisplay" onclick='switchSelectPosition(this,"left")'>
+                        <div class="model-source-table-box">
+                            <table class="table-fd-display" >
+                                <tr class="top-row">
+                                    <td>{%lang['modelingAppListview.fdDisplay']%}1</td>
+                                    <td>{%lang['modelingAppListview.fdDisplay']%}2</td>
+                                </tr>
+                                <tr class="base-row">
+                                    <td><div class="row-div"></div></td>
+                                    <td><div class="row-div"></div></td>
+                                </tr>
+                                <tr class="base-row">
+                                    <td><div class="row-div"></div></td>
+                                    <td><div class="row-div"></div></td>
+                                </tr>
+                                <tr class="base-row">
+                                    <td><div class="row-div"></div></td>
+                                    <td><div class="row-div"></div></td>
+                                </tr>
+                                <tr class="base-row">
+                                    <td><div class="row-div"></div></td>
+                                    <td><div class="row-div"></div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="model-source-right">
+                    <div class="model-source-table-main">
+                        <div class="model-source-time-dimension" data-lui-position="timeDimension" onclick='switchSelectPosition(this,"left")'>
+                                <div class="model-source-time-dimension-time"  ><p style="padding: 20px 0;">2020年10月</p></div>
+                                <div class="model-source-time-dimension-dimension">
+                                    <div class="model-source-time-dimension-dimension-cell"><p>1</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>2</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>3</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>4</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>5</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>6</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>7</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>8</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>9</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>10</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>11</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>12</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>13</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>14</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>15</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>16</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>17</p></div>
+                                    <div class="model-source-time-dimension-dimension-cell"><p>18</p></div>
+                                    <div style="border-right: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;width: 100%;"><p style="padding: 20px 0;text-align: center">...</p></div>
+                                </div>
+                        </div>
+                        <div class="gantt-view-grid">
+                            <div class="gantt-view-grid-row">
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div style="border-right: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;width: 100%;"><p style="padding: 20px 0;text-align: center">...</p></div>
+                            </div>
+                            <div class="gantt-view-grid-row">
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div style="border-right: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;width: 100%;"><p style="padding: 20px 0;text-align: center">...</p></div>
+                            </div>
+                            <div class="gantt-view-grid-row">
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div style="border-right: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;width: 100%;"><p style="padding: 20px 0;text-align: center">...</p></div>
+                            </div>
+                            <div class="gantt-view-grid-row">
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div class="gantt-view-grid-row-cell"></div>
+                                <div style="border-right: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;width: 100%;"><p style="padding: 20px 0;text-align: center">...</p></div>
+                            </div>
+                        </div>
+                        <div class="gantt-view-grid-blocks" data-lui-position="viewContent" onclick='switchSelectPosition(this,"left")' >
+                            <div class="gantt-view-block-container" id="gantt-view-block-container-1" style="height: 58px;width: 3486px;z-index: 1;">
+                                <div id="gant-tview-block-1" class="gantt-view-block gantt-view-readOnly" style="width: 94px;margin-left: 24px;left: 0px;">
+                                    <div class="ui-resizable-handle ui-resizable-e" unselectable="on"></div>
+                                    <div id="gantt-view-block-text-1" class="gantt-view-block-text">
+                                        {%lang['respanel.show.field']%}
+                                        <div class="preview-relative">
+                                            <div class="preview-content">
+                                                <div class="meeting_calendar_dialog_top">
+                                                    <div class="meeting_calendar_dialog_title textEllipsis  " preview-content-mark="showTitle" style="width: 55%"> {%lang['modelingAppMobile.docSubject']%} </div>
+                                                    <div class="lui_dialog_head_right" data-lui-mark="dialog.nav.close" style="margin-top: 16px;top: 0;" onclick="closeDialogDetailPreview();">                    </div>
+                                                </div>
+                                                <div class="lui_imeeting_order_list">
+                                                    <ul>
+                                                        <li ><em style="font-size: 16px">{%lang['Gantt.start']%}</em> <span preview-content-mark="time">2020-05-04  09:00</span></li>
+                                                        <li ><em style="font-size: 16px">{%lang['Gantt.end']%}</em> <span preview-content-mark="time">2020-05-06  11:00</span></li>
+                                                        <li ><em style="font-size: 16px">{%lang['Gantt.schedule']%}</em> <span preview-content-mark="person">50%</span></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="gantt-view-block-container" id="gantt-view-block-container-2" style="height: 58px;width: 3486px;">
+                                <div id="gant-tview-block-2" class="gantt-view-block gantt-view-readOnly"  style="width: 84px;margin-left: 57px;left: 0px;">
+                                    <div class="ui-resizable-handle ui-resizable-e" unselectable="on"></div>
+                                    <div id="gantt-view-block-text-2" class="gantt-view-block-text">
+                                        {%lang['respanel.show.field']%}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gantt-view-block-container" id="gantt-view-block-container-3" style="height: 58px;width: 3486px;">
+                                <div id="gant-tview-block-3" class="gantt-view-block gantt-view-readOnly"  style="width: 84px;margin-left: 87px;left: 0px;">
+                                    <div class="ui-resizable-handle ui-resizable-e" unselectable="on"></div>
+                                    <div id="gantt-view-block-text-3" class="gantt-view-block-text">
+                                        {%lang['respanel.show.field']%}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gantt-view-block-container" id="gantt-view-block-container-4" style="height: 58px;width: 3486px;">
+                                <div id="gant-tview-block-4" class="gantt-view-block gantt-view-readOnly"  style="width: 154px;margin-left: 57px;left: 0px;">
+                                    <div class="ui-resizable-handle ui-resizable-e" unselectable="on"></div>
+                                    <div id="gantt-view-block-text-4" class="gantt-view-block-text">
+                                        {%lang['respanel.show.field']%}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+$}

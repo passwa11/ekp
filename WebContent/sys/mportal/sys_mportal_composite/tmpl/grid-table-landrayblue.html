@@ -1,0 +1,194 @@
+var datas = data;
+var columnNum = template.parent.columnNum;
+//多语言设置
+var composite_lang = {
+	common_yes: "是",
+	common_no: "否",
+	composite_type_page: "页面",
+	composite_type_tab: "页签",
+	composite_mportal: "门户",
+	composite_mportal_type: "门户类型",
+	btn_edit: "编辑",
+};
+if(window["__composite_lang"]){
+	composite_lang = window["__composite_lang"];
+}
+var mportalTypeDesc = composite_lang["composite_mportal_type"];
+
+//table头设置
+var firstItem = datas[0];
+var nameDesc = firstItem["fdName"].label;
+if( firstItem["mportalType"] ){
+	mportalTypeDesc = firstItem["mportalType"].label;
+}
+
+window.__grid_composite_toggle = function(obj, id){
+	if($("#parent_"+id).is(":visible")){
+		$(obj).removeClass("collapse").addClass("expand");
+		$("#parent_"+id).hide();
+	}else{
+		$(obj).removeClass("expand").addClass("collapse");
+		$("#parent_"+id).show();
+	}
+}
+
+var fdOrderDesc = firstItem["fdOrder"].label;
+var fdEnabledDesc = firstItem["fdEnabled"].label;
+var operationsDesc = firstItem["operations"].label;
+var docStatusDesc = firstItem["docStatus"].label;
+
+
+{$<table width="100%" class="composite_table">					
+	<thead data-lui-mark="column.table.header">
+		<tr>
+			<th style="" class="width15" data-lui-mark-row-id="" data-lui-mark-sort="" data-lui-mark-toggle-index=""></th>
+			
+			<th style="" class="" data-lui-mark-sort="" data-lui-mark-toggle-index="0">
+			{%nameDesc%}
+			</th>			
+			<th style="" class="width140"  data-lui-mark-sort="" data-lui-mark-toggle-index="0">
+			{%mportalTypeDesc%}
+			</th>
+			<th style="text-align:center !important;" class="width60"  data-lui-mark-sort="" data-lui-mark-toggle-index="0">
+			{%docStatusDesc%}
+			</th>
+			<th style="text-align:center !important;" class="width60"  data-lui-mark-sort="" data-lui-mark-toggle-index="0">
+			{%fdOrderDesc%}
+			</th>
+			<th class="width80" style="text-align:center !important;" class=""  data-lui-mark-sort="" data-lui-mark-toggle-index="0">
+			{%fdEnabledDesc%}		
+			</th>
+			<th style="" class="width160" data-lui-mark-sort="" data-lui-mark-toggle-index="0">
+			{%operationsDesc%}
+			</th>
+		</tr>
+	</thead>
+	<tbody>$}
+	for(var i=0; i < datas.length; i++){
+		var grid = datas[i];
+		var pagesStr = grid['pages'].text;
+		
+		//解析子级json
+		var pages = [];
+		if(pages != null){
+			pages = JSON.parse(pagesStr);
+		}
+		if(pages == null){
+			pages = [];
+		}
+		
+		var lang_mportal = composite_lang["composite_mportal"];
+		
+		//判断是否存在子级
+		var hasChild = false;
+		if((pages!= null && pages.length > 0)){
+			hasChild = true;
+		}
+		{$
+			<tr  data-lui-mark-id="{%grid.rowId%}" kmss_fdid="{% grid['fdId'].text%}" style="border-top:1px dotted; border-bottom:1px dotted;">
+					<td>
+						<input type="checkbox" name="List_Selected" value="{% grid['fdId'].text%}" data-lui-mark="table.content.checkbox">
+					</td>				
+					<td style="text-align:left;padding-left: 10px;word-break: break-all;">$}
+						if(hasChild){
+							{$<div class='collapse' onclick="__grid_composite_toggle(this,'{% grid['fdId'].text%}')" style='float:left;height:20px;width:20px;' ></div>$}
+						}
+						{${% grid['fdName'].text %}
+					</td>
+					<td>{%lang_mportal%}</td>
+					<td style="text-align:center !important;">{% grid['docStatus'].text %}</td>
+					<td style="text-align:center !important;">{% grid['fdOrder'].text %}</td>
+					<td style="text-align:center !important;">{% grid['fdEnabled'].text %}</td>
+					<td>{% grid['operations'].text %}</td>
+			</tr>$}
+			if(hasChild){
+				var childStyle = "";
+				
+				{$<tr id="parent_{% grid['fdId'].text%}" style="{% childStyle %}"><td colspan="7" style="padding:0;"><table width="100%">$}
+					for(var j=0; j < pages.length; j++ ){
+						var childItem = pages[j];
+						//门户操作
+						var operation = "";
+						//门户类型
+						var type = "";
+						var tabChilds = childItem.childs;
+						if(tabChilds == null){
+							tabChilds = [];
+						}
+						
+						//判断是否存在子级
+						var hasChildLevel2 = false;
+						if((tabChilds!= null && tabChilds.length > 0)){
+							hasChildLevel2 = true;
+						}
+						
+						//是否启用
+						var childItem_pageEnabled = composite_lang["common_no"];
+						if(childItem.pageEnabled){
+							childItem_pageEnabled = composite_lang["common_yes"];
+						}
+						
+						if(childItem.fdType == "1"){
+							type = composite_lang["composite_type_page"] + "：[" + childItem.pageTypeDesc + "]";
+							var href = env.fn.formatUrl("/sys/mportal/sys_mportal_cpage/sysMportalCpage.do?method=edit&fdId=" + childItem.pageId);
+							operation = "<div class='conf_btn_edit'><a target='_blank' class='btn_txt' href='" + href + "'>" + composite_lang["btn_edit"] +"</a></div>";
+						}else if(childItem.fdType == "2"){
+							type = composite_lang["composite_type_tab"];
+							childItem_pageEnabled = "";
+						}
+						
+						if(!childItem.pageCanEdit){
+							operation = "";
+						}	
+						
+						console.log("childItem.pageCanEdit",childItem.pageCanEdit);
+						
+						{$<tr childrenLevel="1" kmss_fdid="{% childItem.fdId %}">
+							<td class="width15"></td>
+							<td  style="text-align:left;padding-left: 30px;word-break: break-all;">$}
+								if(hasChildLevel2){
+									{$<div class='expand' onclick="__grid_composite_toggle(this,'{% childItem.fdId %}')" style='float:left;height:20px;width:20px;' ></div>$}
+								}							
+								{${% childItem.fdName %}
+							</td>				
+							<td class="width140"> {%type%}</td>
+							<td class="width60"></td>
+							<td class="width60"></td>
+							<td class="width80" style="text-align:center !important;">{% childItem_pageEnabled %}</td>
+							<td class="width160">{%operation%}</td>
+						</tr>$}	
+						if(hasChildLevel2){
+							{$<tr id="parent_{% childItem['fdId']%}" style="display:none;"><td colspan="7" style="padding:0;"><table width="100%">$}							
+								for(var k=0; k < tabChilds.length; k++){
+									var tabChild = tabChilds[k];
+									//是否启用
+									var tabChild_pageEnabled = composite_lang["common_no"];
+									if(tabChild.pageEnabled){
+										tabChild_pageEnabled = composite_lang["common_yes"];
+									}
+									var pageType = composite_lang["composite_type_page"];
+									var tabChild_href = env.fn.formatUrl("/sys/mportal/sys_mportal_cpage/sysMportalCpage.do?method=edit&fdId=" + tabChild.pageId);
+									var tabChild_operation = "<div class='conf_btn_edit'><a target='_blank' class='btn_txt' href='" + tabChild_href + "'>" + composite_lang["btn_edit"] + "</a></div>";
+									if(!tabChild.pageCanEdit){
+										tabChild_operation = "";
+									}	
+										{$<tr childrenLevel="2" composite_fdid="{% childItem.fdId %}" cpage_fdid="{% childItem.fdId %}" kmss_fdid="{% tabChild.fdId %}">
+											<td class="width15"></td>
+											<td style="text-align:left;padding-left: 50px;word-break: break-all;">{% tabChild.fdName %}</td>				
+											<td class="width140">{%pageType%}：[{%tabChild.pageTypeDesc%}]</td>
+											<td class="width60"></td>
+											<td class="width60"></td>
+											<td class="width80" style="text-align:center !important;">{% tabChild_pageEnabled %}</td>
+											<td class="width160">{%tabChild_operation%}</td>
+										</tr>$}	
+																								
+								}
+							{$</table></td></tr>$}
+						}											
+					}
+					
+					{$</table></td></tr>$}
+				}
+	}
+	{$</tbody>
+</table>$}

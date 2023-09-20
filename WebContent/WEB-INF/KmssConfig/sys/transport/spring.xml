@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysTransportImportDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.sys.transport.dao.hibernate.SysTransportImportDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.transport.model.SysTransportImportConfig" />
+	</bean>
+	<bean
+		id="sysTransportImportTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.transport.service.spring.SysTransportImportServiceImp">
+		<property name="baseDao">
+			<ref bean="sysTransportImportDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysTransportImportService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysTransportImportTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="importData">PROPAGATION_REQUIRED</prop>
+				<prop key="importRowData">PROPAGATION_REQUIRES_NEW</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<bean
+			id="sysTransportSeniorImportTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.sys.transport.service.spring.SysTransportSeniorImportServiceImp">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+	</bean>
+	<bean
+			id="sysTransportSeniorImportService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysTransportSeniorImportTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="importData">PROPAGATION_REQUIRED</prop>
+				<prop key="importRowData">PROPAGATION_REQUIRES_NEW</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean
+		id="sysTransportExportDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.sys.transport.dao.hibernate.SysTransportExportDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.transport.model.SysTransportExportConfig" />
+	</bean>
+	<bean
+		id="sysTransportExportTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.transport.service.spring.SysTransportExportServiceImp">
+		<property name="baseDao">
+			<ref bean="sysTransportExportDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysTransportExportService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysTransportExportTarget" />
+		</property>
+	</bean>
+	<bean
+			id="sysTransportSeniorExportTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.sys.transport.service.spring.SysTransportSeniorExportServiceImp">
+		<property name="baseDao">
+			<ref bean="sysTransportExportDao" />
+		</property>
+	</bean>
+	<bean
+			id="sysTransportSeniorExportService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysTransportSeniorExportTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysTransportExoprtConfigDataBean"
+		class="com.landray.kmss.sys.transport.service.spring.SysTransportExoprtConfigDataBean">
+		<property name="dao">
+			<ref bean="sysTransportExportDao" />
+		</property>
+	</bean>
+	<bean id="sysListExportService" class="com.landray.kmss.sys.transport.service.spring.SysListExportServiceImp">
+	</bean>
+</beans>

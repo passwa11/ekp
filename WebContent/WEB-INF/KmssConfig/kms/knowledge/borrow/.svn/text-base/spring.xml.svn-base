@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="kmsKnowledgeBorrowDao" 
+        class="com.landray.kmss.kms.knowledge.borrow.dao.hibernate.KmsKnowledgeBorrowDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.kms.knowledge.borrow.model.KmsKnowledgeBorrow</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmsKnowledgeBorrowTarget" 
+        class="com.landray.kmss.kms.knowledge.borrow.service.spring.KmsKnowledgeBorrowServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmsKnowledgeBorrowDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmsKnowledgeBorrowService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmsKnowledgeBorrowTarget"/>
+        </property>
+    </bean>
+    
+    <bean
+            id="kmsKnowledgeBorrowAttAuthDao"
+            class="com.landray.kmss.kms.knowledge.borrow.dao.hibernate.KmsKnowledgeBorrowAttAuthDaoImp"
+            parent="KmssAuthBaseDao">
+        <property name="modelName">
+            <value>com.landray.kmss.kms.knowledge.borrow.model.KmsKnowledgeBorrowAttAuth</value>
+        </property>
+    </bean>
+    <bean
+            id="kmsKnowledgeBorrowAttAuthTarget"
+            class="com.landray.kmss.kms.knowledge.borrow.service.spring.KmsKnowledgeBorrowAttAuthServiceImp"
+            parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="kmsKnowledgeBorrowAttAuthDao"/>
+        </property>
+    </bean>
+    <bean
+            id="kmsKnowledgeBorrowAttAuthService"
+            parent="KmssBaseService">
+        <property name="target">
+            <ref bean="kmsKnowledgeBorrowAttAuthTarget"/>
+        </property>
+    </bean>
+    <!-- 知识借阅过滤器 -->
+	<bean id="kmsKnowledgeBorrowAuthFieldValidator"
+		class="com.landray.kmss.kms.knowledge.borrow.validator.KmsKnowledgeBorrowAuthFieldValidator">
+		<property name="kmsKnowledgeBorrowService">
+			<ref bean="kmsKnowledgeBorrowService" />
+		</property>
+	</bean>
+    <bean id="kmsKnowledgeBorrowAttBusinessModuleValidator"
+          class="com.landray.kmss.kms.knowledge.borrow.validator.KmsKnowledgeBorrowAttBusinessModuleValidator">
+    </bean>
+    <!-- 附件权限申请校验器 -->
+    <bean id="kmsKnowledgeBorrowAttAuthApplicationValidator"
+          class="com.landray.kmss.kms.knowledge.borrow.validator.KmsKnowledgeBorrowAttAuthApplicationValidator">
+    </bean>
+</beans>

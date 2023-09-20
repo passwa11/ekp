@@ -1,0 +1,1703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="sysAttendCategoryPluginService"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendCategoryPluginServiceImp"></bean>
+
+	<bean
+		id="sysAttendCategoryWorktimeDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryWorktimeDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendCategoryWorktime" />
+	</bean>
+
+	<bean
+		id="sysAttendCategoryWorktimeTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendCategoryWorktimeServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendCategoryWorktimeDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendCategoryWorktimeService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendCategoryWorktimeTarget" />
+		</property>
+	</bean>
+
+
+	<bean
+		id="sysAttendCategoryDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendCategory" />
+	</bean>
+
+	<bean
+		id="sysAttendCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendCategoryDao" />
+		</property>
+		<property name="sysOrgCoreService" ref="sysOrgCoreService"></property>
+		<property name="sysAttendMainDao" ref="sysAttendMainDao"></property>
+		<property name="sysQuartzCoreService" ref="sysQuartzCoreService"></property>
+		<property name="sysNotifyMainCoreService" ref="sysNotifyMainCoreService"></property>
+		<property name="sysAttendConfigService" ref="sysAttendConfigService"></property>
+		<property name="sysTimeHolidayService" ref="sysTimeHolidayService"></property>
+		<property name="sysTimeCountService" ref="sysTimeCountService" />
+		<property name="sysAttendDeviceService" ref="sysAttendDeviceService" />
+		<property name="sysAttendNotifyRemindLogService" ref="sysAttendNotifyRemindLogService" />
+	</bean>
+	<bean
+		id="sysAttendCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendCategoryTarget" />
+		</property>
+	</bean>
+
+
+	<bean
+		id="sysAttendCategoryRuleDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryRuleDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendCategoryRule" />
+	</bean>
+
+	<bean
+		id="sysAttendCategoryRuleTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendCategoryRuleServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendCategoryRuleDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendCategoryRuleService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendCategoryRuleTarget" />
+		</property>
+	</bean>
+
+
+	<bean
+		id="sysAttendCategoryTimeDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryTimeDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendCategoryTime" />
+	</bean>
+
+	<bean
+		id="sysAttendCategoryTimeTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendCategoryTimeServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendCategoryTimeDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendCategoryTimeService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendCategoryTimeTarget" />
+		</property>
+	</bean>
+
+
+	<bean
+		id="sysAttendMainDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendMain" />
+		<property name="sysAttendMainLogDao" ref="sysAttendMainLogDao" />
+		<property name="sysAttendSynDingDao" ref="sysAttendSynDingDao" />
+	</bean>
+
+	<bean
+		id="sysMonthCountDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysMonthCountDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysMonthCount" />
+	</bean>
+	<bean
+		id="sysAttendMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendMainServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendMainDao" />
+		</property>
+		<property
+			name="sysAttendCategoryService">
+			<ref
+				bean="sysAttendCategoryService" />
+		</property>
+		<property
+			name="sysAttendBusinessService">
+			<ref
+				bean="sysAttendBusinessService" />
+		</property>
+		<property name="sysNotifyMainCoreService" ref="sysNotifyMainCoreService">
+		</property>
+		<property name="sysAttendSignLogService" ref="sysAttendSignLogService">
+		</property>
+		<property name="sysAttendMainExcService" ref="sysAttendMainExcService">
+		</property>
+		<property name="sysAttendStatJobService" ref="sysAttendStatJobService">
+		</property>
+	</bean>
+	<bean
+		id="sysMonthCountTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysMonthCountServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysMonthCountDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendMainService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendMainTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysMonthCountService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysMonthCountTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendMainExcDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendMainExcDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendMainExc" />
+	</bean>
+
+	<bean
+		id="sysAttendMainExcTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendMainExcServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendMainExcDao" />
+		</property>
+		<property name="sysNotifyMainCoreService"><ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="sysAttendStatJobService"><ref bean="sysAttendStatJobService" />
+		</property>
+		<property name="processExecuteService"><ref bean="lbpmProcessExecuteService" />
+		</property>
+		<property name="lbpmProcessService"><ref bean="lbpmProcessService" />
+		</property>
+		<property name="sysAttendCategoryService"><ref bean="sysAttendCategoryService" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendMainExcService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendMainExcTarget" />
+		</property>
+	</bean>
+
+
+	<bean
+		id="sysAttendCategoryLocationDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryLocationDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendCategoryLocation" />
+	</bean>
+
+	<bean
+		id="sysAttendCategoryLocationTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendCategoryLocationServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendCategoryLocationDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendCategoryLocationService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendCategoryLocationTarget" />
+		</property>
+	</bean>
+
+
+	<bean
+		id="sysAttendCategoryExctimeDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryExctimeDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendCategoryExctime" />
+	</bean>
+
+	<bean
+		id="sysAttendCategoryExctimeTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendCategoryExctimeServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendCategoryExctimeDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendCategoryExctimeService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendCategoryExctimeTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendMainJobService"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendMainJobServiceImp">
+	</bean>
+	<bean
+		id="sysAttendStatJobService"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendStatJobServiceImp">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+		<property name="sysAttendStatMonthJobService" ref="sysAttendStatMonthJobService"></property>
+		<property name="sysOrgCoreService" ref="sysOrgCoreService"></property>
+		<property name="sysAttendBusinessService" ref="sysAttendBusinessService"></property>
+		
+		<property name="sysTimeCountService" ref="sysTimeCountService" ></property>
+	</bean>
+	<bean
+		id="sysAttendDatabaseJobService"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendDatabaseJobServiceImp">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+		<property name="sysAttendStatMonthJobService" ref="sysAttendStatMonthJobService"></property>
+		<property name="sysOrgCoreService" ref="sysOrgCoreService"></property>
+		<property name="sysAttendBusinessService" ref="sysAttendBusinessService"></property>
+		<property name="sysAttendSynDingService" ref="sysAttendSynDingService"></property>
+		<property name="sysOrgElementService" ref="sysOrgElementService"></property>
+	</bean>
+	<bean
+		id="sysMonthCountJobService"
+		class="com.landray.kmss.sys.attend.service.spring.SysMonthCountJobServiceImp">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+		<property name="sysAttendStatMonthJobService" ref="sysAttendStatMonthJobService"></property>
+		<property name="sysOrgCoreService" ref="sysOrgCoreService"></property>
+		<property name="sysAttendBusinessService" ref="sysAttendBusinessService"></property>
+		<property name="sysAttendSynDingService" ref="sysAttendSynDingService"></property>
+		<property name="sysOrgElementService" ref="sysOrgElementService"></property>
+	</bean>
+	<bean
+		id="sysAttendStatMonthJobService"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendStatMonthJobServiceImp">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+		<property name="sysTimeHolidayService" ref="sysTimeHolidayService"></property>
+	</bean>
+	<bean
+		id="sysAttendCategoryJobService"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendCategoryJobServiceImp">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+	</bean>
+
+	<bean
+		id="sysAttendMainNotifyJobService"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendMainNotifyJobServiceImp">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+	</bean>
+
+	<bean
+		id="sysAttendStatNotifyJobService"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendStatNotifyJobServiceImp">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+	</bean>
+	<bean
+		id="sysAttendReportDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendReportDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendReport" />
+	</bean>
+
+	<bean
+		id="sysAttendReportTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendReportServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendReportDao" />
+		</property>
+		<property name="sysTimeCountService" ref="sysTimeCountService" />
+		<property name="sysAttendStatMonthService" ref="sysAttendStatMonthService"></property>
+		<property name="sysOrgCoreService" ref="sysOrgCoreService"></property>
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+		<property name="sysNotifyMainCoreService" ref="sysNotifyMainCoreService"></property>
+		<property name="sysAttendOrgService" ref="sysAttendOrgService"></property>
+		<property name="sysAttendReportMonthService" ref="sysAttendReportMonthService"></property>
+		<property name="sysAttendStatService" ref="sysAttendStatService"></property>
+		<property name="sysAttendStatDetailService" ref="sysAttendStatDetailService"></property>
+		<property name="sysAttendMainService" ref="sysAttendMainService"></property>
+		<property name="sysAttendStatPeriodService" ref="sysAttendStatPeriodService"></property>
+		<property name="sysTimeLeaveRuleService" ref="sysTimeLeaveRuleService"></property>
+		<property name="sysAttendConfigService" ref="sysAttendConfigService"></property>
+		<property name="sysTimeLeaveAmountService" ref="sysTimeLeaveAmountService"></property>
+		<property name="hrStaffPersonInfoService" ref="hrStaffPersonInfoService"></property>
+		<property name="sysAttendSynDingService" ref="sysAttendSynDingService"></property>
+	</bean>
+	<bean
+		id="sysAttendReportService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendReportTarget" />
+		</property>
+	</bean>
+
+
+	<bean
+		id="sysAttendStatDetailDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendStatDetailDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendStatDetail" />
+	</bean>
+
+	<bean
+		id="sysAttendStatDetailTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendStatDetailServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendStatDetailDao" />
+		</property>
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+		<property name="sysAttendMainService" ref="sysAttendMainService"></property>
+		<property name="sysAttendMainExcService" ref="sysAttendMainExcService"></property>
+		<property name="sysAttendStatJobService" ref="sysAttendStatJobService"></property>
+		<property name="sysAttendStatService" ref="sysAttendStatService"></property>
+	</bean>
+	<bean
+		id="sysAttendStatDetailService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendStatDetailTarget" />
+		</property>
+	</bean>
+
+
+	<bean
+		id="sysAttendStatDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendStatDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendStat" />
+	</bean>
+
+	<bean
+		id="sysAttendStatTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendStatServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendStatDao" />
+		</property>
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+		<property name="sysOrgCoreService" ref="sysOrgCoreService"></property>
+		<property name="sysAttendStatMonthService" ref="sysAttendStatMonthService"></property>
+		<property name="sysAttendOrgService" ref="sysAttendOrgService"></property>
+		<property name="sysOrgElementService" ref="sysOrgElementService"></property>
+	</bean>
+	<bean
+		id="sysAttendStatService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendStatTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendBusinessDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendBusinessDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendBusiness" />
+	</bean>
+	<bean
+		id="sysAttendBusinessTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendBusinessServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendBusinessDao" />
+		</property>
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+	</bean>
+	<bean
+		id="sysAttendBusinessService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendBusinessTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendBusinessListener"
+		class="com.landray.kmss.sys.attend.plugin.SysAttendBusinessListener">
+		<property name="sysQuartzCoreService">
+			<ref bean="sysQuartzCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendBusinessResumeListener"
+		class="com.landray.kmss.sys.attend.plugin.SysAttendBusinessResumeListener"></bean>
+
+	<bean
+		id="sysAttendOutgoingResumeListener"
+		class="com.landray.kmss.sys.attend.plugin.SysAttendOutgoingResumeListener"></bean>
+<bean
+		id="sysAttendEASListener"
+		class="com.landray.kmss.sys.attend.plugin.SysAttendEASListener"></bean>
+
+	<bean
+		id="sysAttendAddCardListener"
+		class="com.landray.kmss.sys.attend.plugin.SysAttendAddCardListener"></bean>
+	
+	<bean
+	id="sysAttendAddWeekDayCardListener"
+	class="com.landray.kmss.sys.attend.plugin.SysAttendAddWeekDayCardListener"></bean>
+	
+	<bean
+		id="sysAttendLeaveListener"
+		class="com.landray.kmss.sys.attend.plugin.SysAttendLeaveListener">
+
+		<property name="sysTimeLeaveDetailService" ref="sysTimeLeaveDetailService"></property>
+		<property name="leaveTaskExecutor">
+            <ref bean="leaveTaskExecutor"/>
+        </property>
+
+	</bean>
+
+	<bean
+		id="sysAttendOvertimeListener"
+		class="com.landray.kmss.sys.attend.plugin.SysAttendOvertimeListener">
+	</bean>
+	<bean
+		id="sysAttendOutgoingListener"
+		class="com.landray.kmss.sys.attend.plugin.SysAttendOutgoingListener">
+	</bean>
+
+	<bean
+			id="sysAttendOvertimeStartListener"
+			class="com.landray.kmss.sys.attend.plugin.SysAttendOvertimeStartListener">
+	</bean>
+	<bean
+			id="sysAttendOutgoingStartListener"
+			class="com.landray.kmss.sys.attend.plugin.SysAttendOutgoingStartListener">
+	</bean>
+
+	<bean
+			id="sysAttendResumeStartListener"
+			class="com.landray.kmss.sys.attend.plugin.SysAttendResumeStartListener">
+	</bean>
+	<bean
+			id="sysAttendResumeOverListener"
+			class="com.landray.kmss.sys.attend.plugin.SysAttendResumeOverListener">
+	</bean>
+	<bean
+			id="sysAttendLeaveStartListener"
+			class="com.landray.kmss.sys.attend.plugin.SysAttendLeaveStartListener">
+	</bean>
+	<bean
+			id="sysAttendLeaveOverListener"
+			class="com.landray.kmss.sys.attend.plugin.SysAttendLeaveOverListener">
+	</bean>
+	<bean
+			id="sysAttendBusinessStartListener"
+			class="com.landray.kmss.sys.attend.plugin.SysAttendBusinessStartListener">
+	</bean>
+	<bean
+			id="sysAttendFlowOverListener"
+			class="com.landray.kmss.sys.attend.plugin.SysAttendFlowOverListener">
+	</bean>
+
+	<bean
+			id="sysAttendBusinessResumeStartListener"
+			class="com.landray.kmss.sys.attend.plugin.SysAttendBusinessResumeStartListener">
+	</bean>
+
+
+	<bean
+		id="sysAttendResumeListener"
+		class="com.landray.kmss.sys.attend.plugin.SysAttendResumeListener">
+		<property name="sysTimeLeaveDetailService" ref="sysTimeLeaveDetailService"></property>
+		<property name="sysTimeLeaveResumeService" ref="sysTimeLeaveResumeService"></property>
+	</bean>
+
+	<bean
+		id="sysAttendStatMonthDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendStatMonthDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendStatMonth" />
+	</bean>
+
+	<bean
+		id="sysAttendStatMonthTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendStatMonthServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendStatMonthDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendStatMonthService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendStatMonthTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendConfigDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendConfigDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendConfig" />
+	</bean>
+	<bean
+		id="sysAttendConfigTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendConfigServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendConfigDao" />
+		</property>
+		<property name="sysQuartzCoreService" ref="sysQuartzCoreService"></property>
+	</bean>
+	<bean
+		id="sysAttendConfigService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendConfigTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendCategoryTemplateDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendCategoryTemplate" />
+	</bean>
+	<bean
+		id="sysAttendCategoryTemplateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendCategoryTemplateServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendCategoryTemplateDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendCategoryTemplateService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendCategoryTemplateTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendCategoryATemplateDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryATemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendCategoryATemplate" />
+	</bean>
+	<bean
+		id="sysAttendCategoryATemplateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendCategoryATemplateServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendCategoryATemplateDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendCategoryATemplateService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendCategoryATemplateTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysAttendOrgService" class="com.landray.kmss.sys.attend.service.spring.SysAttendOrgServiceImp">
+		<property name="sysOrgCoreService" ref="sysOrgCoreService">
+		</property>
+		<property name="baseDao" ref="KmssBaseDao">
+		</property>
+		<property name="sysAttendMainService" ref="sysAttendMainService">
+		</property>
+		<property name="sysOrgElementService" ref="sysOrgElementService">
+		</property>
+		<property name="sysAttendAuthSettingService" ref="sysAttendAuthSettingService">
+		</property>
+	</bean>
+
+	<bean id="sysAttendOrgValidator" class="com.landray.kmss.sys.attend.service.spring.SysAttendOrgValidator">
+		<property name="sysAttendOrgService" ref="sysAttendOrgService"></property>
+	</bean>
+
+	<bean id="sysAttendManagerValidator" class="com.landray.kmss.sys.attend.service.spring.SysAttendManagerValidator">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+	</bean>
+
+	<bean id="sysAttendCateReaderValidator" class="com.landray.kmss.sys.attend.service.spring.SysAttendCateReaderValidator">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+	</bean>
+
+	<bean id="sysAttendCateEditorValidator" class="com.landray.kmss.sys.attend.service.spring.SysAttendCateEditorValidator">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+	</bean>
+
+	<bean id="sysAttendOrgFilter" class="com.landray.kmss.sys.attend.service.spring.SysAttendOrgFilter">
+		<property name="sysAttendOrgService" ref="sysAttendOrgService"></property>
+	</bean>
+
+	<bean id="sysAttendManagerFilter" class="com.landray.kmss.sys.attend.service.spring.SysAttendManagerFilter">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+	</bean>
+
+	<bean id="sysAttendCateReaderFilter" class="com.landray.kmss.sys.attend.service.spring.SysAttendCateReaderFilter">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+	</bean>
+
+	<bean id="sysAttendCateEditorFilter" class="com.landray.kmss.sys.attend.service.spring.SysAttendCateEditorFilter">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+	</bean>
+	<bean id="sysAttendGroupFilter" class="com.landray.kmss.sys.attend.service.spring.SysAttendGroupFilter">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+	</bean>
+	<bean
+		id="sysAttendSignStatDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendSignStatDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendSignStat" />
+	</bean>
+
+	<bean
+		id="sysAttendSignStatTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendSignStatServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendSignStatDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendSignStatService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendSignStatTarget" />
+		</property>
+	</bean>
+	<bean id="sysAttendSignStatJobService"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendSignStatJobServiceImp">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+		<property name="sysOrgCoreService" ref="sysOrgCoreService"></property>
+	</bean>
+
+	<bean
+		id="sysAttendReportMonthDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendReportMonthDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendReportMonth" />
+	</bean>
+
+	<bean
+		id="sysAttendReportMonthTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendReportMonthServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendReportMonthDao" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendReportMonthService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendReportMonthTarget" />
+		</property>
+	</bean>
+	<bean id="sysAttendWebTarget" class="com.landray.kmss.sys.attend.webservice.SysAttendWebServiceImp">
+		<property name="sysWsOrgService" ref="sysWsOrgService" />
+		<property name="sysOrgCoreService" ref="sysOrgCoreService" />
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService" />
+		<property name="sysAttendMainService" ref="sysAttendMainService"></property>
+		<property name="sysAttendImportLogService" ref="sysAttendImportLogService"></property>
+	</bean>
+
+	<bean
+		id="sysAttendWebService"
+		parent="KmssBaseService">
+		<property name="target" ref="sysAttendWebTarget">
+		</property>
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop
+					key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendCategoryTSheetDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryTSheetDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendCategoryTimesheet" />
+	</bean>
+
+	<bean
+		id="sysAttendCategoryTSheetTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendCategoryTSheetServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendCategoryTSheetDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendCategoryTSheetService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendCategoryTSheetTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendStatPeriodDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendStatPeriodDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendStatPeriod" />
+	</bean>
+
+	<bean
+		id="sysAttendStatPeriodTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendStatPeriodServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendStatPeriodDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendStatPeriodService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendStatPeriodTarget" />
+		</property>
+	</bean>
+	<bean id="sysAttendStatPeriodJobService" class="com.landray.kmss.sys.attend.service.spring.SysAttendStatPeriodJobServiceImp">
+		<property name="sysAttendStatPeriodService" ref="sysAttendStatPeriodService"></property>
+	</bean>
+	<bean id="sysAttendNotifyRemindJobService" class="com.landray.kmss.sys.attend.service.spring.SysAttendNotifyRemindJobServiceImp">
+	</bean>
+
+	<bean
+		id="sysAttendOutPersonDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendOutPersonDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendOutPerson" />
+	</bean>
+	<bean
+		id="sysAttendOutPersonTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendOutPersonServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendOutPersonDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendOutPersonService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendOutPersonTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendOutPersonLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendOutPersonLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendOutPersonLog" />
+	</bean>
+	<bean
+		id="sysAttendOutPersonLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendOutPersonLogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendOutPersonLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendOutPersonLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendOutPersonLogTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendAuthSettingDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendAuthSettingDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendAuthSetting" />
+	</bean>
+	<bean
+		id="sysAttendAuthSettingTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendAuthSettingServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendAuthSettingDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendAuthSettingService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendAuthSettingTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendDeviceDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendDeviceDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendDevice" />
+	</bean>
+	<bean
+		id="sysAttendDeviceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendDeviceServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendDeviceDao" />
+		</property>
+		<property name="sysAttendConfigService" ref="sysAttendConfigService"></property>
+	</bean>
+	<bean
+		id="sysAttendDeviceService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendDeviceTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendDeviceExcDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendDeviceExcDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendDeviceExc" />
+	</bean>
+	<bean
+		id="sysAttendDeviceExcTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendDeviceExcServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendDeviceExcDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendDeviceExcService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendDeviceExcTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendSignPatchDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendSignPatchDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendSignPatch" />
+	</bean>
+	<bean
+		id="sysAttendSignPatchTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendSignPatchServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendSignPatchDao" />
+		</property>
+		<property name="sysOrgCoreService" ref="sysOrgCoreService"></property>
+		<property name="sysAttendMainService" ref="sysAttendMainService"></property>
+	</bean>
+	<bean
+		id="sysAttendSignPatchService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendSignPatchTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendSignPatchDetailDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendSignPatchDetailDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendSignPatchDetail" />
+	</bean>
+	<bean
+		id="sysAttendSignPatchDetailTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendSignPatchDetailServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendSignPatchDetailDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendSignPatchDetailService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendSignPatchDetailTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysAttendMainTransferJobService" class="com.landray.kmss.sys.attend.service.spring.SysAttendMainTransferJobServiceImp">
+		<property name="sysAttendConfigService" ref="sysAttendConfigService"></property>
+	</bean>
+
+	<bean
+		id="sysAttendMainBakDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendMainBakDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendMainBak" />
+	</bean>
+	<bean
+		id="sysAttendMainBakTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendMainBakServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendMainBakDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendMainBakService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendMainBakTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendStatLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendStatLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendStatLog" />
+	</bean>
+	<bean
+		id="sysAttendStatLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendStatLogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendStatLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendStatLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendStatLogTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttendNotifyRemindLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendNotifyRemindLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendNotifyRemindLog" />
+	</bean>
+	<bean
+		id="sysAttendNotifyRemindLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendNotifyRemindLogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendNotifyRemindLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendNotifyRemindLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendNotifyRemindLogTarget" />
+		</property>
+	</bean>
+	<bean id="sysAttendRemindLogJobService" class="com.landray.kmss.sys.attend.service.spring.SysAttendRemindLogJobServiceImp">
+		<property name="sysAttendNotifyRemindLogService" ref="sysAttendNotifyRemindLogService"></property>
+	</bean>
+	<bean
+        id="sysAttendSynConfigDao"
+        parent="KmssAuthBaseDao"
+        class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendSynConfigDaoImp">
+        <property
+            name="modelName"
+            value="com.landray.kmss.sys.attend.model.SysAttendSynConfig" />
+    </bean>
+    <bean
+        id="sysAttendSynConfigTarget"
+        parent="KmssBaseTarget"
+        class="com.landray.kmss.sys.attend.service.spring.SysAttendSynConfigServiceImp">
+        <property
+            name="baseDao">
+            <ref
+                bean="sysAttendSynConfigDao" />
+        </property>
+    </bean>
+    <bean
+        id="sysAttendSynConfigService"
+        parent="KmssBaseService">
+        <property
+            name="target">
+            <ref
+                bean="sysAttendSynConfigTarget" />
+        </property>
+    </bean>
+    <bean
+        id="sysAttendSynDingDao"
+        class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendSynDingDaoImp"
+        parent="KmssAuthAreaBaseDao">
+        <property
+            name="modelName">
+            <value>com.landray.kmss.sys.attend.model.SysAttendSynDing</value>
+        </property>
+    </bean>
+    <bean
+        id="sysAttendSynDingTarget"
+        class="com.landray.kmss.sys.attend.service.spring.SysAttendSynDingServiceImp"
+        parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="sysAttendSynDingDao"/>
+        </property>
+        <property name="sysOrgPersonService">
+            <ref bean="sysOrgPersonService"/>
+        </property>
+        <property name="taskExecutor">
+            <ref bean="taskExecutor"/>
+        </property>
+        <property name="sysOrgCoreService" ref="sysOrgCoreService" />
+        <property name="sysAttendCategoryService" ref="sysAttendCategoryService" />
+        <property name="sysAttendMainService" ref="sysAttendMainService" />
+        <property name="sysAttendImportLogService" ref="sysAttendImportLogService"></property>
+    </bean>
+    <bean
+        id="sysAttendSynDingService"
+        parent="KmssBaseService">
+        <property
+            name="target">
+            <ref
+                bean="sysAttendSynDingTarget"/>
+        </property>
+    </bean>
+    <bean
+        id="sysAttendSynDingBakDao"
+        class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendSynDingBakDaoImp"
+        parent="KmssAuthBaseDao">
+        <property
+            name="modelName">
+            <value>com.landray.kmss.sys.attend.model.SysAttendSynDingBak</value>
+        </property>
+    </bean>
+    <bean
+        id="sysAttendSynDingBakTarget"
+        class="com.landray.kmss.sys.attend.service.spring.SysAttendSynDingBakServiceImp"
+        parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="sysAttendSynDingBakDao"/>
+        </property>
+    </bean>
+    <bean
+        id="sysAttendSynDingBakService"
+        parent="KmssBaseService">
+        <property
+            name="target">
+            <ref
+                bean="sysAttendSynDingBakTarget"/>
+        </property>
+    </bean>
+    <bean
+        id="taskExecutor"
+        class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property
+            name="corePoolSize"
+            value="20" />
+        <property
+            name="maxPoolSize"
+            value="50" />
+        <property
+            name="keepAliveSeconds"
+            value="200" />
+        <property
+            name="queueCapacity"
+            value="250" />
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+        </property>
+    </bean>
+
+    <bean
+        id="sysAttendSynDingQueueErrorDao"
+        parent="KmssAuthBaseDao"
+        class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendSynDingQueueErrorDaoImp">
+        <property
+            name="modelName"
+            value="com.landray.kmss.sys.attend.model.SysAttendSynDingQueueError" />
+    </bean>
+    <bean
+        id="sysAttendSynDingQueueErrorServiceTarget"
+        parent="KmssBaseTarget"
+        class="com.landray.kmss.sys.attend.service.spring.SysAttendSynDingQueueErrorServiceImp">
+        <property
+            name="baseDao">
+            <ref
+                bean="sysAttendSynDingQueueErrorDao" />
+        </property>
+    </bean>
+    <bean
+        id="sysAttendSynDingQueueErrorService"
+        parent="KmssBaseService">
+        <property
+            name="target">
+            <ref
+                bean="sysAttendSynDingQueueErrorServiceTarget" />
+        </property>
+    </bean>
+    
+	<bean
+		id="sysAttendMainLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendMainLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendMainLog" />
+	</bean>
+	<bean
+		id="sysAttendMainLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendMainLogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendMainLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendMainLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendMainLogTarget" />
+		</property>
+	</bean>
+	<bean id="sysAttendMainLogJobService" class="com.landray.kmss.sys.attend.service.spring.SysAttendMainLogJobServiceImp">
+	</bean>
+	<bean id="sysAttendSynDingTransferJobService" class="com.landray.kmss.sys.attend.service.spring.SysAttendSynDingTransferJobServiceImp">
+		<property name="sysAttendConfigService" ref="sysAttendConfigService"></property>
+	</bean>
+	<bean id="sysAttendSynDingReaderValidator" class="com.landray.kmss.sys.attend.service.spring.SysAttendSynDingReaderValidator">
+		<property name="baseDao" ref="sysAttendSynDingBakDao"></property>
+	</bean>
+	<bean id="sysAttendSynDingReaderFilter" class="com.landray.kmss.sys.attend.service.spring.SysAttendSynDingReaderFilter">
+	</bean>
+	<bean
+        id="sysAttendSynDingNotifyDao"
+        parent="KmssBaseDao"
+        class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendSynDingNotifyDaoImp">
+        <property
+            name="modelName"
+            value="com.landray.kmss.sys.attend.model.SysAttendSynDingNotify" />
+    </bean>
+    <bean
+        id="sysAttendSynDingNotifyServiceTarget"
+        parent="KmssBaseTarget"
+        class="com.landray.kmss.sys.attend.service.spring.SysAttendSynDingNotifyServiceImp">
+        <property
+            name="baseDao">
+            <ref
+                bean="sysAttendSynDingNotifyDao" />
+        </property>
+    </bean>
+    <bean
+        id="sysAttendSynDingNotifyService"
+        parent="KmssBaseService">
+        <property
+            name="target">
+            <ref
+                bean="sysAttendSynDingNotifyServiceTarget" />
+        </property>
+    </bean>
+    <bean id="sysAttendCateStatFilter" class="com.landray.kmss.sys.attend.service.spring.SysAttendCateStatFilter">
+		<property name="sysAttendCategoryService" ref="sysAttendCategoryService"></property>
+	</bean>
+	<bean
+        id="leaveTaskExecutor"
+        class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property
+            name="corePoolSize"
+            value="20" />
+        <property
+            name="maxPoolSize"
+            value="50" />
+        <property
+            name="keepAliveSeconds"
+            value="200" />
+        <property
+            name="queueCapacity"
+            value="250" />
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+        </property>
+    </bean>
+    <bean
+		id="sysAttendImportLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendImportLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendImportLog" />
+	</bean>
+	<bean
+		id="sysAttendImportLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendImportLogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendImportLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendImportLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendImportLogTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendExchangeListener"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendExchangeListener">
+		<property
+			name="sysNotifyMainCoreService">
+			<ref
+				bean="sysNotifyMainCoreService" />
+		</property>
+		<property
+			name="sysAttendCategoryService">
+			<ref
+				bean="sysAttendCategoryService" />
+		</property>
+		<property
+			name="sysAttendSynDingService">
+			<ref
+				bean="sysAttendSynDingService" />
+		</property>
+		<property name="sysTimeCountService" ref="sysTimeCountService" >
+		</property>
+		<property name="sysAttendStatJobService" ref="sysAttendStatJobService"></property>
+		<property name="sysTimeBusinessExService" ref="sysTimeBusinessExService"></property>
+		<property name="sysTimeElementExService" ref="sysTimeElementExService"></property>
+		<property name="sysTimeWorkService" ref="sysTimeWorkService"></property>
+		<property name="sysTimePatchworkService" ref="sysTimePatchworkService"></property>
+		<property name="sysTimeVacationService" ref="sysTimeVacationService"></property>
+		<property name="sysQuartzCoreService">
+			<ref bean="sysQuartzCoreService" />
+		</property>
+	</bean>
+
+
+
+
+	<bean
+			id="sysAttendCategoryContentDao"
+			class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryContentDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName"
+				value="com.landray.kmss.sys.attend.model.SysAttendHisCategoryContent" />
+	</bean>
+
+	<bean
+			id="sysAttendHisCategoryDao"
+			class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendHisCategoryDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName"
+				value="com.landray.kmss.sys.attend.model.SysAttendHisCategory" />
+	</bean>
+	<bean
+			id="sysAttendHisCategoryTarget"
+			class="com.landray.kmss.sys.attend.service.spring.SysAttendHisCategoryServiceImp"
+			parent="KmssBaseTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="sysAttendHisCategoryDao"/>
+		</property>
+	</bean>
+
+
+
+	<bean
+			id="sysAttendHisCategoryService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysAttendHisCategoryTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="sysAttendCategoryTargetNewDao"
+			class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryTargetNewDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName"
+				value="com.landray.kmss.sys.attend.model.SysAttendCategoryTargetNew"
+		/>
+	</bean>
+
+	<bean
+			id="sysAttendCategoryTargetChangeDao"
+			class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryTargetChangeDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName"
+				value="com.landray.kmss.sys.attend.model.SysAttendCategoryTargetChange"
+		/>
+	</bean>
+
+	<bean
+		id="sysAttendCategoryExcNewDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendCategoryExcNewDaoImp"
+		parent="KmssAuthBaseDao">
+		<property
+				name="modelName" value="com.landray.kmss.sys.attend.model.SysAttendCategoryExcNew">
+		</property>
+	</bean>
+	<bean
+			id="sysAttendReportLogDao"
+			class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendReportLogDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName"
+				value="com.landray.kmss.sys.attend.model.SysAttendReportLog"
+		>
+		</property>
+	</bean>
+	<bean
+			id="sysAttendReportLogTarget"
+			class="com.landray.kmss.sys.attend.service.spring.SysAttendReportLogServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="sysAttendReportLogDao"/>
+		</property>
+	</bean>
+	<bean
+			id="sysAttendReportLogService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="sysAttendReportLogTarget"/>
+		</property>
+	</bean>
+
+	<bean
+			id="sysAttendSignLogDao"
+			class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendSignLogDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName" value="com.landray.kmss.sys.attend.model.SysAttendSignLog">
+		</property>
+	</bean>
+	<bean
+			id="sysAttendSignLogTarget"
+			class="com.landray.kmss.sys.attend.service.spring.SysAttendSignLogServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="sysAttendSignLogDao"/>
+		</property>
+	</bean>
+	<bean
+			id="sysAttendSignLogService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="sysAttendSignLogTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="sysAttendSignBakDao"
+			class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendSignBakDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName" value="com.landray.kmss.sys.attend.model.SysAttendSignBak">
+		</property>
+	</bean>
+	<bean
+			id="sysAttendSignBakTarget"
+			class="com.landray.kmss.sys.attend.service.spring.SysAttendSignBakServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="sysAttendSignBakDao"/>
+		</property>
+	</bean>
+	<bean
+			id="sysAttendSignBakService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="sysAttendSignBakTarget"/>
+		</property>
+	</bean>
+
+	<bean
+			id="sysAttendListenerCommonService"
+			class="com.landray.kmss.sys.attend.plugin.SysAttendListenerCommonImp"
+			>
+	</bean>
+	<bean
+			id="sysAttendRestatLogDao"
+			class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendRestatLogDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName" value="com.landray.kmss.sys.attend.model.SysAttendRestatLog">
+
+		</property>
+	</bean>
+	<bean
+			id="sysAttendRestatLogTarget"
+			class="com.landray.kmss.sys.attend.service.spring.SysAttendRestatLogServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="sysAttendRestatLogDao"/>
+		</property>
+	</bean>
+	<bean
+			id="sysAttendRestatLogService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="sysAttendRestatLogTarget"/>
+		</property>
+	</bean>
+
+	<!--签到工时计算服务-->
+	<bean
+			id="sysAttendCountService"
+			class="com.landray.kmss.sys.attend.service.business.SysAttendCountServiceImp">
+	</bean>
+	<bean
+		id="sysAttendLactationDetailDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attend.dao.hibernate.SysAttendLactationDetailDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attend.model.SysAttendLactationDetail" />
+	</bean>
+	<bean
+		id="sysAttendLactationDetailTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attend.service.spring.SysAttendLactationDetailServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAttendLactationDetailDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAttendLactationDetailService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAttendLactationDetailTarget" />
+		</property>
+	</bean>
+</beans>

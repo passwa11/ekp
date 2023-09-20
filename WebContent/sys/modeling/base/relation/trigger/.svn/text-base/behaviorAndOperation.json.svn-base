@@ -1,0 +1,145 @@
+{
+  "触发": {
+    "where": [
+      {
+        "name": {
+          "type": "String",
+          "value": "fdId",
+          "text": "fdId"
+        },
+        "match": "=",
+        "type": {
+          "text": "公式定义",
+          "value": "4"
+        },
+        "expression": {
+          "text": "$商机名称(ID)$",
+          "value": "$fd_380dda4518cdda$"
+        },
+        "idx": 0
+      }
+    ],
+    "target": [
+      {
+        "name": {
+          "text": "商机记录(ID)",
+          "type": "String",
+          "value": "fd_37dc1826193c10"
+        },
+        "type": {
+          "text": "入参",
+          "value": "2"
+        },
+        "expression": {
+          "text": "",
+          "value": ""
+        },
+        "idx": 0
+      }
+    ],
+    "msg": {
+      "targetElement": {
+        "type": "目标人群，3|直接指定，4|公式定义",
+        "text": "",
+        "value": ""
+      },
+      "expression": {
+        "text": "【消息内容】每日健康打卡报平安，请您填写今日健康打卡|/sys/modeling/main/modelingAppSimpleMain.do?method=add&fdAppModelId=16ffaa4acb7b54d193cc862477f95cfd",
+        "value": "%E6%AF%8F%E6%97%A5%E5%81%A5%E5%BA%B7%E6%89%93%E5%8D%A1%E6%8A%A5%E5%B9%B3%E5%AE%89%EF%BC%8C%E8%AF%B7%E6%82%A8%E5%A1%AB%E5%86%99%E4%BB%8A%E6%97%A5%E5%81%A5%E5%BA%B7%E6%89%93%E5%8D%A1%7C%2Fsys%2Fmodeling%2Fmain%2FmodelingAppSimpleMain.do%3Fmethod%3Dadd%26fdAppModelId%3D16ffaa4acb7b54d193cc862477f95cfd"
+      },
+      "type": "使用类型，1|场景，2|触发",
+      "notify": {
+        "type": "通知类型 0|处理，1|阅读",
+        "key": "1700cc7099499e2cd24778e4cf395299",
+        "ways": "通知方式，多选。 todo|待办待阅，mobile|短消息，email|邮件"
+      },
+      "link": {
+        "type": "消息链接，0|查看，1|编辑，2|其他Url",
+        "view": {
+          "id": "_def",
+          "name": "默认视图"
+        }
+      }
+    },
+    "behaviorRule": {
+      "jumpDraft": true
+    },
+    "flow": {
+      "flowId": "171f36fa12ae7182b08b7ec472291d48【流程表单指定流程】",
+      "flowName": "餐费填报【流程表单指定流程】",
+      "targetElement": {
+        "text": "guest 【流程表单指定创建人】",
+        "value": "16afd64e8026c9466dae9b44048908c0",
+        "type": "3"
+      }
+    },
+    "noflow": {
+      "targetElement": {
+        "text": "guest;李沁烨【无流程表单指定创建人】",
+        "value": "16afd64e8026c9466dae9b44048908c0;17185f3e3b4db13bd392fac4b0bbb041",
+        "type": "3"
+      }
+    },
+    "msgArray": [
+      {
+        "behaviorId": "17013da31f2bc482c1ad81b4ca69b895",
+        "behaviorName": "发消息通知员工每日健康打卡",
+        "type": "add|发送，remove|消除"
+      }
+    ]
+  },
+  "操作": {
+    "trigger": [
+      {
+        "idx": 0,
+        "ele": {
+          "triggerId": "触发Id",
+          "triggerName": "触发名",
+          "type": "where|查询,target|目标",
+          "inputType": "4",
+          "triggerInputType": "2",
+          "widgetId": "fdId",
+          "widgetType": "String",
+          "widgetName": "fdId"
+        },
+        "expression": {
+          "value": "$fdId$",
+          "text": "$ID$"
+        }
+      }
+    ],
+    "viewModelName": "视图所属表单",
+    "viewModelId": "视图所属表单",
+    "viewSet": {
+      "type": "0|列表，1|查看，2|新建【新建是参数取viewNew，其他情况取view】",
+      "id": "视图Id，默认视图定义def为true，def为false时取此id",
+      "name": "视图名称",
+      "def": false
+    },
+    "view": [
+      {
+        "idx": 0,
+        "ele": "fdId",
+        "expression": {
+          "text": "$ID$",
+          "value": "$fdId$"
+        }
+      }
+    ],
+    "viewNew": [
+      {
+        "ele": "fd_382e3cb77417f4_text",
+        "name": {
+          "type": "String",
+          "value": "fd_382e3cb77417f4_text",
+          "text": "物资名称"
+        },
+        "expression": {
+          "text": "$建模工具.获取关联对象属性值$($ID$,\"物资名称\")",
+          "value": "$建模工具.获取关联对象属性值$($fdId$,\"物资名称\")"
+        },
+        "idx": 4
+      }
+    ]
+  }
+}

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+	xmlns="http://www.example.org/design-config" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module 
+		messageKey="sys-person:module.sys.person" 
+		urlPrefix="/sys/person/"
+		defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN;SYSROLE_SECURITY)">
+		<roles>
+			ROLE_SYSPERSON_SETTING_ADMIN;
+		</roles>
+		<areaRoles>
+			ROLE_SYSPERSON_PORTAL_ADMIN;
+		</areaRoles>
+		
+		<request
+			path="sys_person_sysnav_category/sysPersonSysNavCategory*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.person.model.SysPersonSysNavCategory">
+			<query
+				queryString="method=add|save"
+				validator="areaRoleValidator(role=ROLE_SYSPERSON_PORTAL_ADMIN)" />
+			<query
+				queryString="method=update|delete|edit"
+				validator="authFieldValidator(type=SYS_EDITOR)" />
+			<query
+				queryString="method=deleteall"
+				validator="areaRoleValidator(role=ROLE_SYSPERSON_PORTAL_ADMIN)" />
+		</request>
+		<request
+			path="sys_person_systab_category/sysPersonSysTabCategory*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.person.model.SysPersonSysTabCategory">
+			<query
+				queryString="method=add|save"
+				validator="areaRoleValidator(role=ROLE_SYSPERSON_PORTAL_ADMIN)" />
+			<query
+				queryString="method=update|delete|edit"
+				validator="authFieldValidator(type=SYS_EDITOR)" />
+			<query
+				queryString="method=deleteall"
+				validator="areaRoleValidator(role=ROLE_SYSPERSON_PORTAL_ADMIN)" />
+		</request>
+		<request
+			path="sys_person_cfg_link/sysPersonCfgLink*"
+			defaultValidator="roleValidator(role=ROLE_SYSPERSON_SETTING_ADMIN)">
+		</request>
+		<request
+			path="index.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+		</request>
+		<request
+			path="setting.do*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+		</request>
+		<request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_SYSPERSON_SETTING_ADMIN)">
+		</request>
+		<request
+			path="image.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN;SYSROLE_SECURITY)">
+		</request>
+		
+		<!-- 移动链接“我的” -->
+		<request
+			path="sys_person_mlink_category/sysPersonMlinkCategory*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.person.model.SysPersonMlinkCategory">
+			<query
+				queryString="method=add|save"
+				validator="areaRoleValidator(role=ROLE_SYSPERSON_SETTING_ADMIN)" />
+			<query
+				queryString="method=update|delete|edit|inverseEnable"
+				validator="authFieldValidator(type=SYS_EDITOR)" />
+			<query
+				queryString="method=deleteall"
+				validator="areaRoleValidator(role=ROLE_SYSPERSON_SETTING_ADMIN)" />
+		</request>
+		
+		<!-- <request path="sys_person_mlink_category/index.jsp*" defaultValidator="uselessRoleValidator()" /> -->
+		
+		<filters modelName="com.landray.kmss.sys.person.model.SysPersonSysNavCategory">			
+			<filter
+				type="SYS_EDITOR"
+				expression="roleFilter(role=ROLE_SYSPERSON_SETTING_ADMIN)" />
+			<filter 
+				type="SYS_EDITOR" 
+				expression="authFieldFilter(field=authAllEditors.fdId)"/>
+		</filters>
+		<filters modelName="com.landray.kmss.sys.person.model.SysPersonSysTabCategory">			
+			<filter
+				type="SYS_EDITOR"
+				expression="roleFilter(role=ROLE_SYSPERSON_SETTING_ADMIN)" />
+			<filter 
+				type="SYS_EDITOR" 
+				expression="authFieldFilter(field=authAllEditors.fdId)"/>
+		</filters>
+		
+		<filters modelName="com.landray.kmss.sys.person.model.SysPersonMlinkCategory">			
+			<filter
+				type="SYS_EDITOR"
+				expression="roleFilter(role=ROLE_SYSPERSON_SETTING_ADMIN)" />
+			<filter 
+				type="SYS_EDITOR" 
+				expression="authFieldFilter(field=authEditors.fdId)"/>
+		</filters>
+	</module>
+	
+	<homePage
+		urlPrefix="sys/person"
+		messageKey="sys-person:person.setting"
+		config="/moduleindex_notopic.jsp?nav=/sys/person/tree.jsp"
+		type="global" />
+
+</configs>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrgElementExtProp"
+		table="sys_org_element_ext_prop">
+		<!-- 主结构配置 -->
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<!-- 属性类型（部门/人员） -->
+		<property
+			name="fdType"
+			column="fd_type"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="10" />
+		<!-- 显示名称 -->
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200"
+			access="com.landray.kmss.sys.organization.lang.SysOrgCommonAccessor"/>
+		<!-- 排序号 -->
+		<property
+			name="fdOrder"
+			column="fd_order"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 属性名称 -->
+		<property
+			name="fdFieldName"
+			column="fd_field_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100" />
+		<!-- 字段名称 -->
+		<property
+			name="fdColumnName"
+			column="fd_column_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="30" />
+		<!-- 数据类型 -->
+		<property
+			name="fdFieldType"
+			column="fd_field_type"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="50" />
+		<!-- 字段长度 -->
+		<property
+			name="fdFieldLength"
+			column="fd_field_length"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 精度，适用于浮点类型 -->
+		<property
+			name="fdScale"
+			column="fd_scale"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 是否必填 -->
+		<property
+			name="fdRequired"
+			column="fd_required"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 是否启用 -->
+		<property
+			name="fdStatus"
+			column="fd_status"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 是否列表展示 -->
+		<property
+			name="fdShowList"
+			column="fd_show_list"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 显示的类型 -->
+		<property
+			name="fdDisplayType"
+			column="fd_display_type"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="50" />
+		
+		<!-- 所属扩展 -->
+		<many-to-one
+			name="fdExternal"
+			column="fd_external_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<!-- 枚举集合 -->
+		<bag
+			name="fdFieldEnums"
+			cascade="all-delete-orphan"
+			inverse="false">
+			<key column="fd_ext_prop_id" />
+			<one-to-many class="com.landray.kmss.sys.organization.model.SysOrgElementExtPropEnum" />
+		</bag>
+	</class>
+</hibernate-mapping>

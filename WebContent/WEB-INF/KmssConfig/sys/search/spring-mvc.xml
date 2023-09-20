@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/search/sys_search_main/sysSearchMain.do"
+		class="com.landray.kmss.sys.search.actions.SysSearchMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.search.forms.SysSearchMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/search/sys_search_main/sysSearchMain_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/search/sys_search_main/sysSearchMain_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/search/sys_search_main/sysSearchMain_list.jsp" />
+				<entry
+					key="editTemplate"
+					value="/sys/search/sys_search_main/sysSearchMain_template.jsp" />
+				<entry
+					key="editParam"
+					value="/sys/search/sys_search_main/sysSearchMain_param.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/search/sys_search_cate/sysSearchCate.do"
+		class="com.landray.kmss.sys.search.actions.SysSearchCateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.search.forms.SysSearchCateForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/search/sys_search_cate/sysSearchCate_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/search/sys_search_cate/sysSearchCate_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/search/sys_search_cate/sysSearchCate_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/search/search.do"
+		class="com.landray.kmss.sys.search.actions.SearchAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="searchConditionNew"
+					value="/sys/search/search_condition_new.jsp" />
+				<entry
+					key="dingSearchConditionNew"
+					value="/km/review/km_review_ui/dingSuit/dataExport_search.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+        id="sysSearchController"
+        class="com.landray.kmss.sys.search.rest.controller.SysSearchController">
+    </bean>
+    <bean
+        id="sysSearchMainController"
+        class="com.landray.kmss.sys.search.rest.controller.SysSearchMainController">
+    </bean>
+    <bean
+        id="sysSearchExportController"
+        class="com.landray.kmss.sys.search.rest.controller.SysSearchExportController">
+    </bean>
+</beans>

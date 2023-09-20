@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <extension 
+        point="com.landray.kmss.sys.number.config" 
+        model="*">
+        <item 
+            name="extend">
+            <param 
+                name="modelName" 
+                value="com.landray.kmss.km.archives.model.KmArchivesMain"/>
+            <param 
+                name="templatePropertyName" 
+                value="docTemplate"/>
+            <param 
+                name="moduleName" 
+                value="{km-archives:module.km.archives}"/>
+        </item>
+    </extension>
+    
+    <!-- 数据字典加载器实现 -->
+	<extension point="com.landray.kmss.sys.metadata.setting"
+		model="com.landray.kmss.km.archives.model.KmArchivesMain">
+		<item name="loader">
+			<param name="bean" value="sysPropertyDictLoader" />
+		</item>
+	</extension>	
+	<!-- 软删除功能扩展点实现 -->
+	<extension point="com.landray.kmss.sys.recycle">
+		<item name="softDelete">
+			<param
+				name="modelName"
+				value="km-archives:module.km.archives" />
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.km.archives.model.KmArchivesMain" />
+			<param
+				name="categoryClassName"
+				value="com.landray.kmss.km.archives.model.KmArchivesCategory" />
+			<param
+				name="categoryField"
+				value="docTemplate" />
+			<param
+				name="titleField"
+				value="docSubject" />
+		</item>
+		<item name="softDelete">
+			<param
+				name="modelName"
+				value="km-archives:module.km.archives" />
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.km.archives.model.KmArchivesBorrow" />
+			<param
+				name="categoryClassName"
+				value="com.landray.kmss.km.archives.model.KmArchivesTemplate" />
+			<param
+				name="categoryField"
+				value="docTemplate" />
+			<param
+				name="titleField"
+				value="docSubject" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesBorrow">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.WoJieYueDe" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesBorrow" />
+			<param
+				name="page"
+				value="/myBorrow" />
+				<param
+				name="default"
+				value="docSubject;docCreateTime;fdBorrowDate;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler" />
+			<param
+				name="customized"
+				value="lbpm_main_listcolumn_node;km-archives:lbpm.currentNode,lbpm_main_listcolumn_handler;km-archives:lbpm.currentHandler" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesBorrow">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="list.approval" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesBorrow" />
+			<param
+				name="page"
+				value="/myApproval" />
+				<param
+				name="default"
+				value="docSubject;docCreateTime;fdBorrowDate;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler" />
+			<param
+				name="customized"
+				value="lbpm_main_listcolumn_node;km-archives:lbpm.currentNode,lbpm_main_listcolumn_handler;km-archives:lbpm.currentHandler" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesBorrow">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="list.approved" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesBorrow" />
+			<param
+				name="page"
+				value="/myApproved" />
+				<param
+				name="default"
+				value="docSubject;docCreateTime;fdBorrowDate;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler" />
+			<param
+				name="customized"
+				value="lbpm_main_listcolumn_node;km-archives:lbpm.currentNode,lbpm_main_listcolumn_handler;km-archives:lbpm.currentHandler" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesBorrow">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.SuoYouJieYue" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesBorrow" />
+			<param
+				name="page"
+				value="/allBorrow" />
+				<param
+				name="default"
+				value="docSubject;docCreateTime;fdBorrowDate;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler" />
+			<param
+				name="customized"
+				value="lbpm_main_listcolumn_node;km-archives:lbpm.currentNode,lbpm_main_listcolumn_handler;km-archives:lbpm.currentHandler" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesBorrow">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.DiscardBorrow" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesBorrow" />
+			<param
+				name="page"
+				value="/discard/borrow" />
+				<param
+				name="default"
+				value="docSubject;docCreateTime;fdBorrowDate" />
+			<param
+				name="customized"
+				value="" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.DangAnShenHe" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesMain" />
+			<param
+				name="page"
+				value="/examineDoc" />
+				<param
+				name="default"
+				value="docSubject;docNumber;docCreator.fdName;fdFileDate;fdLibrary;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler" />
+			<param
+				name="customized"
+				value="lbpm_main_listcolumn_node;km-archives:lbpm.currentNode,lbpm_main_listcolumn_handler;km-archives:lbpm.currentHandler" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesDetails">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.DangAnJieYue" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesDetails" />
+			<param
+				name="page"
+				value="/myBorrowDetails" />
+				<param
+				name="default"
+				value="fdArchives.docSubject;fdArchives.docNumber;fdArchives.fdDenseLevel;fdReturnDate;fdRemindDate" />
+			<param
+				name="customized"
+				value="fdArchives.docSubject;km-archives:kmArchivesMain.docSubject,fdArchives.docNumber;km-archives:kmArchivesMain.docNumber,fdArchives.fdDenseLevel;km-archives:kmArchivesMain.fdDenseLevel,fdRemindDate;km-archives:kmArchivesDetails.remainDate" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesAppraise">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.DangAnJianDing" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesAppraise" />
+			<param
+				name="page"
+				value="/operation/myAppraiseDetails" />
+			<param
+				name="default"
+				value="docSubject;docCreator.fdName;docCreateTime;fdAppraiseIdea;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler" />
+			<param
+				name="customized"
+				value="lbpm_main_listcolumn_node;km-archives:lbpm.currentNode,lbpm_main_listcolumn_handler;km-archives:lbpm.currentHandler" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesDestroy">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.DangAnXiaoHui" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesDestroy" />
+			<param
+				name="page"
+				value="/operation/myDestroyDetails" />
+				<param
+				name="default"
+				value="docSubject;docCreator.fdName;docCreateTime;fdDestroyIdea;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler" />
+			<param
+				name="customized"
+				value="lbpm_main_listcolumn_node;km-archives:lbpm.currentNode,lbpm_main_listcolumn_handler;km-archives:lbpm.currentHandler" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesAppraise">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.JianDingJiLu" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesAppraise" />
+			<param
+				name="page"
+				value="/record/appraise" />
+				<param
+				name="default"
+				value="fdArchivesName;fdArchivesNumber;fdAfterAppraiseDate;docCreator.fdName;docCreateTime;fdAppraiseIdea" />
+			<param
+				name="customized"
+				value="" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesDestroy">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.XiaoHuiJiLu" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesDestroy" />
+			<param
+				name="page"
+				value="/record/destroy" />
+				<param
+				name="default"
+				value="fdArchivesName;fdArchivesNumber;fdAfterAppraiseDate;docCreator.fdName;docCreateTime;fdDestroyIdea" />
+			<param
+				name="customized"
+				value="" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.DangAnKu" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesMain" />
+			<param
+				name="page"
+				value="/allArchives" />
+				<param
+				name="default"
+				value="docSubject;docNumber;docCreator.fdName;fdFileDate;fdLibrary;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler" />
+			<param
+				name="customized"
+				value="lbpm_main_listcolumn_node;km-archives:lbpm.currentNode,lbpm_main_listcolumn_handler;km-archives:lbpm.currentHandler" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.YuGuiDangKu" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesMain" />
+			<param
+				name="page"
+				value="/preFileArchives" />
+				<param
+				name="default"
+				value="docSubject;docTemplate.fdName;docNumber;docCreator.fdName;fdFileDate;fdFromModule;fdLibrary;operations" />
+			<param
+				name="customized"
+				value="operations;list.operation" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.JiJiangDaoQi" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesMain" />
+			<param
+				name="page"
+				value="/due" />
+				<param
+				name="default"
+				value="docSubject;docNumber;docCreator.fdName;fdFileDate;fdLibrary;fdValidityDate" />
+			<param
+				name="customized"
+				value="lbpm_main_listcolumn_node;km-archives:lbpm.currentNode,lbpm_main_listcolumn_handler;km-archives:lbpm.currentHandler" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.DaoQiDangAn" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesMain" />
+			<param
+				name="page"
+				value="/expired" />
+				<param
+				name="default"
+				value="docSubject;docNumber;docCreator.fdName;fdFileDate;fdLibrary;fdValidityDate" />
+			<param
+				name="customized"
+				value="lbpm_main_listcolumn_node;km-archives:lbpm.currentNode,lbpm_main_listcolumn_handler;km-archives:lbpm.currentHandler" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.listshow.listShowConfig"
+		model="com.landray.kmss.km.archives.model.KmArchivesMain">
+		<item
+			name="listShowConfig">
+			<param
+				name="name"
+				value="km-archives:py.DiscardArchives" />
+			<param
+				name="model"
+				value="com.landray.kmss.km.archives.model.KmArchivesMain" />
+			<param
+				name="page"
+				value="/discard/archives" />
+				<param
+				name="default"
+				value="docSubject;docNumber;docCreator.fdName;fdFileDate;fdLibrary" />
+			<param
+				name="customized"
+				value="" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.archives.model.KmArchivesBorrow">
+		<!-- 流程事件监听 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="kmArchivesBorrowListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessFinishEvent" />
+			<param
+				name="listener"
+				value="kmArchivesBorrowListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+	
+	<!-- 自定义附件权限实现 -->
+	<extension point="com.landray.kmss.sys.attachment.validator"
+		model="com.landray.kmss.km.archives.model.KmArchivesMain">
+		<item name="validator">
+			<param name="bean" value="kmArchivesAttValidator" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.km.archives.transfer.KmArchivesTask" />
+			<param
+				name="name"
+				value="档案管理旧数据迁移" />
+			<param
+				name="path"
+				value="/km/archives/" />
+			<param
+				name="check"
+				value="com.landray.kmss.km.archives.transfer.KmArchivesChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.km.archives.transfer.KmArchivesTask" />
+			<param
+				name="description"
+				value="全文搜索最后修改时间字段不为空，需要执行该数据迁移" />
+		</item>
+	</extension>
+	<!-- 档案管理移动化注册 -->
+	<extension point="com.landray.kmss.sys.mobile.config">
+		<item name="info">
+			<param name="name" value="{km-archives:module.km.archives}" />
+			<param name="modelName" value="com.landray.kmss.km.archives.model.KmArchivesMain" />
+		</item>
+	</extension>
+	<!-- 客户台帐移动化数据压缩 -->
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-archives-list.js" />
+			<param name="targetFile" value="/km/archives/mobile/resource/js/mui-cusledger-list.js" />
+			<param name="srcFold" value="/km/archives/mobile/resource/js" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-archives-index.js" />
+			<param name="targetFile" value="/km/archives/mobile/resource/js/Index.js" />
+			<param name="tinyId" value="kmArchivesIndexTiny" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-archives-myborrow.js" />
+			<param name="targetFile" value="/km/archives/mobile/resource/js/MyBorrow.js" />
+			<param name="tinyId" value="kmArchivesMyBorrowTiny" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-archives-mydoc.js" />
+			<param name="targetFile" value="/km/archives/mobile/resource/js/Mydoc.js" />
+			<param name="tinyId" value="kmArchivesMydocTiny" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-archives-kStatus.js" />
+			<param name="targetFile" value="/km/archives/mobile/resource/js/kStatus.js" />
+			<param name="tinyId" value="kmArchiveskStatusTiny" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-archives-examine.js" />
+			<param name="targetFile" value="/km/archives/mobile/resource/js/Examine.js" />
+			<param name="tinyId" value="kmArchivesExamineTiny" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-archives-borrow.js" />
+			<param name="targetFile" value="/km/archives/mobile/resource/js/Borrow.js" />
+			<param name="tinyId" value="kmArchivesBorrowTiny" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-archives-appraisal.js" />
+			<param name="targetFile" value="/km/archives/mobile/resource/js/Appraisal.js" />
+			<param name="tinyId" value="kmArchivesAppraisalTiny" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-archives-destroy.js" />
+			<param name="targetFile" value="/km/archives/mobile/resource/js/Destroy.js" />
+			<param name="tinyId" value="kmArchivesDestroyTiny" />
+		</item>
+		<item name="js-pkg">
+			<param name="name" value="mui-archives-prefile.js" />
+			<param name="targetFile" value="/km/archives/mobile/resource/js/Prefile.js" />
+			<param name="tinyId" value="kmArchivesPrefileTiny" />
+		</item>
+		<item  name="css-file">
+			<param  name="name" value="mui-archives-list.css" />	
+			<param  name="targetFile" value="/km/archives/mobile/resource/css/mui-archives-list.css" />
+			<param name="srcFold" value="/km/archives/mobile/resource/css" />
+		</item>
+	</extension>
+	
+	<!-- 表单关联控件的模块扩展点 -->
+	<extension point="com.landray.kmss.sys.xform.base.service.controls.relevance" model="*">
+		<item name="node">
+			<param name="modelName" value="com.landray.kmss.km.archives.model.KmArchivesMain" />
+			<param name="templateModelName" value="com.landray.kmss.km.archives.model.KmArchivesCategory" />
+			<param name="key" value="kmArchives" />
+			<param name="templatePropertyName" value="docTemplate" />
+			<param name="moduleMessageKey" value="km-archives:module.km.archives" />
+		</item>
+	</extension>
+
+	<!-- 模块解耦注册 -->
+	<extension point="com.landray.kmss.common.module.core.register.declare" model="*">
+		<item name="declare">
+			<param name="id" value="km/archives" />
+			<param name="messageKey" value="km-archives:module.km.archives" />
+			<param name="mechanismModels" value="IKmArchivesFileTemplateModel:KmArchivesFileTemplate:com.landray.kmss.km.archives.model.KmArchivesFileTemplate" />
+		</item>
+	</extension>
+
+</plugin>

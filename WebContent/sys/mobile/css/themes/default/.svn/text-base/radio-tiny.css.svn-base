@@ -1,0 +1,202 @@
+﻿/*@newMui开头，竖向布局开始*/
+
+/*@newMui开头，竖向布局结束*/
+
+/*@oldMui开头，横向布局开始*/
+
+/*@oldMui开头，横向布局结束*/
+
+.muiFormRadio {
+	height: 1.5rem;
+	width: 1.5rem;
+	/*background: #fff;*/
+	position: relative;
+	vertical-align: middle;
+	line-height: 1.5rem;
+	display: inline-block;
+}
+
+.muiFormRadioChecked .muiFormRadio .muiFormRadioOverlay{ color: #fa8733;}
+
+.muiFormRadio .muiFormRadioOverlay {
+	color: #d8d8d8;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 7px;
+	left: 0;
+	font-size: 2rem;
+	line-height: 100%;
+	display: inline-block;
+}
+.muiFieldItem.view .muiFormRadioChecked .muiFormRadio .muiFormRadioOverlay,
+.muiFieldItem.readOnly .muiFormRadioChecked .muiFormRadio .muiFormRadioOverlay{ color: #898989;}
+
+.muiFormRadio input{
+	margin: 3px 0 0 1px;
+	opacity: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 2;
+}
+
+.muiRadioGroupWrap input[type=radio],
+.muiRadioGroupPopWarp input[type=radio]{
+	opacity: 0;
+    position: absolute;
+    width: 100%;
+    left: 0;
+}
+
+
+/**-----------------------------------------------   【表格】CheckBox  Start   -----------------------------------------------**/
+.muiRadioTableItem{
+    position: relative;
+    font-size: var(--muiFontSizeMS);
+    color: var(--muiFontColorInfo); 
+    padding-right: 4rem;    
+}
+.muiRadioTableItem:after {
+    content: " ";
+    position: absolute;
+    z-index: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-bottom: .1rem solid #eee;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+}
+.muiRadioTableItem> .muiRadioTableText{
+    min-height: 4.2rem;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-top: .4rem;
+    padding-bottom: .4rem;	
+}
+.muiRadioTableItem> .muiRadioTableChecked{
+    display: block;
+    margin-right: 0;
+    position: absolute;
+    right: 1rem;
+    top: 2.2rem;
+    margin-top: -0.7rem;
+    font-size: 1.2rem;
+    opacity: 0;
+}
+.muiRadioTableItem.active> .muiRadioTableChecked{
+    display: block;
+    margin-right: 0;
+    position: absolute;
+    right: 1rem;
+    top: 2.2rem;
+    margin-top: -0.7rem;
+    font-size: 1.2rem;
+    transition: all .3s;
+    opacity: 1;
+}
+
+.muiRadioTableItem.active{
+    color: var(--muiFontColor);
+}
+
+.muiFormStatusReadOnly .muiRadioTableItem,
+.muiFormStatusReadOnly .muiRadioTableItem.active{
+	color: #9DA0AF;
+}
+
+/**-----------------------------------------------   【表格】CheckBox  End   -----------------------------------------------**/
+
+
+/**-----------------------------------------------   【块状】Radio  Start   -----------------------------------------------**/
+.muiRadioBlockItem:not(:last-child){
+	margin-right: 1.5rem;
+}
+
+.blockRadio .muiRadioBlockItem:not(:last-child){
+    margin-right: 0;
+}
+
+.muiRadioGroupWrap.blockRadio .muiRadioBlockItem{
+	display: block;
+}
+
+.muiRadioGroupBlockWrap .muiRadioBlockItem{
+	margin-top: 2.2rem;
+}
+
+.muiRadioBlockItem{
+	position: relative;
+	display: inline-block;
+	padding-right: 0;
+	padding: 0 1.5rem;
+	min-height: 3.6rem;
+	border-radius: .4rem;
+	border: none;
+}
+
+.muiRadioBlockItem:after{ /** 伪类处理细边框，为了兼容IOS、安卓 **/
+	content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 1px solid #F8F9FB;
+    background-color: #F8F9FB;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    -webkit-transform-origin: left top;
+    transform-origin: left top;
+    border-radius: .8rem;
+    width: 200%;
+    height: 200%;
+    /*margin-left: -2px;*/
+    transition: all .2s;
+}
+
+.muiRadioBlockItem.active:after{ /** 伪类处理细边框，为了兼容IOS、安卓 **/
+    border: 1px solid #4285F4;
+    background-color: #E9F1FF;
+}
+
+.muiRadioBlockItem>.muiRadioBlockText{
+	position: relative;
+    z-index: 1;
+    color: var(--muiFontColorInfo);
+    font-size: var(--muiFontSizeMS);
+    min-height: 2.8rem;
+    display: flex;   /* 这里使用flex部件目的是为了文字能够垂直居中且左右居中 */
+    justify-content: center;
+    align-items: center;
+    padding-top: .4rem;
+    padding-bottom: .4rem;    	
+}
+
+.blockRadio .muiRadioBlockItem>.muiRadioBlockText{ /** 纵向排列时文字左对齐 **/
+	justify-content: left;
+}
+
+.muiRadioBlockItem.active>.muiRadioBlockText{
+	color: var(--muiFontColor);
+}
+
+.muiFormStatusReadOnly .muiRadioBlockItem>.muiRadioBlockText{
+	color: #999999;
+}
+
+.muiFormStatusReadOnly .muiRadioBlockItem.active>.muiRadioBlockText{
+	color: #999999;
+	
+}
+
+.muiFormStatusReadOnly .muiRadioBlockItem.active:after{ /** 伪类处理细边框，为了兼容IOS、安卓 **/
+    border: .1rem solid #C1C1C1;
+    background-color:  #F2F2F2;
+}
+
+.muiFormStatusView .muiRadioBlockItem:not(.active):after{
+    background-color:  #FAFAFA;
+}
+/**-----------------------------------------------   【块状】Radio  End   -----------------------------------------------**/

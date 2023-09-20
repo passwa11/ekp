@@ -1,0 +1,57 @@
+<%@ page import="com.landray.kmss.util.ResourceUtil"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ include file="/sys/ui/jsp/common.jsp"%>
+<template:include ref="default.dialog">
+<template:replace name="head">
+        <script type="text/javascript">
+            var initData = {
+                contextPath: '${LUI_ContextPath}',
+            };
+            Com_IncludeFile("security.js");
+            Com_IncludeFile("domain.js");
+        </script>
+        <script type="text/javascript">
+            Com_IncludeFile("data.js|dialog.js|jquery.js");
+        </script>
+
+    </template:replace>
+	<template:replace name="content">
+	
+		<script type="text/javascript">
+			seajs.use(['theme!list']);
+		</script>
+		<script type="text/javascript" src="${LUI_ContextPath}/resource/js/jquery.js?s_cache=${LUI_Cache}"></script>
+
+		<!-- 筛选器 -->
+		<list:criteria id="criteria">
+			<list:cri-auto modelName="com.landray.kmss.hr.staff.model.HrStaffRatifyLog" property="fdRatifyDate" /></list:criteria>
+		<!-- 列表 -->
+		<list:listview id="listview">
+			<ui:source type="AjaxJson">
+				{url:'/hr/staff/portlet.do?method=listTransfer'}
+			</ui:source>
+			<!-- 列表视图 -->
+			<list:colTable layout="sys.ui.listview.columntable"
+				name="columntable">
+		
+				<list:col-auto props="fdPersonName;fdDeptName;fdOldDept;fdOldPost;fdNewDept;fdNewPost;fdRatifyDate;">
+				</list:col-auto>
+			</list:colTable>
+			
+		</list:listview>
+		<list:paging></list:paging>
+
+
+<Style>
+.dlg_btn_bar_bottom{
+  	position: fixed;
+    bottom: 0px;
+    width:100%;
+ }
+</Style>
+   <div class="dlg_btn_bar_bottom">
+  			<ui:button text="${lfn:message('button.close') }" onclick="Com_CloseWindow();" suspend="bottom" style="float:right;">
+			</ui:button>
+        </div>
+	</template:replace>
+</template:include>

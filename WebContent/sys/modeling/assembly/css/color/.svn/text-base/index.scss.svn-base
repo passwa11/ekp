@@ -1,0 +1,400 @@
+
+
+.model-gantt-setColor {
+    // 设置弹框外部背景色（视情况取舍）starts
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba($color: #000000, $alpha: .5);
+    // 设置弹框外部背景色（视情况取舍）ends
+
+    .setColor-dialog {
+        width: 540px; 
+        height: 550px;
+        background: #FFFFFF;
+        border-radius: 4px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .setColor-dialog-head {
+        position: relative;
+        height: 50px;
+        border-bottom: 1px solid #EEEEEE;
+        box-sizing: border-box;
+        padding: 0 20px;
+
+        p {
+            font-size: 16px;
+            color: #333333;
+            line-height: 50px;
+        }
+
+        i {
+            position: absolute;
+            right: 20px;
+            top: 18px;
+            width: 14px;
+            height: 14px;
+            background: url(../../img/colorSet/close@2x.png);
+            background-size: 14px 14px;
+            cursor: pointer;
+        }
+    }
+
+    .setColor-dialog-content {
+        height: 100%;
+        margin-top: -50px;
+        padding: 50px 0 70px;
+        box-sizing: border-box;
+    }
+
+    .select-color-schemes {
+        padding: 20px 25px;
+        font-size: 0;
+        box-sizing: border-box;
+        border-bottom: 1px solid #eee;
+
+        .color-schemes-title {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 14px;
+            color: #333333;
+            line-height: 30px;
+            margin-right: 16px;
+        }
+
+        .select-box {
+            display: inline-block;
+            vertical-align: middle;
+            position: relative;
+            width: 330px;
+            font-size: 12px;
+            line-height: 30px;
+            
+
+        }
+
+        #select-txt {
+            padding-left: 8px;
+            padding-right: 24px;
+            box-sizing: border-box;
+            width: 100%;
+            line-height: 30px;
+            height: 30px;
+            cursor: pointer;
+            overflow: hidden;
+            border: 1px solid #DDDDDD;
+            // box-shadow: inset 0 1px 0 0 #E5E5E5;
+            border-radius: 2px;
+            font-size: 12px;
+            color: #333;
+        }
+
+        #select-txt::placeholder {
+            font-size: 12px;
+            line-height: 30px;
+        }
+        #select-txt:-moz-placeholder{
+            font-size: 12px;
+            line-height: 30px;
+        }
+        #select-txt::-moz-placeholder{
+            font-size: 12px;
+            line-height: 30px;
+        }
+        #select-txt:-ms-input-placeholder{
+            font-size: 12px;
+            line-height: 30px;
+        }
+        #select-txt::-webkit-input-placeholder {
+            font-size: 12px;
+            line-height: 30px;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 8px;
+            top: 13px;
+            width: 8px;
+            height: 3px;
+            background: url(../../img/colorSet/select@2x.png);
+            background-size: 8px 3px;
+        }
+
+        .option-list {
+            background: #FFFFFF;
+            border: 1px solid #DDDDDD;
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
+            border-radius: 0 0 2px 2px;
+            width: 100%;
+            position: absolute;
+            top: 30px;
+            left: -1px;
+            z-index: 2;
+            overflow: hidden;
+            display: none;
+
+            .option-list-item {
+                display: block;
+                width: 100%;
+                height: 30px;
+                line-height: 30px;
+                text-align: left;
+                padding: 0 7px;
+                box-sizing: border-box;
+                font-size: 0;
+                &:hover {
+                    background: #ECF2FD;
+                    .color-schemes-name {
+                        color: #4285f4;
+                    }
+                }
+                &.active {
+                    background: #ECF2FD;
+                }
+
+                .color-schemes-name {
+                    display: inline-block;
+                    vertical-align: middle;
+                    font-size: 12px;
+                    color: #333;
+                }
+            }
+
+            .option-empty-item {
+                display: block;
+                width: 100%;
+                height: 30px;
+                font-size: 12px;
+                color: #999;
+                line-height: 30px;
+                text-align: center;
+                padding: 0 7px;
+                box-sizing: border-box;
+                cursor: not-allowed;
+            }
+        } 
+    }
+
+    .color-list {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 14px;
+    font-size: 0;
+        li {
+            width: 24px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+
+    .edit-color-schemes {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        height: 100%;
+        padding-top: 70px;
+        margin-top: -70px;
+        box-sizing: border-box;
+    }
+
+    .project-area {
+        width: 153px;
+        height: 100%;
+        border-right: 1px solid #eee;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        li {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            height: 36px;
+            padding: 10px;
+            font-size: 0;
+            box-sizing: border-box;
+            cursor: default;
+            &:hover,
+            &.active {
+                background: #ECF2FD;
+            }
+        }
+
+        .project-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .project-title {
+            flex:1;
+            padding-left: 8px;
+            font-size: 12px;
+            color: #333333;
+            line-height: 18px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    .editing-area {
+        flex:1;
+        padding: 20px 0 20px 20px;
+
+        .editing-color-title {
+            font-size: 12px;
+            color: #666666;
+            margin-bottom: 10px;
+        }
+    }
+
+    .preset-color {
+        margin-bottom: 10px;
+
+        .preset-color-list {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+
+            li {
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                margin-bottom: 20px;
+                margin-right: 20px;
+                border-radius: 50%;
+            }
+        }
+    }
+
+    .custom-color {
+        font-size: 0;
+
+        .custom-color-box {
+            display: inline-block;
+            font-size: 0;
+            border-radius: 50%;
+
+            .custom-item-color {
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                position: relative;
+                animation: editing 0.5s;
+                -webkit-animation: editing 0.5s;
+
+                &.custom {
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        width: 16px;
+                        height: 16px;
+                        background: url(../../img/colorSet/correct@2x.png);
+                        background-size: 16px 16px;
+                        animation: editing 0.5s;
+                        -webkit-animation: editing 0.5s;
+                    }
+                }
+
+                &:hover {
+                    &:before {
+                        content: '';
+                        background: none;
+                    }
+
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        width: 100%;
+                        height: 100%;
+                        transform: translate(-50%, -50%);
+                        background: url(../../img/colorSet/edit@2x.png);
+                        background-size: 40px 40px;
+                        animation: editing 0.5s;
+                        -webkit-animation: editing 0.5s;
+                    }
+                }
+            }
+        }
+
+        .custom-color-add {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: url(../../img/colorSet/add@2x.png);
+            background-size: 40px 40px;
+            animation: editing 0.5s;
+            -webkit-animation: editing 0.5s;
+        }
+    }
+
+    .setColor-dialog-footer {
+        position: absolute;
+        bottom: 0;
+        font-size: 0;
+        width: 100%;
+        height: 70px;
+        padding-top: 20px;
+        padding-right: 5px;
+        box-sizing: border-box;
+        border-top: 1px solid #eee;
+
+        &>div {
+            float: right;
+            margin-right: 15px;
+            width: 90px;
+            height: 30px;
+            font-size: 14px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 2px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        .sure {
+            background-color: #4285f4;
+            color: #fff;
+        }
+
+        .cancel {
+            border: 1px solid #ddd;
+            color: #333;
+        }
+    }
+}
+
+@-webkit-keyframes editing {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+   }
+
+@keyframes editing {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+   }

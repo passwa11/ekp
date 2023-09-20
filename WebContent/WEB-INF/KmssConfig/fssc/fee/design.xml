@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/fssc/fee/" 
+        messageKey="fssc-fee:module.fssc.fee" 
+        defaultValidator="roleValidator(role=ROLE_FSSCFEE_DEFAULT)">
+        <roles>
+        	ROLE_FSSCFEE_DEFAULT;	<!-- 默认权限 -->
+        	ROLE_FSSCFEE_SETTING; 	<!-- 后台维护权限 -->
+        	ROLE_FSSCFEE_ADD; 	<!-- 创建权限 -->
+        	ROLE_FSSCFEE_DELETE; 	<!-- 删除权限 -->
+        	ROLE_FSSCFEE_VIEW; 	<!-- 查看权限 -->
+        	ROLE_FSSCFEE_ACCOUNT; 	<!-- 台账查看权限 -->
+        	ROLE_FSSCFEE_CHANGERIGHT; <!-- 修改权限的权限 -->
+            ROLE_FSSCFEE_CLOSE; <!-- 关闭事前权限 -->
+        </roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+        <request 
+            path="fssc_fee_template/fsscFeeTemplate.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.fee.model.FsscFeeTemplate,role=ROLE_FSSCFEE_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCFEE_SETTING)">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="authCategoryReaderValidator(cateId=i.docCategory)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)|authCategoryEditorValidator(property=docCategory)"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="authFieldValidator(type=SYS_EDITOR)|authCategoryEditorValidator(property=docCategory)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_SYSCATEGORY_MAINTAINER;ROLE_FSSCFEE_SETTING)|authCategoryEditorValidator(property=docCategory)"/>
+        </request>
+        <request 
+            path="fssc_fee_main/fsscFeeMain.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.fee.model.FsscFeeMain,templatemodel=com.landray.kmss.fssc.fee.model.FsscFeeTemplate,role=ROLE_FSSCFEE_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCFEE_DEFAULT)">
+            <query 
+                queryString="method=add|save|saveadd&amp;i.docTemplate=*" 
+                validator="roleValidator(role=ROLE_FSSCFEE_ADD)&amp;authCategoryReaderValidator(templateid=i.docTemplate)"/>
+            <!-- 按钮控制 -->
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_FSSCFEE_ADD)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)|authCategoryEditorValidator(property=docTemplate)|authFieldValidator(type=creator)"/>
+            <query 
+                queryString="method=edit" 
+                validator="authFieldValidator(type=SYS_EDITOR)|[fieldValueValidator(fieldproperty=docStatus,value=10;11)&amp;authFieldValidator(type=creator)]"/>
+            <query 
+                queryString="method=update" 
+                validator="authFieldValidator(type=SYS_EDITOR)|lbpmCurHandlerValidator(method=update)"/>
+            <query 
+                queryString="method=delete" 
+                validator="[authFieldValidator(type=creator)|roleValidator(role=ROLE_FSSCFEE_DELETE)]&amp;fieldValueValidator(fieldproperty=docStatus,value=00;10;11)"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCFEE_DELETE)"/>
+            <query 
+                queryString="method=print" 
+                validator="roleValidator(role=ROLE_FSSCFEE_DEFAULT)&amp;[authFieldValidator(type=SYS_READER)|authCategoryEditorValidator(property=docTemplate)]"/>
+            <query
+                queryString="method=closeFee"
+                validator="[roleValidator(role=ROLE_FSSCFEE_CLOSE)|authFieldValidator(type=creator)]&amp;fieldValueValidator(fieldproperty=docStatus,value=30)&amp;fieldValueValidator(fieldproperty=fdIsClosed,value=false)"/>
+        </request>
+        <request 
+            path="fssc_fee_expense_item/fsscFeeExpenseItem.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.fee.model.FsscFeeExpenseItem" 
+            defaultValidator="roleValidator(role=ROLE_FSSCFEE_SETTING)">
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+        </request>
+        <request 
+            path="fssc_fee_ledger/fsscFeeLedger.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.fee.model.FsscFeeLedger" 
+            defaultValidator="roleValidator(role=ROLE_FSSCFEE_DEFAULT)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+            <query 
+                queryString="method=executeData" 
+                validator="roleValidator(role=ROLE_FSSCFEE_DEFAULT)"/>
+        </request>
+        <request 
+            path="fssc_fee_mapp/fsscFeeMapp.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.fee.model.FsscFeeMapp" 
+            defaultValidator="roleValidator(role=ROLE_FSSCFEE_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+        </request>
+        <filters 
+            modelName="com.landray.kmss.fssc.fee.model.FsscFeeTemplate">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_SYSCATEGORY_MAINTAINER;ROLE_FSSCFEE_SETTING)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_SYSCATEGORY_MAINTAINER;ROLE_FSSCFEE_SETTING)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.fee.model.FsscFeeMain">
+            <filter 
+                type="creator" 
+                expression="authFieldFilter(field=docCreator.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCFEE_VIEW)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <!-- 类别维护者 -->
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docTemplate.authEditors.fdId)"/>
+            <!-- 类别可阅读者 -->
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docTemplate.authTmpReaders.fdId)"/>
+            <!-- 类别可编辑者 -->
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docTemplate.authTmpEditors.fdId)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+    </module>
+    <module 
+        urlPrefix="/sys/xform/">
+        <request 
+            path="base/sys_form_db_table/sysFormDbTable*">
+            <query 
+                queryString="method=config|edit|save|delete&amp;fdFormType=common&amp;fdTemplateModel=com.landray.kmss.fssc.fee.model.FsscFeeTemplate" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+            <query 
+                queryString="method=config|edit|save|delete&amp;fdFormType=template&amp;fdTemplateModel=com.landray.kmss.fssc.fee.model.FsscFeeTemplate" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)|authFieldValidator(type=SYS_EDITOR,recid=fdModelId,model=com.landray.kmss.fssc.fee.model.FsscFeeTemplate)|authCategoryEditorValidator(property=docCategory,recid=fdModelId,model=com.landray.kmss.fssc.fee.model.FsscFeeTemplate)"/>
+            <query 
+                queryString="method=deleteall&amp;fdTemplateModel=com.landray.kmss.fssc.fee.model.FsscFeeTemplate" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+        </request>
+        <request 
+            path="sys_form_common_template/sysFormCommonTemplate*">
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.fee.model.FsscFeeTemplate" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+        </request>
+    </module>
+    <!-- 类别设置权限 -->
+	<module urlPrefix="/sys/category/">
+		<request path="sys_category_main/sysCategoryMain*">
+			<query
+				queryString="fdModelName=com.landray.kmss.fssc.fee.model.FsscFeeTemplate"
+				validator="roleValidator(role=ROLE_FSSCFEE_SETTING)" />
+		</request>
+	</module>
+    <module 
+        urlPrefix="/sys/transport/">
+        <request 
+            path="sys_transport_import/SysTransportImport*"/>
+        <request 
+            path="sys_transport_export/SysTransportExport*"/>
+    </module>
+    <module 
+        urlPrefix="/sys/transport/">
+        <request 
+            path="sys_transport_import/SysTransportImport*">
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.fee.model.FsscFeeExpenseItem" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+        </request>
+        <request 
+            path="sys_transport_export/SysTransportExport*">
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.fee.model.FsscFeeExpenseItem" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+        </request>
+    </module>
+    <module 
+        urlPrefix="/sys/lbpmservice/support/">
+         <request 
+            path="lbpm_template/**">
+            <query 
+                queryString="fdModelName=fdModelName=com.landray.kmss.fssc.fee.model.FsscFeeTemplate" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+        </request>
+        <request 
+            path="lbpm_template/lbpmTemplate*">
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.fee.model.FsscFeeTemplate" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+        </request>
+    </module>
+    <module 
+        urlPrefix="/sys/number/">
+        <request 
+            path="sys_number_main/sysNumberMain*">
+            <query 
+                queryString="modelName=com.landray.kmss.fssc.fee.model.FsscFeeMain" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING)"/>
+        </request>
+    </module>
+    <module 
+        urlPrefix="/sys/circulation/">
+        <request 
+            path="sys_circulation_main/sysCirculationMain*">
+            <query 
+                queryString="method=add|save|saveadd&amp;fdModelName=com.landray.kmss.fssc.fee.model.FsscFeeMain" 
+                validator="roleValidator(role=ROLE_FSSCFEE_DEFAULT)|roleValidator(role=ROLE_FSSCFEE_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.fee.model.FsscFeeMain)"/>
+            <query 
+                queryString="method=delete&amp;fdModelName=com.landray.kmss.fssc.fee.model.FsscFeeMain" 
+                validator="roleValidator(role=ROLE_FSSCFEE_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.fee.model.FsscFeeMain)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.fee.model.FsscFeeMain" 
+                validator="roleValidator(role=ROLE_FSSCFEE_DEFAULT)"/>
+        </request>
+    </module>
+    	<!-- 文档视图列表批量修改权限 -->
+	<module urlPrefix="/sys/right/">
+		<request path="rightDocChange*">
+			<query queryString="method=docRightEdit&amp;modelName=com.landray.kmss.fssc.fee.model.FsscFeeMain"
+				validator="areaRoleValidator(role=ROLE_FSSCFEE_CHANGERIGHT)" />
+		</request>
+	</module>
+
+
+    <relation 
+        messageKey="fssc-fee:module.fssc.fee" 
+        modelName="com.landray.kmss.fssc.fee.model.FsscFeeMain"/>
+    <homePage 
+        messageKey="fssc-fee:module.fssc.fee" 
+        urlPrefix="fssc/fee" 
+        url="/fssc/fee/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/fssc/fee/tree.jsp"/>
+    <categoryMng 
+        messageKey="fssc-fee:table.fsscFeeTemplate" 
+        modelName="com.landray.kmss.fssc.fee.model.FsscFeeTemplate" 
+        serviceName="fsscFeeTemplateTreeService"/>
+    <flowDef 
+        modelName="com.landray.kmss.fssc.fee.model.FsscFeeMain" 
+        key="fsscFeeMain" 
+        type="oa" 
+        templatePropertyName="docTemplate" 
+        moduleMessageKey="fssc-fee:module.fssc.fee" 
+        templateModelName="com.landray.kmss.fssc.fee.model.FsscFeeTemplate"/>
+    <profileConfig 
+        key="fssc/fee" 
+        messageKey="{fssc-fee:module.fssc.fee}" 
+        url="/sys/profile/moduleindex.jsp?nav=/fssc/fee/tree.jsp" 
+        icon="km_comminfo" 
+        type="fs" 
+        description="{fssc-fee:module.fssc.fee.description}"/>
+</configs>

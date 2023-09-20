@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs xmlns="http://www.example.org/design-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module messageKey="tic-core:module.tic.core" urlPrefix="/tic/core/"
+		defaultValidator="roleValidator(role=SYSROLE_USER)">
+		<roles>
+		<!-- 
+			ROLE_TIC_CORE_USE;
+			ROLE_TIC_CORE_ADMIN;
+			ROLE_TIC_CORE_LOG_ADD;
+			ROLE_TIC_CORE_LOG_VIEW;
+			ROLE_TIC_CORE_LOG_EDIT;
+			ROLE_TIC_CORE_LOG_DELETE;
+			ROLE_TIC_CORE_MAPPING_MODULE_ADD;
+			ROLE_TIC_CORE_MAPPING_MODULE_VIEW;
+			ROLE_TIC_CORE_MAPPING_MODULE_EDIT;
+			ROLE_TIC_CORE_MAPPING_MODULE_DELETE;
+			ROLE_TIC_CORE_MAPPING_CONFIG_ADD;
+			ROLE_TIC_CORE_MAPPING_CONFIG_VIEW;
+			ROLE_TIC_CORE_MAPPING_CONFIG_EDIT;
+			ROLE_TIC_CORE_MAPPING_CONFIG_DELETE;
+			
+			
+			ROLE_TICSYSCOREPROVIDER_DEFAULT;
+			ROLE_TICSYSCOREPROVIDER_ADD;
+			ROLE_TICSYSCOREPROVIDER_EDIT;
+			ROLE_TICSYSCOREPROVIDER_DELETE;
+			ROLE_TICSYSCOREPROVIDER_VIEW;
+			ROLE_TICSYSCOREPROVIDER_TAGMANAGE;
+			 -->
+			ROLE_TIC_BACKSTAGE_MANAGER
+		</roles>
+		<request path="profile.jsp*" defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)"/>
+		
+		<request path="*"
+			defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)" />
+					
+		<request path="init/ticCoreInit*"
+			defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)" />
+			
+		<request path="inoutdata/ticCoreInoutdata*"
+			defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)" />
+			
+		
+		<!-- 模块注册 
+		<request path="mapping/tic_core_mapping_module/ticCoreMappingModule*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.mapping.model.TicCoreMappingModule">
+			<query queryString="method=view"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_MAPPING_MODULE_DELETE)|roleValidator(role=ROLE_TIC_CORE_MAPPING_MODULE_EDIT)|roleValidator(role=ROLE_TIC_CORE_MAPPING_MODULE_VIEW)|roleValidator(role=ROLE_TIC_CORE_MAPPING_MODULE_ADD)" />
+			
+			<query queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_MAPPING_MODULE_EDIT)" />
+			
+			<query queryString="method=delete|deleteall"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_MAPPING_MODULE_DELETE)" />	
+			<query queryString="method=add"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_MAPPING_MODULE_ADD)" />	
+		</request>
+		-->
+		
+		<!-- 映射配置 
+		<request path="mapping/tic_core_mapping_main/ticCoreMappingMain*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.mapping.model.TicCoreMappingMain">
+			<query queryString="method=view"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_DELETE)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_EDIT)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_VIEW)" />
+			
+			<query queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_EDIT)" />
+			
+			<query queryString="method=delete|deleteall"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_DELETE)" />	
+			<query queryString="method=add"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_ADD)" />	
+		</request>
+		-->
+		
+		<!-- 映射配置func 
+		<request path="mapping/tic_core_mapping_func*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.mapping.model.TicCoreMappingFunc"
+			defaultValidator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_DELETE)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_EDIT)">
+		</request>
+		-->
+
+		<!-- 操作日志 -->
+		<request path="log/tic_core_log_opt/ticCoreLogOpt*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.log.model.TicCoreLogOpt" defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)">
+			<!-- 阅读 
+			<query queryString="method=view"
+				validator="roleValidator(role=ROLE_TIC_CORE_LOG_DELETE)|roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_LOG_VIEW)|roleValidator(role=ROLE_TIC_CORE_LOG_EDIT)" />
+			<query queryString="method=delete|deleteall"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_LOG_DELETE)" />
+			<query queryString="method=add"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_LOG_ADD)" />
+				-->
+		</request>
+		<!-- 日志记录 -->
+		<request path="log/tic_core_log_main/ticCoreLogMain*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.log.model.TicCoreLogMain" defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)">
+			<!-- 
+			<query queryString="method=view"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_LOG_DELETE)|roleValidator(role=ROLE_TIC_CORE_LOG_EDIT)|roleValidator(role=ROLE_TIC_CORE_LOG_VIEW)" />
+			<query queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_LOG_EDIT)" />
+			<query queryString="method=delete|deleteall"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_LOG_DELETE)" />
+			<query queryString="method=add"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_LOG_ADD)" />
+				 -->
+		</request>
+		
+		<!-- 日志管理-->
+		<request path="log/tic_core_log_manage/ticCoreLogManage*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.log.model.TicCoreLogManage" defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)">
+			<!-- 
+			<query queryString="method=view"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_LOG_DELETE)|roleValidator(role=ROLE_TIC_CORE_LOG_EDIT)|roleValidator(role=ROLE_TIC_CORE_LOG_VIEW)" />
+			
+			<query queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_LOG_EDIT)" />
+			
+			<query queryString="method=delete|deleteall"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_LOG_DELETE)" />
+			<query queryString="method=add"
+				validator="roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_LOG_ADD)" />
+			 -->
+		</request>
+		
+		
+		<!-- 使用权限 -->
+		<request path="resource/js/erp_data.jsp*" defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)">
+             <!-- 
+              <query
+                    validator="roleValidator(role=SYSROLE_USER)|roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_USE)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_DELETE)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_EDIT)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_VIEW)"/>
+      		 -->
+       </request>
+       
+       <!-- 
+       <request
+			path="provider/tic_core_iface/ticCoreIface*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.provider.model.TicCoreIface">
+			<query
+				queryString="method=add"
+				validator="roleValidator(role=ROLE_TICSYSCOREPROVIDER_ADD)" />
+			<query
+				queryString="method=save|saveadd"
+				validator="roleValidator(role=ROLE_TICSYSCOREPROVIDER_ADD)" />
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_TICSYSCOREPROVIDER_EDIT)" />
+			<query
+				queryString="method=delete"
+				validator="roleValidator(role=ROLE_TICSYSCOREPROVIDER_DELETE)" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_TICSYSCOREPROVIDER_DELETE)" />
+		</request>
+
+		<request
+			path="tic_core_node/ticCoreNode*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.provider.model.TicCoreNode">
+		</request>
+
+		<request
+			path="tic_core_tag/ticCoreTag*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.provider.model.TicCoreTag">
+		</request>
+		
+		<request
+			path="tic_core_iface_impl/ticCoreIfaceImpl*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.provider.model.TicCoreIfaceImpl">
+		</request>
+		-->
+		
+		<request 
+            path="common/tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)"/>
+        <request 
+            path="common/tic_core_func_base/ticCoreFuncBase.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.common.model.TicCoreFuncBase" 
+            defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)">
+            
+        </request>
+        <request 
+            path="common/tic_core_busi_cate/ticCoreBusiCate.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.common.model.TicCoreBusiCate,adminRoleName=ROLE_TICCORE_ADMIN" 
+            defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)">
+            <!-- 
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="sysSimpleCategoryEditorValidator(recid=parentId)"/>
+            <query 
+                queryString="method=view" 
+                validator="sysSimpleCategoryReaderValidator()"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=delete" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_TICCORE_ADMIN)"/>
+             -->
+        </request>
+        
+        <request 
+            path="common/tic_core_trans_sett/ticCoreTransSett.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.tic.core.common.model.TicCoreTransSett" 
+            defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)">
+            <!-- 
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_TICCORE_SETTING)"/>
+             -->
+        </request>
+
+		<request path="sync/tic_core_sync_job/*"
+				 defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)" />
+        
+        <filters 
+            modelName="com.landray.kmss.tic.core.commonmodel.TicCoreBusiCate">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_TIC_BACKSTAGE_MANAGER)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_TIC_BACKSTAGE_MANAGER)"/>
+            <!-- 
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+                 -->
+        </filters>
+		
+	</module>
+	
+	<!-- 配置service使用权限 -->
+	<module urlPrefix="sys/common/">
+	   <!-- 
+       <request path="dataxml.jsp*">
+              <query
+                     validator="roleValidator(role=SYSROLE_USER)|roleValidator(role=ROLE_TIC_CORE_ADMIN)|roleValidator(role=ROLE_TIC_CORE_USE)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_DELETE)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_EDIT)|roleValidator(role=ROLE_TIC_CORE_MAPPING_CONFIG_VIEW)"/>
+       </request>
+        -->
+       <request path="treexml.jsp*">
+			<query
+				validator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)"
+				queryString="s_bean=ticCoreInoutdataBean" />
+		</request>
+
+	</module>
+	<!-- 删除日志定时任务 -->
+	<quartz
+        messageKey="tic-core-log:ticCoreLogManage.logClean"
+        jobService="ticCoreLogMainService"
+        jobMethod="backup"
+        enable="true"
+        cronExpression="0 0 1 * * ?"
+        runType="SINGLENODE"
+        description="tic-core-log:ticCoreLogManage.logClean.description" />
+        
+    <quartz
+        messageKey="tic-core:ticCoreMappControlFieldMain.clearData"
+        jobService="ticCoreMappControlFieldService"
+        jobMethod="clearData"
+        enable="true"
+        cronExpression="0 0 2 * * ?"
+        runType="SINGLENODE"
+        description="tic-core:ticCoreMappControlFieldMain.clearData.description" />
+        
+        
+	<homePage urlPrefix="tic/core"
+		url="/tic/core/index.jsp" 
+		messageKey="tic-core:module.tic.core"
+		config="/moduleindex_notopic.jsp?nav=/tic/core/tree.jsp" />
+		
+	<profileConfig
+		key="tic"
+		messageKey="{tic-core:ticCore.tic.name}" 
+		url="/tic/core/profile.jsp" 
+		type="integrate"
+		order="6"/>
+
+</configs>

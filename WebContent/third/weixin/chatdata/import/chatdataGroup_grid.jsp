@@ -1,0 +1,32 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib uri="/WEB-INF/KmssConfig/sys/ui/lfn.tld" prefix="lfn"%>
+<%@ taglib uri="/WEB-INF/KmssConfig/sys/ui/ui.tld" prefix="ui"%>
+
+{$
+<li class="lui_chattingRecords_item">
+    <p class="lui_chattingRecords_item_profile">
+        群聊
+    </p>
+    <div class="lui_chattingRecords_item_content">
+        <div class="lui_chattingRecords_item_header clearfix">
+            <div class="lui_chattingRecords_item_name">
+                群名称
+            </div>
+            <div class="lui_chattingRecords_item_label">
+                内部
+            </div>
+            <div class="lui_chattingRecords_item_update_time">
+                最近更新时间
+            </div>
+        </div>
+        <div class="lui_chattingRecords_item_chatcontent">
+            <span class="lui_chattingRecords_item_num">[5]</span>
+            <div class="lui_chattingRecords_item_chatcontent_detail">
+                最新一条消息内容，内容较少时显示一行最新一条消息内容，内容较少时显示一行最新一条消息内容，内容较少时显示一行最新一条消息内容，内容较少时显示一行最新一条消息内容，内容较少时显示一行最新一条消息内容，内容较少时显示一行最新一条消息内容，内容较少时显示一行最新一条消息内容，内容较少时显示一行
+            </div>
+        </div>
+    </div>
+</li>
+
+
+$}

@@ -1,0 +1,178 @@
+var extend = (param!=null && param.extend!=null)?('_'+param.extend):'';
+		/*是否支持伸缩*/
+		var supportExpand = layout.tabpanel.vars.supportExpand == 'true';
+		var expand_class = layout.tabpanel.vars.expand == 'false' ? "tabPanel_retract_frame" : "tabPanel_expand_frame";
+		var content_length = layout.tabpanel.contents.length;
+		var showMore = false;
+		var v_count = content_length;
+		var morecount = 0;
+		var widthFiled = "width";
+
+		if(layout.tabpanel.vars.useMaxWidth){
+		widthFiled = "max-width";
+		}
+		if(layout.tabpanel.vars.count && layout.tabpanel.vars.count != '0' && content_length > parseInt(layout.tabpanel.vars.count)){
+		v_count = parseInt(layout.tabpanel.vars.count);
+		showMore = true;
+		morecount = content_length-v_count;
+		}
+
+		var width = (Math.floor(1000/v_count))/10.0;
+		if(showMore){
+		width = (Math.floor(1000/(v_count+1)))/10.0;
+		}
+		var _vars = layout.tabpanel.config.vars;
+		var _customStyle = '';
+		if(_vars){
+		_customStyle = _vars.style || '';
+		}
+		if (supportExpand) {
+		/*三级页面支持页签伸缩*/
+		width -= 1;
+		{$
+<div  style="{%_customStyle%}" class='lui_tabpanel{%extend%}_frame tabPanel_frame tabPanel_support_expand_frame {%expand_class%} '>
+<div class='lui_tabpanel_title'>
+<span class='lui_tabpanel_title_icon'></span>
+<span class='lui_tabpanel_title_main'></span>
+<span class='lui_tabpanel_title_subtitle'></span>
+</div>
+<div class='lui_tabpanel{%extend%}_navs_l lui_tabpanel{%extend%}_navs_supportExpand'>
+<div class='lui_tabpanel{%extend%}_navs_r'>
+<div class="lui_tabpanel{%extend%}_navs_c clearfloat">
+<div class='lui_tabpanel_sucktop_item_iframe'>
+<div class='lui_tabpanel_sucktop_item_wrap'>
+		$}
+		for(var i=0;i< content_length;i++) {
+		{$
+<div class='lui_tabpanel{%extend%}_navs_item_l' data-lui-mark="panel.nav.frame" data-lui-switch-class="lui_tabpanel{%extend%}_navs_item_selected">
+<div class='lui_tabpanel{%extend%}_navs_item_r'>
+<div class='lui_tabpanel{%extend%}_navs_item_c' data-lui-mark="panel.nav.title">
+</div>
+</div>
+</div>
+		$}
+		}
+		{$
+</div>
+<div class='lui_tabpanel{%extend%}_navs_item_l lui_tabpanel{%extend%}_collapse_more_item' data-lui-mark="panel.nav.morenode" data-lui-switch-class="lui_tabpanel{%extend%}_navs_item_selected">
+<div class='lui_tabpanel{%extend%}_navs_item_r' >
+<div class='lui_tabpanel{%extend%}_navs_item_c'>
+<span class="lui_tabpanel_navs_item_title lui_tabpanel_collapse_more_title"></span>
+</div>
+</div>
+</div>
+		$}
+		{$
+</div>
+<div class="lui_tabpanel_collapse_navs_div">
+<div class="lui_tabpanel_collapse_navs_list">
+		$}
+		for(var i=0;i< content_length;i++){
+		{$
+<div data-more="true" class='lui_tabpanel_collapse_navs_item_l' data-lui-mark="panel.nav.more.frame" data-lui-switch-class="lui_tabpanel_collapse_navs_item_selected">
+<div class='lui_tabpanel_collapse_navs_item_r'>
+<div class='lui_tabpanel_collapse_navs_item_c more_item' data-lui-mark="panel.nav.title">
+</div>
+</div>
+</div>
+		$}
+		}
+		{$
+</div>
+</div>
+
+<div class='lui_tabpanel{%extend%}_navs_item_l lui_tabpanel{%extend%}_collapse_extend_item ' data-lui-mark="panel.nav.extend">
+<div class='lui_tabpanel{%extend%}_navs_item_r' >
+<div class='lui_tabpanel{%extend%}_navs_item_c'>
+<span class="lui_tabpanel_navs_item_title lui_tabpanel_collapse_extend_title"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lui_tabpanel{%extend%}_content_l">
+<div class="lui_tabpanel{%extend%}_content_r">
+<div class="lui_tabpanel{%extend%}_content_c" data-lui-mark="panel.contents">
+</div>
+</div>
+</div>
+<div class="lui_tabpanel{%extend%}_footer_l">
+<div class="lui_tabpanel{%extend%}_footer_r">
+<div class="lui_tabpanel{%extend%}_footer_c">
+</div>
+</div>
+</div>
+</div>
+		$}
+		} else {
+		/*原来的模式*/
+		{$
+<div style="{%_customStyle%}" class='lui_tabpanel{%extend%}_frame tabPanel_frame '>
+<div class='lui_tabpanel_title'>
+<span class='lui_tabpanel_title_icon'></span>
+<span class='lui_tabpanel_title_main'></span>
+<span class='lui_tabpanel_title_subtitle'></span>
+</div>
+<div class='lui_tabpanel{%extend%}_navs_l'>
+<div class='lui_tabpanel{%extend%}_navs_r'>
+<div class="lui_tabpanel{%extend%}_navs_c clearfloat">
+		$}
+
+		for(var i=0;i< v_count;i++){
+		{$
+<div style="{%widthFiled%}:{%width%}%;"  class='lui_tabpanel{%extend%}_navs_item_l' data-lui-mark="panel.nav.frame" data-lui-switch-class="lui_tabpanel{%extend%}_navs_item_selected">
+<div class='lui_tabpanel{%extend%}_navs_item_r'>
+<div class='lui_tabpanel{%extend%}_navs_item_c' data-lui-mark="panel.nav.title">
+</div>
+</div>
+</div>
+		$}
+		}
+
+		if(showMore){
+		{$
+<div style="{%widthFiled%}:{%width%}%;"  class='lui_tabpanel{%extend%}_navs_item_l lui_tabpanel{%extend%}_collapse_more_item' data-lui-mark="panel.nav.morenode" data-lui-switch-class="lui_tabpanel{%extend%}_navs_item_selected">
+<div class='lui_tabpanel{%extend%}_navs_item_r' >
+<div class='lui_tabpanel{%extend%}_navs_item_c'>
+<span class="lui_tabpanel_navs_item_title lui_tabpanel_collapse_more_title">更多</span>
+</div>
+</div>
+<ul class="lui_tabpanel_collapse_navs_list">
+		$}
+		for(var i=0;i< morecount;i++){
+		{$
+<li style="width:{%width%}%;" data-more="true"  class='lui_tabpanel_collapse_navs_item_l' data-lui-mark="panel.nav.frame" data-lui-switch-class="lui_tabpanel_collapse_navs_item_selected">
+<div class='lui_tabpanel_collapse_navs_item_r'>
+<div class='lui_tabpanel_collapse_navs_item_c' data-lui-mark="panel.nav.title">
+</div>
+</div>
+</li>
+		$}
+		}
+		{$
+</ul>
+</div>
+
+		$}
+		}
+
+		{$
+</div>
+</div>
+</div>
+<div class="lui_tabpanel{%extend%}_content_l">
+<div class="lui_tabpanel{%extend%}_content_r">
+<div class="lui_tabpanel{%extend%}_content_c" data-lui-mark="panel.contents">
+</div>
+</div>
+</div>
+<div class="lui_tabpanel{%extend%}_footer_l">
+<div class="lui_tabpanel{%extend%}_footer_r">
+<div class="lui_tabpanel{%extend%}_footer_c">
+</div>
+</div>
+</div>
+</div>
+		$}
+		}

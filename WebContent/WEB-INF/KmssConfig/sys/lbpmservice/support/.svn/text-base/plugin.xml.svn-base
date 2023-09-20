@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+
+	<extension-point
+		id="com.landray.kmss.lbpm.engine.process">
+		<item
+			name="jspExt">
+			<param
+				name="jsp"
+				required="false"
+				kind="string">
+				<description>
+					流程审批全局引入JSP地址
+				</description>
+			</param>
+			<param
+				name="mobileJsp"
+				required="false"
+				kind="string">
+				<description>
+					移动端流程审批全局引入JSP地址
+				</description>
+			</param>
+			<description>
+				流程审批全局引入JSP
+			</description>
+		</item>
+		<system>
+			<event
+				name="load"
+				class="com.landray.kmss.sys.lbpmservice.support.service.spring.LbpmProcessJspExtLoader" />
+		</system>
+		<description>流程审批扩展点</description>
+	</extension-point>
+	
+	<extension-point id="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node">
+		<item
+			name="nodeSimulation">
+			<param
+				name="nodeType"
+				required="true"
+				kind="unid">
+				<description>
+					节点类型(节点的getType方法的返回值)
+				</description>
+			</param>
+			<param
+				name="defClass"
+				required="true"
+				kind="java"
+				basedOn="com.landray.kmss.sys.lbpmservice.support.service.ILbpmSimulationNodeService">
+				<description>节点定义的实现类名</description>
+			</param>
+			<description>
+				流程仿真节点仿真接口
+			</description>
+		</item>
+		<description>节点仿真扩展点</description>
+	</extension-point>
+	
+	<extension-point
+		id="com.landray.kmss.sys.lbpmservice.auditnote">
+		<item
+			name="auditNoteOperation">
+			<param
+				name="jsp"
+				required="true"
+				kind="string">
+				<description>必需，流程审批过程中，引入扩展审批意见操作的JSP片段</description>
+			</param>
+			<param
+				name="provideFor"
+				kind="string"
+				default="*"
+				restriction="pda;pc;mobile;*">
+				<description>
+					可选，默认*，提供给pda或者pc端扩展
+						 pda：仅移动端扩展
+						 pc：仅PC端扩展
+						 *：移动端和PC端
+				</description>
+			</param>
+			<param
+				name="order"
+				kind="int"
+				default="0">
+				<description>可选，排序号，默认值为0。根据此排序的升序顺序加载。</description>
+			</param>
+			<description>
+				流程审批意见操作扩展
+			</description>
+		</item>
+		<item
+			name="auditNoteList">
+			<param
+				name="jsp"
+				kind="filepath">
+				<description>必需，审批意见列表中，显示审批意见内容的JSP片段</description>
+			</param>
+			<param
+				name="provideFor"
+				kind="string"
+				default="*"
+				restriction="pda;pc;mobile;*">
+				<description>
+					可选，默认*，提供给pda或者pc端扩展
+						 pda：仅移动端扩展
+						 pc：仅PC端扩展
+						 *：移动端和PC端
+				</description>
+			</param>
+			<param
+				name="order"
+				kind="int"
+				default="0">
+				<description>可选，排序号，默认值为0。根据此排序的升序顺序加载。</description>
+			</param>
+			<description>
+				流程审批意见展现扩展
+			</description>
+		</item>
+		<system>
+			<event
+				name="load"
+				class="com.landray.kmss.sys.lbpmservice.support.service.spring.LbpmAuditNoteExtsManager" />
+		</system>
+		<description>流程审批意见扩展点</description>
+	</extension-point>
+
+	<!-- 节点消息自定义 -->
+	<extension-point id="com.landray.kmss.sys.lbpmservice.custom.notify">
+		<item name="customNotify">
+			<param name="nodeType" kind="string" required="true">
+				<description>节点类型</description>
+			</param>
+			<param name="notifyType" kind="string" required="true">
+				<description>自定义消息类型</description>
+			</param>
+			<param name="messageKey" kind="string" required="true">
+				<description>需要自定义的消息messageKey</description>
+			</param>
+			<description>节点消息自定义</description>
+		</item>
+		<description>
+			节点消息自定义
+		</description>
+	</extension-point>
+	
+	<extension-point id="com.landray.kmss.sys.lbpmservice.support.summary">
+		<item name="handler">
+			<param name="modelName" kind="string">
+				<description>模块类名</description>
+			</param>
+			<param name="class" kind="java"
+				basedOn="com.landray.kmss.sys.lbpmservice.support.service.LbpmSummaryApplovalHandler">
+				<description>模块需要实现的处理器接口</description>
+			</param>
+			<description>解析获取模块对应数据</description>
+		</item>
+		<item name="langHandler">
+			<param name="class" kind="java"
+				basedOn="com.landray.kmss.sys.lbpmservice.support.service.LbpmSummaryApplovalLangHandler">
+				<description>表单多语言处理器</description>
+			</param>
+			<description>解析获取表单多语言数据</description>
+		</item>
+		<description>
+			流程表单摘要汇总
+		</description>
+	</extension-point>
+	
+	<extension-point id="com.landray.kmss.sys.lbpmservice.support.otherContentInfo">
+		<item name="handler">
+			<param name="serviceName" kind="string" required="true">
+				<description>服务类路径，全名</description>
+			</param>
+			<param name="serviceSpringName" kind="string" required="true">
+				<description>服务spring注入的名称</description>
+			</param>
+			<description>解析获取流程用到的其他数据，比如规则引擎的数据</description>
+		</item>
+		<description>
+			用于获取流程的其他数据或者更新数据（这些数据可以算流程的扩展数据或者关联数据）
+		</description>
+	</extension-point>
+
+	<extension
+		point="com.landray.kmss.lbpm.engine.handlerAssert">
+		<!-- 过滤授权代理人的审批权限 -->
+		<item
+			name="handlerAssert">
+			<param
+				name="asserter"
+				value="lbpmAuthorizeHolderService" />
+		</item>
+	</extension>
+
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<!-- 通过操作或起草提交操作时返回驳回点，设置历史路由记录类型 -->
+		<!-- 工作项结束且是执行驳回操作时记录未审批的人员中 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="recordUnreviewedIfRefuse" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="endedWorkitemEvent;drafterSubmitEvent;handlerPassOperationEvent" />
+			<param
+				name="listener"
+				value="lbpmManualRefuseHolder" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="lbpmAuditNoteRtNodeListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="enterNodeEvent" />
+			<param
+				name="listener"
+				value="lbpmAuditNoteRtNodeListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="lbpmAuditNoteAddBranchNoteListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="enterNodeEvent;endedNodeEvent;abandonNodeEvent" />
+			<param
+				name="listener"
+				value="lbpmAuditNoteAddBranchNoteListener" />
+			<param
+				name="enforce"
+				value="true" /> 
+		</item>
+	</extension>
+
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="lbpmAuditNoteReaderListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="processEndEvent" />
+			<param
+				name="listener"
+				value="lbpmAuditNoteService" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<!-- 每次操作后，清空当前处理人暂存意见 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="clearWorkingStorageAddition" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="handlerOperationExecutionEvent" />
+			<param
+				name="listener"
+				value="lbpmClearWorkingStorageAdditionListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="doAssignForHandlerPass" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="handlerPassOperationEvent" />
+			<param
+				name="listener"
+				value="lbpmAssignService" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="lbpmCardService" />
+			<param
+				name="messageKey"
+				value="sys-lbpm-engine:lbpm.listenerType.processEndListener" />
+			<param
+				name="eventTypes"
+				value="drafterReturnEvent;adminNodeSuspendOperationEvent;adminNodeResumeOperationEvent;nodeSuspendOperationEvent;nodeResumeOperationEvent;processSuspendOperationEvent;processResumeOperationEvent;adminOperationExecutionEvent" />
+			<param
+				name="listener"
+				value="lbpmCardService" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+	
+	<!-- 流程小工具 -->
+	<extension point="com.landray.kmss.sys.admin.commontools">
+		<item name="tools">
+			<param 
+				name="name" 
+				value="{sys-lbpmservice-support:lbpmTools.tools}" />
+			<param 
+				name="path" 
+				value="/sys/lbpmservice/support/lbpm_tools/index.jsp" />
+			<param 
+				name="description" 
+				value="{sys-lbpmservice-support:lbpmTools.tools.description}" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node">
+		<item name="nodeSimulation">
+			<param name="nodeType" value="draftNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationDraftNode" />
+		</item>
+		<item name="nodeSimulation">
+			<param name="nodeType" value="signNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationSignNode" />
+		</item>
+		<item name="nodeSimulation">
+			<param name="nodeType" value="reviewNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationReviewNode" />
+		</item>
+		<item name="nodeSimulation">
+			<param name="nodeType" value="sendNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationSendNode" />
+		</item>
+		<item name="nodeSimulation">
+			<param name="nodeType" value="recoverSubProcessNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationRecoverSubProcessNode" />
+		</item>
+		<item name="nodeSimulation">
+			<param name="nodeType" value="startSubProcessNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationStartSubProcessNode" />
+		</item>
+		<item name="nodeSimulation">
+			<param name="nodeType" value="autoBranchNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationAutoBranchNode" />
+		</item>
+		<item name="nodeSimulation">
+			<param name="nodeType" value="endNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationEndNode" />
+		</item>
+		<item name="nodeSimulation">
+			<param name="nodeType" value="joinNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationJoinNode" />
+		</item>
+		<item name="nodeSimulation">
+			<param name="nodeType" value="manualBranchNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationManualBranchNode" />
+		</item>
+		<item name="nodeSimulation">
+			<param name="nodeType" value="robotNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationRobotNode" />
+		</item>
+		<item name="nodeSimulation">
+			<param name="nodeType" value="splitNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationSplitNode" />
+		</item>
+		<item name="nodeSimulation">
+			<param name="nodeType" value="startNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationStartNode" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.lbpmservice.auditnote">
+		<item name="auditNoteOperation">
+			<param name="jsp" value="/sys/lbpmservice/noticehandler/noticeHandler_btn.jsp" />
+			<param name="provideFor" value="pc" />
+			<param name="order" value="3" />
+		</item>
+	</extension>
+	
+	<!--汇总审批消息上下文转换器扩展 -->
+	<extension 
+		point="com.landray.kmss.sys.lbpmext.notify">
+		<item 
+			name="context">
+			<param 
+				name="convertor" 
+				value="lbpmSummaryContextConvertor" />
+			<param 
+				name="range" 
+				value="com.landray.kmss.sys.lbpmservice.support.model.LbpmSummaryApprovalConfig" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.rule.clone.advice" model="*">
+		<item name="advice">
+			<param name="adviceClassName" value="lbpmDefinitionHandler4CloneRuleAdvice"/>
+		</item>
+	</extension>
+	<!--压缩合并扩展点实现-->
+	<extension point="com.landray.kmss.sys.ui.compressExecutor"
+			   model="com.landray.kmss.sys.ui.service.ISysUiCompressExecutor">
+		<item name="executor">
+			<param name="unid" value="lbpmServiceCompressExecutor" />
+			<param name="bean" value="lbpmServiceCompressExecutor" />
+		</item>
+	</extension>
+
+	<!-- 意见类型表名兼容性检测 -->
+	<extension point="com.landray.kmss.sys.admin.transfer" model="*">
+		<item name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.lbpmservice.support.transfer.LbpmAuditNoteTypeTabName" />
+			<param
+				name="name"
+				value="意见类型更正表名后数据配置" />
+			<param
+				name="path"
+				value="/sys/lbpmservice/support/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.lbpmservice.support.transfer.LbpmAuditNoteTypeTabNameChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.lbpmservice.support.transfer.LbpmAuditNoteTypeTabNameTask" />
+			<param
+				name="description"
+				value="修复意见类型表名更正后，导致意见类型数据消失的问题"/>
+		</item>
+	</extension>
+</plugin>

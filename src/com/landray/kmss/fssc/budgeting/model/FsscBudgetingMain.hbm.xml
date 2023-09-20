@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.fssc.budgeting.model.FsscBudgetingMain" 
+        table="fssc_budgeting_main">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property 
+            name="fdOrgType" 
+            column="fd_org_type" 
+            update="true" 
+            insert="true" 
+            length="4"/>
+        <property 
+            name="fdYear" 
+            column="fd_year" 
+            update="true" 
+            insert="true" 
+            length="10"/>
+        <property 
+            name="fdStatus" 
+            column="fd_status" 
+            update="true" 
+            insert="true" 
+            length="4"/>
+        <property 
+            name="docStatus" 
+            column="doc_status" 
+            update="true" 
+            insert="true" 
+            length="4"/>
+        <property 
+            name="fdTotalMoney" 
+            column="fd_total_money" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="fdChildTotalMoney" 
+            column="fd_child_total_money" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="fdOrgId" 
+            column="fd_org_id" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+         <property 
+            name="fdOrgName" 
+            column="fd_org_name" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+         <property 
+            name="fdYearRule" 
+            column="fd_year_rule" 
+            update="true" 
+            insert="true" 
+            length="10"/>
+        <property 
+            name="fdQuarterRule" 
+            column="fd_quarter_rule" 
+            update="true" 
+            insert="true" 
+            length="10"/>
+        <property 
+            name="fdMonthRule" 
+            column="fd_month_rule" 
+            update="true" 
+            insert="true" 
+            length="10"/>
+        <property 
+            name="fdYearApply" 
+            column="fd_year_apply" 
+            update="true" 
+            insert="true" 
+            length="10"/>
+        <property 
+            name="fdQuarterApply" 
+            column="fd_quarter_apply" 
+            update="true" 
+            insert="true" 
+            length="10"/>
+        <property 
+            name="fdMonthApply" 
+            column="fd_month_apply" 
+            update="true" 
+            insert="true" 
+            length="10"/>
+        <property 
+            name="fdElasticPercent" 
+            column="fd_elastic_percent" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="fdSchemeId" 
+            column="fd_scheme_id" 
+            update="true" 
+            insert="true" 
+            length="36"/>
+        <property 
+            name="docCreateTime" 
+            column="doc_create_time" 
+            update="true" 
+            insert="true" 
+            length="36"/>
+        <property 
+            name="docSubject" 
+            column="doc_sbject" 
+            update="true" 
+            insert="true" 
+            length="500"/>
+         <many-to-one 
+            name="fdCompany" 
+            column="fd_company_id" 
+            update="true" 
+            insert="true"/>
+         <many-to-one 
+            name="docCreator" 
+            column="doc_creator_id"
+            update="true" 
+            insert="true"/>
+        <!-- 是否是新版本 -->
+		<property
+			name="docIsNewVersion"
+			column="doc_is_new_version"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 版本锁定 -->
+		<property
+			name="docIsLocked"
+			column="doc_is_locked"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 主版本号 -->
+		<property
+			name="docMainVersion"
+			column="doc_main_version"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<!--辅版本号 -->
+		<property
+			name="docAuxiVersion"
+			column="doc_auxi_version"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<!-- 历史版本 -->
+		<bag
+			name="docHistoryEditions"
+			inverse="true">
+			<key column="doc_origin_docid"></key>
+			<one-to-many
+				class="com.landray.kmss.fssc.budgeting.model.FsscBudgetingMain" />
+		</bag>
+		<!--主文档-->
+		<many-to-one
+			name="docOriginDoc"
+			column="doc_origin_docid"
+			insert="true"
+			update="true"
+			not-null="false"
+			class="com.landray.kmss.fssc.budgeting.model.FsscBudgetingMain" />
+        
+        <list 
+            name="fdDetailList" 
+            lazy="true" 
+            cascade="all-delete-orphan" 
+            inverse="false">
+            <key 
+                column="doc_main_id"/>
+            <list-index 
+                column="doc_index"/>
+            <one-to-many 
+                class="com.landray.kmss.fssc.budgeting.model.FsscBudgetingDetail"/>
+        </list>
+        <property 
+            name="fdApprovalOpinions" 
+            column="fd_approval_opinions" 
+            update="true" 
+            insert="true" 
+            length="1000000"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true" />
+    </class>
+</hibernate-mapping>

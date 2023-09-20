@@ -1,0 +1,1488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 人事合同到期提醒 -->
+	<bean id="hrExpContractExpirationRemind" class="com.landray.kmss.hr.staff.quartz.HrExpContractExpirationRemind" autowire="byName" />
+		
+	<!-- 人事转正提醒 -->
+	<bean id="hrBecomeRegularWorkerRemind" class="com.landray.kmss.hr.staff.quartz.HrBecomeRegularWorkerRemind" autowire="byName" />
+	
+	<!-- 人事个税提醒 -->
+	<bean id="hrPersonalIncomeTaxRemind" class="com.landray.kmss.hr.staff.quartz.HrPersonalIncomeTaxRemind" autowire="byName" />
+	
+	<!-- 离职手续办理提醒 -->
+	<bean id="hrLeaveHandelRemind" class="com.landray.kmss.hr.staff.quartz.HrLeaveHandelRemind" autowire="byName" />
+	
+	<!-- 员工试用期报告-入职第一周提醒 -->
+	<bean id="hrProbationFeedbackRemind" class="com.landray.kmss.hr.staff.quartz.HrProbationFeedbackRemind" autowire="byName" />
+	
+	<!-- 员工试用期报告-入职第一周提醒 -->
+	<bean id="hrEmployeeCareRemind" class="com.landray.kmss.hr.staff.quartz.HrEmployeeCareRemind" autowire="byName" />
+	
+	<!-- 员工信息 -->
+	<bean
+			id="hrStaffPersonInfoDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonInfoDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonInfo" />
+	</bean>
+	<bean id="staffTaskExecutor"
+		  class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="20" />
+		<property name="maxPoolSize" value="50" />
+		<property name="keepAliveSeconds" value="200" />
+		<property name="queueCapacity" value="250" />
+		<property name="rejectedExecutionHandler">
+			<bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonInfoTarget"
+			parent="KmssExtendDataTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonInfoServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPersonInfoDao" />
+		</property>
+		<property name="hrStaffPersonInfoLogService">
+			<ref bean="hrStaffPersonInfoLogService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService"/>
+		</property>
+		<property name="sysTagMainService">
+			<ref bean="sysTagMainService"/>
+		</property>
+		<property name="hrStaffPersonExperienceBriefService">
+			<ref bean="hrStaffPersonExperienceBriefService"/>
+		</property>
+		<property name="hrStaffPersonExperienceProjectService">
+			<ref bean="hrStaffPersonExperienceProjectService"/>
+		</property>
+		<property name="hrStaffPersonExperienceEducationService">
+			<ref bean="hrStaffPersonExperienceEducationService"/>
+		</property>
+		<property name="hrStaffPersonExperienceTrainingService">
+			<ref bean="hrStaffPersonExperienceTrainingService"/>
+		</property>
+		<property name="hrStaffPersonExperienceWorkService">
+			<ref bean="hrStaffPersonExperienceWorkService"/>
+		</property>
+		<property name="hrStaffPersonExperienceBonusMalusService">
+			<ref bean="hrStaffPersonExperienceBonusMalusService"/>
+		</property>
+		<property name="hrStaffTrackRecordService">
+			<ref bean="hrStaffTrackRecordService"/>
+		</property>
+		<property name="hrStaffMoveRecordService">
+			<ref bean="hrStaffMoveRecordService"/>
+		</property>
+		<property name="sysOrganizationStaffingLevelService">
+			<ref bean="sysOrganizationStaffingLevelService"/>
+		</property>
+		<property name="hrStaffPersonExperienceContractService">
+			<ref bean="hrStaffPersonExperienceContractService"/>
+		</property>
+		<property name="sysOrgPostService">
+			<ref bean="sysOrgPostService"/>
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService"/>
+		</property>
+		<property name="taskExecutor">
+			<ref bean="staffTaskExecutor"/>
+		</property>
+		<property name="hrStaffPersonInfoCustomizeDataSource">
+			<ref bean="hrStaffPersonInfoCustomizeDataSource"/>
+		</property>
+	</bean>
+	<!-- webservice服务 -->
+	<bean id="hrStaffWebService" class="com.landray.kmss.hr.staff.webservice.HrStaffWebServiceImp">
+		<property name="hrStaffPersonInfoService" ref="hrStaffPersonInfoService" />
+	</bean>
+	<bean
+			id="hrStaffPersonInfoService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPersonInfoTarget" />
+		</property>
+	</bean>
+
+	<!-- 工作记录信息 -->
+	<bean
+			id="hrStaffRatifyLogDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonInfoLogDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffRatifyLog" />
+	</bean>
+	<bean
+			id="hrStaffRatifyLogTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffRatifyLogServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffRatifyLogDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffRatifyLogService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffRatifyLogTarget" />
+		</property>
+	</bean>
+	<!-- 新的工作记录信息 -->
+	<bean
+			id="hrStaffTrackRecordDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffTrackRecordDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffTrackRecord" />
+	</bean>
+	<bean
+			id="hrStaffTrackRecordTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffTrackRecordServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffTrackRecordDao" />
+		</property>
+		<property name="sysOrgImportService">
+			<ref
+					bean="sysOrgImportService"/>
+		</property>
+		<property name="sysOrgPersonService">
+			<ref
+					bean="sysOrgPersonService"/>
+		</property>
+		<property name="hrStaffEmolumentWelfareDetaliedService">
+			<ref
+					bean="hrStaffEmolumentWelfareDetaliedService"/>
+		</property>
+		<property name="sysQuartzCoreService">
+			<ref
+					bean="sysQuartzCoreService"/>
+		</property>
+		<property name="hrOrganizationElementService">
+			<ref
+					bean="hrOrganizationElementService"/>
+		</property>
+	</bean>
+	<bean
+			id="hrStaffTrackRecordService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffTrackRecordTarget" />
+		</property>
+	</bean>
+	<!-- 家庭信息 -->
+	<bean
+			id="hrStaffPersonFamilyDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonFamilyDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonFamily" />
+	</bean>
+	<bean
+			id="hrStaffPersonFamilyTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonFamilyServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPersonFamilyDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonFamilyService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPersonFamilyTarget" />
+		</property>
+	</bean>
+	<!-- 待确认员工信息表 -->
+	<bean
+			id="hrStaffEntryDao"
+			parent="KmssExtendDataDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffEntryDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffEntry">
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEntryTarget"
+			parent="KmssExtendDataTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffEntryServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffEntryDao" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref
+					bean="sysOrgPersonService"/>
+		</property>
+		<property name="sysOrgImportService">
+			<ref
+					bean="sysOrgImportService"/>
+		</property>
+		<property name="sysOrgElementService">
+			<ref
+					bean="sysOrgElementService"/>
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref
+					bean="hrStaffPersonInfoService"/>
+		</property>
+		<property name="hrStaffPersonExperienceWorkService">
+			<ref
+					bean="hrStaffPersonExperienceWorkService"/>
+		</property>
+		<property name="hrStaffPersonExperienceEducationService">
+			<ref
+					bean="hrStaffPersonExperienceEducationService"/>
+		</property>
+		<property name="hrStaffPersonExperienceQualificationService">
+			<ref
+					bean="hrStaffPersonExperienceQualificationService"/>
+		</property>
+		<property name="hrStaffPersonExperienceBonusMalusService">
+			<ref
+					bean="hrStaffPersonExperienceBonusMalusService"/>
+		</property>
+		<property name="hrStaffTrackRecordService">
+			<ref
+					bean="hrStaffTrackRecordService"/>
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEntryService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffEntryTarget" />
+		</property>
+	</bean>
+
+	<!-- 员工信息日志 -->
+	<bean
+			id="hrStaffPersonInfoLogDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonInfoLogDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonInfoLog" />
+	</bean>
+	<bean
+			id="hrStaffPersonInfoLogTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonInfoLogServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPersonInfoLogDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonInfoLogService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPersonInfoLogTarget" />
+		</property>
+	</bean>
+
+	<!-- 奖惩信息 -->
+	<bean
+			id="hrStaffPersonExperienceBonusMalusDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonExperienceBonusMalusDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonExperienceBonusMalus" />
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceBonusMalusTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonExperienceBonusMalusServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPersonExperienceBonusMalusDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceBonusMalusService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPersonExperienceBonusMalusTarget" />
+		</property>
+	</bean>
+	<!-- 合同信息 -->
+	<bean
+			id="hrStaffPersonExperienceContractDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonExperienceContractDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonExperienceContract" />
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceContractTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonExperienceContractServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPersonExperienceContractDao" />
+		</property>
+		<property name="taskExecutor">
+			<ref bean="staffTaskExecutor"/>
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceContractService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPersonExperienceContractTarget" />
+		</property>
+	</bean>
+	<!-- 教育记录 -->
+	<bean
+			id="hrStaffPersonExperienceEducationDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonExperienceEducationDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonExperienceEducation" />
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceEducationTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonExperienceEducationServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPersonExperienceEducationDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceEducationService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPersonExperienceEducationTarget" />
+		</property>
+	</bean>
+	<!-- 资格证书 -->
+	<bean
+			id="hrStaffPersonExperienceQualificationDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonExperienceQualificationDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonExperienceQualification" />
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceQualificationTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonExperienceQualificationServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPersonExperienceQualificationDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceQualificationService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPersonExperienceQualificationTarget" />
+		</property>
+	</bean>
+	<!-- 培训记录 -->
+	<bean
+			id="hrStaffPersonExperienceTrainingDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonExperienceTrainingDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonExperienceTraining" />
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceTrainingTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonExperienceTrainingServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPersonExperienceTrainingDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceTrainingService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPersonExperienceTrainingTarget" />
+		</property>
+	</bean>
+	<!-- 工作经历 -->
+	<bean
+			id="hrStaffPersonExperienceWorkDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonExperienceWorkDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonExperienceWork" />
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceWorkTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonExperienceWorkServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPersonExperienceWorkDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceWorkService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPersonExperienceWorkTarget" />
+		</property>
+	</bean>
+	<!-- 项目经历 -->
+	<bean
+			id="hrStaffPersonExperienceProjectDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonExperienceProjectDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonExperienceProject" />
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceProjectTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonExperienceProjectServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPersonExperienceProjectDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceProjectService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPersonExperienceProjectTarget" />
+		</property>
+	</bean>
+	<!-- 个人简介 -->
+	<bean
+			id="hrStaffPersonExperienceBriefDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonExperienceBriefDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonExperienceBrief" />
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceBriefTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonExperienceBriefServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPersonExperienceBriefDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonExperienceBriefService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPersonExperienceBriefTarget" />
+		</property>
+	</bean>
+	<!-- 个人隐私设置 -->
+	<bean
+			id="hrStaffPrivateChangeDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPrivateChangeDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPrivateChange" />
+	</bean>
+	<bean
+			id="hrStaffPrivateChangeTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPrivateChangeServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPrivateChangeDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPrivateChangeService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPrivateChangeTarget" />
+		</property>
+	</bean>
+
+	<!-- 考勤管理 -->
+	<bean
+			id="hrStaffAttendanceManageDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffAttendanceManageDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffAttendanceManage" />
+	</bean>
+	<bean
+			id="hrStaffAttendanceManageTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffAttendanceManageServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffAttendanceManageDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffAttendanceManageService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffAttendanceManageTarget" />
+		</property>
+	</bean>
+
+	<!-- 请假明细 -->
+	<bean
+			id="hrStaffAttendanceManageDetailedDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffAttendanceManageDetailedDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffAttendanceManageDetailed" />
+	</bean>
+	<bean
+			id="hrStaffAttendanceManageDetailedTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffAttendanceManageDetailedServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffAttendanceManageDetailedDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffAttendanceManageDetailedService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffAttendanceManageDetailedTarget" />
+		</property>
+	</bean>
+
+	<!-- 薪酬福利 -->
+	<bean
+			id="hrStaffEmolumentWelfareDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffEmolumentWelfareDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffEmolumentWelfare" />
+	</bean>
+	<bean
+			id="hrStaffSecurityDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffSecurityDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffSecurity" />
+	</bean>
+	<bean
+			id="hrStaffAccumulationFundDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffAccumulationFundDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffAccumulationFund" />
+	</bean>
+	<bean
+			id="hrStaffPerformanceContractImportDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPerformanceContractImportDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPerformanceContractImport" />
+	</bean>
+	<bean
+			id="hrStaffPerformanceSearchDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPerformanceSearchDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.Ekp_H14_M_detailed" />
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_InternDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffEkp_H14_InternDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.Ekp_H14_Intern" />
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_M_performanceDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffEkp_H14_M_performanceDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.Ekp_H14_M_performance" />
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_SDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffEkp_H14_SDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.Ekp_H14_S" />
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_S1Dao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffEkp_H14_S1DaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.Ekp_H14_S1_detail" />
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_S2Dao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffEkp_H14_S2DaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.Ekp_H14_S2_detail" />
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_nSDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffEkp_H14_nSDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.Ekp_H14_nS_detail" />
+	</bean>
+	<bean
+			id="hrStaffSecurityTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffSecurityServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffSecurityDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffAccumulationFundTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffAccumulationFundServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffAccumulationFundDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPerformanceContractImportTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPerformanceContractImportServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPerformanceContractImportDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPerformanceSearchTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPerformanceSearchServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPerformanceSearchDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_InternTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffEkp_H14_InternServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffEkp_H14_InternDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_M_performanceTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffEkp_H14_M_performanceServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffEkp_H14_M_performanceDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_STarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffEkp_H14_SServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffEkp_H14_SDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_S1Target"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffEkp_H14_S1ServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffEkp_H14_S1Dao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_S2Target"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffEkp_H14_S2ServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffEkp_H14_S2Dao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_nSTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffEkp_H14_nSServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffEkp_H14_nSDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPerformanceContractImportService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPerformanceContractImportTarget" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_M_performanceService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffEkp_H14_M_performanceTarget" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_SService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffEkp_H14_STarget" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_S1Service"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffEkp_H14_S1Target" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_S2Service"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffEkp_H14_S2Target" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_nSService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffEkp_H14_nSTarget" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEkp_H14_InternService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffEkp_H14_InternTarget" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPerformanceSearchService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPerformanceSearchTarget" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffAccumulationFundService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffAccumulationFundTarget" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffSecurityService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffSecurityTarget" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEmolumentWelfareTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffEmolumentWelfareServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffEmolumentWelfareDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEmolumentWelfareService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffEmolumentWelfareTarget" />
+		</property>
+	</bean>
+
+	<!-- 薪酬福利明细 -->
+	<bean
+			id="hrStaffEmolumentWelfareDetaliedDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffEmolumentWelfareDetaliedDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffEmolumentWelfareDetalied" />
+	</bean>
+	<bean
+			id="hrStaffEmolumentWelfareDetaliedTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffEmolumentWelfareDetaliedServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffEmolumentWelfareDetaliedDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffEmolumentWelfareDetaliedService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffEmolumentWelfareDetaliedTarget" />
+		</property>
+	</bean>
+
+	<!-- 员工信息定时任务 -->
+	<bean
+			id="hrStaffPersonInfoDataSyncService"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonInfoDataSyncServiceImp">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="hrStaffPersonInfoLogService">
+			<ref bean="hrStaffPersonInfoLogService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="hrOrganizationElementService">
+			<ref bean="hrOrganizationElementService" />
+		</property>
+		<property name="hrOrganizationPostService">
+			<ref bean="hrOrganizationPostService" />
+		</property>
+	</bean>
+
+	<bean
+			id="tagByCategoryDatabean"
+			class="com.landray.kmss.hr.staff.service.tag.TagByCategoryDatabean">
+		<property name="sysTagTagsService">
+			<ref bean="sysTagTagsService" />
+		</property>
+	</bean>
+	<bean
+			id="tagCategoryDataService"
+			class="com.landray.kmss.hr.staff.service.tag.TagCategoryDataService">
+		<property name="sysTagCategoryService">
+			<ref bean="sysTagCategoryService" />
+		</property>
+	</bean>
+
+	<!-- 考勤管理机器人 -->
+	<bean
+			id="hrStaffAttendanceManageRobotService"
+			class="com.landray.kmss.hr.staff.service.robot.HrStaffAttendanceManageRobotServiceImp">
+		<property name="hrStaffAttendanceManageDetailedService">
+			<ref bean="hrStaffAttendanceManageDetailedService" />
+		</property>
+		<property name="hrStaffAttendanceManageService">
+			<ref bean="hrStaffAttendanceManageService" />
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<!-- 休假类型统一使用枚举
+		<property name="sysFormDictLoadService">
+			<ref bean="sysFormDictLoadService" />
+		</property>
+		 -->
+		<property name="hrStaffPersonInfoLogService">
+			<ref bean="hrStaffPersonInfoLogService" />
+		</property>
+	</bean>
+	<!-- 考勤加班机器人 -->
+	<bean
+			id="hrStaffAttendanceManageOvertimeRobotService"
+			class="com.landray.kmss.hr.staff.service.robot.HrStaffAttendanceManageOvertimeRobotServiceImp">
+		<property name="hrStaffAttendanceManageDetailedService">
+			<ref bean="hrStaffAttendanceManageDetailedService" />
+		</property>
+		<property name="hrStaffAttendanceManageService">
+			<ref bean="hrStaffAttendanceManageService" />
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="hrStaffPersonInfoLogService">
+			<ref bean="hrStaffPersonInfoLogService" />
+		</property>
+	</bean>
+	<!-- 薪酬福利机器人 -->
+	<bean
+			id="hrStaffEmolumentWelfareRobotService"
+			class="com.landray.kmss.hr.staff.service.robot.HrStaffEmolumentWelfareRobotServiceImp">
+		<property name="hrStaffEmolumentWelfareDetaliedService">
+			<ref bean="hrStaffEmolumentWelfareDetaliedService" />
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+	</bean>
+	<!-- 员工信息机器人 -->
+	<bean
+			id="hrStaffPersonInfoRobotService"
+			class="com.landray.kmss.hr.staff.service.robot.HrStaffPersonInfoRobotServiceImp">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+	</bean>
+	<!-- 合同信息信息机器人 -->
+	<bean
+			id="hrStaffContractRobotService"
+			class="com.landray.kmss.hr.staff.service.robot.HrStaffContractRobotServiceImp">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="hrStaffPersonExperienceContractService">
+			<ref bean="hrStaffPersonExperienceContractService" />
+		</property>
+		<property name="sysAttMainService">
+			<ref bean="sysAttMainService" />
+		</property>
+	</bean>
+	<!-- 工作经历机器人 -->
+	<bean
+			id="hrStaffWorkRobotService"
+			class="com.landray.kmss.hr.staff.service.robot.HrStaffWorkRobotServiceImp">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="hrStaffPersonExperienceWorkService">
+			<ref bean="hrStaffPersonExperienceWorkService" />
+		</property>
+	</bean>
+	<!-- 教育记录机器人 -->
+	<bean
+			id="hrStaffEducationRobotService"
+			class="com.landray.kmss.hr.staff.service.robot.HrStaffEducationRobotServiceImp">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="hrStaffPersonExperienceEducationService">
+			<ref bean="hrStaffPersonExperienceEducationService" />
+		</property>
+	</bean>
+	<!-- 培训记录机器人 -->
+	<bean
+			id="hrStaffTrainingRobotService"
+			class="com.landray.kmss.hr.staff.service.robot.HrStaffTrainingRobotServiceImp">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="hrStaffPersonExperienceTrainingService">
+			<ref bean="hrStaffPersonExperienceTrainingService" />
+		</property>
+	</bean>
+	<!-- 资格证书机器人 -->
+	<bean
+			id="hrStaffQualificationRobotService"
+			class="com.landray.kmss.hr.staff.service.robot.HrStaffQualificationRobotServiceImp">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="hrStaffPersonExperienceQualificationService">
+			<ref bean="hrStaffPersonExperienceQualificationService" />
+		</property>
+	</bean>
+	<!-- 奖惩信息机器人 -->
+	<bean
+			id="hrStaffBonusMalusRobotService"
+			class="com.landray.kmss.hr.staff.service.robot.HrStaffBonusMalusRobotServiceImp">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="hrStaffPersonExperienceBonusMalusService">
+			<ref bean="hrStaffPersonExperienceBonusMalusService" />
+		</property>
+	</bean>
+	<!-- 家庭机器人 -->
+	<bean id="hrStaffFamilyRobotService" class="com.landray.kmss.hr.staff.service.robot.HrStaffFamilyRobotServiceImp">
+		<property name="hrStaffPersonFamilyService">
+			<ref bean="hrStaffPersonFamilyService" />
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+	</bean>
+	<!-- 家庭机器人 -->
+	<bean id="hrStaffWelfareRobotService" class="com.landray.kmss.hr.staff.service.robot.HrStaffWelfareRobotServiceImp">
+		<property name="hrStaffAccumulationFundService">
+			<ref bean="hrStaffAccumulationFundService" />
+		</property>
+			<property name="hrStaffSecurityService">
+			<ref bean="hrStaffSecurityService" />
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+	</bean>
+	<!-- 合同到期提醒 -->
+	<bean
+			id="hrStaffSendAlertWarningContractService"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffSendAlertWarningContractServiceImp">
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="hrStaffPersonExperienceContractService">
+			<ref bean="hrStaffPersonExperienceContractService" />
+		</property>
+	</bean>
+	<!-- 试用期到期提醒 -->
+	<bean
+			id="hrStaffSendAlertWarningTrialService"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffSendAlertWarningTrialServiceImp">
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+	</bean>
+
+	<!-- 生日提醒 -->
+	<bean
+			id="hrStaffSendAlertWarningBirthdayService"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffSendAlertWarningBirthdyServiceImp">
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+	</bean>
+	<!--后台个人信息设置 -->
+
+	<!--新后台个人信息设置 -->
+	<bean
+			id="hrStaffPersonInfoSetNewDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonInfoSettingNewDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonInfoSettingNew" />
+	</bean>
+	<bean
+			id="citiesDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.CitiesDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.Cities" />
+	</bean>
+	<bean
+			id="areasDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.AreasDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.Areas" />
+	</bean>
+	<bean
+			id="provinceDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.ProvinceDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.Province" />
+	</bean>
+	<bean
+			id="areasTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.AreasServiceImp">
+		<property
+				name="baseDao">
+			<ref
+					bean="areasDao" />
+		</property>
+	</bean>
+	<bean
+			id="citiesTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.CitiesServiceImp">
+		<property
+				name="baseDao">
+			<ref
+					bean="citiesDao" />
+		</property>
+	</bean>
+	<bean
+			id="provinceTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.ProvinceServiceImp">
+		<property
+				name="baseDao">
+			<ref
+					bean="provinceDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonInfoSetNewTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonInfoSettingNewServiceImp">
+		<property
+				name="baseDao">
+			<ref
+					bean="hrStaffPersonInfoSetNewDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonInfoSetNewService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="hrStaffPersonInfoSetNewTarget" />
+		</property>
+	</bean>
+	<bean
+			id="areasService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="areasTarget" />
+		</property>
+	</bean>
+	<bean
+			id="citiesService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="citiesTarget" />
+		</property>
+	</bean>
+	<bean
+			id="provinceService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="provinceTarget" />
+		</property>
+	</bean>
+	<!-- 统计报表 -->
+	<bean
+			id="hrStaffPersonReportDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPersonReportDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonReport" />
+	</bean>
+	<bean
+			id="hrStaffPersonReportTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonReportServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPersonReportDao" />
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="hrOrganizationRankService">
+			<ref bean="hrOrganizationRankService" />
+		</property>
+		<property name="hrStaffMoveRecordService">
+			<ref bean="hrStaffMoveRecordService" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService"/>
+		</property>
+		<property name="hrStaffPersonInfoSettingService">
+			<ref bean="hrStaffPersonInfoSetNewService" />
+		</property>
+		<property name="sysOrganizationStaffingLevelService">
+			<ref bean="sysOrganizationStaffingLevelService" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPersonReportService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPersonReportTarget" />
+		</property>
+	</bean>
+	<!-- 个人经历权限校验器 -->
+	<bean
+			id="hrStaffPersonExperienceValidator"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonExperienceValidator">
+	</bean>
+	<!-- 工资单发放 -->
+	<bean
+			id="hrStaffPayrollIssuanceDao"
+			parent="KmssAuthBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffPayrollIssuanceDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPayrollIssuance" />
+	</bean>
+	<bean
+			id="hrStaffPayrollIssuanceTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffPayrollIssuanceServiceImp">
+		<property name="baseDao">
+			<ref bean="hrStaffPayrollIssuanceDao" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService"/>
+		</property>
+		<property name="sysNotifyTodoService">
+			<ref bean="sysNotifyTodoService"/>
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService"/>
+		</property>
+		<property name="hrStaffSalaryInfoService">
+			<ref bean="hrStaffSalaryInfoService"/>
+		</property>
+	</bean>
+	<bean
+			id="hrStaffPayrollIssuanceService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffPayrollIssuanceTarget" />
+		</property>
+	</bean>
+
+	<bean
+			id="hrStaffFileAuthorDao"
+			parent="KmssExtendDataAreaDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffFileAuthorDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffFileAuthor" />
+	</bean>
+
+	<bean
+			id="hrStaffFileAuthorTarget"
+			parent="KmssExtendDataTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffFileAuthorServiceImp">
+		<property
+				name="baseDao">
+			<ref
+					bean="hrStaffFileAuthorDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffFileAuthorService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="hrStaffFileAuthorTarget" />
+		</property>
+	</bean>
+	<bean id="hrStaffPersonInfoValidator" class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonInfoValidator">
+		<property name="hrStaffFileAuthorService">
+			<ref bean="hrStaffFileAuthorService"/>
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService"/>
+		</property>
+	</bean>
+	<bean id="hrStaffEntryValidator" class="com.landray.kmss.hr.staff.service.spring.HrStaffEntryValidator">
+		<property name="hrStaffFileAuthorService">
+			<ref bean="hrStaffFileAuthorService"/>
+		</property>
+		<property name="hrStaffEntryService">
+			<ref bean="hrStaffEntryService"/>
+		</property>
+	</bean>
+
+	<bean
+			id="hrStaffSalaryInfoService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffSalaryInfoTarget" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffSalaryInfoDao"
+			parent="KmssBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffSalaryInfoDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffSalaryInfo" />
+	</bean>
+	<bean
+			id="hrStaffSalaryInfoTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffSalaryInfoServiceImp">
+		<property
+				name="baseDao">
+			<ref
+					bean="hrStaffSalaryInfoDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffContractTypeService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffContractTypeTarget" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffContractTypeDao"
+			parent="KmssBaseDao"
+			class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffContractTypeDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffContractType" />
+	</bean>
+	<bean
+			id="hrStaffContractTypeTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffContractTypeServiceImp">
+		<property
+				name="baseDao">
+			<ref
+					bean="hrStaffContractTypeDao" />
+		</property>
+	</bean>
+	<bean
+			id="hrStaffConfigValidator"
+			class="com.landray.kmss.hr.staff.service.spring.HrStaffConfigValidator">
+	</bean>
+	<bean
+			id="hrFinshEven"
+			class="com.landray.kmss.hr.staff.event.HrFinshEven">
+	</bean>
+	<bean
+			id="hrRzSubmitEven"
+			class="com.landray.kmss.hr.staff.event.HrRzSubmitEven">
+	</bean>
+	<bean id="hrStaffEntryAuthFilter" class="com.landray.kmss.hr.staff.service.spring.HrStaffEntryAuthFilter">
+		<property name="hrStaffFileAuthorService">
+			<ref bean="hrStaffFileAuthorService"/>
+		</property>
+		<property name="hrStaffEntryService">
+			<ref bean="hrStaffEntryService"/>
+		</property>
+	</bean>
+
+	<bean id="hrStaffPersonInfoPortlet" class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonInfoPortlet">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService"/>
+		</property>
+	</bean>
+
+	<bean id="hrStaffUpdateLeaderFlagQuartz" class="com.landray.kmss.hr.staff.service.quartz.HrStaffUpdateLeaderFlagQuartz"/>
+
+	<bean id="hrStaffLeaveRobotService" class="com.landray.kmss.hr.staff.service.robot.HrStaffLeaveRobotServiceImp">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="sysAttMainService">
+			<ref bean="sysAttMainService"/>
+		</property>
+		<property name="hrStaffEmolumentWelfareService">
+			<ref bean="hrStaffEmolumentWelfareService"/>
+		</property>
+	</bean>
+
+	<bean id="hrStaffMoveRobotService" class="com.landray.kmss.hr.staff.service.robot.HrStaffMoveRobotServiceImp">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService"/>
+		</property>
+		<property name="sysOrgPostService">
+			<ref bean="sysOrgPostService"/>
+		</property>
+		<property name="hrOrganizationRankService">
+			<ref bean="hrOrganizationRankService"/>
+		</property>
+		<property name="hrStaffMoveRecordService">
+			<ref bean="hrStaffMoveRecordService"/>
+		</property>
+			<property name="provinceService">
+			<ref bean="provinceService"/>
+		</property>
+		<property name="citiesService">
+			<ref bean="citiesService"/>
+		</property>
+		<property name="areasService">
+			<ref bean="areasService"/>
+		</property>
+	</bean>
+
+	<bean id="hrStaffContractContinueRobotService" class="com.landray.kmss.hr.staff.service.robot.HrStaffContractContinueRobotServiceImp">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="hrStaffMoveRecordService">
+			<ref bean="hrStaffMoveRecordService"/>
+		</property>
+		<property name="sysOrgPostService">
+			<ref bean="sysOrgPostService"/>
+		</property>
+	</bean>
+	<bean id="hrStaffEmploymentConfirmationApplicationRobotService" class="com.landray.kmss.hr.staff.service.robot.HrStaffEmploymentConfirmationApplicationRobotServiceImp">
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="hrStaffMoveRecordService">
+			<ref bean="hrStaffMoveRecordService"/>
+		</property>
+		<property name="sysOrgPostService">
+			<ref bean="sysOrgPostService"/>
+		</property>
+	</bean>
+	<bean
+		id="hrStaffMoveRecordDao"
+		class="com.landray.kmss.hr.staff.dao.hibernate.HrStaffMoveRecordDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.hr.staff.model.HrStaffMoveRecord</value>
+		</property>
+	</bean>
+
+	<bean
+		id="hrStaffMoveRecordTarget"
+		class="com.landray.kmss.hr.staff.service.spring.HrStaffMoveRecordServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="hrStaffMoveRecordDao"/>
+		</property>
+		<property name="sysMetadataService">
+			<ref bean="sysMetadataService"/>
+		</property>
+	</bean>
+	<bean
+		id="hrStaffMoveRecordService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="hrStaffMoveRecordTarget"/>
+		</property>
+	</bean>
+	<bean id="hrStaffPersonInfoCustomizeDataSource" class="com.landray.kmss.hr.staff.service.spring.HrStaffPersonInfoCustomizeDataSource"/>
+	<bean id="lbpmAnalysisFlowService" class="com.landray.kmss.hr.staff.report.LbpmAnalysisFlowService"></bean>
+	<bean id="sysAttendPersonReportService" class="com.landray.kmss.hr.staff.report.SysAttendPersonReportService"></bean>
+	<bean id="sysAttendOverDetailService" class="com.landray.kmss.hr.staff.report.SysAttendOverDetailService"></bean>
+</beans>

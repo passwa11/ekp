@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="ticCoreInitDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.init.dao.hibernate.TicCoreInitDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.init.model.TicCoreInit" />
+	</bean>
+	<bean
+		id="ticCoreInitTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.init.service.spring.TicCoreInitServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticCoreInitDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticCoreInitService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticCoreInitTarget" />
+		</property>
+	</bean>
+		
+</beans>

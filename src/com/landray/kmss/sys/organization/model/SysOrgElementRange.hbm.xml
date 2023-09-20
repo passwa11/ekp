@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrgElementRange"
+		table="sys_org_element_range">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+
+		<property
+			name="fdIsOpenLimit"
+			column="fd_is_open_limit"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdViewType"
+			column="fd_view_type"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="10" />
+		<property
+			name="fdViewSubType"
+			column="fd_view_sub_type"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="10" />
+		<property
+			name="fdInviteUrl"
+			column="fd_invite_url"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1000" />
+		<!-- 所属组织 -->
+		<many-to-one
+			name="fdElement"
+			column="fd_element_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		
+		<bag
+			name="fdOthers"
+			table="sys_org_element_range_other">
+			<key column="fd_rangeid" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_otherid" />
+		</bag>
+	</class>
+</hibernate-mapping>

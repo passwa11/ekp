@@ -1,0 +1,2691 @@
+@CHARSET "UTF-8";
+
+
+/* 公共通用 Starts
+   ========================================================================== */
+.muiSignInList
+.muiSignInList *,
+.muiSignInList *:after,
+.muiSignInList *:before,
+.muiSignInAbnormalList,
+.muiSignInAbnormalList *,
+.muiSignInAbnormalList *:after,
+.muiSignInAbnormalList *:before,
+.muiSignInBtn
+.muiSignInBtn *,
+.muiSignInBtn *:after,
+.muiSignInBtn *:before,
+.muiSignInLabel,
+.muiSignInLabel *,
+.muiSignInLabel *:after,
+.muiSignInLabel *:before,
+.muiSignInBtnArea,
+.muiSignInBtnArea *,
+.muiSignInBtnArea *:after,
+.muiSignInBtnArea *:before,
+.muiSignInPanel,
+.muiSignInPanel *,
+.muiSignInPanel *:after,
+.muiSignInPanel *:before,
+.muiSignInDropDownMenu,
+.muiSignInDropDownMenu *,
+.muiSignInDropDownMenu *:after,
+.muiSignInDropDownMenu *:before {
+	transition: color, background-color, box-shadow, width, opacity, transform .3s ease-in-out;
+	-webkit-box-sizing: border-box;
+					box-sizing: border-box;
+}
+
+.muitabBarBottom {
+  position: absolute;
+  bottom: 0rem;
+  width: 100%;
+}
+
+
+/* 公共通用 Ends
+   ========================================================================== */
+
+/* 移动签到列表 Starts
+   ========================================================================== */
+/*.muiCalendarBottom .muiCalendarOpt .muiSignInList {
+  margin: 0 -.8rem;
+}*/
+.muiSignInList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 1.42857143;
+  background-color: rgb(238, 238, 238);
+  position: relative;
+  top: 0px;
+}
+.muiSignInList > li{
+	width: 100%;
+	display: table;
+  border-bottom: 1px solid #ddd;
+	background-color: #fff;
+	position: relative;
+	z-index: 1050;
+}
+.muiSignInList > li.muiAttendNav.emphasize{
+  margin-top: .8rem;
+  border-top: 1px solid #ddd;
+}
+
+.muiSignInList > li > .row {
+	display: table-row;
+	color: #333;
+	font-size: 1.4rem;
+	-webkit-box-sizing:border-box;
+					box-sizing:border-box;
+}
+.muiSignInList > li > a:active{ background-color: #f8f8f8; }
+.muiSignInList > li .contentLeft,
+.muiSignInList > li .contentRight{
+	display: table-cell;
+	padding: 1rem;
+}
+.muiSignInList > li .contentRight {
+	text-align: right;
+	color: #4297ff;
+}
+.muiSignInList > li .contentRight > .mui {
+	transition: all .3s ease-in-out;
+	margin-left: .3rem;
+	top: -.1rem;
+}
+.muiSignInList .contentLeft .muipersonHead {
+  margin-right: 1rem;
+  display: inline-block;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  float: left;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.muiSignInList .contentLeft .muiImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.muiSignInList .contentLeft .muiPersonInfo{
+	display: inline-block;
+  height: 4.5rem;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+}
+.muiSignInList .contentLeft .muiPersonInfo span{
+	display: block;
+  font-size: 1.6rem;
+}
+.muiSignInList .contentLeft .muiPersonInfo span:nth-child(2){
+  color: #999;
+  font-size: 1.2rem;
+}
+.muiSignInList > li .contentRight > .mui.mui-down-n{ color: #999; }
+.muiSignInList > .emphasize > .row {
+	color: #4297ff;
+	font-size: 1.4rem;
+	width: 100%;
+  display: table;
+  background: #fff;
+}
+.muiSignInList > .emphasize > .row .contentLeft,
+.muiSignInList > .emphasize > .row .contentRight {
+	display: table-cell;
+	padding: 1rem;
+}
+.muiSignInList > .emphasize > .row .contentRight {
+	text-align: right;
+	color: #4297ff;
+}
+.muiSignInList > .emphasize > .row ~ .muiSignInDropDownMenu{
+	margin: 0;
+	top: 100%;
+}
+
+.muiSignInList.muiSignInView{
+  margin-bottom: 0;
+  background-color: transparent;
+}
+.muiSignInList.muiSignInView > li{
+  border-bottom: 0;
+  background-color: rgba(255,255,255,.95);
+  -webkit-box-shadow: 0 1px 5px rgba(0,0,0,.125);
+          box-shadow: 0 1px 5px rgba(0,0,0,.125);
+}
+.muiSignInList.muiSignInView > li .contentLeft,
+.muiSignInList.muiSignInView > li .contentRight {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+.muiSignInList.muiSignInView .contentLeft .muipersonHead{
+  width: 3.5rem;
+  height: 3.5rem;
+}
+.muiSignInList.muiSignInView .contentLeft .muiPersonInfo{
+  height: 3.5rem;
+}
+
+
+.muiSignInDropDown{}
+.muiSignInDropDownMenu{
+	width: 100%;
+    transition: all .4s ease;
+    z-index: 999;
+    max-height: 24rem;
+    overflow: auto;
+    padding: 0 .5rem;
+}
+.muiSignInDropDownMenu > li {
+	width: 100%;
+    height: 4.8rem;
+    line-height: 4.8rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    font-size: 1.4rem;
+    color: #2A304A;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.muiSignInDropDownMenu > .selected{ color: #4285f4; }
+.muiSignInDropDownMenu>li:last-child {
+    border: 0;
+}
+
+.muiSignInOpen > .row{
+	position: relative;
+	z-index: 1030;
+}
+.muiSignInDropDownshade{
+	/*background-color: rgba(0,0,0,.55);*/
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 1000;
+}
+.muiSignInOpen .contentRight > .mui.mui-down-n {
+	color: #4297ff!important;
+	-webkit-transform: rotate(180deg);
+					transform: rotate(180deg);
+}
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+
+.muiSignInOpen .muiSignInDropDownMenu {
+	-webkit-animation: fadeIn .3s ease-in-out 0s 1 both;
+	        animation: fadeIn .3s ease-in-out 0s 1 both;
+}
+.muiSignInOpen .muiSignInDropDownMenu > li {
+  -webkit-animation: fadeInDown .3s ease-in-out 0s 1 both;
+          animation: fadeInDown .3s ease-in-out 0s 1 both;
+}
+.muiListNoDataImg img {
+}
+
+.muiSignedRecordsBorder{
+	border-bottom: 1px solid #e8e8e8;
+    margin: 0 1.4rem;
+}
+.muiSignedRecords{background: #fff;overflow-x:hidden;overflow-y:scroll;}
+.muiSignedRecords .muiSignedRecordList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 1.4rem;
+    background-color: transparent;
+    position: relative;
+}
+.muiSignedRecords .muiSignedRecordList > li {
+    padding: .5rem 0 .5rem 3rem;
+    position: relative;
+}
+.muiSignedRecords .muiSignedRecordList > li:before {
+	content: '';
+    border-left: 1px solid #e0e0e0;
+    position: absolute;
+    left: 1.25rem;
+    top: 0;
+    bottom: 0;
+}
+.muiSignedRecords .muiSignedRecordList > li:first-child:before{
+	top:1.6rem;
+}
+.muiSignedRecords .muiSignedRecordList > li:last-child:before{
+	bottom: 3rem;
+}
+
+.muiSignedRecords .muiSignedTitlePoint {
+    width: 1.5rem;
+    height: 1.5rem;
+    text-align: center;
+    font-size: 1rem;
+    border: 0;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: inline-block;
+    position: absolute;
+    top: 1.6rem;
+    left: .8rem;
+    border: 3px solid #4285F4;
+}
+
+.muiSignedRecords .muiSignedAddress {
+    line-height: 1.42857143;
+    color: #ADAFBA;
+    font-size: 1.2rem;
+    padding-left: 1.2rem;
+}
+/* 定位loading  start */
+@-webkit-keyframes muiIconLoading {
+	  0% {
+	    opacity: .2;
+	    -webkit-transform: scale(.5);
+	    				transform: scale(.5);
+	  }
+	  100% {
+	    opacity: 1;
+	    -webkit-transform: scale(1);
+	    				transform: scale(1);
+	  }
+	}
+
+	@keyframes muiIconLoading {
+	  0% {
+	    opacity: .2;
+	    -webkit-transform: scale(.5);
+	    				transform: scale(.5);
+	  }
+	  100% {
+	    opacity: 1;
+	    -webkit-transform: scale(1);
+	    				transform: scale(1);
+	  }
+	}
+	.muiIconLoading{
+		font-size: 0;
+		text-align: center;
+		display: inline-block;
+	}
+	.muiIconLoading > span{
+		margin: 0 1px;
+		width: 3px;
+		height: 3px;
+		border-radius: 50%;
+		background-color: #999;
+		display: inline-block;
+		position: relative;
+		-webkit-animation: muiIconLoading .8s ease-in-out 0s alternate infinite;
+						animation: muiIconLoading .8s ease-in-out 0s alternate infinite;
+	}
+	.muiIconLoading > span:nth-child(1){
+		-webkit-animation-delay: 0s;
+						animation-delay: 0s;
+	}
+	.muiIconLoading > span:nth-child(2){
+		-webkit-animation-delay: .3s;
+						animation-delay: .3s;
+	}
+	.muiIconLoading > span:nth-child(3){
+		-webkit-animation-delay: .6s;
+						animation-delay: .6s;
+	}
+	.muiIconLoading.hide{
+		display: none;
+	}
+	/* 定位loading  end */
+/* 移动签到列表 Ends
+   ========================================================================== */
+
+
+/* 移动签到按钮 Starts
+   ========================================================================== */
+.muiSignInBtn{
+	display: inline-block;
+	margin-bottom: 0;
+	padding: 0 .4rem .2rem;
+	font-size: 1.2rem;
+	font-weight: normal;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+			touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+		 -moz-user-select: none;
+			-ms-user-select: none;
+					user-select: none;
+	border: 1px solid transparent;
+	border-radius: .3rem;
+	background-image: none;
+	background-color: transparent;
+	outline: none;
+	transition: all .3s ease-in-out;
+	position: relative;
+}
+.muiSignInBtn:active{
+	background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+					box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+.muiSignInBtn > .mui{
+	font-weight: bold;
+	top: -.1rem;
+  right: -.1rem;
+}
+.muiSignInBtnLg{
+	padding: .8rem .5rem;
+	font-size: 1.8rem;
+	border-radius: .5rem;
+}
+.muiSignInBtnPrimaryOutline{
+	color: #999FB7;
+}
+.muiSignInBtnPrimary{
+	color: #fff;
+	border-color: #4297ff;
+	background-color: #4297ff;
+}
+.muiSignInBtnDanger{
+	color: #fff;
+	border-color: #ff8484;
+	background-color: #ff8484;
+}
+.muiSignInBtnCancel{
+	color: #fff;
+	border-color: #b9b9b9;
+	background-color: #b9b9b9;
+}
+.muiSignInBtnGroup{}
+.muiSignInBtnGroup > .muiSignInBtn{ margin-right: .3rem; }
+.muiSignInBtnGroup > .muiSignInBtn .muis-to-right{
+	transform: scale(.8);
+	display: inline-block;
+	font-size: 1.2rem;
+}
+.muiSignInBtnGroupInline {
+	padding: 1rem .5rem;
+	display: -webkit-box;
+	display: box;
+}
+.muiSignInBtnGroupInline > .muiSignInBtn{
+	-webkit-box-flex:1;
+	margin-right: .5rem;
+	margin-left: .5rem;
+	width: 100%;
+	max-width: 100%;
+	display: block;
+}
+.muiSignInBtnGroupVertical{ padding: 1rem; }
+.muiSignInBtnGroupVertical > .muiSignInBtn{
+	margin-right: 0;
+	width: 100%;
+	max-width: 100%;
+	display: block;
+}
+.muiSignInBtnGroupVertical > .muiSignInBtn:not(:last-child){ margin-bottom: 1rem; }
+/* 移动签到按钮 Ends
+   ========================================================================== */
+
+
+/* 移动签到标签 Starts
+   ========================================================================== */
+.muiSignInLabel {
+	display: inline-block;
+    height: 1.4rem;
+    line-height: 1.4rem;
+    font-size: var(--muiFontSizeXS);
+    text-align: center;
+    border-radius: 2px;
+    position: relative;
+    top:-1px;
+    padding: 0 .6rem;  
+    border-radius: 14px;
+    }
+.signInLabelPrimary{ 
+	color: #4297ff;
+	font-family: PingFangSC-Regular;
+	font-size: 9px;
+	color: #4297ff;
+	letter-spacing: 0;
+	text-align: center;
+     padding: 0 .6rem;  
+     opacity: 0.5;
+	border: 1px solid #4297ff;;
+	border-radius: 7px;
+	}
+.signInLabelWarning{ 
+	color: #ffa055;
+	font-family: PingFangSC-Regular;
+	font-size: 9px;
+	color: #ffa055;
+	letter-spacing: 0;
+	text-align: center;
+     padding: 0 .6rem;  
+     border: 1px solid #ffa055;
+	 border-radius: 14px;
+}
+.signInLabelDanger{ 
+	color: #ff6c6c;
+	font-family: PingFangSC-Regular;
+	font-size: 9px;
+	color: #F25643;
+	letter-spacing: 0;
+    text-align: center;
+     padding: 0 .6rem;    
+     border: 1px solid #F25643;
+	}
+
+
+/* 移动签到标签 Ends
+   ========================================================================== */
+
+
+/* 移动签到打卡区域 Starts
+   ========================================================================== */
+.muiSignInBtnArea{
+	padding: 3rem 1.2rem .5rem;
+	text-align: center;
+	vertical-align: middle;
+}
+.muiSignInflowList > li .muiSignInBtnArea{
+	padding: 3rem .5rem .5rem 0rem;
+}
+
+.muiSignInBtnSign {
+	margin-bottom: 1.8rem;
+	padding: 0;
+	width: 13rem;
+	height:13rem;
+	color: #fff;
+	font-size: 1.6rem;
+	border-radius: 50%;
+	background-image: none;
+	background-color: #4285f4;
+}
+.muiSignInBtnOutside{
+	background-color: #FF9900 !important;
+}
+.muiSignInBtnOutsideDis{
+	background-color: #b7b0ac !important;
+}
+.muiSignInBtnDisabled{
+	background-color: #9ea5ad !important;
+}
+
+.muiSignInBtnSign:active{
+	background-image: none;
+  outline: 0;
+  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .35), inset 0 3px 5px rgba(0, 0, 0, .125);
+					box-shadow: 0 2px 8px rgba(0, 0, 0, .35), inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+.muiSignInBtnSign > .currentTime {
+	display: block;
+	font-size: 2.6rem;
+	font-family: "landray-number", fontnumber,-apple-system, SF UI Text, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
+}
+.muiSignInBtnSign > .signName {
+	display: block;
+	font-size: 1.4rem;
+}
+
+.muiSignInBtnInfo{
+	line-height: 1.42857143;
+	color: #ADAFBA;
+	font-size: 1.2rem;
+}
+.muiSignInBtnInfo > .mui{
+	margin-left: -1.2rem;
+  margin-right: .2rem;
+	color: #999;
+	top: -.1rem;
+}
+.muiSignInBtnArea > .refashSingIn{
+	color: #4297ff;
+	font-size: 1.2rem;
+	transition: color .1s ease-in-out;
+	outline:none;
+	padding:4px 0px;
+}
+.muiSignInBtnArea > .refashSingIn:active{
+	color: #ffa055;
+}
+.muiSignInBtnInfo .muiSignInLimit{
+	padding-left:5px;color: #4297ff;
+}
+.muiSignInLocation {
+    color: #ADAFBA;
+}
+.muiSignInBtnArea .muiSignInLimit.unLimit{
+	color: #FF682B;
+	font-size:10px;
+}
+.muiSignInflowListContent .muiSignInExcDoing,.muiSignInflowListHeading .muiSignInExcDoing{
+	font-size: 10px;
+    color: blue;
+}
+.muiSignInflowListContent .muiSignInExcDone,.muiSignInflowListHeading .muiSignInExcDone{
+	font-size: 10px;
+    color: green;
+}
+.muiSignInflowListContent .muiSignInExcRefuse,.muiSignInflowListHeading .muiSignInExcRefuse{
+	font-size: 10px;
+    color: red;
+}
+
+.muiAttendExcMask {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 99;
+	overflow: hidden;
+	-webkit-transition: opacity 0.2s linear;
+	opacity: 0;
+}
+.muiAttendExcUl {
+	min-height: 10rem !important;
+	margin-top: -25%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 90%;
+	margin-left: -45%;
+	-webkit-appearance: none;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	min-width: 20rem;
+	min-height: 20rem;
+	/* margin: 0;*/
+	padding: 0;
+}
+.muiAttendExc {
+	float: left;
+	/* margin: 1.5rem 1.2rem; */
+	width: 33%;
+	text-align: center;
+	margin:1rem 0;
+	-webkit-transition: all 0.5s ease-out;
+	-webkit-transform: translate3d(0px,1000px, 0px);
+}
+.muiAttendExcItem {
+	background: #399be8;
+	display: inline-block;
+	border-radius: 50%;
+	height: 5.5rem;
+	width: 5.5rem;
+	line-height: 5.5rem;
+	text-align: center;
+	color: #fff;
+}
+.muiAttendExcItem .mui {
+	font-size: 2.4rem;
+	vertical-align: middle;
+}
+
+.muiAttendExcItemBgColor0 {
+	background-color: #66CDCC;
+}
+.muiAttendExcItemBgColor1 {
+	background-color: #F26C60;
+}
+.muiAttendExcItemBgColor2{
+	background-color: #FDA106;
+}
+.muiAttendExcItemBgColor3{
+	background-color: #E7507B;
+}
+.muiAttendExcItemBgColor4{
+	background-color: #34B87F;
+}
+.muiAttendExcItemBgColor5{
+	background-color: #399be8;
+}
+.muiAttendExcItemText {
+	display: block;
+	color: #fff;
+	font-size: 1.4rem;
+	padding: 0.4rem 0;
+}
+/* 移动签到打卡区域 Ends
+   ========================================================================== */
+
+
+/* 移动签到时间轴列表 Starts
+   ========================================================================== */
+.muiSignInflowList{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 1.4rem;
+  background-color: transparent;
+	position: relative;
+}
+.muiSignInflowList:before{ top: 0; }
+.muiSignInflowList:after{ bottom: 0; }
+
+.muiSignInflowList > li {
+  padding: 1.5rem 0 1.5rem 1.5rem;
+  position: relative;
+}
+.muiSignInflowList > li:after {
+  content: '';
+  border-bottom: 1px solid #ddd;
+  position: absolute;
+  left: 3rem;
+  right: 0;
+  bottom: 0;
+}
+.muiSignInflowList > li:before{
+  content: '';
+  border-left: 1px solid #e0e0e0;
+  position: absolute;
+  left: 2.1rem;
+  top: 0;
+  bottom: -2rem;
+}
+.muiSignCustList.muiSignInflowList > li:before{
+  border-left: 1px solid #e0e0e0;
+}
+.muiSignInPanelNoPadding .muiSignInflowList > li:before{
+	border-left: 0px solid #e0e0e0;
+
+}
+.muiSignInflowList > li:first-child:before{ top: 1.6rem; }
+.muiSignInflowList > li:last-child:before{ bottom: 25rem; }
+
+.muiSignInflowList > li.muiListNoData {
+  padding-right: 3rem;
+  width: auto;
+  display: block;
+}
+.muiSignInflowList > li.muiListNoData:after,
+.muiSignInflowList > li.muiListNoData:before{ display: none; }
+.muiSignInflowList > li.muiListNoData .muiListNoDataTxt{
+  margin-top: .8rem;
+  color: #999;
+  font-size: 1.4rem;
+}
+.muiSignInflowList > li.muiSignedItem{ background-color: #fff; }
+
+.muiSignInflowList > .lastSignIn .flowListPostPoint {
+	border-color: #4297ff;
+}
+.muiSignInflowList > .lastSignIn .flowListPostPoint.hasTxt{ border: 3px solid #4285F4; }
+.muiSignInflowList > .lastSignIn .muiSignInflowListHeading {
+	color: #333;
+}
+.muiSignInflowList .muiSignInBtnInfo{
+	padding-left: 2rem;
+}
+.muiSignInflowList .flowListPostPoint {
+  width: 1.5rem;
+  height: 1.5rem;
+	text-align: center;
+	font-size: 1rem;
+	border: 3px solid #b2b2b2;
+	border-radius: 50%;
+	background-color: #f9f9f9;
+	display: inline-block;
+	position: absolute;
+	top: 1.6rem;
+	left: 1.6rem;
+	z-index: 5;
+}
+.muiSignInflowList .flowListPostPoint.hasTxt {
+	width: 1.1rem;
+	height: 1.1rem;
+	line-height: 1.8rem;
+	color: #fff;
+	border: 3px solid #b2b2b2;
+	background-color: #ffffff;
+	overflow: hidden;
+}
+
+.muiSignInflowListHeading {
+  line-height: 1.42857143;
+	color: #999;
+}
+.muiSignInflowListHeading:after{
+	content: '';
+	display: table;
+	visibility: hidden;
+	clear: both;
+}
+.muiSignInflowListHeading > .time,
+.muiSignInflowListHeading > .info {
+	float: left;
+	margin-left: 3rem
+}
+.muiSignInflowListHeading > .info{ margin-left: .5rem; }
+.muiSignInflowListHeading > .muiSignInBtn {
+	margin-right: 1rem;
+	margin-top: -.4rem;
+	float: right;
+}
+
+.muiSignInflowListHeading > .muiSignInLabel {
+	margin-left: .3rem;
+	float: left;
+	opacity: 0.5;
+	border-radius: 7px;
+	border-radius: 7px;
+	margin-left: 1rem;
+}
+.muiSignInflowListContent{
+	margin-top: .5rem;
+	width: 100%;
+	display: table;
+	padding-left: 2.3rem;
+}
+.muiSignInflowListContent > .item{
+	display: table-cell;
+	vertical-align: top;
+	padding-right: 1rem;
+}
+.muiSignInflowListContent > .item:nth-child(1){ padding-right: .5rem; }
+.muiSignInflowListContent > .item .imgbox{
+	width: 5rem;
+	height: 5rem;
+}
+.muiSignInflowListContent > .item .imgbox:after{
+	content: '';
+	display: table;
+	visibility: hidden;
+	clear: both;
+}
+.muiSignInflowListContent > .item .imgbox > span{
+	margin-left: .1rem;
+	margin-bottom: .1rem;
+	width: 2.4rem;
+	height: 2.4rem;
+	float: left;
+	display: inline-block;
+}
+.muiSignInflowListContent > .item .imgbox > span:nth-child(2n+1){ clear: both; }
+.muiSignInflowListContent > .item .imgbox img{
+	width: 100%;
+	height: 100%;
+}
+.muiSignInflowListInfo{
+	margin-top: .3rem;
+	color: #999;
+	font-size: 1.2rem;
+}
+.muiSignInflowList .muiSignInBtnGroup{
+	padding: 0;
+	font-size: 0;
+	padding-left: .4rem;
+}
+/* 移动签到时间轴列表 Ends
+   ========================================================================== */
+
+
+/* 移动签到打卡记录 Starts
+   ========================================================================== */
+.muiSignInRecord .muiSignInflowList > li {
+	border-bottom: 0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.muiSignInRecord .muiSignInflowList .flowListPostPoint{
+  top: 1.1rem;
+}
+
+.muiSignInRecord .muiSignInflowList > li:after{ display: none; }
+
+.muiSignInRecord .muiSignInflowList .muiSignInBtnInfo{ margin-bottom: .5rem; }
+
+/* 移动签到打卡记录 Ends
+   ========================================================================== */
+
+
+/* 移动签到面板 Starts
+   ========================================================================== */
+.muiSignInPanel { /*background-color: #fff;*/ }
+.muiSignInPanelHeading {
+	padding: 1rem 1rem 0;
+	line-height: 1.42857143;
+	vertical-align: middle;
+	color: #999;
+	font-size: 1.4rem;
+	font-weight: normal;
+	display: -webkit-box;
+	display: box;
+	-webkit-box-orient: horizontal;
+					box-orient: horizontal;
+}
+.muiSignInPanelHeading > .title,
+.muiSignInPanelHeading > .muiSignInBtnGroup{
+	-webkit-box-flex:1;
+}
+.muiSignInPanelHeading > .title {
+	line-height: 1.42857143;
+}
+.muiSignInPanelHeading > .title > em{
+	margin: 0 .3rem;
+	color: #4297ff;
+}
+.muiSignInPanelHeading > .muiSignInBtnGroup{ text-align: right; }
+.muiSignInPanelBody{
+	padding-bottom: 1rem;
+}
+.muiSignInPanelNoPadding{padding:0px;}
+/* 移动签到面板 Ends
+   ========================================================================== */
+/* 地图详细信息 Starts
+   ========================================================================== */
+.muiSignInMapDetail {
+  padding: .5rem 1rem;
+  padding-bottom: 6rem;
+  background-color: #fff;
+  position: absolute;
+  z-index: 2000;
+  bottom: 0;
+  width: 100%;
+  -webkit-box-shadow: 0 -1px 5px rgba(0,0,0,.125);
+          box-shadow: 0 -1px 5px rgba(0,0,0,.125);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.muiSignInMapDetail.trail{
+	height: 160px;
+	z-index: 100000;
+}
+.muiSignInMapDetailPost{
+	margin-bottom: .5rem;
+	color: #999;
+	font-size: 1.2rem;
+}
+.muiSignInMapDetailHeading{
+  margin-bottom: .3rem;
+	color: #333;
+	font-weight: normal;
+}
+.muiSignInMapDetailHeading:after{
+	content: '';
+	display: table;
+	visibility: hidden;
+	clear: both;
+}
+.muiSignInMapDetailHeading > .time{
+	margin-right: .5rem;
+	color: #4297ff;
+	font-size: 1.6rem;
+	font-weight: normal;
+	float: left;
+}
+.muiSignInMapDetailHeading > .title{
+	margin-right: .5rem;
+	font-size: 1.8rem;
+  font-weight: normal;
+	float: left;
+	/* width: 20rem; */
+}
+.muiSignInMapDetailHeading > .muiSignInLabel {
+	margin-top: .1rem;
+	float: left;
+}
+.muiSignInMapDetailSummary {
+	margin-top: .8rem;
+	color: #333;
+	font-size: 1.4rem;
+}
+.muiSignInMapDetail .muiSignInBtnInfo{
+	color: #999;
+	font-size: 1.2rem;
+}
+.muiSignInMapDetail .imgbox {
+	margin-top: .8rem;
+	font-size: 0;
+}
+.muiSignInMapDetail .imgbox > span {
+	width: 6rem;
+	height: 6rem;
+	display: inline-block;
+}
+.muiSignInMapDetail .imgbox > span:not(:last-child){ margin-right: .8rem; }
+.muiSignInMapDetail .imgbox > span img{
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.attendTabBar{
+	z-index: 1050;
+    bottom: 0rem;
+    position: absolute;
+    width: 100%;
+}
+.muiSignOutside .muiSignOutsideBtn{
+	margin-top:3rem;
+}
+.muiSignOutside .muiDesc{
+	text-align:right;
+	padding-right:5px;
+ 	color: #898989;
+    font-size: 12px;
+}
+.muiSignInMapDetail-dotted{
+	padding: 1rem .4rem;
+	text-align: center;
+	font-size: 0;
+	bottom: 0;
+    position: absolute;
+    width: 90%;
+}
+.muiSignInMapDetail-dotted > span{
+	margin: 0 .6rem;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background-color: #d5d5d5;
+	display: inline-block;
+}
+.muiSignInMapDetail-dotted > span.active{ background-color: #4297ff; }
+
+/* 地图详细信息 Ends
+   ========================================================================== */
+/* 提交异常处理Start
+   ========================================================================== */   
+ .muiSignExc .muiDesc{
+ 	text-align:right;
+ 	color: #898989;
+    font-size: 12px;
+    padding-right: 5px;
+}
+  .muiSignExc .muiSignExcBtn{
+  	margin-top:3rem;
+  } 
+   /* 提交异常处理End
+   ========================================================================== */
+   
+/* 签到日历Start
+========================================================================== */
+ .CalendarListView  .muiSignInflowList.muiCalendarList{border-left: 0px solid #e0e0e0;}
+.CalendarListView .muiListNoData { }
+.CalendarListView .muiListNoData .muiListNoDataTxt{
+	position: relative;
+    top: -15px;
+}
+.CalendarListView .muiListNoDataImg img{
+}
+.muiCalendarNotify {
+	background-color: red !important;
+}
+.muiCalendarNotify.muiCalendarNotifyNormal{
+	background-color: #37aee9 !important;
+}
+.muiCalendarNotify.muiCalendarNotifyOutside {
+	background-color: #FD8641 !important;
+}
+.journey_status.journey.normal{
+	background: var(--muiFontColor);
+}
+.journey_status.journey.outside{
+	background: #FF9900;
+}
+.journey_status.journey.late{
+	background: #F46642;
+}
+
+   /* 签到日历End
+   ========================================================================== */
+ /* 签到统计Start
+   ========================================================================== */
+.muiAttendStatView{}
+.muiAttendStatView .muiSubHead {
+  padding: 1rem 1.5rem;
+  width: 100%;
+  display: table;
+  background-color: #fff;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.muiAttendStatView .muiSubHead .muiItem {
+  display: table-cell;
+  width: 50%;
+  color: #666;
+  font-size: 1.4rem;
+  line-height: 3rem;
+}
+.muiAttendStatView .muiSubHead .muiStatDate{text-align: right;padding-right: 1rem;}
+.muiAttendStatView .muiSubHead .muiStatDate .muiFieldOpt{display:none;}
+.muiAttendStatView .muiSubHead .muiField {min-width:inherit;width:auto;}
+.muiAttendStatView .muiSubHead .mui-down-n {font-size:12px;}
+
+.muiAttendStatView .muiSubHead .muiStatDateSelIcon {
+  margin-left: 5px;
+  display: inline-block;
+  position: relative;
+  left: -1.2rem;
+}
+.muiAttendStatView .muiSubHead .muiSelInputRight{ font-size: 1.4rem; padding-right: 1rem;}
+.muiAttendStatView .muiSubHead .muiFormEleWrap{ padding-right: 1.3rem; display: inline-block; }
+.muiAttendStatView .muiSubHead .muiSelInput{ text-align: right; }
+
+.muiAttendStatView .muiStatType .muiDate{margin-right: 2rem;}
+.muiAttendStatView .muiStatType .active{font-weight: bold;position: relative;}
+.muiAttendStatView .muiStatType .active:after{
+	content: '';
+    position: absolute;
+    width: 2rem;
+    height:4px;
+    background-color: #4285f4;
+    border-radius: 6px;
+    left:calc(50% - 1rem);
+    bottom: -12px;
+}
+
+.muiStatView {
+	background-color: #4285F4;
+    padding: 1.25rem 1.5rem;
+}
+.mui-infoboard-progress {
+	padding-top: 1rem;
+}
+
+.muiEkpSubStatisticsPopulation {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #5491F5;
+}
+.muiEkpSubStatisticsPopulation>p {
+    font-size: 4rem;
+    color: #FFFFFF;
+    font-family: "landray-number", fontnumber,-apple-system, SF UI Text, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
+}
+.muiEkpSubStatisticsPopulation>span {
+    font-size: 1.2rem;
+    color: #FFFFFF;
+    opacity: 0.8;
+}
+
+/*圆形进度条*/
+.mui-progress-circle{
+  margin: 0 auto;
+  border-radius:50%;
+  background-image:-webkit-linear-gradient(230deg, #4a9cfe 0%, #2be4ad 100%);
+  background-image:gradient(230deg, #4a9cfe 0%, #2be4ad 100%);
+  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+          box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  -webkit-transition: width .6s ease;
+          transition: width .6s ease;
+  position:relative;
+}
+.mui-progress-circle,
+.mui-progress-circle-L,
+.mui-progress-circle-R,
+.mui-progress-circle-L .progress-o-L,
+.mui-progress-circle-R .progress-o-R{
+    width:64px;
+    height:64px;
+}
+.mui-progress-circle-L,
+.mui-progress-circle-R{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.mui-progress-circle-L .progress-o-L,
+.mui-progress-circle-R .progress-o-R {
+    background-color:#e6e6e6;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.mui-progress-circle-R,
+.mui-progress-circle-R .progress-o-R {
+    clip:rect(0,auto,auto,32px);
+}
+.mui-progress-circle-L,
+.mui-progress-circle-L .progress-o-L {
+    clip:rect(0,32px,auto,0);
+}
+.mui-progress-circle-mask {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background-color: #fff;
+  text-align: center;
+  color: #2d96e9;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-box-pack: center;
+  box-pack: center;
+  -webkit-box-align: center;
+  box-align: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.mui-progress-circle-mask .head{
+  margin-bottom: .3rem;
+  color: #333;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.mui-progress-circle-mask .txt{
+  color: #bbb;
+}
+.mui-progress-circle-s,
+.mui-progress-circle-s .mui-progress-circle-L,
+.mui-progress-circle-s .mui-progress-circle-R,
+.mui-progress-circle-s .mui-progress-circle-L .progress-o-L,
+.mui-progress-circle-s .mui-progress-circle-R .progress-o-R{
+    width:46px;
+    height:46px;
+}
+.mui-progress-circle-s .mui-progress-circle-R,
+.mui-progress-circle-s .mui-progress-circle-R .progress-o-R {
+    clip:rect(0,auto,auto,23px);
+}
+.mui-progress-circle-s .mui-progress-circle-L,
+.mui-progress-circle-s .mui-progress-circle-L .progress-o-L {
+    clip:rect(0,23px,auto,0);
+}
+.mui-progress-circle-s .mui-progress-circle-mask{
+    width:40px;
+    height:40px;
+    font-size:12px;
+    left: 3px;
+    top: 3px;
+}
+.mui-progress-circle-lg,
+.mui-progress-circle-lg .mui-progress-circle-L,
+.mui-progress-circle-lg .mui-progress-circle-R,
+.mui-progress-circle-lg .mui-progress-circle-L .progress-o-L,
+.mui-progress-circle-lg .mui-progress-circle-R .progress-o-R{
+  width:140px;
+  height:140px;
+}
+.mui-progress-circle-lg .mui-progress-circle-R,
+.mui-progress-circle-lg .mui-progress-circle-R .progress-o-R {
+    clip:rect(0,auto,auto,70px);
+}
+.mui-progress-circle-lg .mui-progress-circle-L,
+.mui-progress-circle-lg .mui-progress-circle-L .progress-o-L {
+    clip:rect(0,70px,auto,0);
+}
+.mui-progress-circle-lg .mui-progress-circle-mask {
+  width: 126px;
+  height: 126px;
+  font-size: 12px;
+  left: 7px;
+  top: 7px;
+}
+
+.muiStatView-infoboard-list{
+  margin-bottom: 1rem;
+  list-style: none;
+  font-size: 0;
+  -webkit-display: flex;
+          display: flex;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.muiStatView-infoboard-list > li{
+  width: 20%;
+  float: left;
+  margin: 1.6rem 0 .8rem 0;
+}
+.muiStatView-infoboard-list > li .num,
+.muiStatView-infoboard-list > li .txt{
+  display: block;
+  color: #FFFFFF;
+}
+.muiStatView-infoboard-list > li .num{ 
+	font-size: 2rem; 
+	font-family: "landray-number", fontnumber,-apple-system, SF UI Text, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
+}
+.muiStatView-infoboard-list > li .txt{
+	font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.muiAttendExcListContainer {
+	margin-top: 1rem;
+}
+.muiAttendExcListMore {
+	float: right;
+}
+.muiAttendExcListMore>span {
+	color: #fff;
+    height: 2rem;
+    font-size: 1.2rem;
+}
+.muiAttendExcListMore .numActive {
+	background-color: #FF725A;
+	border-radius: 6px;
+    padding: 0 .2rem;
+}
+.muiAttendExcListContainer,
+.muiAttendWorkChartContainer {
+  padding: 1.5rem;
+  background-color: #fff;
+  position: relative;
+  font-size: 1.4rem;
+  color: #3E4665;
+}
+.muiAttendExcListContainer .muis-to-right,
+.muiAttendWorkChartContainer .muis-to-right {
+  	display: inline-block;
+    font-size: 1rem;
+    transform: scale(.8);
+    color: #999FB7;
+}
+.muiStatCriterion{
+  padding: 1rem 1.5rem;
+  background-color: #fff;
+  position: relative;
+  display: flex;
+}
+.muiStatCriterion .muiStatDate {
+    line-height: 3rem;
+    width: 120px;
+}
+.muiStatCriterion .muiStatDate .oldMui.muiFormEleWrap{
+	min-width: 0;
+}
+.muiStatCriterion .muiItem {
+	width:65%;
+	flex: 1;
+    line-height: 3rem;
+    padding-left:5px;
+    font-size: var(--muiFontSizeMS);
+}
+.muiStatCriterion .muiStatDate .muiSelInput{
+	font-size: 1.4rem;
+    color: #2A304A;
+    margin-right: .4rem;
+    float: left;
+    padding-right: 0;
+    width:65%;
+}
+.muiStatCriterion .muiStatDate .muiSelInputRight {
+	font-size: 1.4rem;
+    padding-right: 1rem;
+    display: inline-block;
+    position: relative;
+    right: 0;
+    top:0px;
+}
+.muiStatCriterion .muiStatDate .muiFormStatusEdit .muiSelInput {
+	padding-right: 0.1rem!important;
+}
+.muiStatCriterion .muiStatDate .mui-down-n {
+	font-size: 12px;
+	color: #999999;
+}
+
+.muiStatCriterion .muiAddressForm{
+	display:none;
+}
+.muiStatCriterion .muiLeftArea{
+	float:left;
+	display: inline-block;
+    width: 55%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.muiStatCriterion .muiRightArea{
+	text-align: right;
+	color: #999999;
+}
+.muiStatCriterion .muiRightArea .muis-to-right{
+	display: inline-block;
+    font-size: 1rem;
+    transform: scale(.8);
+    position: relative;
+    top: -1px;
+}
+.muiCommonHead {
+  padding: .7rem 1.2rem;
+  height: 60px;
+  background-color: rgba(255, 255, 255, .9);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.muiCommonHead .leftArea,
+.muiCommonHead .rightArea{
+	color: #666;
+	font-size: 1.4rem;
+}
+.muiCommonHead .leftArea {
+   float: left;
+   padding-top: 5px;
+  color: #333;
+  font-size: 17px;
+}
+
+.muiCommonHead .rightArea {float: right;}
+.muiCommonHead .rightArea .muiHeaderItem,
+.muiCommonHead .rightArea .muiFieldItem{
+	width: 100%;
+	display: inline-block;
+  height: auto;
+  min-height: inherit;
+  padding-right: .3rem;
+}
+.muiCommonHead .rightArea .muiSelInputRight {
+  color: #666;
+  font-size: 1.4rem;
+  line-height: initial;
+  top: 50%;
+  position:absolute;
+  right:.5rem;
+}
+.muiCommonHead .rightArea .muiSelInput{ line-height: inherit; color: #666;}
+
+
+.muiCommonHead .rightArea .muiFieldItem{ margin-left: 2rem; }
+.muiCommonHead .rightArea .muiFormSelectContnet.edit .muiFormDatetimeText{ padding-right: 1rem; }
+
+.muiAttendChartListItem{
+	padding: 1rem 1.2rem;
+    border-bottom: 1px solid #d1d1d1;
+    color: #888;
+    font-size: 1.4rem;
+    margin: 0;
+}
+.muiAttendChartListItem:nth-child(1) .muiChartNum,
+.muiAttendChartListItem:nth-child(2) .muiChartNum,
+.muiAttendChartListItem:nth-child(3) .muiChartNum{
+	margin-top: .5rem;
+	height: 3.5rem;
+	background-color: transparent;
+	border-radius: 0;
+}
+
+.muiAttendChartListItem:nth-child(1) .muiChartNum{ background-image: url(../image/badge-img-01.png); }
+.muiAttendChartListItem:nth-child(2) .muiChartNum{ background-image: url(../image/badge-img-02.png); }
+.muiAttendChartListItem:nth-child(3) .muiChartNum{ background-image: url(../image/badge-img-03.png); }
+
+.muiAttendChartListItem .muiChartImgContainer{
+	margin-right: 1rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-color: #f8f8f8;
+    overflow: hidden;
+    display: inline-block;
+    float: left;
+}
+.muiAttendChartListItem .muiChartImgContainer > img{ max-width: 100%; }
+.muiAttendChartListItem .muiChartContentContainer{
+	max-width: 50%;
+    min-height: 4rem;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-box-pack: center;
+    box-pack: center;
+    -webkit-box-align: start;
+    box-align: start;
+}
+.muiAttendChartListItem .muiChartContentContainer .sysAttendListTitle,
+.muiAttendChartListItem .muiAttendPerson{
+	margin: 0 0 .5rem;
+	font-size: 1.6rem;
+	font-weight: normal;
+}
+.muiAttendChartListItem .muiChartContentContainer .sysAttendListTime,
+.muiAttendChartListItem .muiAttendPersonDept{ font-size: 1.2rem; }
+.muiAttendChartListItem .muiChartNum {
+	margin-top: .8rem;
+	margin-right: 1rem;
+	width: 2.4rem;
+	height: 2.4rem;
+	line-height: 2.5rem;
+	text-align: center;
+	color: #fff;
+	border-radius: 50%;
+	background-color: #d5d5d5;
+	background-repeat: no-repeat;
+	background-position: 50% 0;
+	background-size: 100% auto;
+	overflow: hidden;
+	display: inline-block;
+	float: left;
+}
+.attendStatListView .muiStatListHead{width:100%; box-shadow: none;}
+.attendStatListView .muiStatListHead .muiHeaderItem {text-align:right !important;}
+.attendStatListView .muiNavbarSelected{
+	display:none;
+}
+.muiRightContainer{}
+.attendStatListView .muiStatInfo{
+	line-height: 4rem;
+    float: right;
+}
+.attendStatListView .muiLight{color: #fc8080;}
+.attendStatListView .muiStatus{color:#37aee9}
+.attendStatListView .muiMissed{color: #ef850d;}
+.attendStatListView .muiNavbarContainer {
+	background-color: #fff;
+  -webkit-display: flex;
+          display: flex;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-align-items: stretch;
+          align-items: stretch;
+}
+.attendStatListView .muiNavitem {
+	line-height: 1.42857143;
+  -webkit-display: flex;
+          display: flex;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-align-items: center;
+          align-items: center;
+  position: relative;
+}
+.attendStatListView .muiNavitem:not(:last-child):after{
+	content: '';
+	display: block;
+	border-left: 1px solid #e0e0e0;
+	position: absolute;
+	right: 0;
+	top: 1rem;
+	bottom: 1rem;
+}
+.attendStatListView .muiNavitem.muiNavitemSelected span{
+	color: #4297ff;
+	font-size: 1.2rem;
+	font-weight: normal;
+	border-bottom:0px;
+}
+@media screen and (max-width: 400px) and (min-width: 321px){
+	.attendStatListView .muiNavitem span{
+		font-size: 1.6rem;
+		font-weight: normal;
+	}
+	.attendStatListView .muiNavitem.muiNavitemSelected span,
+	.attendStatListView .muiNavitem .muiNavitemSpan{ font-size: 1.2rem; }
+}
+.attendStatListView .muiFormSelectContnet.edit .muiFormDatetimeText{ padding-right: 1rem; }
+
+.muiCommonHead .rightArea .muiFormSelect > .muiFieldItem > .muiFieldOpt span,
+.attendStatListView .muiFormSelect > .muiFieldItem > .muiFieldOpt span {
+	width: 0;
+	height: 0;
+	border-right: 4px solid transparent;
+	border-top: 4px solid #b4b4b4;
+	border-bottom: 4px solid transparent;
+	border-left: 4px solid transparent;
+	right: 1rem;
+	position: absolute;
+	bottom: 50%;
+	margin-bottom: -5px;
+}
+
+.muiFormSelectContnet.edit .muiFormDatetimeText{
+	color: #666;
+	white-space: nowrap;
+}
+
+.attendRecordView{}
+.attendRecordView .muiListItem div{display:inline;}
+.attendRecordView .muiListItem{min-height:4rem;line-height: 4rem;}
+.attendRecordView .muiStatusTxt{float:right;}
+
+
+ /* 签到统计End
+   ========================================================================== */
+   
+/* 移动签到异常列表 Starts
+   ========================================================================== */
+.excListView{
+	background-color: #f9f9f9;
+}
+.muiExcPanel{padding:0 1rem;}
+.muiSignInAbnormalList{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.muiSignInAbnormalList > li{
+	margin-bottom: 1rem;
+	background-color: #fff;
+	border: .1rem #e1e1e1 solid;
+}
+
+.muiSignInSignLogList > li{
+	background-color: #fff;
+	border: none;
+	border-bottom: .1rem #eee solid;
+}
+
+.muiSignInSignLogList .content {
+	padding: 1rem;
+	color: #999;
+	font-size: 1.2rem;
+	position: relative;
+	overflow: hidden;
+}
+.muiSignInSignLogList .timeInfo{
+	font-size: 2rem;
+	color: #000000;
+	letter-spacing: 0;
+	font-weight: 400;
+}
+.muiSignInSignLogList .addressImage{
+	vertical-align: middle;
+	width: 1.3rem;
+	height: 1.3rem;
+	margin-right: 0.4rem;
+}
+.muiSignInSignLogList .addressInfo{
+	vertical-align:middle;
+}
+
+.muiSignInSignLogList .muiSignDateBox{font-size:1.3rem;padding-bottom: 0.4rem;}
+
+.muiSignInAbnormalList .content{
+	padding: 1rem;
+	color: #999;
+	font-size: 1.2rem;
+	position: relative;
+	overflow: hidden;
+}
+.muiSignInAbnormalList .heading:after,
+.muiSignInAbnormalList .muiSignInBtnGroup:after{
+	content: '';
+	display: table;
+	visibility: hidden;
+	clear: both;
+}
+.muiSignInAbnormalList .heading > .imgbox,
+.muiSignInAbnormalList .heading > .name,
+.muiSignInAbnormalList .heading > .date{
+	display: inline-block;
+	line-height: 2rem;
+	float: left;
+}
+.muiSignInAbnormalList .heading > .name{color:#333;font-size:1.4rem;}
+.muiSignInAbnormalList .heading > .muiAttendStatus{float:right;color:#ff5e56;font-size:1.4rem;}
+.muiSignInAbnormalList .heading > .imgbox{
+	margin-right: .8rem;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	background-color: #f8f8f8;
+	overflow: hidden;
+}
+.muiSignInAbnormalList .heading > .imgbox img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+.muiSignInAbnormalList .heading > .name{ margin-right: .5rem; }
+.muiSignInAbnormalList .badge {
+	padding: 1.4rem 2.2rem .2rem;
+	color: #fff;
+	font-size: 1rem;
+	background-color: #ff6c6c;
+	-webkit-transform: rotate(45deg);
+					transform: rotate(45deg);
+	position: absolute;
+	right: -2.3rem;
+	top: -.5rem;
+}
+.muiSignInAbnormalList .muiDateBox{margin:1.2rem 0 0;font-size:1.3rem;}
+.muiSignInAbnormalList .muiDateBox span{color:#777;}
+.muiSignInAbnormalList .summary {
+	margin-top: 1rem;
+	color: #333;
+	font-size: 1.3rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-break: break-all;
+	word-wrap: break-word;
+	-webkit-line-clamp: 2;
+	display: -webkit-box;
+	display: box;
+	-webkit-box-orient: vertical;
+					box-orient: vertical;
+	-webkit-box-pack: center;
+					box-pack: center;
+	-webkit-box-align: start;
+					box-align: start;
+}
+.muiSignInAbnormalList .summary{color:#777;}
+.muiSignInAbnormalList .muiSignInBtnGroup{
+	border-top: 1px solid #ddd;
+}
+.muiSignInAbnormalList .muiSignInBtnGroup > a{
+	padding: 1rem;
+	width: 50%;
+	line-height: 1.42857143;
+	text-align: center;
+	font-size: 1.4rem;
+	transition: all .3s ease-in-out;
+	display: block;
+	float: left;
+}
+.muiSignInAbnormalList .muiSignInBtnGroup > a:not(:last-child) { border-right: 1px solid #ddd; }
+.muiSignInAbnormalList .muiSignInBtnGroup > a:nth-child(1) { color: #ff5e56; }
+.muiSignInAbnormalList .muiSignInBtnGroup > a:nth-child(2) { color: #4297ff; }
+.muiSignInAbnormalList .muiSignInBtnGroup > a:active { background-color: #f8f8f8; }
+
+.muiExcListHeading{
+  padding: 1rem;
+  line-height: 1.42857143;
+  color: #333;
+  font-size: 1.4rem;
+  display: -webkit-box;
+  display: box;
+}
+.muiExcListHeading > div{
+	-webkit-box-flex:1;
+}
+.muiExcListHeading > .title > em{
+	margin: 0 .3rem;
+	color: #4297ff;
+}
+.chartListView .mblFixedBottomBar,.excListView .mblFixedBottomBar,.attendStatListView .mblFixedBottomBar {
+    position: relative !important;
+}
+/* 移动签到异常列表 Ends
+   ========================================================================== */
+
+/*edit start*/
+.mblBackground{height:100%;}
+.muiSignCustBar{position:fixed;bottom:0;left:0;width:100%;}
+.mblView{height:100%;}
+.muiSignedTitle .time,.muiSignedTitle .info{color:#2A304A;font-size:1.4rem;}
+.muiSignedRecords .muiSignedRecordList .muiSignedAddress{padding:0;}
+.muiSignInRecord .muiSignedRecords{height:12rem;padding:.4rem 0.5rem;}
+.muiSignInRecord .muiSignedRecords .muiSignedRecordList{height:11.8rem;overflow-y:scroll;-webkit-overflow-scrolling:touch;}
+
+.muiSignInflowList > li .muiSignInBtnArea{width:100%;padding:1.1rem .5rem .5rem 0rem;margin:5% 0 0;z-index:10;zoom:1;}
+.muiSignNoRecordPanel .muiSignInflowList > li .muiSignInBtnArea{clear:both;margin:12% 0 0;}
+
+@media (device-width:320px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone 5 */
+.muiSignInRecord .muiSignedRecords{height:7rem;}
+.muiSignInRecord .muiSignedRecords .muiSignedRecordList{height:6.8rem;}
+.muiSignInflowList > li .muiSignInBtnArea{margin:4% 0 0;}
+}
+@media (device-width:320px) and (device-height:480px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone 4 */
+.muiSignInRecord .muiSignedRecords{height:8rem;}
+.muiSignInRecord .muiSignedRecords .muiSignedRecordList{height:7.8rem;}
+.muiSignInflowList > li .muiSignInBtnArea{margin:2% 0 0;}
+.muiSignInflowList > li .muiSignInBtnArea{margin:0;}
+.muiSignInBtnSign{width:10rem;height:10rem;}
+}
+
+@media (device-width:375px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone 6 */
+.muiSignInRecord .muiSignedRecords{height:14rem;}
+.muiSignInRecord .muiSignedRecords .muiSignedRecordList{height:13.8rem;}
+.muiSignInflowList > li .muiSignInBtnArea{margin:6% 0 0;}
+.muiSignNoRecordPanel .muiSignInflowList > li .muiSignInBtnArea{margin:35% 0 0;}
+}
+@media (device-width:414px) and (-webkit-min-device-pixel-ratio:3.0){/* 兼容iphone6 plus */
+.muiSignInRecord .muiSignedRecords{height:19.5rem;}
+.muiSignInRecord .muiSignedRecords .muiSignedRecordList{height:19.3rem;}
+.muiSignInflowList > li .muiSignInBtnArea{margin:6% 0 0;}
+.muiSignNoRecordPanel .muiSignInflowList > li .muiSignInBtnArea{margin:40% 0 0;}
+}
+
+@media (device-width:1024px) and (device-height:600px) and (-webkit-min-device-pixel-ratio:1){/* 兼容samsung Galaxy Tab*/
+.muiSignInflowList > li .muiSignInBtnArea{margin:0;padding:.8rem .5rem .5rem 0;}
+}
+
+@media (device-width:320px) and (device-height:533px) and (-webkit-min-device-pixel-ratio:1.5){/* 兼容samsung Galaxy S SII W*/
+.muiSignInRecord .muiSignedRecords{height:12rem;}
+.muiSignInRecord .muiSignedRecords .muiSignedRecordList{height:11.8rem;}
+.muiSignInflowList > li .muiSignInBtnArea{margin:0;padding:.2rem .5rem .5rem 0;}
+}
+
+
+.muiSignedRecords .muiSignedTitlePoint{width:1rem;height:1rem;top:.85rem;}
+/*edit end*/
+
+/*签到统计 start*/
+.muiSignStatListItem {
+    background: #FFFFFF;
+    box-shadow: 0 0 30px 0 rgba(153, 179, 210, 0.20);
+    border-radius: 6px;
+    zoom: 1;
+    margin-bottom: 1rem;
+}
+.muiSignStatListItem .muiStatHead{
+	height: 4.5rem;
+    line-height: 4.5rem;
+    padding: 0 1rem;
+    border-bottom: 1px solid #eee;
+}
+.muiSignStatListItem .muiStatHead .muiStatTitle{
+  	float: left;
+    font-size: 1.4rem;
+    color: #3E4665;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/*.muiSignStatListItem .muiStatHead .muiStatIcon {
+  border: 1px #37aee9 solid;
+  display: inline-block;
+  margin-right: 2px;
+}*/
+.muiSignStatListItem .muiStatStatusSpan{
+	float: left;
+    margin-left: .4rem;
+}
+.muiSignStatListItem .muiStatStatus{
+    padding: .3rem .5rem .1rem .5rem;
+    display: initial;
+    height: 1.4rem;
+    font-size: var(--muiFontSizeXS);
+    background-color: #EEF4FF;
+    border-radius: 2px;
+    position: relative;
+    top: 1px;
+}
+.muiSignStatListItem .muiStatStatus.muiDoing{
+	color: #4285F4;
+}
+.muiSignStatListItem .muiStatStatus.muiFinish{
+	color: #999999;
+}
+.muiSignStatListItem .muiStatStatus.muiUnstart{
+	color: #999999;
+}
+.muiSignStatListItem .muiStatSignedDetail{
+	float: right;
+    font-size: 1.2rem;
+    color: #999FB7;
+}
+.muiSignStatListItem .muiStatSignedDetail .muis-to-right{
+	display: inline-block;
+    color: #999FB7;
+    font-size: 1rem;
+    transform: scale(.8);
+}
+.muiSignStatListItem .muiStatSignedDetail span {
+  border: 1px solid #37aee9;
+  border-radius: 40px;
+  display: inline-block;
+  min-width: 100px;
+  line-height: 20px;
+  padding: 4px 10px;
+  color: #37aee9;
+  font-size: 14px;
+}
+.muiSignStatListItem .muiStatSignedDetail span:active{
+  background-color: #d6f1ff;
+}
+.muiSignStatListItem .muiSignBox,
+.muiSignStatListItem .muiUnSignBox{
+  margin: 0 18%;
+  padding: 20px 0;
+  /*width: 50%;*/
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+  display: inline-block;
+  position: relative;
+}
+.muiSignStatListItem .muiSignBox:hover,
+.muiSignStatListItem .muiUnSignBox:hover{
+  opacity: .75;
+  filter: alpha(opacity=75);
+}
+
+.muiSignStatListItem .muiSignBox span,
+.muiSignStatListItem .muiUnSignBox span{
+  display:block;
+  font-size: 1.2rem;
+  color: #3E4665;
+}
+.muiSignStatListItem .muiStatItem {
+  text-align: center;
+  height: 9rem;
+}
+.muiSignStatListItem .muiStatItem:after{
+  content: '';
+  display: table;
+  visibility: hidden;
+  clear: both;
+}
+.muiSignStatListItem .muiStatItem .muiCount {
+  font-size: 3.1rem;
+  color: #4285F4;
+  display: inline-block;
+  text-align: center;
+  font-family: "landray-number", fontnumber,-apple-system, SF UI Text, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
+}
+
+.signStatListView .muiNavbarContainer{
+	background-color: #F7F7F7;
+}
+.SignRecordListItem {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid #d1d1d1;
+  color: #888;
+  font-size: 1.4rem;
+  margin: 0;
+  position: relative;
+}
+.SignRecordListItem .sysAttendListImgContainer {
+    margin-right: 1rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-color: #f8f8f8;
+    overflow: hidden;
+    display: inline-block;
+    float: left;
+}
+.SignRecordListItem .sysAttendListImgContainer > img {
+    width: 100%;
+    height: 100%;
+}
+.SignRecordListItem .sysAttendListContentContainer {
+  max-width: 50%;
+  min-height: 4rem;
+  float: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: vertical;
+          box-orient: vertical;
+  -webkit-box-pack: center;
+          box-pack: center;
+  -webkit-box-align: start;
+          box-align: start;
+}
+.SignRecordListItem .sysAttendListContentContainer .muiName {
+    margin: 0 0 .3rem;
+    color: #454545;
+    font-size: 1.6rem;
+    font-weight: normal;
+}
+.SignRecordListItem .sysAttendListContentContainer .muiDept {
+    color: #888;
+    font-size: 1.2rem;
+}
+.sysAttendListTagContainer {
+  color: #333;
+  right: 1.2rem;
+  top: 1rem;
+}
+.chartListView .sysAttendListTagContainer{
+	float:right;
+}
+
+.signStatTrailView{z-index:15;}
+.signStatTrailView .muiSignTrailTabBar{
+
+}
+.muiLocationListDom .muiSignTrailContent{
+	width:100%;
+}
+.muiLocationListDom .muiSignTrailScrollableView{
+	max-height: 120px;
+}
+.muiLocationListDom .muiSignTrailHeadBtn {
+  width: 60px;
+  height: 18px;
+  line-height: 18px;
+  color: #999;
+  font-size: 14px;
+  text-align: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: #fff;
+  background-size: 16px;
+  display: inline-block;
+  -webkit-box-shadow: 0 -1px 3px rgba(0, 0, 0, .175);
+          box-shadow: 0 -1px 3px rgba(0, 0, 0, .175);
+  position: absolute;
+  left: 50%;
+  top: -18px;
+  margin-left: -30px;
+  transition-duration: .3s;
+}
+.muiLocationListDom .muiSignTrailHeadBtn:after{
+  content: '';
+  width: 100%;
+  height: 4px;
+  background-color: #fff;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+}
+.muiLocationListDom  .muiSignTrailHeadBtn:active{ background-color: #f8f8f8; }
+.muiLocationListDom  .muiSignTrailHeadBtn > .mui{ display: inline-block; transition-duration: .3s;}
+.muiLocationListDom  .muiSignTrailHeadBtn.collapse > .mui{
+  transform: rotate(180deg);
+}
+
+.muiLocationListDom .muiSignTrailContent .muiSignTrailHead{
+  padding: 5px 12px;
+}
+.muiLocationListDom .muiSignTrailContent .muiSignTrailHead:after{
+  content: '';
+  display: table;
+  visibility: hidden;
+  clear: both;
+}
+.muiLocationListDom .muiSignTrailContent .muiSignTrailHead .muiSignTrailLeftArea{
+  max-width: 60%;
+	float: left;
+}
+.muiLocationListDom .muiSignTrailContent .muiSignTrailHead .muiSignTrailRightArea{
+	max-width: 40%;
+  float: right;
+}
+.muiLocationListDom .muiSignTrailLeftArea .muipersonHead {
+  margin-right: 8px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f8f8f8;
+  overflow: hidden;
+  float: left;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.muiLocationListDom .muiSignTrailLeftArea .muiImg {
+  width: 100%;
+  height: 100%;
+}
+.muiLocationListDom .muiSignTrailLeftArea .muiPersonInfo {
+  height: 40px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+}
+.muiLocationListDom .muiSignTrailLeftArea .muiPersonInfo span {
+    display: block;
+    font-size: 1.6rem;
+}
+.muiLocationListDom .muiSignTrailLeftArea .muiDept{
+	color:#666;
+	 font-size: 1.2rem !important;
+}
+.muiLocationListDom .muiSignTrailRightArea .muiSignTrailCount{
+  margin: 0 auto;
+	width: 24px;
+  height: 24px;
+  background: url(../image/persons.png) no-repeat 50%;
+  background-size: auto 100%;
+  display: block;
+}
+.muiLocationListDom .muiSignTrailRightArea .muiSignTrailCountTxt{
+  color: #37aee9;
+	font-size: 10px;
+  position: relative;
+  top: -3px;
+}
+.muiLocationListDom .muiSignTrailRecordList{counter-reset: count;}
+.muiLocationListDom .muiSignTrailRecordList > li {
+  padding: 5px 12px 5px 34px;
+  position: relative;
+}
+.muiLocationListDom .muiSignTrailRecordList > li:not(:last-child){ padding-bottom: 15px; }
+.muiLocationListDom .muiSignTrailRecordList > li:before {
+  content: '';
+  border-left: 1px solid #e0e0e0;
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+}
+.muiLocationListDom .muiSignTrailRecordList > li:first-child:before {
+    top: 15px;
+}
+.muiLocationListDom .muiSignTrailItem .muiItemPoint {
+ width: 25px;
+ height: 31px;
+ text-align: center;
+ background: url(../image/icon-location.png) no-repeat left top;
+ background-size: 25px auto;
+ font-size: 1rem;
+ display: inline-block;
+ position: absolute;
+ left: 3px;
+ top: 6px;
+ z-index: 5;
+}
+.muiLocationListDom .muiSignTrailItem .muiItemPoint:before{
+	content: counter(count,decimal);
+	counter-increment:count;
+	color: #F36C6E;
+	line-height: 23px;
+}
+.muiSignMarker {
+	position: absolute;
+	width: 25px;
+	height: 31px;
+	text-align: center;
+	background: url(../image/icon-location.png) no-repeat left top;
+	background-size: 25px auto;
+	display: inline-block;
+	line-height: 13px;
+}
+.muiSignMarker i {
+	color: #F36C6E;
+	line-height: 23px;
+	font-size: 12px;
+}
+
+.muiLocationListDom .muiSignTrailItem .muiItemTitle{
+  line-height: 1;
+  color: #333;
+  font-size: 1.5rem;
+}
+.muiLocationListDom .muiSignTrailItem .muiItemTitle .info{ margin-left: 2px; }
+.muiLocationListDom .muiSignTrailItem .muiItemContent {
+  margin-top: .5rem;
+  padding: 5px;
+  border-radius: 2px;
+  background-color: #f7f7f7;
+}
+.muiLocationListDom .muiSignTrailItem .muiInfo {
+  line-height: 1.3;
+  color: #666;
+  font-size: 1.3rem;
+}
+.muiLocationListDom .muiSignTrailItem .muiInfo:not(:last-child){ margin-bottom: 5px; }
+.muiLocationListDom .muiSignTrailItem .muiInfo > .mui{
+  position: relative;
+  top: -1px;
+}
+.muiLocationListDom .muiSignTrailItem .muiImgBox {
+    margin-top: .8rem;
+    font-size: 0;
+}
+.muiLocationListDom .muiSignTrailItem .muiImgBox span {
+    width: 6rem;
+    height: 6rem;
+    display: inline-block;
+}
+.muiLocationListDom .muiSignTrailItem .muiImgBox span:not(:last-child) {
+    margin-right: .8rem;
+}
+.muiLocationListDom .muiSignTrailItem .muiImgBox > span img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.muiLocationListDom.muiSignTrailLocationList {
+  bottom: 0px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 -1px 3px rgba(0,0,0,.175);
+  box-shadow: 0 -1px 3px rgba(0,0,0,.175);
+}
+
+/*签到统计 end*/
+
+/* 签到记录详情页Start
+========================================================================== */
+.attendMainView{z-index:15;}
+.attendMainView .muiCommonHead .mainDate .muiSelInput{
+	padding-right: 0;
+}
+.muiLocationDialogListDom .muiSignTrailContent{
+	width:100%;
+}
+.muiLocationDialogListDom .muiLocListScrollableView{
+	max-height: 120px;
+}
+.muiLocationDialogListDom .muiToggleHeadBtn {
+  width: 60px;
+  height: 18px;
+  line-height: 18px;
+  color: #999;
+  font-size: 14px;
+  text-align: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: #fff;
+  background-size: 16px;
+  display: inline-block;
+  -webkit-box-shadow: 0 -1px 3px rgba(0, 0, 0, .175);
+          box-shadow: 0 -1px 3px rgba(0, 0, 0, .175);
+  position: absolute;
+  left: 50%;
+  top: -18px;
+  margin-left: -30px;
+  transition-duration: .3s;
+}
+.muiLocationDialogListDom .muiToggleHeadBtn:after{
+  content: '';
+  width: 100%;
+  height: 4px;
+  background-color: #fff;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+}
+.muiLocationDialogListDom  .muiToggleHeadBtn:active{ background-color: #f8f8f8; }
+.muiLocationDialogListDom  .muiToggleHeadBtn > .mui{ display: inline-block; transition-duration: .3s;}
+.muiLocationDialogListDom  .muiToggleHeadBtn.collapse > .mui{
+  transform: rotate(180deg);
+}
+
+.muiLocationDialogListDom .muiLocListContent .muiLocListHead{
+  padding: 5px 12px;
+}
+.muiLocationDialogListDom .muiLocListContent .muiLocListHead:after{
+  content: '';
+  display: table;
+  visibility: hidden;
+  clear: both;
+}
+.muiLocationDialogListDom .muiLocListContent .muiLocListHead .muiLocListLeftArea{
+  max-width: 60%;
+	float: left;
+}
+.muiLocationDialogListDom .muiLocListLeftArea .muipersonHead {
+  margin-right: 8px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f8f8f8;
+  overflow: hidden;
+  float: left;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.muiLocationDialogListDom .muiLocListLeftArea .muiImg {
+  width: 100%;
+  height: 100%;
+}
+.muiLocationDialogListDom .muiLocListLeftArea .muiPersonInfo {
+  height: 40px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+}
+.muiLocationDialogListDom .muiLocListLeftArea .muiPersonInfo span {
+    display: block;
+    font-size: 1.6rem;
+}
+.muiLocationDialogListDom .muiLocListLeftArea .muiDept{
+	color:#666;
+	 font-size: 1.2rem !important;
+}
+.muiLocationDialogListDom .muiLoctionRecordList{ }
+.muiLocationDialogListDom .muiLoctionRecordList > li {
+  padding: 5px 12px 5px 24px;
+  position: relative;
+}
+.muiLocationDialogListDom .muiLoctionRecordList > li:not(:last-child){ padding-bottom: 15px; }
+.muiLocationDialogListDom .muiLoctionRecordList > li:before {
+  content: '';
+  border-left: 1px solid #e0e0e0;
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+}
+.muiLocationDialogListDom .muiLoctionRecordList > li:first-child:before {
+    top: 15px;
+}
+.muiLocationDialogListDom .muiLoctionItem .muiItemPoint {
+  width: 6px;
+  height: 6px;
+  text-align: center;
+  background-color: #d8d8d8;
+  font-size: 1rem;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 5;
+}
+.muiLocationDialogListDom .muiLoctionItem .muiItemTitle{
+  line-height: 1;
+  color: #333;
+  font-size: 1.5rem;
+}
+.muiLocationDialogListDom .muiLoctionItem .muiItemTitle:after{
+	content: '';
+	display: table;
+	visibility: hidden;
+	clear: both;
+}
+.muiLocationDialogListDom .muiLoctionItem .muiItemTitle .time{ float: left; }
+.muiLocationDialogListDom .muiLoctionItem .muiItemTitle .info{
+	float: left;
+	margin-left: 2px;
+}
+.muiLocationDialogListDom .muiLoctionItem .muiItemTitle > .muiSignInLabel{
+	margin-left: .3rem;
+    float: left;
+}
+.muiLocationDialogListDom .muiLoctionItem .muiItemContent {
+  margin-top: .5rem;
+  padding: 5px;
+  border-radius: 2px;
+  background-color: #f7f7f7;
+}
+.muiLocationDialogListDom .muiLoctionItem .muiInfo {
+  line-height: 1.3;
+  color: #666;
+  font-size: 1.3rem;
+}
+.muiLocationDialogListDom .muiLoctionItem .muiInfo:not(:last-child){ margin-bottom: 5px; }
+.muiLocationDialogListDom .muiLoctionItem .muiInfo > .mui{
+  position: relative;
+  top: -1px;
+}
+.muiLocationDialogListDom .muiLoctionItem .muiImgBox {
+    margin-top: .8rem;
+    font-size: 0;
+}
+.muiLocationDialogListDom .muiLoctionItem .muiImgBox span {
+    width: 6rem;
+    height: 6rem;
+    display: inline-block;
+}
+.muiLocationDialogListDom .muiLoctionItem .muiImgBox span:not(:last-child) {
+    margin-right: .8rem;
+}
+.muiLocationDialogListDom .muiLoctionItem .muiImgBox > span img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.muiLocationDialogListDom.muiLocationList {
+  bottom: 0px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 -1px 3px rgba(0,0,0,.175);
+  box-shadow: 0 -1px 3px rgba(0,0,0,.175);
+}
+/* 签到记录详情页End
+========================================================================== */
+
+
+.mblView.sysAttendListView .muiNavbarContainer {
+	background-color: #f2f2f2;
+}
+.muiAttendBussTip{border: 0px !important;z-index:1000 !important;}
+.muiAttendBuss{
+	margin: 1rem;
+	padding: .5rem;
+	color: #333;
+    font-size: 1.4rem;
+    background: #F7F7F7;
+    box-sizing: border-box;
+    border-radius:.5rem;
+    position: relative;
+}
+.muiAttendBuss .muiBussCenter,.muiAttendBuss .muiBussRight{
+	
+}
+.muiAttendBuss .muiBussRight{
+	position: relative;
+    top: -3rem;
+    float: right;
+}
+.muiAttendBuss .muiBussLeft{
+   border-radius: 5px 0 0 5px;
+    height: 100%;
+    position: absolute;
+    width: 2rem; 
+}
+.muiAttendBuss .muiBussCenter{
+     margin: 0rem 2.5rem 0rem 1rem;
+}
+.muiAttendBuss .muiBussRight .mui-forward{color:#999}
+.muiAttendBuss .muiBussStatus{
+      color: #4285F4;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    -webkit-box-orient: vertical;
+    text-align: center;
+    border: 1px solid #4285F4;
+    border-radius: 10px;
+    padding: 0 .4rem;
+    font-size: 1rem;
+    margin-right: 1px;
+}
+.muiAttendBuss .muiBussTime{
+	color:#999999;
+	margin: -10px;
+    padding-top: 17px;
+    }
+.muiAttendBuss .muiBussTitle{
+text-overflow: ellipsis;
+    word-break: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    height: 2rem;
+    padding-left: 4.1rem;
+    }
+
+/* 首页底部按钮 Start
+========================================================================== */
+.muiEkpSubClockInFooter{
+    display: flex;
+    width: 100%;
+    position: fixed;
+    bottom:0;
+    text-align: center;
+    background: #FFFFFF;
+    box-shadow: 0 6px 10px 0 rgba(59, 68, 93, 0.50);
+}
+/* 首页底部按钮 End
+========================================================================== */
+.muiEkpSubClockInTitle{
+	padding:0 1.25rem;
+    height:5rem;
+    line-height: 5rem;
+    text-align: center;
+    border-bottom: 1px solid #e8e8e8;
+}
+.muiEkpSubClockInTitle .muiEkpSubClockInTitleText{
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.muiEkpSubClockInTitle .muis-spread {
+    display: inline-block;
+    font-size: 1.2rem;
+    transform: scale(.3);
+    color: #4285F4;
+}
+.muiEkpSubClockInTitle>em{
+    display: inline-block;
+    height:100%;
+    color: #4285F4;
+}
+
+
+.muiEkpSubClockInHeader{
+    background-color: #fafafa;
+    height:9rem;
+    padding:2.5rem 1.25rem 0 1.25rem;
+    box-sizing: border-box;
+}
+.muiEkpSubClockInHeader .muiEkpSubHeadicon img{
+    border:1px solid #CCE0FE;
+    float: left;
+}
+.muiEkpSubClockInHeader>ul{
+    float: left;
+    margin-left: 1rem;
+    padding-top:.3rem;
+}
+.muiEkpSubClockInHeader>ul>li>p{
+    color: #2A304A;
+}
+.muiEkpSubClockInHeader>ul>li>span{
+    color: #999FB7;
+}
+.muiEkpSubHeadicon img{
+    display: inline-block;
+    width: 4rem;
+    height: 4rem;
+    background-size: 4rem;
+    border-radius: 2rem;
+}
+
+.muiEkpSubClockInScheduleTitle{
+    background-color: #f7f7f8;
+    height:5rem;
+    line-height: 5rem;
+    padding:0 2rem;
+}
+.muiEkpSubClockInScheduleCount{
+	font-size: var(--muiFontSizeSS);
+	color: var(--muiFontColorMuted);
+}
+.muiEkpSubClockInScheduleTitle>span {
+    float: right;
+    font-size: var(--muiFontSizeSS);
+    color: var(--muiFontColor);
+}
+.muiEkpSubClockInSchedule{
+    padding:0 1.25rem;
+}
+.muiEkpSubClockInSchedule>li{
+    height:6rem;
+    box-sizing: border-box;
+}
+.muiEkpSubClockInSubmit{
+    float: right;
+    font-size: 1.2rem;
+    color: var(--muiFontColorMuted);
+    padding:0.5rem;
+}
+.muiEkpSubClockInSubmit .muis-to-right{
+    display: inline-block;
+    font-size: 1rem;
+    transform: scale(.8);
+    color: var(--muiFontColorMuted);
+}
+.muiEkpSubClockInScheduleStatus{
+   width: 100%;
+    height: 2rem;
+    line-height: 3rem;
+    float: left;
+    text-align: left;
+    box-sizing: border-box;
+    position: relative;
+    padding-left: 1rem;
+}
+.muiEkpSubClockInScheduleStatus:before{
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: #4285f4;
+    border-radius: 4px;
+    left: 0;
+    top: 12px;
+	
+}
+.muiEkpSubClockInScheduleStatus>span{
+    color: #4285F4;
+    
+}
+.muiEkpSubClockInScheduleRight{
+}
+.muiEkpSubClockInScheduleInfo{
+    width: calc(100% );
+    height:100%;
+    float: left;
+    border-bottom: 1px solid #eee;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    text-align: left;
+}
+.muiEkpSubClockInTag{
+    display: inline-block;
+    height: 1.4rem;
+    line-height: 1.4rem;
+    font-size: 8px;
+    text-align: center;
+    border-radius: 2px;
+    position: relative;
+    top: -1px;
+    padding: 0 .6rem;    
+}
+.muiEkpSubClockInTag.normal{
+	opacity: 0.5;
+	color: #4285F4;
+    border: 1px solid #4285F4;
+    border-radius: 14px;
+}
+.muiEkpSubClockInTag.outSide{
+	    opacity: 0.5;
+		border: 1px solid #FF9431;
+		border-radius: 7px;
+		color:  #FF9431;
+}
+.muiEkpSubClockInTag.late,
+.muiEkpSubClockInTag.lack {
+		opacity: 0.5;
+		border: 1px solid #F25643;
+		border-radius: 7px;
+		font-family: PingFangSC-Regular;
+			font-size: 8px;
+			color: #F25643;
+			letter-spacing: 0;
+			text-align: center;
+			}
+.muiEkpSubClockInRecord{
+    font-size: var(--muiFontSizeMS);
+    color: #2A304A;
+    position: relative;
+    width: 100%;
+    top:2px;
+}
+.muiEkpSubClockInRecord span {
+	font-weight: bold;
+}
+.muiEkpSubClockInRecord i{
+	font-weight: normal;
+	margin-left: 1rem;
+}
+.muiEkpSubClockInRecord i.icon {
+	margin: 0 .5rem 0 0;
+    font-size: 1.2rem;
+    position: relative;
+    top: 1px;
+}
+.muiEkpSubClockInPositioned{
+    height: 3rem;
+    line-height: 3rem;
+    padding-bottom: .6rem;
+}
+.muiEkpSubClockInPositioned>p{
+    font-size: var(--muiFontSizeSS);
+    color: var(--muiFontColorMuted);
+    display: block;
+	overflow: hidden;
+	white-space: nowrap;
+	word-break: break-word;
+	text-overflow: ellipsis;   
+}
+.muiEkpSubClockInPositioned>p>i {
+    font-size: var(--muiFontSizeXS);
+    color: var(--muiFontColorMuted);
+}
+
+.muiEkpSubClockInStatistics{
+	padding: 1.25rem;
+}
+.muiDialogElementShow{
+	opacity: 10;
+}
+
+.mui-singin-log{
+	font-size: 1.3rem;
+	color: #999FB7;
+	letter-spacing: 0;
+	font-weight: 400;
+	float: right;
+}
+.mui-singin-log-icon {
+	height: 13px;
+	width: 13px;
+	float: right;
+	margin: 18px 1px;
+}
+.mui-signin-log-list-li{
+	background-color: #fff;
+	border-bottom: .1rem #e1e1e1 solid;
+}
+
+/* 兼容iPhone12底部安全区域 */
+@media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
+	.mblTabBarTabBar.mblTabBar.muiEkpSubClockInFooter {
+		padding-bottom: 14px !important;
+	}
+}

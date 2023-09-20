@@ -1,0 +1,282 @@
+var test = render.parent;
+var lang = test.getModelingLang();
+var testSource = test.source;
+var config = testSource.config;
+var datas = config.datas || {};
+var listOperations = [];//业务操作
+var listTags = [];//业务标签
+if(datas && datas.length > 0){
+	listOperations = datas[0].listOperations || [];//业务操作
+	listTags = datas[0].listTags || [];//业务标签
+}
+{$
+	<div class="model-body-wrap">
+       <div class="model-body-content">
+        <!-- <div class="model-body-content-desc" onclick="returnListPage('mobile')">
+         	<i></i>
+			<p>返回</p>
+         </div>-->
+         <!-- 这里放入你的组件 starts -->
+         <div class="model-body-content-wrap" style="overflow:auto">
+         	<div class="model-body-content-phone check-phone">
+              <div class="model-body-content-phone-wrap">
+				  <div class="model-body-content-phone-status-bar"></div>
+                <div class="model-body-content-phone-view">
+					<div class="model-body-phone-content">
+					<div class="model-body-content-phone-title">{%lang['view.form.title']%}</div>
+					<div class="model-body-content-phone-top">
+						<div class="model-body-content-phone-top-title">深圳市蓝凌软件股份有限公司</div>
+						<div class="model-body-content-phone-top-cnotent">
+							<div class="model-body-content-phone-top-img"></div>
+							<div class="model-body-content-phone-top-name">小李</div>
+						</div>
+						<div class="model-body-content-phone-top-bottom">
+							<div class="model-body-content-phone-bottom-path">
+
+							</div>
+						</div>
+					</div>
+					<div class="model-body-content-phone-tab" data-lui-position="fdTag" onclick='switchSelectPosition(this,"left")'>
+						<div class="model-phone-opt-flag">{%lang['modelingAppView.listTabs']%}</div>
+						$}
+						var tabs = [];
+						var listTagsLen = listTags.length;
+						var len = listTagsLen;
+						for(var i=0; i<len; i++){
+							var listTag = listTags[i];
+							if(listTag.name == "流程处理" || listTag.name == "沉淀记录" || listTag.name == "权限"){
+								continue;
+							}else{
+								var tab = {
+									"index":i,
+									"tab":listTag
+								}
+								tabs.push(tab);
+							}
+						}
+						var len = tabs.length;
+						if(len > 4){
+							len = 4;
+						}
+						for(var i=0; i<len; i++){
+						var listTag = tabs[i].tab;
+						var index = tabs[i].index;
+						var temp = tabs[i].index+1;
+						if(listTag.name == "流程处理" || listTag.name == "沉淀记录" || listTag.name == "权限"){
+							continue;
+						}
+						if(listTag.name){
+						{$
+						<div class="model-edit-view-btn-item" data-lui-position='fdTag-{%index%}' onclick='switchSelectPosition(this,"left")'><span>{%listTag.name%}</span><div class='model-tab-bottom'></div></div>
+						$}
+						}else{
+						{$
+						<div class="model-edit-view-btn-item" data-lui-position='fdTag-{%index%}' onclick='switchSelectPosition(this,"left")'><span>标签{%temp%}</span><div class='model-tab-bottom'></div></div>
+						$}
+						}
+						}
+						var moreLen = 0;
+						if(listTagsLen < 4 && listTagsLen > 0){
+						var restLen = 4-listTagsLen;
+						for(var i=restLen; i>0; i--){
+						var index = 4-i+1;
+						var temp = index-1;
+						{$
+						<div class="model-edit-view-btn-item disabled" data-lui-position='fdTag-{%temp%}'><span>{%lang['view.label']%}{%index%}</span><div class='model-tab-bottom'></div></div>
+						$}
+						}
+						}else if(listTagsLen<=0){
+						{$
+						<div class="model-edit-view-btn-item disabled" data-lui-position='fdTag-1'><span>{%lang['view.labelview.label']%}1</span><div class='model-tab-bottom'></div></div>
+						<div class="model-edit-view-btn-item disabled" data-lui-position='fdTag-2'><span>{%lang['view.label']%}2</span><div class='model-tab-bottom'></div></div>
+						<div class="model-edit-view-btn-item disabled" data-lui-position='fdTag-3'><span>{%lang['view.label']%}3</span><div class='model-tab-bottom'></div></div>
+						<div class="model-edit-view-btn-item disabled" data-lui-position='fdTag-4'><span>{%lang['view.label']%}4</span><div class='model-tab-bottom'></div></div>
+						$}
+						}else{
+						moreLen = tabs.length - 4;
+						}
+						if(moreLen > 0){
+						{$
+						<div class="dots"  onclick='showMoreItemNewMobile(this,"fdTag_more",true,null,20)'></div>
+						$}
+						}
+						if(moreLen > 0){
+						{$
+						<div id='fdTag_more' style="display:none">
+							<ul>
+								$}
+								for(var i=moreLen; i>0; i--){
+								var index = listTagsLen - i;
+								var temp = listTagsLen - i +1;
+								var listTag = listTags[index];
+								if(listTag.name){
+								{$
+								<li data-lui-position='fdTag-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdTag_more")'>{%listTag.name%}</li>
+								$}
+								}else{
+								{$
+								<li data-lui-position='fdTag-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdTag_more")'>{%lang['view.label']%}{%temp%}</li>
+								$}
+								}
+								}
+								{$
+							</ul></div>
+						$}
+						}
+						{$
+					</div>
+					<div id="moreListNewMobile" class='moreList' style="height: 309px;overflow: auto;padding: 0px;border: 0px;margin: 0px;top: 211px;width: 100%;background-color:#FFFFFF;display: none;">
+						<div class="model-view-tab-item">
+							$}
+							for(var i=moreLen; i>0; i--){
+							var index = listTagsLen - i;
+							var temp = listTagsLen - i +1;
+							var listTag = listTags[index];
+							if(listTag.name){
+							{$
+							<div data-lui-position='fdTag-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItemNewMobile("fdTag_more")'>{%listTag.name%}</div>
+							$}
+							}else{
+							{$
+							<div data-lui-position='fdTag-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItemNewMobile("fdTag_more")'>{%lang['view.label']%}{%temp%}</div>
+							$}
+							}
+							}
+							{$
+						</div>
+					</div>
+					<div class="model-view-tab-content">
+						<div class="model-view-tab-content-one"></div>
+						<div class="model-view-tab-content-two"></div>
+						<div class="model-view-tab-content-two-second"></div>
+						<div class="model-view-tab-content-three"></div>
+						<div class="model-view-tab-content-last"></div>
+					</div>
+					<div class="model-view-tab-content-block"></div>
+					</div>
+
+                  <div class="model-body-content-phone-bottom">
+                    <div class="model-phone-opt finish" data-lui-position='fdOperation'>
+                      <div class="model-phone-opt-flag">{%lang['modelingAppListview.listOperation']%}</div>
+                      <div class="model-phone-opt-wrap clearfix">
+                      $}
+						  var listOperationsLen = listOperations.length;
+						  var len = listOperationsLen;
+						  if(listOperationsLen > 2){
+							 len = 2;
+						  }
+						for(var i=0; i<len; i++){
+							var listOperation = listOperations[i] || {};
+							var index = i;
+							var temp = i+1;
+							var className = "first-item";
+							if(i != 0){
+								className = "";
+							}
+							if(listOperation.name){
+							{$
+								 <div class="model-phone-opt-item col-{%listOperationsLen%} {%className%}" data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left")'>
+		                          <p>{%listOperation.name%}</p>
+		                        </div>
+							$}
+							}else{
+							{$
+								<div class="model-phone-opt-item col-{%listOperationsLen%} {%className%}" data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left")'>
+		                          <p>{%lang['listview.action.item']%}{%temp%}</p>
+		                        </div>
+							$}
+							}
+						}
+						if(listOperationsLen<=0){
+							{$
+								<div class="model-phone-opt-item col-1 no-item first-item" data-lui-position='fdOperation-1'>
+		                          <p>{%lang['modelingAppListview.listOperation']%}</p>
+		                        </div>
+							$}		
+						}
+						  var moreLen = 0;
+						  moreLen = listOperationsLen - 2;
+						  if(moreLen > 0){
+						  {$
+						  <div class="model-edit-view-btn-item operation-dots" onclick='showMoreOperItemMobile(this,"fdOperation_more")'>{%lang['modeling.more']%}</div>
+						  $}
+						  }
+						  if(moreLen > 0){
+						  {$
+						  <div id='fdOperation_more' style="display:none">
+							  <ul>
+								  $}
+								  for(var i=0; i<moreLen; i++){
+								  var index = 2+i;
+								  var temp = 2+i+1;
+								  var listOperation = listOperations[index] || {};
+								  if(listOperation.name){
+								  {$
+								  <li data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdOperation_more")'>{%listOperation.name%}</li>
+								  $}
+								  }else{
+								  {$
+								  <li data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdOperation_more")'>{%lang['listview.action.item']%}{%temp%}</li>
+								  $}
+								  }
+								  }
+								  {$
+							  </ul>
+						  </div>
+						  $}
+						  }
+						{$
+						  <div id="moreOperListMobile" class='moreList'>
+							  <div class="model-view-oper-title">
+								  <span>{%lang['modeling.more']%}</span>
+								  <div class="cancel-show-more" onclick="hideMoreOperItemMobile('fdOper_more')">{%lang['modeling.Cancel']%}</div>
+							  </div>
+							  <div class="model-view-oper-item">
+							  <ul>
+								  $}
+								  for(var i=0; i<moreLen; i++){
+								  var index = 2+i;
+								  var temp = 2+i+1;
+								  var listOperation = listOperations[index] || {};
+								  if(listOperation.name){
+								  {$
+								  <li data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreOperItemMobile("fdOper_more")'>
+									  <i class="view_flag_yes"></i><span>{%listTag.name%}</span></li>
+								  $}
+								  }else{
+								  {$
+								  <li data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreOperItemMobile("fdOper_more")'>
+									  <i class="view_flag_yes"></i><span>{%lang['listview.action.item']%}{%temp%}</span></li>
+								  $}
+								  }
+								  }
+								  {$
+							  </ul>
+							  </div>
+						  </div>
+                      </div>
+                    </div>
+                  </div>
+				</div>
+                </div>
+            </div>
+         </div>
+       </div>
+    </div>
+<!--<div class="model-import-pc">
+	<div class="model-import-pc-text">导入pc端配置项</div>
+	<i class="model-import-pc-icon"></i>
+	<div class="model-import-pc-tip">
+		<div class="model-import-pc-tip-top">
+			<div class="model-import-pc-tip-icon"></div>
+			<div class="model-import-pc-tip-content">
+				导入PC端配置项会清空当前配置的内容, 确定导入吗？
+			</div>
+		</div>
+		<div class="model-import-pc-bottom">
+			<div class="model-import-pc-btn-ok" name="view">确定</div>
+			<div class="model-import-pc-btn-cancel">取消</div>
+		</div>
+	</div>
+</div>-->
+$}

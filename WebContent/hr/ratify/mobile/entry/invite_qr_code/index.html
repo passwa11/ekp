@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>请输入验证信息</title>
+    <style>
+        body {
+            background-color: #F8F8F8 100%;
+        }
+
+        .container {}
+
+        .phoneContainer {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            font-size: 1em;
+            margin-top: 100px;
+            background: #FFFFFF;
+            border: 1px solid #EEEEEE;
+            border-radius: 6px;
+            border-radius: 6px;
+
+        }
+
+        .phoneContainer span {
+            padding: 0 30px;
+            font-size: 14px
+        }
+
+        .phoneContainer input {
+        	width:80%;
+            outline: none;
+            border: none;
+            padding: 0px;
+            line-height: 36px;
+            font-size: 16px;
+            padding-left: 20px;
+        }
+
+        .validateContainer {
+            width: 360px;
+            background: #FFFFFF;
+            border: 1px solid #EEEEEE;
+            border-radius: 6px;
+            border-radius: 6px;
+            padding: 10px 8px;
+             margin-top: 10px;
+        }
+
+        .validateContainer p {
+            margin: 5px 0px;
+        }
+
+        .imageContainer {
+            margin-top: 10px;
+            width: 100%;
+            height: 240px;
+			
+			
+            position: relative;
+        }
+
+        #imgGap {
+            width: 100%;
+            height: 240px;
+            background-color: rgba(255, 255, 255, 0.8)
+        }
+
+        #imgChip {
+            width: 33.33%;
+            height: 80px;
+            background-size: 100%;
+            position: absolute;
+            bottom: 0px;
+        }
+
+        .dragContainer {
+            width: 100%;
+            height: 40px;
+            background-color: #eeeeee;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #EEEEEE;
+        }
+
+        .dragCover {
+            width: 100%;
+            height: 40px;
+    		text-align: right;
+    		line-height: 40px;
+    		padding-right:20px;
+    		color:#FFFFFF;
+            background-color: #009933;
+            position: absolute;
+            top: 0;
+            z-index: 9
+        }
+
+        .dragContainer p {
+            line-height: 40px;
+            font-size: 16px;
+            margin: 0px;
+            color: #666;
+            text-align: center;
+        }
+
+        #dragArrow {
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            z-index: 12;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background: url(./res/arrow.png) no-repeat;
+            background-size: cover;
+            background-color: #ffffff;
+            z-index: 10
+        }
+
+        #submitBtn {
+            margin-top: 10px;
+            width: 100%;
+            height: 36px;
+            line-height: 36px;
+            background: #4285F4;
+            border-radius: 6px;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #FFFFFF;
+            letter-spacing: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .unValidate {
+            background-color: gray !important;
+            cursor: not-allowed !important;
+        }
+        #successCover{
+         	width: 100%;
+            height: 40px;
+    		text-align: center;
+    		line-height: 40px;
+    		color:#FFFFFF;
+            background-color: #009933;
+            position: absolute;
+            top: 0;
+            z-index: 12;
+            display:none;
+        }
+        .validateSuccess #successCover{
+        	display:block;
+        }
+        .validateSuccess #imgGap,.validateSuccess #imgChip{
+        	display:none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="phoneContainer">
+            <input name="phone" type="number" min="1000000" max="10000000000000" placeholder="请输入手机号码">
+        </div>
+      
+        <div class="validateContainer">
+            <p>请完成安全验证</p>
+            <div class="imageContainer ">
+                <img id="imgGap" src="" alt="">
+                <div id="imgChip">
+                    <img style="width:100%;height:100%;" id="imgChipSrc" src="">
+                </div>
+            </div>
+            <br>
+            <div class="dragContainer">
+                <p>向右滑动滑块完成拼图</p>
+                <span id="dragArrow"></span>
+                <div class="dragCover"></div>
+                <div id="successCover">
+                <span>验证通过</span>
+                <svg t="1563952617281" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2120" width="20" height="20"><path d="M60.217477 633.910561c0 0 250.197342 104.557334 374.563838 330.628186 149.378146-279.762705 436.109566-540.713972 521.05012-560.013527 0-115.776863 0-163.394371 0-341.442486-342.237595 226.070852-506.576477 642.342604-506.576477 642.342604l-180.049702-191.614086L60.217477 633.910561z" p-id="2121" fill="#ffffff"></path>
+                </svg>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="submitContainer">
+            <div id="submitBtn" class="unValidate">提交</div>
+        </div>
+    </div>
+
+</body>
+<script src="./res/jquery.js"></script>
+<script>
+    //全局参数
+    var drag = $("#dragArrow");
+    var imgChip = $("#imgChip");
+    var imgContainer = $(".imageContainer");
+    var imgGap = $("#imgGap");
+    var dragCover = $(".dragCover");
+    var submitBtn = $("#submitBtn");
+    var valContainer = $(".validateContainer");
+    var _isValidate = false;
+	var root="/resource/hr/staff/anonymous/QRCodeInvited.do"
+
+    $(document).ready(function () {
+        //url解析
+        var re = /([^&=]+)=?([^&]*)/g,
+            decodeRE = /\+/g,
+            decode = function (str) {
+                return decodeURIComponent(str.replace(decodeRE, " "));
+            };
+        $.parseParams = function (query) {
+            let params = {},
+                e;
+            while (e = re.exec(query)) params[decode(e[1])] = decode(e[2]);
+            return params;
+        };
+        var param = $.parseParams(location.href.split('?')[1] || '');
+        var host = location.href.split("/hr/ratify/mobile/entry/invite_qr_code/index.html")[0];
+        //请求
+        $.get(host +root+"?method=getValidateImg",
+            function (data, status) {
+                if (status == "success") {
+                    imgContainer.css("background", "url(" + data.back + ") no-repeat center center ");
+                    imgContainer.css("background-size", "100% 100% ");
+                    imgGap.attr("src", data.imgb)
+                    imgChip.find("img").attr("src", data.imga)
+                    imgChip.css("top", data.y * 80)
+                    initValidate();
+                }
+
+            });
+
+        $("#submitBtn").click(function () {
+            if (_isValidate) {
+                var phone = $("input[name='phone']").val();
+                if (phone.length < 5) {
+                    alert("请填写手机号码")
+                } else {
+                    $.get(host + root+"?method=toDetail&phone=" +
+                        phone,
+                        function (data, status) {
+                            if (data.status == "success") {
+                                window.location.href = host + data.url
+                            } else {
+                                window.location.href = host +
+                                    "/hr/ratify/mobile/entry/invite_qr_code/error.html";
+                            }
+
+                        });
+                }
+
+            }
+        })
+
+
+        function initValidate() {
+            var container = $(".container");
+            
+            var width = window.innerWidth * 0.77;
+            var ml = (window.innerWidth - width) / 2
+            container.css("width", width + 16 + "px")
+            container.css("margin-left", ml - 16 + "px")
+            valContainer.css("width", width + "px")
+            dragCover.css("right", width + "px")
+
+            //初始化宽度
+            //拖拽动作
+            var _width = {
+                drag: drag.width(),
+                chip: imgChip.width()
+            }
+            var _orgin = {
+                drag: 0,
+                chip: 0
+            }
+            var _max = {
+                drag: width - _width.drag + _orgin.drag,
+                chip: width - _width.chip + _orgin.chip
+            }
+            var _isMove = true;
+
+            //mouse
+            drag.mousedown(function (e) {
+                _isMove = true;
+            });
+
+            $(document).mousemove(function (e) {
+                var _left = e.pageX;
+                if (e.pageX > _max.drag) {
+                    _left = _max.drag;
+                } else if (e.pageX < _orgin.drag) {
+                    _left = 0
+                }
+                if (_isMove) {
+                    move(_left)
+                }
+
+            }).mouseup(function (e) {
+                sendValidate();
+                _isMove = false;
+            });
+            //touch
+            drag.on('touchstart', function (e) {
+                _isMove = true;
+            });
+            $(document).on('touchmove', function (e) {
+                var _touch = e.originalEvent.targetTouches[0];
+                var _left = _touch.pageX;
+                if (_touch.pageX > _max.drag) {
+                    _left = _max.drag
+                } else if (_touch.pageX < _orgin.drag) {
+                    _left = 0
+                }
+                if (_isMove) {
+                    move(_left)
+                }
+
+            })
+            $(document).on('touchend', function (e) {
+                sendValidate();
+                _isMove = false;
+            });
+
+            function move(left) {
+                if (_isValidate) {
+                    return;
+                }
+                drag.css({
+                    "left": left + "px"
+                })
+                var percent = left / (_max.drag - _orgin.drag);
+
+                var imgLeft = percent * (_max.chip - _orgin.chip) - 0.5;
+                imgChip.css({
+                    "left": imgLeft + "px"
+                })
+                $(".dragCover").css({
+                    "right": width - left + "px"
+                })
+            }
+
+            function sendValidate() {
+                if (_isValidate) {
+                    return;
+                }
+                var x = imgChip.css("left");
+                $.get(host +root+"?method=validate&x=" +
+                    x + "&w=" + width,
+                    function (data, status) {
+                        if (data.status == "success") {
+                            _isValidate = true;
+                            submitBtn.removeClass("unValidate")
+                           valContainer.addClass("validateSuccess"); 
+                        } else {
+                            move(_orgin.drag)
+                        }
+
+                    });
+            }
+        }
+    });
+</script>
+
+</html>

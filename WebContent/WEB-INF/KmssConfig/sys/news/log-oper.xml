@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+	
+		<oper
+            id="sysNewsMainIndexOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.news.model.SysNewsMain"
+            action="/sys/news/sys_news_main/sysNewsMainIndex.do">
+            <query 
+                method="listChildren|showKeydataUsed|manageList"
+                logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="button.list">
+            </query>
+        </oper>
+        
+        <oper
+            id="sysNewsMainPortletOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/news/sys_news_main/sysNewsMainPortlet.do">
+            <query 
+                method="listPortlet|getNewsMportal"
+                logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="button.list">
+            </query>
+        </oper>
+	
+		<oper
+            id="sysNewsMainOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.news.model.SysNewsMain"
+            action="/sys/news/sys_news_main/sysNewsMain.do">
+            <query 
+                method="browse|editManualPublish|index|viewAllPublish"
+                logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="button.list">
+            </query>
+            <query 
+                method="manualPublishAdd|publishAttAdd"
+                logPoint="Base_UrlParam;add"
+                messageKey="sys-news:news.tree.publishNews">
+            </query>
+            <query 
+                method="setAuth"
+                logPoint="Base_UrlParam;updateAuthWithTmp">
+            </query>
+            <query 
+                method="setTemplate"
+                logPoint="Base_UrlParam;updateTemplate">
+            </query>
+            <query 
+                method="setPublish"
+                logPoint="Base_UrlParam;updatePublish">
+            </query>
+            <query 
+                method="simpleData"
+                logPoint="Base_UrlParam;Action_Find"
+                messageKey="button.view">
+            </query>
+            <query 
+                method="setTop"
+                logPoint="Base_UrlParam;updateTop"
+                messageKey="sys-news:news.button.setTop">
+            </query>
+        </oper>
+        
+        <oper
+            id="sysNewsTemplateOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.news.model.SysNewsTemplate"
+            action="/sys/news/sys_news_template/sysNewsTemplate.do">
+            <ignoreFields>authAttNoprint;authAttNocopy;authAttNodownload;authChangeEditorFlag</ignoreFields>
+            <query
+            	method="copy"
+            	logPoint="Base_UrlParam;Action_Find"
+            	messageKey="button.copy">
+            </query>
+        </oper>
+        
+        <oper
+            id="sysNewsPublishMainOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.news.model.SysNewsPublishMain"
+            action="/sys/news/sys_news_publish_main/sysNewsPublishMain.do">
+        </oper>
+        
+        <oper
+            id="sysNewsPublishCategoryOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.news.model.SysNewsPublishCategory"
+            action="/sys/news/sys_news_publish_category/sysNewsPublishCategory.do">
+        </oper>
+        
+        <oper
+            id="sysNewsConfig"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/sys/news/sys_news_main/sysNewsConfig.do">
+        </oper>
+        
+        <!-- 门户数据查询 -->
+        <oper
+            id="sysNewsPortletOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/common/dataxml.jsp">
+            <query
+            	paramName="s_bean"
+            	paramValue="sysNewsMainPortletService"
+            	logPoint="Base_UrlParam;sysNewsMainPortletService"
+            	messageKey="button.list">
+            </query>
+        </oper>
+	</logset>
+</log-oper>

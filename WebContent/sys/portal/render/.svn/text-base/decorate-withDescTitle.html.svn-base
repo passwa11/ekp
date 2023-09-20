@@ -1,0 +1,47 @@
+function getUrl(url) {
+return render.env.fn.formatUrl(url);
+}
+var element = render.parent.element;
+var frag = $(document.createDocumentFragment());
+var _vars = render.vars;
+var _defurl="/sys/portal/render/icon_decorate_def.png";
+var _bg = getUrl(_vars.bg) || getUrl(_defurl)  ;
+var _placeBg = getUrl(_vars.placeBg);
+
+var _bgColor = render.vars.bgColor === null ? 'transparent' : render.vars.bgColor === undefined ? '#ffff' : render.vars.bgColor; // 背景颜色
+var _height = _vars.height || 80;
+var _style = _vars.style || '';
+var _mainTitle = _vars.mainTitle || '解决方案课件';
+var _descTitle = _vars.descTitle || 'RHE SOLUTION';
+var _radius = (_vars.radius || 4) + 'px';
+var _titlelink = getUrl(_vars.titlelink) || '';
+var _style = Com_HtmlEscape(_vars.style) || '';
+
+
+{$
+<style>
+    #{%render.dataview.cid%}{
+    {%_style%}
+    }
+
+    }
+</style>
+
+<div class="lui-sys-decorate-wrap lui-sys-decorate-wrap-widthDescTitle" style="height:{%_height%}px;
+background-repeat:no-repeat;background-position:center;background-size:cover;
+background-color:{%_bgColor%};{%_style%};border-radius:{%_radius%};">
+    <div class="lui-sys-decorate-content">
+        <a href="{%_titlelink%}" target="_blank">
+            <div class="lui-sys-decorate-icon"><img src="{%_bg%}" /></div>
+            <div class="lui-sys-decorate-title">
+                <h4 title="{%_mainTitle%}">{%_mainTitle%}</h4>
+                <p title="{%_descTitle%}">{%_descTitle%}</p>
+            </div>
+        </a>
+    </div>
+</div>
+$}
+
+
+
+

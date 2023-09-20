@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/sys/iassister/" 
+        messageKey="sys-iassister:module.sys.iassister" 
+        defaultValidator="roleValidator(role=ROLE_SYSIASSISTER_DEFAULT)">
+        <roles>ROLE_SYSIASSISTER_DEFAULT;ROLE_SYSIASSISTER_SETTING</roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_SYSIASSISTER_SETTING)"/>
+        <request 
+            path="sys_iassister_item/sysIassisterItem.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.sys.iassister.model.SysIassisterItem,role=ROLE_SYSIASSISTER_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_SYSIASSISTER_SETTING)">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="authCategoryReaderValidator(cateId=i.docCategory)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)|authCategoryEditorValidator(property=docCategory)"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="authFieldValidator(type=SYS_EDITOR)|authCategoryEditorValidator(property=docCategory)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_SYSCATEGORY_MAINTAINER;ROLE_SYSIASSISTER_SETTING)|authCategoryEditorValidator(property=docCategory)"/>
+        </request>
+        <filters 
+            modelName="com.landray.kmss.sys.iassister.model.SysIassisterItem">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_SYSCATEGORY_MAINTAINER;ROLE_SYSIASSISTER_SETTING)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_SYSCATEGORY_MAINTAINER;ROLE_SYSIASSISTER_SETTING)"/>
+        </filters>
+    </module>
+    <!-- <homePage 
+        messageKey="sys-iassister:module.sys.iassister" 
+        urlPrefix="sys/iassister" 
+        url="/moduleindex.jsp?nav=/sys/iassister/tree.jsp"/> -->
+    <categoryMng 
+        messageKey="sys-iassister:table.sysIassisterItem" 
+        modelName="com.landray.kmss.sys.iassister.model.SysIassisterItem" 
+        serviceName="sysIassisterItemTreeService"
+		adminRoleName="ROLE_SYSIASSISTER_SETTING"/>
+    <profileConfig 
+        key="sys/iassister" 
+        messageKey="{sys-iassister:module.sys.iassister}" 
+        url="/sys/profile/moduleindex.jsp?nav=/sys/iassister/tree.jsp" 
+        icon="km_pindagate" 
+        type="mechanism" 
+        description="{sys-iassister:module.sys.iassister.description}"/>
+</configs>

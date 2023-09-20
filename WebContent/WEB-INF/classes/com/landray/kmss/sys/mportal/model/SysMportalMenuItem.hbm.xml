@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.mportal.model.SysMportalMenuItem"
+		table="sys_mportal_menu_item">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+		
+		<property
+			name="fdIconType"
+			column="fd_icon_type"
+			update="true"
+			insert="true"
+			length="10"
+			not-null="false" />
+
+		<property
+			name="fdIcon"
+			column="fd_icon"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="fdUrl"
+			column="fd_url"
+			update="true"
+			insert="true"
+			length="1000" />
+
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			length="200" />
+			
+		<property
+			name="fdOrder"
+			column="fd_order"
+			update="true"
+			insert="true"
+			length="10"
+			not-null="false" />
+			
+		<many-to-one
+			name="fdSysMportalMenu"
+			column="fd_menu_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+	</class>
+</hibernate-mapping>

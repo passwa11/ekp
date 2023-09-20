@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.comminfo.model.KmComminfoAltInfo"
+		table="km_comminfo_main_altInfo">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+
+		<many-to-one
+			name="comminfoMain"
+			column="fd_main_id"
+			insert="true"
+			update="true"
+			not-null="false"/>
+			
+			
+		<many-to-one
+			name="docAlteror"
+			column="doc_alteror_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+		<property
+			name="docAlterTime"
+			column="doc_alter_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- pda请求拦截器 -->
+	<bean id="thirdPdaActionInterceptor"
+		class="com.landray.kmss.third.pda.interfaces.ThirdPdaActionInterceptor">
+	</bean>
+	<bean
+		class="com.landray.kmss.web.config.ExtendModuleConfig">
+		<constructor-arg>
+			<map>
+				<entry
+					key="success.4pda"
+					value="/third/pda/resource/jsp/success.jsp" />
+				<entry
+					key="failure.4pda"
+					value="/third/pda/resource/jsp/error.jsp" />
+				<entry
+					key="e500.4pda"
+					value="/third/pda/resource/jsp/jsperror.jsp" />
+				<entry
+					key="e403.4pda"
+					value="/third/pda/resource/jsp/e403.jsp" />
+				<entry
+					key="e404.4pda"
+					value="/third/pda/resource/jsp/e404.jsp" />
+				<entry
+					key="e503.4pda"
+					value="/third/pda/resource/jsp/e503.jsp" />
+				<entry
+					key="list.4pda"
+					value="/third/pda/public/module_listdata.jsp" />
+				<entry
+					key="listChildren.4pda"
+					value="/third/pda/public/module_listdata.jsp" />
+				<entry
+					key="view.4pda"
+					value="/third/pda/public/module_viewdata.jsp" />
+				<entry
+					key="stylepage.4pda"
+					value="/third/pda/public/module_viewdata.jsp" />
+				<entry
+					key="notfound.4pda"
+					value="/third/pda/resource/jsp/notfound.jsp" />
+				<entry
+					key="e500.4m"
+					value="/third/pda/resource/jsp/mobile/error.jsp" />
+				<entry
+					key="e403.4m"
+					value="/third/pda/resource/jsp/mobile/e403.jsp" />
+				<entry
+					key="e404.4m"
+					value="/third/pda/resource/jsp/mobile/e404.jsp" />
+				<entry
+					key="failure.4m"
+					value="/third/pda/resource/jsp/mobile/error.jsp" />
+				<entry
+					key="warn.4m"
+					value="/third/pda/resource/jsp/mobile/warn.jsp" />
+				<entry
+					key="success.4m"
+					value="/third/pda/resource/jsp/mobile/success.jsp" />
+			</map>
+		</constructor-arg>
+	</bean>
+	<bean
+		name="/third/pda/pda_module_config_view/pdaModuleConfigView.do"
+		class="com.landray.kmss.third.pda.actions.PdaModuleConfigViewAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.pda.forms.PdaModuleConfigViewForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/pda/pda_module_config_view/pdaModuleConfigView_view.jsp" />
+				<entry
+					key="edit"
+					value="/third/pda/pda_module_config_view/pdaModuleConfigView_edit.jsp" />
+				<entry
+					key="list"
+					value="/third/pda/pda_module_config_view/pdaModuleConfigView_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/pda_module_label_list/pdaModuleLabelList.do"
+		class="com.landray.kmss.third.pda.actions.PdaModuleLabelListAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.pda.forms.PdaModuleLabelListForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/pda/pda_module_label_list/pdaModuleLabelList_view.jsp" />
+				<entry
+					key="edit"
+					value="/third/pda/pda_module_label_list/pdaModuleLabelList_edit.jsp" />
+				<entry
+					key="list"
+					value="/third/pda/pda_module_label_list/pdaModuleLabelList_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/pda_module_label_view/pdaModuleLabelView.do"
+		class="com.landray.kmss.third.pda.actions.PdaModuleLabelViewAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.pda.forms.PdaModuleLabelViewForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/third/pda/pda_module_label_view/pdaModuleLabelView_edit.jsp" />
+				<entry
+					key="list"
+					value="/third/pda/pda_module_label_view/pdaModuleLabelView_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/pda_module_config_main/pdaModuleConfigMain.do"
+		class="com.landray.kmss.third.pda.actions.PdaModuleConfigMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.pda.forms.PdaModuleConfigMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/pda/pda_module_config_main/pdaModuleConfigMain_view.jsp" />
+				<entry
+					key="open"
+					value="/third/pda/index.jsp" />
+				<entry
+					key="edit"
+					value="/third/pda/pda_module_config_main/pdaModuleConfigMain_edit.jsp" />
+				<entry
+					key="list"
+					value="/third/pda/pda_module_config_main/pdaModuleConfigMain_list.jsp" />
+				<entry
+					key="data"
+					value="/third/pda/pda_module_config_main/pdaModuleConfigMain_data.jsp" />
+				<entry
+					key="selectIcon"
+					value="/third/pda/pda_module_config_main/pdaModuleIcon_select.jsp" />
+				<entry
+					key="view.4pda"
+					value="/third/pda/module.jsp" />
+				<entry
+					key="redirect"
+					value="/resource/jsp/redirect.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/pda_module_cate/pdaModuleCate.do"
+		class="com.landray.kmss.third.pda.actions.PdaModuleCateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.pda.forms.PdaModuleCateForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/pda/pda_module_cate/pdaModuleCate_view.jsp" />
+				<entry
+					key="edit"
+					value="/third/pda/pda_module_cate/pdaModuleCate_edit.jsp" />
+				<entry
+					key="list"
+					value="/third/pda/pda_module_cate/pdaModuleCate_list.jsp" />
+				<entry
+					key="data"
+					value="/third/pda/pda_module_cate/pdaModuleCate_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/pda_custon_page_portlet/pdaHomeCustomPortlet.do"
+		class="com.landray.kmss.third.pda.actions.PdaHomeCustomPortletAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.pda.forms.PdaHomeCustomPortletForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/third/pda/pda_home_custom_portlet/pdaHomeCustomPortlet_list.jsp" />
+				<entry
+					key="edit"
+					value="/third/pda/pda_home_custom_portlet/pdaHomeCustomPortlet_edit.jsp" />
+				<entry
+					key="view"
+					value="/third/pda/pda_home_custom_portlet/pdaHomeCustomPortlet_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/pda_home_page_cfg/pdaHomePageConfig.do"
+		class="com.landray.kmss.third.pda.actions.PdaHomePageConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.pda.forms.PdaHomePageConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/third/pda/pda_home_page_cfg/pdaHomePageConfig_list.jsp" />
+				<entry
+					key="edit"
+					value="/third/pda/pda_home_page_cfg/pdaHomePageConfig_edit.jsp" />
+				<entry
+					key="view"
+					value="/third/pda/pda_home_page_cfg/pdaHomePageConfig_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/pda_home_page_portlet/pdaHomePagePortlet.do"
+		class="com.landray.kmss.third.pda.actions.PdaHomePagePortletAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.pda.forms.PdaHomePagePortletForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/third/pda/pda_home_page_portlet/pdaHomePagePortlet_list.jsp" />
+				<entry
+					key="edit"
+					value="/third/pda/pda_home_page_portlet/pdaHomePagePortlet_edit.jsp" />
+				<entry
+					key="view"
+					value="/third/pda/pda_home_page_portlet/pdaHomePagePortlet_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/pda_rows_per_page_config/pdaRowsPerPageConfig.do"
+		class="com.landray.kmss.third.pda.actions.PdaRowsPerPageConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.pda.forms.PdaRowsPerPageConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/third/pda/pda_config/pdaRowsPerPageConfig_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/third_pda_config/pdaLicenseConfig.do"
+		class="com.landray.kmss.third.pda.actions.PdaLicenseSettingAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/third/pda/pda_config/pdaLicenseConfig_edit.jsp" />
+				<entry
+					key="view"
+					value="/third/pda/pda_config/pdaLicenseConfig_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/third_pda_config/pdaMsgPushMem.do"
+		class="com.landray.kmss.third.pda.actions.PdaMessagePushMemberAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/pda/app/messagePushMem_view.jsp" />
+				<entry
+					key="view.4pda"
+					value="/third/pda/app/messagePushMem_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/third_pda_config/pdaMsgPushInfo.do"
+		class="com.landray.kmss.third.pda.actions.PdaMessagePushInfoAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/third/pda/app/messagePushInfo_list.jsp" />
+				<entry
+					key="list.4pda"
+					value="/third/pda/app/messagePushInfo_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/third_pda_config/thirdPdaConfig.do"
+		class="com.landray.kmss.third.pda.actions.PdaAppConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="jsonDetail"
+					value="/third/pda/app/jsonDetail.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/sys_notify_todo/sysNotifyTodo.do"
+		class="com.landray.kmss.third.pda.actions.PdaSysNotifyTodoAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="listHome"
+					value="/sys/notify/sys_notify_todo/sysNotifyTodo_home.jsp" />
+				<entry
+					key="listTodo"
+					value="/sys/notify/sys_notify_todo/sysNotifyTodo_list.jsp" />
+				<entry
+					key="listDone"
+					value="/sys/notify/sys_notify_todo/sysNotifyTodoDone_list.jsp" />
+				<entry
+					key="listMngTodo"
+					value="/sys/notify/sys_notify_todo/sysNotifyTodo_mng_list.jsp" />
+				<entry
+					key="listMngDone"
+					value="/sys/notify/sys_notify_todo/sysNotifyTodoDone_mng_list.jsp" />
+				<entry
+					key="count"
+					value="/sys/notify/pda/count.jsp" />
+				<entry
+					key="listHome.4pda"
+					value="/sys/notify/pda/notifyDataTodo_list.jsp" />
+				<entry
+					key="listTodo.4pda"
+					value="/sys/notify/pda/notifyDataTodo_list.jsp" />
+				<entry
+					key="listDone.4pda"
+					value="/sys/notify/pda/notifyDataTodo_list.jsp" />
+				<entry
+					key="listMngTodo.4pda"
+					value="/sys/notify/pda/notifyDataTodo_list.jsp" />
+				<entry
+					key="listMngDone.4pda"
+					value="/sys/notify/pda/notifyDataTodo_list.jsp" />
+				<entry
+					key="count.4pda"
+					value="/sys/notify/pda/count.jsp" />
+				<entry
+					key="redirect"
+					value="/resource/jsp/redirect.jsp" />
+				<entry
+					key="listHome.4m"
+					value="/sys/notify/mobile/list.jsp" />
+				<entry
+					key="listTodo.4m"
+					value="/sys/notify/mobile/list.jsp" />
+				<entry
+					key="listDone.4m"
+					value="/sys/notify/mobile/list.jsp" />
+				<entry
+					key="listMngTodo.4m"
+					value="/sys/notify/mobile/list.jsp" />
+				<entry
+					key="listMngDone.4m"
+					value="/sys/notify/mobile/list.jsp" />
+				<entry
+					key="count.4m"
+					value="/sys/notify/pda/count.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/pda_ftsearch/pdaFtsearch.do"
+		class="com.landray.kmss.third.pda.actions.PdaFtsearchAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="ftSearchDetail"
+					value="/third/pda/app/ftSearchDetail.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/pda_tabview_config_main/pdaTabViewConfigMain.do"
+		class="com.landray.kmss.third.pda.actions.PdaTabViewConfigMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.pda.forms.PdaTabViewConfigMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/pda/pda_tabview_config_main/pdaTabViewConfigMain_view.jsp" />
+				<entry
+					key="edit"
+					value="/third/pda/pda_tabview_config_main/pdaTabViewConfigMain_edit.jsp" />
+				<entry
+					key="list"
+					value="/third/pda/pda_tabview_config_main/pdaTabViewConfigMain_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/pda_tabview_label_list/pdaTabViewLabelList.do"
+		class="com.landray.kmss.third.pda.actions.PdaTabViewLabelListAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.pda.forms.PdaTabViewLabelListForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/third/pda/pda_tabview_label_list/pdaTabViewLabelList_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/pda/pda_data_extend_config/pdaDataExtendConfig.do"
+		class="com.landray.kmss.third.pda.actions.PdaDataExtendConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.pda.forms.PdaDataExtendConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/pda/pda_data_extend_config/pdaDataExtendConfig_view.jsp" />
+				<entry
+					key="edit"
+					value="/third/pda/pda_data_extend_config/pdaDataExtendConfig_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

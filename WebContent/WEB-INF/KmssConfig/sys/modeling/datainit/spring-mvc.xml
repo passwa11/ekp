@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/modeling/base/modelingDatainitMain.do"
+		class="com.landray.kmss.sys.modeling.datainit.actions.ModelingDatainitMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.modeling.datainit.forms.UploadInitForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="upload"
+					value="/sys/modeling/datainit/import/upload.jsp" />
+				<entry
+					key="status"
+					value="/sys/modeling/datainit/import/status.jsp" />
+				<entry
+					key="statusForm"
+					value="/sys/modeling/datainit/import/statusForm.jsp" />
+				<entry
+					key="strategy"
+					value="/sys/modeling/datainit/import/strategy.jsp" />
+				<entry
+					key="dialogResult"
+					value="/sys/modeling/datainit/dialogResult.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

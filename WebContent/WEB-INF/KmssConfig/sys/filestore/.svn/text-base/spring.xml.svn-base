@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="sysFileConvertDataService"
+		class="com.landray.kmss.sys.filestore.service.spring.SysFileConvertDataServiceImp">
+	</bean>
+	<bean id="remoteHTMLScheduler"
+		class="com.landray.kmss.sys.filestore.scheduler.remote.RemoteHTMLSchedulerImp">
+	</bean>
+	<bean id="remotePDFScheduler"
+		class="com.landray.kmss.sys.filestore.scheduler.remote.RemotePDFSchedulerImp">
+	</bean>
+	<bean id="remoteVideoScheduler"
+		class="com.landray.kmss.sys.filestore.scheduler.remote.RemoteVideoSchedulerImp">
+	</bean>
+	<bean id="remoteCADScheduler"
+		class="com.landray.kmss.sys.filestore.scheduler.remote.RemoteCADSchedulerImp">
+	</bean>
+	<bean id="localScheduler"
+		class="com.landray.kmss.sys.filestore.scheduler.local.LocalSchedulerImp">
+		<property name="dataService">
+			<ref bean="sysFileConvertDataService" />
+		</property>
+	</bean>
+	
+	<bean id="suwellScheduler"
+		class="com.landray.kmss.sys.filestore.scheduler.third.suwell.SuWellSchedulerImp">
+		<property name="dataService">
+			<ref bean="sysFileConvertDataService" />
+		</property>
+	</bean>
+	<bean id="wpsCloudScheduler"
+		class="com.landray.kmss.sys.filestore.scheduler.third.wps.WpsCloudSchedulerImp">
+		<property name="dataService">
+			<ref bean="sysFileConvertDataService" />
+		</property>
+	</bean>
+	<bean id="wpsConvertScheduler"
+		  class="com.landray.kmss.sys.filestore.scheduler.third.wps.cloud.service.imp.WPSConvertSchedulerImp">
+		<property name="dataService">
+			<ref bean="sysFileConvertDataService" />
+		</property>
+	</bean>
+	<bean id="wpsCenterConvertScheduler"
+		class="com.landray.kmss.sys.filestore.scheduler.third.wps.center.service.imp.WpsCenterConvertSchedulerImp">
+		<property name="dataService">
+			<ref bean="sysFileConvertDataService" />
+		</property>
+	</bean>
+	<bean id="dianjuConvertScheduler"
+		  class="com.landray.kmss.sys.filestore.scheduler.third.dianju.service.imp.DianjuConvertSchedulerImp">
+		<property name="dataService">
+			<ref bean="sysFileConvertDataService" />
+		</property>
+	</bean>
+
+
+	<!-- liyong -->
+	<bean id="sysFileConvertScheduler"
+		class="com.landray.kmss.sys.filestore.scheduler.impl.SysFileConvertScheduler">
+		<property name="remoteHTMLScheduler">
+			<ref bean="remoteHTMLScheduler" />
+		</property>
+		<property name="remotePDFScheduler">
+			<ref bean="remotePDFScheduler" />
+		</property>
+		<property name="remoteVideoScheduler">
+			<ref bean="remoteVideoScheduler" />
+		</property>
+		<property name="wpsCloudScheduler">
+			<ref bean="wpsCloudScheduler" />
+		</property>
+		<property name="wpsConvertScheduler">
+			<ref bean="wpsConvertScheduler" />
+		</property>
+		<property name="dianjuConvertScheduler">
+			<ref bean="dianjuConvertScheduler" />
+		</property>
+
+		<property name="foxitScheduler">
+			<ref bean="foxitScheduler" />
+		</property>
+		<property name="wpsCenterConvertScheduler">
+			<ref bean="wpsCenterConvertScheduler" />
+		</property>
+		<property name="localScheduler">
+			<ref bean="localScheduler" />
+		</property>
+		<property name="suwellScheduler">
+			<ref bean="suwellScheduler" />
+		</property>
+		<property name="sysFileConvertDataService">
+			<ref bean="sysFileConvertDataService" />
+		</property>
+		<property name="remoteCADScheduler">
+			<ref bean="remoteCADScheduler" />
+		</property>
+	</bean>
+	<bean id="sysFileConvertDispatcher"
+		class="com.landray.kmss.sys.filestore.service.spring.SysFileConvertDispatcher">
+		<property name="scheduler" ref="sysFileConvertScheduler"></property>
+	</bean>
+
+	<bean id="sysFileConvertBaseService" parent="KmssBaseService">
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="init*">PROPAGATION_REQUIRED</prop>
+				<prop key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop key="new*">PROPAGATION_REQUIRED</prop>
+				<prop key="findOK*">PROPAGATION_REQUIRED</prop>
+				<prop key="change*">PROPAGATION_REQUIRED</prop>
+				<prop key="operate*">PROPAGATION_REQUIRED</prop>
+				<prop key="register*">PROPAGATION_REQUIRED</prop>
+				<prop key="get*">PROPAGATION_REQUIRED</prop>
+				<prop key="set*">PROPAGATION_REQUIRED</prop>
+				<prop key="refresh*">PROPAGATION_REQUIRED</prop>
+				<prop key="clear*">PROPAGATION_REQUIRED</prop>
+				<prop key="enable*">PROPAGATION_REQUIRED</prop>
+				<prop key="is*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- liyong -->
+	<bean id="sysFileConvertConfigDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.filestore.dao.hibernate.SysFileConvertConfigDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.filestore.model.SysFileConvertConfig" />
+	</bean>
+	<bean id="sysFileConvertConfigTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.filestore.service.spring.SysFileConvertConfigServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFileConvertConfigDao" />
+		</property>
+		<property name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+	</bean>
+	<bean id="sysFileConvertConfigService" parent="sysFileConvertBaseService">
+		<property name="target">
+			<ref bean="sysFileConvertConfigTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysFileConvertQueueDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.filestore.dao.hibernate.SysFileConvertQueueDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.filestore.model.SysFileConvertQueue" />
+	</bean>
+	<bean id="sysFileConvertQueueTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.filestore.service.spring.SysFileConvertQueueServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFileConvertQueueDao" />
+		</property>
+		<property name="logService">
+			<ref bean="sysFileConvertLogService" />
+		</property>
+		<property name="paramService">
+			<ref bean="sysFileViewerParamService" />
+		</property>
+	</bean>
+	<bean id="sysFileConvertQueueService" parent="sysFileConvertBaseService">
+		<property name="target">
+			<ref bean="sysFileConvertQueueTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysFileConvertClientDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.filestore.dao.hibernate.SysFileConvertClientDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.filestore.model.SysFileConvertClient" />
+	</bean>
+	<bean id="sysFileConvertClientTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.filestore.service.spring.SysFileConvertClientServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFileConvertClientDao" />
+		</property>
+		<property name="queueService">
+			<ref bean="sysFileConvertQueueService" />
+		</property>
+		<property name="configService">
+			<ref bean="sysFileConvertConfigService" />
+		</property>
+	</bean>
+	<bean id="sysFileConvertClientService" parent="sysFileConvertBaseService">
+		<property name="target">
+			<ref bean="sysFileConvertClientTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysFileConvertLogDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.filestore.dao.hibernate.SysFileConvertLogDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.filestore.model.SysFileConvertLog" />
+	</bean>
+	<bean id="sysFileConvertLogTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.filestore.service.spring.SysFileConvertLogServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFileConvertLogDao" />
+		</property>
+	</bean>
+	<bean id="sysFileConvertLogService" parent="sysFileConvertBaseService">
+		<property name="target">
+			<ref bean="sysFileConvertLogTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysFileViewerParamDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.filestore.dao.hibernate.SysFileViewerParamDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.filestore.model.SysFileViewerParam" />
+	</bean>
+	<bean id="sysFileViewerParamTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.filestore.service.spring.SysFileViewerParamServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFileViewerParamDao" />
+		</property>
+	</bean>
+	<bean id="sysFileViewerParamService" parent="sysFileConvertBaseService">
+		<property name="target">
+			<ref bean="sysFileViewerParamTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysFileConvertCallbackDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.filestore.dao.hibernate.SysFileConvertCallbackDaoImp">
+	</bean>
+	<bean id="sysFileConvertCallbackTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.filestore.service.spring.SysFileConvertCallbackServiceImp">
+		<property name="sysFileConvertQueueService">
+			<ref bean="sysFileConvertQueueService" />
+		</property>
+		<property name="sysAttMainService">
+			<ref bean="sysAttMainService" />
+		</property>
+	</bean>
+	<bean id="sysFileConvertCallbackService" parent="sysFileConvertBaseService">
+		<property name="target">
+			<ref bean="sysFileConvertCallbackTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysFileStoreAddFileExtNamesService"
+		class="com.landray.kmss.sys.filestore.service.spring.SysFileStoreAddFileExtNamesService">
+		<property name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+	</bean>
+
+	<bean id="sysFileStoreAddModelNamesService"
+		class="com.landray.kmss.sys.filestore.service.spring.SysFileStoreAddModelNamesService">
+		<property name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+	</bean>
+
+	<bean id="sysFileStoreAddConverterKeysService"
+		class="com.landray.kmss.sys.filestore.service.spring.SysFileStoreAddConverterKeysService">
+		<property name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+	</bean>
+
+	<bean id="clearInvalidQueueService"
+		class="com.landray.kmss.sys.filestore.service.spring.SysFileClearInvalidQueueService">
+		<property name="convertDataService">
+			<ref bean="sysFileConvertDataService" />
+		</property>
+	</bean>
+	
+	<bean id="sysFileLocationLogByLog4jService"
+		class="com.landray.kmss.sys.filestore.location.log.service.spring.SysFileLocationLogByLog4jService">
+	</bean>
+	<!--  -->
+	 <bean 
+        id="wpsConvertOfdDao" 
+        class="com.landray.kmss.sys.filestore.dao.hibernate.WpsConvertOfdDaoImpl" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.filestore.model.ThirdWpsConvertOfd</value>
+        </property>
+    </bean>
+	<bean id="wpsConvertOfdService"
+		class="com.landray.kmss.sys.filestore.service.spring.WpsConvertOfdServiceImp">
+		<property 
+            name="baseDao">
+            <ref 
+                bean="wpsConvertOfdDao"/>
+        </property>
+	</bean>
+	<bean 
+        id="wpsConvertOfdLogDao" 
+        class="com.landray.kmss.sys.filestore.dao.hibernate.WpsConvertOfdLogDaoImpl" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.filestore.model.ThirdWpsConvertOfdLog</value>
+        </property>
+    </bean>
+	<bean id="wpsConvertOfdLogService"
+		class="com.landray.kmss.sys.filestore.service.spring.WpsConvertOfdLogServiceImp">
+		<property 
+            name="baseDao">
+            <ref 
+                bean="wpsConvertOfdLogDao"/>
+        </property>
+	</bean>
+	 <bean
+		id="sysExtendFileNameTreeService"
+		class="com.landray.kmss.sys.filestore.service.spring.SysExtendFileNameTreeService">
+	</bean>
+	
+	<bean
+		id="sysModulsInfosTreeService"
+		class="com.landray.kmss.sys.filestore.service.spring.SysModulsInfosTreeService">
+	</bean>
+
+	<bean id="sysAttFileBakDao"
+		  class="com.landray.kmss.sys.filestore.dao.hibernate.SysAttFileBakDaoImpl"
+		  parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.sys.filestore.model.SysAttFileBak</value>
+		</property>
+	</bean>
+	<bean id="sysAttFileBakService" class="com.landray.kmss.sys.filestore.service.spring.SysAttFileBakServiceImpl">
+		<property name="baseDao">
+			<ref bean="sysAttFileBakDao"/>
+		</property>
+	</bean>
+
+	<bean
+			id="fireThirdApplicationApiImp"
+			class="com.landray.kmss.sys.filestore.scheduler.third.dianju.api.FireThirdApplicationApiImp">
+	</bean>
+
+	<bean
+			id="convertRequestResultExecutorFactory"
+			class="com.landray.kmss.sys.filestore.scheduler.third.dianju.service.imp.ConvertRequestResultExecutorFactory">
+	</bean>
+
+	<bean
+			id="failedConvertResultExecutor"
+			class="com.landray.kmss.sys.filestore.scheduler.third.dianju.service.imp.FailedConvertResultExecutor">
+	</bean>
+	<bean
+			id="successConvertResultExecutor"
+			class="com.landray.kmss.sys.filestore.scheduler.third.dianju.service.imp.SuccessConvertResultExecutor">
+	</bean>
+
+	<bean
+			id="wpsCenterApiImpl"
+			class="com.landray.kmss.sys.filestore.scheduler.third.wps.center.api.WPSCenterApiImpl">
+	</bean>
+
+	<bean
+			id="wpsCenterFailResultExecutor"
+			class="com.landray.kmss.sys.filestore.scheduler.third.wps.center.service.imp.WPSCenterFailResultExecutor">
+	</bean>
+
+	<bean
+			id="wpsCenterResultExecutorFactory"
+			class="com.landray.kmss.sys.filestore.scheduler.third.wps.center.service.imp.WpsCenterResultExecutorFactory">
+	</bean>
+
+	<bean
+			id="wpsCenterSuccessResultExecutor"
+			class="com.landray.kmss.sys.filestore.scheduler.third.wps.center.service.imp.WPSCenterSuccessResultExecutor">
+	</bean>
+	<bean
+			id="wpsCenterHandUpResultExecutor"
+			class="com.landray.kmss.sys.filestore.scheduler.third.wps.center.service.imp.WPSCenterHandUpResultExecutor">
+	</bean>
+	<bean
+			id="wpsCenterCallbackResultImp"
+			class="com.landray.kmss.sys.filestore.scheduler.third.wps.center.service.imp.WPSCenterCallbackResultImp">
+	</bean>
+
+	<bean
+			id="wpsCloudConvertFileHandler"
+			class="com.landray.kmss.sys.filestore.scheduler.third.wps.cloud.service.imp.WPSCloudConvertFileHandler">
+	</bean>
+	<bean
+			id="wpsCloudConvertHandlerFactory"
+			class="com.landray.kmss.sys.filestore.scheduler.third.wps.cloud.service.imp.WPSCloudConvertHandlerFactory">
+	</bean>
+	<bean
+			id="wpsCloudConvertUpLoadFileHandler"
+			class="com.landray.kmss.sys.filestore.scheduler.third.wps.cloud.service.imp.WPSCloudConvertUpLoadFileHandler">
+	</bean>
+	<bean
+			id="wpsCloudDownloadConvertedFileHandler"
+			class="com.landray.kmss.sys.filestore.scheduler.third.wps.cloud.service.imp.WPSCloudDownloadConvertedFileHandler">
+	</bean>
+	<bean
+			id="wpsCloudApiImp"
+			class="com.landray.kmss.sys.filestore.scheduler.third.wps.cloud.api.WPSCloudApiImp">
+	</bean>
+	<bean
+			id="convertedAssignedState"
+			class="com.landray.kmss.sys.filestore.state.ConvertedAssignedState">
+	</bean>
+	<bean
+			id="convertedFinishResultFailState"
+			class="com.landray.kmss.sys.filestore.state.ConvertedFinishResultFailState">
+	</bean>
+	<bean
+			id="convertedFinishResultState"
+			class="com.landray.kmss.sys.filestore.state.ConvertedFinishResultState">
+	</bean>
+	<bean
+			id="convertedFinishResultTrueState"
+			class="com.landray.kmss.sys.filestore.state.ConvertedFinishResultTrueState">
+	</bean>
+	<bean
+			id="convertedInvalidState"
+			class="com.landray.kmss.sys.filestore.state.ConvertedInvalidState">
+	</bean>
+	<bean
+			id="convertedStateFactory"
+			class="com.landray.kmss.sys.filestore.state.ConvertedStateFactory">
+	</bean>
+	<bean
+			id="convertedSuccessedState"
+			class="com.landray.kmss.sys.filestore.state.ConvertedSuccessedState">
+	</bean>
+	<bean
+			id="convertedUnasssignedState"
+			class="com.landray.kmss.sys.filestore.state.ConvertedUnasssignedState">
+	</bean>
+	<bean
+			id="convertedFailureState"
+			class="com.landray.kmss.sys.filestore.state.ConvertedFailureState">
+	</bean>
+	<bean
+			id="dianjuConvertNormalSchedulerImpl"
+			class="com.landray.kmss.sys.filestore.scheduler.third.dianju.service.imp.DianjuConvertFileImpl">
+	</bean>
+
+	<!--转换队列组件 start-->
+
+	<bean
+			id="convertQueueDao"
+			class="com.landray.kmss.sys.filestore.queue.dao.ConvertQueueDaoImpl"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.sys.filestore.model.SysFileConvertQueue</value>
+		</property>
+	</bean>
+
+	<bean
+			id="convertQueueImpl"
+			class="com.landray.kmss.sys.filestore.queue.service.impl.ConvertQueueImpl">
+	</bean>
+	<bean
+			id="convertQueueServiceImpl"
+			class="com.landray.kmss.sys.filestore.queue.service.impl.ConvertQueueServiceImpl">
+		<property
+				name="baseDao">
+			<ref
+					bean="convertQueueDao"/>
+		</property>
+	</bean>
+	<bean
+			id="failConvertQueueImpl"
+			class="com.landray.kmss.sys.filestore.queue.service.impl.FailConvertQueueImpl">
+	</bean>
+	<bean
+			id="convertServerMediator"
+			class="com.landray.kmss.sys.filestore.scheduler.third.ConvertServerMediator">
+	</bean>
+	<bean
+			id="operateThread"
+			class="com.landray.kmss.sys.filestore.convert.util.OperateThread">
+	</bean>
+	<!--转换队列组件 end-->
+	<!--点聚-->
+	<bean
+			id="dianjuCallbackHandleImpl"
+			class="com.landray.kmss.sys.filestore.scheduler.third.dianju.service.imp.DianjuCallbackHandleImpl">
+	</bean>
+	<bean
+			id="dianjuConvertRequestHandleImpl"
+			class="com.landray.kmss.sys.filestore.scheduler.third.dianju.service.imp.DianjuConvertRequestHandleImpl">
+	</bean>
+	<bean
+			id="dianjuConvertResponseHandleImpl"
+			class="com.landray.kmss.sys.filestore.scheduler.third.dianju.service.imp.DianjuConvertResponseHandleImpl">
+	</bean>
+
+	<!--福昕-->
+	<bean
+			id="fireFoxitApplicationApiImp"
+			class="com.landray.kmss.sys.filestore.scheduler.third.foxit.api.FireFoxitApplicationApiImpl">
+	</bean>
+	<bean
+			id="foxitConvertResponseHandleImpl"
+			class="com.landray.kmss.sys.filestore.scheduler.third.foxit.service.impl.ConvertResponseHandleImpl">
+	</bean>
+	<bean
+			id="foxitConvertRequestHandleImpl"
+			class="com.landray.kmss.sys.filestore.scheduler.third.foxit.service.impl.ConvertRequestHandleImpl">
+	</bean>
+	<bean
+			id="convertResultHandleFactory"
+			class="com.landray.kmss.sys.filestore.scheduler.third.foxit.service.impl.ConvertResultHandleFactory">
+	</bean>
+	<bean
+			id="foxitConvertSuccessHandle"
+			class="com.landray.kmss.sys.filestore.scheduler.third.foxit.service.impl.ConvertSuccessHandle">
+	</bean>
+	<bean
+			id="foxitConvertFailureHandle"
+			class="com.landray.kmss.sys.filestore.scheduler.third.foxit.service.impl.ConvertFailureHandle">
+	</bean>
+
+	<bean id="foxitScheduler"
+		  class="com.landray.kmss.sys.filestore.scheduler.third.foxit.service.impl.FoxitSchedulerImpl">
+		<property name="dataService">
+			<ref bean="sysFileConvertDataService" />
+		</property>
+	</bean>
+
+	<bean
+			id="foxitConvertFileImpl"
+			class="com.landray.kmss.sys.filestore.scheduler.third.foxit.service.impl.FoxitConvertFileImpl">
+	</bean>
+
+	<bean
+			id="foxitCallbackHandleImpl"
+			class="com.landray.kmss.sys.filestore.scheduler.third.foxit.service.impl.FoxitCallbackHandleImpl">
+	</bean>
+</beans>

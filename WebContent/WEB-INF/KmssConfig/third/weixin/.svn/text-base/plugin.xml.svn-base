@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!-- SSO -->
+	<extension
+		point="com.landray.kmss.sys.authentication">
+		<item
+			name="authenticationProcessingFilter">
+			<param
+				name="bean"
+				value="wxOauth2ProcessingFilter" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.notify">
+		<item name="todoExtend">
+			<param name="bean" value="wxNotifyProvider" />
+			<param name="name" value="{third-weixin:third.weixin.extension.notify}" />
+		</item>
+	</extension>
+
+	<!--
+    <extension
+		point="com.landray.kmss.sys.config.admin.do">
+		<item
+			name="config">
+			<param
+				name="jsp"
+				value="/third/weixin/wxConfig.jsp" />
+			<param
+				name="type"
+				value="integrate" />
+			<param
+				name="order"
+				value="200" />
+		</item>
+	</extension>
+	-->
+	
+	<extension point="com.landray.kmss.sys.mobile.third.integrate">
+		<item name="sign">
+			<param 
+				name="key" 
+				value="weixin" />
+			<param 
+				name="clientType" 
+				value="6" />
+			<param 
+				name="file" 
+				value="/third/weixin/mobile/third.js" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.lbpm.engine.robot" model="*">
+		<item name="robot">
+			<param name="unid"
+				value="com.landray.kmss.third.weixin.service.spring.RobotNodeSendDynamicInfoToWxServiceImp" />
+			<param name="category" value="{third-weixin:lbpmRobotNode.category.wx}" />
+			<param name="type"
+				value="{third-weixin:lbpmRobotNode.type.sendDynamicInfoToWx}" />
+			<param name="bean" value="robotNodeSendDynamicInfoToWxService" />
+			<param name="class" value="integrate" />
+			<param name="description" value="{third-weixin:lbpmRobotNode.type.sendDynamicInfoToWx}"/>
+			<param name="url" value="/third/weixin/robot_node.jsp" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.profile.login.third" model="*">
+		<item name="config">
+			<param name="bean" value="wxPcScanLogin"></param>
+		</item>
+	</extension>
+
+</plugin>

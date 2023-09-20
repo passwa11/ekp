@@ -1,0 +1,55 @@
+var self = this;
+
+// 监听窗口变化
+$(window).on("resize", function() {setTimeout(function(){self.resizeAllUploader3();}, 500);});
+// 监听右则收缩变化
+$(document).on("slideSpread", function() {setTimeout(function(){self.resizeAllUploader3();}, 500);});
+
+var xtable = $("<table id='uploader_" + self.fdKey + "' class='tb_noborder' width='100%' border=0 cellspacing=0 cellpadding=0></table>");
+if (this.editMode == "edit" || this.editMode == "add"){
+	if(!self.fdMulti) {
+		// 单附件上传时，在选择了一个文件后，出现提示信息
+		var xtr = $("<tr class='tips upload_item_hide'></tr>");
+		var xtd = $("<td></td>");
+		xtd.append("<div class='lui_upload_tip tip_info'><i></i>"+Attachment_MessageInfo["layout.upload.note3"]+"</div>");
+		xtable.append(xtr.append(xtd));
+	}
+	var xtr1 = $("<tr class='uploader'></tr>");
+	var xtd = $("<td></td>");
+	self.$tdDisplay = xtd;
+	
+	var xinner = "<div id='uploader_" + self.fdKey + "_queueList' class='lui_queueList lui_queueList_s lui_queueList_block'";
+	// 判断是否有传入宽度
+	if(self.totalWidth) {
+		xinner += " style='width:" + self.totalWidth + ";'";
+	} else {
+		var ___width = "width:100%;"
+		if(self.required) {
+			// 留一点空间显示必填符号*
+			__width = "width:90%;"
+		}
+		xinner += " style='" + ___width + "'";
+	}
+	
+	xinner += ">";
+	xinner += "<div id='uploader_" + self.fdKey + "_container' class='lui_upload_container'><i></i>";
+	if(self.supportDnd() && window.navigator.userAgent.indexOf("Chrome") == -1) {
+		xinner += Attachment_MessageInfo["layout.upload.note1"];
+	} else {
+		xinner += Attachment_MessageInfo["layout.upload.note2"];
+	}
+	xinner += "<span id='upload_" + self.fdKey + "_div_buttom' class='lui_text_primary'>"+Attachment_MessageInfo["layout.upload"]+"</span></div></div>";
+	xtd.append(xinner);
+	if(self.required){
+		self.requiredExec(true);
+	}
+	xtable.append(xtr1.append(xtd));
+}
+var xtr2;
+if(self.isPrintModel) {
+	xtr2 = $("<tr><td data-lui-mark='attachmentlist' class='upload_list_view_print'></td></tr>");
+} else {
+	xtr2 = $("<tr><td data-lui-mark='attachmentlist'></td></tr>");
+}
+xtable.append(xtr2);
+done(xtable);

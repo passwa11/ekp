@@ -1,0 +1,170 @@
+var datas = data;
+var columnNum = template.parent.columnNum;
+
+var width = 100/columnNum+'%';
+var imgUrl = '/sys/person/sys_person_zone/sysPersonZone.do?method=img&fdId=';
+{$<table class="lui_listview_landrayblue_table">$}
+for (var i = 0; i < datas.length; i ++) {
+	var grid = datas[i];
+	if (i % columnNum === 0){
+		{$<tr>$}
+	}
+			{$<td width="{%width%}">
+				<div class="lui_listview_landrayblue_content">
+					<div class="lui_listview_landrayblue_content_container">
+						<a class="lui_listview_landrayblue_content_image" href="javascript:;" data-lui-mark-id="{%grid.rowId%}">
+							<img id="lui_listview_landrayblue_content_image_id" src="{%env.fn.formatUrl(datas[i].fdImageUrl.text)%}" $}if(grid['docSubject']&&grid['docSubject'].text){ {$ alt="{% grid['docSubject'].text %}" $} } {$>
+						</a>$}
+						{$
+						<div class="lui_listview_landrayblue_content_info">$}
+							
+							{$<h1 class="textEllipsis">$}
+								if(template.showCheckbox){
+									{$<input type="checkbox" data-lui-mark="table.content.checkbox" value="{%grid.fdId.text%}" name="{%template['checkBoxName'] ? template['checkBoxName'] : 'List_Selected'%}">$}
+								}
+							if(grid['docSubject']){
+								{$
+								<a href="javascript:;" class="lui_listview_landrayblue_content_docSubject com_subject" title="{%grid['docSubject'].text%}" data-lui-mark-id="{%grid.rowId%}">
+								$}
+									if(grid['icon']){
+										if(grid['icon'].text.indexOf('lui')==0){
+											{$ <span class="lui_icon_s {% grid['icon'].text %}"></span>$}
+										}else{
+											{${% grid['icon'].text %}$}
+										}
+										
+									}
+									{$ {%grid['docSubject'].text%} $}
+								{$
+								</a>
+								$}
+							}
+							{$</h1><div class="lui_listview_landrayblue_category" title="{%grid['docCategory.fdName'].text%}">{%grid['docCategory.fdName'].label%}：{%grid['docCategory.fdName'].text%}</div>
+
+							$}
+							
+							if(grid['trainBeginTime'] && grid['fdApplyCount']){
+								{$
+								
+									<div class="lui_listview_landrayblue_bottom">
+										<div class="lui_listview_landrayblue_bottom_left">
+											<span>{%grid['trainBeginTime'].label%}：{%grid['trainBeginTime'].text%}</span>
+										</div>
+										
+										<div class="lui_listview_landrayblue_bottom_right">
+											<span>{% grid['fdApplyCount'].label%}：{% grid['fdApplyCount'].text%}</span>								
+										</div>
+									</div>
+									
+								$}
+							}
+							
+							if(grid['fdCount']){
+								{$
+								
+									<div class="lui_listview_landrayblue_bottom">
+										<div class="lui_listview_landrayblue_bottom_left">
+											<span>{%grid['fdCount'].label%}：{%grid['fdCount'].text%}</span>
+										</div>
+										
+									</div>
+									
+								$}
+							}
+							
+							if(!grid['docAuthorId'] && !grid['docAuthor.fdId'] && !grid['docAuthor.fdName'] && !grid['docScore'] && !grid['docReadCount']){
+								continue;
+							}
+							
+							{$
+							<div class="lui_listview_landrayblue_bottom">
+								<div class="lui_listview_landrayblue_bottom_left">
+							$}
+							
+							
+							if(grid['docAuthorId']||grid['docAuthor.fdId']){
+								var text = grid['docAuthorId']?grid['docAuthorId'].text:grid['docAuthor.fdId'].text;
+								if(grid['docAuthor.fdAuthorImageUrl']){
+								  var text1=grid['docAuthor.fdAuthorImageUrl'].text;
+								  if(text1!=""){
+								     {$
+										<span class="lui_listview_landrayblue_bottom_avator_img">
+						                   <img src="{%env.fn.formatUrl(text1)%}">
+					                   	</span>
+				                   	  $}
+								  }else{
+								    {$
+										<span class="lui_listview_landrayblue_bottom_avator_img">
+						                     <img src="{%env.fn.formatUrl(imgUrl+text)%}">
+					                   	</span>
+			                     	$}
+								  }
+								}else{
+								    {$
+										<span class="lui_listview_landrayblue_bottom_avator_img">
+						                     <img src="{%env.fn.formatUrl(imgUrl+text)%}">
+					                   	</span>
+			                     	$}
+								}
+								
+								
+							}
+							
+							if(grid['docAuthor.fdName']){
+								{$
+									<span class="lui_listview_landrayblue_bottom_avator_name">
+								     {%grid['docAuthor.fdName'].text%}
+			                 	 	</span>
+			                   	$}
+							}
+							{$	   
+								</div>
+								<div class="lui_listview_landrayblue_bottom_right">
+							$}
+								if(grid['docScore']){
+									{$
+										<div class="lui_listview_landrayblue_remark">
+					                     <span class="lui_listview_landrayblue_remark_pic">
+					                       <img src="{%env.fn.formatUrl('/sys/ui/extend/theme/default/images/listview/remark.png')%}">
+					                     </span>
+					                     <span class="lui_listview_landrayblue_remark_num">
+					                       {%grid['docScore'].text%}
+					                     </span>
+					                   </div>
+				                 	$}
+				                 }
+				                 if(grid['docReadCount']){
+				                 	{$
+				                 		<div class="lui_listview_landrayblue_eye">
+						                     <span class="lui_listview_landrayblue_eye_pic">
+						                       <img src="{%env.fn.formatUrl('/sys/ui/extend/theme/default/images/listview/eye.png')%}">
+						                     </span>
+						                     <span class="lui_listview_landrayblue_eye_num">
+						                       {%grid['docReadCount'].text%}
+						                     </span>
+						                   </div>
+				                 	$}
+				                  }
+				                 {$
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>	
+			</td>$}
+	if (i % columnNum === columnNum-1){
+		{$</tr>$}
+	}
+}
+var _num = datas.length % columnNum; 
+if(_num>0){
+	for(var j = 0;j<columnNum-_num;j++){
+		{$
+			<td width="{%width%}"></td>
+		$}
+	}
+	{$ </tr> $}
+}
+
+{$</table>$}

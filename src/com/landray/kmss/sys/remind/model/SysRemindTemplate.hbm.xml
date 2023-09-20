@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.sys.remind.model.SysRemindTemplate" 
+        table="sys_remind_template">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36">
+            <generator class="assigned" />
+        </id>
+        <property
+			name="fdKey"
+			column="fd_key"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100" />
+		<property
+			name="fdModuleUrl"
+			column="fd_module_url"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100" />
+		<property
+			name="fdModelName"
+			column="fd_model_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200" 
+			index="idx_sysRemindTmpl_fdModelName"/>
+		<property
+			name="fdTemplateId"
+			column="fd_template_id"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="36" 
+			index="idx_sysRemindTmpl_tempId"/>
+		<property
+			name="fdTemplateName"
+			column="fd_template_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200" 
+			index="idx_sysRemindTmpl_tempName"/>
+		<property
+			name="fdTemplateProperty"
+			column="fd_template_property"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100" />
+		<bag
+			name="fdMains"
+			lazy="true"
+			order-by="fd_order"
+			cascade="all-delete-orphan">
+			<key column="fd_template_id"></key>
+			<one-to-many class="com.landray.kmss.sys.remind.model.SysRemindMain" />
+		</bag>
+	</class>
+</hibernate-mapping>

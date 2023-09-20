@@ -1,0 +1,73 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.organization.model.SysOrgRoleConfCate",
+        "messageKey": "sys-organization:table.sysOrgRoleConfCate",
+        "displayProperty": "fdName",
+        "serviceBean": "sysOrgRoleConfCateService",
+        "table": "sys_org_role_conf_cate",
+        "url": "/sys/organization/sys_org_role_conf_cate/sysOrgRoleConfCate.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgRoleConfCate.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "unique": "false",
+            "length": "200",
+            "langSupport": "true"
+        },
+        "fdKeyword":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgRoleConfCate.fdKeyword",
+            "type": "String",
+            "column": "fd_keyword",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100"
+        },
+        "fdCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "model.fdCreateTime",
+            "type": "DateTime",
+            "column": "fd_create_time",
+            "notNull": "false",
+            "unique": "false",
+            "readOnly": "true"
+        },
+        "fdAlterTime":         {
+            "propertyType": "simple",
+            "messageKey": "model.fdAlterTime",
+            "type": "DateTime",
+            "column": "fd_alter_time",
+            "notNull": "false",
+            "unique": "false",
+            "readOnly": "true"
+        },
+        "hbmParent":         {
+            "propertyType": "model",
+            "messageKey": "sys-organization:sysOrgRoleConfCate.fdParent",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgRoleConfCate",
+            "column": "fd_parentid",
+            "notNull": "false",
+            "unique": "false",
+            "treeModel": "true",
+            "dialogJS": "Dialog_Tree(!{mulSelect},'!{idField}','!{nameField}',null,Tree_GetBeanNameFromService('sysOrgRoleConfCateService', 'hbmParent', 'fdName:fdId'),'!{message(sys-organization:table.sysOrgRoleConfCate)');"
+        },
+        "hbmChildren":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrgRoleConfCate.fdChildren",
+            "column": "fd_parentid",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgRoleConfCate",
+            "inverse": "true",
+            "readOnly": "true",
+            "canDisplay": "false",
+            "table": "sys_org_role_conf_cate"
+        }
+    }
+}

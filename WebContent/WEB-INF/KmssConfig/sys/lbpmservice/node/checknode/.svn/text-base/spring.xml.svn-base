@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="checkNodeBehaviourService"
+		class="com.landray.kmss.sys.lbpmservice.node.checknode.CheckNodeBehaviour" >
+		<property name="handlerHolder">
+			<ref bean="lbpmNodeHandlerHolder" />
+		</property>
+	</bean>
+	<bean
+		id="checkNodeDesc"
+		class="com.landray.kmss.sys.lbpmservice.node.checknode.CheckNodeDesc" />
+
+	<bean
+		id="checkNodeWorkitemBehaviourService"
+		parent="abstractManualWorkitemBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.checknode.CheckNodeWorkitemBehaviour" />
+	<bean
+		id="checkNodeWorkitemDesc"
+		class="com.landray.kmss.sys.lbpmservice.node.checknode.CheckNodeWorkitemDesc" />
+		
+	<!-- 处理人跳转操作 -->
+	<bean
+		id="lbpmHandlerCheckNodeBinder"
+		class="com.landray.kmss.sys.lbpmservice.node.checknode.operation.LbpmHandlerCheckNodeBinder">
+	</bean>
+	
+	<!-- 处理人放弃操作 -->
+	<bean
+		id="lbpmHandlerGiveUpOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.checknode.operation.LbpmHandlerGiveUpOperationBehaviour">
+		<property name="processServiceManager">
+			<ref bean="lbpmProcessServiceManager" />
+		</property>
+	</bean>
+	
+	<bean
+		id="lbpmHandlerGiveUpOperationAccessor"
+		class="com.landray.kmss.sys.lbpmservice.node.checknode.operation.LbpmHandlerGiveUpOperationAccessor">
+		<property name="processServiceManager">
+			<ref bean="lbpmProcessServiceManager" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmcheckNodeMsgDataBean"
+		class="com.landray.kmss.sys.lbpmservice.node.checknode.CheckNodeMsgDataBean">
+		<property name="accessManager">
+			<ref bean="accessManager" />
+		</property>
+	</bean>
+</beans>

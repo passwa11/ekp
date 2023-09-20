@@ -1,0 +1,1582 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>MUI公共组件帮助手册</title>
+
+    <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+      <script src="javascripts/all.js" type="text/javascript"></script>
+
+  </head>
+
+  <body class="index">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+     
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='http://www.landray.com.cn/'>深圳市蓝凌软件股份有限公司</a></li>
+            <li>© 2015 版权所有</li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="概述">概述</h1>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;本手册主要讲解移动UED中的一些组件，我们称之为MUI组件。<br/> </p>
+
+<h1 id="工具类">工具类</h1>
+
+<blockquote>
+<p>工具类示例代码:</p>
+</blockquote>
+<pre class="highlight javascript"><code>  <span class="nx">require</span><span class="p">([</span><span class="s2">"mui/util"</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">util</span><span class="p">){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">util</span><span class="p">.</span><span class="nx">getHost</span><span class="p">());</span>
+  <span class="p">});</span>
+</code></pre>
+
+<p>在做ekp移动UED开发时，经常会需要格式化数据请求地址，url操作等常用功能，我们统一放到组件“mui/util”中了。他的功能如下：</p>
+
+<table><thead>
+<tr>
+<th>方法</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>formatUrl</td>
+<td>格式化url信息</td>
+</tr>
+<tr>
+<td>getHost</td>
+<td>获取当前主页路径</td>
+</tr>
+<tr>
+<td>formatText</td>
+<td>格式化文本，文本中html会被转义</td>
+</tr>
+<tr>
+<td>urlResolver</td>
+<td>处理url参数变量</td>
+</tr>
+<tr>
+<td>capitalize</td>
+<td>处理字符串，首字母大写</td>
+</tr>
+<tr>
+<td>getScreenSize</td>
+<td>获取屏幕分辨率规格</td>
+</tr>
+<tr>
+<td>addTopView</td>
+<td>视图增加到顶部</td>
+</tr>
+<tr>
+<td>getUrlParameter</td>
+<td>获取url参数信息</td>
+</tr>
+<tr>
+<td>setUrlParameter</td>
+<td>设置url参数</td>
+</tr>
+<tr>
+<td>disableTouch</td>
+<td>禁用touch功能</td>
+</tr>
+<tr>
+<td>base64Encode</td>
+<td>字符串base64编码</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+    关于模块化的概念及使用， 本文未详细说明， 可参考本文档同名系列“进阶篇”， 深入学习模块化的知识。
+</aside>
+  
+
+<h1 id="通用组件">通用组件</h1>
+
+<p>这部分内容主要介绍EKP目前已经提供了哪些通用组件，可以在移动开发过程中直接使用。</p>
+
+<h2 id="头部组件">头部组件</h2>
+
+<blockquote>
+<p>头部组件示例代码:</p>
+</blockquote>
+<pre class="highlight html"><code>  <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/header/Header"</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/header/HeaderItem"</span>   
+        <span class="na">data-dojo-mixins=</span><span class="s">"mui/folder/_Folder"</span>
+        <span class="na">data-dojo-props=</span><span class="s">"href:'/km/forum/mobile/index.jsp'"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/header/HeaderItem"</span> 
+        <span class="na">data-dojo-props=</span><span class="s">"label:'灌水',referListId:'_filterDataList'"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+</code></pre>
+
+<p>头部组件主要是定义页面头部显示信息的，可以有多种组件显示在头部。头部组件的主要包含头部容器（mui/header/Header）以及头部项（mui/header/HeaderItem）。</p>
+
+<p><img alt="example" src="images/Header.png" /></p>
+
+<h3 id="mui-header-header">mui/header/Header</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>width</td>
+<td>100%</td>
+<td>头部宽</td>
+</tr>
+<tr>
+<td>height</td>
+<td>auto</td>
+<td>头部区域高</td>
+</tr>
+</tbody></table>
+
+<h3 id="mui-header-headeritem">mui/header/HeaderItem</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>icon</td>
+<td>null</td>
+<td>头部项显示图标对应样式名</td>
+</tr>
+<tr>
+<td>label</td>
+<td>null</td>
+<td>头部项显示名</td>
+</tr>
+<tr>
+<td>referListId</td>
+<td>null</td>
+<td>关联组件id，用于list数据请求后显示联动</td>
+</tr>
+</tbody></table>
+
+<h3 id="部件预览">部件预览</h3>
+
+<h2 id="搜索组件">搜索组件</h2>
+
+<blockquote>
+<p>搜索组件示例代码:</p>
+</blockquote>
+<pre class="highlight html"><code>    <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/search/SearchButtonBar"</span>        
+      <span class="na">data-dojo-props=</span><span class="s">"modelName:'com.landray.kmss.km.review.model.KmReviewMain'"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+</code></pre>
+
+<p>搜索组件为我们提供标准的EKP搜索功能的一些组件，主要的组件类型有：搜索项组件（mui/search/SearchButtonBar）和搜索栏组件（mui/search/SearchBar）。</p>
+
+<h3 id="mui-search-searchbuttonbar">mui/search/SearchButtonBar</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>modelName</td>
+<td>null</td>
+<td>待搜索的文档标示</td>
+</tr>
+</tbody></table>
+
+<p><img alt="example" src="images/SearchButtonBar.png" /></p>
+
+<h3 id="mui-search-searchbar">mui/search/SearchBar</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>modelName</td>
+<td>null</td>
+<td>待搜索的文档标示</td>
+</tr>
+<tr>
+<td>searchUrl</td>
+<td>EKP默认的搜索地址</td>
+<td>搜索结果对应的展现地址或结果地址</td>
+</tr>
+</tbody></table>
+
+<p><img alt="example" src="images/SearchBar.png" /></p>
+
+<h2 id="头部导航组件">头部导航组件</h2>
+
+<blockquote>
+<p>头部导航组件示例代码:</p>
+</blockquote>
+<pre class="highlight html"><code>  <span class="c">&lt;!-- NavBar --&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/nav/NavBar"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/nav/NavItem"</span> 
+      <span class="na">data-dojo-props=</span><span class="s">”text:’待我审’,url:’/km/review/…’”</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/nav/NavItem"</span> 
+      <span class="na">data-dojo-props=</span><span class="s">”text:’我已审’,url:’’/km/review/…”</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/nav/NavItem"</span> 
+      <span class="na">data-dojo-props=</span><span class="s">”text:’所有申请’,url:’/km/review/…’”</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/nav/NavItem"</span> 
+      <span class="na">data-dojo-props=</span><span class="s">”text:’我的申请’,url:’/km/review/…’”</span><span class="nt">&gt;&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+
+  <span class="c">&lt;!-- NavBarStore --&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/nav/NavBarStore"</span>         
+      <span class="na">data-dojo-props=</span><span class="s">"defaultUrl:'/km/review/mobile/nav.jsp'"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+
+  <span class="c">&lt;!-- MobileCfgNavBar --&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/nav/MobileCfgNavBar"</span>         
+    <span class="na">data-dojo-props=</span><span class="s">"defaultUrl:'/km/review/mobile/nav.jsp',
+    modelName:'com.landray.kmss.km.review.model.KmReviewMain'"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+</code></pre>
+
+<p>导航组件主要是用于列表页面。对应相关组件类型有：
+导航组件（mui/nav/NavBar），数据导航组件（mui/nav/NavBarStore），配置数据导航组件（mui/nav/MobileCfgNavBar），导航项组件（mui/nav/NavItem）。</p>
+
+<p><img alt="example" src="images/mNavBar.png" /></p>
+
+<h3 id="mui-nav-navbar">mui/nav/NavBar</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>curIndex</td>
+<td>0</td>
+<td>当前选中导航项</td>
+</tr>
+<tr>
+<td>lastIndex</td>
+<td>0</td>
+<td>最后的导航项序号</td>
+</tr>
+<tr>
+<td>height</td>
+<td>inherit</td>
+<td>导航高度，默认是继承上一容器高度</td>
+</tr>
+<tr>
+<td>width</td>
+<td>100%</td>
+<td>导航宽度，默认100%</td>
+</tr>
+</tbody></table>
+
+<h3 id="mui-nav-navbarstore">mui/nav/NavBarStore</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>curIndex</td>
+<td>0</td>
+<td>当前选中导航项</td>
+</tr>
+<tr>
+<td>lastIndex</td>
+<td>0</td>
+<td>最后的导航项序号</td>
+</tr>
+<tr>
+<td>height</td>
+<td>inherit</td>
+<td>导航高度，默认是继承上一容器高度</td>
+</tr>
+<tr>
+<td>width 100%</td>
+<td>导航宽度，</td>
+<td>默认100%</td>
+</tr>
+<tr>
+<td>defaultUrl</td>
+<td>null</td>
+<td>&ldquo;导航数据项来源，返回数据的格式：<br/>[{<br/>text:导航项名称,<br/>url:导航对应数据源,<br/>selected: 是否默认选中,<br/>},…]&rdquo;</td>
+</tr>
+</tbody></table>
+
+<h3 id="mui-nav-mobilecfgnavbar">mui/nav/MobileCfgNavBar</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>curIndex</td>
+<td>0</td>
+<td>当前选中导航项</td>
+</tr>
+<tr>
+<td>lastIndex</td>
+<td>0</td>
+<td>最后的导航项序号</td>
+</tr>
+<tr>
+<td>height</td>
+<td>inherit</td>
+<td>导航高度，默认是继承上一容器高度</td>
+</tr>
+<tr>
+<td>width</td>
+<td>100%</td>
+<td>导航宽度，默认100%</td>
+</tr>
+<tr>
+<td>defaultUrl</td>
+<td>null</td>
+<td>导航数据项默认来源</td>
+</tr>
+<tr>
+<td>modelName</td>
+<td>null</td>
+<td>导航配置对应模块名</td>
+</tr>
+<tr>
+<td>url</td>
+<td>&ndash;</td>
+<td>导航数据源来源</td>
+</tr>
+</tbody></table>
+
+<h3 id="mui-nav-navitem">mui/nav/NavItem</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>text</td>
+<td>null</td>
+<td>导航项名称</td>
+</tr>
+<tr>
+<td>url</td>
+<td>null</td>
+<td>导航项对应列表数据源</td>
+</tr>
+<tr>
+<td>badge</td>
+<td>null</td>
+<td>导航项中数字显示</td>
+</tr>
+<tr>
+<td>countUrl</td>
+<td>null</td>
+<td>导航项数字请求地址</td>
+</tr>
+<tr>
+<td>selected</td>
+<td>false</td>
+<td>导航项是否被选中</td>
+</tr>
+</tbody></table>
+
+<h2 id="工具栏组件">工具栏组件</h2>
+
+<blockquote>
+<p>工具栏组件示例代码</p>
+</blockquote>
+<pre class="highlight html"><code>  <span class="nt">&lt;ul</span> <span class="na">data-dojo-type=</span><span class="s">"mui/tabbar/TabBar"</span> <span class="na">fixed=</span><span class="s">"bottom"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">data-dojo-type=</span><span class="s">"mui/back/BackButton"</span><span class="nt">&gt;&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">data-dojo-type=</span><span class="s">"mui/tabbar/CreateButton"</span> 
+        <span class="na">data-dojo-mixins=</span><span class="s">"mui/syscategory/SysCategoryMixin"</span>
+        <span class="na">data-dojo-props=</span><span class="s">"createUrl:'/km/review/km_review_main/kmReviewMain.do?method=add&amp;fdTemplateId=!{curIds}',           
+        modelName:'com.landray.kmss.km.review.model.KmReviewTemplate'"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">data-dojo-type=</span><span class="s">"mui/tabbar/TabBarButtonGroup"</span> 
+      <span class="na">data-dojo-props=</span><span class="s">"icon1:'mui mui-more'"</span><span class="nt">&gt;</span>
+       <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/back/HomeButton"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;/ul&gt;</span>
+</code></pre>
+
+<p>工具栏用于页面底部，显示当前页主要的操作按钮。主要组件有：
+工具栏（mui/tabbar/TabBar），按钮（mui/tabbar/TabBarButton），后退按钮（mui/back/BackButton），新建按钮（mui/tabbar/CreateButton），返回主页按钮（mui/back/HomeButton），分组按钮（mui/tabbar/TabBarButtonGroup）。</p>
+
+<p><img alt="example" src="images/Tabbar.png" /></p>
+
+<h3 id="mui-tabbar-tabbar">mui/tabbar/TabBar</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>fill</td>
+<td>always</td>
+<td>工具按钮填充方式，grid和always两种</td>
+</tr>
+</tbody></table>
+
+<h3 id="mui-tabbar-tabbarbutton">mui/tabbar/TabBarButton</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>icon1</td>
+<td>null</td>
+<td>按钮图标</td>
+</tr>
+<tr>
+<td>label</td>
+<td>null</td>
+<td>按钮文字</td>
+</tr>
+<tr>
+<td>align</td>
+<td>center</td>
+<td>按钮对齐方式，right，left，center</td>
+</tr>
+<tr>
+<td>colSize</td>
+<td>1</td>
+<td>当tabbar为grid模式时使用,所占单元格区域(共4个单元格)</td>
+</tr>
+</tbody></table>
+
+<h3 id="mui-back-backbutton、mui-back-homebutton、mui-tabbar-createbutton">mui/back/BackButton、mui/back/HomeButton、mui/tabbar/CreateButton</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>createUrl</td>
+<td>null</td>
+<td>按钮图标</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+    一般需要mixin配合支持，目前支持的全局分类（mui/syscategory/SysCategoryMixin），简单分类（mui/simplecategory/SimpleCategoryMixin），地址本（mui/address/AddressMixin）
+</aside>
+
+<h3 id="mui-tabbar-tabbarbuttongroup">mui/tabbar/TabBarButtonGroup</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>icon1</td>
+<td>null</td>
+<td>按钮图标</td>
+</tr>
+<tr>
+<td>label</td>
+<td>null</td>
+<td>按钮文字</td>
+</tr>
+<tr>
+<td>align</td>
+<td>right</td>
+<td>按钮对齐方式，right，left，center</td>
+</tr>
+</tbody></table>
+
+<h2 id="对话框组件">对话框组件</h2>
+
+<blockquote>
+<p>对话框组件示例代码</p>
+</blockquote>
+<pre class="highlight javascript"><code>  <span class="nx">require</span><span class="p">([</span><span class="s2">"mui/dialog/Dialog"</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">Dialog</span><span class="p">){</span>
+      <span class="nx">Dialog</span><span class="p">.</span><span class="nx">element</span><span class="p">({</span>
+        <span class="s1">'title'</span> <span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span>
+        <span class="s1">'element'</span> <span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">dialog</span><span class="p">,</span>
+        <span class="s1">'scrollable'</span> <span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="s1">'parseable'</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">'buttons'</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span>
+          <span class="na">title</span> <span class="p">:</span> <span class="s1">'取消'</span><span class="p">,</span>
+          <span class="na">fn</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dialog</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">dialog</span><span class="p">.</span><span class="nx">hide</span><span class="p">();</span>
+          <span class="p">}</span>
+        <span class="p">}</span> <span class="p">,{</span>
+          <span class="na">title</span> <span class="p">:</span> <span class="s1">'确定'</span><span class="p">,</span>
+          <span class="na">fn</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dialog</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">getDateTimeValue</span><span class="p">();</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">'value'</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+            <span class="nx">dialog</span><span class="p">.</span><span class="nx">hide</span><span class="p">();</span>
+          <span class="p">}</span>
+        <span class="p">}</span> <span class="p">],</span>
+        <span class="s1">'callback'</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dialog</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">self</span><span class="p">.</span><span class="nx">destroyDialog</span><span class="p">();</span>
+        <span class="p">},</span>
+        <span class="s1">'onDrawed'</span><span class="p">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">dialog</span><span class="p">){</span>
+          <span class="nx">self</span><span class="p">.</span><span class="nx">bindSwitch</span><span class="p">();</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+  <span class="p">});</span>
+
+</code></pre>
+
+<p>对话框组件主要提供了在业务场景中需要用到的提示以及对话功能， 主要是以接口调用的方式使用对应的功能。主要提供的组件有：Dialog组件（mui/dialog/Dialog），提示框组件（mui/dialog/Tip），确认提示组件（mui/dialog/Confirm），折叠提示组件（mui/dialog/OperaTip），头部提示组件（mui/dialog/BarTip）。</p>
+
+<h3 id="mui-dialog-tip">mui/dialog/Tip</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>参数信息</th>
+<th>参数描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tip</td>
+<td>options 对象，<br/>包含以下信息: icon、text、time</td>
+<td>icon 提示图标<br/>text 提示文本<br/>time 提示停留时间<br/></td>
+</tr>
+<tr>
+<td>success</td>
+<td>options 对象，<br/>包含以下信息: text</td>
+<td>提示成功文本</td>
+</tr>
+<tr>
+<td>fail</td>
+<td>options 对象，<br/>包含以下信息: text</td>
+<td>提示错误文本</td>
+</tr>
+<tr>
+<td>processing</td>
+<td>options 对象，<br/>包含以下信息:text</td>
+<td>提示处理中文本</td>
+</tr>
+</tbody></table>
+
+<p><img alt="example" src="images/Tip.png" /></p>
+
+<h3 id="mui-dialog-confirm">mui/dialog/Confirm</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>参数信息</th>
+<th>参数描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><br/>confirm</td>
+<td>html <br/> title<br/>callback</td>
+<td>确认文本信息<br/>确认标题<br/> 确认后回调函数</td>
+</tr>
+</tbody></table>
+
+<p><img alt="example" src="images/Comfirm.png" /></p>
+
+<h3 id="mui-dialog-bartip">mui/dialog/BarTip</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>参数信息</th>
+<th>参数描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><br/>tip</td>
+<td>options 对象，<br/>包含以下信息:text、icon</td>
+<td>text 顶部提示文本信息<br/>icon 顶部提示图标信息</td>
+</tr>
+</tbody></table>
+
+<p><img alt="example" src="images/BarTip.png" /></p>
+
+<h2 id="日历组件">日历组件</h2>
+
+<blockquote>
+<p>日历组件示例代码</p>
+</blockquote>
+<pre class="highlight html"><code>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"calendar"</span> <span class="na">class=</span><span class="s">"muiCalendarListView"</span>
+    <span class="na">data-dojo-type=</span><span class="s">"mui/calendar/CalendarView"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/calendar/CalendarHeader"</span>          
+      <span class="na">data-dojo-props=</span><span class="s">"left:{href:''}"</span><span class="nt">&gt;&lt;/div&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/calendar/CalendarWeek"</span><span class="nt">&gt;&lt;/div&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/calendar/CalendarContent"</span><span class="nt">&gt;&lt;/div&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/calendar/CalendarBottom"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"CalendarListView"</span>
+        <span class="na">data-dojo-type=</span><span class="s">"mui/calendar/CalendarListScrollableView"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ul</span> <span class="na">data-dojo-type=</span><span class="s">"mui/calendar/CalendarJsonStoreList"</span>
+          <span class="na">data-dojo-mixins=</span><span class="s">"km/calendar/mobile/resource/js/list/CalendarItemListMixin"</span>              
+          <span class="na">data-dojo-props=</span><span class="s">"url:''"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+</code></pre>
+
+<p>日历组件提供了周和月的日历展现，可以相互切换，主要的组件对应有：<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;日历视图组件（mui/calendar/CalendarView）<br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;周展现组件（mui/calendar/CalendarWeek）<br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;月展现组件（mui/calendar/CalendarContent）<br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;日历头部组件（mui/calendar/CalendarHeader）<br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;日历底部组件（mui/calendar/CalendarBottom）<br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;日历列表视图（mui/calendar/CalendarListScrollableView）</p>
+
+<p><img alt="example" src="images/Calendar.png" /></p>
+
+<h3 id="mui-calendar-calendarview">mui/calendar/CalendarView</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>width</td>
+<td>100%</td>
+<td>日历宽度</td>
+</tr>
+</tbody></table>
+
+<h3 id="mui-calendar-calendarweek">mui/calendar/CalendarWeek</h3>
+
+<h3 id="mui-calendar-calendarcontent">mui/calendar/CalendarContent</h3>
+
+<h3 id="mui-calendar-calendarheader">mui/calendar/CalendarHeader</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>left</td>
+<td>null</td>
+<td>&ldquo;{<br/>icon:头部左边区域显示图标<br/>href:头部左边区域点击后跳转地址<br/>moveTo:头部左边区域点击后切换视图名<br/>}&rdquo;</td>
+</tr>
+<tr>
+<td>right</td>
+<td>null</td>
+<td>同上</td>
+</tr>
+</tbody></table>
+
+<h2 id="地址本、类别组件">地址本、类别组件</h2>
+
+<blockquote>
+<p>地址本、类别组件示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/address/AddressHeader"</span>
+    <span class="na">data-dojo-props=</span><span class="s">"key:'fdCreatorId',height:'3.8rem'"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/category/CategoryNavInfo"</span> 
+    <span class="na">data-dojo-props=</span><span class="s">"key:'fdCreatorId'"</span><span class="nt">&gt;&lt;/div&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'_address_mul_view_fdCreatorId'</span>
+    <span class="na">data-dojo-type=</span><span class="s">"dojox/mobile/ScrollableView"</span>
+    <span class="na">data-dojo-mixins=</span><span class="s">"mui/category/_ViewScrollResizeMixin"</span>    
+    <span class="na">data-dojo-props=</span><span class="s">"scrollBar:false,threshold:100,key:'fdCreatorId'"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'_address_mul_search_fdCreatorId'</span>
+        <span class="na">data-dojo-type=</span><span class="s">"mui/address/AddressSearchBar"</span> 
+        <span class="na">data-dojo-props=</span><span class="s">"orgType:8,key:'fdCreatorId',height:'3.8rem'"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;ul</span> <span class="na">data-dojo-type=</span><span class="s">"mui/address/AddressList"</span>
+        <span class="na">data-dojo-mixins=</span><span class="s">"mui/address/AddressItemListMixin"</span>
+        <span class="na">data-dojo-props=</span><span class="s">"isMul:true,key:'fdCreatorId',selType:8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/address/AddressSelection"</span> 
+    <span class="na">data-dojo-props=</span><span class="s">"key:'fdCreatorId'"</span> <span class="na">fixed=</span><span class="s">"bottom"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/category/CategoryScrollNav"</span> 
+  <span class="na">data-dojo-props=</span><span class="s">"key:'fdCreatorId',refrenceDom:'_address_mul_view_fdCreatorId',absoluteDom:'_address_mul_search_fdCreatorId'"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+
+</code></pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;该部分主要介绍地址本展现和类别展现相关组件。 其中类别组件中对应的各个组件是地址本、简单分类、全局分类各自对应组件的基类。<br/>
+基类组件主要包含：<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;类别头部组件（mui/category/CategoryHeader），<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;类别列表组件（mui/category/CategoryList），<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;类别导航组件（mui/category/CategoryScrollNav），<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;类别选择区域组件（mui/category/CategorySelection）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;类别标签信息组件（mui/category/CategoryNavInfo）<br/>
+地址本组件主要包括：<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;地址本头部组件（mui/address/AddressHeader）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;地址本搜索组件（mui/address/AddressSearchBar）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;地址本列表组件（mui/address/AddressList）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;地址本选择区域组件（mui/address/AddressSelection）<br/>
+简单分类组件主要包括：<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;简单分类头部组件（mui/simplecategory/SimpleCategoryHeader）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;简单分类列表组件（mui/simplecategory/SimpleCategoryList）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;简单分类选择区域组件（mui/simplecategory/SimpleCategorySelection）<br/>
+全局分类组件主要包括：<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;简单分类头部组件（mui/syscategory/SysCategoryHeader）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;简单分类列表组件（mui/syscategory/SysCategoryList）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;简单分类选择区域组件（mui/syscategory/SysCategorySelection）<br/></p>
+
+<h3 id="地址本">地址本</h3>
+
+<p><img alt="example" src="images/Address.png" /></p>
+
+<h3 id="全局分类">全局分类</h3>
+
+<p><img alt="example" src="images/Category.png" /></p>
+
+<h2 id="标签组件">标签组件</h2>
+
+<blockquote>
+<p>标签组件示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/panel/AccordPanelanel"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/panel/Content"</span>
+      <span class="na">data-dojo-props=</span><span class="s">"title:'基本信息',icon:'mui-ul'"</span><span class="nt">&gt;</span>
+      内容1
+  <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/panel/Content"</span>
+    <span class="na">data-dojo-props=</span><span class="s">"title:'审批内容',icon:'mui-ul'"</span><span class="nt">&gt;</span>
+      内容2
+  <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/panel/Content"</span>
+    <span class="na">data-dojo-props=</span><span class="s">"title:'流程日志',icon:'mui-ul'"</span><span class="nt">&gt;</span>
+      内容3 
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+</code></pre>
+
+<p>标签组件主要用于页面内容信息分组展现，对应的组件有：标签容器组件（mui/panel/AccordionPanel），标签内容组件（mui/panel/Content）</p>
+
+<p><img alt="example" src="images/Panel.png" /></p>
+
+<h3 id="mui-panel-content">mui/panel/Content</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>title</td>
+<td>null</td>
+<td>该内容区域标签标题</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>null</td>
+<td>显示图标</td>
+</tr>
+<tr>
+<td>toggle</td>
+<td>true</td>
+<td>是否标示为已选中</td>
+</tr>
+<tr>
+<td>sexpand</td>
+<td>true</td>
+<td>是否默认展开</td>
+</tr>
+</tbody></table>
+
+<h2 id="标签导航组件">标签导航组件</h2>
+
+<blockquote>
+<p>标签导航组件示例代码</p>
+</blockquote>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">titles</span> <span class="o">=</span> <span class="p">[{</span><span class="na">title</span><span class="p">:</span><span class="s1">'基本信息'</span><span class="p">},{</span><span class="na">title</span><span class="p">:</span><span class="s1">'审批内容'</span><span class="p">,</span><span class="na">selected</span><span class="p">:</span><span class="kc">true</span><span class="p">},{</span><span class="na">title</span><span class="p">:</span><span class="s1">'流程记录'</span><span class="p">}];</span>
+<span class="kd">var</span> <span class="nx">slide</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SlidePanel</span><span class="p">({</span>
+  <span class="na">store</span> <span class="p">:</span> <span class="nx">titles</span>
+<span class="p">});</span>
+<span class="nx">domConstruct</span><span class="p">.</span><span class="nx">place</span><span class="p">(</span><span class="nx">slide</span><span class="p">.</span><span class="nx">domNode</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="s1">'last'</span><span class="p">);</span>
+<span class="nx">slide</span><span class="p">.</span><span class="nx">startup</span><span class="p">();</span>
+
+</code></pre>
+
+<p>标签导航主要用于展现页面，所有的标签信息，并能定位具体标签。对应主要组件有：标签导航组件（mui/panel/SlidePanel）</p>
+
+<p><img alt="example" src="images/SlidePanel.png" /></p>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>store</td>
+<td>[]</td>
+<td>&ldquo;导航数据源，格式json数组。<br/>对象中含有text，selected，icon信息&rdquo;</td>
+</tr>
+<tr>
+<td>dir</td>
+<td>left</td>
+<td>导航出现方向，left左侧出现，right右侧出现</td>
+</tr>
+<tr>
+<td>width</td>
+<td>170</td>
+<td>导航宽度，单位px</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>null</td>
+<td>默认图标</td>
+</tr>
+<tr>
+<td>sourceUrl</td>
+<td>null</td>
+<td>自定义导航展现时，数据源请求地址。</td>
+</tr>
+<tr>
+<td>templateUrl</td>
+<td>null</td>
+<td>自定义导航展现时，导航展现模板地址</td>
+</tr>
+</tbody></table>
+
+<h2 id="浮动组件">浮动组件</h2>
+
+<blockquote>
+<p>浮动组件示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/fixed/Fixed"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/fixed/FixedItem"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"muiHeader"</span> <span class="na">style=</span><span class="s">"margin:0;"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"display:table-cell;"</span>
+          <span class="na">data-dojo-type=</span><span class="s">"mui/nav/NavBarStore"</span> 
+          <span class="na">data-dojo-props=</span><span class="s">"store:groupNavMem"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre>
+
+<p>浮动组件，主要适用于当页面顶部离开该组件时，组件自定飘浮到页面顶端。组件包含：浮动组件（mui/fixed/Fixed）,浮动项（mui/fixed/FixedItem）</p>
+
+<p><img alt="example" src="images/Fixed.png" /></p>
+
+<h2 id="折叠组件">折叠组件</h2>
+
+<blockquote>
+<p>折叠组件示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/header/HeaderItem"</span> 
+    <span class="na">data-dojo-mixins=</span><span class="s">"mui/folder/Folder"</span> 
+    <span class="na">data-dojo-props=</span><span class="s">"tmplURL:'/km/forum/mobile/list/query.jsp'"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+</code></pre>
+
+<p>折叠组件，主要用于展开和折叠指定模板信息的内容。组件主要包含：折叠组件（mui/folder/Folder）</p>
+
+<p><img alt="example" src="images/Folder.png" /></p>
+
+<h3 id="mui-folder-folder">mui/folder/Folder</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tmplURL</td>
+<td>null</td>
+<td>折叠展现的内容</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>mui mui-plus</td>
+<td>显示图标</td>
+</tr>
+</tbody></table>
+
+<h2 id="图片播放组件">图片播放组件</h2>
+
+<blockquote>
+<p>图片播放示例代码</p>
+</blockquote>
+<pre class="highlight javascript"><code><span class="k">this</span><span class="p">.</span><span class="nx">imgSlide</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PicSlide</span><span class="p">(</span><span class="nx">lang</span><span class="p">.</span><span class="nx">mixin</span><span class="p">({</span>
+        <span class="na">items</span> <span class="p">:</span> <span class="p">[{</span><span class="na">url</span><span class="p">:</span><span class="s1">'/resource/1.png'</span><span class="p">}]</span>
+      <span class="p">},</span> <span class="p">{</span><span class="na">width</span><span class="p">:</span><span class="s1">'100%'</span><span class="p">,</span><span class="na">height</span><span class="p">:</span><span class="s1">'100%'</span><span class="p">}));</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">imgSlide</span><span class="p">.</span><span class="nx">startup</span><span class="p">();</span>
+</code></pre>
+
+<p>图片播放组件主要用于一组图片的展现，可滑动切换。主要对应组件有：图片播放组件（mui/picslide/PicSlide），图片播放项（mui/picslide/PicItem）</p>
+
+<p><img alt="example" src="images/PicSlide.png" /></p>
+
+<h3 id="mui-picslide-picslide">mui/picslide/PicSlide</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>width</td>
+<td>inherit</td>
+<td>宽度，默认继承父节点宽度</td>
+</tr>
+<tr>
+<td>height</td>
+<td>inherit</td>
+<td>高度，默认继承父节点高度</td>
+</tr>
+<tr>
+<td>url</td>
+<td>null</td>
+<td>图片请求地址</td>
+</tr>
+<tr>
+<td>items</td>
+<td>[]</td>
+<td>图片信息，当url为空时，该属性生效</td>
+</tr>
+<tr>
+<td>picTensile</td>
+<td>false</td>
+<td>图片是否根据高宽拉伸</td>
+</tr>
+</tbody></table>
+
+<h3 id="mui-picslide-picitem">mui/picslide/PicItem</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>label/alt</td>
+<td>null</td>
+<td>图片名称</td>
+</tr>
+<tr>
+<td>icon/url</td>
+<td>null</td>
+<td>图片地址</td>
+</tr>
+<tr>
+<td>href</td>
+<td>null</td>
+<td>图片点击后链接地址</td>
+</tr>
+</tbody></table>
+
+<h2 id="回到顶端组件">回到顶端组件</h2>
+
+<blockquote>
+<p>回到顶端组件示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/top/Top"</span> 
+    <span class="na">data-dojo-mixins=</span><span class="s">"mui/top/_TopViewMixin"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre>
+
+<p>回到顶部控件，主要用于快速回到页面头部的操作，组件对应为：mui/top/Top</p>
+
+<p><img alt="example" src="images/Top.png" /></p>
+
+<h3 id="mui-top-top">mui/top/Top</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>bottom</td>
+<td>60px</td>
+<td>距离屏幕底部距离</td>
+</tr>
+<tr>
+<td>right</td>
+<td>5px</td>
+<td>距离屏幕右侧距离</td>
+</tr>
+</tbody></table>
+
+<h1 id="列表组件">列表组件</h1>
+
+<p>本章节主要介绍数据列表页面用的组件，包含数据视图，数据展现，以及对应的数据结构要求。</p>
+
+<h2 id="数据列表视图">数据列表视图</h2>
+
+<blockquote>
+<p>数据列表视图示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"scroll"</span> <span class="na">data-dojo-type=</span><span class="s">"mui/list/StoreScrollableView"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;ul</span> <span class="na">data-dojo-type=</span><span class="s">"mui/list/JsonStoreList"</span>  
+      <span class="na">data-dojo-mixins=</span><span class="s">"mui/list/ComplexRItemListMixin"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+</code></pre>
+
+<p>使用该组件，数据列表的滑动，上拉加载更多，下拉会更新数据列表，对应组件名（mui/list/StoreScrollableView）</p>
+
+<p><img alt="example" src="images/StoreScrollableView.png" /></p>
+
+<h2 id="切换列表视图">切换列表视图</h2>
+
+<blockquote>
+<p>切换列表视图示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;div</span> <span class="na">data-dojo-type=</span><span class="s">"mui/list/NavSwapScrollableView"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;ul</span> <span class="na">data-dojo-type=</span><span class="s">"mui/list/JsonStoreList"</span> 
+      <span class="na">data-dojo-mixins=</span><span class="s">"mui/list/ComplexRItemListMixin"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+</code></pre>
+
+<p>该组件除了具备数据列表视图功能外，还可以左右滑动切换不同列表视图的数据查看。组件名：mui/list/NavSwapScrollableView</p>
+
+<p><img alt="example" src="images/NavSwapScrollableView.png" /></p>
+
+<h2 id="数据列表组件">数据列表组件</h2>
+
+<blockquote>
+<p>数据列表组件示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;ul</span> 
+  <span class="na">data-dojo-type=</span><span class="s">"mui/list/JsonStoreList"</span> 
+  <span class="na">data-dojo-mixins=</span><span class="s">"mui/list/ComplexRItemListMixin"</span>
+  <span class="na">data-dojo-props=</span><span class="s">"url:'',lazy:false"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</code></pre>
+
+<p>组件主要用于数据的请求展现，对应组件为：mui/list/JsonStoreList</p>
+
+<p><img alt="example" src="images/JsonStoreList.png" /></p>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>url</td>
+<td>null</td>
+<td>数据请求url信息</td>
+</tr>
+<tr>
+<td>rowsize</td>
+<td>null</td>
+<td>数据请求每页的条数</td>
+</tr>
+<tr>
+<td>lazy</td>
+<td>true</td>
+<td>是否组件初始化的时候数据请求</td>
+</tr>
+<tr>
+<td>itemRenderer</td>
+<td>&ldquo;基于_TemplateItemMixin的对象&rdquo;</td>
+<td>设定数据展现的组件</td>
+</tr>
+<tr>
+<td>itemTemplateString</td>
+<td>null</td>
+<td>设定数据展现模板</td>
+</tr>
+</tbody></table>
+
+<h2 id="卡片式数据列表">卡片式数据列表</h2>
+
+<blockquote>
+<p>卡片式数据列表示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;ul</span> 
+  <span class="na">data-dojo-type=</span><span class="s">"mui/list/JsonStoreList"</span> 
+  <span class="na">data-dojo-mixins=</span><span class="s">"mui/list/CardItemListMixin"</span>
+  <span class="na">data-dojo-props=</span><span class="s">"url:'',lazy:false"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</code></pre>
+
+<p>组件主要用于定义列表中数据的展现样式，为卡片式，对应组件为：mui/list/CardItemListMixin。对应绘制数据项的组件为：mui/list/item/CardItemMixin.</p>
+
+<p><img alt="example" src="images/CardItemListMixin.png" /></p>
+
+<h3 id="mui-list-item-carditemmixin">mui/list/item/CardItemMixin</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>label</td>
+<td>null</td>
+<td>标题</td>
+</tr>
+<tr>
+<td>created</td>
+<td>null</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>null</td>
+<td>创建人</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>null</td>
+<td>创建人头像地址</td>
+</tr>
+<tr>
+<td>href</td>
+<td>null</td>
+<td>链接地址</td>
+</tr>
+<tr>
+<td>summary</td>
+<td>null</td>
+<td>简要信息</td>
+</tr>
+<tr>
+<td>docPublishTime</td>
+<td>null</td>
+<td>文档发布时间</td>
+</tr>
+<tr>
+<td>docDeptName</td>
+<td>null</td>
+<td>文档所属部门</td>
+</tr>
+<tr>
+<td>docReadCount</td>
+<td>null</td>
+<td>文档阅读数</td>
+</tr>
+<tr>
+<td>tagNames</td>
+<td>null</td>
+<td>文档标签信息</td>
+</tr>
+<tr>
+<td>modelNameText</td>
+<td>null</td>
+<td>所属模块</td>
+</tr>
+<tr>
+<td>lbpmCurrNodeValue</td>
+<td>null</td>
+<td>当前节点</td>
+</tr>
+<tr>
+<td>docFinishedTimeValue</td>
+<td>null</td>
+<td>结束时间</td>
+</tr>
+</tbody></table>
+
+<h2 id="右图模式数据列表">右图模式数据列表</h2>
+
+<blockquote>
+<p>右图模式数据列表示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;ul</span> 
+  <span class="na">data-dojo-type=</span><span class="s">"mui/list/JsonStoreList"</span> 
+  <span class="na">data-dojo-mixins=</span><span class="s">"mui/list/ComplexRItemListMixin"</span>
+  <span class="na">data-dojo-props=</span><span class="s">"url:'',lazy:false"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+</code></pre>
+
+<p>数据展现的另一种方式，列表中有图形的展示，并且图是展现在页面右端。对应组件名：mui/list/ComplexRItemListMixin。对应绘制数据项的组件为：mui/list/item/ComplexRItemMixin.</p>
+
+<p><img alt="example" src="images/ComplexRItemListMixin.png" /></p>
+
+<h3 id="mui-list-item-complexritemmixin">mui/list/item/ComplexRItemMixin</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>label</td>
+<td>null</td>
+<td>标题</td>
+</tr>
+<tr>
+<td>created</td>
+<td>null</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>null</td>
+<td>创建人</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>null</td>
+<td>创建人头像地址</td>
+</tr>
+<tr>
+<td>href</td>
+<td>null</td>
+<td>链接地址</td>
+</tr>
+<tr>
+<td>summary</td>
+<td>null</td>
+<td>简要信息</td>
+</tr>
+<tr>
+<td>status</td>
+<td>null</td>
+<td>文档状态</td>
+</tr>
+<tr>
+<td>count</td>
+<td>null</td>
+<td>文档点击率</td>
+</tr>
+</tbody></table>
+
+<h2 id="左图模式数据列表">左图模式数据列表</h2>
+
+<blockquote>
+<p>左图模式数据列表示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;ul</span> 
+  <span class="na">data-dojo-type=</span><span class="s">"mui/list/JsonStoreList"</span> 
+  <span class="na">data-dojo-mixins=</span><span class="s">"mui/list/ComplexLItemListMixin"</span>
+  <span class="na">data-dojo-props=</span><span class="s">"url:'',lazy:false"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</code></pre>
+
+<p>相对于右图模式数据列表，图片信息展现在页面左边。对应组件名：mui/list/ComplexLItemListMixin
+对应绘制数据项的组件为：mui/list/item/ComplexLItemMixin.</p>
+
+<p><img alt="example" src="images/ComplexLItemListMixin.png" /></p>
+
+<h3 id="mui-list-item-mixcontentitemmixin">mui/list/item/MixContentItemMixin</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>label</td>
+<td>null</td>
+<td>标题</td>
+</tr>
+<tr>
+<td>created</td>
+<td>null</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>null</td>
+<td>创建人</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>null</td>
+<td>创建人头像地址</td>
+</tr>
+<tr>
+<td>href</td>
+<td>null</td>
+<td>链接地址</td>
+</tr>
+<tr>
+<td>summary</td>
+<td>null</td>
+<td>简要信息</td>
+</tr>
+<tr>
+<td>status</td>
+<td>null</td>
+<td>文档状态</td>
+</tr>
+<tr>
+<td>count</td>
+<td>null</td>
+<td>文档点击率</td>
+</tr>
+</tbody></table>
+
+<h2 id="混合式数据列表">混合式数据列表</h2>
+
+<blockquote>
+<p>混合式数据列表示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;ul</span> 
+  <span class="na">data-dojo-type=</span><span class="s">"mui/list/JsonStoreList"</span> 
+  <span class="na">data-dojo-mixins=</span><span class="s">"mui/list/ProcessItemListMixin"</span>
+  <span class="na">data-dojo-props=</span><span class="s">"url:'',lazy:false"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</code></pre>
+
+<p>主要用于展现流程处理类数据。对应组件名：mui/list/ProcessItemListMixin。对应绘制数据项的组件为：mui/list/item/ProcessItemMixin</p>
+
+<p><img alt="example" src="images/MixContentItemMixin.png" /></p>
+
+<h3 id="mui-list-item-processitemmixin">mui/list/item/ProcessItemMixin</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>label</td>
+<td>null</td>
+<td>标题</td>
+</tr>
+<tr>
+<td>created</td>
+<td>null</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>null</td>
+<td>创建人</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>null</td>
+<td>创建人头像地址</td>
+</tr>
+<tr>
+<td>href</td>
+<td>null</td>
+<td>链接地址</td>
+</tr>
+<tr>
+<td>summary null</td>
+<td>简要信息</td>
+<td></td>
+</tr>
+<tr>
+<td>status</td>
+<td></td>
+<td>null</td>
+</tr>
+</tbody></table>
+
+<h2 id="处理类数据列表">处理类数据列表</h2>
+
+<blockquote>
+<p>处理类数据列表示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;ul</span> 
+  <span class="na">data-dojo-type=</span><span class="s">"mui/list/JsonStoreList"</span> 
+  <span class="na">data-dojo-mixins=</span><span class="s">"mui/list/ProcessItemListMixin"</span>
+  <span class="na">data-dojo-props=</span><span class="s">"url:'',lazy:false"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</code></pre>
+
+<p>主要用于展现流程处理类数据。对应组件名：mui/list/ProcessItemListMixin。对应绘制数据项的组件为：mui/list/item/ProcessItemMixin</p>
+
+<p><img alt="example" src="images/ProcessItemListMixin.png" /></p>
+
+<h3 id="mui-list-item-processitemmixin">mui/list/item/ProcessItemMixin</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>label</td>
+<td>null</td>
+<td>标题</td>
+</tr>
+<tr>
+<td>created</td>
+<td>null</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>null</td>
+<td>创建人</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>null</td>
+<td>创建人头像地址</td>
+</tr>
+<tr>
+<td>href</td>
+<td>null</td>
+<td>链接地址</td>
+</tr>
+<tr>
+<td>summary</td>
+<td>null</td>
+<td>简要信息</td>
+</tr>
+<tr>
+<td>status</td>
+<td>null</td>
+<td>文档状态</td>
+</tr>
+</tbody></table>
+
+<h2 id="纯文本数据列表">纯文本数据列表</h2>
+
+<blockquote>
+<p>纯文本数据列表示例代码</p>
+</blockquote>
+<pre class="highlight html"><code><span class="nt">&lt;ul</span>  
+  <span class="na">data-dojo-type=</span><span class="s">"mui/list/JsonStoreList"</span> 
+  <span class="na">data-dojo-mixins=</span><span class="s">"mui/list/TextItemListMixin"</span>
+  <span class="na">data-dojo-props=</span><span class="s">"url:'',lazy:false"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</code></pre>
+
+<p>普通的文本数据展现。对应组件名：mui/list/TextItemListMixin。对应绘制数据项的组件为：mui/list/item/TextItemMixin</p>
+
+<p><img alt="example" src="images/TextItemListMixin.png" /></p>
+
+<h3 id="mui-list-item-textitemmixin">mui/list/item/TextItemMixin</h3>
+
+<table><thead>
+<tr>
+<th>属性名</th>
+<th>默认值</th>
+<th>功能描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>label</td>
+<td>null</td>
+<td>标题</td>
+</tr>
+<tr>
+<td>created</td>
+<td>null</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>null</td>
+<td>创建人</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>null</td>
+<td>创建人头像地址</td>
+</tr>
+<tr>
+<td>href</td>
+<td>null</td>
+<td>链接地址</td>
+</tr>
+</tbody></table>
+
+<h1 id="表单组件">表单组件</h1>
+
+<p>暂无</p>
+
+<h1 id="机制">机制</h1>
+
+<p>暂无</p>
+
+<h1 id="多语言">多语言</h1>
+
+<p>暂无</p>
+
+<h1 id="客户端接口">客户端接口</h1>
+
+<p>暂无</p>
+
+      </div>
+      <div class="dark-box">
+      </div>
+    </div>
+  </body>
+</html>

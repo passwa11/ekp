@@ -1,0 +1,214 @@
+package com.landray.kmss.eop.basedata.model;
+
+import java.util.ArrayList;
+import com.landray.kmss.common.convertor.ModelConvertor_Common;
+import com.landray.kmss.sys.attachment.forms.AttachmentDetailsForm;
+import com.landray.kmss.sys.attachment.model.IAttachment;
+import java.util.Date;
+import java.util.List;
+import com.landray.kmss.eop.basedata.forms.EopBasedataCityForm;
+import com.landray.kmss.common.convertor.ModelConvertor_ModelListToString;
+import com.landray.kmss.common.convertor.ModelToFormPropertyMap;
+import com.landray.kmss.util.AutoHashMap;
+import com.landray.kmss.common.model.BaseModel;
+import com.landray.kmss.util.DateUtil;
+import com.landray.kmss.sys.organization.model.SysOrgPerson;
+
+/**
+  * 城市
+  */
+public class EopBasedataCity extends BaseModel implements IAttachment {
+
+    private static ModelToFormPropertyMap toFormPropertyMap;
+
+    private String fdName;
+
+    private Date docCreateTime;
+
+    private String fdCode;
+
+    private Date docAlterTime;
+
+    private Boolean fdIsAvailable;
+
+    private SysOrgPerson docCreator;
+
+    private SysOrgPerson docAlteror;
+
+    private EopBasedataProvince fdProvince;
+    
+    private EopBasedataArea fdArea;
+
+    private List<EopBasedataCompany> fdCompanyList = new ArrayList<EopBasedataCompany>();
+
+    private AutoHashMap attachmentForms = new AutoHashMap(AttachmentDetailsForm.class);
+
+    @Override
+    public Class<EopBasedataCityForm> getFormClass() {
+        return EopBasedataCityForm.class;
+    }
+
+    @Override
+    public ModelToFormPropertyMap getToFormPropertyMap() {
+        if (toFormPropertyMap == null) {
+            toFormPropertyMap = new ModelToFormPropertyMap();
+            toFormPropertyMap.putAll(super.getToFormPropertyMap());
+            toFormPropertyMap.put("docCreateTime", new ModelConvertor_Common("docCreateTime").setDateTimeType(DateUtil.TYPE_DATETIME));
+            toFormPropertyMap.put("docAlterTime", new ModelConvertor_Common("docAlterTime").setDateTimeType(DateUtil.TYPE_DATETIME));
+            toFormPropertyMap.put("docCreator.fdName", "docCreatorName");
+            toFormPropertyMap.put("docCreator.fdId", "docCreatorId");
+            toFormPropertyMap.put("docAlteror.fdName", "docAlterorName");
+            toFormPropertyMap.put("docAlteror.fdId", "docAlterorId");
+            toFormPropertyMap.put("fdProvince.fdName", "fdProvinceName");
+            toFormPropertyMap.put("fdProvince.fdId", "fdProvinceId");
+            toFormPropertyMap.put("fdArea.fdArea", "fdAreaName");
+            toFormPropertyMap.put("fdArea.fdId", "fdAreaId");
+            toFormPropertyMap.put("fdCompanyList", new ModelConvertor_ModelListToString("fdCompanyListIds:fdCompanyListNames", "fdId:fdName"));
+        }
+        return toFormPropertyMap;
+    }
+
+    @Override
+    public void recalculateFields() {
+        super.recalculateFields();
+    }
+
+    public EopBasedataArea getFdArea() {
+		return fdArea;
+	}
+
+	public void setFdArea(EopBasedataArea fdArea) {
+		this.fdArea = fdArea;
+	}
+
+	/**
+     * 名称
+     */
+    public String getFdName() {
+        return this.fdName;
+    }
+
+    /**
+     * 名称
+     */
+    public void setFdName(String fdName) {
+        this.fdName = fdName;
+    }
+
+    /**
+     * 创建时间
+     */
+    public Date getDocCreateTime() {
+        return this.docCreateTime;
+    }
+
+    /**
+     * 创建时间
+     */
+    public void setDocCreateTime(Date docCreateTime) {
+        this.docCreateTime = docCreateTime;
+    }
+
+    /**
+     * 编码
+     */
+    public String getFdCode() {
+        return this.fdCode;
+    }
+
+    /**
+     * 编码
+     */
+    public void setFdCode(String fdCode) {
+        this.fdCode = fdCode;
+    }
+
+    /**
+     * 更新时间
+     */
+    public Date getDocAlterTime() {
+        return this.docAlterTime;
+    }
+
+    /**
+     * 更新时间
+     */
+    public void setDocAlterTime(Date docAlterTime) {
+        this.docAlterTime = docAlterTime;
+    }
+
+    /**
+     * 是否有效
+     */
+    public Boolean getFdIsAvailable() {
+        return this.fdIsAvailable;
+    }
+
+    /**
+     * 是否有效
+     */
+    public void setFdIsAvailable(Boolean fdIsAvailable) {
+        this.fdIsAvailable = fdIsAvailable;
+    }
+
+    /**
+     * 创建人
+     */
+    public SysOrgPerson getDocCreator() {
+        return this.docCreator;
+    }
+
+    /**
+     * 创建人
+     */
+    public void setDocCreator(SysOrgPerson docCreator) {
+        this.docCreator = docCreator;
+    }
+
+    /**
+     * 修改人
+     */
+    public SysOrgPerson getDocAlteror() {
+        return this.docAlteror;
+    }
+
+    /**
+     * 修改人
+     */
+    public void setDocAlteror(SysOrgPerson docAlteror) {
+        this.docAlteror = docAlteror;
+    }
+
+    /**
+     * 所属省份
+     */
+    public EopBasedataProvince getFdProvince() {
+        return this.fdProvince;
+    }
+
+    /**
+     * 所属省份
+     */
+    public void setFdProvince(EopBasedataProvince fdProvince) {
+        this.fdProvince = fdProvince;
+    }
+
+    /**
+     * 所属公司
+     */
+    public List<EopBasedataCompany> getFdCompanyList() {
+        return this.fdCompanyList;
+    }
+
+    /**
+     * 所属公司
+     */
+    public void setFdCompanyList(List<EopBasedataCompany> fdCompanyList) {
+        this.fdCompanyList = fdCompanyList;
+    }
+
+    @Override
+    public AutoHashMap getAttachmentForms() {
+        return attachmentForms;
+    }
+}

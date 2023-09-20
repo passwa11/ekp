@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!-- admin.do配置 
+	<extension
+		point="com.landray.kmss.sys.config.admin.do">
+		<item
+			name="config">
+			<param
+				name="jsp"
+				value="/third/ecalendar/config.jsp" />
+			<param name="order" value="112"/>
+		</item>
+	</extension>
+	-->
+	<extension
+		point="com.landray.kmss.km.calendar.cms">
+		<item
+			name="cms"
+			enable="true">
+			<param
+				name="key"
+				value="ecalendar" />
+			<param
+				name="name"
+				value="{third-ecalendar:module.gcalendar.name}" />
+			<param
+				name="cmsService"
+				value="eCalendarProvider" />
+			<param
+				name="bindPageUrl"
+				value="third/ecalendar/ecalendar_bind_data/ecalendarBindData.do?method=beforeBind" />
+			<param
+				name="order"
+				value="61" />
+		</item>
+	</extension>
+	
+	<!-- 主页待办窗口显示邮件数扩展 -->
+	<extension
+		point="com.landray.kmss.sys.notify">
+		<item
+			name="homeMailNum"
+			enable="true">
+			<param
+				name="mailNumJsp"
+				value="/third/ecalendar/sysMail_home.jsp" /> 
+			<param 
+				name="bean"
+				value="eCalendarProvider" />
+			<param
+					name="name"
+					value="{third-ecalendar:module.gcalendar.name}" />
+		</item>
+	</extension>
+</plugin>

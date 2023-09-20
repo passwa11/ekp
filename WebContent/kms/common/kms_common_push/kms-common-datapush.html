@@ -1,0 +1,32 @@
+var push="推送到";
+seajs.use( [ 'lang!kms-common' ], function(lang) {
+   push = lang['dataPush.push'];
+})
+window.onload = function(){
+	var el = $(".prompt");
+	for(var i=0; i< el.length;i++){
+		var name = el.eq(i).attr("title");
+		var title = push+name;
+		el.eq(i).attr("title",title);
+	}
+
+}					
+if(data.unsolveAskList.length>0){
+	var canPush = false;
+	for(var i=0;i<data.unsolveAskList.length;i++){
+		var json = data.unsolveAskList[i];
+		if(!json.isPushed){
+			if(!canPush){
+				canPush = true;
+				{$ {%data.datapush%}：$}
+			}
+			{$
+				<a href="javascript:void(0)" onclick="datapush('{%json.modelName%}','{%json.fdId%}','{%json.cateModelName%}');" class="prompt" title="{%json.modelSubject%}" style="vertical-align:middle;"> 
+					<img alt="" src="{%json.imgUrl%}" style="line-height: 22px;"/>
+				</a>
+			$}
+		}
+	}
+	
+}
+{$&nbsp;$}

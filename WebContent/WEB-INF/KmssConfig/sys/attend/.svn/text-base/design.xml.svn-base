@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="sys-attend:module.sys.attend"
+		urlPrefix="/sys/attend/"
+		defaultValidator="roleValidator(role=ROLE_SYSATTEND_DEFAULT)">
+		<roles>
+			<!-- 默认权限 -->
+			ROLE_SYSATTEND_DEFAULT;
+			<!-- 地图服务配置 -->
+			ROLE_SYSATTEND_MAP_CONFIG;				
+		</roles>
+		<areaRoles>
+			<!-- 处理考勤异常 -->
+			ROLE_SYSATTEND_ATTEND_APPROVE;			
+			
+			<!-- 考勤组权限 -->
+			ROLE_SYSATTEND_CREATE;
+			ROLE_SYSATTEND_DELETE; 
+			ROLE_SYSATTEND_EDITOR;
+			ROLE_SYSATTEND_READER;
+			
+			<!-- 查看所有考勤记录 -->
+			ROLE_SYSATTEND_ATTEND_RECORD_READER;
+			<!-- 考勤统计 -->
+			ROLE_SYSATTEND_STAT_READER;
+			
+			<!-- 签到组权限 -->
+			ROLE_SYSATTEND_SIGN_CREATE;
+			ROLE_SYSATTEND_SIGN_EDITOR;
+			ROLE_SYSATTEND_SIGN_DELETE;
+			ROLE_SYSATTEND_SIGN_READER;
+			<!-- 查看所有签到记录 -->
+			ROLE_SYSATTEND_SIGN_RECORD_READER;
+			
+			<!-- 签到组分类 -->
+			ROLE_SYSATTEND_TEMPLATE_MAINTAINER;
+			<!-- 考勤组分类 -->
+			ROLE_SYSATTEND_ATEMPLATE_MAINTAINER;
+			<!-- 查看原始考勤记录 -->
+			ROLE_SYSATTEND_ATTEND_ORIGINAL_RECORD_READER;
+			
+			<!-- 后台设置权限 -->
+			ROLE_SYSATTEND_BACKSTAGE_MANAGER;
+			<!-- 历史考勤备查 -->
+			ROLE_SYSATTEND_HISTORY_READER;
+			<!-- 历史原始考勤备查 -->
+			ROLE_SYSATTEND_HISTORY_ORIGINAL_READER;
+			<!-- 数据检查 -->
+			ROLE_SYSATTEND_DATA_CHECK;
+			<!-- 导入原始考勤记录-->
+			ROLE_SYSATTEND_ATTEND_ORIGINAL_RECORD_IMPORT;
+			<!-- 导出原始考勤记录-->
+			ROLE_SYSATTEND_ATTEND_ORIGINAL_RECORD_EXPORT;
+		</areaRoles>
+		 
+		<request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)">
+		</request>
+		<request
+			path="sys_attend_stat/sysAttendStat_restat.jsp"
+			defaultValidator="roleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)">
+		</request>
+		<request
+			path="sys_attend_main/sysAttendMain_check.jsp"
+			defaultValidator="roleValidator(role=ROLE_SYSATTEND_DATA_CHECK)">
+		</request>
+		<request
+			path="map/mobile/**"
+			defaultValidator="true"/>
+		<request
+			path="map/resource/**"
+			defaultValidator="true"/>
+		<request
+			path="map/xform/**"
+			defaultValidator="true"/>
+		<request
+			path="mobile/error.jsp"
+			defaultValidator="true"/>
+		<request
+			path="mobile/import/sign_choose.jsp"
+			defaultValidator="true"/>
+		<request
+			path="mobile/import/register.jsp"
+			defaultValidator="true"/>
+		<request
+			path="mobile/import/sign_outer.jsp"
+			defaultValidator="true"/>
+		<request
+			path="sys_attend_config/sysAttendConfig*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendConfig">
+			<query
+				queryString="method=edit"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)" />
+		</request>
+		<request
+            path="sys_attend_syn_config/sysAttendSynConfig*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendSynConfig">
+            <query
+                queryString="method=edit"
+                validator="areaRoleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)" />
+        </request>
+
+		<request
+				path="sys_attend_his_category/index.jsp"
+				defaultValidator="roleValidator(role=ROLE_SYSATTEND_CREATE)">
+		</request>
+
+		<request path="sys_attend_main/sysAttendMain_listener*" defaultValidator="true">
+		</request>
+		<request
+			path="sys_attend_category/sysAttendCategory*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendCategory">
+			<query
+				queryString="method=add|saveadd&amp;type=custom&amp;fdTemplateId=*"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_SIGN_CREATE)&amp;authSimpleCategoryReaderValidator(cateId=fdTemplateId,cateModel=com.landray.kmss.sys.attend.model.SysAttendCategoryTemplate)" />
+			<query
+				queryString="method=add|saveadd&amp;type=attend&amp;fdATemplateId=*"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_CREATE)&amp;authSimpleCategoryReaderValidator(cateId=fdATemplateId,cateModel=com.landray.kmss.sys.attend.model.SysAttendCategoryATemplate)" />
+			<query
+				queryString="method=add|saveadd&amp;type=custom"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_SIGN_CREATE)" />
+			<query
+				queryString="method=add|saveadd&amp;type=attend"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_CREATE)" />
+			<query
+				queryString="method=add|saveadd"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_CREATE)" />
+			<query
+				queryString="method=save"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_CREATE;ROLE_SYSATTEND_SIGN_CREATE)" />
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=creator)|areaRoleValidator(role=ROLE_SYSATTEND_READER;ROLE_SYSATTEND_DELETE)&amp;fieldValueValidator(fieldproperty=fdType,value=1)|areaRoleValidator(role=ROLE_SYSATTEND_SIGN_READER;ROLE_SYSATTEND_SIGN_DELETE)&amp;fieldValueValidator(fieldproperty=fdType,value=2)|authFieldValidator(type=SYS_READER)" />
+			<query
+				queryString="method=edit|update|updateStatus"
+				validator="authFieldValidator(type=creator)&amp;fieldValueValidator(fieldproperty=fdStatus,value=0;1)|fieldValueValidator(fieldproperty=fdStatus,value=0;1)&amp;areaRoleValidator(role=ROLE_SYSATTEND_EDITOR)&amp;fieldValueValidator(fieldproperty=fdType,value=1)|areaRoleValidator(role=ROLE_SYSATTEND_SIGN_EDITOR)&amp;fieldValueValidator(fieldproperty=fdType,value=2)&amp;fieldValueValidator(fieldproperty=fdStatus,value=0;1)|authFieldValidator(type=SYS_EDITOR)" />
+			<query
+				queryString="method=delete"
+				validator="authFieldValidator(type=SYS_EDITOR)|fieldValueValidator(fieldproperty=fdType,value=1)&amp;areaRoleValidator(role=ROLE_SYSATTEND_DELETE)|fieldValueValidator(fieldproperty=fdType,value=2)&amp;areaRoleValidator(role=ROLE_SYSATTEND_SIGN_DELETE)" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYSATTEND_DELETE)&amp;fieldValueValidator(field=fdType,value=1)|roleValidator(role=ROLE_SYSATTEND_SIGN_DELETE)&amp;fieldValueValidator(field=fdType,value=2)" />		
+			<query
+				queryString="method=liststat"
+				validator="authFieldValidator(type=cateStat)" />
+		</request>
+
+
+		<request
+			path="sys_attend_main_exc/sysAttendMainExc*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendMainExc">
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=SYS_READER)" />
+			<query
+				queryString="method=edit|update"
+				validator=" authFieldValidator(type=SYS_EDITOR)" />
+
+			<query
+					queryString="method=add"
+					validator="areaRoleValidator(role=ROLE_SYSATTEND_CREATE)" />
+
+			<query
+				queryString="method=addExc"
+				validator="authFieldValidator(type=creator,recid=fdAttendMainId,model=com.landray.kmss.sys.attend.model.SysAttendMain)" />
+		</request>
+		
+		<request
+			path="sys_attend_main_bak/*" defaultValidator="roleValidator(role=ROLE_SYSATTEND_HISTORY_READER)">
+		</request>
+			
+		
+		<request
+			path="sys_attend_main/sysAttendMain*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendMain">
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=SYS_READER)|authFieldValidator(type=SIGN_READER)" />
+			<query
+				queryString="method=updateByAdmin|editByAdmin"
+				validator="authFieldValidator(type=attendManager)|authFieldValidator(type=attendEditor)" />
+			<query
+				queryString="method=viewCheck|statListDetail|validListDetail|originListDetail"
+				validator="roleValidator(role=ROLE_SYSATTEND_DATA_CHECK)" />
+		</request>
+
+		<request
+			path="sys_attend_report/sysAttendReport*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendReport">
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=SYS_READER)" />
+			<query
+				queryString="method=add|save|saveAndView|update|deleteall"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_STAT_READER)|sysAttendOrgValidator()|sysAttendManagerValidator(cateType=1)|sysAttendCateReaderValidator(cateType=1)|sysAttendCateEditorValidator(cateType=1)" />
+			<query
+				queryString="method=edit|delete"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_STAT_READER)|authFieldValidator(type=SYS_EDITOR)|sysAttendOrgValidator()|sysAttendManagerValidator(cateType=1)|sysAttendCateReaderValidator(cateType=1)|sysAttendCateEditorValidator(cateType=1)" />
+		</request>
+
+		<request
+				path="sys_attend_report_log/sysAttendReportLog*"
+				validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendReportLog">
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=SYS_READER)" />
+			<query
+					queryString="method=edit|delete"
+					validator="authFieldValidator(type=SYS_EDITOR)" />
+
+		</request>
+
+
+		<request
+			path="sys_attend_stat_detail/sysAttendStatDetail*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendStatDetail">
+		</request>
+
+		<request
+			path="sys_attend_stat/sysAttendStat*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendStat">
+			<query
+				queryString="method=restat"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)" />
+		</request>
+		
+		<request
+			path="sys_attend_category_templ/sysAttendCategoryTemplate*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendCategoryTemplate,adminRoleName=ROLE_SYSATTEND_TEMPLATE_MAINTAINER">
+			<query
+				queryString="method=add"
+				validator="sysSimpleCategoryEditorValidator(recid=parentId)" />
+			<query
+				queryString="method=view"
+				validator="sysSimpleCategoryReaderValidator()" />
+			<query
+				queryString="method=edit|update|delete"
+				validator="sysSimpleCategoryEditorValidator()" />
+		</request>
+		
+		<request
+			path="sys_attend_category_atempl/sysAttendCategoryATemplate*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendCategoryATemplate,adminRoleName=ROLE_SYSATTEND_ATEMPLATE_MAINTAINER">
+			<query
+				queryString="method=add"
+				validator="sysSimpleCategoryEditorValidator(recid=parentId)" />
+			<query
+				queryString="method=view"
+				validator="sysSimpleCategoryReaderValidator()" />
+			<query
+				queryString="method=edit|update|delete"
+				validator="sysSimpleCategoryEditorValidator()" />
+		</request>
+		
+		<request
+			path="sys_attend_auth_setting/sysAttendAuthSetting*"
+			defaultValidator="roleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)">
+		</request>
+
+		<request
+				path="sys_attend_sign_log/sysAttendSignLog*"
+				defaultValidator="roleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)">
+		</request>
+		<request
+				path="sys_attend_sign_log/sysAttendSignBak*"
+				defaultValidator="roleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)">
+		</request>
+
+		<request
+			path="sys_attend_sign_patch/sysAttendSignPatch*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendSignPatch">
+			<query
+				queryString="method=add"
+				validator="authFieldValidator(type=SYS_EDITOR,recid=cateId,model=com.landray.kmss.sys.attend.model.SysAttendCategory)" />
+		</request>
+		
+		<request path="map/sysAttendMapConfig.do*">
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_SYSATTEND_MAP_CONFIG)" />
+			<query
+				queryString="method=getCurrentMap"
+				validator="true" />
+		</request>
+		<request
+			path="sys_attend_syn_ding_bak/sysAttendSynDingBak*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendSynDingBak,year=year"
+			defaultValidator="roleValidator(role=ROLE_SYSATTEND_HISTORY_ORIGINAL_READER)">
+			<query
+				queryString="method=view"
+				validator="sysAttendSynDingReaderValidator(tableName=sys_attend_syn_ding_bak)" />
+		</request>
+		<request
+			path="sys_attend_syn_ding/sysAttendSynDing*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.attend.model.SysAttendSynDing">
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=SYS_READER)" />
+			<query
+				queryString="method=importExcel|exportExcel"
+				validator="roleValidator(role=ROLE_SYSATTEND_ATTEND_ORIGINAL_RECORD_IMPORT)" />
+			<query
+				queryString="method=batchExport"
+				validator="roleValidator(role=ROLE_SYSATTEND_ATTEND_ORIGINAL_RECORD_EXPORT)" />
+		</request>
+		<filters modelName="com.landray.kmss.sys.attend.model.SysAttendCategory">
+			<filter type="creator" expression="authFieldFilter(field=docCreator.fdId)"/>
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYSATTEND_READER)" />
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYSATTEND_SIGN_READER)" />
+			<filter type="SYS_READER" expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter type="SYS_READER" expression="authFieldFilter(field=fdManager.fdId)" />
+			<filter type="SYS_READER" expression="authFieldFilter(field=authAllReaders.fdId)" />
+			<filter type="SYS_READER" expression="flagFieldFilter(field=authReaderFlag,value=1)" />
+			<filter type="SYS_EDITOR" expression="roleFilter(role=ROLE_SYSATTEND_EDITOR)" />	
+			<filter type="SYS_EDITOR" expression="authFieldFilter(field=authAllEditors.fdId)" />
+			<filter type="SYS_EDITOR" expression="authFieldFilter(field=fdManager.fdId)" />
+			<filter type="SYS_EDITOR" expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter type="cateStat" expression="sysAttendCateStatFilter(field=fdId)" />
+		</filters>
+		<filters modelName="com.landray.kmss.sys.attend.model.SysAttendMainExc">
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYSATTEND_ATTEND_APPROVE)" />
+			<filter type="SYS_READER" expression="authFieldFilter(field=authAllReaders.fdId)" />
+			<filter type="SYS_READER" expression="flagFieldFilter(field=authReaderFlag,value=1)" />
+			<filter type="SYS_EDITOR" expression="authFieldFilter(field=authAllEditors.fdId)" />
+			<filter type="creator" expression="authFieldFilter(field=docCreator.fdId)" />
+		</filters>
+		<filters modelName="com.landray.kmss.sys.attend.model.SysAttendMain">
+			<!-- 考勤记录查看 -->
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYSATTEND_ATTEND_RECORD_READER)" />
+			<filter type="SYS_READER" expression="sysAttendOrgFilter(field=docCreator,parentfield=docCreatorHId)"></filter>
+			<filter type="SYS_READER" expression="sysAttendManagerFilter(field=fdHisCategory.fdId)"></filter>
+			<filter type="SYS_READER" expression="sysAttendCateReaderFilter(field=fdHisCategory.fdId)"></filter>
+			<filter type="SYS_READER" expression="sysAttendCateEditorFilter(field=fdHisCategory.fdId)"></filter>
+			<filter type="SYS_READER" expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter type="attendManager" expression="sysAttendManagerFilter(field=fdHisCategory.fdId,cateType=1)" />
+			<filter type="attendEditor" expression="sysAttendCateEditorFilter(field=fdHisCategory.fdId,cateType=1)" />
+
+			<!-- 签到记录查看 -->
+			<filter type="SIGN_READER" expression="roleFilter(role=ROLE_SYSATTEND_SIGN_RECORD_READER)" />
+			<filter type="SIGN_READER" expression="sysAttendManagerFilter(field=fdCategory.fdId)"></filter>
+			<filter type="SIGN_READER" expression="sysAttendCateReaderFilter(field=fdCategory.fdId)"></filter>
+			<filter type="SIGN_READER" expression="sysAttendCateEditorFilter(field=fdCategory.fdId)"></filter>
+			<filter type="SIGN_READER" expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter type="SIGN_READER" expression="sysAttendGroupFilter(field=fdCategory.fdId)"></filter>
+			<filter type="creator" expression="authFieldFilter(field=docCreator.fdId)" />
+
+		</filters>
+		<filters modelName="com.landray.kmss.sys.attend.model.SysAttendReport">
+			<filter type="SYS_READER" expression="authFieldFilter(field=authReaders.fdId)" />
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYSATTEND_STAT_READER)" />
+			<filter type="SYS_READER" expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter type="SYS_EDITOR" expression="roleFilter(role=ROLE_SYSATTEND_STAT_READER)" />
+			<filter type="SYS_EDITOR" expression="authFieldFilter(field=docCreator.fdId)" />
+		</filters>
+		<filters modelName="com.landray.kmss.sys.attend.model.SysAttendReportLog">
+			<filter type="SYS_READER" expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter type="SYS_EDITOR" expression="authFieldFilter(field=docCreator.fdId)" />
+		</filters>
+
+
+
+		<filters modelName="com.landray.kmss.sys.attend.model.SysAttendStat">
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYSATTEND_STAT_READER)" />
+			<filter type="SYS_READER" expression="sysAttendOrgFilter(field=docCreator,parentfield=docCreatorHId)"></filter>
+			<filter type="SYS_READER" expression="sysAttendManagerFilter(field=fdCategoryId,cateType=1)"></filter>
+			<filter type="SYS_READER" expression="sysAttendCateReaderFilter(field=fdCategoryId,cateType=1)"></filter>
+			<filter type="SYS_READER" expression="authFieldFilter(field=docCreator.fdId)" />
+		</filters>
+		<filters modelName="com.landray.kmss.sys.attend.model.SysAttendStatDetail">
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYSATTEND_STAT_READER)" />
+			<filter type="SYS_READER" expression="sysAttendOrgFilter(field=docCreator,parentfield=docCreatorHId)"></filter>
+			<filter type="SYS_READER" expression="sysAttendManagerFilter(field=fdCategoryId,cateType=1)"></filter>
+			<filter type="SYS_READER" expression="sysAttendCateReaderFilter(field=fdCategoryId,cateType=1)"></filter>
+			<filter type="SYS_READER" expression="authFieldFilter(field=docCreator.fdId)" />
+		</filters>
+		<filters modelName="com.landray.kmss.sys.attend.model.SysAttendStatMonth">
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYSATTEND_STAT_READER)" />
+			<filter type="SYS_READER" expression="sysAttendOrgFilter(field=docCreator,parentfield=docCreatorHId)"></filter>
+			<filter type="SYS_READER" expression="sysAttendManagerFilter(field=fdCategoryId,cateType=1)"></filter>
+			<filter type="SYS_READER" expression="sysAttendCateReaderFilter(field=fdCategoryId,cateType=1)"></filter>
+			<filter type="SYS_READER" expression="authFieldFilter(field=docCreator.fdId)" />
+		</filters>
+		<filters modelName="com.landray.kmss.sys.attend.model.SysAttendReportMonth">
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYSATTEND_STAT_READER)" />
+			<filter type="SYS_READER" expression="sysAttendOrgFilter(field=docCreator,parentfield=docCreatorHId)"></filter>
+			<filter type="SYS_READER" expression="sysAttendManagerFilter(field=fdCategoryId,cateType=1)"></filter>
+			<filter type="SYS_READER" expression="sysAttendCateReaderFilter(field=fdCategoryId,cateType=1)"></filter>
+			<filter type="SYS_READER" expression="authFieldFilter(field=docCreator.fdId)" />
+		</filters>
+		<filters modelName="com.landray.kmss.sys.attend.model.SysAttendStatPeriod">
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYSATTEND_STAT_READER)" />
+			<filter type="SYS_READER" expression="sysAttendOrgFilter(field=docCreator,parentfield=docCreatorHId)"></filter>
+			<filter type="SYS_READER" expression="sysAttendManagerFilter(field=fdCategoryId,cateType=1)"></filter>
+			<filter type="SYS_READER" expression="sysAttendCateReaderFilter(field=fdCategoryId,cateType=1)"></filter>
+			<filter type="SYS_READER" expression="authFieldFilter(field=docCreator.fdId)" />
+		</filters>
+		<filters modelName="com.landray.kmss.sys.attend.model.SysAttendSynDing">
+			<!-- 原始考勤记录查看 -->
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_SYSATTEND_ATTEND_ORIGINAL_RECORD_READER)" />
+			<filter type="SYS_READER" expression="sysAttendOrgFilter(field=docCreator)"></filter>
+			<filter type="SYS_READER" expression="sysAttendSynDingReaderFilter(field=fdPersonId)" />
+		</filters>
+	</module>
+
+	<module urlPrefix="/sys/right/">
+		<request path="rightCateChange*">
+			<query
+				queryString="method=cateRightEdit&amp;cateModelName=com.landray.kmss.sys.attend.model.SysAttendCategoryTemplate"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_TEMPLATE_MAINTAINER)|sysSimpleCategoryEditorBatchValidator(recid=fdIds,model=com.landray.kmss.sys.attend.model.SysAttendCategoryTemplate)" />
+			<query
+				queryString="method=cateRightEdit&amp;cateModelName=com.landray.kmss.sys.attend.model.SysAttendCategoryATemplate"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_ATEMPLATE_MAINTAINER)|sysSimpleCategoryEditorBatchValidator(recid=fdIds,model=com.landray.kmss.sys.attend.model.SysAttendCategoryATemplate)" />
+		</request>
+	</module>
+	
+	<module urlPrefix="/sys/simplecategory/">
+		<request path="sys_simple_category/sysCategoryMain_tree.jsp*">
+			<query
+				queryString="modelName=com.landray.kmss.sys.attend.model.SysAttendCategoryTemplate"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)" />
+			<query
+				queryString="modelName=com.landray.kmss.sys.attend.model.SysAttendCategoryATemplate"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)" />
+		</request>
+	</module>
+	
+	<module urlPrefix="/sys/lbpmservice/">
+		<request path="support/lbpm_template/index.jsp*">
+			<query
+				queryString="fdModelName=com.landray.kmss.sys.attend.model.SysAttendCategoryATemplate"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)" />
+		</request>
+		<request path="support/lbpm_template/lbpmTemplate*">
+			<query
+				queryString="fdModelName=com.landray.kmss.sys.attend.model.SysAttendCategoryATemplate"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)" />
+		</request>
+		<request path="support/lbpm_template/lbpmPrivileger*">
+			<query
+				queryString="fdModelName=com.landray.kmss.sys.attend.model.SysAttendCategoryATemplate"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)" />
+		</request>
+		<request path="support/lbpm_template/lbpmNodes2Excel*">
+			<query
+				queryString="fdModelName=com.landray.kmss.sys.attend.model.SysAttendCategoryATemplate"
+				validator="areaRoleValidator(role=ROLE_SYSATTEND_BACKSTAGE_MANAGER)" />
+		</request>
+	</module>
+	
+<!--	<quartz
+		messageKey="sys-attend:sysAttendMain.record.job"
+		jobService="sysAttendMainJobService"
+		jobMethod="execute"
+		cronExpression="30 0 2 * * ?"
+		description="sys-attend:sysAttendMain.quartz.description" />-->
+
+	<quartz
+			messageKey="sys-attend:sysAttendMain.stat.job"
+			jobService="sysAttendStatJobService"
+			jobMethod="execute"
+			cronExpression="0 0/5 * * * ?"
+			description="sys-attend:sysAttendMain.quartz.stat.description" />
+	<quartz
+			messageKey="sys-attend:sysAttendMain.database.job"
+			jobService="sysAttendDatabaseJobService"
+			jobMethod="execute"
+			cronExpression="0 0/10 * * * ?"
+			description="sys-attend:sysAttendMain.quartz.database.description" />
+<quartz
+			messageKey="sys-attend:sysMonthCount.job"
+			jobService="sysMonthCountJobService"
+			jobMethod="execute"
+			cronExpression="0 0/10 * * * ?"
+			description="sys-attend:sysMonthCount.quartz.description" />
+	<quartz
+		messageKey="sys-attend:sysAttendMain.signStat.job"
+		jobService="sysAttendSignStatJobService"
+		jobMethod="execute"
+		cronExpression="0 0/10 * * * ?"
+		description="sys-attend:sysAttendMain.quartz.signStat.description" />
+	<quartz
+		messageKey="sys-attend:sysAttendMain.category.job"
+		jobService="sysAttendCategoryJobService"
+		jobMethod="execute"
+		cronExpression="0 0/30 * * * ?"
+		description="sys-attend:sysAttendMain.quartz.category.description" />
+	<quartz
+		messageKey="sys-attend:sysAttendMain.unsign.notify.job"
+		jobService="sysAttendMainNotifyJobService"
+		jobMethod="execute"
+		cronExpression="0 0 10 * * ?"
+		description="sys-attend:sysAttendMain.unsign.notify.description" />
+	<quartz
+		messageKey="sys-attend:sysAttendStat.abnormal.notify.job"
+		jobService="sysAttendStatNotifyJobService"
+		jobMethod="execute"
+		cronExpression="0 0 10 * * ?"
+		description="sys-attend:sysAttendStat.abnormal.notify.description" />
+	<quartz
+		messageKey="sys-attend:sysAttendStatPeriod.clear.quartz.job"
+		jobService="sysAttendStatPeriodJobService"
+		jobMethod="execute"
+		cronExpression="0 0 3 * * ?"
+		description="sys-attend:sysAttendStatPeriod.clear.quartz.job.description" />
+	<quartz
+		messageKey="sys-attend:sysAttendMain.remind.job"
+		jobService="sysAttendNotifyRemindJobService"
+		jobMethod="execute"
+		cronExpression="0 0/1 * * * ?"
+		description="sys-attend:sysAttendMain.quartz.remind.description" />
+	<quartz
+		messageKey="sys-attend:sysAttendMain.transfer.quartz.job"
+		jobService="sysAttendMainTransferJobService"
+		jobMethod="execute"
+		cronExpression="0 0 4 * * ?"
+		description="sys-attend:sysAttendMain.transfer.quartz.description" />
+	<quartz
+        messageKey="sys-attend:sysAttendSynConfig.clock.person.sync"
+        jobService="sysAttendSynDingService"
+        cronExpression="0 0 * * * ?"
+        jobMethod="synchPersonClock"
+        enable="false"
+        description="sys-attend:sysAttendSynConfig.clock.person.sync.description"/>
+     <quartz
+        messageKey="sys-attend:sysAttendSynConfig.last.person.sync"
+        jobService="sysAttendSynDingService"
+        cronExpression="0 0 22 * * ?"
+        jobMethod="synchPersonLastClock"
+        description="sys-attend:sysAttendSynConfig.last.person.sync.description"/>
+     <quartz 
+        messageKey="sys-attend:sysAttendSynConfig.clock.person.qywx.sync"
+        jobService="sysAttendSynDingService"
+        cronExpression="10 30 * * * ?"
+        jobMethod="synchPersonWxClock"
+        enable="false"
+        description="sys-attend:sysAttendSynConfig.clock.person.qywx.sync.description"/>
+     <quartz
+        messageKey="sys-attend:sysAttendSynConfig.last.person.qywx.sync"
+        jobService="sysAttendSynDingService"
+        cronExpression="0 0 22 * * ?"
+        jobMethod="synchPersonLastWxClock"
+		enable="false"
+        description="sys-attend:sysAttendSynConfig.last.person.qywx.sync.description"/>
+    
+    <quartz
+        messageKey="sys-attend:sysAttendMain.dingSynQueueError.title"
+        jobService="sysAttendSynDingQueueErrorService"
+        jobMethod="updateRunErrorQueue"
+        cronExpression="0 0/10 * * * ?" 
+        description="sys-attend:sysAttendMain.dingSynQueueError.description" />
+    <quartz
+        messageKey="sys-attend:sysAttendMain.dingSynQueueError.clear.title"
+        jobService="sysAttendSynDingQueueErrorService"
+        jobMethod="clearNotifyQueueError"
+        cronExpression="0 0 4 * * ?" 
+        description="sys-attend:sysAttendMain.dingSynQueueError.clear.description" />
+	<quartz
+		messageKey="sys-attend:sysAttendMain.remind.clear.job"
+		jobService="sysAttendRemindLogJobService"
+		jobMethod="execute"
+		cronExpression="0 0 2 1 * ?"
+		description="sys-attend:sysAttendMain.remind.clear.job.description" />
+	<quartz
+		messageKey="sys-attend:sysAttendMain.log.clear"
+		jobService="sysAttendMainLogJobService"
+		jobMethod="execute"
+		cronExpression="0 0 23 * * ?"
+		description="sys-attend:sysAttendMain.log.clear.description" />
+	<quartz
+		messageKey="sys-attend:sysAttendStat.job.statYesterday"
+		jobService="sysAttendMainJobService"
+		jobMethod="statYesterday"
+		cronExpression="0 0 23 * * ?"
+		description="sys-attend:sysAttendStat.job.statYesterday.description" />
+	<quartz
+		messageKey="sys-attend:sysAttendMain.across.job"
+		jobService="sysAttendMainJobService"
+		jobMethod="executeAnother"
+		cronExpression="0 0 0/1 * * ?"
+		description="sys-attend:sysAttendMain.across.job.description" />
+	<quartz
+		messageKey="sys-attend:sysAttendMain.transfer.synding.quartz.job"
+		jobService="sysAttendSynDingTransferJobService"
+		jobMethod="execute"
+		cronExpression="0 0 4 * * ?"
+		description="sys-attend:sysAttendMain.transfer.synding.quartz.description" />
+	<quartz
+        messageKey="sys-attend:sysAttendMain.notify.invalid.record.job"
+        jobService="sysAttendSynDingService"
+        cronExpression="0 0 * * * ?"
+        jobMethod="sendInvalidRecordNotify"
+        enable="false"
+        description="sys-attend:sysAttendMain.notify.invalid.record.description"/>
+
+
+	<quartz
+			messageKey="sys-attend:sysAttendSignLog.quartz.tohis"
+			jobService="sysAttendSignLogService"
+			jobMethod="syncSignLogToHis"
+			cronExpression="0 0 22 * * ?"
+			enable="true"
+			description="sys-attend:sysAttendSignLog.quartz.tohis.desc" />
+
+	<quartz
+			messageKey="sys-attend:sysAttendSignLog.quartz.delete"
+			jobService="sysAttendSignBakService"
+			jobMethod="deleteSignHisLogDelete"
+			cronExpression="0 30 22 * * ?"
+			enable="true"
+			description="sys-attend:sysAttendSignLog.quartz.delete.desc" />
+
+	<homePage
+		urlPrefix="sys/attend"
+		config="/moduleindex_notopic.jsp?nav=/sys/attend/tree.jsp"
+		url="/sys/portal/page.jsp#j_start=/sys/attend/index.jsp&amp;j_target=_iframe"
+		messageKey="sys-attend:module.sys.attend" />
+	<flowDef
+		modelName="com.landray.kmss.sys.attend.model.SysAttendMainExc"
+		templateModelName="com.landray.kmss.sys.attend.model.SysAttendCategoryATemplate"
+		key="attendMainExc"
+		templatePropertyName="fdCateTempl"
+		moduleMessageKey="sys-attend:module.sys.attend"
+		show="false"
+		type="oa" />
+ 	<profileConfig
+		key="sys/attend"
+		messageKey="{sys-attend:module.sys.attend}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/attend/tree.jsp" 
+		icon="sys_attend"
+		description="{sys-attend:sysAttend.profileCfg.description}"
+		type="hr"
+		order="303"/>
+
+</configs>

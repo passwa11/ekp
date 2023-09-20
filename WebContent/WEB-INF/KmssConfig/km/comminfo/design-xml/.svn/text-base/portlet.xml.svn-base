@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+	
+	<!-- 常用资料 -->
+	<portlet id="km.comminfo.content" name="{km-comminfo:kmComminfo.tree.model}" module="{km-comminfo:kmComminfo.tree.model}">
+		<source  format="sys.ui.classic" type="AjaxXml" >
+			<code>
+			<![CDATA[
+				{
+				"url":"/sys/common/dataxml.jsp?s_bean=kmComminfoPortletService&rowsize=!{rowsize}&fdCategoryId=!{cateid}"
+				}
+			]]>
+			</code>
+		</source>
+		<vars>
+		    <var name="{km-comminfo:kmComminfo.tree.infoNum}" key="rowsize" kind="rowsize" />
+		    <var name="{km-comminfo:kmComminfo.tree.type}" key="cateid" kind="dialogJs" >
+		    	{"jsp":"/km/comminfo/km_comminfo_main/selectcomminfocategory.jsp","help":"{km-comminfo:kmComminfo.tree.selectCate}"}
+		    </var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=add&amp;categoryId=!{cateid}" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/comminfo/?categoryId=!{cateid}" />
+		</operations>
+	</portlet>
+	<!-- 以下为支持cloud数据源 -->
+	<!-- 常用资料 -->
+	<portlet id="km.comminfo.content" name="{km-comminfo:kmComminfo.tree.model}" module="{km-comminfo:kmComminfo.tree.model}" forSystem="cloud" varExtend="km.comminfo.content">
+		<source id="km-comminfo.content" format="data.list" type="xml" >
+			<code>
+			<![CDATA[
+				{
+				"url":"/data/sys-common/dataxml?s_bean=kmComminfoPortletService&rowsize=!{rowsize}&fdCategoryId=!{cateid}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[{"text":"跨部门各职能接口人一览表2017","href":"http://java.landray.com.cn/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=view&fdId=15dac052fb0de856919530041d3a0175","statusInfo":"已发布","statusColor":"primary","cateName":"常用资料","cateHref":"http://java.landray.com.cn/sys/portal/page.jsp#j_start=%2Fkm%2Fcomminfo.index&j_target=_iframe&c_app_title=%25E5%25B8%25B8%25E7%2594%25A8%25E8%25B5%2584%25E6%2596%2599&c_app_url=%252Fkm%252Fcomminfo.index","creator":{"fdName":"刘晓霞"},"created":1557132149164},{"text":"社保和公积金自助查询方法","href":"http://java.landray.com.cn/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=view&fdId=145f899db92d8bcc1519bf943f989eb9","statusInfo":"已发布","statusColor":"primary","cateName":"常用资料","cateHref":"http://java.landray.com.cn/sys/portal/page.jsp#j_start=%2Fkm%2Fcomminfo.index&j_target=_iframe&c_app_title=%25E5%25B8%25B8%25E7%2594%25A8%25E8%25B5%2584%25E6%2596%2599&c_app_url=%252Fkm%252Fcomminfo.index","creator":{"fdName":"韩晨"},"created":1557132149163},{"text":"蓝锐点餐系统 ","href":"http://java.landray.com.cn/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=view&fdId=14596f501391383c4f18d7d4cbca9340","statusInfo":"已发布","statusColor":"primary","cateName":"常用资料","cateHref":"http://java.landray.com.cn/sys/portal/page.jsp#j_start=%2Fkm%2Fcomminfo.index&j_target=_iframe&c_app_title=%25E5%25B8%25B8%25E7%2594%25A8%25E8%25B5%2584%25E6%2596%2599&c_app_url=%252Fkm%252Fcomminfo.index","creator":{"fdName":"韩晨"},"created":1557132149162},{"text":"南昌办公区座位分布图","href":"http://java.landray.com.cn/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=view&fdId=145a5eaf3658785a2258be64a2bb132c","statusInfo":"已发布","statusColor":"primary","cateName":"常用资料","cateHref":"http://java.landray.com.cn/sys/portal/page.jsp#j_start=%2Fkm%2Fcomminfo.index&j_target=_iframe&c_app_title=%25E5%25B8%25B8%25E7%2594%25A8%25E8%25B5%2584%25E6%2596%2599&c_app_url=%252Fkm%252Fcomminfo.index","creator":{"fdName":"韩晨"},"created":1557132149161},{"text":"打印机使用操作手册","href":"http://java.landray.com.cn/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=view&fdId=145c4e7fc219da933b8cbde42b79b3bf","statusInfo":"已发布","statusColor":"primary","cateName":"常用资料","cateHref":"http://java.landray.com.cn/sys/portal/page.jsp#j_start=%2Fkm%2Fcomminfo.index&j_target=_iframe&c_app_title=%25E5%25B8%25B8%25E7%2594%25A8%25E8%25B5%2584%25E6%2596%2599&c_app_url=%252Fkm%252Fcomminfo.index","creator":{"fdName":"韩晨"},"created":1557132149160}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{km-comminfo:kmComminfo.tree.type}" key="cateid" kind="tree" >
+		    	<![CDATA[
+			    	{
+			    		"url":"/data/sys-common/treexml?s_bean=kmCategoryTreeService&parentId=!{parentId}&portlet=true",
+			    		"dataType":"xml",
+			    		"canSelectCategory":true,
+			    		"model":"com.landray.kmss.km.comminfo.model.KmComminfoCategory",
+			    		"help":"{km-comminfo:kmComminfo.tree.selectCate}"
+			    	}
+		    	]]>
+		    </var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=add&amp;categoryId=!{cateid}" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/comminfo/?categoryId=!{cateid}" />
+		</operations>
+	</portlet>
+	<!-- 常用资料 new-->
+	<portlet id="km.comminfo.content.new" name="{km-comminfo:kmComminfo.tree.model.new}" module="{km-comminfo:kmComminfo.tree.model}" forSystem="cloud" varExtend="km.comminfo.content">
+		<source id="km-comminfo.content.new" format="data.fieldlist" type="xml" >
+			<code>
+				<![CDATA[
+				{
+				"url":"/data/sys-common/dataxml?s_bean=kmComminfoPortletService&rowsize=!{rowsize}&fdCategoryId=!{cateid}&isNew=true"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+            [{"text":"跨部门各职能接口人一览表2017","href":"http://java.landray.com.cn/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=view&fdId=15dac052fb0de856919530041d3a0175","statusInfo":{"text":"已发布","color":"primary"},"cateName":{"text":"常用资料","href":"http://java.landray.com.cn/sys/portal/page.jsp#j_start=%2Fkm%2Fcomminfo.index&j_target=_iframe&c_app_title=%25E5%25B8%25B8%25E7%2594%25A8%25E8%25B5%2584%25E6%2596%2599&c_app_url=%252Fkm%252Fcomminfo.index"},"creator":{"fdName":"刘晓霞"},"created":{"text":1557132149164}},{"text":"社保和公积金自助查询方法","href":"http://java.landray.com.cn/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=view&fdId=145f899db92d8bcc1519bf943f989eb9","statusInfo":{"text":"已发布","color":"primary"},"cateName":{"text":"常用资料","href":"http://java.landray.com.cn/sys/portal/page.jsp#j_start=%2Fkm%2Fcomminfo.index&j_target=_iframe&c_app_title=%25E5%25B8%25B8%25E7%2594%25A8%25E8%25B5%2584%25E6%2596%2599&c_app_url=%252Fkm%252Fcomminfo.index"},"creator":{"fdName":"韩晨"},"created":{"text":1557132149163}},{"text":"蓝锐点餐系统 ","href":"http://java.landray.com.cn/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=view&fdId=14596f501391383c4f18d7d4cbca9340","statusInfo":{"text":"已发布","color":"primary"},"cateName":{"text":"常用资料","href":"http://java.landray.com.cn/sys/portal/page.jsp#j_start=%2Fkm%2Fcomminfo.index&j_target=_iframe&c_app_title=%25E5%25B8%25B8%25E7%2594%25A8%25E8%25B5%2584%25E6%2596%2599&c_app_url=%252Fkm%252Fcomminfo.index"},"creator":{"fdName":"韩晨"},"created":{"text":1557132149162}},{"text":"南昌办公区座位分布图","href":"http://java.landray.com.cn/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=view&fdId=145a5eaf3658785a2258be64a2bb132c","statusInfo":{"text":"已发布","color":"primary"},"cateName":{"text":"常用资料","href":"http://java.landray.com.cn/sys/portal/page.jsp#j_start=%2Fkm%2Fcomminfo.index&j_target=_iframe&c_app_title=%25E5%25B8%25B8%25E7%2594%25A8%25E8%25B5%2584%25E6%2596%2599&c_app_url=%252Fkm%252Fcomminfo.index"},"creator":{"fdName":"韩晨"},"created":{"text":1557132149161}},{"text":"打印机使用操作手册","href":"http://java.landray.com.cn/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=view&fdId=145c4e7fc219da933b8cbde42b79b3bf","statusInfo":{"text":"已发布","color":"primary"},"cateName":{"text":"常用资料","href":"http://java.landray.com.cn/sys/portal/page.jsp#j_start=%2Fkm%2Fcomminfo.index&j_target=_iframe&c_app_title=%25E5%25B8%25B8%25E7%2594%25A8%25E8%25B5%2584%25E6%2596%2599&c_app_url=%252Fkm%252Fcomminfo.index"},"creator":{"fdName":"韩晨"},"created":{"text":1557132149160}}]
+            ]]>
+				</code>
+			</example>
+			<dataFields>
+				<code>
+					<![CDATA[
+               {
+               "base": {
+               "label": "基础信息",
+               "items": [
+               {"key": "statusInfo", "text": "状态"}
+               ]
+               },
+               "info": {
+               "label": "辅助信息",
+               "items": [
+               {"key": "created", "text": "创建时间", "type": "timestamp"},
+               {"key": "creator", "text": "作者", "type": "person"},
+               {"key": "cateName", "text": "分类", "type": "string"}
+               ]
+               },
+               "tag": {
+               "label": "标签",
+               "items": []
+               }
+               }
+            ]]>
+				</code>
+			</dataFields>
+		</source>
+		<vars>
+			<var name="{km-comminfo:kmComminfo.tree.type}" key="cateid" kind="tree" >
+				<![CDATA[
+			    	{
+			    		"url":"/data/sys-common/treexml?s_bean=kmCategoryTreeService&parentId=!{parentId}&portlet=true",
+			    		"dataType":"xml",
+			    		"canSelectCategory":true,
+			    		"model":"com.landray.kmss.km.comminfo.model.KmComminfoCategory",
+			    		"help":"{km-comminfo:kmComminfo.tree.selectCate}"
+			    	}
+		    	]]>
+			</var>
+		</vars>
+		<operations>
+			<operation
+					name="{operation.create}"
+					type="create"
+					href="/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=add&amp;categoryId=!{cateid}" />
+			<operation
+					name="{operation.more}"
+					type="more"
+					href="/km/comminfo/?categoryId=!{cateid}" />
+		</operations>
+	</portlet>
+</root>

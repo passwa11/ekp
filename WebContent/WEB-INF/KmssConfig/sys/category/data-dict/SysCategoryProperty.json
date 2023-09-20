@@ -1,0 +1,165 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.category.model.SysCategoryProperty",
+        "messageKey": "sys-category:table.sysCategoryProperty",
+        "serviceBean": "sysCategoryPropertyService",
+        "displayProperty": "fdName",
+        "table": "sys_category_property",
+        "url": "/sys/category/sys_category_property/sysCategoryProperty.do?method=edit&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-category:sysCategoryProperty.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "unique": "false",
+            "length": "100",
+            "validate": "true"
+        },
+        "fdHierarchyId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-category:sysCategoryMain.fdHierarchyId",
+            "type": "String",
+            "column": "fd_hierarchy_id",
+            "notNull": "false",
+            "unique": "false",
+            "length": "1000",
+            "canDisplay": "false"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "model.fdCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "true",
+            "unique": "false"
+        },
+        "docAlterTime":         {
+            "propertyType": "simple",
+            "messageKey": "model.fdAlterTime",
+            "type": "DateTime",
+            "column": "doc_alter_time",
+            "notNull": "false",
+            "unique": "false"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "model.fdOrder",
+            "type": "Integer",
+            "column": "fd_order",
+            "notNull": "false",
+            "unique": "false",
+            "length": "10"
+        },
+        "fdIsinheritMaintainer":         {
+            "propertyType": "simple",
+            "messageKey": "sys-category:sysCategory.fdIsinheritMaintainer",
+            "type": "Boolean",
+            "column": "fd_isinherit_maintainer",
+            "notNull": "false",
+            "unique": "false",
+            "length": "1"
+        },
+        "fdIsinheritUser":         {
+            "propertyType": "simple",
+            "messageKey": "sys-category:sysCategory.fdIsinheritUser",
+            "type": "Boolean",
+            "column": "fd_isinherit_user",
+            "notNull": "false",
+            "unique": "false",
+            "length": "1"
+        },
+        "authReaderFlag":         {
+            "propertyType": "simple",
+            "messageKey": "sys-category:sysCategory.authReaderFlag",
+            "type": "Boolean",
+            "column": "auth_reader_flag",
+            "notNull": "false",
+            "unique": "false",
+            "length": "1",
+            "canDisplay": "false"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "model.fdCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_creator_id",
+            "notNull": "true",
+            "unique": "false"
+        },
+        "docAlteror":         {
+            "propertyType": "model",
+            "messageKey": "model.docAlteror",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_alteror_id",
+            "notNull": "false",
+            "unique": "false"
+        },
+        "authEditors":         {
+            "propertyType": "list",
+            "messageKey": "model.tempEditorName",
+            "column": "fd_category_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_editor_id",
+            "table": "sys_category_property_editor"
+        },
+        "authReaders":         {
+            "propertyType": "list",
+            "messageKey": "model.tempReaderName",
+            "column": "fd_category_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_reader_id",
+            "table": "sys_category_property_reader"
+        },
+        "authAllReaders":         {
+            "propertyType": "list",
+            "messageKey": "sys-category:sysCategoryMain.authAllReaders",
+            "column": "fd_category_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_all_reader_id",
+            "table": "sys_category_property_areaders",
+            "canDisplay": "false"
+        },
+        "authAllEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-category:sysCategoryMain.authAllEditors",
+            "column": "fd_category_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_all_editor_id",
+            "table": "sys_category_property_aeditor",
+            "canDisplay": "false"
+        },
+        "authOtherEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-category:sysCategoryMain.authOtherEditors",
+            "column": "fd_category_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_other_editor_id",
+            "table": "sys_category_property_oeditor",
+            "canDisplay": "false"
+        },
+        "authOtherReaders":         {
+            "propertyType": "list",
+            "messageKey": "sys-category:sysCategoryMain.authOtherReaders",
+            "column": "fd_category_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_other_reader_id",
+            "table": "sys_category_property_oreader",
+            "canDisplay": "false"
+        },
+        "hbmParent":         {
+            "propertyType": "model",
+            "messageKey": "sys-category:sysCategoryProperty.fdParentName",
+            "type": "com.landray.kmss.sys.category.model.SysCategoryProperty",
+            "column": "fd_parent_id",
+            "unique": "false",
+            "cascade": "save-update"
+        }
+    }
+}

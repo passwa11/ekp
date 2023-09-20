@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<bean id="sysAttBorrowDao"
+		class="com.landray.kmss.sys.attachment.borrow.dao.hibernate.SysAttBorrowDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.sys.attachment.borrow.model.SysAttBorrow</value>
+		</property>
+	</bean>
+	<bean id="sysAttBorrowTarget"
+		class="com.landray.kmss.sys.attachment.borrow.service.spring.SysAttBorrowServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="sysAttBorrowDao" />
+		</property>
+		<property name="sysAttMainService">
+			<ref bean="sysAttMainService" />
+		</property>
+	</bean>
+	<bean id="sysAttBorrowService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysAttBorrowTarget" />
+		</property>
+	</bean>
+
+</beans>

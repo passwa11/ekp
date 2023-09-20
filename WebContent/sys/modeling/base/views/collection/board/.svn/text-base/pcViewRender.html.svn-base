@@ -1,0 +1,362 @@
+data = data || {};
+var viewWgt = render.parent;
+var lang = viewWgt.getModelingLang();
+var fieldInfos = viewWgt.getFieldInfos();
+var attachments = listviewOption.attachments;
+// 列表穿透，默认是true
+var viewFlag = data.fdViewFlag === "0" ? "0":"1";
+// 是否权限过滤，默认是true
+var authEnabled = data.fdAuthEnabled === "0" ? "0":"1";
+
+// 获取标题字段的文本值
+var fdSubject = data.fdSubject || {};
+
+//封面图片
+var fdCoverImg = data.fdCoverImg || {};
+//是否显示封面图片
+data.fdShowCoverImg = data.fdShowCoverImg || "1";
+
+//分组依据
+var fdGroup = data.fdGroup || {};
+if(fdGroup.fieldCfg && fdGroup.fieldCfg.length>0){
+    fdGroup = fdGroup.fieldCfg[0];
+}
+{$
+<table class="tb_simple model-view-panel-table" width="100%">
+    <!-- 筛选项start -->
+    <tr>
+        <td class="td_normal_title" data-lui-position='fdCondition'>
+            {%lang['modelingAppListview.fdCondition']%}
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <div class="inputselectsgl multiSelectDialog"  data-lui-position='fdCondition' style="width:100%;height: 28px!important;">
+                <input name="fd_{%viewWgt.id%}_fdCondition" value='{%JSON.stringify(data.fdCondition)%}' type="hidden">
+                <div class="input">
+                    <input name="fd_{%viewWgt.id%}_fdConditionText" value="{%data.fdConditionText%}" type="text" style="display:none;" />
+                    <span class="selectedItem"></span>
+                </div>
+                <div class="deleteAll"></div>
+                <div class="selectitem"></div>
+            </div>
+        </td>
+    </tr>
+    <!-- 筛选项end -->
+
+    <!-- 排序设置start -->
+    <tr>
+        <td class="td_normal_title" data-lui-position='fdOrderBy'>
+            <span class="model-edit-view-oper-title">{%lang['modelingAppListview.fdOrderBy']%}</span>
+            <span class="model-data-create model-data-order">{%lang['button.add']%}</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <div class="model-panel-table-base" style="display:none;margin-bottom:0">
+                <div class="tb_simple model-edit-view-oper-content-table" id="fd_{%viewWgt.id%}_order" data-table-type="order" style="width:100%;">
+                </div>
+            </div>
+        </td>
+    </tr>
+    <!-- 排序设置end -->
+
+    <!-- 业务操作start -->
+    <tr  class="operationTr">
+        <td class="td_normal_title" data-lui-position='fdOperation'>
+            <span class="model-edit-view-oper-title">
+                {%lang['modelingAppListview.listOperation']%}
+            </span>
+            <span class="model-data-create model-data-operate">
+                {%lang['button.add']%}
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <div class="model-panel-table-base" style="display:none;margin-bottom:0">
+                <div class="tb_simple model-edit-view-oper-content-table" id="fd_{%viewWgt.id%}_operate" data-table-type="operate" style="width:100%;">
+                </div>
+                <input name="operationIds" type="hidden" value="" />
+                <input name="operationNames" type="hidden" value="" />
+            </div>
+        </td>
+    </tr>
+    <!-- 业务操作end -->
+    <!-- 看板卡片start -->
+    <tr>
+        <td class="td_normal_title viewcover-content" data-lui-position='fdDisplay'>
+            {%lang['listview.board.card']%}
+            <div class="modeling-viewcover-tip">
+                <span>{%lang['listview.card.image.tips']%}</span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <div class="model-panel-table-base" style="margin-bottom: 0px;">
+                <div class="tb_simple model-edit-view-oper-content-table" style="width:100%;">
+                    <div class="item operateItem sortItem" index="0">
+                        <div class="model-edit-view-oper" data-lui-position="fdDisplay" onclick="switchSelectPosition(this,'right')">
+                            <div class="model-edit-view-oper-head">
+                                <div class="model-edit-view-oper-head-title">
+                                    <div onclick='changeToOpenOrClose(this)'><i class="open"></i></div>
+                                    <span>{%lang['listview.cover.image']%}</span>
+                                </div>
+                                <div class="model-edit-view-oper-head-item">
+                                </div>
+                            </div>
+                            <div class="model-edit-view-oper-content">
+                                <ul class="list-content">
+                                    <li class="model-edit-view-oper-content-item">
+                                        <div class="item-content">
+                                            <div class="operation fdCoverImgTr">
+                                                <div class="model-view-mobile-cover">
+                                                    <input type="hidden" name="fd_{%viewWgt.id%}_ShowCoverImg" value="{%data.fdShowCoverImg%}">
+                                                    <div class="model-mask-panel-table-radio">
+                                                        <input type="radio" name="fd_{%viewWgt.id%}_fdShowCoverImg" value="0" class="model-mask-panel-table-radio-item">{%lang['behavior.null']%}
+                                                    </div>
+                                                    <div class="model-mask-panel-table-radio">
+                                                        <input type="radio" name="fd_{%viewWgt.id%}_fdShowCoverImg" value="1" class="model-mask-panel-table-radio-item">{%lang['listview.have']%}
+
+                                                        <div class="model-mask-panel-table-select" style="">
+                                                            <p class="model-mask-panel-table-select-val" placeholder="{%lang['listview.default.cover']%}">{%fdCoverImg.text || lang['listview.default.cover']%}</p>
+                                                            <div class="model-mask-panel-table-option">$}
+                                                                {$
+                                                                <div option-value="" data-field-type="" title="{%lang['listview.default.cover']%}">{%lang['listview.default.cover']%}</div>
+                                                                $}
+                                                                for(var i = 0;i < attachments.length;i++){
+                                                                var attachment = attachments[i];
+                                                                if(attachment.atttype == 'docimg' && !attachment.multi && attachment.name.indexOf(".")<0){
+                                                                {$
+                                                                <div option-value="{%attachment.name%}" data-field-type="{%attachment.type%}" title="{%attachment.label%}">{%attachment.label%}</div>
+                                                                $}
+                                                                }
+                                                                }
+                                                                {$</div>
+                                                            <input name="fd_{%viewWgt.id%}_fdCoverImg" type="text" style='display: none'  subject="{%lang['listview.cover.image']%}" value="{%fdCoverImg.field%}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 标题字段start -->
+            <div class="model-panel-table-base" style="margin-bottom: 0px;">
+                <div class="tb_simple model-edit-view-oper-content-table" style="width:100%;">
+                    <div class="item operateItem sortItem" index="0">
+                        <div class="model-edit-view-oper" data-lui-position="fdDisplay" onclick="switchSelectPosition(this,'right')">
+                            <div class="model-edit-view-oper-head">
+                                <div class="model-edit-view-oper-head-title">
+                                    <div onclick='changeToOpenOrClose(this)'><i class="open"></i></div>
+                                    <span>{%lang['listview.title.field']%}</span>
+                                </div>
+                                <div class="model-edit-view-oper-head-item">
+                                </div>
+                            </div>
+                            <div class="model-edit-view-oper-content">
+                                <ul class="list-content">
+                                    <li class="model-edit-view-oper-content-item">
+                                        <div class="item-content">
+                                            <div class="operation fdSubjectTr">
+                                                <div class="">
+                                                    <div class="model-mask-panel-table-select" style="margin-left: 0px;width:96%;display:inline-block;height:28px">
+                                                        <p class="model-mask-panel-table-select-val" placeholder="{%lang['modeling.page.choose']%}">{%fdSubject.text || lang['modeling.page.choose']%}</p>
+                                                        <div class="model-mask-panel-table-option">$}
+                                                            for(var i = 0;i < fieldInfos.length;i++){
+                                                            var fieldInfo = fieldInfos[i];
+                                                            {$
+                                                            <div option-value="{%fieldInfo.field%}" data-field-type="{%fieldInfo.type%}" title="{%fieldInfo.text%}">{%fieldInfo.text%}</div>
+                                                            $}
+                                                            }
+                                                            {$</div>
+                                                        <input name="fd_{%viewWgt.id%}_fdSubject" type="text" style='display: none' validate='required' data-subject="{%lang['listview.title.field']%}" value="{%fdSubject.field%}" />
+                                                    </div>
+                                                    <span class="txtstrong">*</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 标题字段end -->
+        </td>
+    </tr>
+
+
+    <!-- 摘要项start -->
+    <tr>
+        <td class="td_normal_title" data-lui-position='fdDisplay'>
+            {%lang['listview.summary.item']%}
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <div class="model-edit-view-oper-head model-edit-view-oper-summary">
+                <div class="model-edit-view-oper-head-title">
+                    <span>{%lang['listview.whether.display.title']%}</span>
+                </div>
+                <div class="model-edit-view-oper-head-item">
+                    <input type="checkbox" name="{%viewWgt.id%}_summaryflag"></div>
+                <input type="hidden" name="fd_{%viewWgt.id%}_fdSummaryFlag" value="{%data.fdSummaryFlag%}">
+                </div>
+            </div>
+            <div class="inputselectsgl multiSelectDialog" data-lui-position='fdDisplay'  style="width:100%;height: 28px!important;">
+                <input name="fd_{%viewWgt.id%}_fdSummary" value='{%JSON.stringify(data.fdSummary)%}' type="hidden">
+                <div class="input">
+                    <input name="fd_{%viewWgt.id%}_fdSummaryText" value="{%data.fdSummaryText%}" type="text" style="display:none;"/>
+                    <span class="selectedItem"></span>
+                </div>
+                <div class="deleteAll"></div>
+                <div class="selectitem"></div>
+            </div>
+        </td>
+    </tr>
+    <!-- 摘要项end -->
+
+    <!-- 显示样式start -->
+    <tr id="fdDisplayCssSetTr">
+        <td class="td_normal_title td_display_add">
+            <span class="displaycss td_normal_title" data-lui-position="fdDisplayCss">{%lang['modelingAppListview.fdDisplayCssSet']%}</span>
+            <span class="displaycss_create model_select_selected" style="float: right; padding-bottom: 8px; pointer-events: auto;">{%lang['button.add']%}
+                <div class="displaycss_create_pop" style="height: 0px; border: 0px;">
+                </div>
+            </span>
+        </td>
+    </tr>
+    <!-- 显示样式end -->
+
+    <!-- 卡片分类依据start -->
+    <tr>
+        <td class="td_normal_title" >
+            {%lang['listview.card.classify']%}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="board-list-view-group-container">
+                <div class="board-list-view-group-type">
+                    <span class="txtstrong">*</span>
+                    <ul class="board-list-view-group-type-list">
+                        <li data-value="0">{%lang['listview.by.field']%}</li>
+                        <li data-value="1">{%lang['modeling.customize']%}</li>
+                    </ul>
+                </div>
+                <div class="board-list-view-group-filed-content">
+                    <div class="board-list-view-group-field-header">
+                        <span class="board-list-view-group-field-title">{%lang['listview.optional.category.field']%}</span>
+                        <span class="board-list-view-group-field-create">{%lang['button.add']%}</span>
+                    </div>
+                    <div class="board-list-view-group-field-tip">{%lang['listview.card.automatical.enum.board']%}</div>
+                    <div class="board-list-view-group-field-table" data-table-type="groupField">
+                        <div class="board-list-view-group-field-content" style="display: none">
+                            <div class="board-list-view-group-field-detail">
+                                <div class="board-list-view-group-field-desc">
+                                    <div class="board-list-view-group-field-fieldInfo">
+                                        <input type="text" readonly="readonly" />
+                                    </div>
+                                    <div class="board-list-view-group-field-default">
+                                        <span>{%lang['listview.default']%}</span>
+                                    </div>
+                                </div>
+                                <div class="board-list-view-group-field-del">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="board-list-view-group-custom-content">
+                    <div class="board-list-view-group-custom-header">
+                        <div class="board-list-view-group-custom-title">{%lang['listview.optional.classify']%}</div>
+                    </div>
+                    <div class="board-list-view-group-custom-tip">{%lang['listview.card.classify.rule.board']%}</div>
+                    <div class="board-list-view-group-custom-content">
+                        <div class="model-panel-table-base">
+                            <div class="tb_simple model-edit-view-oper-content-table" id="fd_{%viewWgt.id%}_groupCustom" data-table-type="groupCustom">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="board-list-view-group-custom-create"><div>{%lang['button.add']%}</div></div>
+                    <div class="board-list-view-group-custom-rules" style="display: none">
+                        <div class="board-list-view-group-custom-back">{%lang['sys.profile.modeling.homePage.back']%}</div>
+                        <div class="board-list-view-group-custom-rules-content">
+                            <div class="board-list-view-group-custom-rules-head">
+                                <div class="board-list-view-group-custom-rules-title">{%lang['listview.board']%}</div>
+                                <div class="board-list-view-group-custom-rules-create">{%lang['button.add']%}</div>
+                            </div>
+                            <div class="board-list-view-group-custom-rule-container">
+                                <div class="board-list-view-group-custom-rule-detail">
+                                    <div class="board-list-view-group-custom-rule-head">
+                                        <div class="board-list-view-group-custom-rule-open"></div>
+                                        <div class="board-list-view-group-custom-rule-name-desc"></div>
+                                        <div class="board-list-view-group-custom-rule-oper"></div>
+                                    </div>
+                                    <div class="board-list-view-group-custom-rule-content">
+                                        <div class="board-list-view-group-custom-rule-name">
+                                            <div class="board-list-view-group-custom-rule-name-tip">{%lang['listview.board.name']%}</div>
+                                            <div class="board-list-view-group-custom-rule-name-input">
+                                                <input type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="board-list-view-group-custom-rule-where">
+                                            <div class="board-list-view-group-custom-rule-where-tip">{%lang['listview.display.condition']%}</div>
+                                            <div class="board-list-view-group-custom-rule-where-type">
+                                                <div class="board-list-view-group-custom-rule-where-prefix">{%lang['listview.meet.following']%}</div>
+                                                <div class="board-list-view-group-custom-rule-where-select">
+                                                    <select>
+                                                        <option></option>
+                                                    </select>
+                                                </div>
+                                                <div class="board-list-view-group-custom-rule-where-suffix">{%lang['listview.card.display.currentBoard']%}</div>
+                                            </div>
+                                            <div class="board-list-view-group-custom-rule-where-add">{%lang['button.add']%}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <!-- 卡片分类依据end -->
+
+    <!-- 视图穿透start-->
+    <tr>
+        <td class="td_normal_title viewcover-content">
+            {%lang['listview.view.penetration']%}
+        </td>
+    </tr>
+    <tr>
+        <td class="model-view-panel-table-td">
+            <input type="hidden" name="fd_{%viewWgt.id%}_fdViewFlag" value='{%viewFlag%}'>
+            <select class='inputsgl selectCover' name="fd_{%viewWgt.id%}_fdViewId" style="{%viewFlag === '1'?'':'display:none'%}">
+                <option value="">{%lang['listview.default.view']%}</option>$}
+                // listviewOption.baseInfo在edit.jsp里面定义
+                for(var i = 0;i < listviewOption.baseInfo.views.length;i++){
+                var option = listviewOption.baseInfo.views[i];
+                if (!option[2]) {
+                    {$
+                    <option value="{%option[0]%}" {%data.fdViewId === option[0]?'selected':''%}>{%option[1]%}</option>
+                    $}
+                }
+                }
+                {$</select>
+        </td>
+    </tr>
+    <!-- 视图穿透end-->
+
+</table>
+$}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean
+            id="kmsKnowledgeNotifySettingDao"
+            class="com.landray.kmss.kms.knowledge.notifySetting.dao.hibernate.KmsKnowledgeNotifySettingDaoImp"
+            parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.kms.knowledge.notifySetting.model.KmsKnowledgeNotifySetting</value>
+        </property>
+    </bean>
+
+    <bean
+            id="KmsKnowledgeNotifySettingTarget"
+            class="com.landray.kmss.kms.knowledge.notifySetting.service.spring.KmsKnowledgeNotifySettingServiceImp"
+            parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="kmsKnowledgeNotifySettingDao"/>
+        </property>
+    </bean>
+    <bean
+            id="kmsKnowledgeNotifySettingService"
+            parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="KmsKnowledgeNotifySettingTarget"/>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/admin/sys_admin_dbchecker/sysAdminDbchecker.do"
+		class="com.landray.kmss.sys.admin.dbchecker.action.SysAdminDbcheckerAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.admin.dbchecker.form.SysAdminDbcheckerForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="select"
+					value="/sys/admin/sys_admin_dbchecker/sysAdminDbchecker_select.jsp" />
+				<entry
+					key="result"
+					value="/sys/admin/sys_admin_dbchecker/sysAdminDbchecker_result.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

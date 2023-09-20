@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <extension 
+        point="com.landray.kmss.sys.number.config" 
+        model="*">
+        <item 
+            name="extend">
+            <param 
+                name="modelName" 
+                value="com.landray.kmss.fssc.budget.model.FsscBudgetAdjustMain"/>
+            <param 
+                name="templatePropertyName" 
+                value="docTemplate"/>
+            <param 
+                name="moduleName" 
+                value="{fssc-budget:module.fssc.budget}"/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.fssc.budget.model.FsscBudgetAdjustMain">
+	
+		<!--预算调整流程结束，将借出成本中心对应的金额转移到借入成本中心-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscBudgetAdjustFinishEvent" />
+			<param
+				name="messageKey"
+				value="{fssc-budget:fsscBudgetAdjustMain.finishEvent}" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessFinishEvent" />
+			<param
+				name="listener"
+				value="fsscBudgetAdjustFinishEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		<!--预算调整流程废弃将占用金额释放-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscBudgetAdjustAbandonedEvent" />
+			<param
+				name="messageKey"
+				value="{fssc-budget:fsscBudgetAdjustMain.abandonedEvent}" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessAbandonedEvent;drafterAbandonEvent;lbpmHandlerAbandonEvent" />
+			<param
+				name="listener"
+				value="fsscBudgetAdjustAbandonedEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+		<!--预算调整流程驳回到起草节点将占用金额释放-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscBudgetAdjustEnterNodeEvent" />
+			<param
+				name="messageKey"
+				value="{fssc-budget:fsscBudgetAdjustMain.draftNode.enterNodeEvent}" />
+			<param
+				name="eventTypes"
+				value="enterNodeEvent" />
+			<param
+				name="listener"
+				value="fsscBudgetAdjustEnterNodeEvent" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+		<!--起草人撤回预算调整流程将占用金额释放-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscBudgetAdjustDrafterReturnEvent" />
+			<param
+				name="messageKey"
+				value="{fssc-budget:fsscBudgetAdjustMain.drafterReturnEvent}" />
+			<param
+				name="eventTypes"
+				value="drafterReturnEvent" />
+			<param
+				name="listener"
+				value="fsscBudgetAdjustDrafterReturnEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		<!--起草人提交预算调整流程重新将占用预算金额-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscBudgetAdjustDraftorSubmitEvent" />
+			<param
+				name="messageKey"
+				value="fssc-budget:fsscBudgetAdjustMain.draftor.submit" />
+			<param
+				name="eventTypes"
+				value="drafterSubmitEvent" />
+			<param
+				name="listener"
+				value="fsscBudgetAdjustDraftorSubmitEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+	</extension>
+	<extension	 point="com.landray.kmss.sys.webservice2">
+		<item name="registry">
+			<param name="serviceName" value="第三方系统调用预算新增、匹配、占用、释放Webservice接口" />
+			<param name="serviceClass" 
+				value="com.landray.kmss.fssc.budget.webservice.IFsscBudgetWebserviceService" />
+			<param	name="serviceBean" 
+				value="fsscBudgetWebserviceService" />				
+			<param	name="serviceDoc"	 
+			value="/fssc/budget/fssc_budget_webservice/fsscBudgetWebserviceHelp.jsp" />
+		</item>
+	</extension>
+	<!-- 软删除功能扩展点实现 -->
+	<extension point="com.landray.kmss.sys.recycle">
+		<item name="softDelete">
+			<!-- 模块(文档)名称 -->
+			<param
+				name="modelName"
+				value="fssc-budget:table.fsscBudgetAdjustMain" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.fssc.budget.model.FsscBudgetAdjustMain" />
+			<!-- 主文档对应的分类(模板)全名称 -->
+			<param
+				name="categoryClassName"
+				value="com.landray.kmss.fssc.budget.model.FsscBudgetAdjustCategory" />
+			<!-- 主文档中分类(模板)的属性名称 -->
+			<param
+				name="categoryField"
+				value="docTemplate" />
+			<!-- 主文档中标题的属性名称 -->
+			<param
+				name="titleField"
+				value="docSubject" />
+		</item>
+	</extension>
+		<extension point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain">
+	<!--起草人提交报销流程将占用预算金额-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="kmReviewZjSubmitEvent" />
+			<param
+				name="messageKey"
+				value="fssc-budget:flow.evnet.draftor.submit" />
+			<param
+				name="eventTypes"
+				value="drafterSubmitEvent;handlerPassOperationEvent" />
+			<param
+				name="listener"
+				value="kmReviewZjSubmitEvent" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+		
+			<!--流程结束事件(预算占用改为使用状态)-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="kmReviewFinshEventBudget" />
+			<param
+				name="messageKey"
+				value="fssc-budget:evnet.KmReviewFinshEventBudget" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessFinishEvent" />
+			<param
+				name="listener"
+				value="kmReviewFinshEventBudget" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+			<!--流程废弃事件、节点进入事件（实际金额）(清除预算占用)-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="kmReviewAbandonEventBudget" />
+			<param
+				name="messageKey"
+				value="fssc-budget:evnet.KmReviewAbandonEventBudget" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessAbandonEvent;drafterReturnEvent;enterNodeEvent;enterNodeEvent" />
+			<param
+				name="listener"
+				value="kmReviewAbandonEventBudget" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+		
+		<!--H27提交-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="kmReviewJfSubmitEvent" />
+			<param
+				name="messageKey"
+				value="fssc-budget:kmReviewJfSubmitEvent" />
+			<param
+				name="eventTypes"
+				value="drafterSubmitEvent" />
+			<param
+				name="listener"
+				value="kmReviewJfSubmitEvent" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+		<!--H27流程废弃-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="kmReviewJfDiscardEvent" />
+			<param
+				name="messageKey"
+				value="fssc-budget:kmReviewJfDiscardEvent" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessAbandonEvent" />
+			<param
+				name="listener"
+				value="kmReviewJfDiscardEvent" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+		<!--H27驳回起草-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="kmReviewJfRefushEvent" />
+			<param
+				name="messageKey"
+				value="fssc-budget:kmReviewJfRefushEvent" />
+			<param
+				name="eventTypes"
+				value="enterNodeEvent" />
+			<param
+				name="listener"
+				value="kmReviewJfRefushEvent" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+		
+		<item name="listener">
+			<param
+				name="unid"
+				value="sFKmReviewFinshEvent" />
+			<param
+				name="messageKey"
+				value="流程结束事件(回传sf数据)" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessFinishEvent" />
+			<param
+				name="listener"
+				value="sFKmReviewFinshEvent" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+		<item name="listener">
+			<param
+				name="unid"
+				value="sFKmReviewAbandonEvent" />
+			<param
+				name="messageKey"
+				value="流程废弃事件(回传sf数据)" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessAbandonEvent" />
+			<param
+				name="listener"
+				value="sFKmReviewAbandonEvent" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+		
+		<item name="listener">
+			<param
+				name="unid"
+				value="sFKmReviewEnterNodeEvent" />
+			<param
+				name="messageKey"
+				value="流程驳回事件(回传sf数据)" />
+			<param
+				name="eventTypes"
+				value="enterNodeEvent" />
+			<param
+				name="listener"
+				value="sFKmReviewEnterNodeEvent" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		</extension>
+		
+		<!-- 自定义业务函数 -->
+	<extension point="com.landray.kmss.sys.xform.relation.params">
+		<item name="config">
+			<param name="sourceName" value="【资金系统】仓库数据"></param>
+			<param name="sourceUUID" value="money_CangKu"></param>
+			<param name="sourceBean" value="moneyCangKu"></param>
+			<param name="paramsURL" value=""></param>
+			<param name="order" value="0"></param>
+		</item>
+	</extension>
+	
+</plugin>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.landray.kmss.sys.portal.model.SysPortalMainPage"
+		table="sys_portal_main_page">
+		<id name="fdId" column="fd_id" length="36">
+			<generator class="assigned" />
+		</id>
+
+		<property name="fdName" column="fd_name" update="true"
+			insert="true" length="255" not-null="false" />
+
+
+		<property name="fdOrder" column="fd_order" update="true"
+			insert="true" length="36" not-null="false" />
+
+		<property name="fdEnabled" column="fd_enabled" update="true"
+			insert="true" length="1" not-null="false" />
+		
+		<property name="fdIcon" column="fd_icon" update="true"
+			insert="true" length="36" not-null="false" />
+
+		<property name="fdImg" column="fd_img" update="true"
+				  insert="true" length="500" not-null="false" />
+		
+		<property name="fdTarget" column="fd_target" update="true"
+			insert="true" length="36" not-null="false" />
+
+
+		<many-to-one name="sysPortalMain" column="fd_portal_id"
+			insert="true" update="true" not-null="false" />
+
+		<many-to-one name="sysPortalPage" column="fd_page_id"
+			insert="true" update="true" not-null="false" />
+
+	</class>
+</hibernate-mapping>

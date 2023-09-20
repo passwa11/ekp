@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs xmlns="http://www.example.org/design-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="third-alimeeting:module.third.aliMeeting"
+		urlPrefix="/third/aliMeeting/">
+		<roles>
+			<!-- 后台管理  -->
+			ROLE_ALIMEETING_BACKSTAGE_MANAGER
+		</roles>
+		<roleType>
+			<!-- 系统管理员权限 -->
+			<sysadmin>
+				ROLE_ALIMEETING_BACKSTAGE_MANAGER
+			</sysadmin>
+		</roleType>
+
+		<request path="config*" defaultValidator="roleValidator(role=ROLE_ALIMEETING_BACKSTAGE_MANAGER)"></request>
+	</module>
+	
+	<!-- 后台配置权限 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.third.alimeeting.model.AliMeetingConfig"
+				validator="roleValidator(role=ROLE_ALIMEETING_BACKSTAGE_MANAGER)" />
+		</request>
+	</module>
+
+	<!-- <profileConfig
+		key="/aliMeeting"
+		messageKey="{third-alimeeting:module.third.aliMeeting}" 
+		url="/sys/profile/moduleindex.jsp?nav=/third/alimeeting/tree.jsp" 
+		type="other"
+		icon="third_meeting"
+		order="10"
+		userType="2"
+		description="{third-alimeeting:aliMeeting.profileCfg.description}"/> -->
+
+</configs>

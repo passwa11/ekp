@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 消息机制对接服务 -->
+	<bean
+		id="lbpmNotifyService"
+		class="com.landray.kmss.sys.lbpmext.notify.LbpmNotifyServiceImp">
+		<property
+			name="sysNotifyMainCoreService">
+			<ref
+				bean="sysNotifyMainCoreService" />
+		</property>
+		<property
+			name="mainModelPerstenceService">
+			<ref
+				bean="lbpmMainModelPerstenceService" />
+		</property>
+		<property
+			name="sysNotifyTodoService">
+			<ref
+				bean="sysNotifyTodoService" />
+		</property>
+		<property name="processServiceManager">
+			<ref bean="lbpmProcessServiceManager" />
+		</property>
+	</bean>
+	
+	<!-- 缺省消息上下文转换器 -->
+	<bean
+		id="defaultContextConvertor"
+		class="com.landray.kmss.sys.lbpmext.notify.DefaultContextConvertor">
+		<property
+			name="sysNotifyMainCoreService">
+			<ref
+				bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+</beans>

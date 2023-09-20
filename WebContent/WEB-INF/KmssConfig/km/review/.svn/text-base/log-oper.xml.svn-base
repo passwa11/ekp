@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="kmReviewMainOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.review.model.KmReviewMain"
+            action="/km/review/km_review_main/kmReviewMain.do">
+           <query
+				method="changeTemplate" logPoint="changeTemplate"
+				messageKey="km-review:kmReviewMain.logOper.changeTemplate" />
+			<query
+				method="listChildren" logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="km-review:kmReviewMain.logOper.listChildren" />
+			<query
+				method="manageList" logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="km-review:kmReviewMain.logOper.manageList" />
+			<query
+				method="print" logPoint="Action_Find"
+				messageKey="km-review:kmReviewMain.logOper.print" />
+			<query
+				method="printBatch" logPoint="Action_printBatch"
+				messageKey="km-review:kmReviewMain.logOper.printBatch" />
+			<query
+				method="changeFeedback" logPoint="changeFeedback"
+				messageKey="km-review:kmReviewMain.logOper.changeFeedback" />	
+		    <query
+                method="saveDraft" logPoint="Service_Add"
+                messageKey="button.savedraft" />
+            <query
+                method="publishDraft" logPoint="Service_Update"
+                messageKey="button.submit" />   
+        </oper>
+         <oper
+            id="kmReviewIndexOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.review.model.KmReviewMain"
+            action="/km/review/km_review_index/kmReviewIndex.do">
+            
+        </oper>
+       
+         <oper
+            id="kmReviewOverviewOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.review.model.KmReviewOverview"
+            action="/km/review/km_review_overview/kmReviewOverview.do">
+            <query
+				method="preview" logPoint="preview"
+				messageKey="km-review:kmReviewOverview.logOper.preview" />
+        </oper>
+        <oper
+            id="kmReviewMainPortletOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.review.model.KmReviewMain"
+            action="/km/review/km_review_main/kmReviewMainPortlet.do">
+            <query
+				method="listPortlet" logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list"/>
+        </oper>
+        <oper
+            id="kmReviewCommonConfig"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/km/review/km_review_common_config/kmReviewCommonConfig.do">
+        </oper>
+        
+        <oper
+            id="kmReviewTemplateOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.review.model.KmReviewTemplate"
+            action="/km/review/km_review_template/kmReviewTemplate.do">
+            <ignoreFields>authAttNoprint;authAttNodownload;authAttNocopy</ignoreFields>
+             <query
+				method="listChildren"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+			<query
+				method="clone"
+				logPoint="Base_UrlParam;Action_Find" 
+				messageKey="km-review:button.copy" />
+				
+        </oper>
+	</logset>
+</log-oper>

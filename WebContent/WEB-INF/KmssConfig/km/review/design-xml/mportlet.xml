@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root 
+    xmlns:m="http://www.landray.com.cn/schema/mportlet" 
+    xmlns="http://www.landray.com.cn/schema/lui" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.landray.com.cn/schema/mportlet 
+	../../../sys/mobile/mportlet.xsd
+		http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd">
+	
+	<m:mportlet 
+		id="km.review.list.mobile"
+		name="{km-review:module.km.review.mportlet}"
+		module= "{km-review:module.km.review}"
+		description="{km-review:module.km.review.mportlet}"
+		moduleUrl = "/km/review/mobile/index.jsp?mydoc=!{mydoc}&amp;categoryId=!{fdTemplate}"
+		jsUrl="/km/review/mobile/mportal/kmReviewMainPortlet_list.js?rowsize=!{rowsize}&amp;mydoc=!{mydoc}&amp;fdTemplate=!{fdTemplate}">
+		<m:vars>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="5"/>
+			<var name="{km-review:kmReviewMain.mobile.type}" key="mydoc" kind="enumValue" default="all">
+		    	 {  "values":[{ "text":"{km-review:kmReviewMain.mobile.all.mine}", "value":"all"},
+                              { "text":"{km-review:kmReviewMain.mobile.create.mine}", "value":"create"},
+                              { "text":"{km-review:kmReviewMain.mobile.approval.mine}", "value":"approval"},
+                              { "text":"{km-review:kmReviewMain.mobile.approved.mine}", "value":"approved"}],
+                   "showType":"radio"
+                  }
+		    </var>
+		    <var
+				name="{portlet.cate}"
+				key="fdTemplate"
+				kind="sys.category">
+				{"model":"com.landray.kmss.km.review.model.KmReviewTemplate","name":"{button.select}"}
+			</var>
+		</m:vars>
+	</m:mportlet>
+	
+</root>	

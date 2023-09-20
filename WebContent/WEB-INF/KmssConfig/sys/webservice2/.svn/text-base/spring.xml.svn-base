@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysWebserviceMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.webservice2.dao.hibernate.SysWebserviceMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.webservice2.model.SysWebserviceMain" />
+	</bean>
+	<bean
+		id="sysWebserviceMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.webservice2.service.spring.SysWebserviceMainServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysWebserviceMainDao" />
+		</property>
+		<property
+			name="urlPattern"
+			value="/sys/webservice" />
+	</bean>
+	<bean
+		id="sysWebserviceMainService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysWebserviceMainTarget" />
+		</property>
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop
+					key="add*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="update*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="save*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="init*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="start*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="stop*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean
+		id="sysWebserviceInitTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.webservice2.service.spring.SysWebserviceInitServiceImp">
+		<property
+			name="sysWsMainService">
+			<ref
+				bean="sysWebserviceMainTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysWebserviceInitService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysWebserviceInitTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysWsOrgTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.webservice2.interfaces.imp.SysWsOrgServiceImp">
+		<property
+			name="sysOrgCoreService"
+			ref="sysOrgCoreService" />
+	</bean>
+	<bean
+		id="sysWsOrgService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysWsOrgTarget" />
+		</property>
+	</bean>	
+	
+	<bean
+		id="sysWsAttTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.webservice2.interfaces.imp.SysWsAttServiceImp">
+		<property
+			name="sysAttMainService"
+			ref="sysAttMainService" />
+	</bean>
+	<bean
+		id="sysWsAttService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysWsAttTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysWebserviceUserDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.webservice2.dao.hibernate.SysWebserviceUserDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.webservice2.model.SysWebserviceUser" />
+	</bean>
+	<bean
+		id="sysWebserviceUserTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.webservice2.service.spring.SysWebserviceUserServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysWebserviceUserDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysWebserviceUserService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysWebserviceUserTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysWebserviceLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.webservice2.dao.hibernate.SysWebserviceLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.webservice2.model.SysWebserviceLog" />
+	</bean>
+	<bean
+		id="sysWebserviceLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.webservice2.service.spring.SysWebserviceLogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysWebserviceLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysWebserviceLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysWebserviceLogTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysWebserviceLogBackupDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.webservice2.dao.hibernate.SysWebserviceLogBackupDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.webservice2.model.SysWebserviceLogBackup" />
+	</bean>
+	<bean
+		id="sysWebserviceLogBackupTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.webservice2.service.spring.SysWebserviceLogBackupServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysWebserviceLogBackupDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysWebserviceLogBackupService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysWebserviceLogBackupTarget" />
+		</property>
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop
+					key="add*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="update*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="save*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="init*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="backup*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="clear*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean
+		id="sysWebserviceDictConfigDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.sys.webservice2.dao.hibernate.SysWebserviceDictConfigDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.webservice2.model.SysWebserviceDictConfig" />
+	</bean>
+
+	<bean
+		id="sysWebserviceDictConfigTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.sys.webservice2.service.spring.SysWebserviceDictConfigServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysWebserviceDictConfigDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysWebserviceDictConfigService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysWebserviceDictConfigTarget" />
+		</property>
+	</bean>
+
+	
+	<bean
+		id="sysWebserviceRestConfigDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.sys.webservice2.dao.hibernate.SysWebserviceRestConfigDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.webservice2.model.SysWebserviceRestConfig" />
+	</bean>
+
+	<bean
+		id="sysWebserviceRestConfigTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.sys.webservice2.service.spring.SysWebserviceRestConfigServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysWebserviceRestConfigDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysWebserviceRestConfigService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysWebserviceRestConfigTarget" />
+		</property>
+	</bean>
+	
+	<!-- 模块数据字典对话框 -->
+	<bean id="restDictModelSelectDialog"
+	class="com.landray.kmss.sys.webservice2.service.spring.RestDictModelSelectDialog" />
+	
+	<!-- 系统模块选择对话框 -->
+	<bean id="restModuleSelectDialog"
+		class="com.landray.kmss.sys.webservice2.service.spring.RestModuleSelectDialog">
+		<property name="allowAllModuleFlag">
+			<value>true</value>
+		</property>
+		<property name="allowModules">
+			<value>sys/attend;km/oitems;sys/lbpmext;fs/expense;lfs/expense;fs/loan;fs/fee;km/carmng;km/imissive;km/asset;km/forum;km/calendar;km/missive;km/smissive;km/review;sys/notify;sys/news;km/doc;km/meeting;km/expert;km/institution;km/summary;km/contract;km/collaborate;sys/communicate;sys/calendar;sys/task;kms/multidoc;kms/multimedia;kms/wiki;kms/ask;kms/knowledge;kms/doc;kms/expert;kms/exam;kms/learn;km/imeeting;sys/person;sys/zone;sns/group;sns/topic;sns/event;sns/album;km/bam2;km/comminfo;km/pindagate;third/aiguanhuai;sys/mportal;km/resource;kms/qa;km/vote;dbcenter/echarts;km/empactivity;kms/homework;kms/reminder;km/cusledger;kms/train</value>
+		</property>
+	</bean>
+
+	<!-- 数据字典属性选择 -->
+	<bean id="sysWebservicePropertySelectList"
+		class="com.landray.kmss.sys.webservice2.service.spring.SysWebserviceDictPropertySelectList" />
+
+</beans>

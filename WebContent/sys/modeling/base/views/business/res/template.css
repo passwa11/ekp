@@ -1,0 +1,164 @@
+@charset "utf-8";
+html,body{
+    height: 100%;
+}
+::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: #dddddd;
+}
+::-webkit-scrollbar-track{
+    background: transparent;
+}
+#treeviewMain{
+    width: 215px;
+    height: 100%;
+    transition-duration: .3s;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    border:1px solid #DDDDDD;
+}
+#treeviewMain.hide{
+    left:-215px;
+}
+.treeviewMainContent{
+    position: absolute;
+    width: 213px;
+    height: 100%;
+    left:0;
+    overflow-x: auto;
+    overflow-y: auto;
+    background-color: #fff;
+    transition-duration: .3s;
+    box-sizing: border-box;
+    z-index: 1;
+}
+#treeviewContent{
+    width: auto;
+    margin-left: 215px;
+    height: 100%;
+    padding:16px;
+    transition-duration: .3s;
+}
+#treeviewMain.hide+#treeviewContent{
+    margin-left: 0;
+}
+.treeview ul:first-child{
+   /* margin-left: 16px;*/
+}
+.treeview .hitarea{
+    width: 14px;
+    height: 14px;
+    background: url(img/treeView/directoryTree_pulldown.png) no-repeat center center;
+    background-size: contain;
+    margin-left: -20px;
+    float: left;
+    cursor: pointer;
+    position: relative;
+    top:6px;
+}
+.expandable>.hitarea{
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: url(img/treeView/directoryTree_pulldown.png) no-repeat center center;
+    background-size: contain;
+    transform: rotate(-90deg);
+}
+.treeview, .treeview ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.treeview ul {
+	background-color: white;
+    display: block;
+    width: 100%;
+}
+.treeview li {
+	margin: 0;
+	padding: 0 0 0 20px;
+}
+.treeview ul:first-child span.folder,.treeview ul:first-child span.file,.treeview ul:first-child span.folder,.treeview ul:first-child span.file div{
+    display: block;
+    width: 100%;
+    min-width: 130px;
+    height:30px;
+    line-height: 30px;
+    font-size: 12px;
+    color: #333333;
+    position: relative;
+    /*padding-left: 20px;*/
+    cursor: pointer;
+    user-select: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: relative;
+}
+.treeview ul:first-child span.folder:hover,.treeview ul:first-child span.file:hover{
+    color: #4285F4;
+}
+.treeview ul:first-child span.folder::before,.treeview ul:first-child span.file::before{
+    content:"";
+    display: inline-block;
+   /* width: 14px;
+    height: 14px;
+    background: url(img/treeView/tree_file.png) no-repeat left;*/
+    background-size: contain;
+    position: absolute;
+    top:6px;
+    left:0;
+}
+li.selected{
+    color:#4285f4;
+}
+li.selected>span.folder,li.selected>span.file{
+    color:#4285f4;
+    background-color: #ECF2FD;
+}
+li.selected>span.folder::before,li.selected>span.file::before{
+    content:"";
+    display: inline-block;
+    /*width: 14px;
+    height: 14px;
+    background: url(img/treeView/tree_file_hover.png) no-repeat left;*/
+    background-size: contain;
+    position: absolute;
+    top:6px;
+    left:0;
+}
+.treeviewMainBtn{
+    position: absolute;
+    width: 8px;
+    height: 60px;
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%);
+    background-color: #FFF;
+    border: 1px solid #DDDDDD;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    transition-duration: .3s;
+    cursor: pointer;
+    z-index: 1;
+
+}
+.treeviewMainBtn>i{
+    display: inline-block;
+    width: 8px;
+    height: 8px;    
+    background:url(img/treeView/directoryTree_pulldown.png) no-repeat center;
+    background-size: 12px 12px;
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    transform: translateY(-50%) rotate(90deg);
+}
+#treeviewMain.hide>.treeviewMainBtn>i{
+    transform: translateY(-50%) rotate(-90deg);
+}

@@ -1,0 +1,115 @@
+if(!data){
+	return;
+}
+var wgt = render.parent;
+var lang = wgt.getModelingLang();
+var dataValue = data || {};
+var title = dataValue.title || lang["modeling.Undefined"];
+data.info = data.info || {};
+var dataValidate = data.info.validate || {};
+var iconUrl = wgt.formatUrl(dataValue.icon);
+{$
+	<div class="field_item_value multi-list-block">
+		<div class='content_name'>
+			<p class="form_item_title" title="{%title%}">{%title%}</p>
+			<i class="form_item_delete"></i>
+		</div>
+		<div class="field_item_content">
+		<div class="content_item_form_element content_input">
+			<p class="content_body_title">
+				{%lang['modeling.Entrance.name']%}
+			</p>
+			<div class="content_opt">
+				<input name='{%data.uuId%}_formItemTitle' title="{%lang['modeling.Entrance.name']%}" type="text" placeholder="{%lang['modeling.please.enter']%}" value="{%(dataValue.title) || ''%}" validate="required maxLength(36)" data-type="validate" data-updateView="true"/>
+				<span class="txtstrong">*</span>
+			</div>
+			<p class="content_opt_info"></p>
+		</div>
+			$}
+			if(wgt.isIcon){
+				{$
+					<div class="content_item_form_element">
+						<p class="content_body_title">{%lang['modeling.model.icon']%}</p>
+						<input name="{%data.uuId%}_icon" value="{%dataValue.icon || 'mui-docRecord'%}" type="hidden" data-type="validate" data-updateView="true" validate="required"/>
+						<input name="{%data.uuId%}_iconType" value="{%dataValue.iconType || '2'%}" type="hidden"/>
+						<div class="content-icon-choose">$}
+							if(dataValue.iconType === "4"){
+								{$
+								<i class="mui" style="width:24px;height:24px;background: url({%iconUrl%}) no-repeat center;background-size: contain"></i>
+								$}
+							}else{
+								{$
+								<i class="mui {%dataValue.icon || 'mui-docRecord'%}"></i>
+							$}
+							}
+							{$
+							<span class="txtstrong">*</span>
+						</div>
+						<p class="content_opt_info"></p>
+					</div>
+				$}
+			}
+			if(wgt.isMulti){
+			{$
+			<div class="content-through content_item_form_element">
+				<p>{%lang['modeling.jump.page.content']%}</p>
+				<div class="content_item_form_element ">
+					<div class="content-through-button addTabButton "  >{%lang['modeling.form.Set']%}</div>
+					<input name=\"{%data.uuId%}_listView\" title=\"{%lang['modeling.jump.page.content']%}\"  style="display: none" value=""/>
+				</div>
+				<div class="content-through-tabs" style="display: none"  >
+					<ui class="content-tabs"></ui>
+					<div class="content-through-button" style="float: right">{%lang['modeling.form.Set']%}</div>
+					<input name="{%data.uuId%}_listviews" type="hidden"  data-type="validate" validate="required" title="{%lang['modeling.penetration.set']%}"/>
+					<span class="txtstrong">*</span>
+				</div>
+				<p class="content_opt_info"></p>
+			</div>
+		</div>
+
+		<div class="field_item_content content_item_tab_box " >
+			<div class="field_item_listTabs" tabindex="0"style="display:none;">
+				<div class="content-reback">
+					<ul class="contentBackList">
+						<li class="contentBackOk">{%lang['modeling.button.ok']%}</li>
+						<li class="contentBackCancel">{%lang['modeling.Cancel']%}</li>
+					</ul>
+				</div>
+				<div class="field-item-throuth">
+					<div>{%lang['modeling.jump.page.content']%}</div>
+					<div class="field-item-throuth-add" style="float: right;margin-top: -20px;">{%lang['button.add']%}</div>
+				</div>
+			</div>
+		</div>
+		$}
+			}else{
+				{$
+					<div class="content_item_form_element content_choose">
+						<p class="content_body_title">{%lang['modeling.Page.content']%}</p>
+						<input name="{%data.uuId%}_listView" title="" value="{%dataValue.listView%}" type="hidden" data-type="validate" validate="required"/>
+						<input name="{%data.uuId%}_listViewText" value="{%dataValue.listViewText%}" type="hidden" />
+						<input name="{%data.uuId%}_listViewAppId" value="{%dataValue.listViewAppId%}" type="hidden" />
+						<input name="{%data.uuId%}_nodeType" value="{%dataValue.nodeType%}" type="hidden" />
+						<div class="content_opt listVieElement">
+							<p class="listViewText">{%dataValue.listViewText || lang['modeling.page.choose']%}</p>
+							<i class="listViewIcon"></i>
+							<span class="txtstrong">*</span>
+						</div>
+						<p class="content_opt_info"></p>
+					</div>
+
+				$}
+			}
+
+		if(wgt.isCount){
+		{$<div class="content_item_form_element content_select" style="display: none">
+		<p class="content_body_title">tab</p>
+		<div class="lvCountWrap"></div>
+		<input name='{%data.uuId%}_countLv' title="tab" data-update-event='change' type='hidden' value="{%dataValue.countLv%}"/>
+		<input name="{%data.uuId%}_lvCollection" type="hidden" />
+		<p class="content_opt_info"></p>
+		</div>$}
+		}
+		{$
+	</div>
+$}

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        class="com.landray.kmss.third.wps.actions.ThirdWpsFileSynAction" 
+        parent="KmssBaseAction" 
+        name="/third/wps/third_wps_file_syn/thirdWpsFileSyn.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.third.wps.forms.ThirdWpsFileSynForm"/>
+        <property 
+            name="forwards">
+            <map/>
+        </property>
+    </bean>
+    <bean 
+        class="com.landray.kmss.third.wps.actions.ThirdWpsLtpatokenAction" 
+        parent="KmssBaseAction" 
+        name="/third/wps/third_wps_ltpatoken/thirdWpsLtpatoken.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.third.wps.forms.ThirdWpsLtpatokenForm"/>
+        <property 
+            name="forwards">
+            <map/>
+        </property>
+    </bean>
+    
+    <bean
+		name="/third/wps/thirdWpsConfig.do"
+		class="com.landray.kmss.third.wps.actions.ThirdWpsConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="select"
+					value="/third/wps/config.jsp" />
+				<entry
+					key="selectPreview"
+					value="/third/wps/thirdWpsPreviewConfig.jsp" />
+				<entry
+					key="selectWPSCenter"
+					value="/third/wps/wpsCenterConfig.jsp" />
+				<entry
+						key="selectWPSMobile"
+						value="/third/wps/wpsMobileConfig.jsp" />
+			</map>
+		</property>
+	</bean>
+    <bean
+		name="/third/wps/thirdWpsUploadFile.do"
+		class="com.landray.kmss.third.wps.actions.ThirdWpsUploadFileAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="code"
+					value="/third/wps/code.jsp" />
+			</map>
+		</property>
+	</bean>
+    <bean
+		name="/third/wps/thirdWpsCloud.do"
+		class="com.landray.kmss.third.wps.actions.ThirdWpsCloudAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="code"
+					value="/third/wps/code.jsp" />
+				<entry
+					key="wps_view"
+					value="/third/wps/wps_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	 <bean
+		name="/third/wps/third_wps_org_element/thirdWpsOrgElement.do"
+		class="com.landray.kmss.third.wps.actions.ThirdWpsOrgElementAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.wps.forms.ThirdWpsOrgElementForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="syncOrgStruct"
+					value="/third/wps/third_wps_orgElement_syn/syncOrgElement.jsp" />
+			</map>
+		</property>
+	</bean>
+	 <bean 
+        class="com.landray.kmss.third.wps.actions.ThirdWpsOrgRecordAction" 
+        parent="KmssBaseAction" 
+        name="/third/wps/third_wps_org_record/thirdWpsOrgRecord.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.third.wps.forms.ThirdWpsOrgRecordForm"/>
+        <property 
+            name="forwards">          
+            <map>
+            	 <entry
+					key="data"
+					value="/third/wps/third_wps_org_record/thirdWpsOrgRecord_data.jsp" />
+				<entry
+					key="view"
+					value="/third/wps/third_wps_org_record/thirdWpsOrgRecord_view.jsp" />					
+            </map>
+        </property>
+    </bean>
+    
+    <bean 
+        class="com.landray.kmss.third.wps.actions.ThirdWpsConvertAction" 
+        parent="KmssBaseAction" 
+        name="/third/wps/third_wps_convert/thirdWpsConvert.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.third.wps.forms.ThirdWpsConvertForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry 
+                    key="data" 
+                    value="/third/wps/third_wps_convert/thirdWpsConvert_data.jsp"/>
+                <entry 
+                    key="view" 
+                    value="/third/wps/third_wps_convert/thirdWpsConvert_view.jsp"/>
+            </map>
+        </property>
+    </bean>
+    
+    <bean 
+        class="com.landray.kmss.third.wps.actions.ThirdWpsWebhookAction" 
+        parent="KmssBaseAction" 
+        name="/third/wps/third_wps_webhook/thirdWpsWebhook.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.third.wps.forms.ThirdWpsWebhookForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry 
+                    key="data" 
+                    value="/third/wps/third_wps_webhook/thirdWpsWebhook_data.jsp"/>
+            </map>
+        </property>
+    </bean>
+</beans>

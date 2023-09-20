@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+   <extension-point
+		id="com.landray.kmss.tic.core.model.register">
+		<item name="register">
+			<param
+				name="mainModelName"
+				required="true"
+				kind="unid">
+				<description>
+					主文档类名
+				</description>
+			</param>
+			<param
+				name="templateModelName"
+				required="true"
+				kind="string">
+				<description>
+					表单模板类名
+				</description>
+			</param>
+			<param
+				name="templateType"
+				required="true"
+				kind="string">
+				<description>
+					区分简单分类还是全局分类，简单分类用“simple”，全局分类用“global”
+				</description>
+			</param>
+			<param
+				name="name"
+				required="true"
+				kind="string">
+				<description>
+					模块名称
+				</description>
+			</param>
+			<param
+				name="desc"
+				required="false"
+				kind="string">
+				<description>
+					模块的SpringBean
+				</description>
+			</param>
+			<param
+				name="order"
+				required="false"
+				default="50"
+				kind="int">
+				<description>
+				</description>
+			</param>	
+			<description>
+			  
+			</description>
+		</item>
+		<description>配置注册模块</description>
+	</extension-point>
+	
+	<!-- tic函数适配执行器扩展点描述 -->
+	<extension-point id="com.landray.kmss.sys.tic.dispatcherExecutor">
+		<item name="dispatcherExecutor">
+			<param name="executor" required="true" kind="spring" 
+			basedOn="com.landray.kmss.tic.core.middleware.executor.ITicDispatcherExecutor">
+				<description>tic适配处理器bean</description>
+			</param>
+			<param name="funcTypeName" required="true" kind="string">
+				<description>函数类型名称</description>
+			</param>
+			<param name="funcTypeCode" required="true" kind="string">
+				<description>函数类型编码1为sap,3为soap,4为jdbc</description>
+			</param>
+		    <param name="syncUniteQuartz"  kind="spring" 
+			basedOn="com.landray.kmss.tic.core.sync.service.ITicCoreSyncUniteQuartzService">
+				<description>tic同步</description>
+			</param>
+			<description>函数适配器信息</description>
+		</item>
+		<description>TIC函数信息</description>
+	</extension-point>
+	
+	<extension
+		point="com.landray.kmss.tic.core.model.register"
+		model="*">
+		<item name="register">
+			<param
+				name="mainModelName"
+				value="com.landray.kmss.km.review.model.KmReviewMain" />
+			<param
+				name="templateModelName"
+				value="com.landray.kmss.km.review.model.KmReviewTemplate" />
+			<param
+				name="templateType"
+				value="global" />
+			<param
+				name="name"
+				value="km-review:table.kmReviewMain" />
+			<param
+				name="order"
+				value="5" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.tic.core.model.register"
+		model="*">
+		<item name="register">
+			<param
+				name="mainModelName"
+				value="com.landray.kmss.sys.news.model.SysNewsMain" />
+			<param
+				name="templateModelName"
+				value="com.landray.kmss.sys.news.model.SysNewsTemplate" />
+			<param
+				name="templateType"
+				value="simple" />
+			<param
+				name="name"
+				value="sys-news:news.moduleName" />
+			<param
+				name="order"
+				value="10" />
+		</item>
+	</extension>
+	
+	<!-- 
+	<extension
+		point="com.landray.kmss.sys.webservice2">
+		<item
+			name="registry">
+			<param
+				name="serviceName"
+				value="{tic-core-common:tic.callFunc}" />
+			<param
+				name="serviceClass"
+				value="com.landray.kmss.tic.core.common.webservice.ITicCoreWebService" />
+			<param
+				name="serviceBean"
+				value="ticCoreWebService" />				
+			<param
+				name="serviceDoc"
+				value="/tic/core/common/webservice/ticCoreWebService_help.jsp" />
+		</item>
+	</extension>
+	-->
+	
+</plugin>

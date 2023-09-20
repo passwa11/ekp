@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="sys-follow:module.sys.follow"
+		urlPrefix="/sys/follow/"
+		defaultValidator="roleValidator(role=SYSROLE_USER;ROLE_SYSFOLLOW_MANAGER)">
+		
+		<roles>
+			ROLE_SYSFOLLOW_MANAGER;
+		</roles>
+		
+		<!--权限分类，把roles和arearoles里权限中应该属于三员体系的分拣（复制）到以下标签 -->
+		<roleType>
+			<!-- 系统管理员权限 -->
+			<sysadmin>ROLE_SYSFOLLOW_MANAGER</sysadmin>
+		</roleType>
+		
+		<request
+			path="sys_follow_doc/sysFollowDoc*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.follow.model.SysFollowDoc">
+		</request>
+
+		<request
+			path="sys_follow_person_config/sysFollowPersonConfig*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.follow.model.SysFollowPersonConfig">
+		</request>
+
+		<request
+			path="sys_follow_log/sysFollowLog*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.follow.model.SysFollowLog">
+		</request>
+
+		<request
+			path="sys_follow_config/sysFollowConfig*"
+			defaultValidator="roleValidator(role=ROLE_SYSFOLLOW_MANAGER)">
+		</request>
+	</module>
+	
+	<!-- 定时删除订阅已读数据 -->
+	<quartz
+		cronExpression="0 0 4 * * ?"
+		jobService="sysFollowQuzrtzService"
+		messageKey="sys-follow:sysFollow.quartz.delete"
+		jobMethod="deleteFollowDoc"
+		description="sys-follow:sysFollow.quartz.delete.description" />
+
+	<!-- 订阅分类下的文档内容有更新时通知订阅者 -->
+	<quartz
+		cronExpression="0 0 1 * * ?"
+		jobService="sysFollowUpdateNoticeService"
+		messageKey="sys-follow:sysFollow.update.notice"
+		jobMethod="notifyFollower"
+		description="sys-follow:sysFollow.update.notice.description" />
+
+	<homePage
+		urlPrefix="sys/follow"
+		messageKey="sys-follow:module.sys.follow"
+		config="/sys/follow/sys_follow_config/sysFollowConfig.do?method=edit" 
+		type="global"/>
+
+    <profileConfig
+    	key="follow"
+		messageKey="{sys-follow:module.sys.follow}" 
+		url="/sys/follow/sys_follow_config/sysFollowConfig.do?method=edit" 
+		icon="sys_follow"
+		type="mechanism"
+		userType="1;2"
+		description="{sys-follow:sysFollow.profileCfg.description}"/>
+</configs>

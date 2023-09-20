@@ -1,0 +1,31 @@
+package com.landray.kmss.third.weixin.chat.msgtype;
+
+import com.alibaba.fastjson.JSONObject;
+import com.landray.kmss.third.weixin.chat.util.ChatdataUtil;
+import com.landray.kmss.third.weixin.model.ThirdWeixinChatDataMain;
+
+import javax.crypto.Cipher;
+
+public class MarkdownHandler extends BaseHandler{
+
+    /**
+     *{"msgid":"7546287934688259248_1603875715","action":"send","from":"ken","tolist":["icef","test"],"roomid":"wr0SfLCgAAgCaCPeM33UNe","msgtime":1603875715782,"msgtype":"markdown","info":{"content":"请前往系统查看，谢谢。"}}
+     * @param msgObj
+     * @param encrypter
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ThirdWeixinChatDataMain buildChatDataMain(JSONObject msgObj, Cipher encrypter) throws Exception {
+        ThirdWeixinChatDataMain main = super.buildChatDataMain(msgObj,encrypter);
+        JSONObject info = msgObj.getJSONObject("info");
+        if(info!=null){
+            String extendContent = info.toString();
+            if(encrypter!=null) {
+                extendContent = ChatdataUtil.encry(encrypter,extendContent);
+            }
+            main.setFdExtendContent(extendContent);
+        }
+        return main;
+    }
+}

@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../../plugin.xsd ">
+    <!-- 分类/模板 -->
+	<extension
+		point="com.landray.kmss.sys.handover">
+		<item
+			name="config">
+			<param
+				name="module"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingResCategory" />
+			<param 
+				name="messageKey" 
+				value="km-imeeting:table.kmImeetingResCategoryHandover"/>
+			<param 
+				name="provider" 
+				value="com.landray.kmss.km.imeeting.handover.KmImeetingResCateTempProvider"/>
+			<param 
+				name="order" 
+				value="3"/>
+		</item>
+		<item
+			name="config">
+			<param
+				name="module"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingTemplate" />
+			<param 
+				name="messageKey" 
+				value="km-imeeting:table.kmImeetingCardHandover"/>
+			<param 
+				name="provider" 
+				value="com.landray.kmss.km.imeeting.handover.KmImeetingTemplateCateTempProvider"/>
+			<param 
+				name="order" 
+				value="4"/>
+		</item>
+		<item
+			name="config">
+			<param
+				name="module"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingRes" />
+			<param 
+				name="messageKey" 
+				value="km-imeeting:table.kmImeetingResConfigHandover"/>
+			<param 
+				name="provider" 
+				value="com.landray.kmss.km.imeeting.handover.KmImeetingResConfigProvider"/>
+			<param 
+				name="order" 
+				value="4"/>
+		</item>
+	</extension>
+	<!-- 文档权限 -->
+	<extension
+		point="com.landray.kmss.sys.handover.doc.auth">
+		<item
+			name="config">
+			<param
+				name="module"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" /> 
+			<param 
+				name="messageKey" 
+				value="km-imeeting:module.km.imeeting"/>
+			<param 
+				name="provider" 
+				value="com.landray.kmss.km.imeeting.handover.KmImeetingDocAuthProvider"/> 
+			<param 
+				name="order" 
+				value="5"/> 
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.handover.doc.auth">
+		<item
+			name="config">
+			<param
+				name="module"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingSummary" /> 
+			<param 
+				name="messageKey" 
+				value="km-imeeting:table.kmImeetingSummary"/>
+			<param 
+				name="provider" 
+				value="com.landray.kmss.km.imeeting.handover.KmImeetingSummaryDocAuthProvider"/> 
+			<param 
+				name="order" 
+				value="6"/> 
+		</item>
+	</extension>
+	
+	<!-- 工作交接（事项交接） -->
+	<extension point="com.landray.kmss.sys.handover.item">
+		<item name="config">
+			<!-- 主文档全名称 -->
+			<param
+				name="module"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingRes" />
+			<param
+				name="messageKey"
+				value="km-imeeting:table.kmImeetingResItemHandover" />
+			<param
+				name="handler"
+				value="com.landray.kmss.km.imeeting.handover.KmImeetingResItemHandler" />
+			<param
+				name="provider"
+				value="com.landray.kmss.km.imeeting.handover.KmImeetingResItemProvider" />
+		</item>
+	</extension>
+	
+	<!-- 工作交接（事项交接）会议安排交接 -->
+	<extension point="com.landray.kmss.sys.handover.item">
+		<item name="config">
+			<!-- 主文档全名称 -->
+			<param
+				name="module"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingMain" />
+			<param
+				name="messageKey"
+				value="km-imeeting:table.kmImeetingMainItemHandover" />
+			<param
+				name="handler"
+				value="com.landray.kmss.km.imeeting.handover.KmImeetingMainItemHandler" />
+			<param
+				name="provider"
+				value="com.landray.kmss.km.imeeting.handover.KmImeetingMainItemProvider" />
+		</item>
+	</extension>
+	
+	<!-- 工作交接（事项交接）会议预约交接 -->
+	<extension point="com.landray.kmss.sys.handover.item">
+		<item name="config">
+			<!-- 主文档全名称 -->
+			<param
+				name="module"
+				value="com.landray.kmss.km.imeeting.model.KmImeetingBook" />
+			<param
+				name="messageKey"
+				value="km-imeeting:table.kmImeetingBookItemHandover" />
+			<param
+				name="handler"
+				value="com.landray.kmss.km.imeeting.handover.KmImeetingBookItemHandler" />
+			<param
+				name="provider"
+				value="com.landray.kmss.km.imeeting.handover.KmImeetingBookItemProvider" />
+		</item>
+	</extension>
+</plugin>

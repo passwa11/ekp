@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	
+	<bean
+		id="sysPraiseMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.praise.dao.hibernate.SysPraiseMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.praise.model.SysPraiseMain" />
+	</bean>
+	<bean id="sysPraiseMainTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.praise.service.spring.SysPraiseMainServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysPraiseMainDao" />
+		</property>
+	</bean>
+	<bean id="sysPraiseMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPraiseMainTarget" />
+		</property>
+	</bean>
+	
+	
+	<bean
+		id="sysPraiseCoreService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<bean
+				class="com.landray.kmss.sys.praise.service.spring.SysPraiseCoreServiceImp">
+				<property name="sysPraiseMainService">
+					<ref bean="sysPraiseMainService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean
+		id="sysPraiseAndNegativeService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<bean
+				class="com.landray.kmss.sys.praise.service.spring.SysPraiseAndNegativeServiceImp">
+				<property name="sysPraiseMainService">
+					<ref bean="sysPraiseMainService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean 
+        id="sysPraiseInfoDao" 
+        class="com.landray.kmss.sys.praise.dao.hibernate.SysPraiseInfoDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.praise.model.SysPraiseInfo</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysPraiseInfoTarget" 
+        class="com.landray.kmss.sys.praise.service.spring.SysPraiseInfoServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysPraiseInfoDao"/>
+        </property>
+        <property 
+        	name="sysNotifyMainCoreService">
+        	<ref 
+        		bean="sysNotifyMainCoreService"/>
+        </property>
+        <property 
+        	name="sysOrgPersonService">
+        	<ref 
+        		bean="sysOrgPersonService"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysPraiseInfoService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysPraiseInfoTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysPraiseInfoCategoryDao" 
+        class="com.landray.kmss.sys.praise.dao.hibernate.SysPraiseInfoCategoryDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.praise.model.SysPraiseInfoCategory</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysPraiseInfoCategoryTarget" 
+        class="com.landray.kmss.sys.praise.service.spring.SysPraiseInfoCategoryServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysPraiseInfoCategoryDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysPraiseInfoCategoryService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysPraiseInfoCategoryTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysPraiseInfoPersonDetailDao" 
+        class="com.landray.kmss.sys.praise.dao.hibernate.SysPraiseInfoPersonDetailDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.praise.model.SysPraiseInfoPersonDetail</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysPraiseInfoPersonDetailTarget" 
+        class="com.landray.kmss.sys.praise.service.spring.SysPraiseInfoPersonDetailServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysPraiseInfoPersonDetailDao"/>
+        </property>
+        <property 
+            name="sysPraiseInfoService">
+            <ref 
+                bean="sysPraiseInfoService"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysPraiseInfoPersonDetailService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysPraiseInfoPersonDetailTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysPraiseInfoPersonMonthDao" 
+        class="com.landray.kmss.sys.praise.dao.hibernate.SysPraiseInfoPersonMonthDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.praise.model.SysPraiseInfoPersonMonth</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysPraiseInfoPersonMonthTarget" 
+        class="com.landray.kmss.sys.praise.service.spring.SysPraiseInfoPersonMonthServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysPraiseInfoPersonMonthDao"/>
+        </property>
+        <property name="sysOrgCoreService">
+       		 <ref 
+       		 	bean="sysOrgCoreService"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysPraiseInfoPersonMonthService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysPraiseInfoPersonMonthTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysPraiseInfoDetailDao" 
+        class="com.landray.kmss.sys.praise.dao.hibernate.SysPraiseInfoDetailDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.praise.model.SysPraiseInfoDetail</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysPraiseInfoDetailTarget" 
+        class="com.landray.kmss.sys.praise.service.spring.SysPraiseInfoDetailServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysPraiseInfoDetailDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysPraiseInfoDetailService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysPraiseInfoDetailTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysPraiseInfoPersonalDao" 
+        class="com.landray.kmss.sys.praise.dao.hibernate.SysPraiseInfoPersonalDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.praise.model.SysPraiseInfoPersonal</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysPraiseInfoPersonalTarget" 
+        class="com.landray.kmss.sys.praise.service.spring.SysPraiseInfoPersonalServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysPraiseInfoPersonalDao"/>
+        </property>
+        <property name="sysOrgCoreService">
+       		 <ref 
+       		 	bean="sysOrgCoreService"/>
+        </property>
+        <property name="sysPraiseInfoDetailService">
+       		 <ref 
+       		 	bean="sysPraiseInfoDetailService"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysPraiseInfoPersonalService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysPraiseInfoPersonalTarget"/>
+        </property>
+    </bean>
+    
+    <bean id="sysPraiseInfoCalculateQuartz" 
+    	  class="com.landray.kmss.sys.praise.calculate.SysPraiseInfoCalculateQuartz">
+    	  <property name="sysPraiseInfoPersonDetailService">
+       		 <ref 
+       		 	bean="sysPraiseInfoPersonDetailService"/>
+          </property>
+          <property name="sysPraiseInfoPersonMonthService">
+       		 <ref 
+       		 	bean="sysPraiseInfoPersonMonthService"/>
+          </property>
+          <property name="sysPraiseInfoService">
+       		 <ref 
+       		 	bean="sysPraiseInfoService"/>
+          </property>
+          <property name="sysPraiseInfoPersonalService">
+       		 <ref 
+       		 	bean="sysPraiseInfoPersonalService"/>
+          </property>
+    </bean>
+    
+    <bean
+		id="sysPraiseInfoConfigDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.praise.dao.hibernate.SysPraiseInfoConfigDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.praise.model.SysPraiseInfoConfig" />
+	</bean>
+	<bean id="sysPraiseInfoConfigTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.praise.service.spring.SysPraiseInfoConfigServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysPraiseInfoConfigDao" />
+		</property>
+		<property name="defaultModules">
+			<value>kms/multidoc;kms/wiki;kms/ask;kms/kmtopic;kms/kmaps;kms/lecturer;kms/knowledge;kms/doc;kms/expert;kms/exam;kms/learn;kms/homework;kms/reminder;kms/evaluate;kms/loperation;kms/imall;kms/train;kms/lmap;sys/person;sys/zone;sns/group;sns/topic;sns/event;sns/album;sns/vote;sns/ispace</value>
+		</property>
+	</bean>
+	<bean id="sysPraiseInfoConfigService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPraiseInfoConfigTarget" />
+		</property>
+	</bean>
+	
+	<bean id="sysPraiseReplyConfigService" class="com.landray.kmss.sys.praise.service.spring.SysPraiseReplyConfigServiceImp">
+		<property name="sysAppConfigService">
+			 <ref bean="sysAppConfigService"/>
+		</property>
+	</bean>	
+    <bean id="sysPraiseMainController" class="com.landray.kmss.sys.praise.controller.SysPraiseMainController">
+    </bean>
+</beans>

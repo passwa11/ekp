@@ -1,0 +1,176 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="/sys/ui/jsp/common.jsp" %>
+<%@ page import="com.landray.kmss.hr.organization.model.HrOrganizationSyncSetting"%>
+<%
+	HrOrganizationSyncSetting syncSetting = new HrOrganizationSyncSetting();
+	request.setAttribute("hrToEkpEnable", syncSetting.getHrToEkpEnable());
+%>
+
+<template:include ref="default.simple" spa="true">
+    <template:replace name="body">
+    	<ui:tabpanel  layout="sys.ui.tabpanel.list" id="tabpanel">
+	    	<ui:content title="${lfn:message('hr-organization:table.hrOrganizationRank') }">
+    	<link rel="stylesheet" href="../resource/css/organization.css">
+        <div style="margin:5px 10px;">
+            <!-- 筛选 -->
+            <list:criteria id="criteria1">
+                <list:cri-ref key="fdRank" ref="criterion.sys.docSubject" title="${lfn:message('hr-organization:hrOrganizationRank.fdName')}" />
+
+            </list:criteria>
+            <!-- 操作 -->
+            <div class="lui_list_operation">
+
+                <div style='color: #979797;float: left;padding-top:1px;'>
+                    ${ lfn:message('list.orderType') }：
+                </div>
+                <div style="float:left">
+                    <div style="display: inline-block;vertical-align: middle;">
+                        <ui:toolbar layout="sys.ui.toolbar.sort" style="float:left">
+                            <list:sort property="hrOrganizationRank.docCreateTime" text="${lfn:message('hr-organization:hrOrganizationRank.docCreateTime')}" group="sort.list" />
+                        </ui:toolbar>
+                    </div>
+                </div>
+                <div style="float:left;">
+                    <list:paging layout="sys.ui.paging.top" />
+                </div>
+                <div style="float:right">
+                    <div style="display: inline-block;vertical-align: middle;">
+                        <ui:toolbar count="3">
+                        	<c:if test="${hrToEkpEnable }">
+                        		<kmss:auth requestURL="/hr/organization/hr_organization_rank/hrOrganizationRank.do?method=add">
+                        			<ui:button text="${lfn:message('hr-organization:hr.organization.info.help') }" onclick="help()"></ui:button>
+									<!-- 增加 -->
+									<ui:button text="${lfn:message('button.add')}" onclick="editRank()" order="2" ></ui:button>
+									<!-- 数据导入 -->
+									<ui:button text="${lfn:message('hr-organization:hrOrganization.import.all.import') }" onclick="importRank();" order="3"></ui:button>
+		                            <!-- 导出 -->
+									<ui:button text="${lfn:message('button.export') }" onclick="listExport('${LUI_ContextPath}/sys/transport/sys_transport_export/SysTransportExport.do?method=listExport&fdModelName=com.landray.kmss.hr.organization.model.HrOrganizationRank')" order="3"></ui:button>
+                            	</kmss:auth>
+                            </c:if>
+                        </ui:toolbar>
+                    </div>
+                </div>
+            </div>
+            <ui:fixed elem=".lui_list_operation" />
+            <!-- 列表 -->
+            <list:listview id="listview">
+                <ui:source type="AjaxJson">
+                    {url:appendQueryParameter('/hr/organization/hr_organization_rank/hrOrganizationRank.do?method=data&orderby=hrOrganizationRank.fdGrade.fdWeight')}
+                </ui:source>
+                <!-- 列表视图 -->
+                <list:colTable isDefault="false" rowHref="" name="columntable">
+                    <list:col-checkbox />
+                    <list:col-serial/>
+                    <list:col-auto props="fdName;fdGrade.name;docCreator.name;docCreateTime;fdWeight;operations" url="" /></list:colTable>
+            </list:listview>
+            <!-- 翻页 -->
+            <list:paging />
+        </div>
+        <script>
+            var listOption = {
+                contextPath: '${LUI_ContextPath}',
+                jPath: 'rank',
+                modelName: 'com.landray.kmss.hr.organization.model.HrOrganizationRank',
+                templateName: '',
+                basePath: '/hr/organization/hr_organization_rank/hrOrganizationRank.do',
+                canDelete: '${canDelete}',
+                mode: '',
+                templateService: '',
+                templateAlert: '${lfn:message("hr-organization:treeModel.alert.templateAlert")}',
+                customOpts: {
+
+                    ____fork__: 0
+                },
+                lang: {
+                    noSelect: '${lfn:message("page.noSelect")}',
+                    comfirmDelete: '${lfn:message("page.comfirmDelete")}'
+                }
+
+            };
+            Com_IncludeFile("list.js", "${LUI_ContextPath}/hr/organization/resource/js/", 'js', true);
+			seajs.use(['lui/jquery', 'lui/dialog', 'lui/topic'],function($, dialog, topic){
+    		    window.help=function(){
+    		    	var html = {
+       		    		html:"${lfn:message('hr-organization:hr.organization.info.rant.desc')}",
+       		    		title:"${lfn:message('hr-organization:hr.organization.info.rant.operationDesc')}"
+       		    	}
+       		    	dialog.alert(html);
+    		    }
+		    	// 监听新建更新等成功后刷新
+				topic.subscribe('successReloadPage', function() {
+					setTimeout(function() {
+						seajs.use(['lui/topic'], function(topic) {
+							topic.publish('list.refresh');
+						});
+					}, 100);
+				});
+		    	
+		    	//批量导入
+		    	window.importRank = function(){
+		    		var path = "/hr/organization/hr_organization_rank/hrOrganizationRank_import.jsp";
+	    	   		dialog.iframe(path,"${lfn:message('hr-organization:hrOrganization.import.all.import')}",function(value){
+	    	   			topic.publish('list.refresh');
+	        		},{
+	    				width : 700,
+	    				height : 500
+	    			});
+		    	};
+		    	//新增、编辑
+		    	window.editRank = function(fdId){
+		    		var title = "${lfn:message('button.add') }";
+		    		var url = '/hr/organization/hr_organization_rank/hrOrganizationRank.do?method=updateRankPage';
+		    		if(null != fdId){
+		    			title = "${lfn:message('button.edit') }";
+		    			url = url + '&fdId='+fdId;
+		    		}
+    				var dialogObj = dialog.iframe(url,title,function(value){
+						if(value == 'success')
+							topic.publish("list.refresh");
+					},{
+						width:450,
+						height:300,
+						buttons:[{
+							name:"${lfn:message('button.ok') }",
+							fn:function(){
+								dialogObj.element.find("iframe").get(0).contentWindow._submit();
+							}
+						},{
+							name:"${lfn:message('button.cancel') }",
+							fn:function(){
+								dialogObj.hide();
+							}
+						}]
+					});
+		    	};
+		    	
+		    	//删除
+		    	window.delRank = function(fdId){
+		    		var path = "/hr/organization/hr_organization_rank/hrOrganizationRank.do?method=deleteRankPage&fdIds="+fdId;
+	    			var dialogObj = dialog.iframe(path,
+	    					"${lfn:message('button.delete') }",
+	    					function(value){
+	    	   			if(value == "success"){
+	    	    			location.reload();
+	    	   			}
+	        		},{
+	    				width : 500,
+	    				height : 240,
+	    				buttons:[{
+    	    				name:"${lfn:message('button.ok') }",
+    	    				fn:function(){
+    	    					dialogObj.element.find("iframe").get(0).contentWindow.clickOk();
+    	    				}
+    	    			},{
+    	    				name:"${lfn:message('button.cancel') }",
+    	    				fn:function(){
+    	    					dialogObj.hide();
+    	    				}
+    	    			}] 	    				
+	    			});
+		    	}
+		    });
+        </script>
+        </ui:content>
+        </ui:tabpanel>
+    </template:replace>
+</template:include>

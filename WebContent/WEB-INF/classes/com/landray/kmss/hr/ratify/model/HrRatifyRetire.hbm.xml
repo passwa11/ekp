@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <subclass 
+        name="com.landray.kmss.hr.ratify.model.HrRatifyRetire" 
+        extends="com.landray.kmss.hr.ratify.model.HrRatifyMain"
+        discriminator-value="com.landray.kmss.hr.ratify.model.HrRatifyRetire">
+        <join table="hr_ratify_retire">
+	        <key
+				column="fd_id"></key>
+	        <property 
+	            name="fdRetireDate" 
+	            column="fd_retire_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdRetireEnterDate" 
+	            column="fd_retire_enter_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdRetireAge" 
+	            column="fd_retire_age" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdRetireLeaderView" 
+	            column="fd_retire_leader_view" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdRetireHrView" 
+	            column="fd_retire_hr_view" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdRetireRemark" 
+	            column="fd_retire_remark" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <many-to-one 
+	            name="fdRetireStaff" 
+	            column="fd_retire_staff_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one 
+	            name="fdRetireDept" 
+	            column="fd_retire_dept_id" 
+	            update="true" 
+	            insert="true"/>
+        </join>
+    </subclass>
+</hibernate-mapping>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.calendar.model.KmCalendarSyncMapping"
+		table="km_calendar_sync_mapping">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="fdCalendarId"
+			column="fd_calendar_id"
+			update="true"
+			insert="true"
+			length="36"
+			index="idx_kmCalSyncMapp_fdCalId"/>
+
+		<property
+			name="fdAppKey"
+			column="fd_app_key"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" 
+			index="idx_kmCalSyncMapp_fdAuthType"/>
+
+		<property
+			name="fdAppUuid"
+			column="fd_app_uuid"
+			update="true"
+			insert="true"
+			length="450"
+			not-null="false" 
+			index="idx_kmCaSyncMapp_fdAppUuid"/>
+
+	</class>
+</hibernate-mapping>

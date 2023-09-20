@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="sysFormImportService"
+		class="com.landray.kmss.sys.xform.impt.service.SysFormImportServiceImpl">
+	</bean>
+	<bean id="sysFormImportTabParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportTabParser">
+	</bean>
+	<bean id="sysFormImportLabelParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportLabelParser">
+	</bean>
+	<bean id="sysFormImportInputParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportInputParser">
+	</bean>
+	<bean id="sysFormImportTextAreaParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportTextAreaParser">
+	</bean>
+	<bean id="sysFormImportRadioParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportRadioParser">
+	</bean>
+	<bean id="sysFormImportCheckboxParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportCheckboxParser">
+	</bean>
+	<bean id="sysFormImportSelectParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportSelectParser">
+	</bean>
+	<bean id="sysFormImportRtfParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportRtfParser">
+	</bean>
+	<bean id="sysFormImportAttachmentParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportAttachmentParser">
+	</bean>
+	<bean id="sysFormImportAddressParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportAddressParser">
+	</bean>
+	<bean id="sysFormImportDatetimeParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportDatetimeParser">
+	</bean>
+	<bean id="sysFormImportDatailTableParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportDetailTableParser">
+	</bean>
+	<bean id="sysFormImportAuditShowParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportAuditShowParser">
+	</bean>
+	<bean id="sysFormImportTableParser"
+		class="com.landray.kmss.sys.xform.impt.service.parsers.SysFormImportTableParser">
+	</bean>
+	
+	<!-- 表单主文档数据导入 -->
+	<bean
+		id="sysFormMainImportTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.impt.service.SysFormMainImportServiceImp">
+	</bean>
+	
+	<bean
+		id="sysFormMainImportService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormMainImportTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="get">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="importData">PROPAGATION_REQUIRED</prop>
+				<prop key="importRowData">PROPAGATION_REQUIRES_NEW</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

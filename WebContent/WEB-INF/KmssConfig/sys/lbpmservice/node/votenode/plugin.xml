@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../plugin.xsd ">
+	<!-- 投票节点定义 -->
+	<extension
+		point="com.landray.kmss.lbpm.engine.node">
+		<item
+			name="nodeType"
+			id="voteNode">
+			<param
+				name="type"
+				value="voteNode" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice:lbpm.nodeType.voteNode" />
+			<param
+				name="defClass"
+				value="com.landray.kmss.sys.lbpmservice.node.votenode.VoteNode" />
+			<param
+				name="attributesJsp"
+				value="/sys/lbpmservice/node/votenode/node_attribute.jsp" />
+			<param
+				name="nodeDescType"
+				value="voteNodeDesc" />
+			<param
+				name="taskDataAccess"
+				value="defaultManualNodeDataAccess" />
+			<param
+				name="subTaskType"
+				value="voteWorkitem" />
+			<param
+				name="taskBehaviour"
+				value="voteNodeBehaviourService" />
+		</item>
+		<item
+			name="nodeDescType"
+			id="voteNodeDesc">
+			<param
+				name="type"
+				value="voteNodeDesc" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/node/votenode/node_review.jsp" />
+			<param
+				name="chartJs"
+				value="/sys/lbpmservice/node/votenode/node_flowchart.js" />
+			<param
+				name="taskDesc"
+				value="voteNodeDesc" />
+		</item>
+		<item
+			name="taskType"
+			id="voteWorkitem">
+			<param
+				name="type"
+				value="voteWorkitem" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/node/votenode/workitem_voteworkitem.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/node/votenode/workitem_voteworkitem.jsp" />
+			<param
+				name="taskDesc"
+				value="voteNodeWorkitemDesc" />
+			<param
+				name="taskBehaviour"
+				value="voteNodeWorkitemBehaviourService" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node">
+		<item name="nodeSimulation">
+			<param name="nodeType" value="voteNode" />
+			<param name="defClass" value="com.landray.kmss.sys.lbpmservice.support.service.spring.simulation.node.SimulationVoteNode" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.lbpmservice.custom.notify" model="*">
+		<item name="customNotify">
+			<param name="nodeType" value="voteNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.vote}" />
+			<param name="messageKey" value="sys-lbpmservice-node-votenode:lbpmProcess.handler.vote.notify.handler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="voteNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.drafter.cancel}" />
+			<param name="messageKey" value="sys-lbpmservice-operation-drafter:lbpmProcess.drafter.default.notify.currhandler" />
+		</item>
+		<item name="customNotify">
+			<param name="nodeType" value="voteNode" />
+			<param name="notifyType" value="{sys-lbpmservice-support:lbpmProcess.customNotify.operation.reminder}" />
+			<param name="messageKey" value="sys-lbpmservice-support:lbpmProcess.operation.reminder.notify.currhandler" />
+		</item>
+	</extension>
+</plugin>

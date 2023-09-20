@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.km.signature.transfer.KmSignatureTransferTask" />
+			<param
+				name="name"
+				value="签章管理数据迁移" />
+			<param
+				name="path"
+				value="/km/signature/" />
+			<param
+				name="check"
+				value="com.landray.kmss.km.signature.transfer.KmSignatureTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.km.signature.transfer.KmSignatureTransferTask" />
+			<param
+				name="description"
+				value="签章管理数据迁移：对密码进行md5算法加密，执行数据迁移，将对 所有旧签章图片的密码进行md5加密。" />
+		</item>
+	</extension>
+	<!-- 声明所需要实现的扩展点
+	 <extension point="com.landray.kmss.sys.xform.base.service.controls" model="*">
+	  <item name="control">
+	   <param name="class" value="com.landray.kmss.km.signature.actions.KmexReferenceController" />
+	   <param name="file" value="/km/signature/js/referencedoc.js" />
+	  </item>
+	 </extension>
+	  -->
+	  
+	<!-- added by weiby 2014-12-19 -->
+	<!-- 表单自定义——审批意见展示控件扩展点 审批意见展示样式 -->
+	<extension point="com.landray.kmss.sys.xform.jsp.auditnote.viewstyle" model="*">
+		<item name="config">
+			<param name="viewName" value="km-signature:kmSignature.auditshow_aprrovalSignatureDate" />
+			<param name="viewValue" value="auditNoteStyleDefaultSignature" />	
+			<param name="order" value="4"/>
+			<param name="previewPictureURL" value="style/img/auditshow/defaultMsgSigTime.png"/>
+		</item>
+		<item name="config">
+			<param name="viewName" value="km-signature:kmSignature.auditshow_signature" />
+			<param name="viewValue" value="auditNoteStyleDefaultOnlySignature" />	
+			<param name="order" value="6"/>
+			<param name="previewPictureURL" value="style/img/auditshow/defaultSig.png"/>
+		</item>
+		<item name="config">
+			<param name="viewName" value="km-signature:kmSignature.auditshow_signatureDate" />
+			<param name="viewValue" value="auditNoteStyleDefaultSignatureDate" />	
+			<param name="order" value="7"/>
+			<param name="previewPictureURL" value="style/img/auditshow/defaultSigTime.png"/>
+		</item>
+	</extension>
+	<!-- 附件扩展点，兼容金格三个签章接口 -->
+	<extension point="com.landray.kmss.sys.attachment.jg.function">
+		<!-- 
+		<item name="function">
+			<param name="key" value="SAVESIGNATURE" />
+			<param name="name" value="保存签章图片" />
+			<param name="function" value="sysAttJGSaveSignatureFunction" />
+		</item>
+		 -->
+		<item name="function">
+			<param name="key" value="LOADMARKLIST" />
+			<param name="name" value="获取签章列表" />
+			<param name="function" value="sysAttJGLoadMarkListFunction" />
+		</item>
+		<item name="function">
+			<param name="key" value="LOADMARKIMAGE" />
+			<param name="name" value="展示签章信息" />
+			<param name="function" value="sysAttJGLoadMarkImageFunction" />
+		</item>
+	</extension>
+</plugin>

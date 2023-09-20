@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<subclass
+		discriminator-value="16"
+		name="com.landray.kmss.sys.organization.model.SysOrgGroupBak"
+		extends="com.landray.kmss.sys.organization.model.SysOrgElementBak">
+		<bag
+			name="hbmMembers"
+			table="sys_org_group_element_bak">
+			<key column="fd_groupid"/>
+			<many-to-many 
+				class="com.landray.kmss.sys.organization.model.SysOrgElementBak"
+				column="fd_elementid" />
+		</bag>
+		<!-- 
+		<many-to-one
+			name="hbmGroupCate"
+			column="fd_cateid"
+			insert="true"
+			update="true"
+			not-null="false" />
+		 -->
+		<property
+			name="fdGroupCateId"
+			column="fd_cateid"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<property
+			name="authReaderFlag"
+			column="auth_reader_flag"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+	</subclass>
+</hibernate-mapping>

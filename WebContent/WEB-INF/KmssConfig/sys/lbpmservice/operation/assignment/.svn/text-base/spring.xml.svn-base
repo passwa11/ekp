@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="lbpmHandlerAssignBehaviour"
+		parent="abstractOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.operation.assignment.LbpmHandlerAssignBehaviour">
+	</bean>
+	<bean
+		id="lbpmHandlerAssignPassBehaviour"
+		parent="abstractOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.operation.assignment.LbpmHandlerAssignPassBehaviour">
+	</bean>
+	<bean
+		id="lbpmHandlerAssignCancelBehaviour"
+		parent="abstractOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.operation.assignment.LbpmHandlerAssignCancelBehaviour">
+		<property name="accessManager">
+			<ref bean="accessManager" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmHandlerAssignRefuseBehaviour"
+		parent="abstractOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.operation.assignment.LbpmHandlerAssignRefuseBehaviour">
+	</bean>
+	<bean
+		id="handlerAssignBinder"
+		class="com.landray.kmss.sys.lbpmservice.operation.assignment.HandlerAssignBinder">
+	</bean>
+	<bean
+		id="handlerAssignPassBinder"
+		class="com.landray.kmss.sys.lbpmservice.operation.assignment.HandlerAssignPassBinder">
+	</bean>
+	<bean
+		id="handlerAssignCancelBinder"
+		class="com.landray.kmss.sys.lbpmservice.operation.assignment.HandlerAssignCancelBinder">
+	</bean>
+	<bean
+		id="handlerAssignRefuseBinder"
+		class="com.landray.kmss.sys.lbpmservice.operation.assignment.HandlerAssignRefuseBinder">
+	</bean>
+	
+	<bean
+		id="lbpmHandlerAssignAccessor"
+		class="com.landray.kmss.sys.lbpmservice.operation.assignment.LbpmHandlerAssignAccessor">
+		<property name="accessManager">
+			<ref bean="accessManager" />
+		</property>
+	</bean>
+	
+	<bean
+		id="lbpmHandlerAssignListener"
+		class="com.landray.kmss.sys.lbpmservice.operation.assignment.LbpmHandlerAssignListener">
+	</bean>
+</beans>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	
+	<extension point="com.landray.kmss.sys.zone.otherinfo">
+		<item name="zone_info">
+			<param name="source_url" value="/kms/medal/kms_medal_main/kmsMedalMain.do?method=getMedlSource" />
+			<param name="render_url_pc" value="/kms/medal/resource/plugin/medal_info_render.jsp" />
+			<param name="infoId" value="medalInfo" />
+			<param name="renderType" value="Javascript"/>
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.kms.lservice">
+		<item name="publisher">
+			<param name="service" 
+				value="kmsMedalPublisher" />
+		</item>
+	</extension>
+	
+	<!--勋章模块日志部署  -->
+		<extension point="com.landray.kmss.kms.log"> 
+		<item name="log.module">
+			<param name="fdKey" value="com.landray.kmss.kms.medal.model.KmsMedalMain"/>
+			<param name="moduleName" value="kms-medal:module.kms.medal"/>
+			<param name="categoryField" value="fdCategory"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="kms-medal:kmsMedalMain.addOwners"/>
+			<param name="moduleKey" value="com.landray.kmss.kms.medal.model.KmsMedalMain"/>
+			<param name="className" value="com.landray.kmss.kms.medal.service.spring.KmsMedalMainServiceImp"/>			
+			<param name="operateMethod" value="addOwner"/>
+			<param name="modelName" value="com.landray.kmss.kms.medal.model.KmsMedalMain"/>
+			<param name="type" value="6"/>
+			<param name="logServiceBean" value="kmsLogMedalProxy"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="button.delete"/>
+			<param name="moduleKey" value="com.landray.kmss.kms.medal.model.KmsMedalMain"/>
+			<param name="className" value="com.landray.kmss.kms.medal.service.spring.KmsMedalOwnerServiceImp"/>			
+			<param name="operateMethod" value="deleteByUserId"/>
+			<param name="modelName" value="com.landray.kmss.kms.medal.model.KmsMedalMain"/>
+			<param name="type" value="6"/>
+			<param name="logServiceBean" value="kmsLogMedalProxy"/>
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-kmsMedal-list.js" />
+			<param name="targetFile" value="/kms/medal/mobile/list/mui-kmsMedal-list.js" />
+			<param name="srcFold" value="/kms/medal/mobile/list" />
+		</item>
+		
+		<item name="js-pkg">
+			<param name="name" value="mui-kms-medal-extend.js" />
+			<param name="targetFile" value="/kms/medal/mobile/extend/js/mui-kms-medal-extend.js" />
+			<param name="srcFold" value="/kms/medal/mobile/extend/js" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.person.mobile.my">
+		<item name="config">
+			<param name="message" value="{kms-medal:kmsMedalMain.myMedal}" />
+			<param name="url" value="/kms/medal/kms_medal_main/kmsMedalMain.do?method=medalList" />
+		</item>
+    </extension>
+    
+   <!--学习运营  -->
+    <extension point="com.landray.kmss.kms.loperation">
+		<item name="getLogNum">
+			<param name="fdModelName" value="com.landray.kmss.kms.medal.model.KmsMedalOwner"/>
+			<param name="fdMethodName" value="medalOwner4Log"/>
+			<param name="serviceBean" value="com.landray.kmss.kms.medal.service.spring.KmsMedalOwnerServiceImp"/>
+		</item>
+	</extension>
+	
+	
+	<extension point="com.landray.kmss.kms.lservice">
+		<item name="headInfo">
+			<param name="fdModelName" value="com.landray.kmss.kms.medal.model.KmsMedalMain"/>
+			<param name="fdMethodName" value="myMedal"/>
+			<param name="serviceBean" value="kmsMedalOwnerService"/>
+		</item>
+	</extension>
+</plugin>

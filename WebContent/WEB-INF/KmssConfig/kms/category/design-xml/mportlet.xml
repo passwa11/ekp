@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root 
+    xmlns:m="http://www.landray.com.cn/schema/mportlet" 
+    xmlns="http://www.landray.com.cn/schema/lui" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.landray.com.cn/schema/mportlet 
+	../../../sys/mobile/mportlet.xsd
+		http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd">
+	
+	<m:mportlet 
+		id="kms.category.mobile.simple"
+		description="{kms-category:kms.kmsCategory.mobile.simple.desc}"
+		name="{kms-category:kms.kmsCategory.mobile.portlet.list}"
+		moduleUrl="/kms/category/mobile/index.jsp?type=!{type}&amp;categoryId=!{cateid}&amp;#path=!{type}&amp;query=q.docCategory%3A!{cateid}%3B"
+		module="{kms-category:module.kms.category}"
+		jsUrl="/kms/category/mobile/mportal/kmsCategory_simplelist.js?categoryId=!{cateid}&amp;rowsize=!{rowsize}&amp;type=!{type}">
+		<m:vars>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="6"/>
+			<var name="{kms-category:kmsCategory.portlet.template.type}" key="type" kind="enumValue" default="1">
+		    	{
+		    		"values":[{"text":"{kms-category:kmsCategory.index.document}", "value":"0"},
+		    					{"text":"{kms-category:kmsCategory.index.wiki}", "value":"1"},
+		    						{"text":"{kms-category:kmsCategory.index.kem}","value":"2"}],
+		    		"showType":"radio"
+		    	}
+			</var>
+			<var key="cateid" kind="dialogJs" name="{portlet.cate}" >
+				{
+					"js":
+					"seajs.use('lui/dialog',function(dialog){dialog.simpleCategory({modelName: 'com.landray.kmss.kms.category.model.KmsCategoryMain',mulSelect : false,authType: 2,idField: '!{idField}',nameField: '!{nameField}',canClose: true})})"
+				}
+			</var>
+		</m:vars>
+		<m:operations>
+			<m:operation name="换一批" type="random" />
+		</m:operations>
+	</m:mportlet>
+	
+	
+</root>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../../design.xsd ">
+	<module
+		messageKey="sys-lbpmext-voteweight:module.sys.lbpmext.voteweight"
+		urlPrefix="/sys/lbpmext/voteweight/">
+		<request
+			path="lbpm_voteweight/lbpmVoteWeight*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmext.voteweight.model.LbpmVoteWeight">
+			<!-- 编辑和删除 -->
+			<query
+				queryString="method=edit|update|delete"
+				validator="authFieldValidator(type=voteweight_editor)" />
+			<!-- 阅读 -->
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=voteweight_reader)" />
+			<!-- 删除所有 -->
+			<query
+				queryString="method=add|deleteall"
+				validator="roleValidator(role=SYSROLE_ADMIN;ROLE_SYS_LBPM_BASE_MODULE_ADMIN)" />
+		</request>
+		<request path="lbpm_voteweight/index.jsp" defaultValidator="roleValidator(role=SYSROLE_ADMIN;ROLE_SYS_LBPM_BASE_MODULE_ADMIN)">
+		</request>
+		
+		<filters
+			modelName="com.landray.kmss.sys.lbpmext.voteweight.model.LbpmVoteWeight">
+			<filter
+				type="voteweight_reader"
+				expression="authFieldFilter(field=fdCreator.fdId)" />
+			<filter
+				type="voteweight_reader"
+				expression="authFieldFilter(field=fdVoter.fdId)" />
+			<filter
+				type="voteweight_editor"
+				expression="authFieldFilter(field=fdCreator.fdId)" />
+			<filter
+				type="voteweight_editor"
+				expression="authFieldFilter(field=fdVoter.fdId)" />
+			<filter
+				type="voteweight_editor"
+				expression="roleFilter(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN)" />
+			<filter
+				type="voteweight_creator"
+				expression="authFieldFilter(field=fdCreator.fdId)" />
+		</filters>
+	</module>
+	
+	<!-- 流程投票加权 -->
+	<profileConfig
+		key="voteweight"
+		messageKey="{sys-lbpmext-voteweight:module.sys.lbpmext.voteweight}" 
+		url="/sys/lbpmext/voteweight/lbpm_voteweight/index.jsp" 
+		icon="lui_icon_s_profile_navLeft_voteweight"
+		type="lbpm"
+		order="9"/>
+</configs>

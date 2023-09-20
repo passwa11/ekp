@@ -1,0 +1,61 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<!doctype html>
+<html class="lui_portal_quick">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="renderer" content="webkit" />
+		<%@ include file="/sys/ui/jsp/jshead.jsp"%>
+		<script type="text/javascript">
+			seajs.use(['theme!list', 'theme!portal']);	
+		</script>
+		<script src="${ LUI_ContextPath }/sys/ui/extend/template/module/list.js?s_cache=${LUI_Cache}"></script>
+		<template:block name="head" />
+	</head>
+	<c:if test="${not empty param.rwd && param.rwd eq 'true' }">
+		<c:set var="rwdClass" value="rwd" />
+	</c:if>
+	<body class="lui_list_body tTemplate ${rwdClass}">
+		<c:if test="${not empty param.spa && param.spa eq 'true'  }">
+			<div data-lui-type="lui/spa!Spa" style="display: none;" >
+				<script type="text/config">
+					{"groups": "${JsParam['spa-groups']}" }
+				</script>
+			</div>
+		</c:if>
+		
+		<div class="lui_navExpand_banner">
+			<template:block name="banner"/>
+		</div>
+		
+		<div class="lui_navExpand_bodyContent" 
+			data-lui-mark="need-header-margin" 
+			data-lui-body-mark="lui_expand_body_content">
+			<c:if test="${ (empty param.j_aside  || param.j_aside == true) && (empty param.j_rIframe  || param.j_rIframe == false) }">
+				<div class="lui_navExpand_sideBar_frame" data-lui-mark="navExpand_sideBar">
+					<template:block name="nav" />
+				</div>
+			</c:if>
+			<div class="lui_navExpand_container_frame" <c:if test="${not empty param.j_noPadding && param.j_noPadding eq 'true'}">style='padding:0px;'</c:if>>
+				
+				<div id="queryListView" style="width:100%">
+					<template:block name="path" />
+					<template:block name="content" />
+				</div>
+				
+			</div>
+		</div>
+		<c:if test="${empty param.j_notop || (not empty param.j_notop && param.j_notop == false) }">
+				<ui:top id="top"></ui:top>
+				<c:import url="/sys/praise/sysPraiseInfo_common_btn.jsp" charEncoding="UTF-8"></c:import>
+			<kmss:ifModuleExist path="/sys/help">
+				<c:import url="/sys/help/sys_help_template/sysHelp_template_btn.jsp" charEncoding="UTF-8"></c:import>
+			</kmss:ifModuleExist>
+		</c:if>
+	</body>
+	<div data-lui-type="lui/title!Title" style="display: none;">
+		<template:block name="title" />
+	</div>
+	<template:block name="script" />
+	<c:import url="/sys/profile/i18n/quicklyMultiLangEdit.jsp"></c:import>
+</html>

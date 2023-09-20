@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <subclass 
+        name="com.landray.kmss.hr.ratify.model.HrRatifyRemove" 
+        extends="com.landray.kmss.hr.ratify.model.HrRatifyMain"
+        discriminator-value="com.landray.kmss.hr.ratify.model.HrRatifyRemove">
+        <join table="hr_ratify_remove">
+        	<key
+        		column="fd_id"></key>
+        	<property 
+            name="fdRemoveBeginDate" 
+            column="fd_remove_begin_date" 
+            update="true" 
+            insert="true"/>
+	        <property 
+	            name="fdRemoveEndDate" 
+	            column="fd_remove_end_date" 
+	            update="true" 
+	            insert="true"/>
+			<property
+				name="fdIsLongtermContract"
+				column="fd_is_longterm_contract"
+				update="true"
+				insert="true"
+				not-null="false" />
+	        <property 
+	            name="fdRemoveRemark" 
+	            column="fd_remove_remark" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdRemoveCancelDate" 
+	            column="fd_remove_cancel_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdRemoveReason" 
+	            column="fd_remove_reason" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <many-to-one 
+	            name="fdRemoveStaff" 
+	            column="fd_remove_staff_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one 
+	            name="fdRemoveDept" 
+	            column="fd_remove_dept_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one
+	        	name="fdRemoveContract"
+	        	column="fd_remove_contract_id"
+	        	update="true"
+	        	insert="true"/>
+        </join>
+    </subclass>
+</hibernate-mapping>

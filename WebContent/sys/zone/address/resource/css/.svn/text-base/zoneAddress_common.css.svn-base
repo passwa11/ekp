@@ -1,0 +1,780 @@
+body {
+	background-color: #eee;
+}
+
+.lui_zone_address_leftmenucontents{
+	padding-left: 15px;
+	padding-right: 15px;
+	height: 480px;
+	overflow: auto;
+	overflow-x: hidden;
+}
+
+/* 下面注释代码生效则舍弃这段代码  */
+.lui_personal_card_frame{
+	height: 588px;
+	overflow: auto;
+	overflow-x: hidden;
+}
+/* #40206 右边区域添加滚动条  */
+/*
+.lui_person_detail{
+	height: 145px;
+	overflow: auto;
+	overflow-x: hidden;
+}*/
+
+/*---------------------- 通讯录 ---------------------*/
+ul, li {
+	list-style: none;
+}
+
+.lui_zone_address_containter {
+	margin: 0px auto;
+	background: #fff;
+	padding: 10px 0px;
+}
+
+.lui_zone_address_content {
+	padding: 0 10px;
+}
+
+.lui_zone_address_frame {
+	border: 1px solid #e0e0e0;
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+	min-height: 500px;
+}
+
+.lui_zone_address_frame:after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+/*---------- 选项卡菜单（左侧）----------*/
+.lui_zone_address_menu {
+	display: table-cell;
+	vertical-align: top;
+	width: 300px;
+	padding: 10px 0;
+	border-right: 1px solid #e0e0e0;
+	position: relative;
+}
+
+/*----- 搜索框 -----*/
+.lui_zone_address_search {
+	margin-left: 15px;
+	margin-right: 15px;
+	font-size: 0;
+	position: relative;
+}
+
+.lui_zone_address_search > input {
+	padding: 5px 12% 5px 5%;
+	width: 82.5%;
+	height: 20px;
+	line-height: 20px;
+	vertical-align: top;
+	border: 1px solid #e0e0e0;
+	border-radius: 30px;
+	background-color: #fff;
+
+}
+
+.lui_zone_address_searchBtn {
+	width: 32px;
+	padding: 0;
+	vertical-align: top;
+	border-top-right-radius: 30px;
+	border-bottom-right-radius: 30px;
+	background: transparent url(../images/icon_search.png) no-repeat center;
+	-webkit-appearance:none;
+	border: 0;
+	transition-duration: .3s;
+	cursor: pointer;
+	position: absolute;
+	right: 0;
+	top: 1px;
+	bottom: 1px;
+}
+.lui_zone_address_searchBtn:hover {
+	background-color: #f8f8f8;
+	background-image: url(../images/icon_search_hover.png);
+}
+.lui_zone_address_searchBtn:active{
+	outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+  				box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+/*---- 选项卡 -----*/
+.lui_zone_address_menus {
+	margin-bottom: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.lui_zone_address_menus_ul {
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.lui_zone_address_menus_ul:after {
+	content: '';
+	display: table;
+	visibility: hidden;
+	clear: both;
+}
+
+.lui_zone_address_menus_ul > li {
+	float: left;
+	width: 33.3%;
+	position: relative;
+	top: 1px;
+	text-align: center;
+}
+.lui_zone_address_menus_ul > li > span {
+	margin: auto 1px;
+	padding: 10px 0;
+	border-bottom: 2px solid transparent;
+	transition-duration: .3s;
+	display: block;
+	cursor: pointer;
+}
+.lui_zone_address_menus_ul > li > span:hover{ color: #15a4fa;}
+.lui_zone_address_menus_ul > li.active > span,
+.lui_zone_address_menus_ul > li.active > span:hover{
+	color: #15a4fa;
+	border-color: #15a4fa;
+}
+
+/*----- 目录树 -----*/
+.lui_zone_address_tree { /* padding:10px; */
+	min-height: 300px;
+}
+/* 超链接 */
+.lui_zone_address_tree a {
+	color: #222;
+	text-decoration: none;
+}
+/* 鼠标经过的超链接 */
+.lui_zone_address_tree a:hover {
+	color: #15a4fa;
+}
+
+.lui_zone_address_tree li.active>a {
+	color: #15a4fa;
+}
+/* 菜单 */
+.lui_zone_address_tree ul {
+	padding: 0 0 0 18px;
+	margin: 0;
+}
+
+.lui_zone_address_tree ul:first-child {
+	padding-left: 0;
+}
+/* 菜单项 */
+.lui_zone_address_tree ul li {
+	font-size: 13px;
+	color: #222;
+	line-height: 20px;
+	cursor: pointer;
+	list-style: none;
+	background: url(../images/st_node.png) no-repeat left center;
+	padding: 3px 0 3px 16px;
+}
+/* 子菜单 */
+.lui_zone_address_tree ul li ul {
+	
+}
+/* 子菜单项 */
+.lui_zone_address_tree ul li ul li {
+	
+}
+/* 子菜单的父节点 */
+.lui_zone_address_tree .folder {
+	background: url(../images/st_folder.png) no-repeat left center;
+	padding: 3px 0 3px 16px;
+}
+/* 展开的父节点 */
+.lui_zone_address_tree .open {
+	background: url(../images/st_folder_open.png) no-repeat left center;
+	padding: 3px 0 3px 16px;
+}
+/* 当前节点 */
+.lui_zone_address_tree .current a {
+	color: #15a4fa !important;
+}
+
+/*---------- 部门详细信息 （中间） ----------*/
+.lui_zone_address_child_middle {
+	padding: 10px 0;
+	width: 300px;
+	border-right: 1px solid #e0e0e0;
+	display: table-cell;
+	vertical-align: top;
+}
+
+.department_name {
+	margin: 0;
+	padding: 6px 15px;
+	line-height: 20px;
+	color: #333;
+	font-size: 16px;
+	font-weight: normal;
+	background-color: #fff;
+	position: relative;
+	z-index: 1;
+}
+
+.department_name > em {
+	color: #ff6f0f;
+	margin: 0 3px;
+	font-style: normal;
+}
+.lui_zone_address_org{
+	height: 536px;
+	overflow: auto;
+	overflow-x: hidden;
+}
+.lui_zone_address_org > dt {
+	color: #7a7a7a;
+	font-size: 14px;
+	margin-top: 20px;
+	margin-bottom: 8px;
+	padding: 0 15px;
+}
+.lui_zone_address_org > dt:empty{ height: 0;margin-bottom: 0;margin-top: 0;}
+.lui_zone_address_org > dt:first-child{ margin-top: 12px; }
+.lui_zone_address_org dd {
+	margin: 3px 0;
+	cursor: pointer;
+}
+
+.lui_zone_address_org dd:after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+/*--- 人员信息 ---*/
+.lui_zone_address_personItem {
+	padding: 5px 15px;
+	transition-duration: .3s;
+}
+
+.lui_zone_address_personItem:after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+.lui_zone_address_personItem .personImg {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	overflow: hidden;
+	float: left;
+	border:1px solid #e0e0e0;
+	background-color: #f8f8f8;
+}
+
+.lui_zone_address_personItem .personImg img {
+	width: 100%;
+	height: 100%;
+}
+
+.lui_zone_address_personItem .personInfo {
+	margin-left: 55px;
+}
+
+.lui_zone_address_personItem .personInfo .person_name {
+	font-size: 14px;
+	color: #333;
+	margin-top:2px;
+	margin-bottom: 2px;
+}
+
+.lui_zone_address_personItem .personInfo .person_dep {
+	font-size: 12px;
+	color: #999;
+}
+
+/*--- 部门信息 ---*/
+.lui_zone_address_depItem {
+	padding: 5px 15px;
+}
+
+.lui_zone_address_depItem .depImg {
+	width: 40px;
+	height: 40px;
+  border: 1px solid #e0e0e0;
+	background-color: #e6e6e6;
+	border-radius: 50%;
+	overflow: hidden;
+	transition-duration: .3s;
+	float: left;
+}
+
+.lui_zone_address_depItem .icon_depart {
+	background: url(../images/icon_org.png) no-repeat center;
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+}
+.lui_zone_address_depItem .icon_depart_external {
+	background: url(../images/icon_depart_external.png) no-repeat center;
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	background-size: 100% 100%;
+}
+
+.lui_zone_address_depItem .depInfo {
+	margin-left: 55px;
+}
+
+.lui_zone_address_depItem .depInfo .dep_name {
+	font-size: 14px;
+	color: #333;
+	margin-top:2px;
+	margin-bottom: 2px;
+	transition-duration: .3s;
+}
+
+.lui_zone_address_depItem .depInfo .dep_num {
+	font-size: 12px;
+	color: #999;
+}
+
+/* 选中效果 */
+.lui_zone_address_org dd.active .lui_zone_address_depItem .depImg,
+.lui_zone_address_org dd:hover .lui_zone_address_depItem .depImg {
+	background-color: #15a4fa;
+}
+.lui_zone_address_org dd.active .lui_zone_address_depItem .dep_name,
+.lui_zone_address_org dd:hover .lui_zone_address_depItem .dep_name {
+	color: #15a4fa;
+}
+.lui_zone_address_org dd.active .lui_zone_address_personItem .personInfo .person_name,
+.lui_zone_address_org dd:hover .lui_zone_address_personItem .personInfo .person_name {
+	color: #15a4fa;
+}
+.lui_zone_address_org dd.active .lui_zone_address_personItem,
+.lui_zone_address_org dd:hover .lui_zone_address_personItem {
+	background-color: #f8f8f8;
+}
+
+/*---------- 详细信息（右侧） ----------*/
+.lui_zone_address_child_right {
+	display: table-cell;
+	vertical-align: top;
+	position: relative;
+	width: 100%;
+}
+
+/*----- 没有数据提示信息 -----*/ 
+.lui_zone_address_noData_ieHack{ height: 588px;}
+.lui_zone_address_noData {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	color: #b5b5b5;
+	height: 160px;
+	display: inline-block;
+	text-align: center;
+	margin: auto;
+	width: 100%;
+}
+
+.lui_zone_address_noData .icon_noData {
+	display: inline-block;
+	width: 110px;
+	height: 98px;
+	background: url(../images/address_noData.png) no-repeat center;
+}
+
+.lui_zone_address_noData .p1 {
+	font-size: 14px;
+	margin: 5px 0 8px;
+}
+
+.lui_zone_address_noData .p2 {
+	font-size: 12px;
+}
+
+/*----- 员工卡片 -----*/
+.lui_personal_card_frame {
+	width: 100%;
+	position: relative;
+}
+
+.lui_personal_card_header {
+	text-align: center;
+	width: 288px;
+	margin: 0 auto;
+	padding-top: 35px;
+	position: relative;
+}
+
+.lui_personal_card_img {
+	width: 90px;
+	height: 90px;
+	border-radius: 50%;
+	overflow: hidden;
+	background-color: #f8f8f8;
+	margin: 0 auto;
+}
+
+.lui_personal_card_img img {
+	width: 100%;
+	height: 100%;
+}
+
+.lui_personal_card_header p {
+	font-size: 20px;
+	margin-top: 10px;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+.lui_personal_card_header .person_name {
+	white-space:nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: block;
+}
+
+.lui_personal_card_header .staff_sex {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	line-height: 20px;
+	vertical-align: middle;
+	font-size: 0;
+	position:absolute;
+	top: 94px;
+	border: 2px solid #fff;
+	left: 165px;
+}
+
+.lui_personal_card_header .staff_sex.sex_f {
+	background: #ff5287;
+}
+
+.lui_personal_card_header .staff_sex.sex_m {
+	background: #1986fb;
+}
+
+.lui_personal_card_header .staff_sex .lui_icon_s {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(../images/zone_address_sprite.png) no-repeat left top;
+	vertical-align: middle;
+}
+
+.lui_personal_card_header .staff_sex .sex_f {
+	background-position: -48px 0;
+}
+
+.lui_personal_card_header .staff_sex .sex_m {
+	background-position: -64px 0;
+}
+.lui_person_detail{
+	max-height: 235px;
+}
+.lui_personal_card_detail {
+	width: 300px;
+	margin: 0 auto;
+	padding-bottom: 10px;
+}
+
+.lui_personal_card_detail ul{
+	display: table;
+}
+
+.lui_personal_card_detail ul li {
+	padding: 5px 0;
+	display:table-row;
+	width:100%;
+}
+
+.lui_personal_card_detail ul li .item_name {
+	display:table-cell;
+	font-style: normal;
+	color: #999;
+	width: 40px;
+	padding-right: 10px;
+	text-align: right;
+	padding-top:5px;
+	padding-bottom:5px;
+	white-space:nowrap;
+}
+.lui_personal_card_detail ul li .item_detail{
+	display:table-cell;
+	padding-top:5px;
+	padding-bottom:5px;
+	word-break:break-word;
+}
+
+/* 二维码 */
+.lui_personal_code {
+	/*margin: 15px auto 0;*/
+	padding: 15px;
+	width: 200px;
+	border: 1px solid #e0e0e0;
+	text-align: center;
+	/*#159237 因为二维码在员工描述同一列会当到员工的信息，故修改为相对父元素固定到右下角 update by zhouwen 20220127*/
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+.lui_personal_code:after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+.lui_personal_code>.icon_qrcode {
+	display: inline-block;
+	width: 168px;
+	height:168px;
+}
+
+.lui_personal_code>.icon_qrcode img {
+	width: 100%;
+	height: 100%;
+}
+
+.lui_personal_code p {
+	margin-top: 5px;
+	line-height: 1;
+	text-align: center;
+	font-size: 12px;
+}
+
+/* 二维码浮层 */
+.lui_personal_code_float {
+	display: none!important;
+	position: absolute;
+	left: 24px;
+	bottom: 93px;
+	background: #fff;
+	width: 160px;
+	height: 160px;
+	border: 1px solid #e0e0e0;
+	box-shadow: 0 0 5px #e0e0e0;
+	padding: 10px;
+}
+
+.lui_personal_code_float .icon_trg {
+	position: relative;
+}
+
+.lui_personal_code_float .icon_trg:before, .lui_personal_code_float .icon_trg:after
+	{
+	display: inline-block;
+	content: "";
+	width: 0;
+	height: 0;
+	border: 10px solid transparent;
+	position: absolute;
+	left: 80px;
+	bottom: -25px;
+}
+
+.lui_personal_code_float .icon_trg:before {
+	border-top-color: #e0e0e0;
+}
+
+.lui_personal_code_float .icon_trg:after {
+	border-top-color: #fff;
+	bottom: -24px;
+}
+
+/*分类组织*/
+.lui_zone_address_category {
+	margin-bottom: 40px;
+	min-height: 300px;
+}
+
+.lui_zone_address_category ul li {
+	cursor: pointer;
+	padding: 5px 0;
+	display: table;
+	width: 100%;
+	transition-duration: .3s;
+	line-height: 20px;
+}
+
+.lui_zone_address_category ul li span {
+	display: table-cell;
+  word-wrap: break-word;
+}
+
+.lui_zone_address_category ul li span.group_opt {
+	text-align: right;
+  white-space: nowrap;
+}
+.lui_zone_address_category ul li:hover{ background-color: #f8f8f8; }
+.lui_zone_address_category ul li:hover .group_name,
+.lui_zone_address_category ul li.active .group_name {
+	color: #15a4fa;
+}
+
+.active {
+	color: #15a4fa;
+}
+
+.lui_zone_address_category .group_opt i {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 8px;
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+	background: url(../images/zone_address_sprite.png) no-repeat left top;
+}
+
+.lui_zone_address_category .group_opt i.opt_edit {
+	background-position: -16px 0;
+}
+
+.lui_zone_address_category .group_opt i.opt_edit:hover {
+	background-position: -16px -16px;
+}
+
+.lui_zone_address_category .group_opt i.opt_del {
+	background-position: -32px 0;
+}
+
+.lui_zone_address_category .group_opt i.opt_del:hover {
+	background-position: -32px -16px;
+}
+
+/*--- 添加 ---*/
+.lui_zone_address_addBtnBar {
+	border-top: 1px solid #e0e0e0;
+	background-color: #fff;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 40px;
+	line-height: 40px;
+	cursor: pointer;
+	text-align: center;
+	transition-duration: .3s;
+}
+.lui_zone_address_addBtnBar:hover {
+	background-color: #f8f8f8;
+	color: #15a4fa;
+}
+
+.lui_zone_address_addBtnBar .icon_add {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 5px;
+	vertical-align: middle;
+	background: url(../images/zone_address_sprite.png) no-repeat -80px 0;
+}
+
+.lui_zone_address_addBtnBar em {
+	font-style: normal;
+	vertical-align: middle;
+}
+
+/*--- 弹出框相关  ---*/
+.tb_normal .optStyle {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+	margin: 0 3px;
+}
+
+.opt_arrow_up_style {
+	background: url(../images/address_list_sprite.png) no-repeat -96px 0;
+}
+
+.opt_arrow_up_style:hover {
+	background: url(../images/address_list_sprite.png) no-repeat -96px -16px;
+}
+
+.opt_arrow_down_style {
+	background: url(../images/address_list_sprite.png) no-repeat -112px 0;
+}
+
+.opt_arrow_down_style:hover {
+	background: url(../images/address_list_sprite.png) no-repeat -112px
+		-16px;
+}
+
+.address_list_tb.tb_simple>tbody>tr>td {
+	text-align: left;
+}
+
+.address_list_tb.tb_simple>tbody>tr>td.td_normal_title {
+	text-align: right;
+}
+
+.address_list_tb .inputsgl.style_phone {
+	width: 90px;
+}
+
+.address_list_tb .inputsgl.style_post {
+	width: 60px;
+}
+
+.address_list_tb .inputsgl.style_email {
+	width: 110px;
+}
+
+.address_list_tb .inputsgl.style_remark {
+	width: 90px;
+}
+
+.address_list_tb .inputselectsgl.style_name {
+	width: 70px;
+}
+.noData{
+	padding-top:283.5px;
+	padding-bottom: 283.5px;
+	text-align: center;
+}
+/*----- 编辑弹出框 -----*/
+.lui_zone_iframe_body{ background:#fff; overflow-x: hidden;}
+.lui_form_body.lui_zone_iframe_body .lui_form_path_frame{ display: none; min-width:960px!important ;}
+.lui_form_body.lui_zone_iframe_body #lui_validate_message{ min-width: 960px!important;}
+.lui_form_body.lui_zone_iframe_body .tempTB{ min-width: 960px!important;}
+.lui_form_body.lui_zone_iframe_body .com_gototop{ display: none;}
+.lui_zone_iframe_body .lui_form_content{ padding:20px 0;}
+
+/*----- 滚动条相关 -----*/
+.jspContainer{overflow: hidden;position: relative;}
+.jspPane{position: absolute;}
+.jspVerticalBar{position: absolute;top: 0;right: 0;width: 6px;height: 100%;background: red;}
+.jspHorizontalBar{position: absolute;bottom: 0;left: 0;width: 100%;height: 16px;background: red;}
+.jspCap{display: none;}
+.jspHorizontalBar .jspCap{float: left;}
+.jspTrack{background: #f1f1f1;position: relative;}
+.jspDrag{background: #d1d1d1; min-height: 20px; position: relative;top: 0;left: 0;cursor: pointer; border-radius: 4px;}
+.jspDrag:hover{background: #9c9c9c;}
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspDrag{float: left;height: 100%;}
+.jspArrow{background: #50506d;text-indent: -20000px;display: block;cursor: pointer;padding: 0;margin: 0;}
+.jspArrow.jspDisabled{cursor: default;background: #80808d;}
+.jspVerticalBar .jspArrow{height: 16px;}
+.jspHorizontalBar .jspArrow{width: 16px;float: left;height: 100%;}
+.jspVerticalBar .jspArrow:focus{outline: none;}
+.jspCorner{background: #eeeef4;float: left;height: 100%;}
+
+/* Yuk! CSS Hack for IE6 3 pixel bug :( */
+* html .jspCorner{margin: 0 -3px 0 0;}

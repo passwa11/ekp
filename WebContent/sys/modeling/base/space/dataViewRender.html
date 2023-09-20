@@ -1,0 +1,327 @@
+var viewWgt = render.parent;
+var lang = viewWgt.getModelingLang();
+{$<div class="modelAppSpaceContainer">
+    <div class="modelAppSpacePorletsTitle">
+        <div class="modelAppSpacePorletsTitleType">
+            {%lang['modelingAppSpace.styleDataComponent']%}
+        </div>
+        <i class="modelAppSpaceIcon modelAppSpacePorletsTitleIcon"></i>
+        <span class="changePorlet"></span>
+    </div>
+    <div class="modelAppSpacePorletsContainer">
+        <div class="modelAppSpacePorletsRow">
+            <div class="modelAppSpacePorletsTitleType">
+                {%lang['modelingAppSpace.partTitle']%}
+            </div>
+            <div class="modelAppSpacePorletsTitleNameContent">
+                <input type="text" name="fdTitle" placeholder="{%lang['modelingAppSpace.partTitlePlaceholder']%}" maxlength="20">
+                <div><span class="modelAppSpacePorletsTitleNameLength">0</span>/20</div>
+            </div>
+        </div>
+        <div class="modelAppSpacePorletsInlineRow">
+            <div class="modelAppSpacePorletsTitleType">
+                {%lang['modelingAppSpace.partTitleColor']%}
+            </div>
+            <div class="modelAppSpacePorletsPallet title_color_div">
+                <div class="colorColorDiv" name="title_color">
+                    <div data-lui-mark="colorColor"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modelAppSpacePorletsInlineRow">
+            <div class="modelAppSpacePorletsTitleType">
+                {%lang['modelingAppSpace.styleBackground']%}
+            </div>
+            <div class="modelAppSpacePorletsBgContent">
+                <label><input type="radio" name="PorletsBg" value="0" checked=""> {%lang['modelingAppSpace.styleColour']%}</label>
+                <label><input type="radio" name="PorletsBg" value="1"> {%lang['modelingAppSpace.stylePicture']%}</label>
+            </div>
+        </div>
+        <div class="modelAppSpacePorletsBgOnColor">
+            <div class="modelAppSpacePorletsTitleType">
+               {%lang['modelingAppSpace.styleFillColor']%}
+            </div>
+            <div class="modelAppSpacePorletsPallet fill_color_div">
+                <div class="colorColorDiv" name="fill_color">
+                    <div data-lui-mark="colorColor"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modelAppSpacePorletsBgOnPicture" style="display: none;">
+            <div class="modelAppSpacePorletsTitleType">
+                {%lang['modelingAppSpace.styleUploadPictures']%}
+            </div>
+            <div class="modelAppSpacePorletsUploadBtnBox">
+                <div class="modelAppSpacePorletsUploadBtn">
+                    <i class="modelAppSpaceIcon modelAppSpacePorletsAdd"></i>
+                </div>
+                <div class="modelAppSpacePorletsCheckedImginfo" style="display: none;">
+                    <div class="modelAppSpacePorletsDataUploadedBtn">
+                        <img src="" style="width:100%;height:100%;" alt="">
+                        <input type="hidden" id="imgId" value="">
+                        <div class="modelAppSpacePorletsDataUploadMask"><span>{%lang['enums.behavior_type.3']%}</span></div>
+                    </div>
+                    <div class="modelAppSpacePorletsDataUploadedDel">
+                    </div>
+                </div>
+
+            </div>
+            <span class="modelAppSpacePorletsUploadTips"> {%lang['modelingAppSpace.styleUploadTips']%}</span>
+            <div class="modelAppSpacePorletsInlineRow">
+                <div class="modelAppSpacePorletsTitleType">
+                     {%lang['modelingAppSpace.styleFillType']%}
+                </div>
+                <div class="muiPerformanceDropdownBoxData">
+                    <span>{%lang['modelingAppSpace.styleCenterFill']%}</span>
+                    <input type="hidden" value="1">
+                    <i class="muiPerformanceDropdownBoxIconData"></i>
+                    <div class="muiPerformanceDropdownBoxListData" style="display: none;">
+                        <ul>
+                            <li data-data-select="1">{%lang['modelingAppSpace.styleCenterFill']%}</li>
+                            <li data-data-select="2">{%lang['modelingAppSpace.styleCenter']%}</li>
+                            <li data-data-select="3">{%lang['modelingAppSpace.styleStretchFill']%}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modelAppSpacePorletsInlineRow">
+            <div class="modelAppSpacePorletsTitleType">
+                {%lang['modelingAppSpace.displayType']%}
+            </div>
+        </div>
+        <div class="modelAppSpacePorletsDisplayList">
+            <ul class="modelAppSpacePorletsDisplayListUl">
+                <li class="modelAppSpacePorletsDisplayItemNum active">
+                    <i></i>
+                    <span>{%lang['modelingAppSpace.dataNumber']%}</span>
+                    <input type="hidden"  value="1">
+                </li>
+                <li class="modelAppSpacePorletsDisplayItemChart">
+                    <i></i>
+                    <span>{%lang['modelingAppSpace.dataChart']%}</span>
+                    <input type="hidden" value="2">
+                </li>
+                <li class="modelAppSpacePorletsDisplayItemList">
+                    <i></i>
+                    <span>{%lang['modelingAppSpace.dataList']%}</span>
+                    <input type="hidden" value="3">
+                </li>
+                <li class="modelAppSpacePorletsDisplayItemCalendar">
+                    <i></i>
+                    <span>{%lang['modelingAppSpace.dataCalendar']%}</span>
+                    <input type="hidden" value="4">
+                </li>
+                <li class="modelAppSpacePorletsDisplayItemGantt">
+                    <i></i>
+                    <span>{%lang['modelingAppSpace.dataGantt']%}</span>
+                    <input type="hidden" value="5">
+                </li>
+                <li class="modelAppSpacePorletsDisplayItemResource">
+                    <i></i>
+                    <span>{%lang['modelingAppSpace.dataResourcePanel']%}</span>
+                    <input type="hidden" value="6">
+                </li>
+                <li class="modelAppSpacePorletsDisplayItemPorlets">
+                    <i></i>
+                    <span>{%lang['table.modelingPortletCfg']%}</span>
+                    <input type="hidden" value="7">
+                </li>
+            </ul>
+            <input type="hidden" name="display_type" value="">
+        </div>
+        <div class="modelAppSpacePorletsNumContent modelAppSpacePorletsTypeContent" style="display: none;">
+
+        </div>
+        <div class="modelAppSpacePorletsChartContent modelAppSpacePorletsTypeContent" style="display: none;">
+            <div class="modelAppSpacePorletsListRow">
+                <div class="modelAppSpacePorletsTitleType">
+                    {%lang['modelingAppSpace.dataChart.type']%}
+                </div>
+            </div>
+            <div class="muiPerformanceDropdownBox modelAppSpacePorletsChartType">
+                <input type="text" name="nodeTypeName" placeholder="{%lang['modeling.page.choose']%}" readonly="true">
+                <i class="muiPerformanceDropdownBoxIcon"></i>
+                <div class="muiPerformanceDropdownBoxList" style="display: none;">
+                    <ul>
+                        <li>
+                            <span>{%lang['modelingAppSpace.custom.data']%}</span>
+                            <input type="hidden" value="0">
+                        </li>
+                        <li>
+                            <span>{%lang['modelingAppSpace.statistical.chart']%}</span>
+                            <input type="hidden" value="1">
+                        </li>
+                        <li>
+                            <span>{%lang['modelingAppSpace.statistical.list']%}</span>
+                            <input type="hidden" value="2">
+                        </li>
+                        <li>
+                            <span>{%lang['modelingAppSpace.statistical.chartset']%}</span>
+                            <input type="hidden" value="3">
+                        </li>
+                    </ul>
+                    <input type="hidden" name="nodeType" value="">
+                </div>
+            </div>
+            <div class="modelAppSpacePorletsListRow">
+                <div class="modelAppSpacePorletsTitleType">
+                    {%lang['modelingAppSpace.dataChart']%}
+                </div>
+            </div>
+            <div class="muiPerformanceDropdownBox modelingSpaceChartData">
+                <input type="text" placeholder="{%lang['modeling.page.choose']%}" name="chartName" >
+                <input type="hidden" name="chartId" value="">
+                <i class="muiPerformanceDropdownBoxIcon"></i>
+                <div class="muiPerformanceDropdownBoxList" style="display: none;">
+
+                </div>
+            </div>
+        </div>
+        <div class="modelAppSpacePorletsDefaultContent modelAppSpacePorletsTypeContent number" style="display: block;">
+            <div class="modelAppSpacePorletsListRow">
+                <div class="modelAppSpacePorletsTitleType">
+                    {%lang['modelingAppSpace.data.source']%}
+                </div>
+            </div>
+            <div class="muiPerformanceDropdownBox numberSelectModel">
+                <input type="hidden" name="fdNumberApplicationId">
+                <input type="hidden" name="fdNumberModelId">
+                <div class="item-content-element-choose">
+                    <p class="item-content-element-label"></p>
+                    <i></i>
+                </div>
+            </div>
+            <div class="modelAppSpacePorletsListRow">
+                <div class="modelAppSpacePorletsTitleType">
+                    {%lang['modelingAppSpace.data.field']%}
+                </div>
+            </div>
+            <div class="muiPerformanceDropdownBox numberFieldBox">
+                <input type="text" placeholder="{%lang['modeling.page.choose']%}" readonly="true">
+                <input type="hidden" name="fdFieldId" value="">
+                <input type="hidden" name="fdFieldType" value="">
+                <i class="muiPerformanceDropdownBoxIcon"></i>
+                <div class="muiPerformanceDropdownBoxList numberField" style="display: none;">
+                </div>
+            </div>
+            <div class="modelAppSpacePorletsWhere modelAppSpacePorletsListRow">
+                <div class="modelAppSpacePorletsTitleType">
+                    {%lang['modelingAppSpace.condition.setting']%}
+                </div>
+            </div>
+            <div class="modelAppSpacePorletsListDataSettingBox statisticsItem" index="0">
+                <div class="item-content modelAppSpacePorletsListRow">
+                    <button type="button" class="statistics_rule_button"><i></i>{%lang['modelingAppSpace.setting']%}</button>
+                    <div class="modelAppSpacePorletsListDataSettingPop" style="display: none">
+                        <div class="modelAppSpacePorletsListDataSettingPopContent">
+                            <div class="modelAppSpacePorletsListDataSettingPopConditions">
+                                <span>{%lang['modelingAppSpace.meetthefollowing']%}</span>
+                                <div class="muiPerformanceDropdownBox numberWhere" style="width: 100px;">
+                                    <input type="text" placeholder="{%lang['modelingAppSpace.set.all']%}">
+                                    <i class="muiPerformanceDropdownBoxIcon"></i>
+                                    <div class="muiPerformanceDropdownBoxList" style="display: none;">
+                                        <ul>
+                                            <li>
+                                                <span>{%lang['modelingAppSpace.set.all']%}</span>
+                                                <input type="hidden" value="0">
+                                            </li>
+                                            <li>
+                                                <span>{%lang['modelingAppSpace.set.arbitrarily']%}</span>
+                                                <input type="hidden" value="1">
+                                            </li>
+                                        </ul>
+                                        <input type="hidden" name="whereRule" value="0">
+                                    </div>
+                                </div>
+                                <span>{%lang['modelingAppSpace.set.condition']%}</span>
+                            </div>
+                            <div class="open_rule_setting_where_content"></div>
+                            <div class="open_rule_setting_where_create"><span>{%lang['modelingAppSpace.set.newlyadded']%}</span></div>
+                            <div class="open_rule_setting_action_title">{%lang['modelingAppSpace.set.dothefollowing']%}</div>
+                            <div class="open_rule_setting_action_type">
+                                <div class="open_rule_setting_action_type_select">
+                                    <div class="muiPerformanceDropdownBox whereOper">
+                                        <input type="text" placeholder="{%lang['modelingAppSpace.set.count']%}" readonly="true">
+                                        <i class="muiPerformanceDropdownBoxIcon"></i>
+                                        <div class="muiPerformanceDropdownBoxList" style="display: none; max-height: 90px;">
+                                            <ul>
+                                                <li><span>{%lang['modelingAppSpace.set.count']%}</span></li>
+                                            </ul>
+                                            <input type="hidden" name="whereOper" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modelAppSpacePorletsListDataSettingPopFooter">
+                           <!-- <div class="modelAppSpaceContainerSettingPopBtnCancel">
+                                取消
+                            </div>-->
+                            <div class="modelAppSpaceContainerSettingPopBtnConfirm">
+                                {%lang['modelingAppSpace.set.determine']%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modelAppSpacePorlets">
+                <div class="modelAppSpacePorletsTitleType modelAppSpacePorletsListRow">
+                    {%lang['modelingAppSpace.set.unit']%}
+                </div>
+            </div>
+            <div class="muiPerformanceDropdownBox numUtilValueBox" style="margin-bottom:8px !important;">
+                <input type="text" placeholder="{%lang['modelingAppSpace.set.nothing']%}" readonly="true">
+                <input type="hidden" name="numUnitVal" value="0">
+                <i class="muiPerformanceDropdownBoxIcon"></i>
+                <div class="muiPerformanceDropdownBoxList" style="display: none;">
+                    <ul>
+                        <li><span>{%lang['modelingAppSpace.set.nothing']%}</span><input type="hidden" value="0"></li>
+                        <li><span>{%lang['modelingAppSpace.set.thousand']%}</span><input type="hidden" value="1"></li>
+                        <li><span>{%lang['modelingAppSpace.set.tenthousand']%}</span><input type="hidden" value="2"></li>
+                        <li><span>{%lang['modelingAppSpace.set.million']%}</span><input type="hidden" value="3"></li>
+                        <li><span>{%lang['modelingAppSpace.set.billion']%}</span><input type="hidden" value="4"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modelAppSpacePorletsSetValContentOption modelAppSpacePorletsListRow">
+                <label for="setOverflow">
+                    <input type="checkbox" name="isShowUnit" checked="checked" id="show">
+                    {%lang['modelingAppSpace.set.clientdisplayunit']%}
+                </label>
+            </div>
+            <div class="modelAppSpacePorlets modelAppSpacePorletsListRow">
+                <div class="modelAppSpacePorletsTitleType">
+                    {%lang['modelingAppSpace.set.decimal.places']%}
+                </div>
+            </div>
+            <div class="muiPerformanceDropdownBox" style="margin-bottom:8px !important;">
+                <input type="text" name="pointCount" placeholder="{%lang['modelingAppSpace.set.decimal.tips']%}" maxlength="8">
+            </div>
+            <div class="modelAppSpacePorletsSetValContentOption modelAppSpacePorletsListRow">
+                <label for="setOverflow">
+                    <input type="checkbox" name="thousandsChecked" checked="checked" id="num">
+                    {%lang['modelingAppSpace.set.decimal.thousands']%}
+                </label>
+            </div>
+        </div>
+        <div class="modelAppSpacePorletsListRow">
+            <div class="modelAppSpacePorletsTitleType">
+                {%lang['modelingAppSpace.displayHeight']%}
+            </div>
+        </div>
+        <div class="modelAppSpacePorletsDisplayHeight">
+            <div class="modelAppSpacePorletsSetValContent">
+                <span>{%lang['modelingAppSpace.height']%}</span>
+                <input type="text" name="fdDisplayHeight" value="240" />
+                <div style="display:inline-block;margin-left: 5px">px</div>
+            </div>
+            <div class="modelAppSpacePorletsSetValContentOption isOverflowDomByPortlet" style="display: none">
+               <!-- <label for="setOverflow">
+                    <input type="checkbox" checked="checked" name="fdOverstep" id="setOverflow">
+                    {%lang['modelingAppSpace.displayScroll']%}
+                </label>-->
+            </div>
+        </div>
+    </div>
+</div>$}

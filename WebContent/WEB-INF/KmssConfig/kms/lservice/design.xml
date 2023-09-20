@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs xmlns="http://www.example.org/design-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module messageKey="kms-lservice:module.kms.lservice" urlPrefix="/kms/lservice/"
+		defaultValidator="roleValidator(role=ROLE_KMSLSERVICE_DEFAULT)">
+
+		<roles>
+			ROLE_KMSLSERVICE_DEFAULT;
+			ROLE_KMSLSERVICE_MAINTAINER;
+			ROLE_KMSLSERVICE_BACKSTAGE_MANAGER
+		</roles>
+		
+		<request path="profile/tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_KMSLSERVICE_BACKSTAGE_MANAGER)" />
+
+		<request path="lserviceConfig.*"
+			defaultValidator="roleValidator(role=ROLE_KMSLSERVICE_BACKSTAGE_MANAGER)" />
+			
+		<request path="index/admin/index_new.jsp" 
+			defaultValidator="roleValidator(role=ROLE_KMSLSERVICE_MAINTAINER)"/>
+	</module>
+
+	<!-- 后台配置权限 -->
+	<module messageKey="" urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.kms.lservice.config.LserviceConfig"
+				validator="roleValidator(role=ROLE_KMSLSERVICE_BACKSTAGE_MANAGER)" />
+		</request>
+	</module>
+
+	<homePage 
+		urlPrefix="kms/lservice"
+		url="/sys/portal/page.jsp#j_start=/kms/lservice/index.jsp&amp;j_target=_iframe"
+		messageKey="kms-lservice:module.kms.lservice" />
+		
+	<quartz messageKey="kms-lservice:lservice.refs.delete.task"
+		jobService="transferService" jobMethod="refsQuartz" cronExpression="0 0 4 * * ?"
+		runType="SINGLENODE" description="kms-lservice:lservice.refs.delete.task.description" />
+
+<!--	<profileConfig key="learn" messageKey="{kms-lservice:sys.profile.app.learn}"-->
+<!--		url="/kms/lservice/profile/lservice.jsp" icon="lui_icon_s_profile_navLeft_learn"-->
+<!--		type="app" order="3" />-->
+
+
+
+	<profileConfig key="kms/lservice" messageKey="{kms-lservice:module.kms.lservice}"
+		order="200"
+		url="/sys/profile/moduleindex.jsp?nav=/kms/lservice/profile/tree.jsp"
+		icon="kms_lservice" type="learn" description="" />
+
+
+</configs>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.fssc.budget.model.FsscBudgetAdjustLog" 
+        table="fssc_budget_adjust_log">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property 
+            name="fdDesc" 
+            column="fd_desc" 
+            update="true" 
+            insert="true" 
+            length="2000"/>
+        <property 
+            name="docCreateTime" 
+            column="doc_create_time" 
+            update="true" 
+            insert="true" 
+            index="idx_adjustLog_createTime"/>
+        <property 
+            name="fdBudgetId" 
+            column="fd_budget_id" 
+            update="true" 
+            insert="true" 
+            length="36"/>
+        <property 
+            name="fdModelName" 
+            column="fd_model_name" 
+            update="true" 
+            insert="true" 
+            length="100"/>
+        <property 
+            name="fdModelId" 
+            column="fd_model_id" 
+            update="true" 
+            insert="true" 
+            length="36"/>
+        <property 
+            name="fdAmount" 
+            column="fd_amount" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="docCreator" 
+            column="doc_creator_id" 
+            update="true" 
+            insert="true"/>
+    </class>
+</hibernate-mapping>

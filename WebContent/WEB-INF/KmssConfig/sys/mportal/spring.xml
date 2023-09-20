@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="mobilePortalPackageProcesser" class="com.landray.kmss.sys.mportal.MobilePortalPackageProcesser"></bean>
+	<bean id="mobilePortalCache" class="com.landray.kmss.sys.mportal.MobilePortalCache">
+	</bean>
+	<bean id="sysMportalPersonService"
+		  parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysMportalPersonTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysMportalPersonTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalPersonServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysMportalPersonDao" />
+		</property>
+		<property name="mobilePortalCache">
+			<ref bean="mobilePortalCache" />
+		</property>
+	</bean>
+	<bean
+		id="sysMportalPersonDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.mportal.dao.hibernate.SysMportalPersonDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.mportal.model.SysMportalPerson" />
+	</bean>
+	
+	
+	
+	<bean
+		id="sysMportalCardDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.mportal.dao.hibernate.SysMportalCardDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.mportal.model.SysMportalCard" />
+	</bean>
+
+	<bean
+		id="sysMportalCardTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalCardServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysMportalCardDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysMportalCardService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysMportalCardTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysMportalMenuItemDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.mportal.dao.hibernate.SysMportalMenuItemDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.mportal.model.SysMportalMenuItem" />
+	</bean>
+	<bean
+		id="sysMportalMenuItemTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalMenuItemServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysMportalMenuItemDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysMportalMenuItemService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysMportalMenuItemTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysMportalMenuDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.mportal.dao.hibernate.SysMportalMenuDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.mportal.model.SysMportalMenu" />
+	</bean>
+	<bean
+		id="sysMportalMenuTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalMenuServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysMportalMenuDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysMportalMenuService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysMportalMenuTarget" />
+		</property>
+	</bean>
+	
+	<!-- 移动公共门户 -->
+	
+	<bean
+		id="sysMportalPageDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.sys.mportal.dao.hibernate.SysMportalPageDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.mportal.model.SysMportalPage" />
+	</bean>
+
+	<bean
+		id="sysMportalPageTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalPageServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysMportalPageDao" />
+		</property>
+		<property name="sysMportalCardService">
+			<ref bean="sysMportalCardService"/>
+		</property>
+		<property name="sysAppConfigService">
+			 <ref bean="sysAppConfigService"/>
+		</property>
+	</bean>
+	<bean
+		id="sysMportalPageService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysMportalPageTarget" />
+		</property>
+	</bean>
+	<!-- 移动公共门户  结束-->
+	
+	<!-- 自定义页面 开始 -->
+	<bean id="sysMportalHtmlDao" parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.mportal.dao.hibernate.SysMportalHtmlDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.mportal.model.SysMportalHtml" />
+	</bean>
+	<bean id="sysMportalHtmlTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalHtmlServiceImp">
+		<property name="baseDao">
+			<ref bean="sysMportalHtmlDao" />
+		</property>
+	</bean>
+	<bean id="sysMportalHtmlService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysMportalHtmlTarget" />
+		</property>
+	</bean>
+	<!-- 自定义页面 结束 -->
+	
+	<bean
+		id="sysMportalTopmenuDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.sys.mportal.dao.hibernate.SysMportalTopmenuDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.mportal.model.SysMportalTopmenu" />
+	</bean>
+
+	<bean
+		id="sysMportalTopmenuTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalTopmenuServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysMportalTopmenuDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysMportalTopmenuService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysMportalTopmenuTarget" />
+		</property>
+	</bean>
+	
+	<bean id="sysMportalImgSourceDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.mportal.dao.hibernate.SysMportalImgSourceDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.mportal.model.SysMportalImgSource" />
+	</bean>
+
+	<bean id="sysMportalImgSourceTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalImgSourceServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysMportalImgSourceDao" />
+		</property>
+	</bean>
+	<bean id="sysMportalImgSourceService" parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysMportalImgSourceTarget" />
+		</property>
+	</bean>
+	<!-- 复合门户页面 开始-->
+	
+	<bean
+		id="sysMportalCpageDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.sys.mportal.dao.hibernate.SysMportalCpageDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.mportal.model.SysMportalCpage" />
+	</bean>
+
+	<bean
+		id="sysMportalCpageTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalCpageServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysMportalCpageDao" />
+		</property>
+		<property name="sysMportalCardService">
+			<ref bean="sysMportalCardService"/>
+		</property>
+	</bean>
+	<bean
+		id="sysMportalCpageService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysMportalCpageTarget" />
+		</property>
+	</bean>
+	<!-- 复合门户页面  结束-->
+	<!-- 复合门户关联页面 开始-->
+	<bean
+		id="sysMportalCpageRelationDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.sys.mportal.dao.hibernate.SysMportalCpageRelationDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.mportal.model.SysMportalCpageRelation" />
+	</bean>
+
+	<bean
+		id="sysMportalCpageRelationTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalCpageRelationServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysMportalCpageRelationDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysMportalCpageRelationService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysMportalCpageRelationTarget" />
+		</property>
+	</bean>
+	<!-- 复合门户关联页面  结束-->
+	<!-- 复合门户 开始-->
+	<bean
+		id="sysMportalCompositeDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.sys.mportal.dao.hibernate.SysMportalCompositeDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.mportal.model.SysMportalComposite" />
+	</bean>
+
+	<bean
+		id="sysMportalCompositeTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalCompositeServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysMportalCompositeDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysMportalCompositeService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysMportalCompositeTarget" />
+		</property>
+	</bean>
+	<!-- 复合门户  结束-->
+	<!-- 获取ID -->
+	<bean
+		id="sysMportalGenerateId"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalGenerateId">
+	</bean>
+	<!-- 模块分类 -->
+	<bean 
+        id="sysMportalModuleCateDao" 
+        class="com.landray.kmss.sys.mportal.dao.hibernate.SysMportalModuleCateDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.mportal.model.SysMportalModuleCate</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysMportalModuleCateTarget" 
+        class="com.landray.kmss.sys.mportal.service.spring.SysMportalModuleCateServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysMportalModuleCateDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysMportalModuleCateService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysMportalModuleCateTarget"/>
+        </property>
+    </bean>
+    <bean
+		id="sysMportalModuleCateTreeService"
+		class="com.landray.kmss.sys.mportal.service.spring.SysMportalModuleCateTreeService">
+		<property
+			name="sysMportalModuleCateService">
+			<ref
+				bean="sysMportalModuleCateService" />
+		</property>
+	</bean>
+</beans>

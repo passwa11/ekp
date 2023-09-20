@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <subclass 
+        name="com.landray.kmss.hr.ratify.model.HrRatifyChange" 
+        extends="com.landray.kmss.hr.ratify.model.HrRatifyMain"
+        discriminator-value="com.landray.kmss.hr.ratify.model.HrRatifyChange">
+        <join table="hr_ratify_change">
+	        <key
+	        	column="fd_id"></key>
+	        <property 
+	            name="fdChangeSignBeginDate" 
+	            column="fd_change_sign_begin_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdChangeSignEndDate" 
+	            column="fd_change_sign_end_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdChangeSignRemark" 
+	            column="fd_change_sign_remark" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdChangeBeginDate" 
+	            column="fd_change_begin_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdChangeEndDate" 
+	            column="fd_change_end_date" 
+	            update="true" 
+	            insert="true"/>
+			<property
+				name="fdChangeIsLongtermContract"
+				column="fd_change_is_longterm_contract"
+				update="true"
+				insert="true"
+				not-null="false" />
+			<property
+				name="fdIsLongtermContract"
+				column="fd_is_longterm_contract"
+				update="true"
+				insert="true"
+				not-null="false" />
+	        <property 
+	            name="fdChangeRemark" 
+	            column="fd_change_remark" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdChangeReason" 
+	            column="fd_change_reason" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <many-to-one 
+	            name="fdChangeStaff" 
+	            column="fd_change_staff_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one 
+	            name="fdChangeDept" 
+	            column="fd_change_dept_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one 
+	            name="fdContract" 
+	            column="fd_contract_id" 
+	            update="true" 
+	            insert="true"/>
+        </join>
+    </subclass>
+</hibernate-mapping>

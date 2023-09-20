@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ 	 <bean
+		id="kmArchivesRenewValidator"
+		class="com.landray.kmss.km.archives.service.spring.KmArchivesRenewValidator">
+		<property name="kmArchivesBorrowService">
+			<ref bean="kmArchivesBorrowService" />
+		</property>
+	</bean>
+  
+    <bean 
+        id="kmArchivesMainDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesMainDaoImp" 
+        parent="KmssExtendDataDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesMain</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesMainTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesMainServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesMainDao"/>
+        </property>
+        <property name="sysNumberFlowService">
+            <ref bean="sysNumberFlowService"/>
+        </property>
+        <property name="kmArchivesCategoryService">
+            <ref bean="kmArchivesCategoryService"/>
+        </property>
+        <property name="kmArchivesDenseService">
+            <ref bean="kmArchivesDenseService"/>
+        </property>
+        <property name="kmArchivesLibraryService">
+            <ref bean="kmArchivesLibraryService"/>
+        </property>
+        <property name="kmArchivesPeriodService">
+            <ref bean="kmArchivesPeriodService"/>
+        </property>
+        <property name="kmArchivesUnitService">
+            <ref bean="kmArchivesUnitService"/>
+        </property>
+        <property name="sysOrgCoreService">
+            <ref bean="sysOrgCoreService"/>
+        </property>
+        <property name="sysAttMainService">
+            <ref bean="sysAttMainService"/>
+        </property>
+        <property name="sysWfProcessSubService">
+            <ref bean="sysWfProcessSubService"/>
+        </property>
+       	<property name="sysNotifyMainCoreService">
+            <ref bean="sysNotifyMainCoreService"/>
+        </property>
+        <property name="kmArchivesBorrowService">
+            <ref bean="kmArchivesBorrowService"/>
+        </property>
+        <property name="kmArchivesDetailsService">
+        	<ref bean="kmArchivesDetailsService"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesMainService" 
+        parent="KmssBaseService">
+        <property name="target">
+            <ref bean="kmArchivesMainTarget"/>
+        </property>
+        <property name="transactionAttributes">
+        	<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="init*">PROPAGATION_REQUIRED</prop>
+				<prop key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop key="importRowData">PROPAGATION_REQUIRES_NEW</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+    </bean>
+    <bean
+		id="kmArchivesSignDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesSignDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.archives.model.KmArchivesSign" />
+	</bean>
+    <bean
+		id="kmArchivesSignTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.archives.service.spring.KmArchivesSignServiceImp">
+		<property name="baseDao">
+			<ref bean="kmArchivesSignDao" />
+		</property>
+	</bean>
+    <bean
+		id="kmArchivesSignService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmArchivesSignTarget" />
+		</property>
+	</bean>
+    <bean 
+        id="kmArchivesCategoryDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesCategoryDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesCategory</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesCategoryTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesCategoryServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesCategoryDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesCategoryService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesCategoryTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesPeriodDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesPeriodDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesPeriod</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesPeriodTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesPeriodServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesPeriodDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesPeriodService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesPeriodTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesUnitDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesUnitDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesUnit</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesUnitTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesUnitServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesUnitDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesUnitService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesUnitTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesLibraryDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesLibraryDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesLibrary</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesLibraryTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesLibraryServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesLibraryDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesLibraryService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesLibraryTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDenseDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesDenseDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesDense</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDenseTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesDenseServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesDenseDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDenseService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesDenseTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesAppraiseDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesAppraiseDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesAppraise</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesAppraiseTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesAppraiseServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="kmArchivesAppraiseDao"/>
+        </property>
+        <property name="kmArchivesMainService">
+        	<ref bean="kmArchivesMainService"/>
+        </property>
+        <property name="kmArchivesAppraiseTemplateService">
+        	<ref bean="kmArchivesAppraiseTemplateService"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesAppraiseService" 
+        parent="KmssBaseService">
+        <property name="target">
+            <ref bean="kmArchivesAppraiseTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDestroyDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesDestroyDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesDestroy</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDestroyTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesDestroyServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesDestroyDao"/>
+        </property>
+        <property name="kmArchivesMainService">
+        	<ref bean="kmArchivesMainService"/>
+        </property>
+        <property name="kmArchivesDestroyTemplateService">
+        	<ref bean="kmArchivesDestroyTemplateService"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDestroyService" 
+        parent="KmssBaseService">
+        <property name="target">
+            <ref bean="kmArchivesDestroyTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesBorrowDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesBorrowDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesBorrow</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesBorrowTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesBorrowServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property  name="baseDao">
+            <ref bean="kmArchivesBorrowDao"/>
+        </property>
+        <property  name="kmArchivesDetailsService">
+            <ref bean="kmArchivesDetailsService"/>
+        </property>
+        <property name="kmArchivesTemplateService">
+        	<ref bean="kmArchivesTemplateService"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesBorrowService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesBorrowTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesTemplateDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesTemplateDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesTemplate</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesTemplateTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesTemplateServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesTemplateDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesTemplateService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesTemplateTarget"/>
+        </property>
+    </bean>
+    
+    
+    <bean 
+        id="kmArchivesAppraiseTemplateDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesAppraiseTemplateDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesAppraiseTemplate</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesAppraiseTemplateTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesAppraiseTemplateServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesAppraiseTemplateDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesAppraiseTemplateService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesAppraiseTemplateTarget"/>
+        </property>
+    </bean>
+    
+    
+    <bean 
+        id="kmArchivesDestroyTemplateDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesDestroyTemplateDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesDestroyTemplate</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDestroyTemplateTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesDestroyTemplateServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesDestroyTemplateDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDestroyTemplateService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesDestroyTemplateTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesRenewDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesRenewDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesRenew</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesRenewTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesRenewServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesRenewDao"/>
+        </property>
+        <!-- 通知机制 -->
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="kmArchivesDetailsService">
+			<ref bean="kmArchivesDetailsService" />
+		</property>
+    </bean>
+    <bean 
+        id="kmArchivesRenewService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesRenewTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDetailsDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesDetailsDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesDetails</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDetailsTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesDetailsServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesDetailsDao"/>
+        </property>
+        <property name="sysNotifyMainCoreService">
+            <ref bean="sysNotifyMainCoreService"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDetailsService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesDetailsTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesAppraiseDetailsDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesAppraiseDetailsDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesAppraiseDetails</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesAppraiseDetailsTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesAppraiseDetailsServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesAppraiseDetailsDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesAppraiseDetailsService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesAppraiseDetailsTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDestroyDetailsDao" 
+        class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesDestroyDetailsDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.archives.model.KmArchivesDestroyDetails</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDestroyDetailsTarget" 
+        class="com.landray.kmss.km.archives.service.spring.KmArchivesDestroyDetailsServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmArchivesDestroyDetailsDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmArchivesDestroyDetailsService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmArchivesDestroyDetailsTarget"/>
+        </property>
+    </bean>
+    <bean id="kmArchivesModuleSelectService" class="com.landray.kmss.km.archives.service.spring.KmArchivesModuleSelectService">
+	</bean>
+	<bean
+		id="kmArchivesFileTemplateDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.archives.dao.hibernate.KmArchivesFileTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.archives.model.KmArchivesFileTemplate" />
+	</bean>
+	<bean
+		id="kmArchivesFileTemplateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.archives.service.spring.KmArchivesFileTemplateServiceImp">
+		<property
+			name="baseDao">
+			<ref bean="kmArchivesFileTemplateDao" />
+		</property>
+		<property name="sysAttMainService">
+        	<ref bean="sysAttMainService"/>
+        </property>
+        <property name="sysFormTemplateService">
+        	<ref bean="sysFormTemplateService"/>
+        </property>
+        <property name="sysOrgCoreService">
+        	<ref bean="sysOrgCoreService"/>
+        </property>
+	</bean>
+	<bean
+		id="kmArchivesFileTemplateService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmArchivesFileTemplateTarget" />
+		</property>
+	</bean>
+	<bean id="kmArchivesFileTemplateCoreService" parent="KmssBaseCoreService">
+		<property name="target">
+			<bean class="com.landray.kmss.km.archives.service.spring.KmArchivesFileTemplateCoreServiceImp">
+				<property name="kmArchivesFileTemplateService">
+					<ref bean="kmArchivesFileTemplateService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean
+		id="kmArchivesBorrowListener"
+		class="com.landray.kmss.km.archives.service.spring.KmArchivesBorrowListener">
+	</bean>
+	<bean id="kmArchivesAttValidator" class="com.landray.kmss.km.archives.service.spring.KmArchivesAttValidator">
+		<property name="kmArchivesMainService">
+        	<ref bean="kmArchivesMainService"/>
+        </property>
+        <property name="sysAttMainService">
+        	<ref bean="sysAttMainService"/>
+        </property>
+	</bean>
+	<bean id="kmArchivesBorrowValidator" class="com.landray.kmss.km.archives.service.spring.KmArchivesBorrowValidator">
+		<property name="kmArchivesMainService">
+        	<ref bean="kmArchivesMainService"/>
+        </property>
+        <property name="kmArchivesTemplateService">
+        	<ref bean="kmArchivesTemplateService"/>
+        </property>
+	</bean>
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>kmArchivesMainDao</value>
+				<value>kmArchivesBorrowDao</value>
+				<value>KmArchivesAppraiseDao</value>
+				<value>KmArchivesDestroyDao</value>
+				<value>KmArchivesDetailsDao</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>luceneCreateAdvisor</value>
+				<value>luceneSaveAdvisor</value>
+				<value>docKeyWriteAdvice</value>
+				<value>luceneDeleteAdvisor</value>
+			</list>
+		</property>
+	</bean>
+</beans>

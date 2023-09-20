@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/mvc 
+            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+    
+
+	<bean id="simpleTypeConverter" class="com.landray.kmss.web.util.KmssSimpleTypeConverter" />
+    <!-- 
+    <bean id="paraMethodResolver"
+        class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+        <property name="paramName" value="method" />
+        <property name="defaultMethodName" value="execute" />
+    </bean>
+     -->
+     
+    <bean id="parameterNameDiscoverer" 
+    	class="org.springframework.core.LocalVariableTableParameterNameDiscoverer"/>
+    
+    
+    <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓处理Spring注释的方式声明的url映射↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+    <bean id="contentNegotiationManager"
+        class="org.springframework.web.accept.ContentNegotiationManager">
+    </bean>
+    <!-- 全局统一追加的messageConverter 顺序是优先json-->
+    <util:list id="requiredMessageConverters">
+        <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
+        </bean>
+        <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+            <constructor-arg value="UTF-8"/>
+            <property name="writeAcceptCharset" value="false"/>
+        </bean>
+        <bean class="com.landray.kmss.web.springmvc.convert.KmssResourceHttpMessageConverter">
+        </bean>
+        <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter">
+        </bean>
+        <!-- 表单内容的转换器 -->
+        <bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter">
+            <property name="partConverters">
+                <list>
+                    <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
+			        </bean>
+			        <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+			            <constructor-arg value="UTF-8"/>
+			            <property name="writeAcceptCharset" value="false"/>
+			        </bean>
+			        <bean class="org.springframework.http.converter.ResourceHttpMessageConverter">
+			        </bean>
+                </list>
+            </property>
+        </bean>
+    	<!-- 需要 jackson-databind-2.8.10.jar-->
+        <bean class="com.landray.kmss.web.springmvc.convert.MappingJackson2HttpMessageConverter">
+        </bean>
+    	<!--  需要 jackson-dataformat-xml-2.8.10.jar -->
+    	<bean class="com.landray.kmss.web.springmvc.convert.MappingJackson2XmlHttpMessageConverter">
+    	</bean>
+    </util:list>
+    <!-- 被KmssSpringDispatcherServlet加载的时候发现，并且在第一个执行 -->
+    <bean id="springControllerExceptionHandlerExceptionResolver"
+        class="com.landray.kmss.common.exception.SpringControllerExceptionHandlerExceptionResolver">
+        <property name="order" value="0"/>
+        <property name="messageConverters" ref="requiredMessageConverters"/>
+        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+    </bean>
+    <!-- 被自动扫描到的，不用显示的注入，声明即可 -->
+    <bean id="responseEntityExceptionHandler"
+        class="com.landray.kmss.common.exception.SpringControllerResponseEntityExceptionHandler">
+    </bean>
+    <bean id="requestAnnotationMappingHandlerMapping"
+        class="com.landray.kmss.web.springmvc.KmssRequestMappingHandlerMapping">
+        <property name="order" value="9"/>
+        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+    </bean>
+    <bean id="webDataConversionService" class="com.landray.kmss.web.springmvc.convert.KmssWebDataConversionServiceFactoryBean">
+    </bean>
+    <!-- 上传文件的类型转换 自动使用 -->
+    <bean id="kmssFormFile2DataHandlerConverter" class="com.landray.kmss.web.springmvc.convert.KmssFormFile2DataHandlerConverter" />
+    <bean id="kmssWebBindingInitializer" class="com.landray.kmss.web.KmssWebBindingInitializer">
+        <property name="conversionService" ref="webDataConversionService"/>
+    </bean>
+    <bean id="requestMappingHandlerAdapter" 
+    	class="com.landray.kmss.web.springmvc.KmssAnnocatedMappingHandlerAdapter">
+    	<property name="messageConverters" ref="requiredMessageConverters"/>
+    	<property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+    	<property name="webBindingInitializer" ref="kmssWebBindingInitializer"/>
+    </bean>
+    
+    <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑处理Spring注释的方式声明的url映射↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+    
+    <!-- 被KmssSpringDispatcherServlet加载的时候发现，并且在最后执行 -->
+    <bean id="exceptionHandler" 
+    	class="com.landray.kmss.common.exception.KmssSpringExceptionHandler">
+    	<property name="order" value="2147483647"/>
+        <property name="globalModuleConfig" ref="globalConfig" />
+    </bean>
+    
+    <bean id="httpRequestHandlerAdapter" 
+    	class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter">
+    </bean>
+    <bean id="simpleControllerHandlerAdapter" 
+    	class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter">
+    </bean>
+    
+    <!-- VIEW 是 JSP的情况 -->
+    <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"
+            value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/" />
+        <!-- suffix默认为空串，因为EKP以前的配置都以.jsp结尾。
+                    这样配置放宽业务重定向资源的可能,　可以是.do, .json, .html 等等 -->
+        <property name="suffix" value="" />
+    </bean>
+
+
+    <!-- springMVC默认处理
+    <bean id="defaultHandlerMapping"
+        class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="urlMap">
+            <map>
+                <entry key="/*" value-ref="defaultHttpRequestHandler"/>
+            </map>
+        </property>
+        <property name="order" value="2147483646"/>
+    </bean>
+     -->
+    <bean id="defaultHttpRequestHandler"
+        class="org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler">
+    </bean>
+
+    <!-- 把BeanName当做URL的解析器 -->
+    <bean id="beanNameUrlHandlerMapping"
+        class="com.landray.kmss.common.actions.KmssBeanNameUrlHandlerMapping">
+        <property name="order" value="10"/>
+        <!-- 必须的interceptor，同时也是扩展点point="com.landray.kmss.common.actions"的实现，排第一-->
+        <property name="interceptors">
+            <list>
+                <bean class="com.landray.kmss.common.interceptors.QuicklyMultiLangEditHandleInterceptor"></bean>
+                <bean class="com.landray.kmss.common.interceptors.KmssDefaultRequestHandleInterceptor">
+                   <property name="globalModuleConfig" ref="globalConfig" />
+                   <property name="noCache" value="true"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="kmssMultiActionController" abstract="true"
+        class="com.landray.kmss.common.actions.KmssMultiActionController">
+        <property name="globalModuleConfig" ref="globalConfig" />
+        <property name="simpleTypeConverter" ref="simpleTypeConverter" />
+        <property name="parameterNameDiscoverer" ref="parameterNameDiscoverer" />
+        <property name="parameter" value="method" />
+    </bean>
+    
+    <!-- 业务使用的带分发功能的基础类 -->
+    <bean id="KmssBaseAction" abstract="true" parent="kmssMultiActionController"
+        class="com.landray.kmss.common.actions.BaseAction">
+    </bean>
+
+    <!-- 业务使用的不带分发功能的基础类 -->
+    <bean id="kmssSimpleActionController" abstract="true"
+        class="com.landray.kmss.common.actions.KmssSimpleActionController">
+        <property name="globalModuleConfig" ref="globalConfig" />
+        <property name="simpleTypeConverter" ref="simpleTypeConverter" />
+        <property name="parameterNameDiscoverer" ref="parameterNameDiscoverer" />
+    </bean>
+    
+    <!-- 处理特定HTTP异常状态码，注意：该类没有继承KmssBaseAction-->
+    <bean name="/resource/error.do" class="com.landray.kmss.web.servlet.ErrorPageAction">
+        <property name="globalModuleConfig" ref="globalConfig" />
+    </bean>
+    
+    <!-- 系统初始化页面对应的Action，没有Form信息 -->
+    <bean name="/sys/common/config.do" class="com.landray.kmss.sys.config.action.SysConfigAction"
+        parent="KmssBaseAction">
+        <property name="forwards">
+            <map>
+                <entry key="initPage" value="/sys/config/SystemInit.jsp" />
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="dataController"
+        class="com.landray.kmss.common.actions.DataController">
+    </bean>
+    
+    <!-- 通用导出的controller 没有Form信息-->
+    <bean name="/sys/common/export.do" class="com.landray.kmss.common.actions.ExportAction" parent="KmssBaseAction">
+    </bean>
+    <!-- 通用导入的controller 与通用上传使用同类型的Form-->
+    <bean name="/sys/common/import.do" class="com.landray.kmss.common.actions.ImportAction" parent="KmssBaseAction">
+        <property name="formName" value="fileUploadForm"/>
+        <property name="formType" value="com.landray.kmss.common.forms.FileUploadForm"/>
+    </bean>
+    <!-- 信任站点的controller 没有Form信息-->
+    <bean name="/sys/common/trustsite.do" class="com.landray.kmss.web.filter.security.TrustSiteAction" parent="KmssBaseAction">
+    </bean>
+    
+    <!-- 上传功能 -->
+    <bean id="multipartResolver"  
+        class="com.landray.kmss.web.upload.KmssMultipartResolver">  
+        <!-- 上传文件大小上限，单位为字节（10000MB） -->
+        <property name="maxUploadSize">  
+            <value>10485760000</value>  
+        </property>
+        <property name="maxInMemorySize">
+            <value>0</value>
+        </property>
+        <property name="defaultEncoding">
+            <value>UTF-8</value>
+        </property>
+
+        <property name="ignorePaths">
+            <list>
+                <value>/data/sys-attachment/uploaderServlet</value>
+                <value>/data/sys-common/RTFUpload</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- 由sys/common/struts.xml 的 globalforward改编 -->
+    <bean id="globalConfig" class="com.landray.kmss.web.config.GlobalModuleConfig">
+        <constructor-arg>
+            <map key-type="java.lang.String" value-type="java.lang.String">
+                <entry key="success" value="/resource/jsp/success.jsp" />
+                <entry key="failure" value="/resource/jsp/error.jsp" />
+                <entry key="e500" value="/resource/jsp/jsperror.jsp" />
+                <entry key="e403" value="/resource/jsp/e403.jsp" />
+                <entry key="e404" value="/resource/jsp/e404.jsp" />
+                <entry key="e503" value="/resource/jsp/e503.jsp" />
+                <entry key="searchCondition" value="/sys/search/search_condition.jsp" />
+                <entry key="searchResult" value="/sys/search/search_result.jsp" />
+                <entry key="relationSearch" value="/sys/relation/sys_relation_main/sysRelationMain_search.jsp" />
+                <entry key="bklinkView" value="/component/bklink/compBklink_view.jsp" />
+				<entry key="redirect" value="/resource/jsp/redirect.jsp" />
+				<entry key="jsonList" value="/sys/webservice2/sys_webservice_json/jsonList.jsp" />
+				<entry key="jsonView" value="/sys/webservice2/sys_webservice_json/jsonView.jsp" />
+				<entry key="jsonSuccess" value="/sys/webservice2/sys_webservice_json/jsonSuccess.jsp" />
+				<entry key="jsonFailure" value="/sys/webservice2/sys_webservice_json/jsonFailure.jsp" />
+				<entry key="jsonRedirect" value="/sys/webservice2/sys_webservice_json/jsonRedirect.jsp" />
+				<entry key="mobilePageEnable" value="/resource/jsp/mobilePageEnable.jsp" />
+            </map>
+        </constructor-arg>
+    </bean>
+</beans>

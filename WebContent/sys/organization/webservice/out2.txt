@@ -1,0 +1,94 @@
+
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
+import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
+import com.landray.kmss.sys.organization.webservice.out.ISysSynchroGetOrgWebService;
+import com.landray.kmss.sys.organization.webservice.out.SysSynchroGetOrgInfoTokenContext;
+import com.landray.kmss.sys.organization.webservice.out.SysSynchroOrgTokenResult;
+
+public class Test {
+	
+	// 定义组织架构接出WebService对象
+	private ISysSynchroGetOrgWebService getOrgWebService = null;
+
+	/**
+	 * 获取需要更新的组织架构信息
+	 * @param orgContext 组织架构信息接出上下文
+	 * @return
+	 * @throws Exception
+	 */
+	public SysSynchroOrgTokenResult getUpdatedElementsByToken(SysSynchroGetOrgInfoTokenContext orgContext) throws Exception {
+		return getService().getUpdatedElementsByToken(orgContext);
+	}
+
+	/**
+	 * 获取组织架构接出WebService对象 
+	 * @return
+	 */
+	private ISysSynchroGetOrgWebService getService() {
+		if(getOrgWebService==null){
+			// WebService配置信息对象（读取自client.properties配置文件）
+			WebServiceConfig serviceConfig = WebServiceConfig.getInstance(); 
+			// 使用 Apache CXF 框架创建组织架构接出WebService对象
+			JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
+			factory.getInInterceptors().add(new LoggingInInterceptor());
+			factory.getOutInterceptors().add(new LoggingOutInterceptor());
+			factory.getOutInterceptors().add(new AddSoapHeader());
+			factory.setServiceClass(ISysSynchroGetOrgWebService.class);
+			// 设置服务请求的URL地址
+			String servicePath = serviceConfig.getAddress();
+			factory.setAddress(servicePath);
+			getOrgWebService = (ISysSynchroGetOrgWebService) factory.create();
+		}
+		return getOrgWebService;
+	}
+
+
+	public static void main(String[] args) {
+		Test test = new Test();
+		
+		// 定义组织架构信息接出上下文
+		SysSynchroGetOrgInfoTokenContext orgContext = new SysSynchroGetOrgInfoTokenContext();
+		
+		// 参数：组织类型JSON数组字符串（ 可选项: org(机构)、dept(部门)、group(群组)、post(岗位)、person(人员)）
+		// 按需增减参数，如仅需要人员数据时: String returnOrgType = "[{\"type\":\"person\"}]";
+		String returnOrgType = "[{\"type\":\"org\"},{\"type\":\"dept\"},{\"type\":\"group\"},{\"type\":\"post\"},{\"type\":\"person\"}]";
+		orgContext.setReturnOrgType(returnOrgType);
+		
+		// 设置此次同步需要获取组织架构条目数
+		int pageSize = 5;
+		orgContext.setCount(pageSize);
+		
+		// 设置同步的时间戳，返回指定的时间之后的数据，为空时不限制(时间戳格式要求：yyyy-MM-dd HH:mm:ss.SSS)
+		//orgContext.setBeginTimeStamp("2018-12-20 18:50:17.000");
+		
+		try {
+
+			int pageNo = 1;  // 页码
+			String token = null;
+			while(true){
+				orgContext.setPageNo(pageNo);
+				if(pageNo!=1){
+					orgContext.setToken(token);
+				}
+				// 调用WebService接口，并接收请求返回的数据
+				SysSynchroOrgTokenResult result = test.getUpdatedElementsByToken(orgContext);
+				System.out.println("调用webservice请求第 "+pageNo+" 页数据");
+				System.out.println("请求状态:\n"+result.getReturnState()); // 0:未操作、1:失败、2:成功
+				System.out.println("本次请求返回的记录条数:\n"+result.getCount());
+				System.out.println("token:\n"+result.getToken());
+				System.out.println("组织架构数据:\n"+result.getMessage());
+				if(result.getCount()&lt;pageSize){
+					break;
+				}
+				token = result.getToken();
+				pageNo++;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.mportal.model.SysMportalPerson"
+		table="sys_mportal_person">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		
+		<bag
+			name="fdDetails"
+			cascade="all-delete-orphan"
+			order-by="fd_order asc"
+			lazy="true">
+			<key
+				column="fd_mportal_person_id" />
+			<one-to-many
+				class="com.landray.kmss.sys.mportal.model.SysMportalPersonDetail" />
+		</bag>
+		
+		<many-to-one
+			name="fdPerson"
+			column="fd_person_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+			
+	</class>
+</hibernate-mapping>

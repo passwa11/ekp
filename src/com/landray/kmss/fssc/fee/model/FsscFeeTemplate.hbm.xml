@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.fssc.fee.model.FsscFeeTemplate" 
+        table="fssc_fee_template">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property 
+            name="fdIsMobile" 
+            column="fd_is_mobile" 
+            update="true" 
+            insert="true" 
+            length="5"/>
+        <property 
+            name="fdName" 
+            column="fd_name" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+        <property 
+            name="fdForbid" 
+            column="fd_forbid" 
+            update="true" 
+            insert="true" 
+            length="2"/>
+        <property 
+            name="fdSubjectRule" 
+            column="fd_subject_rule" 
+            update="true" 
+            insert="true" />
+        <property 
+            name="fdSubjectRuleText" 
+            column="fd_subject_rule_text" 
+            update="true" 
+            insert="true" />
+        <property 
+            name="fdSubjectType" 
+            column="fd_subject_type" 
+            update="true" 
+            insert="true" />
+        <property 
+            name="fdServiceType" 
+            column="fd_service_type" 
+            update="true" 
+            insert="true"
+            length="20" />
+        <property 
+            name="fdOrder" 
+            column="fd_order" 
+            update="true" 
+            insert="true" 
+            index="idx_feeTemplate_order"/>
+        <property 
+            name="docCreateTime" 
+            column="doc_create_time" 
+            update="true" 
+            insert="true" 
+            index="idx_feeTemplate_createTime"/>
+        <property 
+            name="authChangeReaderFlag" 
+            column="auth_change_reader_flag" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="authRBPFlag" 
+            column="auth_rbp_flag" 
+            update="true" 
+            insert="true"/>
+		<property
+				name="authReaderFlag"
+				column="auth_reader_flag"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="1" />
+		<!-- 所有人不可使用 -->
+		<property
+				name="authNotReaderFlag"
+				column="auth_not_reader_flag"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="1" />
+        <property 
+            name="docXform" 
+            column="doc_xform" 
+            update="true" 
+            insert="true" 
+            length="1000000" 
+            type="com.landray.kmss.common.dao.ClobStringType" 
+            lazy="true"/>
+        <property 
+            name="docUseXform" 
+            column="doc_use_xform" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="docCategory" 
+            column="doc_category_id" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="docCreator" 
+            column="doc_creator_id" 
+            update="true" 
+            insert="true"/>
+        <bag 
+            name="authReaders" 
+            table="fssc_fee_template_reader" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.organization.model.SysOrgElement" 
+                column="fd_target_id"/>
+        </bag>
+        <bag 
+            name="authEditors" 
+            table="fssc_fee_template_editor" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.organization.model.SysOrgElement" 
+                column="fd_target_id"/>
+        </bag>
+        <bag 
+            name="authAllReaders" 
+            table="fssc_fee_template_areader" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.organization.model.SysOrgElement" 
+                column="fd_target_id"/>
+        </bag>
+        <bag 
+            name="authAllEditors" 
+            table="fssc_fee_template_aeditor" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.organization.model.SysOrgElement" 
+                column="fd_target_id"/>
+        </bag>
+        <bag 
+            name="docProperties" 
+            table="fssc_fee_template_property" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.category.model.SysCategoryProperty" 
+                column="fd_target_id"/>
+        </bag>
+        <!-- 默认可阅读者 -->
+		<bag
+			name="authTmpReaders"
+			table="fssc_fee_template_def_reader"
+			lazy="true">
+			<key
+				column="fd_template_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_reader_id" />
+		</bag>
+
+		<!-- 默认可编辑者 -->
+		<bag
+			name="authTmpEditors"
+			table="fssc_fee_template_def_editor"
+			lazy="true">
+			<key
+				column="fd_template_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_editor_id" />
+		</bag>
+		<bag
+			name="authTmpAttPrints"
+			table="fssc_fee_tmp_attprint"
+			lazy="true">
+			<key column="fd_template_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_att_print_id" />
+		</bag>
+		<bag
+			name="authTmpAttCopys"
+			table="fssc_fee_tmp_attcopy"
+			lazy="true">
+			<key column="fd_template_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_att_copy_id" />
+		</bag>
+		<bag
+			name="authTmpAttDownloads"
+			table="fssc_fee_tmp_attdl"
+			lazy="true">
+			<key column="fd_template_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_att_download_id" />
+		</bag>
+		<property
+			name="authTmpAttNodownload"
+			column="auth_tmp_att_nodownload"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<property
+			name="authTmpAttNocopy"
+			column="auth_tmp_att_nocopy"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<property
+			name="authTmpAttNoprint"
+			column="auth_tmp_att_noprint"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<list 
+            name="fdConfig" 
+            lazy="true" 
+            cascade="all-delete-orphan" 
+            inverse="false">
+            <key 
+                column="doc_main_id"/>
+            <list-index 
+                column="fd_order"/>
+            <one-to-many 
+                class="com.landray.kmss.fssc.fee.model.FsscFeeMobileConfig"/>
+        </list>
+    </class>
+</hibernate-mapping>

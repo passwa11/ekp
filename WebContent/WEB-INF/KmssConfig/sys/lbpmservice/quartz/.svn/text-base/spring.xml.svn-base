@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 流程模板触发定时任务侦听器 -->
+	<bean
+		id="lbpmTemplateQuartzListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.TemplateQuartzListener">
+		<property name="templateService">
+			<ref bean="lbpmTemplateService" />
+		</property>
+		<property name="templateQuartzService">
+			<ref bean="lbpmQuartzService" />
+		</property>
+	</bean>
+
+	<!-- 触发定时任务侦听器 -->
+	<bean
+		id="lbpmTriggerQuartzListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.TriggerQuartzListener" />
+
+	<bean
+		id="lbpmRejectNotifyDraftListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.RejectNotifyDraftListener" />
+	<bean
+		id="lbpmDayOfNotifyListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.DayOfNotifyListener" />
+	<bean
+		id="lbpmDayOfNotifyDrafterListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.DayOfNotifyDrafterListener" />
+	<bean
+		id="lbpmDayOfNotifyPrivilegerListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.DayOfNotifyPrivilegerListener" />
+	<bean
+		id="lbpmDayOfPassListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.DayOfPassListener" />
+	<bean
+		id="lbpmDayOfPassTranListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.DayOfPassTranListener" />
+	<bean
+		id="lbpmDayOfLimitListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.DayOfLimitListener" />
+	<bean
+		id="lbpmDayOfLimitTranListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.DayOfLimitTranListener" />
+	<bean
+		id="lbpmTranNotifyDraftListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.TranNotifyDraftListener" />
+	<bean
+		id="lbpmTranNotifyPrivateListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.TranNotifyPrivateListener" />
+	<bean
+		id="lbpmExpiredAbandonListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.ExpiredAbandonListener" />
+	<bean
+		id="lbpmDayOfCommissionListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.DayOfCommissionListener" />
+	<bean
+		id="lbpmRollbackPreviousNodeListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.RollbackPreviousNodeListener" />
+	<bean
+		id="lbpmRollbackDraftNodeListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.RollbackDraftNodeListener" />
+	<bean
+		id="lbpmErrorRestartListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.LbpmErrorRestartListener" />
+
+	<!-- 清除定时任务 -->
+	<bean
+		id="lbpmCleanQuartzListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.CleanQuartzListener" />
+	<!-- 汇总审批定时任务监听器 -->
+	<bean
+		id="lbpmSummaryQuartzListener"
+		class="com.landray.kmss.sys.lbpmservice.quartz.LbpmSummaryQuartzListener" />
+</beans>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="tic-soap:module.tic.soap"
+		urlPrefix="/tic/soap/"
+		defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)">
+		<roles>
+			<!-- 
+			ROLE_TIC_SOAP_DEFAULT,
+			ROLE_TIC_SOAP_ADMIN,
+			
+			ROLE_TIC_SOAP_SETTING_VIEW,
+			ROLE_TIC_SOAP_SETTING_EDIT,
+			ROLE_TIC_SOAP_SETTING_DELETE,
+			
+			ROLE_TIC_SOAP_MAIN_VIEW,
+			ROLE_TIC_SOAP_MAIN_EDIT,
+			ROLE_TIC_SOAP_MAIN_DELETE,
+			
+			ROLE_TIC_SOAP_CATEGORY_VIEW,
+			ROLE_TIC_SOAP_CATEGORY_EDIT,
+			ROLE_TIC_SOAP_CATEGORY_DELETE
+			 -->
+		</roles>
+		
+		<request
+			path="connector/tic_soap_setting/ticSoapSetting*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.soap.connector.model.TicSoapSetting"
+			defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)" >
+			<!-- 
+			<query queryString="method=view"
+				validator="roleValidator(role=ROLE_TIC_SOAP_ADMIN)|roleValidator(role=ROLE_TIC_SOAP_SETTING_DELETE)|roleValidator(role=ROLE_TIC_SOAP_SETTING_EDIT)|roleValidator(role=ROLE_TIC_SOAP_SETTING_VIEW)" />
+			<query queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_TIC_SOAP_ADMIN)|roleValidator(role=ROLE_TIC_SOAP_SETTING_EDIT)" />
+			<query queryString="method=delete*"
+				validator="roleValidator(role=ROLE_TIC_SOAP_ADMIN)|roleValidator(role=ROLE_TIC_SOAP_SETTING_DELETE)" />	
+				 -->	
+		</request>
+		
+		<request
+			path="connector/tic_soap_category/ticSoapCategory*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.soap.connector.model.TicSoapCategory"
+			defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)">
+			<!-- 
+		<query queryString="method=view"
+				validator="roleValidator(role=ROLE_TIC_SOAP_ADMIN)|roleValidator(role=ROLE_TIC_SOAP_CATEGORY_DELETE)|roleValidator(role=ROLE_TIC_SOAP_CATEGORY_EDIT)|roleValidator(role=ROLE_TIC_SOAP_CATEGORY_VIEW)" />
+			<query queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_TIC_SOAP_ADMIN)|roleValidator(role=ROLE_TIC_SOAP_CATEGORY_EDIT)" />
+			<query queryString="method=delete*"
+				validator="roleValidator(role=ROLE_TIC_SOAP_ADMIN)|roleValidator(role=ROLE_TIC_SOAP_CATEGORY_DELETE)" />	
+		 -->
+		</request>
+		
+		<request
+			path="connector/tic_soap_main/ticSoapMain*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.tic.soap.connector.model.TicSoapMain"
+			defaultValidator="roleValidator(role=ROLE_TIC_BACKSTAGE_MANAGER)">
+			<!-- 
+		<query queryString="method=view"
+				validator="roleValidator(role=ROLE_TIC_SOAP_ADMIN)|roleValidator(role=ROLE_TIC_SOAP_MAIN_DELETE)|roleValidator(role=ROLE_TIC_SOAP_MAIN_EDIT)|roleValidator(role=ROLE_TIC_SOAP_MAIN_VIEW)" />
+			<query queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_TIC_SOAP_ADMIN)|roleValidator(role=ROLE_TIC_SOAP_MAIN_EDIT)" />
+			<query queryString="method=delete*"
+				validator="roleValidator(role=ROLE_TIC_SOAP_ADMIN)|roleValidator(role=ROLE_TIC_SOAP_MAIN_DELETE)" />	
+				 -->
+		</request>
+		
+		
+	</module>
+
+	<!--homePage
+		urlPrefix="tic/soap"
+		url="/moduleindex.jsp?nav=/tic/soap/tree.jsp"
+		messageKey="tic-soap:module.tic.soap" /-->
+
+</configs>

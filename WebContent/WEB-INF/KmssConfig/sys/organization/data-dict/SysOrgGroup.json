@@ -1,0 +1,132 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.organization.model.SysOrgGroup",
+        "messageKey": "sys-organization:sysOrgElement.group",
+        "displayProperty": "fdName",
+        "serviceBean": "sysOrgGroupService",
+        "extendClass": "com.landray.kmss.sys.organization.model.SysOrgElement",
+        "discriminatorValue": "16",
+        "url": "/sys/organization/sys_org_group/sysOrgGroup.do?method=view&fdId=${fdId}",
+        "table": "sys_org_element"
+    },
+    "attrs":     {
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgGroup.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "unique": "false",
+            "length": "200",
+            "canSearch": "true",
+            "validate": "true",
+            "langSupport": "true"
+        },
+        "fdNamePinYin":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgGroup.fdNamePinYin",
+            "type": "String",
+            "column": "fd_name_pinyin",
+            "unique": "false",
+            "length": "400"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgGroup.fdOrder",
+            "type": "Integer",
+            "column": "fd_order",
+            "notNull": "false",
+            "unique": "false",
+            "validate": "true"
+        },
+        "fdNo":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgGroup.fdNo",
+            "type": "String",
+            "column": "fd_no",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdKeyword":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgGroup.fdKeyword",
+            "type": "String",
+            "column": "fd_keyword",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "fdIsAvailable":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgGroup.fdIsAvailable",
+            "type": "Boolean",
+            "column": "fd_is_available",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "1",
+            "enumType": "sys_org_available_result",
+            "canSearch": "true"
+        },
+        "fdMemo":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgGroup.fdMemo",
+            "type": "String",
+            "column": "fd_memo",
+            "notNull": "false",
+            "unique": "false",
+            "length": "4000",
+            "canSearch": "true",
+            "validate": "true"
+        },
+        "hbmMembers":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrgGroup.fdMembers",
+            "column": "fd_groupid",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "sys_org_group_element",
+            "elementColumn": "fd_elementid",
+            "dialogJS": "Dialog_Address(true, '!{idField}', '!{nameField}', ';', ORG_TYPE_ALL);"
+        },
+        "hbmGroupCate":         {
+            "propertyType": "model",
+            "messageKey": "sys-organization:sysOrgGroup.fdGroupCate",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgGroupCate",
+            "column": "fd_cateid",
+            "notNull": "false",
+            "unique": "false",
+            "treeModel": "true",
+            "dialogJS": "Dialog_Tree(!{mulSelect},'!{idField}','!{nameField}',null,Tree_GetBeanNameFromService('sysOrgGroupCateService', 'hbmParent', 'fdName:fdId'),'!{message(sys-organization:table.sysOrgGroupCate)');"
+        },
+        "authReaderFlag":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgGroup.authReaderFlag",
+            "type": "Boolean",
+            "column": "auth_reader_flag",
+            "notNull": "false",
+            "unique": "false",
+            "length": "1",
+            "canDisplay": "false"
+        },
+        "authReaders":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrgGroup.authReaders",
+            "column": "fd_group_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_reader_id",
+            "table": "sys_org_group_reader"
+        },
+        "authEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrgGroup.authEditors",
+            "column": "fd_group_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_editor_id",
+            "table": "sys_org_group_editor"
+        }
+    }
+}

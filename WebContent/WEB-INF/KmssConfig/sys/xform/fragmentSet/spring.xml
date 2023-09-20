@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 片段集分类 -->	
+	<bean
+		id="xformFragmentSetCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.fragmentSet.dao.hibernate.SysFormFragmentSetCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.fragmentSet.model.SysFormFragmentSetCategory" />
+	</bean>
+	<bean
+		id="xformFragmentSetCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.fragmentSet.service.spring.SysFormFragmentSetCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="xformFragmentSetCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="xFormFragmentSetCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="xformFragmentSetCategoryTarget" />
+		</property>
+	</bean>
+	
+	<!-- 片段集数据管理 -->
+	<bean
+		id="xFormFragmentSetDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.fragmentSet.dao.hibernate.SysFormFragmentSetDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.fragmentSet.model.SysFormFragmentSet" />
+	</bean>
+	<bean
+		id="xFormFragmentSetTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.fragmentSet.service.spring.SysFormFragmentSetServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="xFormFragmentSetDao" />
+		</property>
+		<property name="sysFormDbTableService">
+			<ref bean="sysFormDbTableService" />
+		</property>
+		<property name="sysFormGenerateService">
+			<ref bean="sysFormGenerateService" />
+		</property>
+		<property name="fileService">
+			<ref bean="fileService" />
+		</property>
+		<!-- <property name="synchronousStatusService">
+			<ref bean="synchronousStatusService" />
+		</property> -->
+	</bean>
+	<bean
+		id="xFormFragmentSetService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="xFormFragmentSetTarget" />
+		</property>
+	</bean>
+	<!-- 片段集历史版本 -->
+	<bean id="sysFormFragmentSetHistoryServiceTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.sys.xform.fragmentSet.service.spring.SysFormFragmentSetHistoryServiceImp">
+		<property name="sysFormGenerateService">
+			<ref bean="sysFormGenerateService" />
+		</property>
+		<property name="fileService">
+			<ref bean="fileService" />
+		</property>
+		<property
+			name="baseDao">
+			<ref bean="KmssAuthBaseDao" />
+		</property>
+	</bean>
+	<bean id="sysFormFragmentSetHistoryService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormFragmentSetHistoryServiceTarget" />
+		</property>
+	</bean>
+	<!-- 分类树服务 -->
+	<bean id="sysFormFramentSetCategoryTreeService"
+		class="com.landray.kmss.sys.xform.fragmentSet.service.spring.SysFormFragmentSetCategoryTreeServiceImp">
+		<property name="xFormFragmentSetCategoryService">
+			<ref bean="xFormFragmentSetCategoryService" />
+		</property>
+	</bean>
+	<!-- 使用范围 -->
+	<bean id="SysFormFragmentSetScopeDataBean" class="com.landray.kmss.sys.xform.fragmentSet.service.spring.SysFormFragmentSetScopeDataBean">
+		<property name="classpathPackageScanner">
+			<ref bean="classpathPackageScanner" />
+		</property>
+	</bean>
+	<!-- 包扫描  -->
+	<bean id="classpathPackageScanner" class="com.landray.kmss.sys.xform.fragmentSet.util.ClasspathPackageScanner">
+	</bean>
+	<bean
+		id="sysFormFragmentSetTreeService"
+		class="com.landray.kmss.sys.xform.fragmentSet.service.spring.SysFormFragmentSetTreeService">
+		<property name="sysFormFragmentSetService">
+			<ref bean="xFormFragmentSetService" />
+		</property>
+	</bean>
+	
+	<!-- 缓存文件等合并服务 -->
+	<bean id="sysFormFragmentSetMergerService" class="com.landray.kmss.sys.xform.fragmentSet.service.meger.SysFormFragmentSetMergerServiceImp">
+		<property name="sysFormGenerateService">
+			<ref bean="sysFormGenerateService" />
+		</property>
+		<property name="fileService">
+			<ref bean="fileService" />
+		</property>
+	</bean>
+	<!-- 同步状态 -->
+	 <bean
+		id="synchronousStatusDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.fragmentSet.dao.hibernate.SynchronousStatusDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.fragmentSet.model.SynchronousStatus" />
+	</bean>
+	<bean
+		id="synchronousStatusTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.fragmentSet.service.spring.SynchronousStatusServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="synchronousStatusDao" />
+		</property>
+	</bean>
+	<bean
+		id="synchronousStatusService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="synchronousStatusTarget" />
+		</property>
+	</bean>
+	
+	<!-- 历史片段集和历史表单模板中间表 -->
+	 <bean
+		id="sysFragmentSetTemplateDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.fragmentSet.dao.hibernate.SysFormFragmentSetTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.fragmentSet.model.SysFormFragmentSetTemplate" />
+	</bean>
+	<bean
+		id="sysFragmentSetTemplateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.fragmentSet.service.spring.SysFormFragmentSetTemplateSerImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysFragmentSetTemplateDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFragmentSetTemplateService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysFragmentSetTemplateTarget" />
+		</property>
+	</bean>
+	
+	<!-- 片段集使用范围 -->
+	 <bean
+		id="sysFragmentSetScopeDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.fragmentSet.dao.hibernate.SysFormFragmentSetScopeDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.fragmentSet.model.SysFormFragmentSetScope" />
+	</bean>
+	<bean
+		id="sysFragmentSetScopeTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.fragmentSet.service.spring.SysFormFragmentSetScopeService">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysFragmentSetScopeDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFragmentSetScopeService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysFragmentSetScopeTarget" />
+		</property>
+	</bean>
+	<!-- 片段集控件使用范围-->
+	<bean id="fragmentSetControlTreeBean" class="com.landray.kmss.sys.xform.fragmentSet.service.spring.SysFormFragmentSetControlTreeBean">
+	</bean>
+</beans>

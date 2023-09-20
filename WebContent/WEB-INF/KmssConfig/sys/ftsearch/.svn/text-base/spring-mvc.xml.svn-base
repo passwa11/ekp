@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/ftsearch/searchBuilder.do"
+		class="com.landray.kmss.sys.ftsearch.db.actions.SearchBuilderAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.ftsearch.db.forms.SysFtearchBuilderForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="searchPage"
+					value="/sys/ftsearch/search_ui.jsp" />
+				<entry
+					key="advancedSearchPage"
+					value="/sys/ftsearch/advanced_search.jsp" />
+				<entry
+					key="result"
+					value="/sys/ftsearch/result.jsp" />
+				<entry
+					key="result_LUI"
+					value="/sys/ftsearch/result_ui.jsp" />
+				<entry
+					key="result_LUI.4pda"
+					value="/sys/ftsearch/result_ui_list.jsp" />
+				<entry
+					key="mobileList"
+					value="/sys/ftsearch/mobile/list.jsp" />
+				<entry
+					key="result_Search3"
+					value="/sys/ftsearch/search3.jsp" />
+				<entry
+					key="result_Snapshot"
+					value="/sys/ftsearch/snapshot.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/ftsearch/searchHomePage.do"
+		class="com.landray.kmss.sys.ftsearch.db.actions.SearchHomePageAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.ftsearch.db.forms.SysFtearchBuilderForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="searchPage"
+					value="/sys/ftsearch/search_ui.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/ftsearch/sys_ftsearch_config/sysFtsearchConfig.do"
+		class="com.landray.kmss.sys.ftsearch.db.actions.SysFtsearchConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.ftsearch.db.forms.SysFtsearchConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/sys/ftsearch/sys_ftsearch_config/sysFtsearchConfig_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/ftsearch/sys_ftsearch_result/sysFtsearchAdvanced.do"
+		class="com.landray.kmss.sys.ftsearch.db.actions.SysFtsearchAdvancedAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="sysFtsearchAdvanced"
+					value="/sys/ftsearch/sys_ftsearch_result/sysFtsearchAdvanced.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/ftsearch/ReStartIndex.do"
+		class="com.landray.kmss.sys.ftsearch.db.actions.ReStartIndexAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/ftsearch/SearchSimDoc.do"
+		class="com.landray.kmss.sys.ftsearch.db.actions.SearchSimDocAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="simdoc"
+					value="/sys/ftsearch/simdoc.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

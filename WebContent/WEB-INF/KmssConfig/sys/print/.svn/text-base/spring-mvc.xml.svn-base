@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/print/sys_print_template/sysPrintTemplate.do"
+		class="com.landray.kmss.sys.print.actions.SysPrintTemplateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.print.forms.SysPrintTemplateForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/print/sys_print_template/sysPrintTemplate_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/print/sys_print_template/sysPrintTemplate_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/print/sys_print_template/sysPrintTemplate_list.jsp" />
+				<entry
+					key="bookmark"
+					value="/sys/print/include/bookMarks.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/print/sys_print_log/sysPrintLog.do"
+		class="com.landray.kmss.sys.print.actions.SysPrintLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.print.forms.SysPrintLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/print/sys_print_log/sysPrintLog_view.jsp" />
+				<entry
+					key="list"
+					value="/sys/print/sys_print_log/sysPrintLog_list.jsp" />
+				<entry
+					key="list.4m"
+					value="/sys/print/mobile/sys_print_log/list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/print/data/sysPrintWordData.do"
+		class="com.landray.kmss.sys.print.actions.SysPrintWordDataAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/print/sys_print_template_history/sysPrintTemplateHistory.do"
+		class="com.landray.kmss.sys.print.actions.SysPrintTemplateHistoryAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.print.forms.SysPrintTemplateHistoryForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/print/sys_print_template_history/sysPrintTemplateHistory_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/print/sys_print_template_history/sysPrintTemplateHistory_edit.jsp" />
+				<entry
+					key="list_formtemplate"
+					value="/sys/print/sys_print_template_history/formTemplate_data.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,96 @@
+<div class="check_templates_container">
+	<div class="btns">
+		<el-button v-if="editAuth" type="primary" size="mini"
+			@click.native.prevent="add">{{langHere["msg.check.item.add"]}}</el-button>
+		<el-switch v-if="templates.length>0" v-model="groupMode"
+			:active-text="langHere['msg.mode.group']"
+			:inactive-text="langHere['msg.mode.template']"> </el-switch>
+	</div>
+	<div class="check_desc">{{langHere["msg.check.template.desc"]}}</div>
+	<div v-if="groupMode&&editAuth" class="check_desc">{{langHere["msg.check.template.order.desc"]}}</div>
+
+	<el-table class="template_mode" v-show="!groupMode" :data="templates"
+		border @cell-click="cellClick"> <el-table-column
+		type="index" width="80" :label="langHere['msg.index']" align="center" />
+	<el-table-column :label="langHere['sysIassisterItem.fdName']"
+		align="center" width="360" :resizable="false"> <template
+		slot-scope="scope"> <el-form v-if="editAuth" :rules="checkRules"
+		:model="scope.row"> <el-form-item prop="label">
+	<el-input class="lui_input" v-model="scope.row.label" size="mini"
+		@input="updateGroups"></el-input></el-form-item></el-form> <template v-else>{{scope.row.label}}</template></template></el-table-column>
+	<el-table-column type="groups"
+		:label="langHere['sysIassisterTemplate.groups']" align="center"
+		class-name="group_node" width="360" :resizable="false">
+	<template slot-scope="scope"> <el-select
+		v-if="scope.row.groupwritable" ref="groupEditor"
+		v-model="scope.row.groups" multiple clearable filterable allow-create
+		default-first-option @change="groupsChanged"
+		:placeholder="langHere['msg.group.placeholder']"> <el-option
+		v-for="group in groups" :key="group.key" :label="group.label"
+		:value="group.key"> </el-option> </el-select> <template v-else>
+	{{showGroups(scope.row.groups)}} <el-button v-if="editAuth" size="mini"
+		type="text" @click.stop="editGroup(scope.row)"> <i
+		class="lui_edit"></i></el-button> </template> </template> </el-table-column> <el-table-column
+		:label="langHere['msg.template.pm.text']" align="center"
+		class-name="params_mapping" :resizable="false"> <template
+		slot-scope="scope"> <el-table
+		:data="scope.row.paramsMapping" border> <el-table-column
+		prop="pName" :label="langHere['msg.template.pmp.text']" align="center"
+		width="260" :resizable="false" /> <el-table-column prop="pTypeLabel"
+		:label="langHere['msg.template.pmp.ptype']" align="center" width="160"
+		:resizable="false" /> <el-table-column
+		:label="langHere['msg.template.pmf.text']" align="center"
+		class-name="field_container" :resizable="false"> <template
+		slot-scope="props">
+	<div class="mapping_field">
+		<template v-if="editAuth"> <input type="hidden"
+			:name="scope.row.key+props.row.pKey+'_key'"
+			:value="props.row.fieldKey"> <input type="hidden"
+			:name="scope.row.key+props.row.pKey+'_label'"
+			:value="props.row.fieldLabel"> <el-input class="lui_input"
+			v-model="props.row.fieldLabel" size="mini"></el-input> <el-button
+			type="text" size="mini" @click="chooseField(scope.row,props.row)">{{langHere['msg.placeholder']}}</el-button>
+		</template>
+		<template v-else>{{props.row.fieldLabel}}</el-button></template>
+	</div>
+	</template> </el-table-column> </el-table> </template> </el-table-column> <el-table-column v-if="editAuth" width="120" align="center">
+	<template slot-scope="scope"> <el-button size="mini"
+		type="text" @click.native.prevent="delTemplate(scope.$index)">
+	<i class="lui_del"></i></el-button> </template> </el-table-column></el-table>
+
+	<el-table class="group_mode" v-show="groupMode" :data="groups" border
+		@cell-click="cellClick" row-key="key"> <el-table-column
+		type="index" width="80" :label="langHere['msg.index']" align="center"
+		:resizable="false"
+		:class-name="['group_order',editAuth?'can_drag':'no_drag']" /> <el-table-column
+		:label="langHere['msg.group.label']" align="center" width="360"
+		:resizable="false"> <template slot-scope="scope">
+	<el-form v-if="editAuth" :rules="groupRules" :model="scope.row"> <el-form-item
+		prop="label"> <el-input class="lui_input"
+		v-model="scope.row.label" size="mini"></el-input></el-form-item></el-form> <template v-else>{{scope.row.label}}</template></template></el-table-column>
+	<el-table-column type="nodes"
+		:label="langHere['sysIassisterTemplate.nodes']" align="center"
+		class-name="group_node" :resizable="false"> <template
+		slot-scope="scope"> <el-select
+		v-if="scope.row.nodewritable" v-model="scope.row.nodes" multiple
+		:placeholder="langHere['msg.node.placeholder']"> <el-option
+		v-for="node in nodes" :key="node.key" :label="node.label"
+		:value="node.key"> </el-option> </el-select> <tempalte v-else>{{showNodes(scope.row.nodes)}}<el-button
+		v-if="editAuth" size="mini" type="text"
+		@click.stop="editNode(scope.row)"> <i class="lui_edit"></i></el-button></tempalte>
+	</template> </el-table-column> <el-table-column :label="langHere['sysIassisterTemplate.checkItem']"
+		align="center" class-name="group_templates" :resizable="false">
+	<template slot-scope="scope"> <draggable
+		class="gt_draggable" v-model="scope.row.templates"
+		:options="{group:'gt'+scope.row.key,draggable:'.can_drag'}">
+	<div v-for="(gt,idx) in scope.row.templates"
+		:class="['gt_wrapper',editAuth?'can_drag':'no_drag']">
+		<div class="gt_index">{{idx+1}}</div>
+		<div class="gt_label ellipse" :title="gt.label">{{gt.label}}</div>
+	</div>
+	</draggable></template> </el-table-column> <el-table-column v-if="editAuth" width="120" align="center"
+		:resizable="false"> <template slot-scope="scope">
+	<el-button size="mini" type="text"
+		@click.native.prevent="delGroup(scope.$index)"> <i
+		class="lui_del"></i></el-button> </template> </el-table-column></el-table>
+</div>

@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	<extension-point 
+		id="com.landray.kmss.sys.listshow.listShowConfig">
+		<item 
+			name="listShowConfig">
+		<param 
+				name="name"
+				kind="string" 
+				required="true">
+				<description>名称</description>
+		</param>
+		<param 
+				name="model"
+				kind="string" 
+				required="true">
+				<description>所属model</description>
+		</param>
+		<param 
+				name="page"
+				kind="string" 
+				required="true">
+				<description>所属页面</description>
+		</param>
+		<param 
+				name="default"
+				kind="string" 
+				required="true">
+				<description>默认的属性</description>
+		</param>
+		<param 
+				name="customized"
+				kind="string" 
+				required="true">
+				<description>自定义的属性</description>
+		</param>
+		<description>列表页显示字段支持自定义</description>	
+		</item>
+		<description>列表页显示字段支持自定义</description>			
+		</extension-point>
+	<extension-point
+		id="com.landray.kmss.sys.profile.login.template">
+		<item
+			name="config">
+			<param
+				name="name"
+				required="true"
+				kind="string">
+				<description>
+					必填，登录模板名称，多语言资源以{}包围
+					例：单屏（随机背景图片）模式
+				</description>
+			</param>
+			<param
+				name="jsp"
+				kind="filepath"
+				required="true"
+				pattern="^.*?\.(jsp)$">
+				<description>
+					必填，登录页面JSP路径
+					注意：此路径必须能匿名访问，最好放在项目根据目录，名称以login_开头
+					例:/login_XXX.jsp
+				</description>
+			</param>
+			<param
+				name="key"
+				required="true"
+				kind="int">
+				<description>
+					必填，关键字
+					注意：不能有重复，目前EKP自带的key在10以内，项目定制的key建议从11开始
+				</description>
+			</param>
+			<param
+				name="thumbnail"
+				required="true"
+				kind="filepath"
+				pattern="^.*?\.(png|jpeg|jpg|gif|bmp)$">
+				<description>
+					必填，缩略图
+					建议上传图片尺寸是1366*655 或 长宽比为2:1
+				</description>
+			</param>
+			<param
+				name="customed"
+				default="false"
+				kind="boolean">
+				<description>
+					不必填，是否可以定制，默认false
+				</description>
+			</param>
+			<param
+				name="cuxJsp"
+				kind="filepath"
+				pattern="^.*?\.(jsp)$">
+				<description>
+					当customed为true时必填，客户化定制展现页面，最好放在resource/customization/jsp目录下，以cux_开头
+					例如：/resource/customization/jsp/cux_xxx.jsp
+				</description>
+			</param>
+			<param
+				name="designJsp"
+				kind="filepath"
+				pattern="^.*?\.(jsp)$">
+				<description>
+					当customed为true时必填，客户化定制配置页面，最好放在resource/customization/jsp目录下，以design_开头
+					例如：/resource/customization/jsp/design_xxx.jsp
+				</description>
+			</param>
+			<description>
+				登录模板配置扩展
+				1、登录页面最好放在项目根目录，以login_XXX.jsp命名
+				2、登录页相关的CSS,JS,图片最好放在/resource/style/default/login_XXX/...
+				3、与登录页有关的文件必须能匿名访问
+			</description>
+		</item>
+		<description>
+		</description>
+	</extension-point>
+	
+	<extension-point
+		id="com.landray.kmss.sys.profile.login.third">
+		<item name="config">
+			<param
+				name="bean"
+				required="true"
+				basedOn="com.landray.kmss.sys.profile.interfaces.IThirdLogin"
+				kind="spring">
+				<description>需要实现IThirdLogin接口，但是建议继承自AbstractThirdLogin</description>
+			</param>
+			<description>第三方登陆拓展点</description>
+		</item>
+		<description>
+		</description>
+	</extension-point>	
+	
+	<extension-point 
+		id="com.landray.sys.profile.sensitive.config">
+		<item name="sensitiveConfig">
+			<param
+				name="name"
+				required="true"
+				kind="string">
+				<description>
+					必填，登录模板名称，多语言资源以{}包围
+					例：知识中心
+				</description>
+			</param>
+			<param
+				name="formName"
+				required="true"
+				kind="string">
+				<description>对应模块中进行敏感词校验的表单名称</description>
+			</param>
+			<description>敏感词过滤配置</description>
+		</item>
+		<description>
+		</description>
+	</extension-point>
+	
+	<!-- 密码混淆配置 -->
+	<extension-point id="com.landray.kmss.sys.profile.password.confusion">
+		<item name="encrypt">
+			<param name="key" required="true" kind="unid">
+				<description>
+					加密类型
+				</description>
+			</param>
+			<param name="impl" required="true" kind="spring"
+				basedOn="com.landray.kmss.sys.profile.password.interfaces.IPasswordConfusionEncrypt">
+				<description>
+					加密实现，已经实现的默认类型有：
+					com.landray.kmss.sys.profile.password.interfaces.PasswordConfusionAES,
+					com.landray.kmss.sys.profile.password.interfaces.PasswordConfusionDES,
+					com.landray.kmss.sys.profile.password.interfaces.PasswordConfusionMD5
+				</description>
+			</param>
+			<description>密码加密</description>
+		</item>
+		<item name="decrypt">
+			<param name="key" required="true" kind="unid">
+				<description>
+					解密类型
+				</description>
+			</param>
+			<param name="impl" required="true" kind="spring"
+				basedOn="com.landray.kmss.sys.profile.password.interfaces.IPasswordConfusionDecrypt">
+				<description>
+					解密实现，已经实现的默认类型有：
+					com.landray.kmss.sys.profile.password.interfaces.PasswordConfusionAES,
+					com.landray.kmss.sys.profile.password.interfaces.PasswordConfusionDES
+				</description>
+			</param>
+			<description>密码解密</description>
+		</item>
+		<description>
+			密码混淆配置
+		</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.sys.profile.filter">
+		<item name="profileFilter">
+			<param name="modulePrefixs" required="true" kind="string">
+				<description>模块前缀多个用英文,号后缀英文;隔开</description>
+			</param>
+			<param name="serviceName" kind="spring" required="true" basedOn="com.landray.kmss.sys.profile.interfaces.ISysProfilePluginFilter">
+				<description>过滤器beanName</description>
+			</param>
+			<description>门户图标过滤</description>
+		</item>
+		<description>门户图标过滤</description>
+	</extension-point>
+
+	<!-- 复合索引 -->
+	<extension-point id="com.landray.kmss.sys.db.composite.index">
+		<item name="index">
+			<param name="moduleKey" required="true" kind="string">
+				<description>模块名称（多语言KEY），如：{sys-news:module.sys.news}</description>
+			</param>
+			<param name="tableName" required="true" kind="string">
+				<description>
+					表名（或 modelName）
+					如：sys_news_main 或 com.landray.kmss.sys.news.model.SysNewsMain
+					注：modelName依赖数据字典
+				</description>
+			</param>
+			<param name="columnNames" required="true" kind="string">
+				<description>
+					多个字段名（或 属性名），多个字段使用,号分隔
+					如：doc_subject,fd_description 或 docSubject,docStatus
+					注：后者依赖数据字典，且与tableName必须保持同一种类型
+				</description>
+			</param>
+			<description>复合索引配置</description>
+		</item>
+		<description>复合索引配置，注意：复合按顺序创建后，需要调整业务查询语句，必须与创建的复合索引顺序保持一致</description>
+	</extension-point>
+	
+	<extension point="com.landray.kmss.sys.profile.login.template">
+		<item name="config">
+			<param name="name" value="{sys-profile:sys.profile.portal.login.screen}" />
+			<param name="jsp" value="/login_single.jsp" />
+			<param name="key" value="1" />
+			<param name="thumbnail" value="/sys/profile/resource/images/singleScreen.png" />
+			<param name="customed" value="true" />
+			<param name="cuxJsp" value="/resource/customization/jsp/cux_login_single.jsp" />
+			<param name="designJsp" value="/resource/customization/jsp/design_login_single.jsp" />
+		</item>
+		<item name="config">
+			<param name="name" value="{sys-profile:sys.profile.portal.login.screen1}" />
+			<param name="jsp" value="/login_single_random.jsp" />
+			<param name="key" value="2" />
+			<param name="thumbnail" value="/sys/profile/resource/images/randomScreen.png" />
+			<param name="customed" value="true" />
+			<param name="cuxJsp" value="/resource/customization/jsp/cux_login_single_random.jsp" />
+			<param name="designJsp" value="/resource/customization/jsp/design_login_single_random.jsp" />
+		</item>
+		<item name="config">
+			<param name="name" value="{sys-profile:sys.profile.portal.login.screen2}" />
+			<param name="jsp" value="/login_multi.jsp" />
+			<param name="key" value="3" />
+			<param name="thumbnail" value="/sys/profile/resource/images/multiScreen.png" />
+			<param name="customed" value="true" />
+			<param name="cuxJsp" value="/resource/customization/jsp/cux_login_multi.jsp" />
+			<param name="designJsp" value="/resource/customization/jsp/design_login_multi.jsp" />
+		</item>
+		<item name="config">
+			<param name="name" value="{sys-profile:sys.profile.portal.login.screen3}" />
+			<param name="jsp" value="/login_single_horizontal.jsp" />
+			<param name="key" value="4" />
+			<param name="thumbnail" value="/sys/profile/resource/images/singleHorizontalScreen.png" />
+			<param name="customed" value="true" />
+			<param name="cuxJsp" value="/resource/customization/jsp/cux_login_single_horizontal.jsp" />
+			<param name="designJsp" value="/resource/customization/jsp/design_login_single_horizontal.jsp" />
+		</item>
+		<item name="config">
+			<param name="name" value="{sys-profile:sys.profile.portal.login.screen4}" />
+			<param name="jsp" value="/login_single_full_screen.jsp" />
+			<param name="key" value="5" />
+			<param name="thumbnail" value="/sys/profile/resource/images/singleFullScreen.png" />
+			<param name="customed" value="true" />
+			<param name="cuxJsp" value="/resource/customization/jsp/cux_login_single_full_screen.jsp" />
+			<param name="designJsp" value="/resource/customization/jsp/design_login_single_full_screen.jsp" />
+		</item>
+		<item name="config">
+			<param name="name" value="{sys-profile:sys.profile.portal.login.simplicity}" />
+			<param name="jsp" value="/login_simplicity.jsp" />
+			<param name="key" value="6" />
+			<param name="thumbnail" value="/sys/profile/resource/images/simplicity.jpg" />
+			<param name="customed" value="true" />
+			<param name="cuxJsp" value="/resource/customization/jsp/cux_login_simplicity.jsp" />
+			<param name="designJsp" value="/resource/customization/jsp/design_login_simplicity.jsp" />
+		</item>
+	</extension>
+	
+	<!-- 动态修改自定义兼容浏览器接收器 -->
+	<extension point="com.landray.kmss.sys.cluster">
+		<item name="messageReceiver">
+			<param name="service" value="passwordSecurityConfigReceiver" />
+			<param name="type" value="com.landray.kmss.sys.profile.service.spring.PasswordSecurityConfigMessage" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.cluster">
+		<item name="messageReceiver">
+			<param name="type" value="com.landray.kmss.sys.profile.model.SysLoginTemplateMessage" />
+			<param name="service" value="sysLoginTemplateMessageReceiver" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.cluster">
+		<item name="messageReceiver">
+			<param name="type" value="com.landray.kmss.sys.profile.model.SysI18nMessage" />
+			<param name="service" value="sysI18nMessageReceiver" />
+		</item>
+	</extension>
+
+	<!-- 多语言检测任务 -->
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid" value="com.landray.kmss.sys.profile.model.SysProfileI18n" />
+			<param name="name" value="{sys-profile:sys.profile.i18n.transfer}" />
+			<param name="type" value="notify"/>
+			<param name="path" value="/sys/profile/" />
+			<param name="description" value="{sys-profile:sys.profile.i18n.transfer.description}" />
+		</item>
+	</extension>
+	
+	<!--
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid"
+				value="com.landray.kmss.sys.profile.model.SysProfileI18n" />
+			<param name="name"
+				value="{sys-profile:sys.profile.i18n.transfer}" />
+			<param name="path"
+				value="/sys/profile/i18n/" />
+			<param name="check"
+				value="com.landray.kmss.sys.profile.transfer.SysProfileI18nChecker" />
+			<param name="upgrade"
+				value="com.landray.kmss.sys.profile.transfer.SysProfileI18nTask" />
+			<param name="description"
+				value="{sys-profile:sys.profile.i18n.transfer.description}"/>
+		</item>
+	</extension>
+	-->
+	
+	<!-- 密码混淆配置 -->
+	<extension point="com.landray.kmss.sys.profile.password.confusion">
+		<item name="encrypt">
+			<param name="key" value="AES" />
+			<param name="impl" value="passwordConfusionAES" />
+ 		</item>
+ 		<item name="decrypt">
+			<param name="key" value="AES" />
+			<param name="impl" value="passwordConfusionAES" />
+ 		</item>
+ 		
+ 		<item name="encrypt">
+			<param name="key" value="DES" />
+			<param name="impl" value="passwordConfusionDES" />
+ 		</item>
+ 		<item name="decrypt">
+			<param name="key" value="DES" />
+			<param name="impl" value="passwordConfusionDES" />
+ 		</item>
+ 		
+ 		<item name="encrypt">
+			<param name="key" value="MD5" />
+			<param name="impl" value="passwordConfusionMD5" />
+ 		</item>
+ 		
+ 		<item name="encrypt">
+            <param name="key" value="SM2" />
+            <param name="impl" value="passwordConfusionSM2" />
+        </item>
+        <item name="decrypt">
+            <param name="key" value="SM2" />
+            <param name="impl" value="passwordConfusionSM2" />
+        </item>
+        
+        <item name="encrypt">
+            <param name="key" value="SM3" />
+            <param name="impl" value="passwordConfusionSM3" />
+        </item>
+
+        <item name="encrypt">
+            <param name="key" value="SM4" />
+            <param name="impl" value="passwordConfusionSM4" />
+        </item>
+        <item name="decrypt">
+            <param name="key" value="SM4" />
+            <param name="impl" value="passwordConfusionSM4" />
+        </item>
+	</extension>
+	
+	<!-- 云商城门户服务 -->
+	<extension point="com.landray.kmss.third.mall.portal">
+		<!--登录页(login)，主题包(theme)，部件呈现(layout)，部件外观(ui)，页眉(header)，页脚(footer)，页面模板(page)-->
+		<item name="portalItem">
+			<param name="fdKey" value="login" />
+			<param name="parser" value="sysLoginTemplateService" />
+		</item>
+	</extension>
+
+	<!-- 复合索引 -->
+	<extension point="com.landray.kmss.sys.admin.commontools">
+		<item name="tools">
+			<param name="name" value="{sys-profile:common.compositeIndex}"/>
+			<param name="path" value="/sys/profile/common/sysCompositeIndex.do?method=index"/>
+			<param name="description" value="{sys-profile:common.compositeIndex.description}"/>
+		</item>
+	</extension>
+</plugin>

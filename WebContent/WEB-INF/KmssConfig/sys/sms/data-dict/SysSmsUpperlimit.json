@@ -1,0 +1,84 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.sms.model.SysSmsUpperlimit",
+        "messageKey": "sys-sms:table.sysSmsUpperlimit",
+        "serviceBean": "sysSmsUpperlimitService",
+        "table": "sys_sms_upperlimit",
+        "url": "/sys/sms/sys_sms_upperlimit/sysSmsUpperlimit.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdUpperlimit":         {
+            "propertyType": "simple",
+            "messageKey": "sys-sms:sysSmsUpperlimit.fdUpperlimit",
+            "type": "Integer",
+            "column": "fd_upperlimit",
+            "notNull": "false",
+            "length": "10",
+            "canSubscribe": "true",
+            "canSearch": "true"
+        },
+        "fdByperiod":         {
+            "propertyType": "simple",
+            "messageKey": "sys-sms:sysSmsUpperlimit.fdByperiod",
+            "type": "Integer",
+            "column": "fd_byperiod",
+            "notNull": "false",
+            "length": "2",
+            "canSubscribe": "true",
+            "canSearch": "true"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-sms:sysSmsUpperlimit.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "false",
+            "canSubscribe": "true",
+            "canSearch": "true"
+        },
+        "docAlterTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-sms:sysSmsUpperlimit.docAlterTime",
+            "type": "DateTime",
+            "column": "doc_alter_time",
+            "notNull": "false",
+            "canSubscribe": "true",
+            "canSearch": "true"
+        },
+        "fdCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-sms:sysSmsUpperlimit.docCreatorId",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "doc_creator_id",
+            "notNull": "false",
+            "canSubscribe": "true",
+            "canSearch": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}', '!{nameField}', null, ORG_TYPE_PERSON);"
+        },
+        "fdAlteror":         {
+            "propertyType": "model",
+            "messageKey": "sys-sms:sysSmsUpperlimit.fdAlteror",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "doc_alteror_id",
+            "notNull": "false",
+            "canSubscribe": "true",
+            "canSearch": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}', '!{nameField}', null, ORG_TYPE_PERSON);"
+        },
+        "theSmsPersons":         {
+            "propertyType": "list",
+            "messageKey": "sys-sms:sysSmsUpperlimit.theSmsPersons",
+            "column": "fd_persons_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "fd_org_id",
+            "table": "sys_sms_limitperson",
+            "canSubscribe": "true",
+            "canSearch": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}', '!{nameField}', null, ORG_TYPE_PERSON);"
+        }
+    }
+}

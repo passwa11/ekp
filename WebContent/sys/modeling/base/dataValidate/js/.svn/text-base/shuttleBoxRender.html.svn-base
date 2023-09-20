@@ -1,0 +1,50 @@
+
+var sourceData = render.parent.getSourceData();
+var mainTableId = render.parent.randomMainId;
+var lang = render.parent.getModelingLang();
+console.log("lang",lang);
+{$
+	<div class="shuttle-box-content">
+		<div class="content-table-select">
+			<div class="table-select-wrap">
+				<select name="tableSelect">$}
+				var mainTableInfo = sourceData[mainTableId];
+				var detailsTableInfo = sourceData["details"];
+				{$
+					<option value="{%mainTableId%}">{%mainTableInfo.label%}</option>
+				$}
+				for(var key in detailsTableInfo){
+					{$
+						<option value="{%key%}">{%detailsTableInfo[key].label%}</option>
+					$}
+				}
+				{$</select>
+			</div>
+			<div class="table-select-tip">
+				<span>{%lang['modeling.dataValidate.Tips']%}</span>
+			</div>
+		</div>
+		<div class="box-wrap">
+			<div class="box-container">
+				<div class="content-box to-choose-box">
+					<div class="box-header">
+						<span class="header-path"></span>
+					</div>
+					<div class="box-content"></div>
+				</div>
+			</div>
+			<div class="box-btn">
+				<div class="box-btn-item add">{%lang['modeling.dataValidate.ALLJoin']%}</div>
+				<div class="box-btn-item reset">{%lang['button.reset']%}</div>
+			</div>
+			<div class="box-container">
+				<div class="content-box selected-box">
+					<div class="box-header">
+						<span>{%lang['modeling.dataValidate.TargetList']%}</span>
+					</div>
+					<div class="box-content"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+$}

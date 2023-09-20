@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	
+	<!-- 三员功能中，安全保密员可以搜索（如：组织架构搜索） -->
+	<module
+		messageKey="sys-search:search.mechanism"
+		urlPrefix="/sys/search/"
+		defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SECURITY)">
+		<request
+			path="search*"
+			defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SECURITY)">
+		</request>
+		<request
+			path="sys_search_main/sysSearchMain*"
+			defaultValidator="roleValidator(role=SYSROLE_ADMIN)" >
+			<query
+				queryString="method=listConfig"
+				validator="roleValidator(role=SYSROLE_USER)" />
+			<query
+				queryString="method=getTempNameByMain"
+				validator="roleValidator(role=SYSROLE_USER)" />
+		</request>
+	</module>
+</configs>

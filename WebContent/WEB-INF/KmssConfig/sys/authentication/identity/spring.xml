@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/util 
+   		http://www.springframework.org/schema/util/spring-util.xsd "
+	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util">
+
+	<bean id="sysAuthenVerifyDao"
+		class="com.landray.kmss.sys.authentication.identity.dao.hibernate.SysAuthenVerifyDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.sys.authentication.identity.model.SysAuthenVerify
+			</value>
+		</property>
+	</bean>
+	<bean id="sysAuthenVerifyTarget"
+		class="com.landray.kmss.sys.authentication.identity.service.spring.SysAuthenVerifyServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="sysAuthenVerifyDao" />
+		</property>
+	</bean>
+	<bean id="sysAuthenVerifyService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysAuthenVerifyTarget" />
+		</property>
+	</bean>
+
+
+	<bean id="sysAuthenUserfreeDao"
+		class="com.landray.kmss.sys.authentication.identity.dao.hibernate.SysAuthenUserfreeDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.sys.authentication.identity.model.SysAuthenUserfree
+			</value>
+		</property>
+	</bean>
+	<bean id="sysAuthenUserfreeTarget"
+		class="com.landray.kmss.sys.authentication.identity.service.spring.SysAuthenUserfreeServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="sysAuthenUserfreeDao" />
+		</property>
+	</bean>
+	<bean id="sysAuthenUserfreeService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysAuthenUserfreeTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysAuthenValidateLogDao"
+		class="com.landray.kmss.sys.authentication.identity.dao.hibernate.SysAuthenValidateLogDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.sys.authentication.identity.model.SysAuthenValidateLog</value>
+		</property>
+	</bean>
+	<bean id="sysAuthenValidateLogTarget"
+		class="com.landray.kmss.sys.authentication.identity.service.spring.SysAuthenValidateLogServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="sysAuthenValidateLogDao" />
+		</property>
+	</bean>
+	<bean id="sysAuthenValidateLogService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysAuthenValidateLogTarget" />
+		</property>
+	</bean>
+	
+	<bean id="phoneIValidate"
+		class="com.landray.kmss.sys.authentication.identity.provider.imp.PhoneIValidate">
+	</bean>
+	
+	<bean id="passwordIValidate"
+		class="com.landray.kmss.sys.authentication.identity.provider.imp.PasswordIValidate">
+	</bean>
+	
+	 <bean 
+        id="sysAuthenRpLogDao" 
+        class="com.landray.kmss.sys.authentication.identity.dao.hibernate.SysAuthenRpLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.authentication.identity.model.SysAuthenRpLog</value>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysAuthenRpLogTarget" 
+        class="com.landray.kmss.sys.authentication.identity.service.spring.SysAuthenRpLogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysAuthenRpLogDao"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysAuthenRpLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysAuthenRpLogTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysVerificationCodeService" 
+        class="com.landray.kmss.sys.authentication.identity.service.spring.SysVerificationCodeServiceImp">
+    </bean>
+    
+    <bean 
+        id="sysIdentityValidationService" 
+        class="com.landray.kmss.sys.authentication.identity.service.spring.SysIdentityValidationServiceImp">
+    </bean>
+    
+    <bean 
+        id="sysAuthenEntityDao" 
+        class="com.landray.kmss.sys.authentication.identity.dao.hibernate.SysAuthenEntityDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.authentication.identity.model.SysAuthenEntity</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysAuthenEntityTarget" 
+        class="com.landray.kmss.sys.authentication.identity.service.spring.SysAuthenEntityServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysAuthenEntityDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysAuthenEntityService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysAuthenEntityTarget"/>
+        </property>
+    </bean>
+    
+    <bean id="identityValidateListener"
+		class="com.landray.kmss.sys.authentication.identity.service.spring.SysIdentityValidationLbpmListener">
+	</bean>
+	
+	
+	<bean 
+        id="sysIdentityValidationCacheDao" 
+        class="com.landray.kmss.sys.authentication.identity.dao.hibernate.SysIdentityValidationCacheDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.authentication.identity.model.SysIdentityValidationCache</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysIdentityValidationCacheTarget" 
+        class="com.landray.kmss.sys.authentication.identity.service.spring.SysIdentityValidationCacheServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysIdentityValidationCacheDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysIdentityValidationCacheService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysIdentityValidationCacheTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysAuthenRpBindLogDao" 
+        class="com.landray.kmss.sys.authentication.identity.dao.hibernate.SysAuthenRpLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.authentication.identity.model.SysAuthenRpBindLog</value>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysAuthenRpBindLogTarget" 
+        class="com.landray.kmss.sys.authentication.identity.service.spring.SysAuthenRpLogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysAuthenRpBindLogDao"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="sysAuthenRpBindLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysAuthenRpBindLogTarget"/>
+        </property>
+    </bean>
+</beans>

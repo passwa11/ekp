@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+<portlet
+		id="km.smissive.latest"
+		name="{km-smissive:portlet.smissive.newDoc}"
+		module="{km-smissive:module.km.smissive}"
+		description="{portlet.list.desc1}">
+		<source
+			format="sys.ui.classic"
+			type="AjaxXml">
+			<code>
+				<![CDATA[
+				{"url":"/sys/common/dataxml.jsp?s_bean=kmSmissivePortlet&fdCategoryId=!{cateid}&rowsize=!{rowsize}&scope=!{scope}"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"政府公开招标融合项目推进情况","created":"2019-10-10","href":"#","catename":"发文","creator":"朱湖强"},{"text":"职能培训通知","created":"2019-10-10","href":"#","catename":"发文","creator":"朱湖强"},{"text":"工业和信息化部关于电信服务质量的通告（2019年第2号）","created":"2019-10-10","href":"#","catename":"公函","creator":"朱湖强"},{"text":"2019世界人工智能大会举办","created":"2019-10-10","href":"#","catename":"通告","creator":"朱湖强"},{"text":"关于开展“不忘初心、牢记使命”主题教育的实施方案","created":"2019-10-10","href":"#","catename":"批复","creator":"朱湖强"},{"text":"全党开展教育活动的意义","created":"2019-10-10","href":"#","catename":"通告","creator":"朱湖强"},{"text":"新时代先锋模范作用经典分享","created":"2019-10-10","href":"#","catename":"公函","creator":"朱湖强"},{"text":"中国互联网企业社会责任论坛在京举办","created":"2019-10-10","href":"#","catename":"通告","creator":"朱湖强"},{"text":"2019地理信息系统（GIS）软件技术大会召开","created":"2019-10-10","href":"#","catename":"通告","creator":"朱湖强"},{"text":"2019中国电子政务论坛在广州开幕","created":"2019-10-10","href":"#","catename":"通告","creator":"朱湖强"}]					
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{km-smissive:kmSmissiveMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+	                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	                   "showType":"radio"
+	                  }
+	        </var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+			<var name="{portlet.cate}"
+				key="cateid"
+				kind="sys.simplecategory">
+				{"model":"com.landray.kmss.km.smissive.model.KmSmissiveTemplate","name":"{button.select}"}
+			</var>
+		</vars>
+		<operations>
+	     	<operation
+				name="{operation.create}"
+				type="create"
+				href="javascript:(function(){seajs.use(['km/smissive/km_smissive_main_ui/js/create'], function(create) { 
+							create.addDoc('!{cateid}');
+					 });})();"
+			    target="_self" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/smissive/?categoryId=!{cateid}#cri.q=docStatus:30" />
+	    </operations>
+</portlet>
+<portlet
+		id="km.smissive.myFlow"
+		name="{km-smissive:smissive.myDoc}"
+		module="{km-smissive:module.km.smissive}"
+		description="{km-smissive:portlet.listtable.desc}">
+		<source
+			format="sys.ui.listtable"
+			type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/smissive/km_smissive_main/kmSmissiveMainPortlet.do?method=listPortlet&rowsize=!{rowsize}&myFlow=!{myFlow}&scope=!{scope}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					{"columns":[{"property":"fdId"},{"title":"标题","property":"docSubject"},{"title":"文件编号","property":"fdFileNo","headerClass":"width100"},{"title":"拟稿人","property":"docAuthor.fdName","headerClass":"width60"},{"title":"发文单位","property":"fdMainDept.fdName","headerClass":"width90"},{"title":"发布日期","property":"docPublishTime","headerClass":"width80"},{"title":"公文状态","property":"docStatus","headerClass":"width60"},{"props":"docSubject;fdFileNo;docAuthor.fdName;fdMainDept.fdName;docStatus;nodeName;handlerName"}],"datas":[[{"col":"fdId","value":"16cd19146e20ae6490f29594baaa5e89"},{"col":"docSubject","value":"政府公开招标融合项目推进情况","style":"text-align:left;min-width:100px"},{"col":"fdFileNo","value":"二〇一九年八月二十七日002","styleClass":"width100"},{"col":"docAuthor.fdName","value":"朱湖强","styleClass":"width60"},{"col":"fdMainDept.fdName","value":"ekp产品部","styleClass":"width90"},{"col":"docPublishTime","value":"2019-08-27","styleClass":"width80"},{"col":"docStatus","value":"发布","styleClass":"width60"}],[{"col":"fdId","value":"16cd19146e20ae6490f29594baaa5e89"},{"col":"docSubject","value":"工业和信息化部关于电信服务质量的通告（2019年第2号）","style":"text-align:left;min-width:100px"},{"col":"fdFileNo","value":"二〇一九年八月二十七日002","styleClass":"width100"},{"col":"docAuthor.fdName","value":"朱湖强","styleClass":"width60"},{"col":"fdMainDept.fdName","value":"ekp产品部","styleClass":"width90"},{"col":"docPublishTime","value":"2019-08-27","styleClass":"width80"},{"col":"docStatus","value":"发布","styleClass":"width60"}],[{"col":"fdId","value":"16cd19146e20ae6490f29594baaa5e89"},{"col":"docSubject","value":"劳动法律法规基础知识","style":"text-align:left;min-width:100px"},{"col":"fdFileNo","value":"二〇一九年八月二十七日002","styleClass":"width100"},{"col":"docAuthor.fdName","value":"朱湖强","styleClass":"width60"},{"col":"fdMainDept.fdName","value":"ekp产品部","styleClass":"width90"},{"col":"docPublishTime","value":"2019-08-27","styleClass":"width80"},{"col":"docStatus","value":"待审","styleClass":"width60"}],[{"col":"fdId","value":"16cd19146e20ae6490f29594baaa5e89"},{"col":"docSubject","value":"关于开展“不忘初心、牢记使命”主题教育的实施方案","style":"text-align:left;min-width:100px"},{"col":"fdFileNo","value":"二〇一九年八月二十七日002","styleClass":"width100"},{"col":"docAuthor.fdName","value":"朱湖强","styleClass":"width60"},{"col":"fdMainDept.fdName","value":"ekp产品部","styleClass":"width90"},{"col":"docPublishTime","value":"2019-08-27","styleClass":"width80"},{"col":"docStatus","value":"发布","styleClass":"width60"}],[{"col":"fdId","value":"16cd19146e20ae6490f29594baaa5e89"},{"col":"docSubject","value":"全党开展教育活动的意义","style":"text-align:left;min-width:100px"},{"col":"fdFileNo","value":"二〇一九年八月二十七日002","styleClass":"width100"},{"col":"docAuthor.fdName","value":"朱湖强","styleClass":"width60"},{"col":"fdMainDept.fdName","value":"ekp产品部","styleClass":"width90"},{"col":"docPublishTime","value":"2019-08-27","styleClass":"width80"},{"col":"docStatus","value":"发布","styleClass":"width60"}],[{"col":"fdId","value":"16cd19146e20ae6490f29594baaa5e89"},{"col":"docSubject","value":"新时代先锋模范作用经典分享","style":"text-align:left;min-width:100px"},{"col":"fdFileNo","value":"二〇一九年八月二十七日002","styleClass":"width100"},{"col":"docAuthor.fdName","value":"朱湖强","styleClass":"width60"},{"col":"fdMainDept.fdName","value":"ekp产品部","styleClass":"width90"},{"col":"docPublishTime","value":"2019-08-27","styleClass":"width80"},{"col":"docStatus","value":"发布","styleClass":"width60"}],[{"col":"fdId","value":"16cd19146e20ae6490f29594baaa5e89"},{"col":"docSubject","value":"中国互联网企业社会责任论坛在京举办","style":"text-align:left;min-width:100px"},{"col":"fdFileNo","value":"二〇一九年八月二十七日002","styleClass":"width100"},{"col":"docAuthor.fdName","value":"朱湖强","styleClass":"width60"},{"col":"fdMainDept.fdName","value":"ekp产品部","styleClass":"width90"},{"col":"docPublishTime","value":"2019-08-27","styleClass":"width80"},{"col":"docStatus","value":"待审","styleClass":"width60"}],[{"col":"fdId","value":"16cd19146e20ae6490f29594baaa5e89"},{"col":"docSubject","value":"2019地理信息系统（GIS）软件技术大会召开","style":"text-align:left;min-width:100px"},{"col":"fdFileNo","value":"二〇一九年八月二十七日002","styleClass":"width100"},{"col":"docAuthor.fdName","value":"朱湖强","styleClass":"width60"},{"col":"fdMainDept.fdName","value":"ekp产品部","styleClass":"width90"},{"col":"docPublishTime","value":"2019-08-27","styleClass":"width80"},{"col":"docStatus","value":"待审","styleClass":"width60"}],[{"col":"fdId","value":"16cd19146e20ae6490f29594baaa5e89"},{"col":"docSubject","value":"2019世界人工智能大会举办","style":"text-align:left;min-width:100px"},{"col":"fdFileNo","value":"二〇一九年八月二十七日002","styleClass":"width100"},{"col":"docAuthor.fdName","value":"朱湖强","styleClass":"width60"},{"col":"fdMainDept.fdName","value":"ekp产品部","styleClass":"width90"},{"col":"docPublishTime","value":"2019-08-27","styleClass":"width80"},{"col":"docStatus","value":"待审","styleClass":"width60"}],[{"col":"fdId","value":"16cd19146e20ae6490f29594baaa5e89"},{"col":"docSubject","value":"2019中国电子政务论坛在广州开幕","style":"text-align:left;min-width:100px"},{"col":"fdFileNo","value":"二〇一九年八月二十七日002","styleClass":"width100"},{"col":"docAuthor.fdName","value":"朱湖强","styleClass":"width60"},{"col":"fdMainDept.fdName","value":"ekp产品部","styleClass":"width90"},{"col":"docPublishTime","value":"2019-08-27","styleClass":"width80"},{"col":"docStatus","value":"待审","styleClass":"width60"}]]}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{km-smissive:kmSmissiveMain.docCreateTime}" key="scope" kind="enumValue" default="no">
+	                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	                   "showType":"radio"
+	                  }
+	        </var>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		    <var name="{km-smissive:smissive.Doc.my}" key="myFlow" kind="enumValue" default="unExecuted">
+			  {    "values":[{ "text":"{km-smissive:smissive.approval.my}", "value":"unExecuted" },{ "text":"{km-smissive:smissive.approved.my}", "value":"executed" },{ "text":"{km-smissive:smissive.create.my}", "value":"myCreate" }],
+	               "showType":"radio"
+                }
+			</var>
+		</vars>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/smissive/km_smissive_main/kmSmissiveMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/smissive/portlet_option_more.jsp?mydoc=!{myFlow}"/>
+	    </operations>
+</portlet>
+
+<!-- 支持cloud数据源 -->
+<!-- 我的公文 -->
+<portlet
+		id="km.smissive.myFlow"
+		name="{km-smissive:smissive.myDoc}"
+		module="{km-smissive:module.km.smissive}"
+		description="{km-smissive:portlet.listtable.desc}" forSystem="cloud" varExtend="km.smissive.myFlow">
+			<source
+			id="km-smissive.myFlow"
+			format="data.table"
+			type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-smissive/kmSmissiveMainPortlet/listPortlet?rowsize=!{rowsize}&myFlow=!{myFlow}&scope=!{scope}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"fdId","renderType":"hidden"},{"property":"docSubject","title":"标题"},{"property":"docCreateTime","title":"拟稿日期"},{"property":"docCreator.fdName","title":"创建人"},{"property":"catename","title":"所属类别"}],"data":[{"href":null,"cells":[{"col":"fdId","value":"16cd71de0161cf43ddd5a9942d8be812"},{"col":"docSubject","value":"关于公司取得AIP软件产品证书 及多项计算机软件著作权证书的通知","href":"/km/smissive/km_smissive_main/kmSmissiveMain.do?method=view&fdId=16cd71de0161cf43ddd5a9942d8be812"},{"col":"docCreateTime","value":"2019-05-01 22:55"},{"col":"docCreator.fdName","value":"唐超"},{"col":"catename","value":"公司公告"}]},{"href":null,"cells":[{"col":"fdId","value":"16cb3953f79419b6ad670f54c2f93760"},{"col":"docSubject","value":"关于8月19号KK商店版更新异常问题解决情况&已解决项目清单更新","href":"/km/smissive/km_smissive_main/kmSmissiveMain.do?method=view&fdId=16cb3953f79419b6ad670f54c2f93760"},{"col":"docCreateTime","value":"2019-08-20 22:55"},{"col":"docCreator.fdName","value":"唐超"},{"col":"catename","value":"公司公告"}]},{"href":null,"cells":[{"col":"fdId","value":"16cb37c51b593c149c2ffd34afa8d596"},{"col":"docSubject","value":"2019年中秋节放假通知","href":"/km/smissive/km_smissive_main/kmSmissiveMain.do?method=view&fdId=16cb37c51b593c149c2ffd34afa8d596"},{"col":"docCreateTime","value":"2019-08-29 10:55"},{"col":"docCreator.fdName","value":"唐超"},{"col":"catename","value":"行政公告"}]},{"href":null,"cells":[{"col":"fdId","value":"16ca99e5333bcc76548defe4b909b6f6"},{"col":"docSubject","value":"关于8月19号KK应用商店版更新异常说明","href":"/km/smissive/km_smissive_main/kmSmissiveMain.do?method=view&fdId=16ca99e5333bcc76548defe4b909b6f6"},{"col":"docCreateTime","value":"2019-08-22 10:55"},{"col":"docCreator.fdName","value":"唐超"},{"col":"catename","value":"产品公告"}]}]}
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/smissive/km_smissive_main/kmSmissiveMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/smissive/mobile"
+				href="/km/smissive/"/>
+	    </operations>
+</portlet>
+
+
+
+<!-- 最新公文-->
+<portlet
+		id="km.smissive.latest"
+		name="{km-smissive:portlet.smissive.newDoc}"
+		module="{km-smissive:module.km.smissive}"
+		description="{portlet.list.desc1}" forSystem="cloud" varExtend="km.smissive.latest">
+		<source
+			id="km-smissive.latest"
+			format="data.list"
+			type="xml">
+			<code>
+				<![CDATA[
+				{
+					"url":"/data/sys-common/dataxml?s_bean=kmSmissivePortlet&fdCategoryId=!{cateid}&rowsize=!{rowsize}&scope=!{scope}"
+				}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"关于公司取得AIP软件产品证书 及多项计算机软件著作权证书的通知","created":1567042051410,"statusInfo":"普通","statusColor":"warning","cateHref":"/km/smissive/?categoryId=12d2c3fb579b4b5728d4aa24f209bb83","href":"/km/smissive/km_smissive_main/kmSmissiveMain.do?method=view&fdId=16cd71de0161cf43ddd5a9942d8be812","cateName":"公司公告","creator":{"fdId":"16bd146b6f73ea4d259357640808906c","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16bd146b6f73ea4d259357640808906c"}},{"text":"关于8月19号KK商店版更新异常问题解决情况&已解决项目清单更新","created":1566441294603,"statusInfo":"加急","statusColor":"info","cateHref":"/km/smissive/?categoryId=12d2c3d21d30861c83794a54f6caaa40","href":"/km/smissive/km_smissive_main/kmSmissiveMain.do?method=view&fdId=16cb3953f79419b6ad670f54c2f93760","cateName":"产品公告","creator":{"fdId":"14bc38a6055ff2d43dc2cc34624924f3","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=14bc38a6055ff2d43dc2cc34624924f3"}},{"text":"2019年中秋节放假通知","created":1566380163480,"statusColor":"warning","cateHref":"/km/smissive/?categoryId=12d2c3454ad90cc885dc9b04447b7c5a","href":"/km/smissive/km_smissive_main/kmSmissiveMain.do?method=view&fdId=16cb37c51b593c149c2ffd34afa8d596","statusInfo":"紧急","cateName":"行政公告","creator":{"fdId":"1234","fdName":"郑超","fdLoginName":"zhengc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=1234"}},{"text":"关于8月19号KK应用商店版更新异常说明","created":1566224230593,"statusColor":"error","cateHref":"/km/smissive/?categoryId=12d2c3d21d30861c83794a54f6caaa40","href":"/km/smissive/km_smissive_main/kmSmissiveMain.do?method=view&fdId=16ca99e5333bcc76548defe4b909b6f6","statusInfo":"特急","cateName":"产品公告","creator":{"fdId":"14bc38a6055ff2d43dc2cc34624924f3","fdName":"郑超","fdLoginName":"zhengc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=14bc38a6055ff2d43dc2cc34624924f3"}}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+	     	<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/smissive/km_smissive_main/kmSmissiveMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/smissive/mobile/index.jsp?cateid=!{cateid}&amp;docStatus=30"
+				href="/km/smissive/?categoryId=!{cateid}#cri.q=docStatus:30" />
+	    </operations>
+</portlet>
+	<!-- 最新公文 new-->
+	<portlet
+			id="km.smissive.latest.new"
+			name="{km-smissive:portlet.smissive.newDoc.new}"
+			module="{km-smissive:module.km.smissive}"
+			description="{portlet.list.desc1}" forSystem="cloud" varExtend="km.smissive.latest">
+		<source
+				id="km-smissive.latest.new"
+				format="data.fieldlist"
+				type="xml">
+			<code>
+				<![CDATA[
+				{
+					"url":"/data/sys-common/dataxml?s_bean=kmSmissivePortlet&fdCategoryId=!{cateid}&rowsize=!{rowsize}&scope=!{scope}&isNew=true"
+				}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"关于公司取得AIP软件产品证书 及多项计算机软件著作权证书的通知","created":{"text":1567042051410},"statusInfo":{"text":"普通","color":"warning"},"href":"/km/smissive/km_smissive_main/kmSmissiveMain.do?method=view&fdId=16cd71de0161cf43ddd5a9942d8be812","cateName":{"text":"公司公告","href":"/km/smissive/?categoryId=12d2c3fb579b4b5728d4aa24f209bb83"},"creator":{"fdId":"16bd146b6f73ea4d259357640808906c","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16bd146b6f73ea4d259357640808906c"}},{"text":"关于8月19号KK商店版更新异常问题解决情况&已解决项目清单更新","created":{"text":1566441294603},"statusInfo":{"text":"加急","color":"info"},"href":"/km/smissive/km_smissive_main/kmSmissiveMain.do?method=view&fdId=16cb3953f79419b6ad670f54c2f93760","cateName":{"text":"产品公告","href":"/km/smissive/?categoryId=12d2c3d21d30861c83794a54f6caaa40"},"creator":{"fdId":"14bc38a6055ff2d43dc2cc34624924f3","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=14bc38a6055ff2d43dc2cc34624924f3"}},{"text":"2019年中秋节放假通知","created":{"text":1566380163480},"href":"/km/smissive/km_smissive_main/kmSmissiveMain.do?method=view&fdId=16cb37c51b593c149c2ffd34afa8d596","statusInfo":{"text":"紧急","color":"warning"},"cateName":{"text":"行政公告","href":"/km/smissive/?categoryId=12d2c3454ad90cc885dc9b04447b7c5a"},"creator":{"fdId":"1234","fdName":"郑超","fdLoginName":"zhengc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=1234"}},{"text":"关于8月19号KK应用商店版更新异常说明","created":{"text":1566224230593},"href":"/km/smissive/km_smissive_main/kmSmissiveMain.do?method=view&fdId=16ca99e5333bcc76548defe4b909b6f6","statusInfo":{"text":"特急","color":"error"},"cateName":{"text":"产品公告","href":"/km/smissive/?categoryId=12d2c3d21d30861c83794a54f6caaa40"},"creator":{"fdId":"14bc38a6055ff2d43dc2cc34624924f3","fdName":"郑超","fdLoginName":"zhengc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=14bc38a6055ff2d43dc2cc34624924f3"}}]
+					]]>
+				</code>
+			</example>
+			<dataFields>
+				<code>
+					<![CDATA[
+						{
+						"base": {
+						"label": "基础信息",
+						"items": [
+						{"key": "statusInfo", "text": "状态"}
+						]
+						},
+						"info": {
+						"label": "辅助信息",
+						"items": [
+						{"key": "created", "text": "创建时间", "type": "timestamp"},
+						{"key": "creator", "text": "作者", "type": "person"},
+						{"key": "cateName", "text": "分类", "type": "string"}
+						]
+						},
+						"tag": {
+						"label": "标签",
+						"items": []
+						}
+						}
+					]]>
+				</code>
+			</dataFields>
+		</source>
+		<operations>
+			<operation
+					name="{operation.create}"
+					type="create"
+					href="/km/smissive/km_smissive_main/kmSmissiveMain.do?method=add" />
+			<operation
+					name="{operation.more}"
+					type="more"
+					mobileHref="/km/smissive/mobile/index.jsp?cateid=!{cateid}&amp;docStatus=30"
+					href="/km/smissive/?categoryId=!{cateid}#cri.q=docStatus:30" />
+		</operations>
+	</portlet>
+
+</root>

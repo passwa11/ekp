@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" 
+	xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:portal="http://www.landray.com.cn/schema/portal"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd
+	http://www.landray.com.cn/schema/portal
+	../../../sys/portal/portal.xsd">
+	<!-- 信息模板 -->
+	<template id="template.default"
+		name="{sys-portal:portlet.template.default}"
+		file="/sys/portal/template/default/index.jsp"
+		designer="/sys/portal/template/default/designer.jsp"
+		for="portal"
+		thumb="/sys/portal/template/default/index.png"
+		help="/sys/portal/template/default/help.jsp">
+	</template> 
+	
+	<!-- T型结构模板 -->
+	<template id="template.t"
+		name="{sys-portal:portlet.template.t}"
+		file="/sys/portal/template/t/index.jsp"
+		designer="/sys/portal/template/t/designer.jsp"
+		for="portal"
+		thumb="/sys/portal/template/t/index.png"
+		help="/sys/portal/template/t/help.jsp">
+	</template>
+	
+	<!-- 个人中心模板 -->
+	<template id="template.person"
+		name="{sys-portal:portlet.template.person}"
+		file="/sys/portal/template/person/index.jsp"
+		designer="/sys/portal/template/person/designer.jsp"
+		for="portal"
+		thumb="/sys/portal/template/person/index.png"
+		help="/sys/portal/template/person/help.jsp">
+	</template>
+
+	<!-- 单列布局-通栏布局 -->
+	<template id="template.full_column"
+		name="{sys-portal:portlet.template.full_column}"
+		file="/sys/portal/template/layout/full_column/index.jsp"
+		designer="/sys/portal/template/layout/full_column/designer.jsp"
+		for="portal"
+		thumb="/sys/portal/template/layout/full_column/index.png"
+		>
+	</template>
+
+	<!-- T型 banner 两侧自适应  -->
+	<template id="template.t_banner"
+		name="{sys-portal:portlet.template.t_banner}"
+		file="/sys/portal/template/layout/t_banner/index.jsp"
+		designer="/sys/portal/template/layout/t_banner/designer.jsp"
+		for="portal"
+		thumb="/sys/portal/template/layout/t_banner/index.png"
+		>
+	</template>
+	  
+	<!-- 匿名门户默认模板 -->
+	<template id="template.anonymous.default"
+		name="{sys-portal:portlet.template.default.anonymous}"
+		file="/sys/portal/template/anonymous/index.jsp"
+		designer="/sys/portal/template/anonymous/designer.jsp"
+		for="anonymous"
+		thumb="/sys/portal/template/default/index.png"
+		help="/sys/portal/template/default/help.jsp">
+	</template>
+
+	<!-- 匿名门户-单列布局-通栏布局 -->
+	<template id="template.anonymous.full_column"
+		name="{sys-portal:portlet.template.full_column.anonymous}"
+		file="/sys/portal/template/anonymous/layout/full_column/index.jsp"
+		designer="/sys/portal/template/anonymous/layout/full_column/designer.jsp"
+		for="anonymous"
+		thumb="/sys/portal/template/layout/full_column/index.png"
+		>
+	</template>
+
+	<!-- 匿名门户T型 banner 两侧自适应  -->
+	<template id="template.anonymous.t_banner"
+		name="{sys-portal:portlet.template.t_banner.anonymous}"
+		file="/sys/portal/template/anonymous/layout/t_banner/index.jsp"
+		designer="/sys/portal/template/anonymous/layout/t_banner/designer.jsp"
+		for="anonymous"
+		thumb="/sys/portal/template/layout/t_banner/index.png"
+		>
+	</template>
+	  
+	<portal:header 
+		id="header.menu" 
+		name="{sys-portal:portlet.header.menu}"
+		file="/sys/portal/template/menu/header.jsp"
+		for="portal"
+		thumb="/sys/portal/template/menu/header.jpg"
+		help="">
+		<portal:vars>
+			<var key="showPortal" name="{sys-portal:portlet.header.var.switch}" kind="enumValue" default="1">
+				{"values":[{"text":"{sys-portal:portlet.header.var.no}", "value":"0"},{"text":"{sys-portal:portlet.theader.var.isSwitchPortal}", "value":"1"},{"text":"{sys-portal:portlet.theader.var.isSwitchPortalPage}", "value":"2"}],"showType":"radio","help":"{sys-portal:portlet.header.var.isswitch}"}
+			</var>
+			<var key="showSearch" name="{sys-portal:portlet.header.var.search}" kind="enumValue" default="true">
+				{"values":[{"text":"{sys-portal:portlet.header.var.yes}", "value":"true"}],"showType":"checkbox","help":"{sys-portal:portlet.header.var.ishowsearch}"}
+			</var>
+			<var key="showPerson" name="{sys-portal:portlet.header.var.person}" kind="enumValue" default="true">
+				{"values":[{"text":"{sys-portal:portlet.header.var.yes}", "value":"true"}],"showType":"checkbox","help":"{sys-portal:portlet.header.var.isperson}"}
+			</var>
+			<var key="showFavorite" name="{sys-portal:portlet.header.var.bookmark}" kind="enumValue" default="true">
+				{"values":[{"text":"{sys-portal:portlet.header.var.yes}", "value":"true"}],"showType":"checkbox","help":"{sys-portal:portlet.header.var.isbookmark}"}
+			</var>
+			<var key="showNotify" name="{sys-portal:portlet.header.var.notify}" kind="enumValue" default="true">
+				{"values":[{"text":"{sys-portal:portlet.header.var.yes}", "value":"true"}],"showType":"checkbox","help":"{sys-portal:portlet.header.var.isnotify}"}
+			</var>
+			<var key="refreshTime" name="{sys-portal:portlet.header.var.refresh}" kind="int">
+				{"help":"{sys-portal:portlet.header.var.isrefresh}","default":"0"}
+			</var>
+			
+			<var key="showWarningreport" name="{sys-portal:portlet.header.var.warningreport}" kind ="enumValue" default="true">
+				{"values":[{"text":"{sys-portal:portlet.header.var.yes}", "value":"true"}],"showType":"checkbox","help":"{sys-portal:portlet.header.var.iswarningreport}"}
+			</var>
+			<var key="showYworkCode" name="{third-ywork:ywork.index.code.wxoffice}" kind ="enumValue" default="false">
+                {"values":[{"text":"{sys-portal:portlet.header.var.yes}", "value":"true"}],"showType":"checkbox","help":"{third-ywork:ywork.index.code.wxoffice.show}"}
+            </var>			
+            <var key="navigationSettings" name="{sys-portal:portlet.header.var.navigationSettings}" kind="custom" default="">
+				{"file":'/sys/portal/varkind/navigationSettings.jsp'}
+			</var>
+		</portal:vars>
+	</portal:header>
+	
+	<!-- 匿名默认页眉 @author 吴进 by 20191112 -->
+	<portal:header 
+		id="header.anonymous.default" 
+		name="{sys-portal:portlet.header.default5.anonymous}"
+		file="/sys/portal/template/anonymous/theader.jsp"
+		for="anonymous"
+		thumb="/sys/portal/template/anonymous/theader.png"
+		help="">
+		<portal:vars>
+			<var key="showPortal" name="{sys-portal:portlet.header.var.switch}" kind="enumValue" default="1">
+				{"values":[{"text":"{sys-portal:portlet.header.var.no}", "value":"0"},{"text":"{sys-portal:portlet.theader.var.isSwitchPortal}", "value":"1"},{"text":"{sys-portal:portlet.theader.var.isSwitchPortalPage}", "value":"2"}],"showType":"radio","help":"{sys-portal:portlet.header.var.isswitch}"}
+			</var>
+		</portal:vars>
+	</portal:header>
+	
+	<!-- 匿名门户经典页眉 -->
+	<portal:header 
+		id="header.anonymous.menu" 
+		name="{sys-portal:portlet.header.menu.anonymous}"
+		file="/sys/portal/template/anonymous/menu/header.jsp"
+		for="anonymous"
+		thumb="/sys/portal/template/anonymous/menu/header.jpg"
+		help="">
+		<portal:vars>
+			<var key="showPortal" name="{sys-portal:portlet.header.var.switch}" kind="enumValue" default="true">
+				{"values":[{"text":"{sys-portal:portlet.header.var.yes}", "value":"true"}],"showType":"checkbox","help":"{sys-portal:portlet.header.var.isswitch}"}
+			</var>
+			<!-- <var key="showSearch" name="{sys-portal:portlet.header.var.search}" kind="enumValue" default="true">
+				{"values":[{"text":"{sys-portal:portlet.header.var.yes}", "value":"true"}],"showType":"checkbox","help":"{sys-portal:portlet.header.var.ishowsearch}"}
+			</var> -->
+			<var key="navigationSettings" name="{sys-portal:portlet.header.var.navigationSettings}" kind="custom" default="">
+				{"file":'/sys/portal/varkind/navigationSettings.jsp'}
+			</var>
+		</portal:vars>
+	</portal:header>
+	
+	<portal:footer
+		id="footer.default" 
+		name="{sys-portal:portlet.footer.default}"
+		file="/sys/portal/template/default/footer.jsp"
+		for="portal"	
+		thumb="/sys/portal/template/default/footer.jpg"
+		help="">
+	</portal:footer>
+	
+	<!-- 匿名默认页脚 @author 吴进 by 20191112 -->
+	<portal:footer
+		id="footer.anonymous.default"
+		name="{sys-portal:portlet.footer.default.anonymous}"
+		file="/sys/portal/template/anonymous/footer.jsp"
+		for="anonymous"	
+		thumb="/sys/portal/template/anonymous/footer.png"
+		help="">
+	</portal:footer>
+</root>

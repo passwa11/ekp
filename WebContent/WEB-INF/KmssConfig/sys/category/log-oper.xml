@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+    <!-- 全局分类机制-->
+    <!-- com.landray.kmss.sys.category.model.SysCategoryMain -->
+	<logset>
+        <oper
+            id="SysCategoryMainAction"
+            desc=""
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.category.model.SysCategoryMain"
+            action="/sys/category/sys_category_main/sysCategoryMain.do">
+            <ignoreFields>authNotReaderFlag</ignoreFields>
+            <query
+                method="savecopy"
+                logPoint="Base_UrlParam;Service_Add" 
+                messageKey="button.save"/>
+            <query
+                method="copy"
+                logPoint="Base_UrlParam;Action_Find" 
+                messageKey="button.copy"/>
+        </oper>
+        <oper
+            id="SysCategoryPropertyAction"
+            desc=""
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.category.model.SysCategoryProperty"
+            action="/sys/category/sys_category_property/sysCategoryProperty.do">
+            <query
+                method="copy"
+                logPoint="Base_UrlParam;Action_Find" 
+                messageKey="button.copy"/>
+        </oper>
+        <oper
+            id="SysCategoryConfigAction"
+            desc=""
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.category.model.SysCategoryConfig"
+            action="/sys/category/sys_category_config/sysCategoryConfig.do">
+            <query
+                method="saveConfig"
+                logPoint="Base_UrlParam;Service_Add" 
+                messageKey="button.save"/>
+        </oper>
+        
+	</logset>
+</log-oper>

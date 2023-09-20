@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 分发服务加载器 -->
+	<bean
+		id="distributeLoader"
+		class="com.landray.kmss.sys.lbpm.engine.dispatcher.DefaultDistributeLoader">
+		<property name="flowDriver">
+			<ref bean="flowDriver" />
+		</property>
+		<property name="queueService">
+			<ref bean="lbpmProcessQueueService" />
+		</property>
+	</bean>
+
+	<!-- 工作服务器群集调度配置服务 -->
+	<bean
+		id="workerDispatcher"
+		class="com.landray.kmss.sys.lbpm.engine.dispatcher.WorkerDispatcher">
+		<property name="dispatcherLoader">
+			<ref bean="distributeLoader" />
+		</property>
+	</bean>
+
+
+	<!-- 死锁群集调度配置服务
+	<bean id="proLbpmDeadlockDispatcher"
+		  class="com.landray.kmss.sys.lbpm.deadlock.service.spring.ProLbpmDeadlockDispatcher">
+	</bean> -->
+
+	<bean
+			id="proLbpmDeadlockServiceImpTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.sys.lbpm.deadlock.service.spring.ProLbpmDeadlockServiceImp">
+		<property name="accessManager">
+			<ref bean="accessManager" />
+		</property>
+		<property name="processQueueService">
+			<ref bean="lbpmProcessQueueService" />
+		</property>
+		<property name="distributeLoader">
+			<ref bean="distributeLoader" />
+		</property>
+	</bean>
+
+	<bean
+			id="proLbpmDeadlockService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="proLbpmDeadlockServiceImpTarget" />
+		</property>
+
+	</bean>
+
+
+</beans>

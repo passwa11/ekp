@@ -1,0 +1,34 @@
+本目录中的“kind.json”和“render.json”原路径是：com.landray.kmss.sys.portal.cloud.resource，为方便项自定义，所以将这2个文件迁移到此处。
+
+文件说明：
+1. kind.json：没有变化，主要用于数据类型的绑定
+2. render.json：已优化，主要用于绑定数据源和呈现
+	原逻辑是固定写法，不支持自定义扩展，原文件内容如下：
+		{
+			"key1": "value1",
+			"key2": "value2",
+			.
+			.
+			.
+			"keyN": "valueN"
+		}
+	为了方便项目自定义扩展，现逻辑优化为可扩展性，文件内容如下：
+		{
+			"system": {							// 原文件内容，系统默认值（勿改勿删）
+				"key1": "value1",
+				"key2": "value2",
+				.
+				.
+				.
+				"keyN": "valueN"
+			},
+			"custom": {							// 自定义扩展，当此处的配置与系统默认有冲突（KEY相同），会优先取自定义数据，以达到覆盖的目的，项目完全可以自由定义自己的绑定规则
+				"key1": "value1",
+				"key2": "value2",
+				.
+				.
+				.
+				"keyN": "valueN"
+			}
+		}
+

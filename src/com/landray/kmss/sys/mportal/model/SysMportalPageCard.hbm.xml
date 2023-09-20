@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.mportal.model.SysMportalPageCard"
+		table="sys_mportal_page_card">
+		<id name="fdId" column="fd_id" length="36">
+			<generator class="assigned" />
+		</id>
+
+		<property name="fdName" column="fd_name" update="true"
+			insert="true" length="200" not-null="false" />
+
+
+		<property name="fdOrder" column="fd_order" update="true"
+			insert="true" length="36" not-null="false" />
+			
+		<property name="fdMargin" column="fd_margin" update="true"
+			insert="true" length="1" not-null="false" />
+
+
+		<many-to-one name="sysMportalPage" column="fd_page_id"
+			insert="true" update="true"  />
+
+		<many-to-one name="sysMportalCard" column="fd_card_id"
+			insert="true" update="true"  />
+
+	</class>
+</hibernate-mapping>

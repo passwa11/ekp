@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+
+	<extension-point id="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" kind="string" required="true">
+				<description>中文显示资源名</description>
+			</param>
+			<param name="moduleKey" kind="string" required="false">
+				<description>所属模块名称</description>
+			</param>
+			<param name="className" kind="string" required="true">
+				<description>操作类名</description>
+			</param>
+			<param name="operateMethod" kind="string" required="true">
+				<description>方法名</description>
+			</param>
+			<param name="modelName" kind="string" required="true">
+				<description>modelName</description>
+			</param>
+			<param name="type" kind="int" required="false">
+				<description>日志类型：1:文档维护,2:分类维护,3:文档应用,4:问答维护,5:搜索,6:其它,7:爱问回复日志,8:后台配置日志</description>
+			</param>
+			<param name="logServiceBean" kind="string" required="false">
+				<description>日志处理bean,自定义写日志</description>
+			</param>
+			<param name="modelKey" kind="string" required="false">
+				<description>所属模型名称</description>
+			</param>
+			<description>日志类型</description>
+		</item>
+		<item name="log.module">
+			<param name="fdKey" required="true" kind="string">
+				<description>模块key </description>
+			</param>
+			<param name="moduleName" required="true" kind="string">
+				<description>模块名称 </description>
+			</param>
+			<param name="categoryField" kind="string" required="false">
+				<description>日志内容所属分类字段</description>
+			</param>
+			<param name="moduleCategory" required="false" kind="string">
+				<description>模块分类 </description>
+			</param>
+			<description>注册统计日志的模块</description>
+		</item>
+		<description>配置KMS日志</description>
+	</extension-point>
+	
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="kms-log:kmsLogType.read"/>
+			<param name="className" value="com.landray.kmss.sys.readlog.service.spring.SysReadLogServiceImp"/>
+			<param name="operateMethod" value="read"/>
+			<param name="modelName" value="com.landray.kmss.kms.train.model.KmsTrainPlan,com.landray.kmss.km.doc.model.KmDocKnowledge,com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,com.landray.kmss.kms.wiki.model.KmsWikiMain,com.landray.kmss.kms.kmaps.model.KmsKmapsMain,com.landray.kmss.kms.kmtopic.model.KmsKmtopicMain,com.landray.kmss.kms.learn.model.KmsLearnMain,com.landray.kmss.kms.learn.model.KmsLearnCourseware,com.landray.kmss.kms.exam.model.KmsExamUnifiedActivity,com.landray.kmss.kms.exam.model.KmsExamUnifiedTemplate,com.landray.kmss.kms.kem.model.KmsKemMain"/>
+			<param name="type" value="3"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="kms-log:kmsLogType.introduce"/>
+			<param name="className" value="com.landray.kmss.sys.introduce.service.spring.SysIntroduceMainServiceImp"/>
+			<param name="operateMethod" value="introduce"/>
+			<param name="modelName" value="com.landray.kmss.km.doc.model.KmDocKnowledge,com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,com.landray.kmss.kms.wiki.model.KmsWikiMain,com.landray.kmss.kms.kmaps.model.KmsKmapsMain,com.landray.kmss.kms.kmtopic.model.KmsKmtopicMain,com.landray.kmss.kms.learn.model.KmsLearnMain,com.landray.kmss.kms.learn.model.KmsLearnCourseware,com.landray.kmss.kms.exam.model.KmsExamUnifiedActivity,com.landray.kmss.kms.exam.model.KmsExamUnifiedTemplate,com.landray.kmss.kms.awiki.model.KmsAwikiMain"/>
+			<param name="type" value="3"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="kms-log:kmsLogType.evaluation"/>
+			<param name="className" value="com.landray.kmss.sys.evaluation.service.spring.SysEvaluationMainServiceImp"/>
+			<param name="operateMethod" value="evaluation"/>
+			<param name="modelName" value="com.landray.kmss.kms.train.model.KmsTrainPlan,com.landray.kmss.km.doc.model.KmDocKnowledge,com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,com.landray.kmss.kms.wiki.model.KmsWikiMain,com.landray.kmss.kms.kmaps.model.KmsKmapsMain,com.landray.kmss.kms.kmtopic.model.KmsKmtopicMain,com.landray.kmss.kms.learn.model.KmsLearnMain,com.landray.kmss.kms.learn.model.KmsLearnCourseware,com.landray.kmss.kms.exam.model.KmsExamUnifiedActivity,com.landray.kmss.kms.exam.model.KmsExamUnifiedTemplate,com.landray.kmss.kms.awiki.model.KmsAwikiMain"/>
+			<param name="type" value="3"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="kms-log:kmsLogType.correction"/>
+			<param name="className" value="com.landray.kmss.kms.common.service.spring.KmsCommonDocErrorCorrectionServiceImp"/>
+			<param name="operateMethod" value="correction"/>
+			<param name="modelName" value="com.landray.kmss.km.doc.model.KmDocKnowledge,com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,com.landray.kmss.kms.wiki.model.KmsWikiMain,com.landray.kmss.kms.awiki.model.KmsAwikiMain"/>
+			<param name="type" value="3"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.config.loader.extend">
+		<item name="frameworkExtend">
+			<param name="fileSuffix" value="log"></param>
+		</item>
+	</extension>
+	
+	
+	<extension point="com.landray.kmss.sys.webservice2">
+		<item name="registry">
+			<param name="serviceName" value="kms日志库webserivce的服务" />
+			<param name="serviceClass"
+				value="com.landray.kmss.kms.log.webservice.service.IKmsMaintainLogWSService" />
+			<param name="serviceBean" value="kmsMaintainLogWSService" />
+			<param name="serviceDoc" value="/kms/log/webservice/kmsLog_help.jsp" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="sys-simplecategory:sysSimpleCategory.chg.button"/>
+			<param name="className" value="com.landray.kmss.sys.simplecategory.service.spring.CateChgServiceImp"/>
+			<param name="operateMethod" value="updateChgCate"/>
+			<param name="modelName" value="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,com.landray.kmss.kms.wiki.model.KmsWikiMain,com.landray.kmss.kms.ask.model.KmsAskTopic,com.landray.kmss.kms.kmaps.model.KmsKmapsMain,com.landray.kmss.kms.learn.model.KmsLearnMain,com.landray.kmss.kms.learn.model.KmsLearnCourseware,com.landray.kmss.kms.exam.model.KmsExamUnifiedTemplate,com.landray.kmss.kms.exam.model.KmsExamUnifiedActivity,com.landray.kmss.kms.exam.model.KmsExamTopic,com.landray.kmss.kms.kem.model.KmsKemMain,com.landray.kmss.kms.train.model.KmsTrainMain,com.landray.kmss.kms.train.model.KmsTrainPlan"/>
+			<param name="type" value="3"/>
+			<param name="logServiceBean" value="kmsLogCateChangeProxy"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="sys-right:right.button.doc.changeRight.view"/>
+			<param name="className" value="com.landray.kmss.sys.right.service.spring.ChangeRightServiceImp"/>
+			<param name="operateMethod" value="updateDocRight"/>
+			<param name="modelName" value="com.landray.kmss.kms.knowledge.model.KmsKnowledgeBaseDoc,com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,com.landray.kmss.kms.wiki.model.KmsWikiMain,com.landray.kmss.kms.kmaps.model.KmsKmapsMain,com.landray.kmss.kms.kem.model.KmsKemMain,com.landray.kmss.kms.kmtopic.model.KmsKmtopicMain,com.landray.kmss.kms.ask.model.KmsAskTopic,com.landray.kmss.kms.expert.model.KmsExpertInfo,com.landray.kmss.kms.socialdoc.model.KmsSocialdocMain,com.landray.kmss.kms.kmservice.model.KmsKmserviceMain,com.landray.kmss.kms.cowriting.model.KmsCowritingTemplate,com.landray.kmss.kms.lmap.model.KmsLmapMain,com.landray.kmss.kms.lmap.model.KmsLmapTmpl,com.landray.kmss.kms.learn.model.KmsLearnMain,com.landray.kmss.kms.learn.model.KmsLearnCourseware,com.landray.kmss.kms.train.model.KmsTrainPlan,com.landray.kmss.kms.train.model.KmsTrainMain,com.landray.kmss.kms.exam.model.KmsExamUnifiedTemplate,com.landray.kmss.kms.exam.model.KmsExamUnifiedActivity,com.landray.kmss.kms.lecturer.model.KmsLecturerMain,com.landray.kmss.kms.diploma.model.KmsDiploma,com.landray.kmss.third.live.polyv.model.ThirdLivePolyvMain"/>
+			<param name="type" value="3"/>
+			<param name="logServiceBean" value="kmsLogRightDocChangeProxy"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="sys-right:right.button.category.changeRight.view"/>
+			<param name="className" value="com.landray.kmss.sys.right.service.spring.ChangeRightServiceImp"/>
+			<param name="operateMethod" value="updateCateRight"/>
+			<param name="modelName" value="com.landray.kmss.km.doc.model.KmDocTemplate,com.landray.kmss.kms.ask.model.KmsAskCategory,com.landray.kmss.kms.expert.model.KmsExpertType,com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory,com.landray.kmss.kms.kmaps.model.KmsKmapsCategory,com.landray.kmss.kms.kmtopic.model.KmsKmtopicCategory,com.landray.kmss.kms.socialdoc.model.KmsSocialdocCategory,com.landray.kmss.kms.kem.model.KmsKemCategory,com.landray.kmss.kms.kmservice.model.KmsKmserviceCategory,com.landray.kmss.kms.cowriting.model.KmsCowritingTCategory,com.landray.kmss.kms.lmap.model.KmsLmapCategory,com.landray.kmss.kms.lmap.model.KmsLmapTmplCategory,com.landray.kmss.kms.learn.model.KmsLearnCategory,com.landray.kmss.kms.learn.model.KmsLearnCoursewareCategory,com.landray.kmss.kms.train.model.KmsTrainCategory,com.landray.kmss.kms.train.model.KmsTrainPlanCategory,com.landray.kmss.kms.exam.model.KmsExamCategory,com.landray.kmss.kms.exam.model.KmsExamActiCategory,com.landray.kmss.kms.lecturer.model.KmsLecturerCategory,com.landray.kmss.kms.diploma.model.KmsDiplomaCategory,com.landray.kmss.kms.tcourse.model.KmsTcourseCategory,com.landray.kmss.third.live.polyv.model.ThirdLivePolyvCategory"/>
+			<param name="type" value="2"/>
+			<param name="logServiceBean" value="kmsLogRightDocChangeProxy"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="kms-log:kmsLog.button.bookMark"/>
+			<param name="className" value="com.landray.kmss.sys.bookmark.service.spring.SysBookmarkMainServiceImp"/>
+			<param name="operateMethod" value="bookmark"/>
+			<param name="modelName" value="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,com.landray.kmss.kms.wiki.model.KmsWikiMain,com.landray.kmss.kms.kmaps.model.KmsKmapsMain,com.landray.kmss.kms.kmtopic.model.KmsKmtopicMain,com.landray.kmss.kms.learn.model.KmsLearnMain,com.landray.kmss.kms.learn.model.KmsLearnCourseware,com.landray.kmss.kms.exam.model.KmsExamUnifiedActivity,com.landray.kmss.kms.exam.model.KmsExamUnifiedTemplate,com.landray.kmss.kms.awiki.model.KmsAwikiMain"/>
+			<param name="type" value="3"/>
+			<param name="logServiceBean" value="kmsLogBookmarkProxy"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="kms-log:kmsLog.button.praise"/>
+			<param name="className" value="com.landray.kmss.sys.praise.service.spring.SysPraiseAndNegativeServiceImp"/>
+			<param name="operateMethod" value="praise"/>
+			<param name="modelName" value="com.landray.kmss.kms.kmtopic.model.KmsKmtopicMain,com.landray.kmss.kms.learn.model.KmsLearnMain,com.landray.kmss.kms.learn.model.KmsLearnCourseware,com.landray.kmss.kms.exam.model.KmsExamUnifiedActivity,com.landray.kmss.kms.exam.model.KmsExamUnifiedTemplate"/>
+			<param name="type" value="3"/>
+			<param name="logServiceBean" value="kmsLogBaseProxy"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="kms-log:kmsLog.button.editTag"/>
+			<param name="className" value="com.landray.kmss.sys.tag.service.spring.SysTagMainServiceImp"/>
+			<param name="operateMethod" value="updateTag"/>
+			<param name="modelName" value="com.landray.kmss.kms.kmaps.model.KmsKmapsMain,com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,com.landray.kmss.kms.wiki.model.KmsWikiMain,com.landray.kmss.kms.awiki.model.KmsAwikiMain"/>
+			<param name="type" value="3"/>
+			<param name="logServiceBean" value="kmsLogUpdateTagsProxy"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="kms-log:kmsLogType.downloadAtt"/>
+			<param name="className" value="com.landray.kmss.sys.attachment.service.spring.SysAttDownloadLogServiceImp"/>
+			<param name="operateMethod" value="downloadAtt"/>
+			<param name="modelName" value="com.landray.kmss.kms.train.model.KmsTrainPlan,com.landray.kmss.km.doc.model.KmDocKnowledge,com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,com.landray.kmss.kms.wiki.model.KmsWikiMain,com.landray.kmss.kms.kmaps.model.KmsKmapsMain,com.landray.kmss.kms.kmtopic.model.KmsKmtopicMain,com.landray.kmss.kms.learn.model.KmsLearnMain,com.landray.kmss.kms.learn.model.KmsLearnCourseware,com.landray.kmss.kms.exam.model.KmsExamUnifiedActivity,com.landray.kmss.kms.exam.model.KmsExamUnifiedTemplate,com.landray.kmss.kms.kem.model.KmsKemMain"/>
+			<param name="type" value="3"/>
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.kms.log.transfer.KmsLogPartitionTransfer" />
+			<param
+				name="name"
+				value="KMS日志库分表信息迁移" />
+			<param
+				name="path"
+				value="/kms/log/" />
+			<param
+				name="check"
+				value="com.landray.kmss.kms.log.transfer.KmsLogPartitionTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.kms.log.transfer.KmsLogPartitionTransferTask" />
+			<param
+				name="description"
+				value="将kms_log_app里面现有的数据同步到对应的日志月表中"/>
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.kms.log.transfer.KmsLogContextCategoryTransfer" />
+			<param
+				name="name"
+				value="KMS日志库分类信息表内容修复" />
+			<param
+				name="path"
+				value="/kms/log/" />
+			<param
+				name="check"
+				value="com.landray.kmss.kms.log.transfer.KmsLogContextCategoryTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.kms.log.transfer.KmsLogContextCategoryTransferTask" />
+			<param
+				name="description"
+				value="修复由于分类转移引发的kms日志库相关分类信息错误的问题"/>
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.kms.log.transfer.KmsLogLearnRemoveTransfer" />
+			<param
+				name="name"
+				value="KMS日志库学习信息优化" />
+			<param
+				name="path"
+				value="/kms/log/" />
+			<param
+				name="check"
+				value="com.landray.kmss.kms.log.transfer.KmsLogLearnRemoveTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.kms.log.transfer.KmsLogLearnRemoveTransferTask" />
+			<param
+				name="description"
+				value="优化学习任务个人数据"/>
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.kms.log.transfer.KmsLogDocContextTransfer" />
+			<param
+				name="name"
+				value="KMS日志库文档类信息表内容修复" />
+			<param
+				name="path"
+				value="/kms/log/" />
+			<param
+				name="check"
+				value="com.landray.kmss.kms.log.transfer.KmsLogDocContextTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.kms.log.transfer.KmsLogDocContextTransferTask" />
+			<param
+				name="description"
+				value="修复由于知识仓库内外部作者切换引发的kms日志库相关文档信息错误的问题"/>
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.kms.log.transfer.KmsLearnMainInfoTransfer" />
+			<param
+				name="name"
+				value="KMS日志库课程信息修复" />
+			<param
+				name="path"
+				value="/kms/log/" />
+			<param
+				name="check"
+				value="com.landray.kmss.kms.log.transfer.KmsLearnMainInfoTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.kms.log.transfer.KmsLearnMainInfoTransferTask" />
+			<param
+				name="description"
+				value="修复由于旧版日志获取导致的部分数据缺失的问题"/>
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.kms.log.transfer.KmsLogLearnActiTransfer" />
+			<param
+				name="name"
+				value="KMS日志库学习任务日志信息修复" />
+			<param
+				name="path"
+				value="/kms/log/" />
+			<param
+				name="check"
+				value="com.landray.kmss.kms.log.transfer.KmsLogLearnActiTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.kms.log.transfer.KmsLogLearnActiTransferTask" />
+			<param
+				name="description"
+				value="日志库升级，修复对旧的学习任务信息的兼容"/>
+		</item>
+	</extension>
+</plugin>

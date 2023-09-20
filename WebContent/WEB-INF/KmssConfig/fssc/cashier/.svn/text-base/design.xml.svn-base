@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/fssc/cashier/" 
+        messageKey="fssc-cashier:module.fssc.cashier" 
+        defaultValidator="roleValidator(role=ROLE_FSSCCASHIER_DEFAULT)">
+        <roles>
+            ROLE_FSSCCASHIER_DEFAULT;
+            ROLE_FSSCCASHIER_SETTING;
+            ROLE_FSSCCASHIER_EDIT;
+            ROLE_FSSCCASHIER_VIEW;
+            ROLE_FSSCCASHIER_DELETE;
+            ROLE_FSSCCASHIER_REFRESH;
+        </roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_FSSCCASHIER_SETTING)"/>
+        <request 
+            path="fssc_cashier_payment/fsscCashierPayment.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.cashier.model.FsscCashierPayment"
+			defaultValidator="roleValidator(role=ROLE_FSSCCASHIER_DEFAULT)">
+            <query
+                queryString="method=view"
+                validator="roleValidator(role=ROLE_FSSCCASHIER_VIEW)|fsscCashierHanderAuthValidator()"/>
+            <query
+                queryString="method=edit"
+                validator="roleValidator(role=ROLE_FSSCCASHIER_EDIT)"/>
+            <query
+                queryString="method=delete"
+                validator="fsscCashierStatusAuthValidator()&amp;roleValidator(role=ROLE_FSSCCASHIER_DELETE)"/>
+            <query
+                queryString="method=deleteall"
+                validator="roleValidator(role=ROLE_FSSCCASHIER_DELETE)"/>
+            <query
+                queryString="method=payment"
+                validator="fsscCashierCmbHanderAuthValidator()"/>
+        </request>
+        <request
+            path="fssc_cashier_model_config/fsscCashierModelConfig.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.cashier.model.FsscCashierModelConfig"
+            defaultValidator="roleValidator(role=ROLE_FSSCCASHIER_SETTING)">
+            <query
+                queryString="method=view"
+                validator="roleValidator(role=ROLE_FSSCCASHIER_SETTING)"/>
+        </request>
+        <request
+            path="fssc_cashier_rule_config/fsscCashierRuleConfig.do*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.cashier.model.FsscCashierRuleConfig"
+            defaultValidator="roleValidator(role=ROLE_FSSCCASHIER_SETTING)">
+            <query
+                queryString="method=view"
+                validator="roleValidator(role=ROLE_FSSCCASHIER_SETTING)"/>
+        </request>
+    </module>
+    <module
+        urlPrefix="/sys/number/">
+        <request
+            path="sys_number_main/sysNumberMain*">
+            <query
+                queryString="modelName=com.landray.kmss.fssc.cashier.model.FsscCashierPaymentDetail"
+                validator="roleValidator(role=ROLE_FSSCCASHIER_SETTING)"/>
+        </request>
+    </module>
+     <!-- 查询招商的付款状态 -->
+    <quartz
+        messageKey="fssc-cashier:fsscCashierQueryCmbPaymentService.quartz" 
+    	jobService="fsscCashierQueryCmbPaymentService" 
+    	jobMethod="queryCmbPayment" 
+    	cronExpression="0 0/5 13 * * ?"
+		enable="false"
+		description="fssc-cashier:fsscCashierQueryCmbPaymentService.description" 
+	/>
+	<!-- 查询中行的付款状态 -->
+	<quartz
+        messageKey="fssc-cashier:fsscCashierQueryBocPaymentService.quartz" 
+    	jobService="fsscCashierQueryBocPaymentService" 
+    	jobMethod="queryBocPayment" 
+    	cronExpression="0 0/5 13 * * ?"
+		enable="false"
+		description="fssc-cashier:fsscCashierQueryBocPaymentService.description" 
+	/>
+	<!-- 查询招行CBS的付款状态 -->
+	<quartz
+        messageKey="fssc-cashier:fsscCashierQueryCbsPaymentService.quartz" 
+    	jobService="fsscCashierQueryCbsPaymentService" 
+    	jobMethod="queryCbsPayment" 
+    	cronExpression="0 0/5 13 * * ?"
+		enable="false"
+		description="fssc-cashier:fsscCashierQueryCbsPaymentService.description" 
+	/>
+
+    <homePage 
+        messageKey="fssc-cashier:module.fssc.cashier" 
+        urlPrefix="fssc/cashier" 
+        url="/fssc/cashier/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/fssc/cashier/tree.jsp"/>
+    <profileConfig
+        key="fssc/cashier"
+        messageKey="{fssc-cashier:module.fssc.cashier}"
+        url="/sys/profile/moduleindex.jsp?nav=/fssc/cashier/tree.jsp"
+        icon="km_comminfo"
+        type="fs"
+        description="{fssc-cashier:module.fssc.cashier.description}"/>
+        
+</configs>

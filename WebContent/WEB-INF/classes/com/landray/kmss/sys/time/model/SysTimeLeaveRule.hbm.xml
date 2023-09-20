@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.time.model.SysTimeLeaveRule"
+		table="sys_time_leave_rule">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+		
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+			
+		<property
+			name="fdSerialNo"
+			column="fd_serial_no"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdStatType"
+			column="fd_stat_type"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdIsAvailable"
+			column="fd_is_avail"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdOrder"
+			column="fd_order"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdStatDayType"
+			column="fd_stat_day_type"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdDayConvertTime"
+			column="fd_day_convt_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="docAlterTime"
+			column="doc_alter_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdIsAmount"
+			column="fd_is_amount"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdAmountType"
+			column="fd_amount_type"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdAutoAmount"
+			column="fd_auto_amount"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdAmountCalType"
+			column="fd_amount_cal_type"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdAmountCalRule"
+			column="fd_amount_cal_rule"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<list
+			name="sysTimeLeaveRuleList"
+			cascade="all-delete-orphan"
+			lazy="true">
+			<key column="fd_rules_id" />
+			<index column="position"></index>
+			<one-to-many
+				class="com.landray.kmss.sys.time.model.SysTimeLeaveRuleList" />
+		</list>
+			
+		<property
+			name="fdValidDays"
+			column="fd_valid_days"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdOvertimeLeaveFlag"
+			column="fd_overtime_leave_flag"
+			update="true"
+			insert="true"
+			not-null="false" />	
+		<many-to-one
+			name="docCreator"
+			column="doc_creator_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+			
+		<many-to-one
+			name="docAlteror"
+			column="doc_alteror_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+			
+	</class>
+</hibernate-mapping>

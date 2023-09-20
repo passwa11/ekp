@@ -1,0 +1,95 @@
+define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/dom-construct", 
+         "dojo/dom-style", "dojo/dom-attr","dojo/dom-class", "dojo/dom-geometry", "dojo/query",
+         "mui/form/_InputBase","mui/form/DateTime"], 
+		function(declare, lang, domConstruct, domStyle,  domAttr, domClass ,domGeometry, query ,_InputBase,DateTime) {
+	var Reminder = declare("mui.form.validate.Reminder", null, {
+		//提示宿主dom对象
+		element : null,
+		
+		
+		//提示信息
+		error : null,
+		
+		//对应参数
+		context:{},
+		
+		serialAttrName:'__validate_serial',
+		
+		_prifix:'reminder_',
+		
+		constructor:function(element, error, context){
+			this.inherited(arguments);
+			this.element = element;
+			this.error = error;
+			this.context = context;
+			if(context && context.validator){
+				this.validator = context.validator;
+			}
+			if(context && context.widget){
+				this.widget = context.widget;
+			}
+			this.reminderId =  this._prifix + domAttr.get(this.element , this.serialAttrName);
+		},
+		
+		show:function(){
+			this.reset();
+			var widget = this.widget || {};
+			if(this.validator && this.validator.type == 'required' 
+				&& widget.isInstanceOf 
+				&& (widget.isInstanceOf(_InputBase) || widget.isInstanceOf(DateTime) ) ){ //TODO 不应该枚举
+				domClass.add(this.element,'blankWarning');
+			}else{
+				var minder = query("#" + this.reminderId);
+				if(minder.length>0){
+					this.renderDom = minder[0];
+					this._reDrawErrorMsg();
+				}else{
+					this._buildRenderDom(this.reminderId);
+				}
+				domClass.add(this.element,'contentWarning');
+				domStyle.set(this.renderDom,{'display':'inline-block'});
+			}
+		},
+		
+		hide:function(){
+			this.reset();
+		},
+		
+		reset:function(){
+			domClass.remove(this.element,'blankWarning');
+			domClass.remove(this.element,'contentWarning');
+			var minder = query("#" + this.reminderId);
+			if(minder.length>0){
+				domStyle.set(minder[0],{'display':'none'});
+			}
+		},
+		
+		_reDrawErrorMsg:function(){
+			var errorMsgDoms = query("#" + this.reminderId);
+			if(errorMsgDoms.length>0){
+				domConstruct.empty(errorMsgDoms[0]);
+				errorMsgDoms[0].innerHTML = this._resolverError();
+			}
+		},
+		
+		_buildRenderDom: function(id){
+			var tipNode = query('.muiFormEleTip',this.element);
+			var errorNode  = this.renderDom = domConstruct.create("span", {'className':'muiFormEleWarning','id':id , 'innerHTML' : this._resolverError() });
+			if(tipNode.length > 0){
+				 domConstruct.place( errorNode , tipNode[0] , 'last' );
+			}else{
+				domConstruct.place( errorNode , this.element , 'after' );
+			}
+		},
+		
+		_resolverError:function(){
+			return this.error.replace(/\{([\w\.]*)\}/gi, lang.hitch(this,function (_var , _key) {
+				var value = null;	
+				if(this.context)
+			         value = this.context[_key];  
+			     return (value === null || value === undefined) ? "" : value;  
+			  }));
+		}
+	});
+	return Reminder;
+});

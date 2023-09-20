@@ -1,0 +1,1240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+    http://www.landray.com.cn/schema/lui
+    ../../../sys/ui/lui.xsd
+    http://www.landray.com.cn/schema/design
+    ../../../design-xml.xsd">
+    <!-- 简单列表 -->
+    <render format="sys.ui.classic" id="sys.ui.classic.default"
+            name="{sys-ui:render.classic.default}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/classic.jpg">
+        <code src="sys/ui/extend/dataview/render/classic.js" ellipsis="true" predraw="false"/>
+        <vars>
+            <var key="firstRowScroll" kind="enumValue" name="{sys-ui:render.var.fistrow.scroll}">
+                {"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="highlight" kind="enumValue" name="{sys-ui:render.var.fistrow}">
+                {"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreator" kind="enumValue" name="{sys-ui:render.var.creator}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showRank" kind="enumValue" name="{sys-ui:render.var.order}" default="no">
+                {"values":[{"text":"{sys-ui:render.var.rank.no}", "value":"no"},
+                {"text":"{sys-ui:render.var.rank.three}", "value":"three"},
+                {"text":"{sys-ui:render.var.rank.all}", "value":"all"}],
+                "showType":"radio"}
+            </var>
+            <var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+            <var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+                {"help":"{sys-ui:render.var.hotday}"}
+            </var>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+            <var key="subjectSize" kind="int" name="{sys-ui:render.var.subjectsize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+        </vars>
+    </render>
+    <render format="sys.ui.classic" id="sys.ui.classic.tile"
+            name="{sys-ui:render.classic.tile}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/classic-tile.jpg">
+        <code src="sys/ui/extend/dataview/render/classic.js" extend="tile"
+              ellipsis="false" predraw="false"/>
+        <vars>
+            <var key="firstRowScroll" kind="enumValue" name="{sys-ui:render.var.fistrow.scroll}">
+                {"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="highlight" kind="enumValue" name="{sys-ui:render.var.fistrow}">
+                {"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="ellipsis" kind="enumValue" name="{sys-ui:render.var.ellipsis}">
+                {"values":[{"text":"{sys-ui:render.var.notallowed}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreator" kind="enumValue" name="{sys-ui:render.var.creator}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showRank" kind="enumValue" name="{sys-ui:render.var.order}" default="no">
+                {"values":[{"text":"{sys-ui:render.var.rank.no}", "value":"no"},
+                {"text":"{sys-ui:render.var.rank.three}", "value":"three"},
+                {"text":"{sys-ui:render.var.rank.all}", "value":"all"}],
+                "showType":"radio"}
+            </var>
+            <var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+            <var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+                {"help":"{sys-ui:render.var.hotday}"}
+            </var>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+            <var key="subjectSize" kind="int" name="{sys-ui:render.var.subjectsize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+        </vars>
+    </render>
+
+    <render format="sys.ui.classic" id="sys.ui.classic.billboard"
+            name="{sys-ui:render.classic.billboard}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/classic-billboard.jpg">
+        <code src="sys/ui/extend/dataview/render/classic_billboard.js" extend="billboard"
+              ellipsis="false" predraw="false"/>
+        <vars>
+            <var key="showCreator" kind="enumValue" name="{sys-ui:render.var.creator}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+            <var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+                {"help":"{sys-ui:render.var.hotday}"}
+            </var>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+            <var key="subjectSize" kind="int" name="{sys-ui:render.var.subjectsize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+            <var key="icon" kind="custom" name="{sys-ui:layout.var.icon}" >
+                {"file":"/sys/ui/extend/varkind/icon.jsp"}
+            </var>
+        </vars>
+    </render>
+    <!-- 上图下文（封面图片） -->
+    <render format="sys.ui.classic" id="sys.ui.classic.coverPicture"
+            name="{sys-ui:render.classic.coverPicture}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/classic_pictureCover.jpg">
+        <code src="sys/ui/extend/dataview/render/classic_pictureCover.js" ellipsis="true" predraw="false"/>
+        <vars>
+            <var key="img" kind="custom" name="{sys-ui:material.picture.cover}" >
+                {"file":"/sys/ui/extend/varkind/material.jsp"}
+            </var>
+            <var key="imgHeight" kind="int" name="{sys-ui:render.var.image.height}" default="0">
+                {"help":"{sys-ui:render.var.image.height0}"}
+            </var>
+            <var name="{sys-ui:render.var.tensile}" kind="enumValue" key="stretch" default="true">
+                {"values":[{"text":"{sys-ui:render.var.picwinsize}","value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="highlight" kind="enumValue" name="{sys-ui:render.var.fistrow}">
+                {"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreator" kind="enumValue" name="{sys-ui:render.var.creator}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showRank" kind="enumValue" name="{sys-ui:render.var.order}" default="no">
+                {"values":[{"text":"{sys-ui:render.var.rank.no}", "value":"no"},
+                {"text":"{sys-ui:render.var.rank.three}", "value":"three"},
+                {"text":"{sys-ui:render.var.rank.all}", "value":"all"}],
+                "showType":"radio"}
+            </var>
+            <var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+            <var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+                {"help":"{sys-ui:render.var.hotday}"}
+            </var>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+            <var key="subjectSize" kind="int" name="{sys-ui:render.var.subjectsize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+        </vars>
+    </render>
+    <!-- 简单列表折行展现 starts -->
+    <render format="sys.ui.classic"
+            id="sys.ui.classic.breakLine"
+            name="{sys-ui:render.classic.breakLine}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/classic_breakLine.png">
+        <code src="sys/ui/extend/dataview/render/classic_breakLine.js" />
+        <vars>
+            <var key="marginB" kind="int" name="{sys-ui:render.var.marginB}" default="15">
+                {"help":"px"}
+            </var>
+            <var key="isStyle" kind="enumValue" name="{sys-ui:render.var.isStyle}" default="gray_disc">
+                {  "values":[{ "text":"灰色实心圆点", "value":"gray_disc"},
+                { "text":"主色实心圆点", "value":"primary_disc"},
+                { "text":"灰色方块", "value":"gray_square"},
+                { "text":"主色方块", "value":"primary_square"}
+                ],
+                "showType":"radio",
+                "help":""
+                }
+            </var>
+            <var key="style" kind="custom" name="{sys-ui:render.var.style}">
+                {"file":"/sys/ui/extend/varkind/textarea.jsp","help":"支持写css代码,作用于呈现父容器;eg:padding:10px;"}
+            </var>
+        </vars>
+    </render>
+    <!-- 简单列表折行展现 ends -->
+    <!-- 简单列表带序号展现 starts -->
+    <render format="sys.ui.classic"
+            id="sys.ui.classic.withNumber"
+            name="{sys-ui:render.classic.withNumber}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/classic_withNumber.png">
+        <code src="sys/ui/extend/dataview/render/classic_withNumber.js" ellipsis="true" predraw="false"/>
+        <vars>
+            <var key="marginB" kind="int" name="{sys-ui:render.var.marginB}" default="15">
+                {"help":"px 最后一行无下间距"}
+            </var>
+            <var key="style" kind="custom" name="{sys-ui:render.var.style}">
+                {"file":"/sys/ui/extend/varkind/textarea.jsp","help":"支持写css代码,作用于呈现父容器;eg:padding:10px;"}
+            </var>
+        </vars>
+    </render>
+    <!-- 简单列表带序号展现 end -->
+    <!-- 简单列表带图标展现 starts -->
+    <render format="sys.ui.classic" id="sys.ui.classic.withIcon"
+            name="{sys-ui:render.classic.withIcon}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/classic_withIcon.png">
+        <code src="sys/ui/extend/dataview/render/classic_withIcon.js" />
+        <vars>
+            <var key="marginB" kind="int" name="{sys-ui:render.var.marginB}" default="15">
+                {"help":"px 最后一行无下间距"}
+            </var>
+            <var key="style" kind="custom" name="{sys-ui:render.var.style}">
+                {"file":"/sys/ui/extend/varkind/textarea.jsp","help":"支持写css代码,作用于呈现父容器;eg:padding:10px;--说明：知识问答-问答列表显示回复数,其他模块不显示"}
+            </var>
+        </vars>
+    </render>
+    <!-- 简单列表带图标展现 ends -->
+    <!-- 简单列表日期序列展现 starts -->
+    <render format="sys.ui.classic" id="sys.ui.classic.dateSequence"
+            name="{sys-ui:render.classic.dateSequence}"
+            type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/classic_dateSequence.png">
+        <code src="sys/ui/extend/dataview/render/classic_dateSequence.js" />
+        <vars>
+            <var key="marginB" kind="int" name="{sys-ui:render.var.marginB}" default="12">
+                {"help":"px 最后一行无下间距"}
+            </var>
+            <var key="isShowBorder" kind="enumValue" name="{sys-ui:render.var.isShowBorder}" default="hidden">
+                {  "values":[{ "text":"显示", "value":"show"},
+                { "text":"隐藏", "value":"hidden"}],
+                "showType":"radio"
+                }
+            </var>
+            <var key="style" kind="custom" name="{sys-ui:render.var.style}">
+                {"file":"/sys/ui/extend/varkind/textarea.jsp","help":"支持写css代码,作用于呈现父容器;eg:padding:10px;"}
+            </var>
+        </vars>
+    </render>
+    <!-- 简单列表日期序列展现 ends -->
+    <!-- classicrich -->
+    <render
+            id="sys.ui.classic.rich"
+            format="sys.ui.classic.rich"
+            name="{sys-ui:render.classic.rich}"
+            type="Javascript"
+            css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/classicrich.jpg">
+        <code
+                src="sys/ui/extend/dataview/render/classic_rich.js"
+                ellipsis="true"
+                predraw="false"/>
+        <vars>
+            <var key="firstRowScroll" kind="enumValue" name="{sys-ui:render.var.fistrow.scroll}">
+                {"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <!-- <var key="highlight" kind="enumValue" name="{sys-ui:render.var.fistrow}">
+                {"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+            </var> -->
+            <var key="showCreator" kind="enumValue" name="{sys-ui:render.var.creator}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+
+            <var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+
+            <var key="showEvaluateCount" kind="enumValue" name="{sys-ui:render.var.showEvaluateCount}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showReadCount" kind="enumValue" name="{sys-ui:render.var.showReadCount}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showDocscore" kind="enumValue" name="{sys-ui:render.var.showDocscore}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+
+            <var key="showRank" kind="enumValue" name="{sys-ui:render.var.rank}" default="no">
+                {"values":[{"text":"{sys-ui:render.var.rank.no}", "value":"no"},
+                {"text":"{sys-ui:render.var.rank.three}", "value":"three"},
+                {"text":"{sys-ui:render.var.rank.all}", "value":"all"}],
+                "showType":"radio"}
+            </var>
+
+            <var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+            <var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+                {"help":"{sys-ui:render.var.hotday}"}
+            </var>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+            <var key="subjectSize" kind="int" name="{sys-ui:render.var.subjectsize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+        </vars>
+    </render>
+
+    <render format="sys.ui.imgtext" id="sys.ui.imgtext.default"
+            name="{sys-ui:render.classic.imgtext}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/imgtext.jpg">
+        <code src="sys/ui/extend/dataview/render/imgtext.js" ellipsis="true" predraw="false"/>
+    </render>
+    <render format="sys.ui.imgtext.noreadcount" id="sys.ui.imgtext.noreadcount"
+            name="{sys-ui:render.classic.imgtext}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/imgtext.jpg">
+        <code src="sys/ui/extend/dataview/render/imgtext_noreadcount.js" ellipsis="true" predraw="false"/>
+    </render>
+    <render format="sys.ui.text" id="sys.ui.text.default"
+            name="{sys-ui:render.classic.text}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/text.jpg">
+        <code src="sys/ui/extend/dataview/render/text.js" ellipsis="true" predraw="false"/>
+    </render>
+    <render format="sys.ui.listdesc" id="sys.ui.listdesc.default"
+            name="{sys-ui:render.classic.listdesc}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/listdesc.jpg">
+        <code src="sys/ui/extend/dataview/render/listdesc.js" ellipsis="true" predraw="false"/>
+        <vars>
+            <var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+                {"help":"{sys-ui:render.var.hotday}"}
+            </var>
+        </vars>
+    </render>
+
+    <!-- 幻灯片 -->
+    <render format="sys.ui.slide" id="sys.ui.slide.default"
+            name="{sys-ui:render.slide.default}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/slide.jpg"
+            help="/sys/ui/extend/dataview/render/help/slide-help.jsp">
+        <vars>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+            <var name="{sys-ui:render.var.tensile}" kind="enumValue" key="stretch" default="true">
+                {
+                "values":[{
+                "text":"{sys-ui:render.var.picwinsize}",
+                "value":"true"
+                }],
+                "showType":"checkbox"
+                }
+            </var>
+            <var key="showTitle" kind="enumValue" name="{sys-ui:render.var.yestitle}" default="true">
+                {
+                "values":[{
+                "text":"{sys-ui:render.var.yes}",
+                "value":"true"
+                }],
+                "showType":"checkbox"
+                }
+            </var>
+        </vars>
+        <code src="/sys/ui/extend/dataview/render/slide.js" />
+    </render>
+
+    <!-- 幻灯片 -->
+    <render format="sys.ui.enhanced.slide" id="sys.ui.enhanced.slide.default"
+            name="{sys-ui:sys.ui.enhanced.slide.name}" type="Javascript" css="theme!dataview"
+            thumb=""
+            help="">
+        <vars>
+            <var key="size" kind="string" name="{sys-ui:render.var.resolution}" default="100*100"/>
+            <var key="columnNum" kind="int" name="{sys-ui:render.var.totalcol}" default="5"/>
+            <var key="showTitle" kind="enumValue" name="{sys-ui:render.var.showtitle}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.yestitle}", "value":"0"},{"text":"{sys-ui:render.var.notitle}", "value":"1"}],"showType":"radio"}
+            </var>
+            <var key="slide" kind="enumValue" name="{sys-ui:render.var.isslide}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.noslide}", "value":"0"},{"text":"{sys-ui:render.var.horizontal}", "value":"1"},{"text":"{sys-ui:render.var.vertical}", "value":"2"}],"showType":"radio"}
+            </var>
+        </vars>
+        <code src="/sys/ui/extend/dataview/render/enhanced_slide.js" />
+    </render>
+
+    <!-- 图片菜单 -->
+    <render format="sys.ui.picMenu" id="sys.ui.picMenu.default"
+            name="{sys-ui:render.picMenu.default}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/picmenu-portlet.jpg"
+            help="/sys/ui/extend/dataview/render/help/picmenu-help.jsp">
+        <vars>
+            <var name="{sys-ui:render.var.showmore}" kind="enumValue" key="showMore" default="true">
+                {
+                "values":[{
+                "text":"{sys-ui:render.var.displayover}",
+                "value":"true"
+                }],
+                "showType":"checkbox"
+                }
+            </var>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+        <code src="/sys/ui/extend/dataview/render/picmenu.js" iconChange="false"
+              showMore="true" />
+    </render>
+    <render format="sys.ui.picMenu" id="sys.ui.picMenu.module"
+            name="{sys-ui:render.picMenu.module}" type="Javascript" css="theme!dataview"
+            for="module"
+            thumb="/sys/ui/extend/dataview/render/help/picmenu-module.jpg"
+            help="/sys/ui/extend/dataview/render/help/picmenu-help.jsp">
+        <vars>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+        <code src="/sys/ui/extend/dataview/render/picmenu.js" extend="mod"
+              iconChange="false" showMore="false" />
+    </render>
+
+    <!-- 自适应快捷 入口 -->
+    <render format="sys.ui.picMenu" id="sys.ui.picMenu.autoWorkRow"
+            name="{sys-ui:render.picMenu.autoWorkRow}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/picmenu-autoWorkRow.jpg">
+        <vars>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+        <code src="/sys/ui/extend/dataview/render/autoPicMenu.js" iconChange="false" showMore="true"/>
+    </render>
+
+
+    <render format="sys.ui.navtitle.info" id="sys.ui.navtitle.info"
+            name="{sys-ui:render.navtitle.info}" type="Javascript" css="theme!dataview"
+            for="module" thumb="" help="">
+        <code src="/sys/ui/extend/dataview/render/navtitle_info.js" />
+    </render>
+
+    <render format="sys.ui.navtitle.info.new" id="sys.ui.navtitle.info.new"
+            name="{sys-ui:render.navtitle.info}" type="Javascript" css="theme!dataview"
+            for="module" thumb="" help="">
+        <code src="/sys/ui/extend/dataview/render/navtitle_info_new.js" />
+    </render>
+
+    <render format="sys.ui.navtitle.operation" id="sys.ui.navtitle.operation"
+            name="{sys-ui:render.navtitle.operation}" type="Javascript" css="theme!dataview"
+            for="module" thumb="" help="">
+        <code src="/sys/ui/extend/dataview/render/navtitle_operation.js"/>
+    </render>
+
+    <render format="sys.ui.navtitle.total" id="sys.ui.navtitle.total"
+            name="{sys-ui:render.navtitle.info}" type="Javascript" css="theme!dataview"
+            for="module" thumb="" help="">
+        <code src="/sys/ui/extend/dataview/render/navtitle_total.js" />
+    </render>
+
+    <render format="" id="sys.ui.nav.simple"
+            name="{sys-ui:render.nav.simple}" type="Javascript" css="theme!dataview"
+            for="module" thumb="" help="">
+        <code src="/sys/ui/extend/dataview/render/nav_simple.js"/>
+    </render>
+
+    <render format="" id="sys.ui.nav.simple.icon"
+            name="{sys-ui:render.nav.simple}" type="Javascript" css="theme!widget"
+            for="module" thumb="" help="">
+        <code src="/sys/ui/extend/dataview/render/nav_simple_icon.js"/>
+    </render>
+
+    <render  id="sys.ui.nav.expand" name="{sys-ui:render.nav.expand}"
+             type="Javascript" for="module" css="theme!dataview">
+        <code src="/sys/ui/extend/dataview/render/nav_expand.js"/>
+    </render>
+
+    <render  id="sys.ui.nav.no.expand" name="{sys-ui:render.nav.no.expand}"
+             type="Javascript" for="module" css="theme!dataview">
+        <code src="/sys/ui/extend/dataview/render/nav_no_expand.js"/>
+    </render>
+
+    <render format="sys.ui.picMenu" id="sys.ui.picMenu.portalpage"
+            name="{sys-ui:render.picMenu.portalpage}" type="Javascript" css="theme!dataview"
+            for="module"
+            thumb="/sys/ui/extend/dataview/render/help/portalpage-portlet.jpg"
+            help="/sys/ui/extend/dataview/render/help/portalpage-help.jsp">
+        <vars>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+        <code src="/sys/ui/extend/dataview/render/portalpage.js" />
+    </render>
+
+    <!-- 文本菜单 -->
+    <render format="sys.ui.textMenu;sys.ui.picMenu" id="sys.ui.textMenu.default"
+            name="{sys-ui:render.textMenu.default}" type="Template" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/textmenu.jpg">
+        <vars>
+            <var key="cols" kind="int" name="{sys-ui:render.var.showcol}" default="1" />
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+        <code src="/sys/ui/extend/dataview/render/textmenu.tmpl" />
+    </render>
+    <render format="sys.ui.textMenu" id="sys.ui.textMenu.button"
+            name="{sys-ui:render.textMenu.button}" type="Template" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/textmenu-button.jpg">
+        <vars>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+        <code src="/sys/ui/extend/dataview/render/textmenu-button.tmpl" />
+    </render>
+
+
+
+    <!-- 系统导航 -->
+    <render format="sys.ui.sysnav" id="sys.ui.sysnav.default"
+            name="{sys-ui:render.porlet.navigation.system}"  type="Javascript"
+            for="portal" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/treemenu2.jpg" help="">
+        <code src="/sys/ui/extend/dataview/render/sysnav.js"/>
+    </render>
+
+    <!-- 二级树形菜单 -->
+    <render format="sys.ui.treeMenu2" id="sys.ui.treeMenu2.default"
+            name="{sys-ui:render.treeMenu2.default}" type="Template" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/treemenu2.jpg">
+        <vars>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+        <code src="sys/ui/extend/dataview/render/treemenu2.tmpl" />
+    </render>
+    <render format="sys.ui.treeMenu2" id="sys.ui.treeMenu2.cate"
+            name="{sys-ui:render.treeMenu2.cate}" type="Template" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/treemenu2-cate.jpg">
+        <vars>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+        <code src="sys/ui/extend/dataview/render/treemenu2.tmpl" extend="cate" />
+    </render>
+
+    <render format="sys.ui.treeMenu2" id="sys.ui.treeMenu2.portal"
+            name="{sys-ui:render.treeMenu2.portal}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/treemenu2-portal.jpg">
+        <vars>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+        <code src="sys/ui/extend/dataview/render/treemenu2.js" extend="portal" />
+    </render>
+
+    <!-- 三级树形菜单 -->
+    <render format="sys.ui.treeMenu3;sys.ui.treeMenu2" id="sys.ui.treeMenu3.default"
+            name="{sys-ui:render.treeMenu3.default}" type="Template" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/treemenu3.jpg">
+        <vars>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+        <code src="sys/ui/extend/dataview/render/treemenu3.tmpl" />
+    </render>
+
+    <!-- 多级树形菜单 -->
+    <render format="sys.ui.treeMenu2;sys.ui.treeMenu3" id="sys.ui.treeMenu.fall"
+            name="{sys-ui:render.treeMenu.fall}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/treemenu-fall.jpg">
+        <vars>
+            <var key="cols" kind="int" name="{sys-ui:render.var.showcol}" default="3" />
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+        <code src="sys/ui/extend/dataview/render/treemenu-fall.js" />
+    </render>
+    <render format="sys.ui.treeMenu2;sys.ui.treeMenu3" id="sys.ui.treeMenu.flat"
+            name="{sys-ui:render.treeMenu.flat}" for="module" type="Template" css="theme!dataview">
+        <code src="sys/ui/extend/dataview/render/treemenu-flat.tmpl" />
+    </render>
+    <!-- 树形菜单彩虹瀑布展现 starts -->
+    <render format="sys.ui.treeMenu2;sys.ui.treeMenu3"
+            id="sys.ui.treeMenu.rainbowFalls"
+            name="{sys-ui:sys.ui.treeMenu.rainbowFalls}"
+            type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/treeMenu-rainbowFalls.jpg">
+        <vars>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+        <code src="sys/ui/extend/dataview/render/treeMenu-rainbowFalls.js" />
+    </render>
+    <!-- 树形菜单彩虹瀑布展现 ends -->
+    <!-- 自定义页面 -->
+    <render format="sys.ui.html" id="sys.ui.html.default"
+            name="{sys-ui:render.html.default}" type="Javascript"
+            help="/sys/ui/extend/dataview/render/help/html-help.jsp">
+        <code src="/sys/ui/extend/dataview/render/html.js"/>
+    </render>
+    <!-- 个人信息页面 -->
+    <render format="sys.ui.html.personinfo" id="sys.ui.html.personinfo"
+            name="{sys-ui:render.html.personinfo}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/personinfo1.png"
+            help="/sys/ui/extend/dataview/render/help/html-help.jsp">
+        <code src="/sys/ui/extend/dataview/render/html_personinfo.js"/>
+        <vars>
+            <var key="showPersonSet" kind="enumValue" name="{sys-ui:render.html.personinfo.personset}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="imgParam" kind="custom" name="{sys-ui:render.html.personinfo.bgimgparam}" default="default">
+                {"values":[{"text":"{sys-ui:render.html.personinfo.var.default}", "value":"default"},
+                {"text":"{sys-ui:render.html.personinfo.var.no}", "value":"no"},
+                {"text":"{sys-ui:render.html.personinfo.var.shallow}", "value":"shallow"},
+                {"text":"{sys-ui:render.html.personinfo.var.deep}", "value":"deep"}],
+                "file":"/sys/ui/extend/varkind/materialRadio.jsp",
+                "showType":"radio"
+                }
+            </var>
+            <var key="img" kind="custom" name="{sys-ui:material.picture.back}" >
+                {"file":"/sys/ui/extend/varkind/material.jsp"}
+            </var>
+        </vars>
+    </render>
+    <!-- 个人信息-图1/3 -->
+    <render format="sys.ui.html.personinfo" id="sys.ui.html.personinfo2"
+            name="{sys-ui:render.porlet.personal.info2}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/personinfo2.png"
+            help="/sys/ui/extend/dataview/render/help/html-help.jsp">
+        <code src="/sys/ui/extend/dataview/render/html_personinfo.js" imgFormat="2"/>
+        <vars>
+            <var key="showPersonSet" kind="enumValue" name="{sys-ui:render.html.personinfo.personset}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="imgParam" kind="custom" name="{sys-ui:render.html.personinfo.bgimgparam}" default="default">
+                {"values":[{"text":"{sys-ui:render.html.personinfo.var.default}", "value":"default"},
+                {"text":"{sys-ui:render.html.personinfo.var.no}", "value":"no"},
+                {"text":"{sys-ui:render.html.personinfo.var.shallow}", "value":"shallow"},
+                {"text":"{sys-ui:render.html.personinfo.var.deep}", "value":"deep"}],
+                "file":"/sys/ui/extend/varkind/materialRadio.jsp",
+                "showType":"radio"
+                }
+            </var>
+            <var key="img" kind="custom" name="{sys-ui:material.picture.back}" >
+                {"file":"/sys/ui/extend/varkind/material.jsp"}
+            </var>
+        </vars>
+    </render>
+    <!-- 个人信息-图2/3 -->
+    <render format="sys.ui.html.personinfo" id="sys.ui.html.personinfo3"
+            name="{sys-ui:render.porlet.personal.info3}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/personinfo3.png"
+            help="/sys/ui/extend/dataview/render/help/html-help.jsp">
+        <code src="/sys/ui/extend/dataview/render/html_personinfo.js" imgFormat="3"/>
+        <vars>
+            <var key="showPersonSet" kind="enumValue" name="{sys-ui:render.html.personinfo.personset}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.yes}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="imgParam" kind="custom" name="{sys-ui:render.html.personinfo.bgimgparam}" default="default">
+                {"values":[{"text":"{sys-ui:render.html.personinfo.var.default}", "value":"default"},
+                {"text":"{sys-ui:render.html.personinfo.var.shallow}", "value":"shallow"},
+                {"text":"{sys-ui:render.html.personinfo.var.deep}", "value":"deep"}],
+                "file":"/sys/ui/extend/varkind/materialRadio.jsp",
+                "showType":"radio"
+                }
+            </var>
+            <var key="img" kind="custom" name="{sys-ui:material.picture.back}" >
+                {"file":"/sys/ui/extend/varkind/material.jsp"}
+            </var>
+        </vars>
+    </render>
+
+    <!-- 图片摘要（左右显示） -->
+    <render format="sys.ui.classic.imageDesc" id="sys.ui.classic.imageDesc.level"
+            name="{sys-ui:render.html.imageDesc.level}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/imageDesc_level.png">
+        <code src="/sys/ui/extend/dataview/render/html.js" extend="level"/>
+    </render>
+    <!-- 图片摘要（上下显示） -->
+    <render format="sys.ui.classic.imageDesc" id="sys.ui.classic.imageDesc.vertical"
+            name="{sys-ui:render.html.imageDesc.vertical}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/imageDesc_vertical.png">
+        <code src="/sys/ui/extend/dataview/render/html.js" extend="vertical"/>
+    </render>
+
+    <!-- 首行图文展现 -->
+    <render format="sys.ui.classic.imageFirst" id="sys.ui.classic.imageFirst"
+            name="{sys-ui:render.html.first}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/htmlFirst.png">
+        <code src="/sys/ui/extend/dataview/render/imgFirst.js" ellipsis="true" predraw="false"/>
+        <vars>
+            <var name="{sys-ui:render.var.image.width}" key="width" kind="int" default="200">
+                {"help":"px"}
+            </var>
+            <var name="{sys-ui:render.var.image.height}" key="height" kind="int" default="140">
+                {"help":"px"}
+            </var>
+            <var key="sumSize" kind="string" name="{sys-ui:render.var.sumSize}" default="0">
+                {"help":"{sys-news:sysNewsMain.portlet.summaryLimit.help}"}
+            </var>
+            <var key="showCreator" kind="enumValue" name="{sys-ui:render.var.creator}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+            <var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+                {"help":"{sys-ui:render.var.hotday}"}
+            </var>
+            <var key="target" kind="enumType" name="{sys-ui:render.var.target}" default="_blank">
+                {type:"sysUi_target", showType:"radio"}
+            </var>
+        </vars>
+    </render>
+    <!-- iframe -->
+    <render format="sys.ui.iframe" id="sys.ui.iframe.default"
+            name="{sys-ui:render.iframe.default}" type="Javascript"
+            help="/sys/ui/extend/dataview/render/help/iframe-help.jsp">
+        <vars>
+            <var key="frameName" kind="string" name="{sys-ui:render.var.winname}" />
+        </vars>
+        <code src="/sys/ui/extend/dataview/render/iframe.js" predraw="true"/>
+    </render>
+
+    <!-- 列表数据展示 sys.ui.listtable.default 数据格式：sys.ui.listtable  -->
+    <render format="sys.ui.listtable" name="{sys-ui:render.listtable.default}" id="sys.ui.listtable.default"
+            type="Template" thumb="/sys/ui/extend/dataview/render/help/listtable.png"
+            help="/sys/ui/extend/dataview/render/help/listtable-help.jsp">
+        <vars>
+            <var key="showTableTitle" kind="enumValue" name="{sys-ui:render.ver.showheader}" default="false">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+        </vars>
+        <code src="/sys/ui/extend/dataview/render/listtable.js" />
+    </render>
+
+    <render id="sys.ui.jsp.default" format="sys.ui.jsp" name="{sys-ui:render.porlet.jsp.render}"></render>
+
+    <render format="sys.ui.cate;sys.ui.treeMenu3" id="sys.ui.cate.default"
+            name="{sys-ui:render.cate.default}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/cate.png"
+            help="/sys/ui/extend/dataview/render/help/cate-help.jsp">
+        <code src="/sys/ui/extend/dataview/render/cate.js" />
+    </render>
+
+    <render format="sys.ui.cate;sys.ui.all" id="sys.ui.cate.all"
+            name="{sys-ui:render.cate.default}" type="Javascript"
+            for="module"
+            thumb=""
+            help="">
+        <code src="/sys/ui/extend/dataview/render/cateAll.js" />
+    </render>
+    <!-- 图文列表 平铺{sys-ui:render.image.default} -->
+    <render format="sys.ui.image" id="sys.ui.image.default"
+            name="{sys-ui:render.porlet.graphic.lists}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/image1.png"
+            help="/sys/ui/extend/dataview/render/help/image-help.jsp">
+        <vars>
+            <var key="size" kind="string" name="{sys-ui:render.var.resolution}" default="100*100"/>
+            <var key="columnNum" kind="int" name="{sys-ui:render.var.totalcol}" default="5"/>
+            <var key="showTitle" kind="enumValue" name="{sys-ui:render.var.showtitle}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.yestitle}", "value":"0"},{"text":"{sys-ui:render.var.notitle}", "value":"1"}],"showType":"radio"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <!-- <var key="slide" kind="enumValue" name="{sys-ui:render.var.isslide}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.noslide}", "value":"0"},{"text":"{sys-ui:render.var.horizontal}", "value":"1"},{"text":"{sys-ui:render.var.vertical}", "value":"2"}],"showType":"radio"}
+            </var> -->
+            <!-- 图片圆角 -->
+            <var name="{sys-ui:render.porlet.images.rounded}" key="imgRadius" kind="enumValue" default="0">
+                {
+                "values":[
+                {"text":"0px", "value":"0"},
+                {"text":"5px", "value":"1"},
+                {"text":"10px", "value":"2"},
+                {"text":"50%", "value":"3"},
+                ],
+                "showType":"radio"
+                }
+            </var>
+        </vars>
+        <code slide="0" src="/sys/ui/extend/dataview/render/image.js" />
+    </render>
+    <!-- 图文列表 水平滑动 -->
+    <render format="sys.ui.image" id="sys.ui.image.horizont"
+            name="{sys-ui:render.porlet.slide.graphic.list}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/image2.png"
+            help="/sys/ui/extend/dataview/render/help/image-help.jsp">
+        <vars>
+            <var key="size" kind="string" name="{sys-ui:render.var.resolution}" default="100*100"/>
+            <var key="columnNum" kind="int" name="{sys-ui:render.var.totalcol}" default="5"/>
+            <var key="showTitle" kind="enumValue" name="{sys-ui:render.var.showtitle}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.yestitle}", "value":"0"},{"text":"{sys-ui:render.var.notitle}", "value":"1"}],"showType":"radio"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <!-- <var key="slide" kind="enumValue" name="{sys-ui:render.var.isslide}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.noslide}", "value":"0"},{"text":"{sys-ui:render.var.horizontal}", "value":"1"},{"text":"{sys-ui:render.var.vertical}", "value":"2"}],"showType":"radio"}
+            </var> -->
+            <!-- 图片圆角 -->
+            <var name="{sys-ui:render.porlet.images.rounded}" key="imgRadius" kind="enumValue" default="0">
+                {
+                "values":[
+                {"text":"0px", "value":"0"},
+                {"text":"5px", "value":"1"},
+                {"text":"10px", "value":"2"},
+                {"text":"50%", "value":"3"},
+                ],
+                "showType":"radio"
+                }
+            </var>
+        </vars>
+        <code slide="1" src="/sys/ui/extend/dataview/render/image.js" />
+    </render>
+    <!-- 图文列表 垂直滑动 -->
+    <render format="sys.ui.image" id="sys.ui.image.vertical"
+            name="{sys-ui:render.porlet.graphic.vertically.lists}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/image3.png"
+            help="/sys/ui/extend/dataview/render/help/image-help.jsp">
+        <vars>
+            <var key="size" kind="string" name="{sys-ui:render.var.resolution}" default="100*100"/>
+            <var key="columnNum" kind="int" name="{sys-ui:render.var.totalcol}" default="5"/>
+            <var key="showTitle" kind="enumValue" name="{sys-ui:render.var.showtitle}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.yestitle}", "value":"0"},{"text":"{sys-ui:render.var.notitle}", "value":"1"}],"showType":"radio"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <!-- <var key="slide" kind="enumValue" name="{sys-ui:render.var.isslide}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.noslide}", "value":"0"},{"text":"{sys-ui:render.var.horizontal}", "value":"1"},{"text":"{sys-ui:render.var.vertical}", "value":"2"}],"showType":"radio"}
+            </var> -->
+            <!-- 图片圆角 -->
+            <var name="{sys-ui:render.porlet.images.rounded}" key="imgRadius" kind="enumValue" default="0">
+                {
+                "values":[
+                {"text":"0px", "value":"0"},
+                {"text":"5px", "value":"1"},
+                {"text":"10px", "value":"2"},
+                {"text":"50%", "value":"3"},
+                ],
+                "showType":"radio"
+                }
+            </var>
+        </vars>
+        <code slide="2" src="/sys/ui/extend/dataview/render/image.js" />
+    </render>
+    <render format="sys.ui.image" id="sys.ui.image.customPic"
+            name="{sys-ui:sys.ui.image.customPic}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/image_customPic.jpg">
+        <vars>
+            <var key="size" kind="string" name="{sys-ui:render.var.resolution}" default="100*100"/>
+            <var key="columnNum" kind="int" name="{sys-ui:render.var.totalcol}" default="5"/>
+            <var key="showTitle" kind="enumValue" name="{sys-ui:render.var.showtitle}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.yestitle}", "value":"0"},{"text":"{sys-ui:render.var.notitle}", "value":"1"}],"showType":"radio"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="slide" kind="enumValue" name="{sys-ui:render.var.isslide}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.noslide}", "value":"0"},{"text":"{sys-ui:render.var.horizontal}", "value":"1"},{"text":"{sys-ui:render.var.vertical}", "value":"2"}],"showType":"radio"}
+            </var>
+        </vars>
+        <code slide="2" src="/sys/ui/extend/dataview/render/image_customPic.js" />
+    </render>
+
+    <!-- 富图文视图显示 -->
+    <render format="sys.ui.image.rich" id="sys.ui.image.rich.default"
+            name="{sys-ui:render.image.default}" type="Javascript"
+            thumb=""
+            help="">
+        <vars>
+            <var key="columnNum" kind="int" name="{sys-ui:render.var.totalcol}" default="4"/>
+        </vars>
+        <code src="/sys/ui/extend/dataview/render/image_rich.js" />
+    </render>
+    <!-- 数据统计 -->
+    <render format="sys.ui.stat" id="sys.ui.stat.default"
+            name="{sys-ui:render.porlet.data.statis}"  type="Javascript"
+            css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/treemenu2.jpg" help="">
+        <code src="/sys/ui/extend/dataview/render/stat.js"/>
+    </render>
+    <!--简约数据统计视图 start-->
+    <render format="sys.ui.stat" id="sys.ui.stat.simpleStatis"
+            name="{sys-ui:render.porlet.data.simpleStatis}"
+            type="Javascript"
+            css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/stat-simpleStatis.jpg">
+        <code src="/sys/ui/extend/dataview/render/stat-simpleStatis.js"/>
+        <vars>
+            <var key="style" kind="custom" name="{sys-ui:render.var.style}" default="padding:23px 0px;">
+                {"file":"/sys/ui/extend/varkind/textarea.jsp","help":"支持写css代码,作用于呈现父容器;eg:padding:10px;"}
+            </var>
+        </vars>
+    </render>
+    <!-- 简约数据统计视图 end-->
+    <!-- 个人数据统计 -->
+    <render format="sys.ui.mine.stat" id="sys.ui.mine.stat.default"
+            name="{sys-ui:render.porlet.personal.data.statis1}"  type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/sys.ui.mine.stat1.jpg"
+            css="theme!dataview" help="">
+        <code src="/sys/ui/extend/dataview/render/mineStat.js"/>
+    </render>
+
+    <!-- 个人数据统计-版式2 -->
+    <render format="sys.ui.mine.stat" id="sys.ui.mine.stat.default2"
+            name="{sys-ui:render.porlet.personal.data.statis2}"  type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/sys.ui.mine.stat2.jpg"
+            css="theme!dataview" help="">
+        <code src="/sys/ui/extend/dataview/render/mineStat.js"/>
+        <vars>
+            <var key="imgFormat" kind="enumValue" name="{sys-ui:render.porlet.format}" default="2">
+                {"values":[{"text":"{sys-ui:render.porlet.format.info2}", "value":"2"}],"showType":"radio"}
+            </var>
+        </vars>
+    </render>
+
+    <!-- 数据统计视图 -->
+    <render format="sys.ui.stat" id="sys.ui.stat.stripe"
+            name="{sys-ui:sys.ui.stat.name}"  type="Javascript"
+            css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/treemenu4.jpg" help="">
+        <code src="/sys/ui/extend/dataview/render/stat-stripe.js"/>
+    </render>
+    <!-- 情感组件 -->
+    <render format="sys.ui.emotional" id="sys.ui.emotional.default"
+            name="{sys-ui:sys.ui.emotional.name}" type="Javascript"
+            css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/treemenu2.jpg" help="">
+        <code src="/sys/ui/extend/dataview/render/emotional.js"/>
+    </render>
+
+    <render format="sys.ui.maindata" id="sys.ui.maindata.tile"
+            name="{sys-ui:render.porlet.associated.master.data}" type="Javascript" thumb="" help="">
+        <code src="/sys/relation/import/resource/maindata_render.js" />
+    </render>
+    <!--地图模板 -->
+    <render format="sys.ui.mapTpl" id="sys.ui.mapTpl.default"
+            name="{sys-ui:sys.ui.mapTpl.name}" type="Template"
+            css="sys/portal/sys_portal_map_tpl/resource/css/animate.css"
+            thumb="/sys/ui/extend/dataview/render/help/treemenu2.jpg" help="">
+        <code src="/sys/portal/sys_portal_map_tpl/resource/template/mapTpl.tmpl"/>
+    </render>
+
+    <render format="sys.ui.card" id="sys.ui.card.default"
+            name="{sys-ui:sys.ui.card.list}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/extend/dataview/render/help/card_default.png">
+        <code src="/sys/ui/extend/dataview/render/card.js" ellipsis="true" predraw="false"/>
+    </render>
+    <render format="sys.ui.image.desc" id="sys.ui.image.desc.card.imgFirst"
+            name="{sys-ui:sys.ui.image.desc.cardlist}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/imagedesc_card_imgFirst.png">
+        <code src="/sys/ui/extend/dataview/render/imgdesc_card_imgFirst.js" ellipsis="true" predraw="false"/>
+        <vars>
+            <var key="position" kind="enumValue" name="{sys-ui:render.var.image.position}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.image.position.left}", "value":"0"},{"text":"{sys-ui:render.var.image.position.right}", "value":"1"}],"showType":"radio"}
+            </var>
+            <var name="{sys-ui:render.var.image.rate.width}" key="rate" kind="int" default="55">
+                {"help":"%"}
+            </var>
+            <var name="{sys-ui:render.var.tensile}" kind="enumValue" key="stretch" default="true">
+                {"values":[{"text":"{sys-ui:render.var.picwinsize}","value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreator" kind="enumValue" name="{sys-ui:render.var.creator}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+            <var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+                {"help":"{sys-ui:render.var.hotday}"}
+            </var>
+        </vars>
+    </render>
+
+    <render format="sys.ui.image.desc" id="sys.ui.image.desc.silder.default"
+            name="{sys-ui:sys.ui.image.desc.outup}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/imagedesc_silder_desc_off.png">
+        <code src="/sys/ui/extend/dataview/render/imgdesc_silder_desc_off.js" ellipsis="true" predraw="false"/>
+        <vars>
+            <var key="position" kind="enumValue" name="{sys-ui:render.var.image.position}" default="1">
+                {"values":[{"text":"{sys-ui:render.var.image.position.left}", "value":"0"},{"text":"{sys-ui:render.var.image.position.right}", "value":"1"}],"showType":"radio"}
+            </var>
+            <var name="{sys-ui:render.var.image.rate.width}" key="rate" kind="int" default="45">
+                {"help":"%"}
+            </var>
+            <var name="{sys-ui:render.var.tensile}" kind="enumValue" key="stretch" default="true">
+                {"values":[{"text":"{sys-ui:render.var.picwinsize}","value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreator" kind="enumValue" name="{sys-ui:render.var.creator}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+            <var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+                {"help":"{sys-ui:render.var.hotday}"}
+            </var>
+        </vars>
+    </render>
+
+    <render format="sys.ui.image.desc" id="sys.ui.image.desc.silder.knMap"
+            name="{sys-ui:sys.ui.image.desc.tiled}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/imagedesc_silder_desc_on.png">
+        <code src="/sys/ui/extend/dataview/render/imgdesc_silder_desc_on.js" ellipsis="true" predraw="false"/>
+        <vars>
+            <var key="position" kind="enumValue" name="{sys-ui:render.var.image.position}" default="1">
+                {"values":[{"text":"{sys-ui:render.var.image.position.left}", "value":"0"},{"text":"{sys-ui:render.var.image.position.right}", "value":"1"}],"showType":"radio"}
+            </var>
+            <var name="{sys-ui:render.var.image.rate.width}" key="rate" kind="int" default="45">
+                {"help":"%"}
+            </var>
+            <var name="{sys-ui:render.var.tensile}" kind="enumValue" key="stretch" default="true">
+                {"values":[{"text":"{sys-ui:render.var.picwinsize}","value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreator" kind="enumValue" name="{sys-ui:render.var.creator}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+            <var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+                {"help":"{sys-ui:render.var.hotday}"}
+            </var>
+        </vars>
+    </render>
+
+    <render format="sys.ui.image.desc" id="sys.ui.image.desc.list.default"
+            name="{sys-ui:sys.ui.image.desc.list}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/imagedesc_list_default.png">
+        <code src="/sys/ui/extend/dataview/render/imgdesc_list.js" ellipsis="true" predraw="false"/>
+        <vars>
+            <var key="position" kind="enumValue" name="{sys-ui:render.var.image.position}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.image.position.left}", "value":"0"},{"text":"{sys-ui:render.var.image.position.right}", "value":"1"}],"showType":"radio"}
+            </var>
+            <var name="{sys-ui:render.var.image.rate.width}" key="rate" kind="int" default="15">
+                {"help":"%"}
+            </var>
+            <var name="{sys-ui:render.var.tensile}" kind="enumValue" key="stretch" default="true">
+                {"values":[{"text":"{sys-ui:render.var.picwinsize}","value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreator" kind="enumValue" name="{sys-ui:render.var.creator}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+            <var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+                {"help":"{sys-ui:render.var.hotday}"}
+            </var>
+        </vars>
+    </render>
+    <render format="sys.ui.image.desc" id="sys.ui.imageUp.descDown"
+            name="{sys-ui:sys.ui.image.desc.updown}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/imgdesc_desc_down.jpg">
+        <code src="/sys/ui/extend/dataview/render/imgdesc_desc_down.js" ellipsis="true" predraw="false"/>
+        <vars>
+            <var key="position" kind="enumValue" name="{sys-ui:render.var.image.position}" default="0">
+                {"values":[{"text":"{sys-ui:render.var.image.position.up}", "value":"0"},{"text":"{sys-ui:render.var.image.position.down}", "value":"1"}],"showType":"radio"}
+            </var>
+            <var key="imgHeight" kind="int" name="{sys-ui:render.var.image.height}" default="0">
+                {"help":"{sys-ui:render.var.image.height0}"}
+            </var>
+            <var name="{sys-ui:render.var.tensile}" kind="enumValue" key="stretch" default="true">
+                {"values":[{"text":"{sys-ui:render.var.picwinsize}","value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreator" kind="enumValue" name="{sys-ui:render.var.creator}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCreated" kind="enumValue" name="{sys-ui:render.var.createtime}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="showCate" kind="enumValue" name="{sys-ui:render.var.catetory}" default="true">
+                {"values":[{"text":"{sys-ui:render.var.show}", "value":"true"}],"showType":"checkbox"}
+            </var>
+            <var key="cateSize" kind="int" name="{sys-ui:render.var.catesize}" default="0">
+                {"help":"{sys-ui:render.var.oversize}"}
+            </var>
+            <var key="newDay" kind="int" name="{sys-ui:render.var.ishot}" default="0">
+                {"help":"{sys-ui:render.var.hotday}"}
+            </var>
+        </vars>
+    </render>
+    <!--图文列表摘要收展切换呈现 start-->
+    <render format="sys.ui.image.desc"
+            id="sys.ui.image.desc.extensionSwitch"
+            name="{sys-ui:sys.ui.image.desc.extensionSwitch}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/imgdesc_extensionSwitch.png">
+        <code src="/sys/ui/extend/dataview/render/imgdesc_extensionSwitch.js" ellipsis="true" predraw="false"/>
+        <vars>
+            <var key="imgWidth" kind="int" name="{sys-ui:render.var.imgWidth}" default="300" >
+                {"help":"px"}
+            </var>
+            <var key="radius" kind="int" name="{sys-ui:render.var.imgRadius}" default="4" />
+            <var key="marginB" kind="int" name="{sys-ui:render.var.marginB}" default="8">
+                {"help":"px 最后一行无下间距"}
+            </var>
+            <var key="isStretch" kind="enumValue"  name="{sys-ui:render.var.isStretch}" default="0">
+                {  "values":[{ "text":"拉伸", "value":"0"},
+                { "text":"不拉伸，纯色底", "value":"1"},
+                { "text":"不拉伸，模糊背景", "value":"2"}],
+                "showType":"radio",
+                "help":"模糊背景不支持IE低版本浏览器"
+                }
+            </var>
+            <var key="iscate" kind="enumValue" name="{sys-ui:render.var.iscate}" default="0">
+                {  "values":[{ "text":"显示", "value":"0"},
+                { "text":"不显示", "value":"1"}],
+                "showType":"radio",
+                "help":"默认显示"
+                }
+            </var>
+
+            <var key="style" kind="custom" name="{sys-ui:render.var.style}">
+                {"file":"/sys/ui/extend/varkind/textarea.jsp","help":"支持写css代码,作用于呈现父容器;eg:padding:10px;"}
+            </var>
+        </vars>
+    </render>
+    <!--图文列表摘要收展切换呈现 end-->
+    <!-- 首行图文列表展现 starts -->
+    <render format="sys.ui.image.desc"
+            id="sys.ui.image.desc.firstLine"
+            name="{sys-ui:sys.ui.image.desc.firstLine}" type="Javascript"
+            thumb="/sys/ui/extend/dataview/render/help/imgdesc_firstLine.png">
+        <code src="/sys/ui/extend/dataview/render/imgdesc_firstLine.js" ellipsis="true" predraw="false"/>
+        <vars>
+            <var key="imgWidth" kind="int" name="{sys-ui:render.var.imgWidth}" default="110">
+                {"help":"px"}
+            </var>
+            <var key="classColor" kind="string" name="{sys-ui:render.var.classColor}" default="#FAA83B">
+                {"help":"#FAA83B"}
+            </var>
+            <var key="marginB" kind="int" name="{sys-ui:render.var.marginB}" default="8">
+                {"help":"px 最后一行无下间距"}
+            </var>
+            <var key="coverImg" kind="custom" name="{sys-ui:render.var.coverImg}" default="">
+                {"file":"/sys/ui/extend/varkind/material.jsp"}
+            </var>
+            <var key="isStretch" kind="enumValue" name="{sys-ui:render.var.isStretch}" default="0">
+                {  "values":[{ "text":"拉伸", "value":"0"},
+                { "text":"不拉伸，纯色底", "value":"1"},
+                { "text":"不拉伸，模糊背景", "value":"2"}],
+                "showType":"radio",
+                "help":"模糊背景不支持IE低版本浏览器"
+                }
+            </var>
+            <var key="style" kind="custom" name="{sys-ui:render.var.style}">
+                {"file":"/sys/ui/extend/varkind/textarea.jsp","help":"支持写css代码,作用于呈现父容器;eg:padding:10px;"}
+            </var>
+        </vars>
+    </render>
+    <!-- 首行图文列表展现 ends -->
+    <render format="sys.ui.personInfo" id="sys.ui.personInfo.default"
+            name="{sys-ui:sys.ui.personInfo.default}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/portal/img/zone_person_default.jpg">
+        <code src="sys/ui/portal/js/portal_person.js" personTyle = "person"/>
+        <vars>
+            <var key="columnNum" kind="int" name="{sys-ui:personInfo.columnNum}" default="1">
+            </var>
+        </vars>
+    </render>
+
+    <render format="sys.ui.personInfo" id="sys.ui.personInfo.expert"
+            name="{sys-ui:sys.ui.personInfo.expert}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/portal/sys.ui.statimg/zone_person_expert.jpg">
+        <code src="sys/ui/portal/js/portal_person.js" personTyle = "expert"/>
+        <vars>
+            <var key="columnNum" kind="int" name="{sys-ui:personInfo.columnNum}" default="1">
+            </var>
+        </vars>
+    </render>
+
+    <render format="sys.ui.personInfo" id="sys.ui.personInfo.solid"
+            name="{sys-ui:sys.ui.personInfo.solid}" type="Javascript" css="theme!dataview"
+            thumb="/sys/ui/portal/img/zone_person_solid.jpg">
+        <code src="sys/ui/portal/js/portal_person_solid.js"/>
+    </render>
+
+    <!-- 人员信息列表展示（圆形头像） starts-->
+    <render format="sys.ui.personInfo" id="sys.ui.personInfo.roundAvatar"
+            name="{sys-ui:sys.ui.personInfo.roundAvatar}" type="Javascript"  css="theme!dataview"
+            thumb="/sys/ui/portal/img/zone_person_roundAvatar.jpg">
+        <code src="/sys/ui/portal/js/portal_person_roundAvatar.js" ellipsis="true" />
+        <vars>
+            <var key="marginL" kind="int" name="{sys-ui:render.var.marginL}" default="45">
+                {"help":"px 第一行无左间距"}
+            </var>
+            <var key="marginB" kind="int" name="{sys-ui:render.var.marginB}" default="20">
+                {"help":"px 最后一行无下间距"}
+            </var>
+            <var key="style" kind="custom" name="{sys-ui:render.var.style}">
+                {"file":"/sys/ui/extend/varkind/textarea.jsp","help":"支持写css代码,作用于呈现父容器;eg:padding:10px; 温馨提示: 容器宽建议不小于200px"}
+            </var>
+        </vars>
+    </render>
+    <!--人员信息列表展示（圆形头像） ends-->
+</root>

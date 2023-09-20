@@ -1,0 +1,33 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.hr.staff.model.HrStaffFileAuthor",
+        "messageKey": "hr-staff:table.hrStaffFileAuthor",
+        "displayProperty": "fdName",
+        "serviceBean": "hrStaffFileAuthorService",
+        "table": "hr_staff_file_author",
+        "url": "/hr/staff/hr_staff_file_author/hrStaffFileAuthor.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "hr-staff:hrStaffFileAuthor.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "length": "200",
+            "validate": "true"
+        },
+        "authorDetail":         {
+            "propertyType": "list",
+            "messageKey": "hr-staff:hrStaffFileAuthor.authorDetail",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "hr_staff_file_author_detail",
+            "column": "fd_author_id",
+            "elementColumn": "fd_org_id"
+        }
+    }
+}

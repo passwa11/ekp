@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!-- JDBC日志管理扩展点  
+	<extension
+		point="com.landray.kmss.tic.core.mapping.plugins.integration"
+		model="*">
+		
+		<item
+			name="ticCoreMappingIntegration">
+			<param
+				name="integrationKey"
+				value="TIC-JDBC" />
+			<param
+				name="displayName"
+				value="{tic-core-log:ticCore.log.jdbc}" />
+
+			<param
+				name="fdIntegrationType"
+				value="4" />
+			<param
+				name="order"
+				value="54" />		
+			<param
+				name="infoClass"
+				value="ticJdbcControlTreeInfo" />		
+			<param
+				name="formControlJS"
+				value="tic/jdbc/resource/js/jdbcFormControl.js" />		
+				
+		</item>
+	</extension>
+	--> 
+			
+	<!--  自定义表单数据源选择控件
+	<extension point="com.landray.kmss.sys.xform.base.service.controls" model="*">
+		<item name="control">
+			<param name="class" value="com.landray.kmss.tic.jdbc.control.sql.TicJdbcFormTemplateSQLSelectOpenControl" />
+			<param name="file" value="/tic/jdbc/resource/controls/sqlSelectByOpenDialog.js" />
+		</item>
+	</extension>
+	 -->	
+	<!--  移动端表单数据源选择控件
+	<extension point="com.landray.kmss.sys.xform.pda.controls" model="*">
+		<item name="control">
+			<param name="class" value="com.landray.kmss.tic.jdbc.control.sql.TicJdbcFormTemplateSQLSelectOpenControl" />
+		</item>
+	</extension>
+	-->	
+	<!-- TIC表单控件扩展 
+	<extension point="com.landray.kmss.sys.xform.relation.params">
+		<item name="config">
+			<param name="sourceName" value="JDBC"></param>
+			<param name="sourceUUID" value="JDBC"></param>
+			<param name="sourceBean" value="ticCoreMappingControlRelation"></param>
+			<param name="paramsURL" value="tic/core/resource/jsp/dialog/dialog.jsp?springBean=ticCoreMappingControlTreeBean&amp;infoBean=ticJdbcControlTreeInfo&amp;url=tic/jdbc/tic_jdbc_data_set/ticJdbcDataSet.do"></param>
+			<param name="order" value="0"></param>
+		</item>
+	</extension>
+	-->
+	
+	<!-- tic函数适配执行器扩展点对应值 -->
+	<extension point="com.landray.kmss.sys.tic.dispatcherExecutor" model="*">
+		<item name="dispatcherExecutor">
+			<param name="executor" value="jdbcDispatcherExecutor"></param>
+			<param name="funcTypeName" value="JDBC"></param>
+			<param name="funcTypeCode" value="4"></param>
+			<param name="syncUniteQuartz" value="ticJdbcSyncUniteQuartzService"></param>
+		</item>
+	</extension>
+	
+</plugin>

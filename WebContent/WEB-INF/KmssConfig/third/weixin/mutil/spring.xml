@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean
+		id="mutilWxworkOauth2ProcessingFilter"
+		class="com.landray.kmss.third.weixin.mutil.sso.WxOauth2AuthProcessingFilter">
+		<property
+			name="autoLoginHelper">
+			<ref
+				bean="autoLoginHelper" />
+		</property>
+	</bean>
+
+	<!-- 待办集成 -->
+	<bean
+		id="mutilWxworkNotifyProvider"
+		class="com.landray.kmss.third.weixin.mutil.notify.WxNotifyProvider">
+		<property name="mutilWxworkOmsRelationService">
+			<ref bean="mutilWxworkOmsRelationService" />
+		</property>
+		<property name="thirdMutilWeixinWorkService">
+			<ref bean="thirdMutilWeixinWorkService" />
+		</property>
+	</bean>
+
+	<bean
+		id="mutilWxworkOmsRelationDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.weixin.mutil.spi.dao.hibernate.WxworkOmsRelationDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.weixin.mutil.spi.model.WxworkOmsRelationMutilModel" />
+	</bean>
+	<bean
+		id="mutilWxworkOmsRelationTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.third.weixin.mutil.spi.service.spring.WxmutilOmsRelationServiceImp">
+		<property name="baseDao">
+			<ref bean="mutilWxworkOmsRelationDao" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+	</bean>
+	<bean
+		id="mutilWxworkOmsRelationService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="mutilWxworkOmsRelationTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="mutilWxworkSynchroOrg2WxTarget"
+		class="com.landray.kmss.third.weixin.mutil.oms.SynchroOrg2WxImp">
+		<property
+			name="mutilWxworkOmsRelationService">
+			<ref
+				bean="mutilWxworkOmsRelationService" />
+		</property>
+		<property
+			name="sysOrgCoreService">
+			<ref
+				bean="sysOrgCoreService" />
+		</property>
+		<property
+			name="sysOrgElementService">
+			<ref
+				bean="sysOrgElementService" />
+		</property>
+		<property
+			name="sysOrgPersonService">
+			<ref
+				bean="sysOrgPersonService" />
+		</property>
+		<property
+			name="thirdWeixinOmsPostService">
+			<ref
+				bean="thirdWeixinOmsPostService" />
+		</property>
+	</bean>
+	<bean
+		id="mutilWxworkSynchroOrg2Wx"
+		lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property
+			name="transactionManager">
+			<ref
+				bean="transactionManager" />
+		</property>
+		<property
+			name="target">
+			<ref
+				bean="mutilWxworkSynchroOrg2WxTarget" />
+		</property>
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop
+					key="triggerSynchro">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean
+		id="mutilWxworkMenuDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.weixin.mutil.spi.dao.hibernate.WxworkMenuDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.weixin.mutil.spi.model.WxworkMutilMenuModel" />
+	</bean>
+	<bean
+		id="mutilWxworkMenuTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.third.weixin.mutil.spi.service.spring.WxworkMenuServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="mutilWxworkMenuDao" />
+		</property>
+	</bean>
+	<bean
+		id="mutilWxworkMenuService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="mutilWxworkMenuTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="mutilWxworkPdaModelSelectDialog"
+		class="com.landray.kmss.third.weixin.mutil.spi.service.spring.WxworkPdaModelSelectDialog">
+	</bean>
+
+	<bean
+		id="mutilWxworkSynchroOrg2WxCheck"
+		class="com.landray.kmss.third.weixin.mutil.oms.SynchroOrg2WxCheckImp">
+		<property
+			name="sysOrgElementService">
+			<ref
+				bean="sysOrgElementService" />
+		</property>
+		<property
+            name="sysOrgCoreService">
+            <ref
+                bean="sysOrgCoreService" />
+        </property>
+	</bean>
+
+		<bean
+		id="thirdMutilWeixinWorkDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.third.weixin.mutil.dao.hibernate.ThirdWeixinWorkDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.weixin.mutil.model.ThirdWeixinWorkMutil" />
+	</bean>
+
+	<bean
+		id="thirdMutilWeixinWorkTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.third.weixin.mutil.service.spring.ThirdWeixinWorkServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="thirdMutilWeixinWorkDao" />
+		</property>
+	</bean>
+	<bean
+		id="thirdMutilWeixinWorkService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="thirdMutilWeixinWorkTarget" />
+		</property>
+	</bean>
+	
+	<!-- 机器人节点设置 -->
+	<bean id="robotNodeSendDynamicInfoToMutilWxworkService"
+		class="com.landray.kmss.third.weixin.mutil.service.spring.RobotNodeSendDynamicInfoToWxworkServiceImp">
+		<property name="thirdMutilWxworkWriteDynamicInfoService">
+			<ref bean="thirdMutilWxworkWriteDynamicInfoService" />
+		</property>
+	</bean>
+	
+	<bean id="thirdMutilWxworkDynamicinfoDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.weixin.mutil.dao.hibernate.ThirdWxworkDynamicinfoDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.weixin.mutil.model.ThirdWxworkMutilDynamicinfo" />
+	</bean>
+	<bean id="thirdMutilWxworkDynamicinfoTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.weixin.mutil.service.spring.ThirdWxworkDynamicinfoServiceImp">
+		<property name="baseDao">
+			<ref bean="thirdMutilWxworkDynamicinfoDao" />
+		</property>
+	</bean>
+	<bean id="thirdMutilWxworkDynamicinfoService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdMutilWxworkDynamicinfoTarget" />
+		</property>
+	</bean>
+	
+	<!-- 定时任务设置 -->
+	<bean id="thirdMutilWxworkWriteDynamicInfoService"
+		class="com.landray.kmss.third.weixin.mutil.service.spring.ThirdWxworkWriteDynamicInfoServiceImp">
+		<property name="thirdMutilWxworkDynamicinfoService">
+			<ref bean="thirdMutilWxworkDynamicinfoService" />
+		</property>
+		<property name="wxTaskExecutor">
+			<ref bean="wxTaskExecutor" />
+		</property>
+	</bean>
+	
+	<bean
+		id="thirdMutilWxworkOmsInitDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.third.weixin.mutil.dao.hibernate.ThirdWxworkOmsInitDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.weixin.mutil.model.ThirdWxworkOmsMutilInit" />
+	</bean>
+
+	<bean
+		id="thirdMutilWxworkOmsInitTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.third.weixin.mutil.service.spring.ThirdWxworkOmsInitServiceImp">
+		<property name="baseDao">
+			<ref bean="thirdMutilWxworkOmsInitDao" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="mutilWxworkOmsRelationService">
+			<ref bean="mutilWxworkOmsRelationService" />
+		</property>
+	</bean>
+	<bean
+		id="thirdMutilWxworkOmsInitService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdMutilWxworkOmsInitTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="thirdMutilWxworkOmsInitListService"
+		class="com.landray.kmss.third.weixin.mutil.service.spring.ThirdWxworkOmsInitListService">
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="mutilWxworkOmsRelationService">
+			<ref bean="mutilWxworkOmsRelationService" />
+		</property>
+		<property name="sysOrganizationVisibleService">
+			<ref bean="sysOrganizationVisibleService" />
+		</property>
+		<property name="roleValidator">
+			<ref bean="roleValidator" />
+		</property>
+		<property name="sysOrganizationStaffingLevelService">
+			<ref bean="sysOrganizationStaffingLevelService" />
+		</property>
+	</bean>
+	
+	 <bean 
+        id="thirdMutilWxWorkConfigDao" 
+        class="com.landray.kmss.third.weixin.mutil.dao.hibernate.ThirdWxWorkConfigDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.weixin.mutil.model.ThirdWxWorkMutilConfig</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdMutilWxWorkConfigTarget" 
+        class="com.landray.kmss.third.weixin.mutil.service.spring.ThirdWxWorkConfigServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdMutilWxWorkConfigDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdMutilWxWorkConfigService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdMutilWxWorkConfigTarget"/>
+        </property>
+    </bean>
+    
+    <!-- 定时任务管理 -->
+    <bean 
+        id="ekp2WxQuartzService"
+        class="com.landray.kmss.third.weixin.mutil.service.spring.Ekp2WxQuartzService">
+        <property name="sysQuartzJobService">
+            <ref bean="sysQuartzJobService"/>
+        </property>
+    </bean>
+</beans>

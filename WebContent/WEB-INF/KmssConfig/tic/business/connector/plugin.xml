@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	
+	<!-- 数据初始化业务集成 -->
+	<extension
+		point="com.landray.kmss.tic.core.init"
+		model="*">
+			<item name="init">
+			<param
+				name="moduleKey"
+				value="5" />
+			<param
+				name="moduleName"
+				value="{tic-core-common:ticCoreCommon.businessIntegrate}" />
+			<param
+				name="initTitle"
+				value="{tic-business-connector:init.business}" /> 
+			<!-- spring 注册 -->
+			<param
+				name="springBean"
+				value="ticBusinessInitExecute" />
+			<param
+				name="jspPath"
+				value="" />	
+			<param
+				name="modulePath"
+				value="/business" />	
+		    <param
+				name="confPath"
+				value="/TicTempBusinessInoutdata/WEB-INF/KmssConfig" />	
+			 <param
+				name="parentPath"
+				value="/TicTempBusinessInoutdata" />	
+		    <param
+				name="uploadFileZip"
+			    value="TicUploadBusinessInout.zip" />
+			<param
+				name="exportFileZip"
+				value="TicInoutBusinessdata.zip" />
+			<param
+				name="moduleDownloadInfo"
+				value="业务集成组件"/>
+			<param
+				name="busiCateClass"
+				value="com.landray.kmss.tic.business.connector.model.TicBusinessCategory"/>	
+		</item>
+	</extension>
+	
+		<!-- 导入导出(业务集成表单流程映射配置) -->
+	<extension
+		point="com.landray.kmss.tic.core.inoutdata.service"
+		model="*">
+		<item name="inoutModule">
+			<param
+				name="moduleKey"
+				value="formFlowMapping_5" />
+			<param
+				name="moduleType"
+				value="5"  />
+			<param
+				name="springName"
+				value="" />
+			<param
+				name="messageKey"
+				value="{tic-business-connector:imExport.business.formFlowMapping}" />
+			<param
+				name="showName"
+				value="docSubject" />
+			<param
+				name="parentRelation"
+				value="docCategory" />
+			
+			<!-- 父类 -->	
+			<param
+				name="parentShowName"
+				value="fdName" />			
+		</item>
+	</extension>
+	
+	
+		<!-- 导入导出(业务集成分类配置射) -->
+	<extension
+		point="com.landray.kmss.tic.core.inoutdata.service"
+		model="*">
+		<item name="inoutModule">
+			<param
+				name="moduleKey"
+				value="ticBusinessCategoryKey"/>
+			<param
+				name="moduleType"
+				value="5"/>
+			<param
+				name="springName"
+				value="ticBusinessCategoryService" />
+			<param
+				name="messageKey"
+				value="{tic-business-connector:imExport.business.CategoryCfg}" />
+			<param
+				name="showName"
+				value="fdName" />
+			<param
+				name="parentRelation"
+				value="" />
+			
+			<!-- 父类 -->	
+			<param
+				name="parentShowName"
+				value="" />				
+		</item>
+	</extension>
+	
+	<!-- 导入导出(业务集成服务配置) -->
+	<extension
+		point="com.landray.kmss.tic.core.inoutdata.service"
+		model="*">
+		<item name="inoutModule">
+			<param
+				name="moduleKey"
+				value="ticBusinessSoapSettingKey" />
+			<param
+				name="moduleType"
+				value="5" />
+			<param
+				name="springName"
+				value="ticSoapSettingService" />
+			<param
+				name="messageKey"
+				value="{tic-business-connector:imExport.business.serviceSettCfg}" />
+			<param
+				name="showName"
+				value="docSubject" />	
+			<param
+				name="parentRelation"
+				value="" />
+			<!-- 父类 -->
+			<param
+				name="parentShowName"
+				value="" />
+		</item>
+	</extension>
+	
+	<!-- 导入导出(业务集成函数配置) -->
+	<extension
+		point="com.landray.kmss.tic.core.inoutdata.service"
+		model="*">
+		<item name="inoutModule">
+			<param
+				name="moduleKey"
+				value="ticBusinessFuncKey" />
+			<param
+				name="moduleType"
+				value="5"/>
+			<param
+				name="springName"
+				value="ticSoapMainService" />
+			<param
+				name="messageKey"
+				value="{tic-business-connector:imExport.soap.funcCfg}" />
+			<param
+				name="showName"
+				value="wsBindFunc" />
+			<param
+				name="parentRelation"
+				value="ticSoapSetting" />
+			<!-- 父类 -->	
+			<param
+				name="parentShowName"
+				value="docSubject" />				
+		</item>
+	</extension>
+	
+	<!-- 导入导出(业务集成组件的Jdbc服务配置) -->
+	<extension
+		point="com.landray.kmss.tic.core.inoutdata.service"
+		model="*">
+		<item name="inoutModule">
+			<param
+				name="moduleKey"
+				value="ticBusinessJdbcSettingKey" />
+			<param
+				name="moduleType"
+				value="5" />
+			<param
+				name="springName"
+				value="compDbcpService" />
+			<param
+				name="messageKey"
+				value="{tic-business-connector:imExport.business.Jdbc.serviceSettCfg}" />
+			<param
+				name="showName"
+				value="fdName" />	
+			<param
+				name="parentRelation"
+				value="" />
+			<!-- 父类 -->
+			<param
+				name="parentShowName"
+				value="" />
+		</item>
+	</extension>
+	
+	<!-- 导入导出业务集成组件 Jdbc的函数配置-->
+	<extension
+		point="com.landray.kmss.tic.core.inoutdata.service"
+		model="*">
+		<item name="inoutModule">
+			<param
+				name="moduleKey"
+				value="ticBusinessJdbcFuncKey" />
+			<param
+				name="moduleType"
+				value="5"/>
+			<param
+				name="springName"
+				value="ticJdbcDataSetService" />
+			<param
+				name="messageKey"
+				value="{tic-business-connector:imExport.business.Jdbc.funcCfg}" />
+			<param
+				name="showName"
+				value="fdName" />
+			<param
+				name="parentRelation"
+				value="fdDataSource" />
+			<!-- 父类 -->	
+			<param
+				name="parentShowName"
+				value="fdName" />				
+		</item>
+	</extension>
+	
+	
+		<!-- 导入导出(业务集成组件 rest的服务配置) -->
+	<extension
+		point="com.landray.kmss.tic.core.inoutdata.service"
+		model="*">
+		<item name="inoutModule">
+			<param
+				name="moduleKey"
+				value="ticBusinessRestSettingKey" />
+			<param
+				name="moduleType"
+				value="5" />
+			<param
+				name="springName"
+				value="ticRestSettingService" />
+			<param
+				name="messageKey"
+				value="{tic-business-connector:imExport.business.RestServiceSettCfg}" />
+			<param
+				name="showName"
+				value="docSubject" />	
+			<param
+				name="parentRelation"
+				value="" />
+			<!-- 父类 -->
+			<param
+				name="parentShowName"
+				value="" />
+		</item>
+	</extension>
+	
+	<!-- 导入导出(业务员集成组件 rest函数配置) -->
+	<extension
+		point="com.landray.kmss.tic.core.inoutdata.service"
+		model="*">
+		<item name="inoutModule">
+			<param
+				name="moduleKey"
+				value="ticBusinessRestFuncKey" />
+			<param
+				name="moduleType"
+				value="5"/>
+			<param
+				name="springName"
+				value="ticRestMainService" />
+			<param
+				name="messageKey"
+				value="{tic-business-connector:imExport.rest.funcCfg}" />
+			<param
+				name="showName"
+				value="fdName" />
+			<param
+				name="parentRelation"
+				value="ticRestSetting" />
+			<!-- 父类 -->	
+			<param
+				name="parentShowName"
+				value="docSubject" />				
+		</item>
+	</extension>
+	
+	
+	
+		
+	<!-- 导入导出(业务集成定时任务映射) -->
+	<extension
+		point="com.landray.kmss.tic.core.inoutdata.service"
+		model="*">
+		<item name="inoutModule">
+			<param
+				name="moduleKey"
+				value="ticBusinessJobKey"/>
+			<param
+				name="moduleType"
+				value="5"  />
+			<param
+				name="springName"
+				value="ticCoreSyncJobService" />
+			<param
+				name="messageKey"
+				value="{tic-business-connector:imExport.business.jobCfg}" />
+			<param
+				name="showName"
+				value="fdSubject" />
+			<param
+				name="parentRelation"
+				value="" />
+			
+			<!-- 父类 -->	
+			<param
+				name="parentShowName"
+				value="" />		
+		</item>
+	</extension>
+</plugin>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrgMatrix"
+		table="sys_org_matrix">
+		<!-- 主结构配置 -->
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<!-- 简单属性 -->
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			length="200"
+			access="com.landray.kmss.sys.organization.lang.SysOrgCommonAccessor" />
+		
+		<property
+			name="matrixType"
+			column="matrix__type"
+			update="true"
+			insert="true"
+			length="2" />
+			
+		<property
+			name="fdDesc"
+			column="fd_desc"
+			update="true"
+			insert="true"
+			length="400" />
+		<property
+			name="fdOrder"
+			column="fd_order"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdIsAvailable"
+			column="fd_is_available"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdSubTable"
+			column="fd_sub_table"
+			update="true"
+			insert="true"
+			length="50" />
+		<property
+			name="fdCreateTime"
+			column="fd_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdAlterTime"
+			column="fd_alter_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="authReaderFlag"
+			column="auth_reader_flag"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<property
+			name="fdIsEnabledCate"
+			column="fd_is_enabled_cate"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 对象属性 -->
+		<many-to-one
+			name="hbmCategory"
+			column="fd_category_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<!-- 矩阵版本 -->
+		<bag
+			name="fdVersions"
+			inverse="false"
+			cascade="all"
+			lazy="true">
+			<key
+				column="fd_matrix_id" />
+			<one-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgMatrixVersion"/>
+		</bag>
+		<!-- 关系信息 -->
+		<bag
+			name="fdRelations"
+			inverse="false"
+			cascade="all"
+			lazy="true">
+			<key
+				column="fd_matrix_id" />
+			<one-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgMatrixRelation"/>
+		</bag>
+		<!-- 配置数据类别 -->
+		<bag
+			name="fdDataCates"
+			inverse="false"
+			cascade="all"
+			lazy="true"
+			order-by="fd_order">
+			<key
+				column="fd_matrix_id" />
+			<one-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgMatrixDataCate"/>
+		</bag>
+		<!-- 阅读者权限 -->
+		<bag
+			name="authReaders"
+			table="sys_org_matrix_reader"
+			lazy="true">
+			<key column="fd_matrix_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_reader_id" />
+		</bag>
+		<!-- 编辑者权限 -->
+		<bag
+			name="authEditors"
+			table="sys_org_matrix_editor"
+			lazy="true">
+			<key column="fd_matrix_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_editor_id" />
+		</bag>
+	</class>
+</hibernate-mapping>

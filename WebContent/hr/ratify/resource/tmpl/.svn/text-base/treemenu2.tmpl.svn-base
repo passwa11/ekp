@@ -1,0 +1,74 @@
+var target = render.vars.target?render.vars.target:'_blank';
+var parent = render.parent;
+var width = parent.element.width();
+
+	//绘制HREF
+	var drawHref = function(oneData){
+		var text = env.fn.formatText(oneData.text);
+		var count = oneData.count;
+		if(oneData.nodeType!=null){
+			{$		
+				<li class="temp-level">
+					<a title="{% text %}"  href="javascript:;" target="_self" onClick="openUrl('{%oneData.id%}','{%oneData.nodeType%}')" onMouseOver ="showCreateDiv('{%oneData.id%}','{%oneData.nodeType%}',this)" onMouseOut="hideCreateDiv()">
+						<span class="txt" class="textEllipsis">{% text %}({%count%})</span><span class="num"> </span>
+					</a>
+				</li>
+			$}
+		}
+	}
+	
+	for(var m=0;m<data.length;m++){
+		{$
+			  <!-- 面板 Starts -->
+			  <div class="lui-backstage-panel">
+			    <div class="lui-backstage-panel-heading" onClick="openUrl('{%data[m].id%}','{%data[m].nodeType%}')">
+			      <h2 class="lui-backstage-panel-heading-title">{%env.fn.formatText(data[m].text)%}({%data[m].count%})<span class="num"> </span> </h2>
+			    </div>
+			    <div class="lui-backstage-panel-body">
+			      <ul class="lui-backstage-panel-list">
+		$}
+		
+		//绘制内容
+		
+				var __data = data[m].children;
+				for(var i=0; i<__data.length; i++){
+					var lv1 = __data[i];
+					
+					var hasChildren = lv1.children ? true : false;
+					
+					if(!hasChildren || lv1.children.length==0){
+						drawHref(lv1);
+					}
+					if(hasChildren && lv1.children.length > 0){
+					   var text = env.fn.formatText(lv1.text);
+					   var count = lv1.count;
+						{$
+							<li class="has-next-level">
+					          <div class="next-level-title" onClick="openUrl('{%lv1.id%}','{%lv1.nodeType%}')">
+					             <a>
+					           		 <span class="txt">{% text %}({%count%})</span><span class="num"> </span>
+					           	 </a>
+					          </div>
+					          <ul class="next-level-list">
+						$}
+							for(var j=0; j<lv1.children.length; j++){
+								var lv2 = lv1.children[j];
+								drawHref(lv2);
+							}
+						{$
+								</ul>
+      				  		</li>
+						$}
+					}
+				  }
+				{$
+				  </ul>
+				$}
+			{$	
+				</div>
+			$}
+		{$	
+			</div>
+		$}
+}
+

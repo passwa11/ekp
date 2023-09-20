@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.hr.ratify.model.HrRatifyFeedback" 
+        table="hr_ratify_feedback">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property 
+            name="fdSummary" 
+            column="fd_summary" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+        <property 
+            name="docCreateTime" 
+            column="doc_create_time" 
+            update="true" 
+            insert="true" 
+            index="idx_hrRatifyFeedback_creTime"/>
+        <property 
+            name="docContent" 
+            column="doc_content" 
+            update="true" 
+            insert="true" 
+            length="1000000" 
+            type="com.landray.kmss.common.dao.ClobStringType" 
+            lazy="true"/>
+        <property
+			name="fdHasAttachment"
+			column="fd_has_attachment"
+			update="true"
+			insert="true"
+			length="10"
+			not-null="false" />	
+        <property 
+            name="fdNotifyPeople" 
+            column="fd_notify_people" 
+            update="true" 
+            insert="true" 
+            length="1500"/>
+        <property 
+            name="fdNotifyType" 
+            column="fd_notify_type" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+        <many-to-one 
+            name="docCreator" 
+            column="doc_creator_id" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="fdDoc" 
+            column="fd_doc_id" 
+            update="false" 
+            insert="true"/>
+    </class>
+</hibernate-mapping>

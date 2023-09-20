@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="producerPublisher" class="com.landray.kmss.kms.lservice.events.ProducerPublisher">
+	</bean>
+
+	<bean id="sourcePublisher" class="com.landray.kmss.kms.lservice.events.SourcePublisher">
+	</bean>
+
+	<bean id="transferService"
+		class="com.landray.kmss.kms.lservice.service.spring.TransferServiceImp">
+		<property name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+	</bean>
+
+	<bean id="customerCoreServiceImp" parent="KmssBaseCoreService">
+		<property name="target">
+			<bean
+				class="com.landray.kmss.kms.lservice.service.spring.CustomerCoreServiceImp">
+				<property name="authorize">
+					<ref bean="authorize" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="authProducerFieldValidator"
+		class="com.landray.kmss.kms.lservice.auth.AuthProducerFieldValidator">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+		<property name="hqlBuilder">
+			<ref bean="kmssAuthHQLBuilder" />
+		</property>
+	</bean>
+
+	<bean id="authProducerFilter" class="com.landray.kmss.kms.lservice.auth.AuthProducerFilter">
+	</bean>
+
+	<bean id="authorize" class="com.landray.kmss.kms.lservice.auth.Authorize">
+	</bean>
+
+	<bean id="authorizeReaders"
+		class="com.landray.kmss.kms.lservice.auth.interfaces.AuthorizeReadersImp">
+	</bean>
+
+	<bean id="authPorducerValidator"
+		class="com.landray.kmss.kms.lservice.auth.AuthPorducerValidator"></bean>
+
+
+	<bean id="producerCoreTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.kms.lservice.service.spring.ProducerCoreServiceImp">
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+
+	<bean id="producerCoreService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="producerCoreTarget" />
+		</property>
+	</bean>
+	
+	<bean id="kmsDuplicateSubmitAdvisorService"
+		class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<property name="advice">
+			<ref bean="duplicateSubmitAdvice" />
+		</property>
+		<property name="pattern" value=".*handleRequest" />
+	</bean>
+	<bean id="duplicateSubmitAdvice" 
+		  class="com.landray.kmss.kms.lservice.service.spring.DuplicateSubmitAdvice"></bean>
+
+	<!-- 门户组件 -->
+	<bean id="kmsLservicePortletService" class="com.landray.kmss.kms.lservice.service.spring.KmsLservicePortletServiceImpl"></bean>
+	<!-- 学习看板 -->
+	<bean id="knowledgePrefectureCustom" class="com.landray.kmss.kms.lservice.service.spring.KnowledgePrefectureCustom"></bean>
+	<!-- 我的学习任务 -->
+	<bean id="kmsLservicePortelMyTaskCustom" class="com.landray.kmss.kms.lservice.service.spring.KmsLservicePortelMyTaskCustom"></bean>
+
+</beans>

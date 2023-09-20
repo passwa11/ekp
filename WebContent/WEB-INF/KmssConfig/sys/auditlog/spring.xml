@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysAuditlogDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.sys.auditlog.dao.hibernate.SysAuditlogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.auditlog.model.SysAuditlog" />
+	</bean>
+	
+	<bean
+		id="sysAuditlogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.auditlog.service.spring.SysAuditlogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAuditlogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAuditlogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAuditlogTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysAuditlogCoreService"
+		parent="KmssBaseCoreService">
+		<property
+			name="target">
+			<bean
+				class="com.landray.kmss.sys.auditlog.service.spring.SysAuditlogCoreOuterService">
+				<property name="auditlogService">
+					<ref bean="sysAuditlogService"/>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean
+		id="oracleAuditTableCreateProvider" 
+		class="com.landray.kmss.sys.auditlog.service.spring.OracleAuditTableCreateProvider">
+		<property
+			name="sqlInfo">
+			<map>
+				<entry key="createTable">
+					<value>
+						create table {sys_audit_log}(fd_id varchar2(36 byte) not null primary key, fd_created date not null, fd_ip varchar2(15 byte) null ,
+						fd_operator varchar2(100 byte) null, fd_operator_id varchar2(36 byte) null, fd_opttype number(11,0) not null,
+						fd_subject varchar2(800 byte) null, fd_model_name varchar2(200 byte) null, fd_model_id varchar2(36 byte) null)
+					</value>
+				</entry>
+				<entry key="createIndex">
+					<value>
+						create index {sys_audit_log}_crtd on {sys_audit_log}(fd_created);
+						create index {sys_audit_log}_optid on {sys_audit_log}(fd_operator_id);
+						create index {sys_audit_log}_opttp on {sys_audit_log}(fd_opttype);
+						create index {sys_audit_log}_model on {sys_audit_log}(fd_model_name);
+						create index {sys_audit_log}_modid on {sys_audit_log}(fd_model_id)
+					</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	<!-- oracle: create table {sys_audit_log} as select * from sys_audit_log where 1=2;  能复制表结构，但不能复制主外键、约束、索引 -->
+	<bean
+		id="mysqlAuditTableCreateProvider" 
+		class="com.landray.kmss.sys.auditlog.service.spring.MysqlAuditTableCreateProvider">
+		<property
+			name="sqlInfo">
+			<map>
+				<entry key="createTable">
+					<value>
+						create table {sys_audit_log}(fd_id varchar(36) not null, fd_created datetime not null, fd_ip varchar(15) null, 
+						fd_operator varchar(100) null, fd_operator_id varchar(36) null, fd_opttype int(11) not null,
+		  				fd_subject varchar(800) null, fd_model_name varchar(200) null, fd_model_id varchar(36) null, primary key(fd_id)) 
+					</value>
+				</entry>
+				<entry key="createIndex">
+					<value>
+						create index {sys_audit_log}_crtd on {sys_audit_log}(fd_created);
+						create index {sys_audit_log}_optid on {sys_audit_log}(fd_operator_id);
+						create index {sys_audit_log}_opttp on {sys_audit_log}(fd_opttype);
+						create index {sys_audit_log}_model on {sys_audit_log}(fd_model_name);
+						create index {sys_audit_log}_modid on {sys_audit_log}(fd_model_id)
+					</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	<!-- mysql: create table {sys_audit_log} like sys_audit_log;  能复制表结构及主外键、约束、索引 -->
+	<bean
+		id="sqlserverAuditTableCreateProvider" 
+		class="com.landray.kmss.sys.auditlog.service.spring.SqlserverAuditTableCreateProvider">
+		<property
+			name="sqlInfo">
+			<map>
+				<entry key="createTable">
+					<value>
+						create table {sys_audit_log}(fd_id varchar(36) not null primary key, fd_created datetime not null, fd_ip varchar(15) null ,
+						fd_operator varchar(100) null, fd_operator_id varchar(36) null, fd_opttype int not null,
+						fd_subject varchar(800) null, fd_model_name varchar(200) null, fd_model_id varchar(36) null)
+					</value>
+				</entry>
+				<entry key="createIndex">
+					<value>
+						create index {sys_audit_log}_crtd on {sys_audit_log}(fd_created);
+						create index {sys_audit_log}_optid on {sys_audit_log}(fd_operator_id);
+						create index {sys_audit_log}_opttp on {sys_audit_log}(fd_opttype);
+						create index {sys_audit_log}_model on {sys_audit_log}(fd_model_name);
+						create index {sys_audit_log}_modid on {sys_audit_log}(fd_model_id)
+					</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	<!-- sqlserver: select * into {sys_audit_log} from sys_audit_log where 1=2;  能复制表结构，但不能复制主外键、约束、索引 -->
+	<bean
+		id="db2AuditTableCreateProvider" 
+		class="com.landray.kmss.sys.auditlog.service.spring.Db2AuditTableCreateProvider">
+		<property
+			name="sqlInfo">
+			<map>
+				<entry key="createTable">
+					<value>
+						create table {sys_audit_log}(fd_id varchar(36) not null primary key, fd_created timestamp not null, fd_ip varchar(15) null ,
+						fd_operator varchar(100) null, fd_operator_id varchar(36) null, fd_opttype int not null,
+						fd_subject varchar(800) null, fd_model_name varchar(200) null, fd_model_id varchar(36) null)
+					</value>
+				</entry>
+				<entry key="createIndex">
+					<value>
+						create index {sys_audit_log}_crtd on {sys_audit_log}(fd_created);
+						create index {sys_audit_log}_optid on {sys_audit_log}(fd_operator_id);
+						create index {sys_audit_log}_opttp on {sys_audit_log}(fd_opttype);
+						create index {sys_audit_log}_model on {sys_audit_log}(fd_model_name);
+						create index {sys_audit_log}_modid on {sys_audit_log}(fd_model_id)
+					</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	<!-- db2: create table {sys_audit_log} as (select * from sys_audit_log) definition only;;  能复制表结构及主外键、约束、索引 -->
+</beans>

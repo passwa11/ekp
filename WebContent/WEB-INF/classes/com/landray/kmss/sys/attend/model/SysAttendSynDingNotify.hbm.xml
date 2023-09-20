@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.sys.attend.model.SysAttendSynDingNotify" 
+        table="sys_attend_syn_ding_notify">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property
+			name="docSubject"
+			column="doc_subject"
+			update="true"
+			insert="true"
+			length="800" />
+        <property 
+            name="docCreateTime" 
+            column="doc_create_time" 
+            update="true" 
+            index="idx_sysAtndSynD_createTime"
+            insert="true"/>
+       <property
+			name="fdStatus"
+			column="fd_status"
+			update="true"
+			insert="true"
+			length="4"/>
+		<property
+			name="fdLink"
+			column="fd_link"
+			update="true"
+			insert="true"
+			length="1200" />
+        <many-to-one
+			name="docCreator"
+			column="doc_creator_id"
+			insert="true"
+			update="true" />
+		<many-to-one
+			name="fdReceiver"
+			column="fd_receiver_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<property
+			name="fdSysAttendSynDingId"
+			column="fd_sys_attend_synding_id"
+			insert="true"
+			update="true"
+			not-null="false"
+			length="36" />
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.hr.organization.model.HrOrganizationElement" 
+        table="hr_org_element"
+		discriminator-value="not null">
+        <!-- 主结构配置 -->
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<discriminator
+			column="fd_org_type"
+			type="int" />
+		<!-- 简单属性 -->
+		<property
+			name="fdOrgType"
+			column="fd_org_type"
+			update="false"
+			insert="false" />
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100" />
+		<property
+			name="fdNameAbbr"
+			column="fd_name_abbr"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100" />
+		<property
+			name="fdNamePinYin"
+			column="fd_name_pinyin"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="400" />
+		<property
+			name="fdNameSimplePinyin"
+			column="fd_name_simple_pinyin"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200" />
+		<property
+			name="fdOrder"
+			column="fd_order"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdNo"
+			column="fd_no"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100"
+			index="idx_hrOrgElement_fdNo" />
+		<property
+			name="fdKeyword"
+			column="fd_keyword"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100"
+			index="idx_hrOrgElement_fdKeyword" />
+		<property
+			name="fdIsAvailable"
+			column="fd_is_available"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdIsAbandon"
+			column="fd_is_abandon"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdIsBusiness"
+			column="fd_is_business"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdSource"
+			column="fd_source"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200"
+			index="idx_hrOrgElement_fdSource" />
+		<property
+			name="fdMemo"
+			column="fd_memo"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="4000" />
+		<property
+			name="fdHierarchyId"
+			column="fd_hierarchy_id"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="450" 
+			index="idx_hrOrgElement_hierarchyId" />
+		<property
+			name="fdIsCompileOpen"
+			column="fd_is_compile_open"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="36" />
+		<property
+			name="fdIsLimitNum"
+			column="fd_is_limit_num"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="36" />
+		<property
+			name="fdCompileNum"
+			column="fd_compile_num"
+			update="true"
+			insert="true"
+			not-null="false"/>
+		<property
+			name="fdIsVirOrg"
+			column="fd_is_vir_org"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="36" />
+		<property
+			name="fdIsCorp"
+			column="fd_is_corp"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="36" />
+		<property
+			name="fdCreateTime"
+			column="fd_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdAlterTime"
+			column="fd_alter_time"
+			update="true"
+			insert="true"
+			not-null="false" />	
+		<property
+			name="fdOrgEmail"
+			column="fd_org_email"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="450"
+			index="idx_hrOrgElement_fdOrgEmail" />		
+		<property
+			name="fdPersonsNumber"
+			column="fd_persons_number"
+			update="true"
+			insert="true"
+			not-null="false" />	
+		<property
+			name="fdPreDeptId"
+			column="fd_pre_dept_id"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="36" />
+		<property
+			name="fdPrePostIds"
+			column="fd_pre_post_ids"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="500" />	
+					
+		<!-- 对象属性 -->
+		<many-to-one
+			name="hbmThisLeader"
+			column="fd_this_leaderid"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<many-to-one
+			name="fdBranLeader"
+			column="fd_bran_leader"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<many-to-one
+			name="hbmSuperLeader"
+			column="fd_super_leaderid"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<many-to-one
+			name="hbmParentOrg"
+			column="fd_parentorgid"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<many-to-one
+			name="hbmParent"
+			column="fd_parentid"
+			insert="true"
+			update="true"
+			not-null="false"
+			index="idx_hrOrgElement_hbmParent" />
+		<bag
+			name="hbmChildren"
+			inverse="true"
+			order-by="fd_org_type desc,fd_order,fd_name">
+			<key column="fd_parentid" />
+			<one-to-many class="com.landray.kmss.hr.organization.model.HrOrganizationElement" />
+		</bag>
+		
+		<!-- 人事档案历史数据-人员使用 -->
+		<bag
+			name="fdOrgPosts"
+			table="hr_staff_person_post">
+			<key column="fd_personid" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgPost"
+				column="fd_postid" />
+		</bag>
+		
+		<!-- 人事组织架构新增-岗位使用 -->
+		<bag
+			name="hbmPosts"
+			table="hr_org_post_person">
+			<key column="fd_personid" />
+			<many-to-many
+				class="com.landray.kmss.hr.organization.model.HrOrganizationPost"
+				column="fd_postid" />
+		</bag>
+		<bag
+			name="hbmPersons"
+			table="hr_org_post_person">
+			<key column="fd_postid" foreign-key="none" />
+			<many-to-many
+				class="com.landray.kmss.hr.staff.model.HrStaffPersonInfo"
+				column="fd_personid" foreign-key="none" />
+		</bag> 
+		 
+		
+		<bag name="hbmThisLeaderChildren">
+			<key column="fd_this_leaderid" />
+			<one-to-many class="com.landray.kmss.hr.organization.model.HrOrganizationElement" />
+		</bag>
+		<bag name="hbmPersonExperienceContract">
+			<key column="fd_person_info_id" />
+			<one-to-many class="com.landray.kmss.hr.staff.model.HrStaffPersonExperienceContract" />
+		</bag>
+		<bag name="hbmSuperLeaderChildren">
+			<key column="fd_super_leaderid" />
+			<one-to-many class="com.landray.kmss.hr.organization.model.HrOrganizationElement" />
+		</bag>
+				
+    </class>
+</hibernate-mapping>

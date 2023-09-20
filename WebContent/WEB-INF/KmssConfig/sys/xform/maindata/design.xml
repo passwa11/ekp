@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../../../design.xsd ">	
+	
+	<module urlPrefix="/sys/simplecategory/">
+		<request path="sys_simple_category/sysCategoryMain_tree.jsp*">
+			<query
+				queryString="modelName=com.landray.kmss.sys.xform.maindata.model.SysFormJdbcDataSetCategory"
+				validator="roleValidator(role=SYSROLE_USER)" />
+		</request>
+	</module>
+	
+	<homePage
+		urlPrefix="sys/xform/maindata"
+		config="/moduleindex_notopic.jsp?nav=/sys/xform/maindata/jdbctree.jsp"
+		messageKey="sys-xform-maindata:tree.relation.jdbc.label"
+		type="app" />
+	
+	<profileConfig 
+		key="maindata"
+		messageKey="{sys-xform-maindata:module.xform.maindata}"
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/lbpm/maindata.jsp"
+		type="intelligence"
+		icon="lui_icon_s_profile_navLeft_maindata"
+		order="1" 
+		description="{sys-xform-maindata:sys.xform.maindata.description}"/>
+	
+</configs>

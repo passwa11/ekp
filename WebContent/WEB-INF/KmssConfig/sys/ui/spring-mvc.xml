@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		class="com.landray.kmss.web.config.ExtendModuleConfig">
+		<constructor-arg>
+			<map>
+				<entry
+					key="lui-source"
+					value="/sys/ui/jsp/json.jsp" />
+				<entry
+					key="lui-text"
+					value="/sys/ui/jsp/text.jsp" />
+				<entry
+					key="lui-failure"
+					value="/sys/ui/jsp/failure.jsp" />
+				<entry
+					key="lui-chart"
+					value="/sys/ui/jsp/chart.jsp" />
+			</map>
+		</constructor-arg>
+	</bean>
+	<bean
+		name="/sys/ui/sys_ui_logo/sysUiLogo.do"
+		class="com.landray.kmss.sys.ui.actions.SysUiLogoAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.ui.forms.SysUiLogoForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="upload"
+					value="/sys/ui/jsp/logo.jsp" />
+				<entry
+					key="profile_logo"
+					value="/sys/admin/commontools/change_back_logo_dialog.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/ui/sys_ui_extend/sysUiExtend.do"
+		class="com.landray.kmss.sys.ui.actions.SysUiExtendAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.ui.forms.SysUiExtendForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="upload"
+					value="/sys/ui/help/lui-ext/upload.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/ui/sys_ui_component/sysUiComponent.do"
+		class="com.landray.kmss.sys.ui.actions.SysUiComponentAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.ui.forms.SysUiComponentForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="upload"
+					value="/sys/ui/help/component/upload.jsp" />
+				<entry
+					key="listChildren"
+					value="/sys/ui/help/component/component_list.jsp"/>
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/ui/sys_ui_tool/sysUiTools.do"
+		class="com.landray.kmss.sys.ui.actions.SysUiToolsAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/ui/sys_ui_qrcode/sysUiQrcode.do"
+		class="com.landray.kmss.sys.ui.actions.SysUiQrcode"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/ui/sys_ui_compress/sysUiCompress.do"
+		class="com.landray.kmss.sys.ui.actions.SysUiCompressAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/ui/sys_ui_config/sysUiConfig.do"
+		class="com.landray.kmss.sys.ui.actions.SysUiConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+</beans>

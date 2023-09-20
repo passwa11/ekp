@@ -1,0 +1,102 @@
+var extend = (param!=null && param.extend!=null)?('_'+param.extend):'';
+		var _vars = layout.tabpanel.config.vars;
+		var _customStyle = '';
+		if(_vars){
+		_customStyle = _vars.style || '';
+		}
+		{$
+<div  style="{%_customStyle%}" class='lui_tabpanel{%extend%}_frame tabPanel_frame '>
+<div class='lui_tabpanel_title'>
+<span class='lui_tabpanel_title_icon'></span>
+<span class='lui_tabpanel_title_main'></span>
+<span class='lui_tabpanel_title_subtitle'></span>
+</div>
+<div class='lui_tabpanel{%extend%}_navs_l'>
+<div class='lui_tabpanel{%extend%}_navs_r'>
+<div class="lui_tabpanel{%extend%}_navs_c clearfloat">
+		$}
+		var width = (Math.floor(1000/layout.tabpanel.contents.length)-1)/10.0;
+
+
+		var titleGroup = {};
+		for(var m=0;m<layout.tabpanel.contents.length;m++){
+		var content = layout.tabpanel.contents[m];
+		var contentTitle = layout.tabpanel.contents[m].title;
+		if(contentTitle.indexOf("/")> -1){
+		var titleArr = contentTitle.split("/");
+		if(titleGroup[titleArr[0]]){
+		var aa = titleGroup[titleArr[0]].push(titleArr[1]);
+		}else{
+		var gs = [];
+		gs.push(titleArr[1]);
+		titleGroup[titleArr[0]] = gs;
+		}
+		}else{
+		if(titleGroup[contentTitle]){
+		var aa = titleGroup[contentTitle].push(contentTitle);
+		}else{
+		var gs = [];
+		gs.push(contentTitle);
+		titleGroup[contentTitle] = gs;
+		}
+		}
+		}
+		var arr = Object.keys(titleGroup);
+		var titleLength = arr.length;
+		var groupTitleWidth = (Math.floor(1000/titleLength)-(titleLength+3))/10.0;
+
+		var count = 0;
+		var order = 0;
+		for(var key in titleGroup) {
+		var yashi = titleGroup[key];
+		var gsTitle = key;
+		{$
+<div class="lui_tabpanel{%extend%}_container" style="max-width:{%groupTitleWidth%}%;" title="{%gsTitle%}">
+<div class="lui_tabpanel{%extend%}_groupTitle_l" data-lui-mark="panel.nav.groupTitle" data-order="{%order%}"  data-count="{%count%}">
+<div class="lui_tabpanel{%extend%}_groupTitle_r">
+<div class="lui_tabpanel{%extend%}_groupTitle">
+		{%gsTitle%}
+</div>
+</div>
+</div>
+<ul class="lui_tabpanel{%extend%}_groupUl">
+		$}
+		for(var j=0;j<yashi.length;j++){
+		{$
+<li style="max-width:{%width%}%;"  class='lui_tabpanel{%extend%}_navs_item_l'  data-lui-mark="panel.nav.frame" data-lui-switch-class="lui_tabpanel{%extend%}_navs_item_selected">
+<div class='lui_tabpanel{%extend%}_navs_item_r'>
+<div class='lui_tabpanel{%extend%}_navs_item_c' data-lui-mark="panel.nav.title">
+</div>
+</div>
+</li>
+		$}
+		}
+		{$
+</ul>
+</div>
+		$}
+		if(count >= 0){
+		count = count + yashi.length;
+		}
+		order++;
+		}
+
+
+		{$
+</div>
+</div>
+</div>
+<div class="lui_tabpanel{%extend%}_content_l">
+<div class="lui_tabpanel{%extend%}_content_r">
+<div class="lui_tabpanel{%extend%}_content_c" data-lui-mark="panel.contents">
+</div>
+</div>
+</div>
+<div class="lui_tabpanel{%extend%}_footer_l">
+<div class="lui_tabpanel{%extend%}_footer_r">
+<div class="lui_tabpanel{%extend%}_footer_c">
+</div>
+</div>
+</div>
+</div>
+		$}

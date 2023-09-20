@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="kmsCategoryMainDao" 
+        class="com.landray.kmss.kms.category.dao.hibernate.KmsCategoryMainDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.kms.category.model.KmsCategoryMain</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmsCategoryMainTarget" 
+        class="com.landray.kmss.kms.category.service.spring.KmsCategoryMainServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmsCategoryMainDao"/>
+        </property>
+        
+        <property
+			name="sysTagMainService">
+			<ref bean="sysTagMainService" />
+		</property>
+		<property
+			name="sysTagTagsService">
+			<ref bean="sysTagTagsService" />
+		</property>
+		<property
+			name="sysTagMainRelationService">
+			<ref bean="sysTagMainRelationService" />
+		</property>
+		<property
+			name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+        
+    </bean>
+    <bean 
+        id="kmsCategoryMainService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmsCategoryMainTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="kmsCategoryKnowledgeRelDao" 
+        class="com.landray.kmss.kms.category.dao.hibernate.KmsCategoryKnowledgeRelDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.kms.category.model.KmsCategoryKnowledgeRel</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmsCategoryKnowledgeRelTarget" 
+        class="com.landray.kmss.kms.category.service.spring.KmsCategoryKnowledgeRelServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmsCategoryKnowledgeRelDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="kmsCategoryKnowledgeRelService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmsCategoryKnowledgeRelTarget"/>
+        </property>
+    </bean>
+    
+    <!-- 统一分类主文档设置 -->
+	<bean
+		id="kmsCategoryKnowledgeRelCoreServiceImp"
+		parent="KmssBaseCoreService">
+		<property
+			name="target">
+			<bean
+				class="com.landray.kmss.kms.category.service.spring.KmsCategoryKnowledgeRelCoreServiceImp">
+				<property
+					name="kmsCategoryKnowledgeRelService">
+					<ref
+						bean="kmsCategoryKnowledgeRelService" />
+				</property>
+				<property
+					name="kmsCategoryMainService">
+					<ref
+						bean="kmsCategoryMainService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+    
+    
+    <bean
+		id="kmsCategoryPreviewDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.kms.category.dao.hibernate.KmsCategoryPreviewDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.kms.category.model.KmsCategoryPreview" />
+	</bean>
+    <bean
+		id="kmsCategoryPreviewService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmsCategoryPreviewServiceTarget" />
+		</property>
+	</bean>
+	<bean id="kmsCategoryPreviewServiceTarget"
+		class="com.landray.kmss.kms.category.service.spring.KmsCategoryPreviewServiceImp"
+		parent="KmssBaseTarget">
+		<property name="baseDao">
+			<ref bean="kmsCategoryPreviewDao" />
+		</property>
+		<property
+			name="kmsCategoryKnowledgeRelService">
+			<ref
+				bean="kmsCategoryKnowledgeRelService" />
+		</property>
+		<property name="kmsCategoryMainService">
+			<ref bean="kmsCategoryMainService"/>
+		</property>
+	</bean> 
+    
+    <!--分类概览-->
+	<bean id="kmsCategoryPreManagerService" class="com.landray.kmss.kms.category.service.spring.KmsCategoryPreManagerService">
+		<property name="mainService">
+			<ref bean="kmsCategoryKnowledgeRelService"/>
+		</property>
+		<property name="templateService">
+			<ref bean="kmsCategoryMainService"/>
+		</property>
+		<property name="preService">
+			<ref bean="kmsCategoryPreviewService"/>
+		</property>
+	</bean>
+	
+	<bean id="kmsCategoryMainCheckService" class="com.landray.kmss.kms.category.service.spring.KmsCategoryMainCheckServiceImp">
+		<property name="kmsCategoryMainService">
+			<ref bean="kmsCategoryMainService"/>
+		</property>
+		
+	</bean>
+	<bean id="kmsCategoryPortletService" class="com.landray.kmss.kms.category.service.spring.KmsCategoryPortletService">
+	</bean>
+	
+</beans>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+    <logset>
+        <!-- 表单主数据操作日志 -->
+        <oper id="xFormJdbcDataSetCategory" desc="" extends="BaseOperLog"
+            model="com.landray.kmss.sys.xform.maindata.model.SysFormJdbcDataSetCategory"
+            action="/sys/xform/maindata/jdbc_data_set_category/xFormJdbcDataSetCategory.do">
+            <ignoreFields>authAttNoprint;authTmpAttNoprint;authAttNocopy;authAttNodownload;authChangeEditorFlag;authChangeAtt;authChangeReaderFlag;authTmpAttNodownload;authTmpAttNocopy</ignoreFields>
+            <query
+                method="copy"
+                logPoint="Base_UrlParam;Action_Find" 
+                messageKey="button.copy"/>
+        </oper>
+        
+        <oper id="sysFormMainDataInsystem" desc="" extends="BaseOperLog"
+            model="*"
+            action="/sys/xform/maindata/main_data_insystem/sysFormMainDataInsystem.do">
+        </oper>
+        
+        <!-- 
+        可能有两个
+        com.landray.kmss.sys.xform.maindata.model.SysFormMainDataCustom
+        com.landray.kmss.sys.xform.maindata.model.SysFormMainDataCustomList
+         -->
+        <oper id="sysFormMainDataCustom" desc="" extends="BaseOperLog"
+            model="*"
+            action="/sys/xform/maindata/main_data_custom/sysFormMainDataCustom.do">
+            <query
+                method="loadExcel"
+                messageKey="sys-xform:sysFormTemplate.from.excel"
+                logPoint="Base_UrlParam;loadExcel"/>
+            <query
+                method="delData"
+                messageKey="button.delete"
+                logPoint="Base_UrlParam;Service_Delete"/>
+            <query
+                method="saveEditData"
+                messageKey="button.update"
+                logPoint="Base_UrlParam;Service_Update"/>
+            
+        </oper>
+        <oper id="xFormjdbcDataSet" desc="" extends="BaseOperLog"
+            model="*"
+            action="/sys/xform/maindata/jdbc_data_set/xFormjdbcDataSet.do">
+        </oper>
+        
+        <oper id="xFormJdbcDataSetIndex" desc="" extends="BaseOperLog"
+            model="*"
+            action="/sys/xform/maindata/jdbc_data_set/xFormJdbcDataSetIndex.do">
+        </oper>
+        
+        
+        
+        <oper id="sysFormMainDataShow" desc="" extends="BaseOperLog"
+            model="*"
+            action="/sys/xform/maindata/main_data_show/sysFormMainDataShow.do">
+        </oper>
+        
+        <oper id="sysFormMainDataShowRelate" desc="" extends="BaseOperLog"
+            model="*"
+            action="/sys/xform/maindata/main_data_show_relate/sysFormMainDataShowRelate.do">
+        </oper>
+        
+        <oper id="sysFormMyData" desc="" extends="BaseOperLog"
+            model="*"
+            action="/sys/xform/maindata/sysFormMyData.do">
+        </oper>
+        
+        
+    </logset>
+</log-oper>

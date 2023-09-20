@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../../design.xsd ">
+
+	<module
+		messageKey="sys-lbpmservice-support:module.sys.lbpmservice.support"
+		urlPrefix="/sys/lbpmservice/support/"
+		defaultValidator="roleValidator(role=SYSROLE_USER;ROLE_SYS_LBPM_BASE_MODULE_ADMIN;ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN)">
+		<roles>
+			ROLE_SYS_LBPM_ADMIN;
+			ROLE_SYS_LBPM_BASE_MODULE_ADMIN;
+			ROLE_SYS_LBPM_TEMPLATE_ADMIN;
+			ROLE_SYS_LBPM_PRIVILEGER_UPDATE;
+			ROLE_SYS_LBPM_EXCEL_EXPORT;
+			ROLE_SYS_LBPM_SIMULATION_EXAMPLE;
+			ROLE_SYS_LBPM_EMBEDDEDSUBFLOW;
+			ROLE_LBPMPRESSLOG_DEFAULT;
+			ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN;
+			ROLE_SYS_LBPM_SUMMARY_CREATE;
+			ROLE_SYS_LBPM_SUMMARY_MAINTAINER;
+			ROLE_SYS_LBPM_SERVICECATALOG;
+		</roles>
+		
+		<!--权限分类，把roles和arearoles里权限中应该属于三员体系的分拣（复制）到以下标签 -->
+		<roleType>
+			<!-- 系统管理员权限 -->
+			<sysadmin>
+				ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN
+			</sysadmin>
+		</roleType>
+
+		<!-- 通用流程模板 -->
+		<request
+			path="lbpm_template/lbpmTemplate*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmTemplate"
+			defaultValidator="roleValidator(role=ROLE_SYS_LBPM_TEMPLATE_ADMIN)">
+		</request>
+
+		<request
+			path="lbpm_template_change_history/lbpmTemplateChangeHistory*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmTemplateChangeHistory">
+		</request>
+
+		<request
+			path="lbpm_audit_note_reader/lbpmAuditNoteReader*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmAuditNoteReader">
+		</request>
+
+		<request
+			path="lbpm_audit_note/lbpmAuditNote*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmAuditNote">
+			<query
+				queryString="method=listNote" 
+				validator="authReadValidator(recid=fdModelId,recmodel=fdModelName)|subordinateViewValidator(recid=fdModelId,recmodel=fdModelName)"/>
+			<query
+				queryString="method=listNote4Mobile" 
+				validator="authReadValidator(recid=fdModelId,recmodel=fdModelName)|subordinateViewValidator(recid=fdModelId,recmodel=fdModelName)"/>
+		</request>
+
+		<!-- 参数配置·操作方式 -->
+		<request
+			path="lbpm_oper_main/lbpmOperMain*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmOperMain"
+			defaultValidator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN;ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN)">
+		</request>
+		<request
+			path="lbpm_operations/lbpmOperations*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmOperations"
+			defaultValidator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN;ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN)">
+		</request>
+		<!-- 参数配置·默认审批语  -->
+		<request
+			path="lbpm_usage/lbpmUsage*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmUsage"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+			<query
+				queryString="method=*&amp;sys=true"
+				validator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN;ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN)" />
+		</request>
+
+		<!-- 批量修改特权人权限 -->
+		<request
+			path="lbpm_template/lbpmPrivileger*">
+			<query
+				queryString="method=updatePrivileger|doUpdatePrivileger"
+				validator="roleValidator(role=ROLE_SYS_LBPM_PRIVILEGER_UPDATE)" />
+		</request>
+
+		<!-- 流程模板节点信息导出到Excel权限 -->
+		<request
+			path="lbpm_template/lbpmNodes2Excel*">
+			<query
+				queryString="method=doExportNodesExcel"
+				validator="roleValidator(role=ROLE_SYS_LBPM_EXCEL_EXPORT)" />
+		</request>
+
+		<request path="lbpm_simulation/example/index.jsp*" defaultValidator="roleValidator(role=SYSROLE_USER)" />
+		<request path="lbpm_simulation/plan/index.jsp*" defaultValidator="roleValidator(role=SYSROLE_USER)" />
+		<request path="lbpm_simulation_log/lbpmSimulationLog*" defaultValidator="roleValidator(role=SYSROLE_USER)" />
+		<request path="lbpm_template/index.jsp*" defaultValidator="roleValidator(role=SYSROLE_USER)" />
+		<!-- 流程小工具权限 -->
+		<request path="lbpm_tools/index.jsp*" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN;ROLE_SYS_LBPM_BASE_MODULE_ADMIN;ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN)" />
+		<request
+			path="lbpmConfigAction*"
+			defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN;ROLE_SYS_LBPM_BASE_MODULE_ADMIN;ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN)">
+		</request>
+		
+		<!-- 嵌入子流程分类权限 -->
+		<request
+			path="lbpmEmbeddedSubFlowCategory*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmEmbeddedSubFlowCategory,adminRoleName=ROLE_SYS_LBPM_BASE_MODULE_ADMIN">
+			<!-- 新建 -->
+			<query
+				queryString="method=add"
+				validator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN)|[roleValidator(role=ROLE_SYS_LBPM_EMBEDDEDSUBFLOW)&amp;sysSimpleCategoryEditorValidator(recid=parentId)]" />
+			<!-- 阅读 -->
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN)|[roleValidator(role=ROLE_SYS_LBPM_EMBEDDEDSUBFLOW)&amp;sysSimpleCategoryEditorValidator()]" />
+			<!-- 编辑和删除 -->
+			<query
+				queryString="method=edit|update|delete"
+				validator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN)|[roleValidator(role=ROLE_SYS_LBPM_EMBEDDEDSUBFLOW)&amp;sysSimpleCategoryEditorValidator()]" />
+			<!-- 复制 -->
+			<query
+				queryString="method=copy"
+				validator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN)|[roleValidator(role=ROLE_SYS_LBPM_EMBEDDEDSUBFLOW)&amp;sysSimpleCategoryEditorValidator(recid=fdCopyId)]" />
+		</request>
+		
+		<!-- 嵌入子流程权限 -->
+		<request
+			path="lbpmEmbeddedSubFlow*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmEmbeddedSubFlow,adminRoleName=ROLE_SYS_LBPM_BASE_MODULE_ADMIN">
+			<!-- 新建、拷贝 -->
+			<query
+				queryString="method=add|clone"
+				validator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN)|[roleValidator(role=ROLE_SYS_LBPM_EMBEDDEDSUBFLOW)&amp;sysSimpleCategoryReaderValidator(recid=categoryId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmEmbeddedSubFlowCategory)]" />
+			<!-- 新建 -->
+			<query
+				queryString="method=save|saveadd"
+				validator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN)|[roleValidator(role=ROLE_SYS_LBPM_EMBEDDEDSUBFLOW)&amp;sysSimpleCategoryReaderValidator(recid=fdCategoryId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmEmbeddedSubFlowCategory)]" />
+			<!-- 阅读、编辑和删除 -->
+			<query
+				queryString="method=view|edit|update|delete"
+				validator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN)|[roleValidator(role=ROLE_SYS_LBPM_EMBEDDEDSUBFLOW)&amp;lbpmEmbeddedSubFlowValidator()]" />
+		</request>
+
+		<!-- 动态子流程权限 -->
+		<request
+			path="lbpmDynamicSubFlow*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmDynamicSubFlow,adminRoleName=ROLE_SYS_LBPM_BASE_MODULE_ADMIN">
+			<!-- 新建、拷贝 -->
+			<query
+				queryString="method=add|clone"
+				validator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN)|[roleValidator(role=ROLE_SYS_LBPM_EMBEDDEDSUBFLOW)&amp;sysSimpleCategoryReaderValidator(recid=categoryId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmEmbeddedSubFlowCategory)]" />
+			<!-- 新建 -->
+			<query
+				queryString="method=save|saveadd"
+				validator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN)|[roleValidator(role=ROLE_SYS_LBPM_EMBEDDEDSUBFLOW)&amp;sysSimpleCategoryReaderValidator(recid=fdCategoryId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmEmbeddedSubFlowCategory)]" />
+			<!-- 阅读、编辑和删除 -->
+			<query
+				queryString="method=view|edit|update|delete"
+				validator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN)|[roleValidator(role=ROLE_SYS_LBPM_EMBEDDEDSUBFLOW)&amp;lbpmDynamicSubFlowValidator()]" />
+		</request>
+		<!-- 汇总审批 -->
+		<request
+			path="lbpm_summary_approval/lbpmSummaryApprovalConfig*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmservice.support.model.LbpmSummaryApprovalConfig">
+			<query
+				queryString="method=add"
+				validator="roleValidator(role=ROLE_SYS_LBPM_SUMMARY_CREATE;ROLE_SYS_LBPM_SUMMARY_MAINTAINER)" />			
+			<query
+				queryString="method=save|saveadd"
+				validator="roleValidator(role=ROLE_SYS_LBPM_SUMMARY_CREATE;ROLE_SYS_LBPM_SUMMARY_MAINTAINER)" />
+			<!-- 阅读 -->
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_SYS_LBPM_SUMMARY_CREATE;ROLE_SYS_LBPM_SUMMARY_MAINTAINER)" />
+			<!-- 编辑和删除 -->
+			<query
+				queryString="method=edit|update|delete"
+				validator="roleValidator(role=ROLE_SYS_LBPM_SUMMARY_CREATE;ROLE_SYS_LBPM_SUMMARY_MAINTAINER)" />
+			<!-- 删除所有 -->
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYS_LBPM_SUMMARY_CREATE;ROLE_SYS_LBPM_SUMMARY_MAINTAINER)" />
+		</request>
+		<!--审批意见展示的权限过滤-->
+		<request
+			path="auditNoteDataShowAction*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+			<query
+				queryString="method=getNoteDataShow"
+				validator="authReadValidator(recid=fdModelId,recmodel=fdModelName)"/>
+		</request>
+	</module>
+
+	<!-- 参数配置·基础设置  -->
+	<module
+		urlPrefix="/sys/appconfig/"
+		messageKey="sys.config.parameters">
+		<request
+			path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.sys.lbpm.engine.persistence.model.LbpmBaseInfo|com.landray.kmss.sys.lbpmservice.support.model.LbpmSetting|com.landray.kmss.sys.lbpmservice.support.model.LbpmSettingDefault|com.landray.kmss.sys.lbpmservice.support.model.LbpmUsageContent"
+				validator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN;ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN)" />
+		</request>
+	</module>
+	
+	<!-- 后台配置中心 -->
+	<module
+		urlPrefix="/sys/profile/"
+		messageKey="sys-profile:module.sys.profile">
+		<request
+			path="lbpm/workflow.jsp" defaultValidator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN;ROLE_SYS_LBPM_EMBEDDEDSUBFLOW;ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN;ROLE_SYS_LBPM_SERVICECATALOG)"/> 
+		<request
+			path="lbpm/simulation.jsp" defaultValidator="roleValidator(role=ROLE_SYS_LBPM_SIMULATION_EXAMPLE)"/> 
+	</module>
+	  
+	<module
+		urlPrefix="/sys/lbpmservice/"
+		messageKey="sys-lbpmservice:module.sys.lbpmservice">
+		<!-- 帮助文档 -->
+		<request
+			path="support/lbpm_template_new/lbpmTemplate_help*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+		</request>
+	</module>
+	
+	<module
+		messageKey="sys-lbpmservice-support:module.sys.lbpmservice.lbpmPressLog.support"
+		urlPrefix="/sys/lbpmservice/support/">
+		<!-- 催办日志访问请求 -->
+		<request
+			path="lbpm_press_log/lbpmPressLog*"
+			defaultValidator="roleValidator(role=ROLE_LBPMPRESSLOG_DEFAULT;ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN)">
+		</request>
+	</module>
+	
+	<module
+		messageKey="sys-lbpmservice-support:module.sys.lbpmservice.lbpmPrivilegeLog.support"
+		urlPrefix="/sys/lbpmservice/support/">
+		<!-- 特权人日志访问请求 -->
+		<request
+			path="lbpm_privilege_log/lbpmPrivilegLog*"
+			defaultValidator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN;ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN;ROLE_SYS_LBPM_SERVICECATALOG)">
+			<!-- 阅读 -->
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_LBPMPRESSLOG_DEFAULT)" />
+			<!-- 删除所有 -->
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_LBPMPRESSLOG_DEFAULT)" />
+		</request>
+		
+	</module>
+	
+	<!-- 仿真计划加权限控制 -->
+	<module
+		messageKey="sys-lbpmservice-support:module.sys.lbpmservice.lbpmSimulationPlan.support"
+		urlPrefix="/sys/lbpm/">
+		<request
+			path="lbpm_simulation_plan/lbpmSimulationPlan*"
+			defaultValidator="roleValidator(role=ROLE_SYS_LBPM_BASE_MODULE_ADMIN;ROLE_SYS_LBPM_BASE_MODULE_SYSADMIN;ROLE_SYS_LBPM_SIMULATION_EXAMPLE)">
+			<!-- 所有访问方式加权限 -->
+			<query
+				queryString="method=view|add|edit|deleteall"
+				validator="roleValidator(role=ROLE_SYS_LBPM_SIMULATION_EXAMPLE)" />
+		</request>
+		
+	</module>
+	
+	
+	
+	<!-- 无效处理人的流程通知定时任务 -->
+	<quartz
+		messageKey="sys-lbpmservice:lbpmProcess.unavailableHandlerNotify"
+		jobService="lbpmUnavailableHandlerNotify"
+		jobMethod="run"
+		cronExpression="0 0 23 * * ?"
+		description="sys-lbpmservice:lbpmProcess.unavailableHandlerNotify.description" />
+
+	<!-- 清理没有代办的流程汇总配置（删除状态的配置）-->
+	<quartz
+		messageKey="sys-lbpmservice:lbpmProcess.unavailableLbpmSummaryConfigNotify"
+		jobService="invalidLbpmSummaryNotifyHandler"
+		jobMethod="run"
+		cronExpression="0 0 23 * * ?"
+		description="sys-lbpmservice:lbpmProcess.unavailableLbpmSummaryConfigNotify.description" />
+
+	<!-- 清理无效模板批量设置事件日志定时任务 -->
+	<quartz
+		messageKey="sys-lbpmservice:lbpmProcess.unavailableEventsSettingLog"
+		jobService="lbpmUnavailableEventsSettingLog"
+		jobMethod="run"
+		cronExpression="0 10 23 * * ?"
+		description="sys-lbpmservice:lbpmProcess.unavailableEventsSettingLog.description" />
+
+	<treeNodes
+		type="sysconfig">
+		<treeNode
+			messageKey="sys-lbpmservice:module.name.workflow"
+			authUrl="/sys/lbpmservice/support/lbpm_oper_main/lbpmOperMain.do?method=list">
+			<treeNode
+				messageKey="sys-lbpmservice:module.node.paramsSetup.base"
+				url="/sys/appconfig/sys_appconfig/sysAppConfig.do?method=edit&amp;modelName=com.landray.kmss.sys.lbpm.engine.persistence.model.LbpmBaseInfo" >
+			</treeNode>
+			<treeNode
+				messageKey="sys-lbpmservice:module.node.paramsSetup.operations"
+				url="/sys/lbpmservice/support/lbpm_oper_main/lbpmOperMain.do?method=list" >
+			</treeNode>
+			<treeNode
+				messageKey="sys-lbpmservice:module.node.paramsSetup.defaultUsage"
+				url="/sys/lbpmservice/support/lbpm_usage/lbpmUsage.do?method=edit&amp;sys=true" >
+			</treeNode>
+			<treeNode
+				messageKey="sys-lbpmservice:module.node.paramsSetup.defaultUsageContent"
+				url="/sys/appconfig/sys_appconfig/sysAppConfig.do?method=edit&amp;modelName=com.landray.kmss.sys.lbpmservice.support.model.LbpmUsageContent" >
+			</treeNode>
+		</treeNode>
+	</treeNodes>
+
+		
+	<homePage
+		urlPrefix="sys/lbpmservice"
+		config="/moduleindex_notopic.jsp?nav=/sys/lbpmservice/tree.jsp"
+		messageKey="sys-lbpmservice:module.sys.lbpmservice"
+		type="global" />
+	<!-- 流程仿真 -->	
+	<profileConfig
+		key="simulation"
+		messageKey="{sys-lbpmservice-support:lbpmFlowSimulation.title}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/lbpm/simulation.jsp" 
+		icon="lui_icon_s_profile_navLeft_simulation"
+		type="lbpm"
+		order="8"/>
+
+</configs>

@@ -1,0 +1,90 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.notify.model.SysNotifyCategory",
+        "messageKey": "sys-notify:table.sysNotifyCategory",
+        "displayProperty": "fdName",
+        "serviceBean": "sysNotifyCategoryService",
+        "table": "sys_notify_category",
+        "url": "/sys/notify/sys_notify_category/sysNotifyCategory.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyCategory.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "false",
+            "length": "200"
+        },
+        "fdNo":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyCategory.fdNo",
+            "type": "String",
+            "column": "fd_no",
+            "notNull": "false",
+            "length": "50"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyCategory.fdOrder",
+            "type": "Long",
+            "column": "fd_order",
+            "notNull": "false"
+        },
+        "fdModelNames":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyCategory.fdModelNames",
+            "type": "String",
+            "column": "fd_model_names",
+            "length": "4000"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyCategory.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time"
+        },
+        "fdModifyTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyCategory.fdModifyTime",
+            "type": "DateTime",
+            "column": "fd_modify_time"
+        },
+        "fdCateType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyCategory.fdCateType",
+            "type": "Integer",
+            "column": "fd_cate_type"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-doc:sysDocBaseInfo.docCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_creator_id"
+        },
+        "fdModify":         {
+            "propertyType": "model",
+            "messageKey": "sys-notify:sysNotifyCategory.fdModifyName",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_modify_id"
+        },
+        "fdOrgOrDepts" : {
+            "propertyType" : "list",
+            "messageKey" : "sys-notify:sysNotifyCategory.fdOrgOrDepts",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table" : "sys_notify_cate_orgordept",
+            "elementColumn" : "fd_target_id",
+            "column" : "fd_source_id",
+            "notNull" : "false",
+            "readOnly" : "false",
+            "dialogJS" : "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_ALL);",
+            "validate" : "true",
+            "canDisplay" : "false",
+            "canRelation" : "false"
+        }
+    }
+}

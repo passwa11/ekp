@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<extension-point
+		id="com.landray.kmss.sys.authentication.identity">
+		<item
+			name="validateType">
+			<param
+				name="key"
+				required="true"
+				kind="string">
+				<description>校验方式的标识关键字,如：mobileCode、authenVerify，用于唯一标识作用。</description>
+			</param>
+			<param
+				name="name"
+				required="true"
+				kind="string">
+				<description>身份校验方式的名称,如：短信验证码、二重密码等等，用于前台页面显示。</description>
+			</param>
+			<param
+				name="order"
+				default="50"
+				required="true"
+				kind="int">
+				<description>
+					排序号，序号小的优先被调用。
+				</description>
+			</param>
+			<param
+				name="validateBean"
+				required="true"
+				kind="spring"
+				basedOn="com.landray.kmss.sys.authentication.identity.provider.ISysInentityProvider">
+				<description>
+					身份校验实现bean。实现接口com.landray.kmss.sys.authentication.identity.provider.ISysInentityProvider。
+				</description>
+			</param>
+			<param
+				name="validatePage"
+				required="true"
+				kind="string">
+				<description>身份校验页面</description>
+			</param>
+			<param
+				name="validatePageMobile"
+				kind="string">
+				<description>身份校验页面(移动端)</description>
+			</param>
+			<param
+				name="settingTitle"
+				required="false"
+				kind="string">
+				<description>设置界面标题</description>
+			</param>
+			<param
+				name="validateEditPath"
+				required="false"
+				kind="string">
+				<description>校验方式设置界面Url</description>
+			</param>
+			<description>
+				身份校验扩展点定义。
+			</description>
+		</item>
+		
+		<description>与身份校验相关的扩展</description>
+	</extension-point>
+	
+	<extension 
+		point="com.landray.kmss.sys.authentication.identity">
+		<item
+			name="validateType">
+			<param
+				name="key"
+				value="phoneAuthenVerify" />
+			<param
+				name="name"
+				value="sys-authentication-identity:identity.phoneAuthenVerify" />
+			<param
+				name="order"
+				value="1" />
+			<param
+				name="validateBean"
+				value="phoneIValidate" />
+			<param
+				name="validatePage"
+				value="/sys/authentication/identity/mobileCode/validate.jsp" />
+			<param
+				name="validatePageMobile"
+				value="/sys/authentication/identity/mobileCode/mobile/validate.jsp" />
+			<param
+				name="settingTitle"
+				value="sys-authentication-identity:bind.my.mobile.number" />
+			<param
+				name="validateEditPath"
+				value="/sys/authentication/verify/sysAuthenVerify.do?method=addPhone" />
+		</item>
+	</extension>
+
+	
+	<extension 
+		point="com.landray.kmss.sys.authentication.identity">
+		<item
+			name="validateType">
+			<param
+				name="key"
+				value="pwdAuthenVerify" />
+			<param
+				name="name"
+				value="sys-authentication-identity:identity.pwdAuthenVerify" />
+			<param
+				name="order"
+				value="2" />
+			<param
+				name="validateBean"
+				value="passwordIValidate" />
+			<param
+				name="validatePage"
+				value="/sys/authentication/identity/authenVerify/validate.jsp" />
+		   <param
+				name="validatePageMobile"
+				value="/sys/authentication/identity/authenVerify/mobile/validate.jsp" />
+		   <param
+				name="settingTitle"
+				value="sys-authentication-identity:set.my.authentication.password" />
+			<param
+				name="validateEditPath"
+				value="/sys/authentication/verify/sysAuthenVerify.do?method=add" />
+		</item>
+	</extension>
+	
+</plugin>

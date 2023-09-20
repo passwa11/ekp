@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	 <bean
+		name="/tic/core/common/tic_core_func_base/ticCoreFuncBase.do"
+		class="com.landray.kmss.tic.core.common.actions.TicCoreFuncBaseAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	
+	<bean
+		name="/tic/core/common/ticCoreInvokeFunc.do"
+		class="com.landray.kmss.tic.core.common.actions.TicCoreInvokeFuncAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.tic.core.common.forms.TicCoreFuncBaseForm" />
+	</bean>
+	
+	<bean
+		name="/tic/core/common/tic_core_trans_sett/ticCoreTransSett.do"
+		class="com.landray.kmss.tic.core.common.actions.TicCoreTransSettAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.tic.core.common.forms.TicCoreTransSettForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/tic/core/common/tic_core_trans_sett/ticCoreTransSett_data.jsp" />
+				<entry
+					key="view"
+					value="/tic/core/common/tic_core_trans_sett/ticCoreTransSett_view.jsp" />
+				<entry
+					key="edit"
+					value="/tic/core/common/tic_core_trans_sett/ticCoreTransSett_edit.jsp" />
+				<entry
+					key="list"
+					value="/tic/core/common/tic_core_trans_sett/ticCore_searchInfo_list.jsp" />
+				
+			</map>
+		</property>
+	</bean>
+	
+	
+	 <bean
+		name="/tic/core/common/tic_core_func_sync/ticCoreFuncSync.do"
+		class="com.landray.kmss.tic.core.common.actions.TicCoreFuncSyncAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="createTable"
+					value="/tic/core/common/tic_core_func_sync/ticCoreFuncSync_createTable.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

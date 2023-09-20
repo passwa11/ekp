@@ -1,0 +1,1 @@
+define([],function(){return{"sysMportalPicDisplay.tip.num.hasRead":"观看","sysMportalPicDisplay.tip.num.chapter":"共{0}章节","sysMportalPicDisplay.tip.num.hasLearned":"人已学","sysMportalPicDisplay.tip.num.hasApplied":"人报名","home.hello":"您好！","sysMportalPage.search":"搜索","sysMportalPage.more":"更多","button.add":"新建","button.addejournal":"投稿"}});

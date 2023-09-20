@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<extension-point 
+		id="com.landray.kmss.sys.portal">
+		<item name="stat">
+			<param name="modelName" kind="string" required="true">
+				<description>主域模型名</description>
+			</param>
+			<param name="moduleName" kind="string" required="true">
+				<description>模块名，支持多语言</description>
+			</param>
+			<param name="icon" kind="string" required="false">
+				<description>图标</description>
+			</param>
+			<param name="url" kind="string" required="true">
+				<description>返回json字符,如:[{text:'发起的流程',count:'0'}]
+				</description>
+			</param>
+			<param name="viewUrl" kind="string" required="true">
+				<description>点击查看地址
+				</description>
+			</param>
+			<description>业务数据统计</description>
+		</item>
+		<description>门户扩展点定义</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.sys.portal.mine">
+		<item name="mineStat">
+			<param name="modelName" kind="string" required="true">
+				<description>主域模型名</description>
+			</param>
+			<param name="moduleName" kind="string" required="true">
+				<description>模块名，支持多语言</description>
+			</param>
+			<param name="detailUrl" kind="string" required="false">
+				<description>详细数据</description>
+			</param>
+			<param name="url" kind="string" required="true">
+				<description>返回json字符,如:[{text:'发起的流程',count:'0'}]
+				</description>
+			</param>
+			<param name="viewUrl" kind="string" required="true">
+				<description>更多跳转地址
+				</description>
+			</param>
+			<description>个人数据数据统计</description>
+		</item>
+		<description>个人数据统计门户组件扩展点定义</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.sys.portal.enabled.choose.custom">
+		<item name="info">
+			<param name="id" kind="string" required="true">
+				<description>对应portlet.xml中的id</description>
+			</param>
+			<param name="serviceBeanName" kind="string" required="true">
+				<description>服务Bean名称</description>
+			</param>
+			<description>对应portlet.xml中的配置</description>
+		</item>
+		<description>根据业务模块逻辑判断门户组件是否能被选择使用，学习服务有一个参考例子</description>
+	</extension-point>
+	
+	<extension point="com.landray.kmss.sys.config.design">
+		<item name="xml">
+			<param name="namespace" value="http://www.landray.com.cn/schema/portal" />
+			<param name="handler" value="com.landray.kmss.sys.portal.xml.PortalNamespaceHandler" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.cluster">
+		<item name="messageReceiver">
+			<param name="type" value="com.landray.kmss.sys.portal.xml.PortalNamespaceHandler" />
+			<param name="service" value="portalNamespaceHandler" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.cluster">
+		<item name="messageReceiver">
+			<param name="type" value="com.landray.kmss.sys.portal.cache.CacheConfigMessage" />
+			<param name="service" value="portalCacheConfigHandler" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.datainit" model="*">
+    	<item name="datainit">
+      		<param name="bean" value="sysPortalPageDataInit" />
+      		<param name="order" value="5" />
+    	</item>
+  	</extension>
+  	
+  	<!-- 门户推荐专题标题字符数长度变更 -->
+  	<extension  
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.portal.transfer.SysPortalTopicFdNameTransferTask" />
+			<param
+				name="name"
+				value="门户推荐专题标题字符数长度变更" />
+			<param
+				name="path"
+				value="/sys/portal/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.portal.transfer.SysPortalTopicFdNameTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.portal.transfer.SysPortalTopicFdNameTransferTask" />
+			<param
+				name="description"
+				value="如系统设置为多语言情况，则变更SysPortalTopic表中fd_name_cn,fd_name_us等字段的长度"/>
+		</item>
+	</extension>
+	<!-- 门户匿名字段类型变更-针对SQLServer -->
+  	<extension  
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.portal.transfer.SysPortalFdAnonymousTransferTask" />
+			<param
+				name="name"
+				value="门户匿名字段类型变更" />
+			<param
+				name="path"
+				value="/sys/portal/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.portal.transfer.SysPortalFdAnonymousTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.portal.transfer.SysPortalFdAnonymousTransferTask" />
+			<param
+				name="description"
+				value="SQLServer数据库需要先删除默认值约束和索引后才能变更字段类型"/>
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.help.module.configuration">
+		<item name="config">
+			<param name="moduleName" value="门户管理"/>
+			<param name="modulePath" value="/sys/portal"/>
+			<param name="defaultOpenHelpManual" value="false"/>
+			<param name="defaultOpenBusinessOverview" value="true"/>
+			<param name="defaultOpenSceneExperience" value="true"/>
+			<param name="businessOverviewImage" value="/sys/portal/view.png"/>
+			<param name="sceneExperienceUrl" value="http://mall.landray.com.cn/core01/build/index.html#/ProcessManagement/portal/sceneExperience?tabs=off"/>
+		</item>
+	</extension>
+</plugin>

@@ -1,0 +1,1029 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		class="com.landray.kmss.web.config.ExtendModuleConfig">
+		<constructor-arg>
+			<map>
+				<entry
+					key="hrStaffFileUpload"
+					value="/hr/staff/upload_files/common_upload_download.jsp" />
+				<entry
+					key="hrStaffFileUpload2"
+					value="/hr/ratify/hr_staff_concern/common_upload_download.jsp" />
+			</map>
+		</constructor-arg>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_info/hrStaffPersonInfo.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonInfoAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonInfoForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="add"
+					value="/hr/staff/hr_staff_person_info/hrStaffPersonInfo_add.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_person_info/hrStaffPersonInfo_view.jsp" />
+				<entry
+					key="view.4m"
+					value="/hr/staff/mobile/personInfo/view.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_info/hrStaffPersonInfo_edit.jsp" />
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_info/hrStaffPersonInfo_list.jsp" />
+				<entry
+					key="listPerson"
+					value="/hr/staff/hr_staff_person_info/hrStaffPersonInfo_person_list.jsp" />
+				<entry
+					key="birthday_list"
+					value="/hr/staff/hr_staff_alert_warning/last_birthday/last_birthday_list.jsp" />
+				<entry
+					key="trial_list"
+					value="/hr/staff/hr_staff_alert_warning/trial_expiration/trial_expiration_list.jsp" />
+				<entry
+					key="contract_list"
+					value="/hr/staff/hr_staff_alert_warning/contract_expiration/contract_expiration_list.jsp" />
+				<entry
+					key="birthday_show"
+					value="/hr/staff/hr_staff_person_info/index.jsp?type=warningBirthday" />
+				<entry
+					key="trial_show"
+					value="/hr/staff/hr_staff_person_info/index.jsp?type=warningTrial" />
+				<entry
+					key="contract_show"
+					value="/hr/staff/hr_staff_person_info/index.jsp?type=warningContract" />
+				<entry
+					key="print"
+					value="/hr/staff/hr_staff_person_info/hrStaffPersonInfo_print.jsp" />
+				<entry
+					key="positiveManage"
+					value="/hr/ratify/hr_staff_concern/hrPositiveManage_data.jsp" />
+				<entry
+					key="contractManage"
+					value="/hr/ratify/hr_staff_concern/hrContractManage_data.jsp" />
+				<entry
+					key="leaveManage"
+					value="/hr/ratify/hr_staff_concern/hrHasLeaveManage_data.jsp" />
+				<entry
+					key="personInfo"
+					value="/hr/staff/hr_staff_person_info/edit/hrStaffPersonInfo_edit_personInfo.jsp" />
+				<entry
+					key="personInfo.4m"
+					value="/hr/staff/mobile/personInfo/view/base.jsp" />
+				<entry
+					key="onPost"
+					value="/hr/staff/hr_staff_person_info/edit/hrStaffPersonInfo_edit_onPost.jsp" />
+				<entry
+					key="onPost.4m"
+					value="/hr/staff/mobile/personInfo/view/onpost.jsp" />
+				<entry
+					key="connect"
+					value="/hr/staff/hr_staff_person_info/edit/hrStaffPersonInfo_edit_connect.jsp" />
+				<entry
+					key="connect.4m"
+					value="/hr/staff/mobile/personInfo/view/connect.jsp" />					
+				<entry
+					key="leave"
+					value="/hr/staff/hr_staff_person_info/edit/hrStaffPersonInfo_edit_leave.jsp" />
+				<entry
+					key="leave.4m"
+					value="/hr/staff/mobile/personInfo/view/leave.jsp" />					
+				<entry
+					key="staffStatus"
+					value="/hr/staff/hr_staff_person_info/edit/hrStaffPersonInfo_edit_staffStatus.jsp" />
+				<entry
+					key="staffStatus.4m"
+					value="/hr/staff/mobile/personInfo/view/staffstatus.jsp" />
+				<entry
+					key="hrOrgPersonList"
+					value="/hr/staff/hr_staff_person_info/hrStaffPersonInfo_org_person_list.jsp" />	
+				<entry
+					key="chgPwd"
+					value="/hr/staff/hr_staff_person_info/sysOrgPerson_chgpwd.jsp" />			
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_info_log/hrStaffPersonInfoLog.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonInfoLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonInfoLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_person_info_log/hrStaffPersonInfoLog_view.jsp" />
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_info_log/hrStaffPersonInfoLog_list.jsp" />
+				<entry
+					key="list.4m"
+					value="/hr/staff/mobile/personInfo/log/list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_experience/bonusMalus/hrStaffPersonExperienceBonusMalus.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonExperienceBonusMalusAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonExperienceBonusMalusForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_experience/bonusMalus/bonusMalus_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_experience/bonusMalus/bonusMalus_edit.jsp" />
+				<entry
+					key="edit.4m"
+					value="/hr/staff/mobile/personInfo/table/bonusmalus.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_experience/contract/hrStaffPersonExperienceContract.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonExperienceContractAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonExperienceContractForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_experience/contract/contract_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_experience/contract/contract_edit.jsp" />
+				<entry
+					key="edit.4m"
+					value="/hr/staff/mobile/personInfo/table/contract.jsp" />					
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_person_experience/contract/contract_view.jsp"/>
+				<entry
+					key="print"
+					value="/hr/staff/hr_staff_person_experience/contract/contract_print.jsp"/>
+				<entry
+					key="sysprint"
+					value="/hr/staff/hr_staff_person_experience/contract/contract_sysprint.jsp"/>
+				<entry
+					key="changeContract"
+					value="/hr/ratify/hr_staff_concern/hrContractManage_change.jsp"/>
+				<entry
+					key="renewContract"
+					value="/hr/ratify/hr_staff_concern/hrContractManage_renew.jsp"/>
+				<entry
+					key="signContract"
+					value="/hr/ratify/hr_staff_concern/hrContractManage_sign.jsp"/>
+				<entry
+					key="batchRenewPage"
+					value="/hr/ratify/hr_staff_concern/hrContractManage_batch_renew.jsp"/>
+				<entry
+					key="batchSignPage"
+					value="/hr/ratify/hr_staff_concern/hrContractManage_batch_sign.jsp"/>
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_experience/education/hrStaffPersonExperienceEducation.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonExperienceEducationAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonExperienceEducationForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_experience/education/education_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_experience/education/education_edit.jsp" />
+				<entry
+					key="edit.4m"
+					value="/hr/staff/mobile/personInfo/table/education.jsp" />					
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_experience/qualification/hrStaffPersonExperienceQualification.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonExperienceQualificationAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonExperienceQualificationForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_experience/qualification/qualification_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_experience/qualification/qualification_edit.jsp" />
+				<entry
+					key="edit.4m"
+					value="/hr/staff/mobile/personInfo/table/qualification.jsp" />					
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_experience/training/hrStaffPersonExperienceTraining.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonExperienceTrainingAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonExperienceTrainingForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_experience/training/training_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_experience/training/training_edit.jsp" />
+				<entry
+					key="edit.4m"
+					value="/hr/staff/mobile/personInfo/table/training.jsp" />					
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_experience/work/hrStaffPersonExperienceWork.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonExperienceWorkAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonExperienceWorkForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_experience/work/work_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_experience/work/work_edit.jsp" />
+				<entry
+					key="edit.4m"
+					value="/hr/staff/mobile/personInfo/table/work.jsp" />					
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_experience/project/hrStaffPersonExperienceProject.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonExperienceProjectAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonExperienceProjectForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_experience/project/project_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_experience/project/project_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_experience/brief/hrStaffPersonExperienceBrief.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonExperienceBriefAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonExperienceBriefForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_experience/brief/brief_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_experience/brief/brief_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_private_change/hrStaffPrivateChange.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPrivateChangeAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPrivateChangeForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="editPrivate"
+					value="/hr/staff/hr_staff_private_change/hrStaffPrivateChange_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_attendance_manage/hrStaffAttendanceManage.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffAttendanceManageAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffAttendanceManageForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_attendance_manage/manage/manage_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_attendance_manage/manage/manage_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_attendance_manage/detailed/hrStaffAttendanceManageDetailed.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffAttendanceManageDetailedAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffAttendanceManageDetailedForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_attendance_manage/detailed/detailed_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_info_setting/hrStaffInfoSetNew.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonInfoSettingNewAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonInfoSettingNewForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_person_info_setting/HrStaffPersonInfoSettingNew_view.jsp" />
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_info_setting/HrStaffPersonInfoSettingNew_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_info_setting/HrStaffPersonInfoSettingNew_edit.jsp" />
+				<entry
+					key="initView"
+					value="/hr/staff/hr_staff_person_info_setting/index_new.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_payroll_issuance/hrStaffPayrollIssuance.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPayrollIssuanceAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPayrollIssuanceForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_payroll_issuance/hrStaffPayrollIssuance_list.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_payroll_issuance/hrStaffPayrollIssuance_view.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_payroll_issuance/hrStaffPayrollIssuance_edit.jsp" />
+				<entry
+					key="viewSalaryPc"
+					value="/hr/staff/hr_staff_salary_info/hrStaffSalaryInfo_pcView.jsp" />
+				<entry
+					key="viewSalaryMobile"
+					value="/hr/staff/hr_staff_salary_info/hrStaffSalaryInfo_mobileView.jsp" />										
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_security/hrStaffSecurity.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffSecurityAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffSecurityForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_social_security/hrStaffSecurity_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_social_security/hrStaffSecurity_edit.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_social_security/hrStaffSecurity_view.jsp" />
+				<entry
+					key="security"
+					value="/hr/staff/hr_staff_person_info/view/hrStaffPersonInfo_view_security.jsp" />
+				<entry
+					key="security.4m"
+					value="/hr/staff/mobile/personInfo/view_security.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_accumulation_fund/hrStaffAccumulationFund.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffAccumulationFundAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffAccumulationFundForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_accumulation_fund/hrStaffAccumulationFund_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_accumulation_fund/hrStaffAccumulationFund_edit.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_accumulation_fund/hrStaffAccumulationFund_view.jsp" />
+				<entry
+					key="security"
+					value="/hr/staff/hr_staff_person_info/view/hrStaffPersonInfo_view_security.jsp" />
+				<entry
+					key="security.4m"
+					value="/hr/staff/mobile/personInfo/view_security.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_performance_contract_import/hrStaffPerformanceContractImport.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPerformanceContractImportAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPerformanceContractImportForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_performance_contract_import/hrStaffPerformanceContractImport_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_performance_contract_import/hrStaffPerformanceContractImport_edit.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_performance_contract_import/hrStaffPerformanceContractImport_view.jsp" />
+				<entry
+					key="security"
+					value="/hr/staff/hr_staff_person_info/view/hrStaffPersonInfo_view_security.jsp" />
+				<entry
+					key="security.4m"
+					value="/hr/staff/mobile/personInfo/view_security.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_performance_search/hrStaffPerformanceSearch.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPerformanceSearchAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_performance_search/hrStaffPerformanceSearch_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_performance_search/hrStaffPerformanceSearch_edit.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_performance_search/hrStaffPerformanceSearch_view.jsp" />
+				<entry
+					key="security"
+					value="/hr/staff/hr_staff_person_info/view/hrStaffPersonInfo_view_security.jsp" />
+				<entry
+					key="security.4m"
+					value="/hr/staff/mobile/personInfo/view_security.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_Ekp_H14_Intern/hrStaffEkp_H14_Intern.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffEkp_H14_InternAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_Ekp_H14_Intern/hrStaffEkp_H14_Intern_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_Ekp_H14_Intern/hrStaffEkp_H14_Intern_edit.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_Ekp_H14_Intern/hrStaffEkp_H14_Intern_view.jsp" />
+				<entry
+					key="security"
+					value="/hr/staff/hr_staff_person_info/view/hrStaffPersonInfo_view_security.jsp" />
+				<entry
+					key="security.4m"
+					value="/hr/staff/mobile/personInfo/view_security.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_Ekp_H14_M_performance/hrStaffEkp_H14_M_performance.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffEkp_H14_M_performanceAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_Ekp_H14_M_performance/hrStaffEkp_H14_M_performance_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_Ekp_H14_M_performance/hrStaffEkp_H14_M_performance.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_Ekp_H14_M_performance/hrStaffEkp_H14_M_performance.jsp" />
+				<entry
+					key="security"
+					value="/hr/staff/hr_staff_person_info/view/hrStaffPersonInfo_view_security.jsp" />
+				<entry
+					key="security.4m"
+					value="/hr/staff/mobile/personInfo/view_security.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_Ekp_H14_S/hrStaffEkp_H14_S.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffEkp_H14_SAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_Ekp_H14_S/hrStaffEkp_H14_S_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_Ekp_H14_S/hrStaffEkp_H14_S.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_Ekp_H14_S/hrStaffEkp_H14_S.jsp" />
+				<entry
+					key="security"
+					value="/hr/staff/hr_staff_person_info/view/hrStaffPersonInfo_view_security.jsp" />
+				<entry
+					key="security.4m"
+					value="/hr/staff/mobile/personInfo/view_security.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_Ekp_H14_S1/hrStaffEkp_H14_S1.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffEkp_H14_S1Action"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_Ekp_H14_S1/hrStaffEkp_H14_S1_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_Ekp_H14_S1/hrStaffEkp_H14_S1.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_Ekp_H14_S1/hrStaffEkp_H14_S1.jsp" />
+				<entry
+					key="security"
+					value="/hr/staff/hr_staff_person_info/view/hrStaffPersonInfo_view_security.jsp" />
+				<entry
+					key="security.4m"
+					value="/hr/staff/mobile/personInfo/view_security.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_Ekp_H14_S2/hrStaffEkp_H14_S2.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffEkp_H14_S2Action"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_Ekp_H14_S2/hrStaffEkp_H14_S2_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_Ekp_H14_S2/hrStaffEkp_H14_S2.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_Ekp_H14_S2/hrStaffEkp_H14_S2.jsp" />
+				<entry
+					key="security"
+					value="/hr/staff/hr_staff_person_info/view/hrStaffPersonInfo_view_security.jsp" />
+				<entry
+					key="security.4m"
+					value="/hr/staff/mobile/personInfo/view_security.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_Ekp_H14_nS/hrStaffEkp_H14_nS.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffEkp_H14_nSAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_Ekp_H14_nS/hrStaffEkp_H14_nS_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_Ekp_H14_nS/hrStaffEkp_H14_nS.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_Ekp_H14_nS/hrStaffEkp_H14_nS.jsp" />
+				<entry
+					key="security"
+					value="/hr/staff/hr_staff_person_info/view/hrStaffPersonInfo_view_security.jsp" />
+				<entry
+					key="security.4m"
+					value="/hr/staff/mobile/personInfo/view_security.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_emolument_welfare/hrStaffEmolumentWelfare.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffEmolumentWelfareAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffEmolumentWelfareForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_emolument_welfare/hrStaffEmolumentWelfare_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_emolument_welfare/hrStaffEmolumentWelfare_edit.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_emolument_welfare/hrStaffEmolumentWelfare_view.jsp" />
+				<entry
+					key="welfare"
+					value="/hr/staff/hr_staff_person_info/view/hrStaffPersonInfo_view_welfare.jsp" />
+				<entry
+					key="welfare.4m"
+					value="/hr/staff/mobile/personInfo/view_welfare.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_track_record/hrStaffTrackRecord.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffTrackRecordAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffTrackRecordForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_track_record/list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_track_record/edit.jsp" />
+				<entry
+					key="edit.4m"
+					value="/hr/staff/mobile/personInfo/table/trackrecord.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_person_track_record/view.jsp" />
+				<entry
+					key="editHrStaffTrackRecord"
+					value="/hr/ratify/hr_staff_concern/editHrStaffTrackRecord.jsp" />
+				<entry
+					key="viewRecord"
+					value="/hr/staff/hr_staff_person_track_record/view_record.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_family/hrStaffPersonFamily.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonFamilyAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonFamilyForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_family/edit.jsp" />
+				<entry
+					key="edit.4m"
+					value="/hr/staff/mobile/personInfo/table/familyinfo.jsp" />					
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_family/list.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_person_track_record/view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_emolument_welfare/hrStaffEmolumentWelfareDetalied.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffEmolumentWelfareDetaliedAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffEmolumentWelfareDetaliedForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_emolument_welfare/detailed/detailed_list.jsp" />
+				<entry
+					key="list.4m"
+					value="/hr/staff/mobile/welfare/detailed/list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_person_report/hrStaffPersonReport.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffPersonReportAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffPersonReportForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_person_report/hrStaffPersonReport_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_person_report/hrStaffPersonReport_edit.jsp" />
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_person_report/hrStaffPersonReport_view.jsp" />
+				<entry
+					key="barLine"
+					value="/hr/staff/hr_staff_person_report/hrStaffPersonReport_barLine.jsp" />
+				<entry
+					key="overviewChart"
+					value="/hr/staff/hr_staff_person_report/hrStaffPersonReport_overviewChart.jsp" />
+			    <entry
+					key="overviewChart.4m"
+					value="/hr/staff/mobile/statistics.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_file_author/hrStaffFileAuthor.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffFileAuthorAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffFileAuthorForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_file_author/hrStaffFileAuthor_view.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_file_author/hrStaffFileAuthor_edit.jsp" />
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_file_author/hrStaffFileAuthor_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_contract_type/hrStaffContractType.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffContractTypeAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffContractTypeForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_contract_type/hrStaffContractType_view.jsp" />
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_contract_type/hrStaffContractType_list.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_contract_type/hrStaffContractType_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/hr/staff/hr_staff_entry/hrStaffEntry.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffEntryAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffEntryForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_entry/hrStaffEntry_view.jsp" />
+				<entry
+					key="view.4m"
+					value="/hr/ratify/mobile/entry/entry_view.jsp" />
+				<entry
+					key="list"
+					value="/hr/staff/hr_staff_entry/hrStaffEntry_list.jsp" />
+				<entry
+					key="entryManage"
+					value="/hr/ratify/hr_staff_concern/hrEntryManage_data.jsp" />
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_entry/hrStaffEntry_edit.jsp" />
+				<entry
+					key="editCheck"
+					value="/hr/staff/hr_staff_entry/check.jsp" />
+				<entry
+					key="editAbandon"
+					value="/hr/ratify/hr_staff_concern/hrEntryManage_abandon.jsp" />
+				<entry
+					key="addEntryMobile"
+					value="/hr/ratify/hr_staff_concern/hrEntryMange_add.jsp" />
+				<entry
+					key="addEntryMobile.4m"
+					value="/hr/ratify/mobile/entry/entry_add.jsp" />
+				<entry
+					key="edit.4m"
+					value="/hr/ratify/mobile/entry/entry_edit.jsp" />
+				<entry
+					key="update.4m"
+					value="/hr/ratify/mobile/entry/entry_detail_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- portlet-->
+    <bean 
+        class="com.landray.kmss.hr.staff.actions.HrStaffPortletAction" 
+        parent="KmssBaseAction" 
+        name="/hr/staff/portlet.do" 
+        lazy-init="true">
+        <property
+            name="formType" 
+         	value="com.landray.kmss.hr.staff.forms.HrStaffEntryForm" />
+        <property 
+            name="forwards">
+            <map>
+            	<entry 
+                    key="moduleNav" 
+                    value="/hr/staff/portlet/hrPortlet_module_nav.jsp"/>
+            	<entry 
+                    key="manageCalend" 
+                    value="/hr/staff/portlet/hrPortlet_manage_calend.jsp"/>
+                <entry 
+                    key="monthOverview" 
+                    value="/hr/staff/portlet/hrPortlet_month_overview.jsp"/>
+                <entry 
+                    key="echartsGender" 
+                    value="/hr/staff/portlet/echarts/gender.jsp"/>
+                <entry 
+                    key="echartsAge" 
+                    value="/hr/staff/portlet/echarts/age.jsp"/>
+                <entry 
+                    key="echartsEducation" 
+                    value="/hr/staff/portlet/echarts/education.jsp"/>
+               	<entry 
+                    key="echartsEntryAndLeave" 
+                    value="/hr/staff/portlet/echarts/entryAndLeave.jsp"/>
+               <entry 
+                    key="transferData" 
+                    value="/hr/staff/portlet/dlg/transfer_dlg_data.jsp"/>
+            </map>
+        </property>
+    </bean>
+    
+    <!-- 匿名访问  二维码入职扫码-->
+    <bean 
+        class="com.landray.kmss.hr.staff.actions.HrStaffQRCodeInvitedAction" 
+        parent="KmssBaseAction" 
+        name="/resource/hr/staff/anonymous/QRCodeInvited.do" 
+        lazy-init="true">
+        <property
+            name="formType" 
+            value="com.landray.kmss.hr.staff.forms.HrStaffEntryForm"/>
+        <property 
+            name="forwards">
+            <map>
+            </map>
+        </property>
+    </bean>
+   <bean
+		name="/resource/hr/staff/hr_staff_entry_anonymous/hrStaffEntry.do"
+		class="com.landray.kmss.hr.staff.actions.HrStaffEntryAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.hr.staff.forms.HrStaffEntryForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="update.4m"
+					value="/hr/ratify/mobile/entry/entry_detail_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<bean
+		class="com.landray.kmss.hr.staff.actions.HrStaffMoveRecordAction"
+		parent="KmssBaseAction"
+		name="/hr/staff/hr_staff_move_record/hrStaffMoveRecord.do"
+		lazy-init="true">
+		<property name="formType" value="com.landray.kmss.hr.staff.forms.HrStaffMoveRecordForm"/>
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/hr/staff/hr_staff_move_record/hrStaffMoveRecord_data.jsp"/>
+				<entry
+					key="edit"
+					value="/hr/staff/hr_staff_move_record/hrStaffMoveRecord_edit.jsp"/>
+				<entry
+					key="view"
+					value="/hr/staff/hr_staff_move_record/hrStaffMoveRecord_view.jsp"/>
+				<entry
+					key="allInfo"
+					value="/hr/staff/hr_staff_move_record/report/all/all_searchList.jsp"/>
+				<entry
+					key="monthInfo"
+					value="/hr/staff/hr_staff_move_record/report/month/month_searchList.jsp"/>
+				<entry
+					key="recruitInfo"
+					value="/hr/staff/hr_staff_move_record/report/recruit/all_searchList.jsp"/>
+				<entry
+					key="approvalInfo"
+					value="/hr/staff/hr_staff_move_record/report/approval/all_searchList.jsp"/>
+				<entry
+					key="statListDetail"
+					value="/hr/staff/hr_staff_move_record/report/attend/all_searchList.jsp"/>
+				<entry
+					key="overListDetail"
+					value="/hr/staff/hr_staff_move_record/report/over/all_searchList.jsp"/>
+			</map>
+		</property>
+	</bean>
+</beans>

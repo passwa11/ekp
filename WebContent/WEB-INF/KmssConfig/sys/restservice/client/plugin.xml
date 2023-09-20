@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<extension-point
+        id="com.landray.kmss.sys.restservice.client">
+        <item
+            name="connectionSocketFactoryBuilder">
+            <param
+                name="bean"
+                required="true"
+                kind="spring"
+                basedOn="com.landray.kmss.sys.restservice.client.IConnectionSocketFactoryBuilder">
+                <description>必需，工厂构造接口</description>
+            </param>
+            <param 
+                name="order" 
+                default="50" 
+                kind="int">
+                <description>排序号，只调用序号最小的</description>
+            </param>
+            <description>
+                用于构造HTTPClient通信协议的工厂类扩展
+            </description>
+        </item>
+        <description>用于构造HTTPClient通信协议的工厂类扩展点</description>
+    </extension-point>
+    
+    <extension
+        point="com.landray.kmss.sys.restservice.client">
+        <item
+            name="connectionSocketFactoryBuilder">
+            <param
+                name="bean"
+                value="defaultConnectionSocketFactoryBuilder" />
+            <param
+                name="order"
+                value="50" />
+        </item>
+    </extension>
+    
+	<extension
+        point="com.landray.kmss.sys.config.admin.do">
+        <item
+            name="config">
+            <param
+                name="jsp"
+                value="/sys/restservice/ekp_cloud_config.jsp" />
+            <param
+                name="type"
+                value="integrate" />
+            <param
+                name="order"
+                value="20" />
+        </item>
+    </extension>
+</plugin>

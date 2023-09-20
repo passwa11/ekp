@@ -1,0 +1,54 @@
+var extend = (param!=null && param.extend!=null)?('_'+param.extend):'';
+		var dir = layout.drawerpanel.dir;
+		var frameWidth = layout.drawerpanel.cfgWidth || "";
+		var dirWidth = parseInt(frameWidth) + 2;
+		{$
+<div class='lui_drawerpanel{%extend%}_frame lui_drawerpanel_frame_{%dir%}'
+		$}
+		if(frameWidth) {
+		var sdir = dir == "r" ? "right" : "left";
+		{$
+		style="width:{%frameWidth%}px;{%sdir%}:-{%dirWidth%}px"
+		$}
+		}
+		{$
+		data-lui-mark="panel.slide.frame" data-lui-switch-class="lui_drawerpanel{%extend%}_slide">
+<div class='lui_drawerpanel{%extend%}_navs lui_drawerpanel_navs_{%dir%}'>
+<div class='lui_drawerpanel{%extend%}_navs_l'>
+<div class='lui_drawerpanel{%extend%}_navs_r'>
+<div class="lui_drawerpanel{%extend%}_navs_c  clearfloat">
+		$}
+		for(var i=0;i<layout.drawerpanel.contents.length;i++){
+		{$
+<div class='lui_drawerpanel{%extend%}_navs_item_l' data-lui-mark="panel.nav.frame" data-lui-switch-class="lui_drawerpanel{%extend%}_navs_item_selected">
+<div class='lui_drawerpanel{%extend%}_navs_item_r'>
+<div class='lui_drawerpanel{%extend%}_navs_item_c' data-lui-mark="panel.nav.title">
+</div>
+</div>
+</div>
+		$}
+		}
+		{$
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="lui_drawerpanel{%extend%}_toolbar_l">
+<div class="lui_drawerpanel{%extend%}_toolbar_r">
+<div class="lui_drawerpanel{%extend%}_toolbar_c" data-lui-mark="panel.toolbar">
+</div>
+<div class="lui_drawerpanel{%extend%}_toolbar_close" data-lui-mark="panel.toolbar.close"><i class="fontmui">&#xe6ca;</i></div>
+</div>
+</div>
+
+<div class="lui_drawerpanel{%extend%}_content_l" data-lui-mark="panel.contents.height">
+<div class="lui_drawerpanel{%extend%}_content_r">
+<div class="lui_drawerpanel{%extend%}_content_c" data-lui-mark="panel.contents">
+</div>
+</div>
+</div>
+
+</div>
+		$}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/tic/core/init/ticCoreInit.do"
+		class="com.landray.kmss.tic.core.init.actions.TicCoreInitAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.tic.core.init.forms.TicCoreInitForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/tic/core/init/ticCoreInit_view.jsp" />
+				<entry
+					key="edit"
+					value="/tic/core/init/ticCoreInit_edit.jsp" />
+				<entry
+					key="list"
+					value="/tic/core/init/ticCoreInit_list.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

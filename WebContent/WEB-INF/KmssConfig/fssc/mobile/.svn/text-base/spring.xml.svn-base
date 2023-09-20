@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="fsscMobileNoteDao" 
+        class="com.landray.kmss.fssc.mobile.dao.hibernate.FsscMobileNoteDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.mobile.model.FsscMobileNote</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscMobileNoteTarget" 
+        class="com.landray.kmss.fssc.mobile.service.spring.FsscMobileNoteServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscMobileNoteDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscMobileNoteService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscMobileNoteTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscMobileInvoiceTitleDao" 
+        class="com.landray.kmss.fssc.mobile.dao.hibernate.FsscMobileInvoiceTitleDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.mobile.model.FsscMobileInvoiceTitle</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscMobileInvoiceTitleTarget" 
+        class="com.landray.kmss.fssc.mobile.service.spring.FsscMobileInvoiceTitleServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscMobileInvoiceTitleDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscMobileInvoiceTitleService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscMobileInvoiceTitleTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscMobileDataService" 
+        class="com.landray.kmss.fssc.mobile.service.spring.FsscMobileDataServiceImp" >
+    </bean>
+    
+    <bean 
+        id="fsscMobileLinkDao" 
+        class="com.landray.kmss.fssc.mobile.dao.hibernate.FsscMobileLinkDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.mobile.model.FsscMobileLink</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscMobileLinkTarget" 
+        class="com.landray.kmss.fssc.mobile.service.spring.FsscMobileLinkServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscMobileLinkDao"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscMobileLinkService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscMobileLinkTarget"/>
+        </property>
+    </bean>
+    
+     <bean 
+        id="fsscMobileInvoiceService" 
+        class="com.landray.kmss.fssc.mobile.service.spring.FsscMobileInvoiceServiceImp" >
+    </bean>
+    
+   <bean 
+        id="fsscCommonMobileService" 
+        class="com.landray.kmss.fssc.mobile.service.spring.FsscCommonMobileServiceImp" >
+    </bean>
+    
+   <bean 
+        id="fsscMobilePublicService" 
+        class="com.landray.kmss.fssc.mobile.service.spring.FsscMobilePublicService" >
+    </bean>
+    <bean
+        id="fsscMobileService"
+        class="com.landray.kmss.sys.mobile.service.spring.SysMobileModuleRegisterService">
+        <property
+                name="modulePath">
+            <value>fssc/mobile</value>
+        </property>
+    </bean>
+  
+</beans>
+
+

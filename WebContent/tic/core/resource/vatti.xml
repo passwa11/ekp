@@ -1,0 +1,478 @@
+
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="ISysSynchroGetOrgWebServiceService" targetNamespace="http://out.webservice.organization.sys.kmss.landray.com/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://out.webservice.organization.sys.kmss.landray.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://out.webservice.organization.sys.kmss.landray.com/" xmlns:tns="http://out.webservice.organization.sys.kmss.landray.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:complexType name="sysSynchroGetOrgContext">
+<xs:sequence>
+<xs:element minOccurs="0" name="returnOrgType" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="sysSynchroGetOrgInfoContext">
+<xs:complexContent>
+<xs:extension base="tns:sysSynchroGetOrgContext">
+<xs:sequence>
+<xs:element minOccurs="0" name="beginTimeStamp" type="xs:string"/>
+<xs:element name="count" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="sysSynchroGetOrgInfoTokenContext">
+<xs:complexContent>
+<xs:extension base="tns:sysSynchroGetOrgInfoContext">
+<xs:sequence>
+<xs:element name="pageNo" type="xs:int"/>
+<xs:element minOccurs="0" name="token" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="sysSynchroOrgTokenResult">
+<xs:sequence>
+<xs:element name="count" type="xs:int"/>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+<xs:element name="returnState" type="xs:int"/>
+<xs:element minOccurs="0" name="token" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="sysSynchroOrgResult">
+<xs:sequence>
+<xs:element name="count" type="xs:int"/>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+<xs:element name="returnState" type="xs:int"/>
+<xs:element minOccurs="0" name="timeStamp" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="sysSynchroGetOrgBaseInfoContext">
+<xs:complexContent>
+<xs:extension base="tns:sysSynchroGetOrgContext">
+<xs:sequence>
+<xs:element minOccurs="0" name="returnType" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="Exception">
+<xs:sequence>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Exception" type="tns:Exception"/>
+<xs:element name="getUpdatedElementsByToken" type="tns:getUpdatedElementsByToken"/>
+<xs:complexType name="getUpdatedElementsByToken">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:sysSynchroGetOrgInfoTokenContext"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getUpdatedElementsByTokenResponse" type="tns:getUpdatedElementsByTokenResponse"/>
+<xs:complexType name="getUpdatedElementsByTokenResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:sysSynchroOrgTokenResult"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getRoleConfCateInfo" type="tns:getRoleConfCateInfo"/>
+<xs:complexType name="getRoleConfCateInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:sysSynchroGetOrgInfoContext"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getRoleConfCateInfoResponse" type="tns:getRoleConfCateInfoResponse"/>
+<xs:complexType name="getRoleConfCateInfoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:sysSynchroOrgResult"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getRoleConfInfo" type="tns:getRoleConfInfo"/>
+<xs:complexType name="getRoleConfInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:sysSynchroGetOrgInfoContext"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getRoleConfInfoResponse" type="tns:getRoleConfInfoResponse"/>
+<xs:complexType name="getRoleConfInfoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:sysSynchroOrgResult"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getUpdatedElements" type="tns:getUpdatedElements"/>
+<xs:complexType name="getUpdatedElements">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:sysSynchroGetOrgInfoContext"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getUpdatedElementsResponse" type="tns:getUpdatedElementsResponse"/>
+<xs:complexType name="getUpdatedElementsResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:sysSynchroOrgResult"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getElementsBaseInfo" type="tns:getElementsBaseInfo"/>
+<xs:complexType name="getElementsBaseInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:sysSynchroGetOrgBaseInfoContext"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getElementsBaseInfoResponse" type="tns:getElementsBaseInfoResponse"/>
+<xs:complexType name="getElementsBaseInfoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:sysSynchroOrgResult"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getRoleInfo" type="tns:getRoleInfo"/>
+<xs:complexType name="getRoleInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:sysSynchroGetOrgInfoContext"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getRoleInfoResponse" type="tns:getRoleInfoResponse"/>
+<xs:complexType name="getRoleInfoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:sysSynchroOrgResult"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getRoleLineDefaultRoleInfo" type="tns:getRoleLineDefaultRoleInfo"/>
+<xs:complexType name="getRoleLineDefaultRoleInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:sysSynchroGetOrgInfoContext"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getRoleLineDefaultRoleInfoResponse" type="tns:getRoleLineDefaultRoleInfoResponse"/>
+<xs:complexType name="getRoleLineDefaultRoleInfoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:sysSynchroOrgResult"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getRoleLineInfo" type="tns:getRoleLineInfo"/>
+<xs:complexType name="getRoleLineInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:sysSynchroGetOrgInfoContext"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getRoleLineInfoResponse" type="tns:getRoleLineInfoResponse"/>
+<xs:complexType name="getRoleLineInfoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:sysSynchroOrgResult"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getOrgGroupCateInfo" type="tns:getOrgGroupCateInfo"/>
+<xs:complexType name="getOrgGroupCateInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:sysSynchroGetOrgInfoContext"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getOrgGroupCateInfoResponse" type="tns:getOrgGroupCateInfoResponse"/>
+<xs:complexType name="getOrgGroupCateInfoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:sysSynchroOrgResult"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getOrgStaffingLevelInfo" type="tns:getOrgStaffingLevelInfo"/>
+<xs:complexType name="getOrgStaffingLevelInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:sysSynchroGetOrgInfoContext"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="getOrgStaffingLevelInfoResponse" type="tns:getOrgStaffingLevelInfoResponse"/>
+<xs:complexType name="getOrgStaffingLevelInfoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:sysSynchroOrgResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+
+  </wsdl:types>
+  <wsdl:message name="getRoleLineInfoResponse">
+    <wsdl:part element="tns:getRoleLineInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getElementsBaseInfo">
+    <wsdl:part element="tns:getElementsBaseInfo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getOrgStaffingLevelInfo">
+    <wsdl:part element="tns:getOrgStaffingLevelInfo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getElementsBaseInfoResponse">
+    <wsdl:part element="tns:getElementsBaseInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getOrgGroupCateInfoResponse">
+    <wsdl:part element="tns:getOrgGroupCateInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUpdatedElementsByTokenResponse">
+    <wsdl:part element="tns:getUpdatedElementsByTokenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getOrgStaffingLevelInfoResponse">
+    <wsdl:part element="tns:getOrgStaffingLevelInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Exception">
+    <wsdl:part element="tns:Exception" name="Exception">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUpdatedElements">
+    <wsdl:part element="tns:getUpdatedElements" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRoleConfInfo">
+    <wsdl:part element="tns:getRoleConfInfo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRoleConfCateInfoResponse">
+    <wsdl:part element="tns:getRoleConfCateInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRoleLineDefaultRoleInfo">
+    <wsdl:part element="tns:getRoleLineDefaultRoleInfo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUpdatedElementsByToken">
+    <wsdl:part element="tns:getUpdatedElementsByToken" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRoleLineDefaultRoleInfoResponse">
+    <wsdl:part element="tns:getRoleLineDefaultRoleInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRoleLineInfo">
+    <wsdl:part element="tns:getRoleLineInfo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRoleConfCateInfo">
+    <wsdl:part element="tns:getRoleConfCateInfo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getOrgGroupCateInfo">
+    <wsdl:part element="tns:getOrgGroupCateInfo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRoleInfoResponse">
+    <wsdl:part element="tns:getRoleInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRoleConfInfoResponse">
+    <wsdl:part element="tns:getRoleConfInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRoleInfo">
+    <wsdl:part element="tns:getRoleInfo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUpdatedElementsResponse">
+    <wsdl:part element="tns:getUpdatedElementsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ISysSynchroGetOrgWebService">
+    <wsdl:operation name="getUpdatedElementsByToken">
+      <wsdl:input message="tns:getUpdatedElementsByToken" name="getUpdatedElementsByToken">
+    </wsdl:input>
+      <wsdl:output message="tns:getUpdatedElementsByTokenResponse" name="getUpdatedElementsByTokenResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRoleConfCateInfo">
+      <wsdl:input message="tns:getRoleConfCateInfo" name="getRoleConfCateInfo">
+    </wsdl:input>
+      <wsdl:output message="tns:getRoleConfCateInfoResponse" name="getRoleConfCateInfoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRoleConfInfo">
+      <wsdl:input message="tns:getRoleConfInfo" name="getRoleConfInfo">
+    </wsdl:input>
+      <wsdl:output message="tns:getRoleConfInfoResponse" name="getRoleConfInfoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getUpdatedElements">
+      <wsdl:input message="tns:getUpdatedElements" name="getUpdatedElements">
+    </wsdl:input>
+      <wsdl:output message="tns:getUpdatedElementsResponse" name="getUpdatedElementsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getElementsBaseInfo">
+      <wsdl:input message="tns:getElementsBaseInfo" name="getElementsBaseInfo">
+    </wsdl:input>
+      <wsdl:output message="tns:getElementsBaseInfoResponse" name="getElementsBaseInfoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRoleInfo">
+      <wsdl:input message="tns:getRoleInfo" name="getRoleInfo">
+    </wsdl:input>
+      <wsdl:output message="tns:getRoleInfoResponse" name="getRoleInfoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRoleLineDefaultRoleInfo">
+      <wsdl:input message="tns:getRoleLineDefaultRoleInfo" name="getRoleLineDefaultRoleInfo">
+    </wsdl:input>
+      <wsdl:output message="tns:getRoleLineDefaultRoleInfoResponse" name="getRoleLineDefaultRoleInfoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRoleLineInfo">
+      <wsdl:input message="tns:getRoleLineInfo" name="getRoleLineInfo">
+    </wsdl:input>
+      <wsdl:output message="tns:getRoleLineInfoResponse" name="getRoleLineInfoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getOrgGroupCateInfo">
+      <wsdl:input message="tns:getOrgGroupCateInfo" name="getOrgGroupCateInfo">
+    </wsdl:input>
+      <wsdl:output message="tns:getOrgGroupCateInfoResponse" name="getOrgGroupCateInfoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getOrgStaffingLevelInfo">
+      <wsdl:input message="tns:getOrgStaffingLevelInfo" name="getOrgStaffingLevelInfo">
+    </wsdl:input>
+      <wsdl:output message="tns:getOrgStaffingLevelInfoResponse" name="getOrgStaffingLevelInfoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ISysSynchroGetOrgWebServiceServiceSoapBinding" type="tns:ISysSynchroGetOrgWebService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getUpdatedElementsByToken">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getUpdatedElementsByToken">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getUpdatedElementsByTokenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRoleConfCateInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getRoleConfCateInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getRoleConfCateInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRoleConfInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getRoleConfInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getRoleConfInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getUpdatedElements">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getUpdatedElements">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getUpdatedElementsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getElementsBaseInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getElementsBaseInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getElementsBaseInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRoleInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getRoleInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getRoleInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRoleLineDefaultRoleInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getRoleLineDefaultRoleInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getRoleLineDefaultRoleInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRoleLineInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getRoleLineInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getRoleLineInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getOrgGroupCateInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getOrgGroupCateInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getOrgGroupCateInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getOrgStaffingLevelInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getOrgStaffingLevelInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getOrgStaffingLevelInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ISysSynchroGetOrgWebServiceService">
+    <wsdl:port binding="tns:ISysSynchroGetOrgWebServiceServiceSoapBinding" name="ISysSynchroGetOrgWebServicePort">
+      <soap:address location="http://oa.vatti.com.cn/sys/webservice/sysSynchroGetOrgWebService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

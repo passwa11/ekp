@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   targetNamespace="http://www.landray.com.cn/fsscxml" 
+		   xmlns="http://www.landray.com.cn/fsscxml"
+		   elementFormDefault="qualified">
+	<xs:element name="module">
+        <xs:complexType>
+			<xs:sequence>
+				<xs:element name="model" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="column" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="rel" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="key" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="name" type="xs:string" use="required"/>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="field" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="name" type="xs:string" use="required"/>
+															<xs:attribute name="type" type="xs:string" use="required"/>
+															<xs:attribute name="data-type" type="xs:string"/>
+															<xs:attribute name="rel-column" type="xs:string"/>
+															<xs:attribute name="value" type="xs:string"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="type" type="xs:string" use="required"/>
+												<xs:attribute name="ref" type="xs:string" use="required"/>
+												<xs:attribute name="foreign" type="xs:string"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="validator" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="rel" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="property" type="xs:string" use="required"/>
+									<xs:attribute name="type" type="xs:string" use="required"/>
+									<xs:attribute name="switch-field" type="xs:string" />
+									<xs:attribute name="ifModuleExist" type="xs:string" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="key-col" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+    </xs:element>
+</xs:schema>

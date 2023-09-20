@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+	
+	<extension-point id="com.landray.kmss.kms.lservice">
+		<item name="taskInfo">
+			<param name="serviceBean" kind="spring" required="true" 
+				basedOn="com.landray.kmss.kms.lservice.service.IPersonalStatisticService">
+				<description>任务运行bean</description>
+			</param>
+			<param name="order" kind="int" required="true">
+				<description>排序号</description>
+			</param>
+			<description>任务数据</description>
+		</item>
+		
+		<item name="headInfo">
+			<param name="fdModelName" kind="string" required="true">
+				<description>任务运行的涉及的模块</description>
+			</param>
+			<param name="fdMethodName" kind="string" required="true">
+				<description>任务运行方法名</description>
+			</param>
+			<param name="serviceBean" kind="string" required="true">
+				<description>任务运行bean</description>
+			</param>
+			<description>头部数据</description>
+		</item>
+		
+		<item name="cardInfo">
+			<param name="icon" kind="string" required="true">
+				<description>图标</description>
+			</param>
+			<param name="text" kind="string" required="true">
+				<description>名称</description>
+			</param>
+			<param name="href" kind="string" required="true">
+				<description>跳转地址</description>
+			</param>
+			<param name="order" kind="string" required="true">
+				<description>排序号</description>
+			</param>
+			<description>卡片数据</description>
+		</item>
+		
+		<item name="recordInfo">
+			<param name="icon" kind="string" required="true">
+				<description>图标</description>
+			</param>
+			<param name="text" kind="string" required="true">
+				<description>名称</description>
+			</param>
+			<param name="href" kind="string" required="true">
+				<description>跳转地址</description>
+			</param>
+			<param name="fdMethodName" kind="string" required="true">
+				<description>任务运行方法名</description>
+			</param>
+			<param name="serviceBean" kind="string" required="true">
+				<description>任务运行bean</description>
+			</param>
+			<description>学习记录数据</description>
+		</item>
+		
+		<item name="flowInfo">
+			<param name="icon" kind="string" required="true">
+				<description>图标</description>
+			</param>
+			<param name="text" kind="string" required="true">
+				<description>名称</description>
+			</param>
+			<param name="href" kind="string" required="true">
+				<description>跳转地址</description>
+			</param>
+			<param name="fdMethodName" kind="string" required="true">
+				<description>任务运行方法名</description>
+			</param>
+			<param name="serviceBean" kind="string" required="true">
+				<description>任务运行bean</description>
+			</param>
+			<description>学习记录数据</description>
+		</item>
+	
+		<item name="producer">
+
+			<param name="modelName" required="true" kind="unid">
+				<description>
+					服务modelname
+				</description>
+			</param>
+			
+			<param name="jsp" required="true" kind="string">
+				<description>
+					服务引入页面
+				</description>
+			</param>
+			
+			<param name="type" required="true" kind="string">
+				<description>
+					服务类型，分为once和manual
+				</description>
+			</param>
+
+			<description>服务提供者注册</description>
+			
+		</item>
+
+		<item name="customer">
+
+			<param name="customerName" required="true" kind="string">
+				<description>
+					消费者modelname
+				</description>
+			</param>
+
+			<param name="producerName" required="true" kind="string">
+				<description>
+					服务提供者modelname
+				</description>
+			</param>
+			
+			<description>消费者注册</description>
+
+		</item>
+		
+		<item name="publisher">
+
+			<param name="service" required="true" kind="spring"
+				basedOn="com.landray.kmss.kms.lservice.events.IPublisher">
+				<description>
+					事件发布器 
+				</description>
+			</param>
+
+			<description>事件发布器</description>
+
+		</item>
+		
+		<item name="bank">
+		
+			<param name="titleMessage" required="true" kind="string">
+				<description>
+					库名称
+				</description>
+			</param>
+			
+			<param name="modelName" required="true" kind="string">
+				<description>
+					库所属模块名
+				</description>
+			</param>
+			
+			<param name="navJsp" kind="string">
+				<description>
+					导航jsp
+				</description>
+			</param>
+			
+			<param name="defaultJsp"  kind="string">
+				<description>
+					默认jsp
+				</description>
+			</param>
+			 
+			<param name="jsp"  kind="string">
+				<description>
+					打开的jsp
+				</description>
+			</param>
+			
+			<param name="icon"  kind="string">
+				<description>
+					图标
+				</description>
+			</param>
+			
+			<param name="order" required="true" kind="int">
+				<description>
+					排序
+				</description>
+			</param>
+			
+			<param name="type" required="true" kind="string">
+				<description>
+					链接所属类型：admin,student和teacher
+				</description>
+			</param>
+			
+			<description>库注册，用于主页树显示</description>
+			
+		</item>
+		
+		<item name="ids">
+            <param name="serviceName" kind="spring"
+                   basedOn="com.landray.kmss.kms.lservice.auth.interfaces.IAuthorizeIds" >
+            	<description>返回人员接口</description>
+            </param>
+            <param name="customerName" kind="string">
+            	<description>消费者modelName</description>
+           	</param>
+            <description>
+            	此扩展点由消费者实现，返回人员id集合，用于服务端的进一步人员过滤
+         	</description>
+        </item>
+        
+        <item name="customerUrl">
+        	<param name="serviceName" kind="spring" 
+        			basedOn="com.landray.kmss.kms.lservice.service.ICustomerUrlService" >
+            	<description>返回某个消费者真实的url</description>
+            </param>
+            <param name="customerName" kind="string">
+            	<description>消费者modelName</description>
+           	</param>
+           	<param name="producerName" kind="string">
+            	<description>消费者modelName</description>
+           	</param>
+           	 <description>返回某个消费者真实的url
+         	 </description>
+        </item>
+        
+		<description>学习服务注册中心</description>
+		
+	</extension-point> 
+	
+	<extension-point id="kms.lservice.buildservice">
+		<item name="serviceinfo">
+			<param name="type" required="true" kind="string">
+				<description>
+					type设置
+				</description>
+			</param>
+			<param name="serviceName" required="true" kind="string">
+				<description>
+					serviceName设置
+				</description>
+			</param>
+			
+		<description>各模块数据信息设置</description>
+		</item>
+		<description>学习服务各模块数据生成调用</description>
+	</extension-point> 
+
+	<extension-point id="kms.lservice.personalstudy">
+		<item name="missionInfo">
+			<param name="type" required="true" kind="string">
+				<description>
+					type设置
+				</description>
+			</param>
+			<param name="serviceBean" required="true" kind="string">
+				<description>
+					bean设置
+				</description>
+			</param>
+			<param name="fdMethodName" required="true" kind="string">
+				<description>
+					方法名
+				</description>
+			</param>			
+		<description>各模块列表数据信息</description>
+		</item>
+		<item name="countNum">
+			<param name="modelName" required="true" kind="string">
+				<description>
+					模块名称
+				</description>
+			</param>
+			<param name="serviceBean" required="true" kind="string">
+				<description>
+					bean设置
+				</description>
+			</param>
+		<description>讲师列表页总数</description>
+		</item>                                                                                                                                                                                                                                                                                                   
+		<description>个人学习中心数据 </description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.kms.lservice.auth.validate">
+		<item name="validate">
+              	<param name="validateBean" kind="spring"
+                       basedOn="com.landray.kmss.kms.lservice.auth.interfaces.IAuthorizeValidator">
+                       <description> 校验权限接口</description>
+                </param>
+                <param name="customerName" kind="string">
+                         <description>消费者modelName</description>
+                </param>
+                <param name="producerName" kind="string">
+                         <description> 服务modelName</description>
+                </param>
+                <description>
+           				此扩展点是由各个消费者实现，用以校验服务的权限
+ 						比如：用户通过扫码或直接输入链接进入随堂考试页面，这时候要由课程或者培训等调用者来决定该用户是否有考试权限
+          		</description>
+        </item>
+        <description>此扩展点是由各个消费者实现，用以校验服务的权限</description>
+	</extension-point>
+
+ 	<extension-point id="com.landray.kmss.kms.lservice.export.param">
+		<item name="config">
+              	<param name="serviceBean" kind="spring"
+                       basedOn="com.landray.kmss.kms.lservice.extend.interfaces.IExtendedFieldService">
+                       <description> 扩展字段接口</description>
+                </param>
+                <param name="customerName" kind="string">
+                         <description>消费者modelName</description>
+                </param>
+                <param name="producerBean"  kind="spring"
+                       basedOn="com.landray.kmss.kms.lservice.extend.interfaces.IExtendedFieldProducer">
+                       <description> 扩展字段服务bean</description>
+                </param>
+                <description>
+           				导出excel附加字段扩展点
+          		</description>
+        </item>
+        <description>此扩展点是由各个学习模块消费者实现，用以导出excel附加字段扩展点</description>
+	</extension-point>
+		
+	<extension point="com.landray.kmss.kms.lservice">
+		<item name="publisher">
+			<param name="service" 
+				value="producerPublisher" />
+		</item>
+		<item name="bank">
+			<param name="modelName" value="com.landray.kmss.kms.lservice.model.PStudyCenter" />
+			<param name="titleMessage" value="kms-lservice:kmsLservice.homePage" />
+			<param name="type" value="admin" />
+			<param name="jsp" value="/kms/lservice/index/admin/index_new.jsp" />
+			<param name="icon" value="lservice-home" />
+			<param name="navJsp" value="/kms/lservice/index/admin/nav_new.jsp" />
+			<param name="order" value="0" />
+		</item>
+		
+		<item name="bank">
+			<param name="modelName" value="com.landray.kmss.kms.lservice.model.PStudyCenter" />
+			<param name="titleMessage" value="kms-lservice:kmsLservice.homePage" />
+			<param name="type" value="student" />
+			<param name="navJsp" value="/kms/learn/main/student/nav_new.jsp" />
+			<param name="jsp" value="/kms/lservice/index/student/index_new.jsp" />
+			<param name="icon" value="lservice-home" />
+			<param name="order" value="0" />
+		</item>
+		
+		<item name="bank">
+			<param name="modelName" value="com.landray.kmss.kms.lservice.model.PStudyCenter" />
+			<param name="titleMessage" value="kms-lservice:kmsLservice.homePage" />
+			<param name="type" value="teacher" />
+			<param name="jsp" value="/kms/lservice/index/teacher/index_new.jsp" />
+			<param name="navJsp" value="/kms/learn/main/teacher/nav_new.jsp" />
+			<param name="icon" value="lservice-home" />
+			<param name="order" value="0" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.kms.lservice">
+		<item name="publisher">
+			<param name="service" 
+				value="sourcePublisher" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+	
+		<item name="js-pkg">
+			<param name="name" value="mui-kms-lservice.js" />
+			<param name="targetFile" value="/kms/lservice/mobile/module/js/mui-kms-lservice.js" />
+			<param name="srcFold" value="/kms/lservice/mobile/module/js" />
+		</item>
+		<item 
+			name="css-file">
+			<param 
+				name="name" 
+				value="mui-kms-lservice.css" />
+			<param 
+				name="targetFile" 
+				value="/kms/lservice/mobile/module/css/module.css" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.portal.enabled.choose.custom">
+		<item name="info">
+			<param name="id" value="kms.lservice.knowledge.prefecture"/>
+			<param name="serviceBeanName" value="knowledgePrefectureCustom"/>
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.portal.enabled.choose.custom">
+		<item name="info">
+			<param name="id" value="kmsLservice.portlet.my.task"/>
+			<param name="serviceBeanName" value="kmsLservicePortelMyTaskCustom"/>
+		</item>
+	</extension>
+	
+</plugin>

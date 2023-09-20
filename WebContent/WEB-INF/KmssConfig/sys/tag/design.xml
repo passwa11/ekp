@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="sys-tag:module.sys.tag"
+		urlPrefix="/sys/tag/"
+		defaultValidator="roleValidator(role=ROLE_SYSTAG_DEFAULT)">
+		<roles>
+			<!-- 默认权限;类别管理员;标签管理员 -->
+			ROLE_SYSTAG_DEFAULT;ROLE_SYSTAG_MANAGER
+		</roles>
+		<request
+			path="sys_tag_tags/sysTagTags*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.tag.model.SysTagTags">
+			<query queryString="method=saveValidateTags|saveValidateTag|editMoveTag|tagCloudSetting"
+				validator="roleValidator(role=ROLE_SYSTAG_MANAGER)" />
+			<query queryString="method=view|delete"
+				validator="authFieldValidator(type=SYS_READER)" />
+			<query queryString="method=saveInvalidateTags|editMergerTag|editResetMainTag|editRemoveAliasTag|saveInvalidateTag"
+				validator="roleValidator(role=ROLE_SYSTAG_MANAGER)|authSysTagCategoryValidator(recid=fdCategoryId,model=com.landray.kmss.sys.tag.model.SysTagCategory)" />
+			<query queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYSTAG_MANAGER)|authSysTagCategoryValidator(recid=fdCategoryId,model=com.landray.kmss.sys.tag.model.SysTagCategory)" />	
+			<query queryString="method=add"
+				validator="roleValidator(role=ROLE_SYSTAG_MANAGER)|authSysTagCategoryValidator(recid=categoryId,model=com.landray.kmss.sys.tag.model.SysTagCategory)" />
+			<query queryString="method=edit"
+				validator="authFieldValidator(type=creator)|roleValidator(role=ROLE_SYSTAG_MANAGER)|authSysTagCategoryValidator(recid=categoryId,model=com.landray.kmss.sys.tag.model.SysTagCategory)" />								
+			<query queryString="method=updateFromPriToPub|updateFromPriToPubInList"
+				validator="roleValidator(role=ROLE_SYSTAG_MANAGER)" />
+			<query queryString="method=exportTagExcel"
+				   validator="roleValidator(role=ROLE_SYSTAG_MANAGER)" />
+		</request>
+		
+		<request path="sys_tag_main/sysTagMain*" 
+			defaultValidator="roleValidator(role=ROLE_SYSTAG_DEFAULT)">
+			<query queryString="method=checkSpecial|listOverView" 
+				validator="roleValidator(role=ROLE_SYSTAG_DEFAULT)" /> 
+		</request>
+		
+		<request
+			path="sys_tag_category/sysTagCategory*">
+			<query queryString="method=add|edit|delete|deleteall"
+				validator="roleValidator(role=ROLE_SYSTAG_MANAGER)" />
+			<query queryString="method=list&amp;fdCategoryId=null"
+				validator="roleValidator(role=ROLE_SYSTAG_MANAGER)" />
+		</request>
+		
+		<request
+			path="sys_tag_group/sysTagGroup*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.tag.model.SysTagGroup">
+			<query queryString="method=add|delete|deleteall|save|saveadd"
+				validator="roleValidator(role=ROLE_SYSTAG_MANAGER)" />
+			<query queryString="method=edit|update"
+				validator="authFieldValidator(type=SYS_EDITOR)|authFieldValidator(type=creator)" />
+		</request>
+		
+		<filters
+			modelName="com.landray.kmss.sys.tag.model.SysTagTags">
+			<filter
+				type="SYS_READER"
+				expression="authTagFieldFilter(field=fdCategorys.authEditors.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_SYSTAG_MANAGER)" />
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_SYSTAG_DEFAULT)" />
+			<filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+		</filters>	
+		
+		<filters
+			modelName="com.landray.kmss.sys.tag.model.SysTagCategory">
+			<filter
+				type="SYS_READER"
+				expression="authTagFieldFilter(field=authEditors.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_SYSTAG_MANAGER)" />
+		</filters>	
+		
+		<filters
+			modelName="com.landray.kmss.sys.tag.model.SysTagGroup">
+			<filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="authFieldFilter(field=authEditors.fdId)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="roleFilter(role=ROLE_SYSTAG_MANAGER)" />
+		</filters>	
+	</module>
+	<module
+		urlPrefix="/sys/common/">
+		<request
+			path="dataxml.jsp*">
+			<query
+				validator="roleValidator(role=SYSROLE_USER)"
+				queryString="service=sysTagTagsService" />
+		</request>
+	</module>
+	<!-- 导入导出 -->
+	<module urlPrefix="/sys/transport/">
+		<request path="sys_transport_import/index.jsp*">
+			<query
+				validator="areaRoleValidator(role=ROLE_SYSTAG_MANAGER)"
+				queryString="fdModelName=com.landray.kmss.sys.tag.model.SysTagTags" />
+		</request>
+		<request path="sys_transport_import/SysTransportImport*">
+			<query
+				validator="areaRoleValidator(role=ROLE_SYSTAG_MANAGER)"
+				queryString="fdModelName=com.landray.kmss.sys.tag.model.SysTagTags" />
+		</request>
+		<request path="sys_transport_import/SysTransportUpload*">
+			<query
+				validator="areaRoleValidator(role=ROLE_SYSTAG_MANAGER)"
+				queryString="fdModelName=com.landray.kmss.sys.tag.model.SysTagTags" />
+		</request>
+	</module>
+
+	<!-- <portlet
+		moduleKey="sys-tag:sysTag.tree.title"
+		messageKey="sys-tag:sysTagTop.portlet"
+		contentURL="/sys/tag/sys_tag_top/tag_top_cloud_portlet.jsp"
+		moreURL="/sys/profile/index.jsp#app/mechanism/tag" /> -->
+	<quartz
+		messageKey="sys-tag:sysTag.job.runTagCalculate"
+		jobService="sysTagCalculateService"
+		cronExpression="0 0 1 * * ?"
+		jobMethod="saveCalculate"
+		description="sys-tag:sysTag.job.runTagCalculate.description" />
+	<!-- 标签统计定时任务 -->
+	<quartz
+		cronExpression="0 0 4 * * ?"
+		jobService="sysCountTagService" 
+		messageKey="sys-tag:sysTag.quartz.fdcountquotetimes"
+		jobMethod="updatefdCountQuoteTimes" 
+		description="sys-tag:sysTag.fdcountquotetimes.description"/>
+	<quartz
+		cronExpression="0 0 4 * * ?"
+		jobService="sysCountTagService" 
+		messageKey="sys-tag:sysTag.quartz.categorycountquotetimes"
+		jobMethod="updateCategoryCountQuoteTimes" 
+		description="sys-tag:sysTag.categorycountquotetimes.description"/>
+	<quartz
+		messageKey="sys-tag:sysTag.job.runTagClearSearchRecord"
+		jobService="sysTagSearchRecordService"
+		cronExpression="0 0 5 * * ?"
+		jobMethod="saveClearSearchRecord" 
+		description="sys-tag:sysTag.job.runTagClearSearchRecord.description"/>
+	<search
+		messageKey="sys-tag:sysTag.tree.title"
+		modelName="com.landray.kmss.sys.tag.model.SysTagTags"
+		resultProperties="fdName;fdCategory;fdQuoteTimes;docCreator;docCreateTime;"	
+	/>
+	<!-- 标签管理配置 -->
+	<treeNodes type="config">
+		<treeNode messageKey="sys-tag:sysTag.tree.title">
+		<treeNode
+			messageKey="sys-tag:sysTag.tree.system.category"
+			url="/sys/tag/sys_tag_category/sysTagCategory.do?method=list" />
+		</treeNode>
+	</treeNodes>
+	<homePage
+		urlPrefix="sys/tag"
+		url="/sys/profile/index.jsp#app/mechanism/tag"
+		messageKey="sys-tag:sysTag.tree.title" 
+		config="/moduleindex_notopic.jsp?nav=/sys/tag/tree.jsp"
+		type="global"/> 
+	
+	<profileConfig
+		key="tag"
+		messageKey="{sys-tag:module.sys.tag}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/tag/tree.jsp" 
+		icon="sys_tag"
+		type="mechanism"
+		description="{sys-tag:sysTag.profileCfg.description}"/>	
+</configs>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<!-- 触发定时任务事件侦听器 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="lbpmTriggerQuartzListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="processStartEvent;enterNodeEvent;enterWorkitemEvent" />
+			<param
+				name="listener"
+				value="lbpmTriggerQuartzListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+
+		<!-- 清除定时任务 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="lbpmCleanQuartzListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="processEndEvent;endedNodeEvent;abandonNodeEvent;endedWorkitemEvent;abandonWorkitemEvent" />
+			<param
+				name="listener"
+				value="lbpmCleanQuartzListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+</plugin>

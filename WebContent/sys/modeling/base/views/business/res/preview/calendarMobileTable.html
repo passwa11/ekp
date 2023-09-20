@@ -1,0 +1,300 @@
+var test = render.parent;
+var testSource = test.source;
+var config = testSource.config;
+var datas = config.datas || {};
+var views = datas.views || [];
+var view = views.length>0 ? views[0] : {};
+var showMode = "1";//默认显示周期
+if(views && views.length > 0){
+showMode = views[0].showMode || "1";
+}
+console.log(showMode);
+console.log(views);
+var viewWgt = render.parent;
+var lang=viewWgt.getModelingLang();
+{$
+<div class="model-body-wrap">
+    <div class="model-body-content">
+        <!-- 这里放入你的组件 starts -->
+        <div class="model-body-content-wrap" style="overflow:auto">
+            <div class="model-body-content-phone new-list-phone">
+                <div class="model-body-content-phone-wrap">
+                    <div class="model-body-content-phone-status-bar"></div>
+                    <div class="model-body-content-phone-view">
+                        <div class="model-body-content-phone-title">
+                            {%lang['listview.view.name']%}
+                        </div>
+                        <div class="model-body-content-phone-top" style="background: #ffffff;">
+                            <div class="model-body-content-phone-sort clearfix">
+                                <div class="model-phone-sort-left" >
+                                    <div class="model-phone-sort-date">
+                                        <p>2021{%lang['Gantt.year']%}6{%lang['respanel.month']%}</p>
+                                        <i></i>
+                                    </div>
+                                </div>
+                                <div class="model-phone-sort-right">
+                                    <div class="model-phone-sort-mode">
+                                        <div class="model-phone-sort-mode-switch">
+                                            <ul>
+                                                $}
+                                                if(showMode == "1"){
+                                                {$
+                                                <li class="day">{%lang['respanel.day']%}</li>
+                                                <li class="month active">{%lang['respanel.month']%}</li>
+                                                $}
+                                                }else{
+                                                {$
+                                                <li class="day active">{%lang['respanel.day']%}</li>
+                                                <li class="month">{%lang['respanel.month']%}</li>
+                                                $}
+                                                }
+                                                {$
+
+                                            </ul>
+                                        </div>
+                                        <div class="model-phone-sort-today">
+                                            <p>{%lang['calendar.today']%}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="model-body-content-phone-center">
+                            <div class="model-body-content-phone-center-wrap"  data-lui-position='fdDisplay' onclick="switchSelectPosition(this,'left')">
+                                $}
+                                if(showMode == "1"){
+                                {$
+                                <div class="model-body-content-phone-calendar-year active"  >
+                                    $}
+                                    }else{
+                                    {$
+                                    <div class="model-body-content-phone-calendar-year">
+                                        $}
+                                        }
+                                {$
+                                    <div class="model-body-content-phone-calendar-title">
+                                        <ul class="model-body-content-phone-calendar-abs">
+                                            <li><div>{%lang['calendar.sun1']%}</div></li>
+                                            <li><div>{%lang['calendar.mon1']%}</div></li>
+                                            <li><div>{%lang['calendar.tue1']%}</div></li>
+                                            <li><div>{%lang['calendar.wed1']%}</div></li>
+                                            <li><div>{%lang['calendar.thu1']%}</div></li>
+                                            <li><div>{%lang['calendar.fri1']%}</div></li>
+                                            <li><div>{%lang['calendar.sat1']%}</div></li>
+                                        </ul>
+                                    </div>
+                                    <div class="model-body-content-phone-main">
+                                        <div class="model-body-content-phone-box">
+                                            <ul class="model-body-content-phone-calendar-content">
+                                                $}
+                                                var now = new Date(2021,6,0);
+                                                var firstDay = new Date(2021,5,1);//所选月份第一天
+                                                var dayCount = now.getDate();//获取月份的天数
+                                                var day = firstDay.getDay(); //通过firstDay变量获取日期，再获取周几。
+                                                var preDate = new Date(2021,5,0);
+                                                var preDayCount = preDate.getDate();//获取月份的天数
+                                                for(var j=day-1;j>=0;j--){
+                                                {$
+                                                <li><div class="model-body-content-phone-day day-past">{%preDayCount-j%}</div></li>
+                                                $}
+                                                }
+                                                for(var i=1;i<=dayCount;i++){
+                                                if(i==1){
+                                                {$
+                                                <li>
+                                                    <div class="model-body-content-phone-day-content">
+                                                        <div class="model-body-content-phone-day">{%i%}</div>
+                                                        <div class="model-body-content-phone-day-title">{%lang['calendar.display.field']%}</div>
+                                                    </div>
+                                                </li>
+                                                $}
+                                                }else{
+                                                {$
+                                                <li><div class="model-body-content-phone-day day-cur">{%i%}</div></li>
+                                                $}
+                                                }
+                                                }
+                                                var nextDayCount = 42-day+1-dayCount;
+                                                for(var i=1;i<nextDayCount;i++){
+                                                {$
+                                                <li><div class="model-body-content-phone-day day-future">{%i%}</div></li>
+                                                $}
+                                                }
+                                                {$
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                    $}
+                                    if(showMode == "1"){
+                                    {$
+                                    <div class="model-body-content-phone-calendar-day">
+                                        $}
+                                        }else{
+                                        {$
+                                        <div class="model-body-content-phone-calendar-day active">
+                                            $}
+                                            }
+                                            {$
+
+                                    <div class="model-body-content-phone-calendar-title">
+                                        <ul class="model-body-content-phone-calendar-abs">
+                                            <li><div>{%lang['calendar.sun1']%}</div></li>
+                                            <li><div>{%lang['calendar.mon1']%}</div></li>
+                                            <li><div>{%lang['calendar.tue1']%}</div></li>
+                                            <li><div>{%lang['calendar.wed1']%}</div></li>
+                                            <li><div>{%lang['calendar.thu1']%}</div></li>
+                                            <li><div>{%lang['calendar.fri1']%}</div></li>
+                                            <li><div>{%lang['calendar.sat1']%}</div></li>
+                                        </ul>
+                                    </div>
+                                    <div class="model-body-content-phone-main">
+                                        <div class="model-body-content-phone-box">
+                                            <ul class="model-body-content-phone-calendar-content">
+                                                $}
+                                                for(var i=20;i<=26;i++){
+                                                    if(i==21){
+                                                    {$
+                                                    <li>
+                                                        <div class="model-body-content-phone-day-content">
+                                                            <div class="model-body-content-phone-day day-today day-have-calendar">{%lang['calendar.today']%}</div>
+                                                        </div>
+                                                    </li>
+                                                    $}
+                                                    }else if(i==23){
+                                                    {$
+                                                    <li>
+                                                        <div class="model-body-content-phone-day-content">
+                                                            <div class="model-body-content-phone-day day-have-calendar">{%i%}</div>
+                                                        </div>
+                                                    </li>
+                                                    $}
+                                                    }else{
+                                                    {$
+                                                    <li>
+                                                        <div class="model-body-content-phone-day-content">
+                                                            <div class="model-body-content-phone-day">{%i%}</div>
+                                                        </div>
+                                                    </li>
+                                                    $}
+                                                    }
+                                                }
+                                                {$
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="model-body-content-phone-summary-panel">
+                                        <div class="model-phone-summary-preview-title">
+                                            <div class="model-phone-summary-preview-left">
+                                                <div class="model-phone-summary-preview-date-day">07</div>
+                                                <div class="model-phone-summary-preview-date-month">2021.06</div>
+                                                <div class="model-phone-summary-preview-date-week">{%lang['calendar.mon1']%}</div>
+                                            </div>
+                                        </div>
+                                        <div class="model-phone-summary-preview-list">
+                                            <div class="model-phone-summary-content">
+                                                <div class="model-phone-summary-content-top">
+                                                    <span class="model-phone-summary-title">{%lang['calendar.display.field']%}</span>
+                                                    <span class="model-phone-summary-detail">{%lang['behavior.Details']%}<i class="right-arrow"></i></span>
+                                                </div>
+                                                <ul class="model-phone-summary-list">
+                                                    <li ><div class="summary-preview-content-title">{%lang['calendar.time']%}</div> <div preview-content-mark="time" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                                    <li ><div class="summary-preview-content-title">{%lang['calendar.content.csummary']%}</div> <div preview-content-mark="summary" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div>
+                                                    </li>
+                                                    <li > <div class="summary-preview-content-title">{%lang['calendar.initiator']%}</div> <div preview-content-mark="person" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                                    <li><div class="summary-preview-content-title">{%lang['calendar.participants']%}</div> <div  preview-content-mark="joiner" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                                    <li><div class="summary-preview-content-title">{%lang['calendar.place']%}</div> <div  preview-content-mark="address" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                                </ul>
+                                            </div>
+                                            <div class="model-phone-summary-content">
+                                                <div class="model-phone-summary-content-top">
+                                                    <span class="model-phone-summary-title">{%lang['calendar.display.field']%}</span>
+                                                    <span class="model-phone-summary-detail">{%lang['behavior.Details']%}<i class="right-arrow"></i></span>
+                                                </div>
+                                                <ul class="model-phone-summary-list">
+                                                    <li ><div class="summary-preview-content-title">{%lang['calendar.time']%}</div> <div preview-content-mark="time" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                                    <li ><div class="summary-preview-content-title">{%lang['calendar.content.csummary']%}</div> <div preview-content-mark="summary" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div>
+                                                    </li>
+                                                    <li > <div class="summary-preview-content-title">{%lang['calendar.initiator']%}</div> <div preview-content-mark="person" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                                    <li><div class="summary-preview-content-title">{%lang['calendar.participants']%}</div> <div  preview-content-mark="joiner" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                                    <li><div class="summary-preview-content-title">{%lang['calendar.place']%}</div> <div  preview-content-mark="address" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="model-body-content-phone-bottom">
+                        <div class="model-phone-opt">
+                            <div class="model-phone-opt-wrap clearfix">
+                                <div class="model-phone-opt-item">
+                                    <p>{%lang['modeling.button.new']%}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <!-- <div class="model-phone-summary-mask" data-lui-position='fdSummary'></div>-->
+                    <div class="model-phone-summary-panel">
+                        <div class="model-phone-summary-preview-title">
+                            <div class="model-phone-summary-preview-left">
+                                <div class="model-phone-summary-preview-date-day">07</div>
+                                <div class="model-phone-summary-preview-date-month">2021.06</div>
+                                <div class="model-phone-summary-preview-date-week">{%lang['calendar.mon1']%}</div>
+                            </div>
+                            <div class = "model-phone-summary-preview-right">{%lang['modeling.Cancel']%}</div>
+                        </div>
+                        <div class="model-phone-summary-preview-list">
+                            <div class="model-phone-summary-content">
+                                <div class="model-phone-summary-content-top">
+                                    <span class="model-phone-summary-title">{%lang['calendar.display.field']%}</span>
+                                    <span class="model-phone-summary-detail">{%lang['behavior.Details']%}<i class="right-arrow"></i></span>
+                                </div>
+                                <ul class="model-phone-summary-list">
+                                    <li ><div class="summary-preview-content-title">{%lang['calendar.time']%}</div> <div preview-content-mark="time" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                    <li ><div class="summary-preview-content-title">{%lang['calendar.content.csummary']%}</div> <div preview-content-mark="summary" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div>
+                                    </li>
+                                    <li > <div class="summary-preview-content-title">{%lang['calendar.initiator']%}</div> <div preview-content-mark="person" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                    <li><div class="summary-preview-content-title">{%lang['calendar.participants']%}</div> <div  preview-content-mark="joiner" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                    <li><div class="summary-preview-content-title">{%lang['calendar.place']%}</div> <div  preview-content-mark="address" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                </ul>
+                            </div>
+                            <div class="model-phone-summary-content">
+                                <div class="model-phone-summary-content-top">
+                                    <span class="model-phone-summary-title">{%lang['calendar.display.field']%}</span>
+                                    <span class="model-phone-summary-detail">{%lang['behavior.Details']%}<i class="right-arrow"></i></span>
+                                </div>
+                                <ul class="model-phone-summary-list">
+                                    <li ><div class="summary-preview-content-title">{%lang['calendar.time']%}</div> <div preview-content-mark="time" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                    <li ><div class="summary-preview-content-title">{%lang['calendar.content.csummary']%}</div> <div preview-content-mark="summary" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div>
+                                    </li>
+                                    <li > <div class="summary-preview-content-title">{%lang['calendar.initiator']%}</div> <div preview-content-mark="person" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                    <li><div class="summary-preview-content-title">{%lang['calendar.participants']%}</div> <div  preview-content-mark="joiner" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                    <li><div class="summary-preview-content-title">{%lang['calendar.place']%}</div> <div  preview-content-mark="address" class="summary-preview-content-row">{%lang['calendar.summary.content']%}</div></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="model-import-pc">
+    <div class="model-import-pc-text">{%lang['listview.import.PC.configuration']%}</div>
+    <i class="model-import-pc-icon"></i>
+    <div class="model-import-pc-tip">
+        <div class="model-import-pc-tip-top">
+            <div class="model-import-pc-tip-icon"></div>
+            <div class="model-import-pc-tip-content">
+                {%lang['listview.import.PC.configuration.tips']%}
+            </div>
+        </div>
+        <div class="model-import-pc-bottom">
+            <div class="model-import-pc-btn-ok">{%lang['modeling.button.ok']%}</div>
+            <div class="model-import-pc-btn-cancel">{%lang['modeling.Cancel']%}</div>
+        </div>
+    </div>
+</div>
+$}

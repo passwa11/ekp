@@ -1,0 +1,397 @@
+var self = this;
+var _reads = File_EXT_READ.split(";");
+var _prints = File_EXT_PRINT.split(";");
+var _videos = File_EXT_VIDEO.split(";");
+var _mp3s = File_EXT_MP3.split(";");
+var _edits = File_EXT_EDIT.split(";");
+var _noPrints = File_EXT_NO_PRINT.split(";");
+var _noReads = File_EXT_NO_READ.split(";");
+var _pics = File_EXT_PIC_READ.split(";");
+var _read_downloads = File_EXT_READDOWNLOAD.split(";");
+var _jgSignaturePdfs = File_EXT_JG_SIGNATURE_PDF.split(";");
+var  _wps_ppt  = File_EXT_WPS_PPT; //ppt pptx dps文件
+
+var rdiv = $("<div class='lui-upload-list-container show'></div>");
+
+var toolBar = null;
+
+// 监听窗口变化
+$(window).on("resize", function() {setTimeout(function(){self.resizeAllUploader3();}, 500);});
+// 监听右则收缩变化
+$(document).on("slideSpread", function() {setTimeout(function(){self.resizeAllUploader3();}, 500);});
+
+var xtable = $("<table  style='border:none' id='att_xtable_"+this.fdKey+"'></table>");
+var innerList = $("<div></div>");
+if(this.fdViewType=="byte"  || this.fdViewType == "byte_ui") { 
+	if(this.editMode=='view'){
+		xtable.addClass("lui-upload-list-tb"); 
+		//查看视图
+		if(this.fileList.length > 0) {
+		
+			toolBar = $("<div class='lui-uoload-list-toolbar'><div class='lui-uoload-list-title'>" + Attachment_MessageInfo["sysAttMain.table"] + "</div></div>");
+			rdiv.append(toolBar);
+			
+			var showBtn = $("<div class='lui-uoload-list-show-btn'></div>");
+			
+			var isShow = true;
+			showBtn.on("click", function() {
+				if(isShow) {
+					innerList.slideUp(300);
+					isShow = false;
+					rdiv.removeClass("show");
+					rdiv.addClass("hide");
+				} else {
+					innerList.slideDown(300);
+					isShow = true;
+					rdiv.removeClass("hide");
+					rdiv.addClass("show");
+				}
+			});
+			toolBar.append(showBtn);
+			
+			if(this.fileList.length > 1) {
+				createViewOperation();
+			}
+		
+			for (var i=0;i<this.fileList.length;i++){
+				xtable.append(createViewFileTr(this.fileList[i]));
+			}
+		}
+	}else{
+		//编辑视图
+		for (var i=0;i<this.fileList.length;i++){
+			xtable.append(createEditFileTr(this.fileList[i]));
+		}
+	}
+}
+innerList.append(xtable);
+rdiv.append(innerList);
+done(rdiv);
+
+
+
+/** 查看视图 开始 **/
+function createViewOperation() { 
+	if (self.canDownload && toolBar) {
+		toolBar.append($("<div class='lui-uoload-list-btn-batchdown'>"
+				+ Attachment_MessageInfo["button.batchdown"] + "</div>").click(
+				function() {
+					self.downloadFiiles();
+				}));
+	}
+}
+
+
+function _canRead(fileExt){
+
+	fileExt = fileExt.toLowerCase();
+
+	if($.inArray(fileExt.toLowerCase(),_noReads) >= 0){
+		return "";
+	}
+	var text = ""; 
+	
+	if ($.inArray(fileExt,_reads) > -1 
+		|| $.inArray(fileExt,_pics) > -1 
+		|| $.inArray(fileExt,['.txt']) > -1
+		|| $.inArray(fileExt,_read_downloads) > -1){
+			text = (Attachment_MessageInfo["button.read"]);
+	}else if($.inArray(fileExt,_videos) > -1 || $.inArray(fileExt,_mp3s) > -1){
+		if(self.editMode=='view'){
+			text = ""+Attachment_MessageInfo["button.play"]+"";
+		} 
+	}
+	
+	return text;
+	
+}
+		
+function createViewFileTr(file){
+	var fileIcon = window.GetIconNameByFileName(file.fileName);
+	var xtr = $("<tr id='"+file.fdId+"' class='upload_list_tr'></tr>");
+	xtr.append("<td class='lui-upload-list-icon'><img src='"+Com_Parameter.ResPath+"style/common/fileIcon/"+fileIcon+"'  align='absmiddle'  /></td>");
+	// 默认执行第一个操作按钮的点击事件
+	var fileExt = file.fileName.substring(file.fileName.lastIndexOf("."));
+	var td = $("<td class='lui-upload-list-filename-view'></td>");
+	xtr.append(td);
+	td.append($("<a href='javascript:;'>" + file.fileName
+					+ "</a>").click(function() {
+						if (self.canRead) {
+							var text = _canRead(fileExt);
+							if(text) {
+								readDoc(file);
+							}
+							return;
+						}
+						if (self.canDownload) {
+							self.downDoc(file.fdId);
+							return;
+						}
+						if (self.canEdit) {
+							if ($.inArray(fileExt.toLowerCase(),_edits) > -1) {
+								self.editDoc(file.fdId);
+								return;
+							}
+						}
+						if (self.canPrint) {
+							self.printDoc(file.fdId);
+							return;
+						}
+					}));  
+	//加入操作列
+	xtr.append("<td class='upload_list_size'>("+self.formatSize(file.fileSize)+")</td>");
+	xtr.append("<td class='lui-upload-list-down-count' style='word-break:keep-all;'>"+Attachment_MessageInfo["show.downloadCount"]+":"+file.fileDownloadCount+"</td>");
+	xtr.append(createFileOpers(file));
+	return xtr;
+}
+
+function readDoc(file) {
+	var fileExt = file.fileName.substring(file.fileName.lastIndexOf(".")).toLowerCase();;
+	var attId = file.fdTemplateAttId || file.fdId;
+	
+	if ($.inArray(fileExt,_reads) > -1) {
+		self.readDoc(attId);
+		// pdf特殊处理下
+	} else if($.inArray(fileExt,_read_downloads) > -1){ 
+		self.openDoc(attId);
+	} else if($.inArray(fileExt,_videos) > -1) {
+		if (self.editMode == 'view') {
+			self.startVideo(attId);
+		}
+	} else if ($.inArray(fileExt,_mp3s) > -1) {
+		if (self.editMode == 'view' ) {
+			self.startMp3(attId);
+		}
+	} else {
+		self.openDoc(attId);
+	}
+}
+
+function createFileOpers(file){	
+	var fileExt = file.fileName.substring(file.fileName.lastIndexOf("."));
+	var xtd = $("<td class='lui-upload-list-operation'></td>");
+	var attId = file.fdTemplateAttId || file.fdId;
+	
+	var wps_ppt = _wps_ppt.split(";");	
+	var showPPTEdit = true; //是否显示PPT编辑
+
+	if($.inArray(fileExt.toLowerCase(),wps_ppt) > -1 && getWpsoaassistConfig() == true)
+	{
+	
+	   showPPTEdit = false;
+	}
+	
+	if(self.isJGSignaturePDFEnabled && $.inArray(fileExt.toLowerCase(),_jgSignaturePdfs) > -1){
+		xtd.append($("<div class='lui-upload-list-opt-signature' title='" + Attachment_MessageInfo["button.signature"] + "'></div>").click(function(){
+				self.jgSignaturePDF(file.fdId);
+			}));
+	}
+	if (self.canRead) {
+	
+		var text = _canRead(fileExt);
+	
+		if (text){
+			xtd.append($("<div class='lui-upload-list-opt-view' title='"+text+"'></div>").click(function(){
+				readDoc(file);
+			}));
+		}
+	}
+	if (self.canDownload) {
+		xtd.append($("<div class='lui-upload-list-opt-down' title='"+Attachment_MessageInfo["button.download"]+"'></div>").click(function(){
+			self.downDoc(attId);
+		}));
+	}
+	
+	if (self.canEdit && !file.fdTemplateAttId && showPPTEdit) {
+		if ($.inArray(fileExt.toLowerCase(),_edits) > -1){
+			xtd.append($("<div class='lui-upload-list-opt-edit' title='"+Attachment_MessageInfo["button.edit"]+"'></div>").click(function(){
+				self.editDoc(attId);
+			}));
+		}
+	}
+	
+	if (self.canPrint) {
+		if ($.inArray(fileExt.toLowerCase(),_noPrints) < 0){
+			if ($.inArray(fileExt.toLowerCase(),_prints) > -1){
+				xtd.append($("<div class='lui-upload-list-opt-print' title='"+Attachment_MessageInfo["button.print"]+"'></div>").click(function(){
+					self.printDoc(attId);
+				}));
+			}
+		}
+	}
+	return xtd;
+}
+/** 查看视图 结束 **/
+
+
+
+/** 编辑视图 开始 **/
+function createEditFileTr(file){
+
+	var fileExt = file.fileName.substring(file.fileName.lastIndexOf("."));
+	var fileIcon = window.GetIconNameByFileName(file.fileName);
+	var xtr = $("<tr id='"+file.fdId+"' class='upload_list_tr'></tr>");
+	xtr.append("<td class='upload_list_icon'><img src='"+Com_Parameter.ResPath+"style/common/fileIcon/"+fileIcon+"' height='16' width='16' border='0' align='absmiddle' style='margin-right:3px;' /></td>");
+	xtr.append("<td class='upload_list_filename_edit'>"+Com_HtmlEscape(file.fileName)+"</td>");  
+	xtr.append("<td class='upload_list_progress_img' style='display:none'></td>");
+	xtr.append("<td class='upload_list_progress_text' style='display:none'></td>");
+	xtr.append("<td class='upload_list_size'>("+self.formatSize(file.fileSize)+")</td>");
+	//加入操作列
+	xtr.append(createEditFileOpers(file));
+	xtr.append($("<td class='upload_list_status'></td>").append(getStatus(file)));
+	return xtr;
+}
+function getStatus(file){
+	if(file.fileStatus != 0){//上传成功,失败，错误
+		return $("<div class='upload_status com_btn_link'>"+Attachment_MessageInfo["button.delete"]+"</div>").click(function(){
+			if(file.fileStatus != -1){
+				if(confirm(""+Attachment_MessageInfo["button.confimdelte"]+"")){
+					file.fileStatus = -1;
+					$("#"+file.fdId).remove();
+					// 编辑状态下删除发送事件
+					self.emit('editDelete',{"file":file});
+				}
+			}else{
+				$("#"+file.fdId).remove();
+			}
+		});
+	}
+}
+if(this.editMode=='view'){
+	
+	//查看时不需要绑定上传时间
+}else if(this.initMode){
+	//this.off();
+	this.on("uploadCreate",function(data){
+		var file = data.file;
+		$('#att_xtable_'+self.fdKey+'').append(createEditFileTr(file));
+	});
+	this.on("uploadStart", function(data){
+		var file = data.file; 
+		$("#"+file.fdId).find(".upload_list_progress_img,.upload_list_progress_text").show();
+		$("#"+file.fdId).find(".upload_list_size,.upload_list_operation").hide();
+		$("#"+file.fdId).find(".upload_list_progress_img").append("<div class='upload_progress_border'><div class='upload_progress_val'></div></div>");
+		$("#"+file.fdId).find(".upload_list_progress_text").append("<div class='upload_progress_text'>"+Attachment_MessageInfo["button.progress"]+"0%</div>");
+
+	});
+
+	this.on("uploadMD5", function(data){
+		var file = data.file; 
+		$("#"+file.fdId).find(".upload_progress_text").html(Attachment_MessageInfo['button.md5']);
+	});
+
+	this.on("uploadProgress", function(data){
+		var file = data.file;
+		var percent = data.totalPercent;
+		if(percent==null){
+			var bytesLoaded = data.bytesLoaded;
+			var bytesTotal = data.bytesTotal;
+			percent = Math.ceil((bytesLoaded / bytesTotal) * 100);
+		}else{
+			percent = Math.ceil(percent*100);
+		}
+		$("#"+file.fdId).find(".upload_progress_val").css("width", percent + "%");
+		$("#"+file.fdId).find(".upload_progress_text").html(Attachment_MessageInfo["button.progress"] + parseInt(percent) + "%");
+	});
+	this.on("uploadSuccess", function(data){
+		var file = data.file;
+		var serverData = data.serverData; 
+		if(file._fdId != file.fdId){
+			$("#"+file._fdId).attr("id",file.fdId);
+		}		
+		$("#"+file.fdId).find(".upload_list_progress_img,.upload_list_progress_text").hide();
+		$("#"+file.fdId).find(".upload_list_size,.upload_list_operation").show();
+		$("#"+file.fdId).find(".upload_list_operation").empty();
+		$("#"+file.fdId).find(".upload_list_operation").html(Attachment_MessageInfo["msg.uploadSucess"]);
+		$("#"+file.fdId).find(".upload_list_status").html(getStatus(file));
+	});
+	this.on("uploadFaied", function(data){
+		var file = data.file;
+		var serverData = data.serverData;	
+		$("#"+file.fdId).find(".upload_list_progress_img,.upload_list_progress_text").hide();
+		$("#"+file.fdId).find(".upload_list_size,.upload_list_operation").show();
+		$("#"+file.fdId).find(".upload_list_operation").empty();
+		$("#"+file.fdId).find(".upload_list_operation").html(Attachment_MessageInfo["msg.uploadFail"]);
+		file.fileStatus = -1;
+		$("#"+file.fdId).find(".upload_list_status").html(getStatus(file));
+		alert(serverData);
+	});
+	
+	this.on("error", function(data){
+		var file = data.file;
+		var serverData = data.serverData;	
+		if("Q_EXCEED_SIZE_LIMIT"==serverData){
+		    $("#"+file.fdId).remove();
+			alert(Attachment_MessageInfo["error.exceedMaxSize"].replace("{0}", self.totalMaxSize+'MB'));
+		}
+		else if("Q_EXCEED_NUM_LIMIT"==serverData){
+		   $("#"+file.fdId).remove();
+		   alert(Attachment_MessageInfo["error.exceedNumber"].replace("{0}", data.max+"个"));
+		}
+		else if("F_EXCEED_SIZE"==serverData){
+		    $("#"+file.fdId).remove();
+			alert(Attachment_MessageInfo["error.smallMaxSize"].replace("{0}",self.singleMaxSize+' MB'));
+		}
+		else{
+		    $("#"+file.fdId).remove();
+			alert(Attachment_MessageInfo["error.enabledFileType"].replace("{0}", self.enabledFileType));
+		}
+			
+		});
+	this.on("uploadError", function(data){
+		var file = data.file;
+		var errorCode = data.errorCode;
+		var message = data.message;
+		$("#"+file.fdId).find(".upload_list_progress_img,.upload_list_progress_text").hide();
+		$("#"+file.fdId).find(".upload_list_size,.upload_list_operation").show();
+		$("#"+file.fdId).find(".upload_list_operation").empty();
+		if(errorCode == -280){
+			$("#"+file.fdId).find(".upload_list_operation").html(Attachment_MessageInfo["button.cancelupload"]);
+		}else{
+			$("#"+file.fdId).find(".upload_list_operation").html(Attachment_MessageInfo["msg.uploadFail"]);
+		}
+		$("#"+file.fdId).find(".upload_list_status").html(getStatus(file));
+		file.fileStatus = -1;
+		//alert($("#"+file.fdId).find(".upload_list_operation").html());
+	});
+}
+
+
+function createEditFileOpers(file){	
+	var fileExt = file.fileName.substring(file.fileName.lastIndexOf("."));
+	var xtd = $("<td class='upload_list_operation'></td>");
+	var attId = file.fdTemplateAttId || file.fdId;
+	if (self.canRead) {
+		var text = _canRead(fileExt);
+		if(!text) {
+			text = (Attachment_MessageInfo["button.open"]);
+		}
+		if (text && $.inArray(fileExt.toLowerCase(),_noReads) < 0){
+			xtd.append($("<div class='upload_opt_view' title='"+text+"'></div>").click(function(){
+				readDoc(file);
+			}));
+		}
+	}
+	if (self.canDownload) {
+		xtd.append($("<div class='upload_opt_down' title='"+Attachment_MessageInfo["button.download"]+"'></div>").click(function(){
+			self.downDoc(attId);
+		}));
+	}
+	if (self.canEdit && !file.fdTemplateAttId) {
+		if ($.inArray(fileExt.toLowerCase(),_edits) > -1){
+			xtd.append($("<div class='upload_opt_edit' title='"+Attachment_MessageInfo["button.edit"]+"'></div>").click(function(){
+				self.editDoc(attId);
+			}));
+		}
+	}
+	if (self.canPrint) {
+		if ($.inArray(fileExt.toLowerCase(),_noPrints) < 0){
+			if ($.inArray(fileExt.toLowerCase(),_prints) > -1){
+				xtd.append($("<div class='upload_opt_print' title='"+Attachment_MessageInfo["button.print"]+"'></div>").click(function(){
+					self.printDoc(attId);
+				}));
+			}
+		}
+	}
+	return xtd;
+}

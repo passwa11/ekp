@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.fssc.budgeting.model.FsscBudgetingOrg" 
+        table="fssc_budgeting_org">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property 
+            name="fdName" 
+            column="fd_name" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+        <property 
+            name="fdNotifyType" 
+            column="fd_notify_type" 
+            update="true" 
+            insert="true" 
+            length="50"/>
+        <property 
+            name="docCreateTime" 
+            column="doc_create_time" 
+            update="true" 
+            insert="true" 
+            index="idx_org_createTime"/>
+        <many-to-one 
+            name="docCreator" 
+            column="doc_creator_id" 
+            update="true" 
+            insert="true"/>
+        <bag 
+            name="fdOrgs" 
+            table="fssc_budgeting_org_om" 
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.sys.organization.model.SysOrgPerson" 
+                column="fd_target_id"/>
+        </bag>
+    </class>
+</hibernate-mapping>

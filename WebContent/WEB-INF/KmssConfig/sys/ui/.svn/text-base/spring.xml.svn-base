@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean
+            id="resourceCacheListener"
+            class="com.landray.kmss.sys.ui.util.ResourceCacheListener">
+    </bean>
+
+    <bean
+            id="sysUiExtendService"
+            class="com.landray.kmss.sys.ui.service.SysUiExtendService">
+    </bean>
+    <bean
+            id="sysUiComponentService"
+            class="com.landray.kmss.sys.ui.service.SysUiComponentService">
+    </bean>
+    <bean
+            id="sysUiMessageReceiver"
+            class="com.landray.kmss.sys.ui.service.spring.message.SysUiMessageReceiver">
+    </bean>
+    <bean
+            id="sysUiCompressExecutor"
+            class="com.landray.kmss.sys.ui.service.spring.SysUiCompressExecutor">
+    </bean>
+    <bean
+            id="sysUiCompressMessageReceiver"
+            class="com.landray.kmss.sys.ui.service.spring.message.SysUiCompressMessageReceiver">
+    </bean>
+
+    <bean id="simpleJspCache" class="com.landray.kmss.sys.ui.cache.SimpleJspCache">
+        <!--静态资源的缓存 24 * 3600 秒-->
+        <property name="staticCacheExpire" value="86400"/>
+        <!--相对固定的资源缓存过期时间 3600 秒-->
+        <property name="dynamicCacheExpire" value="3600"/>
+    </bean>
+
+</beans>

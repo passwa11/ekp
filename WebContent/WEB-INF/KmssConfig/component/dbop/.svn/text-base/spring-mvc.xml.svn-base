@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/component/dbop/compDbcp.do"
+		class="com.landray.kmss.component.dbop.actions.CompDbcpAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.component.dbop.forms.CompDbcpForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/component/dbop/cp/compDbcp_view.jsp" />
+				<entry
+					key="edit"
+					value="/component/dbop/cp/compDbcp_edit.jsp" />
+				<entry
+					key="list"
+					value="/component/dbop/cp/compDbcp_list.jsp" />
+				<entry
+					key="data"
+					value="/tic/jdbc/tic_jdbc_dbcp/compDbcp_list.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

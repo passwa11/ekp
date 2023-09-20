@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/subordinate/sysSubordinateMappingForm.do"
+		class="com.landray.kmss.sys.subordinate.actions.SysSubordinateMappingFormAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.subordinate.form.SysSubordinateMappingConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry key="edit" value="/sys/subordinate/config.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/subordinate/sysSubordinate.do"
+		class="com.landray.kmss.sys.subordinate.actions.SysSubordinateAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry key="view" value="/sys/subordinate/view.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

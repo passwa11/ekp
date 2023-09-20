@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.hr.staff.model.HrStaffPersonReport"
+		table="hr_staff_person_report" >
+		<!-- 主结构配置 -->
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<!-- 简单属性 -->
+		<property
+			name="fdReportType"
+			column="fd_report_type"
+			update="true"
+			insert="true"
+			length="50" />
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			length="200" />
+		<property
+			name="fdQueryIds"
+			column="fd_query_ids"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="3000"/>
+		<property
+			name="fdQueryNames"
+			column="fd_query_names"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="3000"/>
+		<property
+			name="fdPeriod"
+			column="fd_period"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="20"/>
+		<property
+			name="fdBeginPeriod"
+			column="fd_begin_period"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdEndPeriod"
+			column="fd_end_period"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdAgeRange"
+			column="fd_age_range"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdStatus"
+			column="fd_status"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200"/>
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<many-to-one
+			name="docCreator"
+			column="doc_creator_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+			
+		<bag
+			name="authReaders"
+			table="hr_staff_person_report_reader"
+			lazy="true">
+			<key
+				column="fd_report_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_reader_id" />
+		</bag>
+	</class>
+</hibernate-mapping>

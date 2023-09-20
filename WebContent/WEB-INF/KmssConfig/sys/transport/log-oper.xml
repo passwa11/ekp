@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+    <!-- 导入导出机制-->
+	<logset>
+	    <!-- 导入设置 -->
+        <oper
+            id="sysTransportImportLog"
+            desc=""
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.transport.model.SysTransportImportConfig"
+            action="/sys/transport/sys_transport_import/SysTransportImport.do">
+            <query
+                method="saveadd"
+                logPoint="Base_UrlParam;Service_Add" 
+                messageKey="button.saveadd"/>
+            <query
+                method="save"
+                logPoint="Base_UrlParam;Service_Add" 
+                messageKey="button.save"/>
+            <query
+                method="update"
+                logPoint="Base_UrlParam;Service_Update" 
+                messageKey="button.update"/>
+            <query
+                method="downloadTemplet"
+                logPoint="Base_UrlParam;Action_Find;downloadTemplet" 
+                messageKey="sys-transport:sysTransport.button.download.templet"/>
+        </oper>
+        <!-- 导入 -->
+        <oper
+            id="sys_transportImportUploadLog"
+            desc=""
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/transport/sys_transport_xform/SysTransportImportUpload.do">
+            <query
+                method="upload"
+                logPoint="Base_UrlParam;Service_Add;Service_Update;upload"
+                messageKey="sys-transport:sysTransport.button.dataImport"/>
+        </oper>
+        <oper
+            id="sys_transport_importSysTransportImportUploadLog"
+            desc=""
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/transport/sys_transport_import/SysTransportImportUpload.do">
+            <query
+                method="upload"
+                logPoint="Base_UrlParam;Service_Add;Service_Update;upload"
+                messageKey="sys-transport:sysTransport.button.dataImport"/>
+        </oper>
+        <!-- 明细表导入 -->
+        <oper
+            id="detailTableImportLog"
+            desc=""
+            extends="sys_transportImportUploadLog"
+            model="*"
+            action="/sys/transport/detailTableImport.do">
+            <query
+                method="upload"
+                logPoint="Base_UrlParam;Service_Add;Service_Update;upload"
+                messageKey="sys-transport:sysTransport.import.dataImport"/>
+        </oper>
+        <!-- 导出设置 -->
+        <oper
+            id="SysTransportExportLog"
+            desc=""
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.transport.model.SysTransportExportConfig"
+            action="/sys/transport/sys_transport_export/SysTransportExport.do">
+            <query
+                method="saveadd"
+                logPoint="Service_Add" 
+                messageKey="button.saveadd"/>
+            <query
+                method="save"
+                logPoint="Service_Add" 
+                messageKey="button.save"/>
+            <query
+                method="update"
+                logPoint="Service_Update" 
+                messageKey="button.update"/>
+            <query
+                method="export"
+                logPoint="Base_UrlParam;Action_FindAll;export"
+                model="*" 
+                messageKey="sys-transport:sysTransport.export.data"/>
+            <query
+                method="listExport"
+                logPoint="Action_FindAll;listExport"
+                model="*"
+                messageKey="button.export"/>
+        </oper>
+        <!-- 明细表导出 -->
+        <oper
+            id="detailTableExportLog"
+            desc=""
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/transport/detailTableExport.do">
+            <query
+                method="export"
+                logPoint="Base_UrlParam;Action_FindAll;export"
+                messageKey="sys-transport:sysTransport.export.data"/>
+        </oper>
+        
+	</logset>
+</log-oper>

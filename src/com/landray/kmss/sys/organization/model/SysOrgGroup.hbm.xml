@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<subclass
+		discriminator-value="16"
+		name="com.landray.kmss.sys.organization.model.SysOrgGroup"
+		extends="com.landray.kmss.sys.organization.model.SysOrgElement">
+		<bag
+			name="hbmMembers"
+			table="sys_org_group_element">
+			<key column="fd_groupid" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_elementid" />
+		</bag>
+		<many-to-one
+			name="hbmGroupCate"
+			column="fd_cateid"
+			insert="true"
+			update="true"
+			not-null="false" />
+		<property
+			name="authReaderFlag"
+			column="auth_reader_flag"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<bag
+			name="authReaders"
+			table="sys_org_group_reader"
+			lazy="true">
+			<key column="fd_group_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_reader_id" />
+		</bag>
+		<bag
+			name="authEditors"
+			table="sys_org_group_editor"
+			lazy="true">
+			<key column="fd_group_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_editor_id" />
+		</bag>
+	</subclass>
+</hibernate-mapping>

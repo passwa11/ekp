@@ -1,0 +1,715 @@
+/* 修复页面整体滚动*/
+.lui_form_body{
+    overflow-x:hidden;
+  }
+  /* 自定义checkbox */
+  .ld-modal-checkbox{
+      position: relative;
+      height:0.42rem;
+      width:0.42rem;
+      margin-right: 0.17rem;
+     }
+     .ld-modal-checkbox input[type="checkbox"] + .modal-checkbox-label:before,
+     .ld-checkBox input[type="checkbox"] + .checkbox-label:before {
+      content: '';
+      background:url(../images/checkbox_normal.png) no-repeat center center;
+      background-size: cover;
+      display: inline-block;
+      width: 0.42rem;
+      height: 0.42rem;
+      position: relative;
+      top: -1px;
+      margin-right: 5px;
+      vertical-align: middle;
+      cursor: pointer;
+      text-align: center;
+      -webkit-transition: all 250ms ease;
+      transition: all 250ms ease;
+      box-sizing: border-box;
+      border-radius: 2px;
+      z-index: 0;
+     }
+     .ld-modal-checkbox input[type="checkbox"]:checked + .modal-checkbox-label:before,
+     .ld-checkBox input[type="checkbox"]:checked + .checkbox-label:before {
+      border:0!important;
+      background: url(../images/checkbox.png) no-repeat center center;
+      background-size: cover;
+     }
+     /* right-modal自定义radio */
+     .ld-modal-checkbox{
+      position: relative;
+      height:0.42rem;
+      width:0.42rem;
+     }
+     .ld-checkBox input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      z-index: 99;
+      margin: 0;
+      cursor: pointer;
+      height:0.42rem;
+      width:0.42rem;
+     }
+     .ld-modal-checkbox input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      z-index: 99;
+      margin: 0;
+      cursor: pointer;
+      height:0.42rem;
+      width:0.42rem;
+     }
+     .ld-modal-checkbox input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      z-index: 99;
+      margin: 0;
+      cursor: pointer;
+      height:0.42rem;
+      width:0.42rem;
+     }
+     .ld-modal-checkbox input[type="radio"] + .modal-checkbox-label:before {
+      content: '';
+      background: url(../images/radio_normal.png) no-repeat center center;
+      background-size: cover;
+      display: inline-block;
+      width: 0.42rem;
+      height: 0.42rem;
+      position: relative;
+      top: -1px;
+      margin-right: 5px;
+      vertical-align: middle;
+      cursor: pointer;
+      text-align: center;
+      -webkit-transition: all 250ms ease;
+      transition: all 250ms ease;
+      box-sizing: border-box;
+      border-radius: 2px;
+      z-index: 98;
+     }
+     .ld-modal-checkbox input[type="radio"]:checked + .modal-checkbox-label:before {
+      border:0!important;
+      background: url(../images/radio.png) no-repeat center center;
+      background-size: cover;
+     }
+  /* footer */
+  .ld-footer{
+      background:white;
+      height:1.28rem;
+      box-shadow: 0 5px 5px 5px #ddd;
+      display: flex;
+      align-items: center;
+      position: fixed;
+      bottom:0;
+      left:0;
+      width:100%;
+      padding: 0 0.2rem;
+      box-sizing: border-box;
+      justify-content: space-between;
+      z-index:4;
+  }
+  .ld-footer div {
+      width:3.45rem;
+      height:0.88rem;
+      text-align: center;
+      line-height: 0.88rem;
+      border-radius: 0.1rem;
+  }
+  .ld-footer-whiteBg{
+      background: #FFFFFF;
+      border: 1px solid #4285F4;
+      box-sizing: border-box;
+      color:#4285F4;
+  }
+  .ld-footer-blueBg{
+      background: #4285F4;
+      color:white;
+  }
+  .ld-footer-expense{
+      display:none;
+  }
+  /* 遮罩层 */
+  .ld-right-mask{
+      height:100%;
+      width:0;
+      position: fixed;
+      top:0;
+      left:0;
+      background:rgba(0,0,0,0.6);
+      overflow: hidden;
+      z-index: 100000;
+  }
+  .ld-right-mask.ld-right-mask-show{
+      width:100%;
+  }
+  /* 人员选择器 */
+  .ld-right-selector{
+      height:100%;
+      width:0;
+      background:white;
+      position: absolute;
+      right:0;
+      top:0;
+      transition: width 0.3s linear;
+      z-index: 12;
+  }
+  .ld-right-selector.ld-right-selector-show{
+      width:6rem;
+      transition: width 0.3s linear;
+  }
+  .ld-right-selector-head{
+      height:0.8rem;
+      width:6rem;
+      padding:0 0.3rem;
+      box-sizing: border-box;
+      background: #4285F4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color:white;
+  }
+  .ld-right-selector-head > div {
+      display: flex;
+      align-items:center;
+      height:100%;
+  }
+  .ld-right-selector-head > div i {
+      height:0.12rem;
+      width:0.12rem;
+      border-bottom:1px solid white;
+      border-left: 1px solid white;
+      background-size: contain;
+      transform: rotate(45deg);
+      margin-top: 2px;
+  }
+  .ld-right-selector-head span {
+      font-size: 0.28rem;
+      font-family: PingFangSC-Regular;
+      height:100%;
+      line-height: 0.8rem;
+  }
+  .ld-right-selector-head span.department{
+      font-size: 0.3rem;
+      font-family: PingFangSC-Medium;
+  }
+  .ld-right-selector-search{
+      padding:0.32rem 0.3rem 0;
+      /* margin-top: 0.8rem; */
+  }
+  .ld-right-selector-search .searchbox{
+      height:0.68rem;
+      width:5.4rem;
+      position: relative;
+  }
+  .ld-right-selector-search .searchbox input {
+      outline: none;
+      border:0;
+      background: #F7F7F7;
+      height:100%;
+      width:100%;
+      line-height: 0.68rem;
+      padding-left: 0.6rem;
+      box-sizing: border-box;
+      font-size: 0.24rem;
+  }
+  .ld-right-selector-search .searchbox i.search {
+      height:0.6rem;
+      width:0.6rem;
+      background: url(../images/search.png) no-repeat center center;
+      background-size: contain;
+      position: absolute;
+      left:0;
+      top:50%;
+      transform: translateY(-50%);
+  }
+  .ld-right-selector-search .searchbox input::placeholder{
+      color: #CCCCCC;
+  }
+  div.ld-right-selector-local {
+      margin:0.3rem 0;
+      font-size: 0.24rem;
+      color: #999999; 
+      line-height: 0.32rem;
+      padding-left: 0.3rem;
+      box-sizing: border-box;
+  }
+  /* .ld-right-selector-search ul li {
+      font-size: 0.24rem;
+      color: #999999; 
+      line-height: 0.32rem;
+      margin-right: 0.2rem;
+  } */
+  /* 人员列表 */
+  .ld-right-selector-list{
+      height:calc( 100% - 3.1rem);
+      overflow: scroll;
+  }
+  .ld-right-selector-list ul label{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height:1.3rem;
+      padding:0 0.3rem;
+      box-sizing: border-box;
+      border-bottom: 1px solid #e5e5e5;
+      /* margin-top: -1px; */
+  }
+  .ld-right-selector-list ul:last-child label{
+      border-top: 1px solid #e5e5e5;
+  }
+  .ld-right-selector-list ul label .ld-right-selector-name{
+      display: flex;
+      align-items: center;
+  }
+    .ld-right-selector-list ul label .ld-right-selector-name span{
+    	display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    }
+  .ld-right-selector-list ul label img {
+      height:0.7rem;
+      width:0.7rem;
+      border-radius: 50%;
+      background:skyblue;
+      margin-right: 0.22rem;
+  }
+  /* modal-footer */
+  .ld-right-modal-footer{
+      height:1.28rem;
+      width:0;
+      position: fixed;
+      bottom:0;
+      right:0;
+      box-shadow:0px -1px 0px 0px #eee;
+      overflow: hidden;
+      transition: width 0s linear;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+  }
+  .ld-right-selector.ld-right-selector-show .ld-right-modal-footer{
+      width:6rem;
+      transition: width 0.3s linear;
+  }
+  .ld-right-modal-footer .ld-right-modal-footer-btn{
+      background: #4285F4;
+      border-radius: 0.08rem;
+      line-height: 0.88rem;
+      width:1.8rem;
+      text-align: center;
+      color:white;
+      z-index: 13;
+      margin-right: 0.3rem;
+  }
+  .ld-right-modal-footer .ld-right-modal-footer-box{
+      width:calc(100% - 2.1rem);
+      overflow: auto;
+  }
+  .ld-right-modal-footer ul{
+      margin-left: 0.2rem;
+      white-space: nowrap;
+      height:1.28rem;
+      display: flex;
+  }
+  .ld-right-modal-footer ul li {
+      margin-right: 0.3rem;
+      width:0.8rem;
+      height:100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+  }
+  .ld-right-modal-footer ul li:last-child {
+      margin-right: 0;
+  }
+  .ld-right-modal-footer ul li img {
+      height:0.52rem;
+      width:0.52rem;
+      border-radius: 50%;
+  }
+  .ld-right-modal-footer ul li p {
+      font-size: 0.22rem;
+      color: #666666;
+      line-height: 0.32rem;
+      margin-top: -0.1rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width:1rem;
+      text-align:center;
+  }
+  .ld-line20px{
+      height:0.2rem;
+      background: #F2F2F2; 
+   }
+   
+   /* 移动端图片选择 */
+   .ld-feesCharged-home-btns li>div{
+       background-size: 40px auto;
+       background-repeat:no-repeat;
+       background-position: center;
+       width: 48px;
+       height: 48px;
+   }
+  .icon_bussinessTrip { 
+      background-image:url(../images/icon/bussinessTrip.png)!important; 
+      
+      }
+  .icon_applyForm { 
+      background-image:url(../images/icon/applyForm.png) !important;
+      
+        }
+  .icon_entertainApply { 
+      background-image:url(../images/icon/entertainApply.png) !important; 
+      
+        }
+  .icon_expenseAccountForm { 
+      background-image:url(../images/icon/expenseAccountForm.png)!important; 
+      
+    }
+  .icon_hostReimbursement { 
+      background-image:url(../images/icon/hostReimbursement.png) !important; 
+      }
+  .icon_hotel { 
+      background-image:url(../images/icon/hotel.png) !important; 
+  }
+  .icon_manual{ 
+      background-image:url(../images/icon/manual.png) !important; 
+      }
+  .icon_persionBorrow { 
+      background-image:url(../images/icon/persionBorrow.png) !important; 
+      }
+  .icon_plane { 
+      background-image:url(../images/icon/plane.png) !important; 
+      }
+  .icon_pleaseForward { 
+      background-image:url(../images/icon/pleaseForward.png) !important; 
+      }
+  .icon_purchasingPayment { 
+      background-image:url(../images/icon/purchasingPayment.png) !important; 
+  }
+  .icon_shooseCost {
+      background-image:url(../images/icon/shooseCost.png) !important;
+      
+      }
+  .icon_purchasingPayment { 
+      background-image:url(../images/icon/purchasingPayment.png) !important; 
+      }
+  .icon_taxi { 
+      background-image:url(../images/icon/taxi.png)!important; 
+      }
+  .icon_travelReimbursement { 
+      background-image:url(../images/icon/travelReimbursement.png) !important; 
+      }
+        
+   .icon_train { 
+      background-image:url(../images/icon/train.png) !important; 
+      }
+        
+   .icon_ifsdmobile001 { 
+      background-image:url(../images/icon/ifsdmobile001.png) !important; 
+      }
+        
+   .icon_ifsdmobile002 { 
+      background-image:url(../images/ifsdmobile002.png) !important; 
+      }  	
+        
+  .icon_ifsdmobile003 { 
+      background-image:url(../images/ifsdmobile003.png) !important; 
+      }
+        
+   .icon_ifsdmobile011 { 
+      background-image:url(../images/icon/ifsdmobile011.png) !important; 
+  } 	
+        
+  .icon_ifsdmobile012 { 
+      background-image:url(../images/ifsdmobile012.png) !important; 
+      } 	
+        
+  .icon_ifsdmobile013 { 
+      background-image:url(../images/ifsdmobile013.png) !important; 
+      } 	
+        
+    .icon_ifsdmobile021 { 
+      background-image:url(../images/icon/ifsdmobile021.png) !important; 
+      } 	
+        
+    .icon_ifsdmobile022 { 
+      background-image:url(../images/ifsdmobile022.png) !important; 
+      }   		
+             
+    .icon_ifsdmobile023 { 
+      background-image:url(../images/ifsdmobile023.png) !important; 
+      }   	
+        
+  .icon_ifsdmobile031 { 
+      background-image:url(../images/icon/ifsdmobile031.png) !important; 
+      }   		
+        
+  .icon_ifsdmobile041 { 
+      background-image:url(../images/icon/ifsdmobile041.png) !important; 
+      
+        }  
+                 
+  .icon_ifsdmobile051 { 
+      background-image:url(../images/icon/ifsdmobile051.png) !important; 
+      }   
+        
+   .icon_ifsdmobile061 { 
+      background-image:url(../images/icon/ifsdmobile061.png) !important; 
+      }   	  		
+  
+   .icon_ifsdmobile071 { 
+      background-image:url(../images/icon/ifsdmobile071.png) !important; 
+      }   	
+        
+  .icon_ifsdmobile081 { 
+      background-image:url(../images/icon/ifsdmobile081.png) !important; 
+      }   	
+        
+  .icon_ifsdmobile091 { 
+      background-image:url(../images/icon/ifsdmobile091.png) !important; 
+      } 
+        
+   .icon_ifsdmobile101 { 
+      background-image:url(../images/icon/ifsdmobile101.png) !important; 
+      width: 48px;
+        height: 48px;
+        background-size: 100% 100%;}  	
+        
+  .icon_ifsdmobile111 { 
+      background-image:url(../images/icon/ifsdmobile111.png) !important; 
+      background-repeat:no-repeat;
+      background-size:100%;
+      }  	
+        
+  .icon_ifsdmobile121 { 
+      background-image:url(../images/icon/ifsdmobile121.png) !important; 
+      } 
+        
+        
+  .icon_ifsdmobile131 { 
+      background-image:url(../images/icon/ifsdmobile131.png) !important; 
+      } 
+        
+  .icon_ifsdmobile141 { 
+      background-image:url(../images/icon/ifsdmobile141.png) !important; 
+      width: 48px;
+        height: 48px;
+        background-size: 100% 100%;} 
+        
+  .icon_ifsdmobile151 { 
+      background-image:url(../images/icon/ifsdmobile151.png) !important; 
+      }  	
+  
+  .icon_ifsdmobile151 { 
+      background-image:url(../images/icon/ifsdmobile151.png) !important; 
+      }  	
+        
+  .icon_ifsdmobile161 { 
+      background-image:url(../images/icon/ifsdmobile161.png) !important; 
+      }  
+        
+    .icon_ifsdmobile171 { 
+      background-image:url(../images/icon/ifsdmobile171.png) !important; 
+      }  
+                
+   .icon_ifsdmobile181 { 
+      background-image:url(../images/icon/ifsdmobile181.png) !important; 
+      }
+        
+   .icon_ifsdmobile191 { 
+      background-image:url(../images/icon/ifsdmobile191.png) !important; 
+      }
+        
+   .icon_ifsdmobile201 { 
+      background-image:url(../images/icon/ifsdmobile201.png) !important; 
+      } 	
+        
+   .icon_ifsdmobile211 { 
+      background-image:url(../images/icon/ifsdmobile211.png) !important; 
+      }
+        
+   .icon_ifsdmobile221 { 
+      background-image:url(../images/icon/ifsdmobile221.png) !important; 
+  }  
+        
+  .icon_ifsdmobile231 { 
+      background-image:url(../images/icon/ifsdmobile231.png) !important; 
+      } 
+        
+   .icon_ifsdmobile241 { 
+      background-image:url(../images/icon/ifsdmobile241.png) !important; 
+      } 	
+        
+    .icon_ifsdmobile251 { 
+      background-image:url(../images/icon/ifsdmobile251.png) !important; 
+      } 	
+        
+    .icon_ifsdmobile261 { 
+      background-image:url(../images/icon/ifsdmobile261.png) !important; 
+      } 	  	
+        
+     .icon_ifsdmobile271 { 
+      background-image:url(../images/icon/ifsdmobile271.png) !important; 
+      } 	
+        
+    .icon_ifsdmobile281 { 
+      background-image:url(../images/icon/ifsdmobile281.png) !important; 
+      } 
+        
+   .icon_ifsdmobile291 { 
+      background-image:url(../images/icon/ifsdmobile291.png) !important; 
+      } 
+   
+         
+   .icon_ifsdmobile301 { 
+      background-image:url(../images/icon/ifsdmobile301.png) !important; 
+      }  	
+        
+    .icon_ifsdmobile311 { 
+      background-image:url(../images/icon/ifsdmobile311.png) !important; 
+      }  		
+        
+   .icon_ifsdmobile321 { 
+      background-image:url(../images/icon/ifsdmobile321.png) !important; 
+      }  	 	
+        
+  .icon_ifsdmobile331 { 
+      background-image:url(../images/icon/ifsdmobile331.png) !important; 
+      } 
+        
+   .icon_ifsdmobile341 { 
+      background-image:url(../images/icon/ifsdmobile341.png) !important; 
+      
+        }
+        
+    .icon_ifsdmobile351 { 
+      background-image:url(../images/ifsdmobile351.png) !important; 
+      } 
+             
+    .icon_ifsdmobile361 { 
+      background-image:url(../images/ifsdmobile361.png) !important; 
+      }     
+                             
+  .icon_ifsdmobile371 { 
+      background-image:url(../images/ifsdmobile371.png) !important; 
+      }  
+                            
+  html,body,.ld-main{
+           height:100%;
+           width:100%;
+           background: white;
+   }
+   .ld-mask {
+       height:100%;
+       width:100%;
+       position: fixed;
+       top:0;
+       left:0;
+       z-index:80;
+   }
+   .ld-progress-modal {
+       position: absolute;
+       height:2rem;
+       width:2rem;
+       border-radius: 0.2rem;
+       top:50%;
+       left:50%;
+       transform: translate(-50%,-50%);
+       background: rgba(0,0,0,0.6);
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       z-index:80;
+   }
+   .ld-progress-modal > img {
+            animation:rotateEle 1.5s linear infinite;
+        }
+        @keyframes rotateEle{
+           0%{-webkit-transform:rotate(0deg);}
+       25%{-webkit-transform:rotate(90deg);}
+       50%{-webkit-transform:rotate(180deg);}
+           75%{-webkit-transform:rotate(270deg);}
+           100%{-webkit-transform:rotate(360deg);}
+        }
+   .ld-progress-modal span {
+       font-size: 0.28rem;
+       color: #FFFFFF;
+       margin-top: 0.1rem;
+   }
+   .ld-main-show {
+       display: block;
+   }
+   
+    body,html,.ld-turnUpCamera{
+        height:100%;
+        background: white;
+    }
+    .ld-turnUpCamera-modal{
+      height:100%;
+      width:100%;
+      background:rgba(0,0,0,0.6);
+      position: fixed;
+      top:0;
+      bottom:0;
+      z-index:99;
+    }
+    .ld-turnUpCamera-modal-content{
+      position: absolute;
+      bottom:0.25rem;
+      width:6.9rem;
+      left:50%;
+      transform: translateX(-50%);
+    }
+    .ld-turnUpCamera-modal-content-list{
+      background: white;
+      border-radius: 0.2rem;
+      margin-bottom: 0.15rem;
+      font-size: 0.28rem;
+      color: #434343;
+      opacity: 1;
+    }
+    .ld-turnUpCamera-modal-content-list div {
+      height:1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0.2rem;
+      box-sizing: border-box;
+      border-bottom: 1px solid #eee;
+    }
+    .ld-turnUpCamera-modal-content-list div img {
+      height:0.72rem;
+      width:0.72rem;
+      object-fit: contain;
+    }
+    .ld-turnUpCamera-modal-content-list div:last-child{
+      border-bottom: none;
+      z-index:99;
+    }
+    .ld-turnUpCamera-modal-content-btn {
+      font-family: PingFangSC-Regular;
+      height:1rem;
+      width:100%;
+      line-height: 1rem;
+      text-align: center;
+      background: white;
+      border-radius: 0.2rem;
+      font-weight: 700;
+      color:#4285F4;
+      letter-spacing: 0;
+      font-size: 0.32rem;
+    }
+    .cancel-btn{
+    	position:absolute;
+    	right:5px;
+    	top:-10px;
+    	padding:20px;
+    	line-height:18px;
+    	color:#b2b2b2;
+    }

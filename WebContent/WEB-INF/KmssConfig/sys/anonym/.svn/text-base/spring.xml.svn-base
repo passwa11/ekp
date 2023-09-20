@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="sysAnonymMainDao" 
+        class="com.landray.kmss.sys.anonym.dao.hibernate.SysAnonymMainDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.anonym.model.SysAnonymMain</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysAnonymLogDao" 
+        class="com.landray.kmss.sys.anonym.dao.hibernate.SysAnonymLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.anonym.model.SysAnonymLog</value>
+        </property>
+    </bean>
+    <bean
+		id="sysAnonymCateDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.anonym.dao.hibernate.SysAnonymCateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.anonym.model.SysAnonymCate" />
+	</bean>
+    <bean 
+        id="sysAnonymMainTarget" 
+        class="com.landray.kmss.sys.anonym.service.spring.SysAnonymMainServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysAnonymMainDao"/>
+        </property>
+        <property name="sysAttMainService">
+        	<ref bean="sysAttMainService"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysAnonymLogTarget" 
+        class="com.landray.kmss.sys.anonym.service.spring.SysAnonymLogServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysAnonymLogDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysAnonymMainService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysAnonymMainTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysAnonymLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysAnonymLogTarget"/>
+        </property>
+    </bean>
+    <bean
+		id="sysAnonymMainCoreService"
+		parent="KmssBaseCoreService">
+		<property
+			name="target">
+			<bean
+				class="com.landray.kmss.sys.anonym.service.spring.SysAnonymMainCoreServiceImpl">
+				<property
+					name="sysAnonymMainService">
+					<ref
+						bean="sysAnonymMainService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean 
+        id="sysAnonymCommonDao" 
+        class="com.landray.kmss.sys.anonym.dao.hibernate.SysAnonymCommonDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.anonym.model.SysAnonymCommon</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysAnonymCommonTarget" 
+        class="com.landray.kmss.sys.anonym.service.spring.SysAnonymCommonServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysAnonymCommonDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysAnonymCommonService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysAnonymCommonTarget"/>
+        </property>
+    </bean>
+	<bean
+		id="sysAnonymCateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.anonym.service.spring.SysAnonymCateServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysAnonymCateDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysAnonymCateService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysAnonymCateTarget" />
+		</property>
+	</bean>
+	<bean
+		id="commonDataBean"
+		class="com.landray.kmss.sys.anonym.data.CommonDataBean">
+	</bean>
+	<bean
+		id="sysAnonymCateAuthListService"
+		class="com.landray.kmss.sys.anonym.service.spring.SysAnonymCateAuthListService">
+	</bean>
+	<bean
+		id="sysAnonymCateReaderValidator"
+		class="com.landray.kmss.sys.anonym.service.spring.SysAnonymCateValidator">
+		<property 
+			name="sysAnonymCateService">
+			<ref bean="sysAnonymCateService"/>
+		</property>
+		<property
+			name="fieldType">
+			<value>Readers</value>
+		</property>
+	</bean>
+	<bean
+		id="sysAnonymCateEditorValidator"
+		class="com.landray.kmss.sys.anonym.service.spring.SysAnonymCateValidator">
+		<property 
+			name="sysAnonymCateService">
+			<ref bean="sysAnonymCateService"/>
+		</property>
+		<property
+			name="fieldType">
+			<value>Editors</value>
+		</property>
+	</bean>
+	<bean id="sysAnonymAttValidator" class="com.landray.kmss.sys.anonym.service.spring.SysAnonymAttValidator">
+        <property name="sysAttMainService">
+        	<ref bean="sysAttMainService"/>
+        </property>
+	</bean>
+
+	<bean id="sysAnonymPageCache" class="com.landray.kmss.sys.anonym.cache.SysAnonymPageCache"/>
+</beans>

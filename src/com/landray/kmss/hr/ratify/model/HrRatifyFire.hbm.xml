@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <subclass 
+        name="com.landray.kmss.hr.ratify.model.HrRatifyFire" 
+        extends="com.landray.kmss.hr.ratify.model.HrRatifyMain"
+        discriminator-value="com.landray.kmss.hr.ratify.model.HrRatifyFire">
+        <join table="hr_ratify_fire">
+	        <key
+				column="fd_id"></key>
+	        <property 
+	            name="fdFireDate" 
+	            column="fd_fire_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdFireEnterDate" 
+	            column="fd_fire_enter_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdFireReason" 
+	            column="fd_fire_reason" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdFireLeaderView" 
+	            column="fd_fire_leader_view" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdFireHrView" 
+	            column="fd_fire_hr_view" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdFireRemark" 
+	            column="fd_fire_remark" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <many-to-one 
+	            name="fdFireStaff" 
+	            column="fd_fire_staff_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one 
+	            name="fdFireDept" 
+	            column="fd_fire_dept_id" 
+	            update="true" 
+	            insert="true"/>
+        </join>
+    </subclass>
+</hibernate-mapping>

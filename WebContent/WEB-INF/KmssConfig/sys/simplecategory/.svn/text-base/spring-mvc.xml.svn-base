@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/sc/scdt.do"
+		class="com.landray.kmss.sys.simplecategory.actions.SysSimpleCategoryDtAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/sc/cateChg.do"
+		class="com.landray.kmss.sys.simplecategory.actions.CateChgAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.simplecategory.forms.CateChgForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="cateChgEdit"
+					value="/sys/simplecategory/sys_simple_category/doc_cate_change.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		id="sysSimpleCategoryCriteriaAction"
+		name="/sys/simplecategory/criteria/sysSimpleCategoryCriteria.do"
+		class="com.landray.kmss.sys.simplecategory.actions.SysSimpleCategoryCriteriaAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/sc/categoryPreivew.do"
+		class="com.landray.kmss.sys.simplecategory.actions.SysSimpleCategoryPreviewAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="previewPage"
+					value="/sys/simplecategory/category_preview/category_preview.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		id="sysSimpleCategoryCriteriaController"
+		class="com.landray.kmss.sys.simplecategory.actions.SysSimpleCategoryCriteriaController">
+	</bean>
+</beans>

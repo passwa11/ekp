@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+        xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd"
+        xmlns="http://www.example.org/plugin-config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <extension
+        point="com.landray.kmss.sys.number.config"
+        model="*">
+        <item name="extend">
+            <param name="modelName" value="com.landray.kmss.fssc.cashier.model.FsscCashierPaymentDetail"/>
+            <param name="templatePropertyName" value=""/>
+            <param name="moduleName" value="{fssc-cashier:module.fssc.cashier}"/>
+            <param name="isReform" value="true"/>
+            <param name="order" value="10"/>
+        </item>
+    </extension>
+    
+    <!--付款成功发送代办通知-->		
+	<extension point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.fssc.payment.model.FsscPaymentMain;com.landray.kmss.fssc.payment.model.FsscPaymentSuspendMain;com.landray.kmss.fssc.expense.model.FsscExpenseMain;com.landray.kmss.fssc.loan.model.FsscLoanMain">
+		<item name="listener">
+            <param name="unid" value="fsscCashierSuccessNotifyListener"/>
+            <param name="messageKey" value="fssc-cashier:listener.fsscCashierSuccessNotifyListener"/>
+            <param name="eventTypes" value="handlerPassOperationEvent"/>
+			<param name="listener" value="fsscCashierSuccessNotifyListener"/>
+			<param name="enforce" value="false"/>
+		</item>
+	</extension>
+
+    <extension point="com.landray.kmss.lbpm.engine.event" model="*">
+        <item name="listener">
+            <param name="unid" value="fsscCashierAutoCreateListener"/>
+            <param name="messageKey" value="fssc-cashier:listener.fsscCashierAutoCreateListener"/>
+            <param name="eventTypes" value="enterNodeEvent"/>
+            <param name="listener" value="fsscCashierAutoCreateListener"/>
+            <param name="enforce" value="false"/>
+        </item>
+        <item name="listener">
+            <param name="unid" value="fsscCashierPaymentHandlerPassListener"/>
+            <param name="messageKey" value="fssc-cashier:listener.fsscCashierPaymentHandlerPassListener"/>
+            <param name="eventTypes" value="handlerPassOperationEvent"/>
+            <param name="listener" value="fsscCashierPaymentHandlerPassListener"/>
+            <param name="enforce" value="false"/>
+        </item>
+    </extension>
+</plugin>

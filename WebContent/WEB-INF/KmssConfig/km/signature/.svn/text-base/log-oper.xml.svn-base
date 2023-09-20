@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="kmSignatureMainOperLog"
+            desc="This is an example of a normal configuration"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.signature.model.KmSignatureMain"
+            action="/km/signature/km_signature_main/kmSignatureMain.do">
+            <query 
+                method="personalList"
+                logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="km-signature:kmSignatureMain.oper.personalList">
+            </query>
+            <query
+            	method="savePwd"
+            	logPoint="Base_UrlParam;savePassword"
+            	messageKey="km-signature:kmSignatureMain.oper.savePassword">
+            </query>
+            <query
+            	method="invalidated|invalidatedAll"
+            	logPoint="Base_UrlParam;updateInvalidated"
+            	messageKey="km-signature:kmSignatureMain.oper.updateInvalidated">
+            </query>
+            <query
+            	method="validatedAll"
+            	logPoint="updateValidated"
+            	messageKey="km-signature:kmSignatureMain.oper.updateValidated">
+            </query>
+            <query
+            	method="settingDefaultSignature"
+            	logPoint="Base_UrlParam;updateDefault"
+            	messageKey="km-signature:kmSignatureMain.oper.updateDefault">
+            </query>
+            <query
+            	method="confirmSignature"
+            	logPoint="confirmSignature"
+            	messageKey="km-signature:kmSignatureMain.oper.confirmSignature">
+            </query>
+        </oper>
+		<oper
+            id="kmSignatureMainIndexOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.signature.model.KmSignatureMain"
+            action="/km/signature/km_signature_main/kmSignatureMainIndex.do">
+            <query 
+                method="listChildren"
+                logPoint="Base_UrlParam;Action_FindAll"
+                messageKey="km-signature:kmSignatureMain.oper.listChildren">
+            </query>
+        </oper>
+        <oper
+            id="kmSignatureConfig"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/km/signature/km_signature_config/kmSignatureConfig.do">
+        </oper>
+        <oper
+        	id="kmSignatureCategoryOperLog"
+        	extends="BaseOperLog"
+        	model="com.landray.kmss.km.signature.model.KmSignatureCategory"
+        	action="/km/signature/km_signature_category/kmSignatureCategory.do">
+        </oper>
+	</logset>
+</log-oper>

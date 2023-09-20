@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:m="http://www.landray.com.cn/schema/mportlet" xmlns="http://www.landray.com.cn/schema/lui"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.landray.com.cn/schema/mportlet 
+	../../../sys/mobile/mportlet.xsd
+		http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd">
+	<m:mportlet 
+		name="{sys-zone:module.sys.zone.mportlet}"
+		description="{sys-zone:module.sys.zone.mportlet.description}"
+		module="{sys-zone:module.sys.zone}"
+	    id="sys.zone.person.slide" 
+	    moduleUrl="/sys/zone/mobile/index.jsp"
+		jsUrl="/sys/zone/mobile/mportal/sysZonePersonSlide.js?fdIds=!{ids}">
+		<m:vars>
+			<var key="ids" kind="dialogJs" name="选择人员" required="false">
+				{
+					"js":
+					"Dialog_Address(true,'!{idField}','!{nameField}',';',ORG_TYPE_PERSON)",
+					"help":"（换一批操作会无效）"
+				}
+			</var>
+		</m:vars>
+		
+		<m:operations>
+			<m:operation name="换一批" type="random"/>
+		</m:operations>
+	</m:mportlet> 
+</root>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean 
+        id="lbpmExtBusinessAuthCateDao" 
+        class="com.landray.kmss.sys.lbpmext.businessauth.dao.hibernate.LbpmExtBusinessAuthCateDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName" 
+            value="com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuthCate">
+        </property>
+    </bean>
+    <bean 
+        id="lbpmExtBusinessAuthCateTarget" 
+        class="com.landray.kmss.sys.lbpmext.businessauth.service.spring.LbpmExtBusinessAuthCateServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="lbpmExtBusinessAuthCateDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="lbpmExtBusinessAuthCateService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="lbpmExtBusinessAuthCateTarget"/>
+        </property>
+    </bean>
+    
+   	<bean 
+        id="lbpmExtBusinessAuthInfoCateDao" 
+        class="com.landray.kmss.sys.lbpmext.businessauth.dao.hibernate.LbpmExtBusinessAuthInfoCateDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName" 
+            value="com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuthInfoCate">
+        </property>
+    </bean>
+    <bean 
+        id="lbpmExtBusinessAuthInfoCateTarget" 
+        class="com.landray.kmss.sys.lbpmext.businessauth.service.spring.LbpmExtBusinessAuthInfoCateServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="lbpmExtBusinessAuthInfoCateDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="lbpmExtBusinessAuthInfoCateService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="lbpmExtBusinessAuthInfoCateTarget"/>
+        </property>
+    </bean> 
+    
+    <bean 
+        id="lbpmExtBusinessAuthDao" 
+        class="com.landray.kmss.sys.lbpmext.businessauth.dao.hibernate.LbpmExtBusinessAuthDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName" 
+            value="com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuth">
+        </property>
+    </bean>
+    <bean 
+        id="lbpmExtBusinessAuthTarget" 
+        class="com.landray.kmss.sys.lbpmext.businessauth.service.spring.LbpmExtBusinessAuthServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="lbpmExtBusinessAuthDao"/>
+        </property>
+        <property name="sysNumberFlowService">
+        	<ref bean="sysNumberFlowService"/>
+		</property>
+    </bean>
+    <bean 
+        id="lbpmExtBusinessAuthService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="lbpmExtBusinessAuthTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="lbpmExtBusinessAuthInfoDao" 
+        class="com.landray.kmss.sys.lbpmext.businessauth.dao.hibernate.LbpmExtBusinessAuthInfoDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName" 
+            value="com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuthInfo">
+        </property>
+    </bean>
+    <bean 
+        id="lbpmExtBusinessAuthInfoTarget" 
+        class="com.landray.kmss.sys.lbpmext.businessauth.service.spring.LbpmExtBusinessAuthInfoServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="lbpmExtBusinessAuthInfoDao"/>
+        </property>
+        <property
+			name="sysOrgCoreService">
+			<ref
+				bean="sysOrgCoreService" />
+		</property>
+		<!-- 添加注解 -->
+		<property
+			name="sysNumberFlowService">
+			<ref
+				bean="sysNumberFlowService" />
+		</property>
+    </bean>
+    <bean 
+        id="lbpmExtBusinessAuthInfoService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="lbpmExtBusinessAuthInfoTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="lbpmExtBusinessAuthDetailDao" 
+        class="com.landray.kmss.sys.lbpmext.businessauth.dao.hibernate.LbpmExtBusinessAuthDetailDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName" 
+            value="com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuthDetail">
+        </property>
+    </bean>
+    <bean 
+        id="lbpmExtBusinessAuthDetailTarget" 
+        class="com.landray.kmss.sys.lbpmext.businessauth.service.spring.LbpmExtBusinessAuthDetailServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="lbpmExtBusinessAuthDetailDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="lbpmExtBusinessAuthDetailService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="lbpmExtBusinessAuthDetailTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="lbpmExtBusinessAuthSimulateService" 
+        class="com.landray.kmss.sys.lbpmext.businessauth.service.spring.LbpmExtBusinessAuthSimulateServiceImp">
+    </bean>
+    
+    <bean
+        id="lbpmExtBusinessAuthListener"
+        class="com.landray.kmss.sys.lbpmext.businessauth.event.LbpmExtBusinessAuthListener">
+        <property name="lbpmExtBusinessAuthDetailService">
+			<ref bean="lbpmExtBusinessAuthDetailService" />
+		</property>
+    </bean>
+    
+    <bean
+		id="lbpmExtBusinessauthValidator"
+		class="com.landray.kmss.sys.lbpmext.businessauth.validator.LbpmExtBusinessauthValidator"></bean>
+</beans>

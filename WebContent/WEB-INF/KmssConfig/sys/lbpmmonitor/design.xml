@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="sys-lbpmmonitor:module.sys.lbpmmonitor"
+		urlPrefix="/sys/lbpmmonitor/">
+
+		<roles>ROLE_LBPMMONITOR_MONITOR</roles>
+
+		<request
+			path="sys_lbpm_monitor_over/index.jsp"
+			defaultValidator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)">
+		</request>
+		
+		<request
+			path="sys_lbpmmonitor_flow/SysLbpmMonitorFlow*">
+			
+			<query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getMonitorInfo" />
+            <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getUpcomingProcessList" />
+            <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getTimeOutProcessList" />
+             <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getCreateProcessList" />
+             <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getApprovalTimeProcessList" />
+              <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getNodeApprovalTimeList" />
+              <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getNodeRejectCountList" />
+               <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getTimeoutNodeList" />
+               <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getUpcomingNodeList" />
+               <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getPeopleApprovalTimeList" />
+               <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getPeopleReviewProcessList" />
+               <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getPeopleUrgentList" />
+               <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getPeopleTimeOutJumpList" />
+               <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getPeopleTimeOutTurnDoList" />
+               <query
+                validator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)"
+                queryString="method=getProcessAnalysisList" />
+		</request>
+		
+		<request
+			path="sys_lbpmmonitor_flow/LbpmAnalysisConfigAction*"
+			defaultValidator="roleValidator(role=ROLE_LBPMMONITOR_MONITOR)">
+		</request>
+		
+		<request
+			path="sys_lbpm_monitor_flow/sysLbpmMonitor_clusterIndex.jsp"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+		</request>
+
+		<request
+			path="sys_lbpm_monitor_flowVersion/index.jsp"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+		</request>
+
+	</module>
+	
+	<!-- 定时任务 -->
+	<quartz
+		messageKey="sys-lbpmmonitor:description.lbpmmonitor.ToDoQuartz"
+		jobService="sysLbpmMonitorFlowService"
+		jobMethod="doProcessExpiredToDo"
+		enable="false"
+		cronExpression="0 30 0 */3 * ?"
+		runType="SINGLENODE" 
+		description="sys-lbpmmonitor:description.lbpmmonitor.ToDoQuartz.description"/>
+		
+	<quartz
+		cronExpression="0 0 4 * * ?"
+		jobService="sysLbpmMonitorQueueTaskService"
+		messageKey="sys-lbpmmonitor:sysLbpmMonitor.queue.quartz"
+		jobMethod="updateThreadByQuartz"
+		enable="false"
+		description="sys-lbpmmonitor:sysLbpmMonitor.queue.quartz.description"/>
+
+	<treeNodes type="sysconfig">
+		<treeNode
+			messageKey="sys-lbpmmonitor:module.sys.lbpmmonitor"
+			authUrl="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sysLbpmMonitor_clusterIndex.jsp">
+			<treeNode
+				messageKey="sys-lbpmmonitor:sysLbpmMonitor.tree.allFlow"
+				url="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sysLbpmMonitor_clusterIndex.jsp?method=listChildren&amp;fdStatus=20;40&amp;fdType=running">
+			</treeNode>
+			<treeNode
+				messageKey="sys-lbpmmonitor:sysLbpmMonitor.tree.pauseFlow"
+				url="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sysLbpmMonitor_clusterIndex.jsp?method=getPause">
+			</treeNode>
+			<treeNode
+				messageKey="sys-lbpmmonitor:sysLbpmMonitor.tree.errorFlow"
+				url="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sysLbpmMonitor_clusterIndex.jsp?method=listChildren&amp;fdStatus=21&amp;fdType=error">
+			</treeNode>
+			<treeNode
+				messageKey="sys-lbpmmonitor:sysLbpmMonitor.tree.finishedFlow"
+				url="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sysLbpmMonitor_clusterIndex.jsp?method=listChildren&amp;fdStatus=00;30&amp;fdType=finish">
+			</treeNode>
+			<treeNode
+				messageKey="sys-lbpmmonitor:sysLbpmMonitor.tree.recentHandleFlow"
+				url="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sysLbpmMonitor_clusterIndex.jsp?method=getRecentHandle">
+			</treeNode>
+			<treeNode
+				messageKey="sys-lbpmmonitor:sysLbpmMonitor.tree.notValidFlow"
+				url="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sysLbpmMonitor_clusterIndex.jsp?method=getInvalidHandler">
+			</treeNode>
+			<treeNode
+				messageKey="sys-lbpmmonitor:sysLbpmMonitor.tree.expiredFlow"
+				url="/sys/lbpmmonitor/sys_lbpm_monitor_flow/sysLbpmMonitor_clusterIndex.jsp?method=getExpired">
+			</treeNode>
+			<!-- <treeNode messageKey="sys-lbpmmonitor:sysLbpmMonitor.tree.versionMng" 
+				url="/sys/lbpmmonitor/sys_lbpm_monitor_flowVersion/index.jsp"> </treeNode> -->
+		</treeNode>
+	</treeNodes>
+
+</configs>

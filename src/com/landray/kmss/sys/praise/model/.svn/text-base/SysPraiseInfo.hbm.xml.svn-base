@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.sys.praise.model.SysPraiseInfo" 
+        table="sys_praise_info">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+            
+        <property
+			name="docSubject"
+			column="doc_Subject"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200" />
+			
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+        <property 
+            name="fdTargetId" 
+            column="fd_target_id" 
+            update="true" 
+            insert="true" 
+            length="36"/>
+            
+        <property 
+            name="fdTargetName" 
+            column="fd_target_name" 
+            update="true" 
+            insert="true" 
+            length="100"/>
+            
+        <property 
+            name="fdReason" 
+            column="fd_reason" 
+            update="true" 
+            insert="true" 
+            length="500"/>
+            
+        <property 
+            name="fdRich" 
+            column="fd_rich" 
+            update="true" 
+            insert="true"/>
+            
+        <property 
+            name="fdType" 
+            column="fd_type" 
+            update="true" 
+            insert="true"/>
+            
+        <property 
+            name="isReply" 
+            column="is_reply" 
+            update="true" 
+            insert="true"/>
+            
+        <property
+			name="replyContent"
+			column="reply_Content"
+			update="true"
+			insert="true"
+			not-null="false"/>
+			
+		<property
+			name="replyTime"
+			column="reply_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+        <property 
+            name="fdSourceId" 
+            column="fd_source_id" 
+            update="true" 
+            insert="true" 
+            length="36"/>
+            
+        <property 
+            name="fdSourceName" 
+            column="fd_source_name" 
+            update="true" 
+            insert="true" 
+            length="100"/>
+            
+        <property 
+            name="fdSourceTitle" 
+            column="fd_source_title" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+            
+        <property 
+            name="fdIsHideName" 
+            column="fd_hide_name" 
+            update="true" 
+            insert="true" 
+            length="10"/>
+            
+        <property
+			name="fdNotifyType"
+			column="fd_notify_type"
+			update="true"
+			insert="true"
+			length="100"
+			not-null="false" />	
+            
+        <many-to-one 
+            name="fdTargetPerson" 
+            column="fd_target_person_id" 
+            update="true" 
+            insert="true"/>
+            
+        <many-to-one 
+            name="fdPraisePerson" 
+            column="fd_praise_person_id" 
+            update="true" 
+            insert="true"/>
+            
+        <many-to-one
+			name="docCategory"
+			column="doc_category_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+    </class>
+</hibernate-mapping>

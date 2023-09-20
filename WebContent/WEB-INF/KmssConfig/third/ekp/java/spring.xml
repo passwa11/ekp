@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="ekpSynchro"
+		class="com.landray.kmss.third.ekp.java.oms.in.EkpSynchroDelegate">
+		<property name="servicePath">
+			<value>/sys/webservice/sysSynchroGetOrgWebService</value>
+		</property>
+	</bean>
+	<bean
+		id="ekpSynchroInIteratorProviderTarget"
+		class="com.landray.kmss.third.ekp.java.oms.in.EkpSynchroInIteratorProviderImp">
+		<property name="ekpSynchro">
+			<ref bean="ekpSynchro" />
+		</property>
+		<property name="ekpRoleSynchroService">
+			<ref bean="ekpRoleSynchroService" />
+		</property>
+		<property name="sysOrgGroupService">
+			<ref bean="sysOrgGroupService" />
+		</property>
+		<property name="sysOrgGroupCateService">
+			<ref bean="sysOrgGroupCateService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="sysOrganizationStaffingLevelService">
+			<ref bean="sysOrganizationStaffingLevelService" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+	</bean>
+	<bean
+		id="ekpSynchroInIteratorProvider"
+		lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="ekpSynchroInIteratorProviderTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="terminate">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean
+		id="ekpNotifyJavaTodoProvider"
+		class="com.landray.kmss.third.ekp.java.notify.EkpNotifyJavaTodoProvider">
+		<property name="ekpNotifyJavaTodoProviderSimple">
+			<ref bean="ekpNotifyJavaTodoProviderSimple" />
+		</property>
+		<property name="ekpNotifyJavaTodoProviderEkpj">
+			<ref bean="ekpNotifyJavaTodoProviderEkpj" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ekpNotifyJavaTodoProviderSimple"
+		class="com.landray.kmss.third.ekp.java.notify.EkpNotifyJavaTodoProviderSimple">
+	</bean>
+	
+	<bean
+		id="ekpNotifyJavaTodoProviderEkpj"
+		class="com.landray.kmss.third.ekp.java.notify.EkpNotifyJavaTodoProviderEkpj">
+		<property name="thirdEkpJavaNotifyLogService">
+			<ref bean="thirdEkpJavaNotifyLogService" />
+		</property>
+		<property name="thirdEkpJavaNotifyMappService">
+			<ref bean="thirdEkpJavaNotifyMappService" />
+		</property>
+		<property name="thirdEkpJavaNotifyQueErrService">
+			<ref bean="thirdEkpJavaNotifyQueErrService" />
+		</property>
+		<property name="ekpClientTodoEkpjService">
+			<ref bean="ekpClientTodoEkpjService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ekpRoleSynchro"
+		class="com.landray.kmss.third.ekp.java.oms.in.EkpRoleSynchroDelegate">
+		<property name="servicePath">
+			<value>/sys/webservice/sysSynchroGetOrgWebService</value>
+		</property>
+	</bean>
+	
+	<bean
+		id="ekpRoleSynchroService"
+		class="com.landray.kmss.third.ekp.java.oms.in.EkpRoleSynchroServiceImp">
+		<property name="ekpRoleSynchro">
+			<ref bean="ekpRoleSynchro" />
+		</property>
+		<property
+			name="sysOrgElementService">
+			<ref
+				bean="sysOrgElementService" />
+		</property>
+		<property
+			name="sysOrgRoleConfService">
+			<ref
+				bean="sysOrgRoleConfService" />
+		</property>
+		<property
+			name="sysOrgRoleLineService">
+			<ref
+				bean="sysOrgRoleLineService" />
+		</property>
+		<property
+			name="sysOrgRoleService">
+			<ref
+				bean="sysOrgRoleService" />
+		</property>
+		<property
+			name="sysOrgRoleLineDefaultRoleService">
+			<ref
+				bean="sysOrgRoleLineDefaultRoleService" />
+		</property>
+		<property
+			name="sysOrgRoleConfCateService">
+			<ref
+				bean="sysOrgRoleConfCateService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysTagWebServiceClient"
+		class="com.landray.kmss.third.ekp.java.tag.SysTagWebServiceClientImp">
+	</bean>
+	
+	<bean id="sysTagRemoteDataService" class="com.landray.kmss.third.ekp.java.tag.SysTagRemoteDataService">
+		<property name="sysTagWebServiceClient">
+			<ref bean="sysTagWebServiceClient"/>
+		</property>
+	</bean>
+	
+	<bean id="sysTagSyncTask" class="com.landray.kmss.third.ekp.java.tag.SysTagSyncTask">
+		<property name="sysTagMainService">
+			<ref bean="sysTagMainService"/>
+		</property>
+		<property name="sysAppConfigService">
+			<ref bean="sysAppConfigService"/>
+		</property>
+		<property name="sysTagWebServiceClient">
+			<ref bean="sysTagWebServiceClient"/>
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService"/>
+		</property>
+	</bean>
+	
+	<bean
+		id="thirdEkpNotifyQueueErrorDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.ekp.java.notify.queue.dao.hibernate.ThirdEkpNotifyQueueErrorDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.ekp.java.notify.queue.model.ThirdEkpNotifyQueueError" />
+	</bean>
+	<bean
+		id="thirdEkpNotifyQueueErrorTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.third.ekp.java.notify.queue.service.spring.ThirdEkpNotifyQueueErrorServiceImp">
+		<property name="baseDao">
+			<ref bean="thirdEkpNotifyQueueErrorDao" />
+		</property>
+		<property
+			name="ekpNotifyJavaTodoProvider">
+			<ref
+				bean="ekpNotifyJavaTodoProviderSimple" />
+		</property>
+	</bean>
+	<bean
+		id="thirdEkpNotifyQueueErrorService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="thirdEkpNotifyQueueErrorTarget" />
+		</property>
+	</bean>
+	<bean
+		id="ekpSynchroIteratorEcoProvider"
+		class="com.landray.kmss.third.ekp.java.oms.in.EkpSynchroIteratorEcoProviderImp">
+	</bean>
+	
+	
+	
+	<bean 
+        id="thirdEkpJavaNotifyLogDao" 
+        class="com.landray.kmss.third.ekp.java.notify.dao.hibernate.ThirdEkpJavaNotifyLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ekp.java.notify.model.ThirdEkpJavaNotifyLog</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdEkpJavaNotifyLogTarget" 
+        class="com.landray.kmss.third.ekp.java.notify.service.spring.ThirdEkpJavaNotifyLogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdEkpJavaNotifyLogDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdEkpJavaNotifyLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdEkpJavaNotifyLogTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdEkpJavaNotifyMappDao" 
+        class="com.landray.kmss.third.ekp.java.notify.dao.hibernate.ThirdEkpJavaNotifyMappDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ekp.java.notify.model.ThirdEkpJavaNotifyMapp</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdEkpJavaNotifyMappTarget" 
+        class="com.landray.kmss.third.ekp.java.notify.service.spring.ThirdEkpJavaNotifyMappServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdEkpJavaNotifyMappDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdEkpJavaNotifyMappService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdEkpJavaNotifyMappTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdEkpJavaNotifyQueErrDao" 
+        class="com.landray.kmss.third.ekp.java.notify.dao.hibernate.ThirdEkpJavaNotifyQueErrDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ekp.java.notify.model.ThirdEkpJavaNotifyQueErr</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdEkpJavaNotifyQueErrTarget" 
+        class="com.landray.kmss.third.ekp.java.notify.service.spring.ThirdEkpJavaNotifyQueErrServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdEkpJavaNotifyQueErrDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdEkpJavaNotifyQueErrService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdEkpJavaNotifyQueErrTarget"/>
+        </property>
+    </bean>
+    
+    <bean
+    	id="ekpClientTodoEkpjService"
+    	class="com.landray.kmss.third.ekp.java.notify.EkpClientTodoEkpjServiceImpl" />
+</beans>

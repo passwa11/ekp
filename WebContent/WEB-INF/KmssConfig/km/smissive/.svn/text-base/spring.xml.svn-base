@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="kmSmissiveTemplateDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.km.smissive.dao.hibernate.KmSmissiveTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.smissive.model.KmSmissiveTemplate" />
+	</bean>
+	<bean
+		id="kmSmissiveTemplateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.smissive.service.spring.KmSmissiveTemplateServiceImp">
+		<property name="baseDao">
+			<ref bean="kmSmissiveTemplateDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmSmissiveTemplateService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmSmissiveTemplateTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmSmissiveTemplateTreeService"
+		class="com.landray.kmss.km.smissive.service.spring.KmSmissiveTemplateTreeService">
+		<property name="kmSmissiveTemplateService">
+			<ref bean="kmSmissiveTemplateService" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmSmissiveMainDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.km.smissive.dao.hibernate.KmSmissiveMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.smissive.model.KmSmissiveMain" />
+	</bean>
+	<bean
+		id="kmSmissiveMainTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.km.smissive.service.spring.KmSmissiveMainServiceImp">
+		<property name="baseDao">
+			<ref bean="kmSmissiveMainDao" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="templateService">
+			<ref bean="kmSmissiveTemplateService" />
+		</property>
+		<property name="sysNumberFlowService">
+			<ref bean="sysNumberFlowService"/>
+		</property>
+		<property name="kmSmissiveNumberService">
+			<ref bean="kmSmissiveNumberService" />
+		</property>
+		<property name="wpsThreadPool">
+			<ref bean="smissiveWpsThreadPool" />
+		</property>
+	</bean>
+	<bean
+		id="kmSmissiveMainService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmSmissiveMainTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmSmissivePortlet"
+		class="com.landray.kmss.km.smissive.service.spring.KmSmissivePortlet">
+		<property name="kmSmissiveTemplateService">
+			<ref bean="kmSmissiveTemplateService" />
+		</property>
+		<property name="kmSmissiveMainService">
+			<ref bean="kmSmissiveMainService" />
+		</property>
+	</bean>
+	<bean id="kmSmissiveDraftValidator" class="com.landray.kmss.km.smissive.service.spring.KmSmissiveDraftValidator">
+		<property name="lbpmAuditNoteService">
+			<ref bean="lbpmAuditNoteService" />
+		</property>
+	</bean>
+
+	<!-- 全文检索 -->
+	<bean
+		id="kmSmissiveMainDaoProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<value>kmSmissiveMainDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>luceneCreateAdvisor</value>
+				<value>luceneSaveAdvisor</value>
+				<value>docKeyWriteAdvice</value>
+				<value>luceneDeleteAdvisor</value>
+			</list>
+		</property>
+	</bean>
+<bean
+		id="kmSmissiveNumberDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.smissive.dao.hibernate.KmSmissiveNumberDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.smissive.model.KmSmissiveNumber" />
+	</bean>
+	<bean
+		id="kmSmissiveNumberTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.smissive.service.spring.KmSmissiveNumberServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmSmissiveNumberDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmSmissiveNumberService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmSmissiveNumberTarget" />
+		</property>
+	</bean>
+	
+	 <!-- 线程池 -->
+	<bean id="smissiveWpsThreadPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="20" />
+		<property name="maxPoolSize" value="50" />
+		<property name="keepAliveSeconds" value="200" />
+		<property name="queueCapacity" value="250" />
+		<property name="rejectedExecutionHandler">
+			<bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+		</property>
+	</bean>
+</beans>

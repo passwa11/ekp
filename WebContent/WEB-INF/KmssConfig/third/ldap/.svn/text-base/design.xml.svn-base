@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		urlPrefix="/third/ldap/"
+		messageKey="third-ldap:ldap.integration"
+		defaultValidator="roleValidator(role=ROLE_LDAP_BACKSTAGE_MANAGER)">
+		
+		<roles>
+			<!-- 后台管理  -->
+			ROLE_LDAP_BACKSTAGE_MANAGER
+		</roles>
+		<roleType>
+			<!-- 系统管理员权限 -->
+			<sysadmin>
+				ROLE_LDAP_BACKSTAGE_MANAGER
+			</sysadmin>
+		</roleType>
+
+		<request path="setting*" defaultValidator="roleValidator(role=ROLE_LDAP_BACKSTAGE_MANAGER)">
+			
+		</request>
+		
+	</module>
+	
+	<!-- 后台配置权限 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.third.ldap.LdapConfig"
+				validator="roleValidator(role=ROLE_LDAP_BACKSTAGE_MANAGER)" />
+		</request>
+	</module>
+		
+	<profileConfig 
+		key="ldap"
+		messageKey="{third-ldap:ldap.integration}"
+		url="/sys/appconfig/sys_appconfig/sysAppConfig.do?method=edit&amp;modelName=com.landray.kmss.third.ldap.LdapConfig"
+		icon="third_ldap"
+		type="user"
+		order="2" 
+		userType="2"
+		description="{third-ldap:ldap.profileCfg.description}"/>
+		
+	<quartz
+		messageKey="third-ldap:third.ldap.synchroOrg2Ldap.title"
+		jobService="synchroOrg2Ldap"
+		cronExpression="0 0 23 * * ?"
+		jobMethod="triggerSynchro"
+		enable="true" />
+		
+</configs>

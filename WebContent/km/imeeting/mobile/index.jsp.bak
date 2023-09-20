@@ -1,0 +1,170 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/sys/ui/jsp/common.jsp"%>
+<%@ taglib uri="/WEB-INF/KmssConfig/sys/mobile/mui.tld" prefix="mui"%>
+<template:include ref="mobile.list"  loadRef="loading.calendar">
+	<template:replace name="title">
+		<c:if test="${JsParam.moduleName!=null && JsParam.moduleName!=''}">
+			${HtmlParam.moduleName}
+		</c:if>
+		<c:if test="${JsParam.moduleName==null or JsParam.moduleName==''}">
+			<bean:message bundle="km-imeeting" key="module.km.imeeting"/>
+		</c:if>
+	</template:replace>
+	<template:replace name="csshead">
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/sys/mobile/css/themes/default/calendar.css?s_cache=${MUI_Cache}"></link>
+	</template:replace>
+	<template:replace name="head">
+		<link rel="Stylesheet" href="${LUI_ContextPath}/km/imeeting/mobile/resource/css/list.css?s_cache=${MUI_Cache}" />
+		<mui:min-file name="mui-imeeting.js"/>
+	</template:replace>
+	<template:replace name="content">
+	
+		<div class="muiCalendarContainer">
+			<div id="calendar" 
+				data-dojo-type="mui/calendar/CalendarView">
+				<div data-dojo-type="mui/calendar/CalendarHeader"
+					data-dojo-props="right:{href:'/km/imeeting/mobile/index_list.jsp?moduleName=${JsParam.moduleName }'}"></div>
+				<script type="text/javascript">
+					var hpData = null;
+					function getHPData(){
+						require(['dojo/request'], function(request) {
+							if(!hpData){
+								request.get("${LUI_ContextPath}/sys/time/sys_time_area/sysTimeArea.do?method=getHPDay&s_ajax=true", {
+						            handleAs: "json",
+						            sync: true
+						        }).then(function(data){
+						        	hpData = data;
+						        }, function(err){
+									hpData = [];
+						        });
+							}
+						});
+					}
+
+					window.beforeStuffContentDate = function(domNode){
+						getHPData();
+						require(['dojo/query'], function(query) {
+							query('.muiCalendarContentDateSign', domNode).remove();
+						});
+					}
+					window.beforeStuffWeekDate = function(domNode){
+						getHPData();
+						require(['dojo/query'], function(query) {
+							query('.muiCalendarContentDateSign', domNode).remove();
+						});
+					}
+					
+					function stuffDateNode(date, dateNode, flag){
+						if(flag == 'content' && (dateNode.className.indexOf('muiCalendarDatePre') > -1 || dateNode.className.indexOf('muiCalendarDateNext') > -1)) {
+							return;
+						}
+						var i; l = (hpData == null ? 0 : hpData.length);
+						for(i = 0; i < l; i++){
+							var hp = hpData[i];
+							try{
+								var _date = new Date(hp.date.replace(/\-/g, '/'));
+								if(date.getFullYear() != _date.getFullYear() || 
+										date.getMonth() != _date.getMonth() || 
+										date.getDate() != _date.getDate()){
+									continue;
+								}
+								var sign = document.createElement('span');
+								switch(flag){
+									case 'week':
+										sign.className = 'muiCalendarDateSign muiCalendarWeekDateSign';
+										break;
+									case 'content':
+										sign.className = 'muiCalendarDateSign muiCalendarContentDateSign';
+										break;
+									default: break;
+								}
+								switch(hp.type){
+									case '1': 
+										sign.style.color = '#F95A5A';
+										sign.innerHTML = '<bean:message bundle="sys-time" key="calendar.holiday.cal"/>';
+										break;
+									case '2': 
+										sign.style.color = '#4285f4';
+										sign.innerHTML = '<bean:message bundle="sys-time" key="calendar.work.cal"/>';
+										break;
+									default: break;
+								}
+								dateNode.parentNode.appendChild(sign);
+							}catch(err){ console.log(err); }
+						}
+					}
+					
+					window.stuffContentDateNode = function(date, dateNode){
+						stuffDateNode(date, dateNode, 'content');
+					}
+					
+					window.stuffWeekDateNode = function(date, dateNode){
+						stuffDateNode(date, dateNode, 'week');
+					}
+					
+				</script>
+				<div data-dojo-type="mui/calendar/CalendarWeek" data-dojo-props="beforeStuffDate: beforeStuffWeekDate, stuffDateNode: stuffWeekDateNode"></div>
+				<div data-dojo-type="mui/calendar/CalendarContent" data-dojo-props="beforeStuffDate: beforeStuffContentDate, stuffDateNode: stuffContentDateNode"></div>
+				<div data-dojo-type="mui/calendar/CalendarBottom" data-dojo-props="url:''">
+					<div class="ImeetingListView" data-dojo-type="mui/calendar/CalendarListScrollableView">
+						<%
+							if ("zh".equals(UserUtil.getKMSSUser().getLocale().getLanguage())) {
+								request.setAttribute("nodataImgPath", request.getContextPath() + 
+										"/km/imeeting/mobile/resource/images/imeeting_nodata_bg.png");
+							} else {
+								request.setAttribute("nodataImgPath", request.getContextPath() + 
+										"/km/imeeting/mobile/resource/images/imeeting_nodata_bg_en.png");
+							}
+						%>
+						<ul data-dojo-type="mui/calendar/CalendarJsonStoreList"
+							data-dojo-mixins="km/imeeting/mobile/resource/js/list/CalendarItemListMixin"
+							data-dojo-props="nodataImg:'${nodataImgPath}',
+							nodataText:'',url:'/km/imeeting/km_imeeting_calendar/kmImeetingCalendar.do?method=mocalendar&fdStart=!{fdStart}&fdEnd=!{fdEnd}'">
+						</ul>
+					</div>
+				</div>
+			</div>
+			<ul data-dojo-type="mui/tabbar/TabBar" fixed="bottom" data-dojo-props='fill:"grid"'>
+			<kmss:authShow roles="ROLE_KMIMEETING_CREATE_CLOUD">
+				<c:set var="createMeeting" value="true"></c:set>
+			</kmss:authShow>
+			<kmss:authShow roles="ROLE_KMIMEETING_BOOKCREATE">
+				<c:set var="createBook" value="true"></c:set>
+			</kmss:authShow>
+				<c:set var="colSize" value="4"></c:set>
+			<c:if test="${createMeeting eq 'true'  and createBook eq 'true'}">
+				<c:set var="colSize" value="2"></c:set>
+			</c:if>
+				<c:if test="${createMeeting eq 'true'}">
+				  	<li data-dojo-type="mui/tabbar/TabBarButton" 
+				  		data-dojo-props='colSize:${colSize},href:"javascript:window.create(\"meeting\");"'><bean:message bundle="km-imeeting" key="mobile.kmImeetingMain.create"/></li>
+				 </c:if>
+				 <c:if test="${createBook eq 'true'}">
+				  	<li data-dojo-type="mui/tabbar/TabBarButton"
+				  		data-dojo-props='colSize:${colSize},href:"javascript:window.create(\"book\");"'><bean:message bundle="km-imeeting" key="mobile.kmImeetingBook.create"/></li>
+				  </c:if>
+			</ul>
+		</div>
+		
+	</template:replace>
+</template:include>
+<script type="text/javascript">
+require(['mui/calendar/CalendarUtil','dojo/topic'],function(util,topic){
+	var currentDate=new Date();
+	topic.subscribe('/mui/calendar/valueChange',function(widget,args){
+		currentDate=args.currentDate;
+	});
+	//新建会议(无模板模式)
+	window.create = function(type){
+		/*
+		var url='${LUI_ContextPath}/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add&noTemplate=true',
+		currentStr=util.formatDate(currentDate);
+		if( currentStr ){
+			url+='&startDate='+currentStr+'&endDate='+currentStr;
+		}
+		*/
+		var url="${LUI_ContextPath}/km/imeeting/mobile/index_book.jsp?moduleName=${JsParam.moduleName }&createType="+type;
+		window.open(url,'_self');
+	};
+});
+</script>

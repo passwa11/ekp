@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrgElementExtPropEnum"
+		table="sys_org_element_ext_prop_enum">
+		<!-- 主结构配置 -->
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<!-- 排序号 -->
+		<property
+			name="fdOrder"
+			column="fd_order"
+			update="true"
+			insert="true"
+			not-null="false"/>
+		<!-- 显示名称 -->
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200"
+			access="com.landray.kmss.sys.organization.lang.SysOrgCommonAccessor"/>
+		<!-- 枚举值 -->
+		<property
+			name="fdValue"
+			column="fd_value"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="50" />
+		<!-- 所属属性 -->
+		<many-to-one
+			name="fdExtProp"
+			column="fd_ext_prop_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+	</class>
+</hibernate-mapping>

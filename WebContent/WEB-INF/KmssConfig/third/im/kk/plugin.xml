@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!-- 定义扩展点，通过此扩展点传递参数到kk-->
+	<extension-point
+		id="com.landray.kmss.third.im.kk.transfer">
+		<item
+			name="config">
+			<param name="key" kind="string" required="true">
+				<description>传递参数到kk的标识</description>
+			</param>
+			<param name="service" kind="string" required="true">
+				<description>获取传递参数的service</description>
+			</param>
+			<param name="method" kind="string" required="true">
+				<description>获取传递参数的方法</description>
+			</param>
+			<param name="modelName" kind="string" required="true">
+				<description>模块的modelName</description>
+			</param>
+			<description>定义扩展点，通过此扩展点传递参数到kk</description>
+		</item>
+		<description>定义扩展点，通过此扩展点传递参数到kk</description>
+	</extension-point>
+
+	<!-- 
+	<extension point="com.landray.kmss.sys.config.admin.do">
+		<item name="config">
+			<param name="jsp" value="/third/im/kk/kk_notify/kk_notify_cfg.jsp" />
+			<param name="type" value="integrate" />
+			<param name="order" value="99" />
+		</item>
+	</extension>
+	-->
+	<!-- KK 在线感知实现 
+
+	<extension point="com.landray.kmss.sys.ims.config">
+		<item name="config" enable="${kmss.ims.kk.enable}">
+
+			<param name="imsName" value="KK" />
+			<param name="awarePort" value="${kmss.ims.kk.awareport}" />
+
+			<param name="awareIp" value="${third.im.kk.serverIp}" />
+
+			<param name="awareJsp" value="/third/im/kk/kk_awareness/kk_impl.jsp" />
+			<param name="extParams" value="${kmss.ims.kk.extparams}" />
+		</item>
+	</extension>
+-->
+
+	<extension point="com.landray.kmss.sys.notify">
+		<item name="todoExtend" enable="true">
+			<param name="bean" value="kkNotifyTodoProvider" />
+			<param name="name" value="{third-im-kk:third.kk.extension.notify.kk}" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.notify">
+		<item name="todoExtend" enable="true">
+			<param name="bean" value="kk5ServiceNotifyTodoProvider" />
+			<param name="name" value="{third-im-kk:third.kk.extension.notify.kk5}" />
+		</item>
+	</extension>
+
+	<!-- 发起kk聊天 -->
+	<extension point="com.landray.kmss.sys.zone.communicate">
+		<item name="communicate">
+			<param name="unid" value="KK" />
+			<param name="order" value="3"></param>
+			<param name="icon" value="/third/im/kk/resource/images/kkImage.png" />
+			<param name="js_class" value="ImKK" />
+			<param name="js_src" value="/third/im/kk/resource/plugin/ImKK.jsp" />
+			<param name="title" value="third-im-kk:open.kk.chat" />
+			<param name="bean" value="thirdImKKCommunicate" />
+		</item>
+	</extension>
+ 	
+	
+	
+	<extension point="com.landray.kmss.lbpm.engine.robot" model="*">
+		<item name="robot">
+			<param name="unid"
+				value="com.landray.kmss.third.im.kk.service.spring.RobotNodeSendDynamicInfoToKKServiceImp" />
+			<param name="category" value="{third-im-kk:lbpmRobotNode.category.kk}" />
+			<param name="type"
+				value="{third-im-kk:lbpmRobotNode.type.sendDynamicInfoToKK}" />
+			<param name="bean" value="robotNodeSendDynamicInfoToKKService" />
+			<param name="url"
+				value="/third/im/kk/dynamicinfo/robot/robotnode_config.jsp" />
+			<param name="class" value="integrate" />
+			<param name="description" value="{third-im-kk:lbpmRobotNode.type.sendDynamicInfoToKK}"/>
+		</item>
+	</extension>
+	
+	 <extension point="com.landray.kmss.sys.person" >
+             <item name="imageBean" >
+                   <param name="service" value="kk5PersonImageBean" />
+                   <param name="message" value="{third-im-kk:personImage.kk5}" />
+             </item>
+       </extension>
+       
+     <!--kk集成webservice服务   --> 
+	 <extension point="com.landray.kmss.sys.webservice2">
+		<item name="registry">
+			<param name="serviceName" value="kk集成webservice服务" />
+			<param name="serviceClass"
+				value="com.landray.kmss.third.im.kk.webservice.IThirdImSyncForKKWebService" />
+			<param name="serviceBean" value="thirdImSyncForKKWebService" />
+			<param name="serviceDoc" value="/third/im/kk/webservice/kk_help.jsp" />
+		</item>
+	</extension>
+	
+	<!-- 扫码登陆拓展点 -->
+	<extension point="com.landray.kmss.sys.profile.login.third" model="*">
+		<item name="config">
+			<param name="bean" value="kkPcScanLogin"></param>
+		</item>
+	</extension>
+	
+	<!-- 实现群协作-->
+	<extension point="com.landray.kmss.km.cogroup" model="com.landray.kmss.third.im.kk">
+		<item name="config">
+			<param name="service" value="kkCogroupServiceTarget" />
+		</item>
+	</extension>
+	<!--群应用-->
+	<extension
+		point="com.landray.kmss.third.im.kk.transfer">
+		<item
+			name="config">
+			<param
+				name="key"
+				value="groupApp" />
+			<param
+				name="method"
+				value="getKKGroupAppConfig" />
+			<param
+				name="service"
+				value="kkImConfigService" />
+			<param
+				name="modelName"
+				value="com.landray.kmss.third.im.kk.model.KkImConfig" />
+		</item>
+	</extension>
+</plugin>

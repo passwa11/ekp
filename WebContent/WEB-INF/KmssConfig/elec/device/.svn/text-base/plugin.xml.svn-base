@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- 电子签章 -->
+	<extension-point 
+		id="com.landray.kmss.elec.device.contractService">
+		<item name="convertor">
+			<param name="bean" required="true" kind="spring"
+				basedOn="com.landray.kmss.elec.device.service.IElecChannelContractService">
+				<description>渠道服务</description>
+			</param>
+			<param name="channel" kind="string" required="true">
+				<description>服务商</description>
+			</param>
+			<description>无纸化转换总线</description>	
+		</item>
+		<description>无纸化转换总线</description>			
+	</extension-point>
+	
+	<!-- 物理印章 -->
+	<extension-point id="com.landray.kmss.elec.device.physicalSealService">
+		<item name="sealService">
+			<param name="bean" required="true" kind="spring"
+				basedOn="com.landray.kmss.elec.device.service.IElecChannelPhysicalSealService">
+				<description>物理印章服务</description>
+			</param>
+			<param name="channel" kind="string" required="true">
+				<description>服务商</description>
+			</param>
+			<description>物理印章服务</description>	
+		</item>
+		<item name="synchDataService">
+			<param name="bean" required="true" kind="spring"
+				basedOn="com.landray.kmss.elec.device.service.IElecChannelSynchDataService">
+				<description>数据同步到第三方服务</description>
+			</param>
+			<param name="channel" kind="string" required="true">
+				<description>服务商</description>
+			</param>
+			<description>数据同步到第三方服务</description>	
+		</item>
+		<description>物理印章服务</description>			
+	</extension-point>
+	
+	
+    <!-- 回调业务处理 -->
+	<extension-point id="com.landray.kmss.elec.device.ansyService">
+		<item name="convertor">
+			<param name="bean" required="true" kind="spring"
+				basedOn="com.landray.kmss.elec.device.service.IElecChannelAnsyService">
+				<description>三方回调业务处理服务</description>
+			</param>
+			<param name="channel" kind="string" required="true">
+				<description>服务商</description>
+			</param>
+			<param name="receiver" kind="string" required="true">
+				<description>接收者，模块标识，系统内唯一</description>
+			</param>
+			<description>三方回调业务处理服务</description>	
+		</item>
+		<description>三方回调业务处理服务</description>			
+	</extension-point>
+	
+	<!-- 查询服务 -->
+	<extension-point id="com.landray.kmss.elec.device.queryService">
+		<item name="convertor">
+			<param name="bean" required="true" kind="spring"
+				basedOn="com.landray.kmss.elec.device.service.IElecChannelQueryService">
+				<description>渠道查询服务</description>
+			</param>
+			<param name="channel" kind="string" required="true">
+				<description>服务商</description>
+			</param>
+			<description>用于各类查询，状态，列表，明细</description>	
+		</item>
+		<description>无纸化查询转换总线</description>			
+	</extension-point>
+	
+	<!-- 单点服务 -->
+	<extension-point id="com.landray.kmss.elec.device.ssoService">
+		<item name="convertor">
+			<param name="bean" required="true" kind="spring"
+				basedOn="com.landray.kmss.elec.device.service.IElecChannelSsoService">
+				<description>渠道单点登录服务</description>
+			</param>
+			<param name="channel" kind="string" required="true">
+				<description>服务商</description>
+			</param>
+			<description>用于与第三方帐号绑定/解绑, 单点链接生成</description>	
+		</item>
+		<description>无纸化单点登录转换总线</description>			
+	</extension-point>
+	
+</plugin>

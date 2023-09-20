@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root
+		xmlns="http://www.landray.com.cn/schema/lui"
+		xmlns:degign="http://www.landray.com.cn/schema/design"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+	<!-- 招聘导航 -->
+	<portlet
+			id="hr.staff.module.nav"
+			name="{hr-staff:porlet.module.nav}"
+			module="{hr-staff:module.hr.staff}"
+			description="{hr-staff:porlet.module.nav.desc}">
+		<source
+				format="sys.ui.html"
+				type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/hr/staff/portlet.do?method=moduleNavs",
+					 "formatKey":"html"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/hr/staff/nav.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+	</portlet>
+	<!-- 人事管理日历 -->
+	<portlet
+			id="hr.staff.manage.calend"
+			name="{hr-staff:porlet.manage.calend}"
+			module="{hr-staff:module.hr.staff}"
+			description="{hr-staff:porlet.manage.calend.desc}">
+		<source
+				format="sys.ui.html"
+				type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/hr/staff/portlet.do?method=manageCalend&type=!{type}",
+					 "formatKey":"html"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/hr/staff/calend.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="待办事项" key="type" kind="enumValue" default="entry">
+				{    "values":[ { "text":"待入职", "value":"entry" },
+				{ "text":"转正", "value":"positive" },
+				{ "text":"合同", "value":"contract" },
+				{ "text":"离职", "value":"leave" },
+				{ "text":"周年", "value":"annual" },
+				{ "text":"生日", "value":"birthday" },
+				{ "text":"调岗", "value":"transfer" }],
+				"showType":"checkbox",
+				}
+			</var>
+		</vars>
+	</portlet>
+	<!-- 月度统计概览-->
+	<portlet
+			id="hr.staff.month.overview"
+			name="{hr-staff:porlet.month.overview}"
+			module="{hr-staff:module.hr.staff}"
+			description="{hr-staff:porlet.month.overview.desc}">
+		<source
+				format="sys.ui.html"
+				type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/hr/staff/portlet.do?method=monthOverview",
+					 "formatKey":"html"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/hr/staff/overview.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+	</portlet>
+	<!-- 人事档案统计-->
+	<portlet
+			id="hr.staff.echarts"
+			name="{hr-staff:porlet.echarts}"
+			module="{hr-staff:module.hr.staff}"
+			description="{hr-staff:porlet.echarts.desc}">
+		<source
+				format="sys.ui.html"
+				type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/hr/staff/portlet.do?method=echarts&type=!{type}",
+					 "formatKey":"html"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/hr/staff/echarts.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var key="type" kind="enumValue" name="{hr-staff:porlet.echarts.type}" default = "gender">
+				{"values":[{ "text":"{hr-staff:porlet.echarts.gender}", "value":"gender"},
+				{ "text":"{hr-staff:porlet.echarts.age}", "value":"age"},
+				{ "text":"{hr-staff:porlet.echarts.entryAndleave}", "value":"entryAndleave"},
+				{ "text":"{hr-staff:porlet.echarts.education}", "value":"education"}],"showType":"radio"}
+			</var>
+
+		</vars>
+	</portlet>
+
+
+	<!--  员工动态-->
+	<portlet
+			id="hr.staff.employee.dynamic"
+			name="{hr-staff:porlet.employee.dynamic}"
+			module="{hr-staff:module.hr.staff}"
+			description="{hr-staff:porlet.employee.dynamic.desc}">
+		<source
+				format="sys.ui.html"
+				type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/hr/staff/portlet/hrPortlet_employee_dynamic.jsp",
+					 "formatKey":"html"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/hr/staff/dynamic.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+	</portlet>
+
+	<!-- 生日祝福（EKP待实现）
+	<portlet
+			id="hr.staff.birthday.wishes"
+			name="{hr-staff:hrStaff.portlet.birthday}"
+			module="{hr-staff:module.hr.staff}"
+			description="{hr-staff:hrStaff.portlet.birthday.des}">
+		<source format="sys.ui.personInfo" type="AjaxXml">
+			<code>
+				<![CDATA[
+					{"url":"/sys/common/dataxml.jsp?s_bean=hrStaffPersonInfoPortlet&type=birthday"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"祝：张三 生日快乐！","type":"docPublishTime","created":"2021-01-01"}]
+					]]>
+				</code>
+			</example>
+		</source>
+	</portlet>
+	 -->
+
+	<!-- 生日祝福（cloud数据源） -->
+	<portlet
+			id="hr.staff.birthday.wishes"
+			name="{hr-staff:hrStaff.portlet.birthday}"
+			module="{hr-staff:module.hr.staff}"
+			description="{hr-staff:hrStaff.portlet.birthday.des}" forSystem="cloud">
+		<source id="hr-staff.birthday.wishes" format="data.link.image" type="xml">
+			<code>
+				<![CDATA[
+					{"url":"/data/sys-common/dataxml?s_bean=hrStaffPersonInfoPortlet&type=birthday"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"祝：张三 生日快乐！","href":"#","icon":{"name":"dot"}}]
+					]]>
+				</code>
+			</example>
+		</source>
+	</portlet>
+
+</root>

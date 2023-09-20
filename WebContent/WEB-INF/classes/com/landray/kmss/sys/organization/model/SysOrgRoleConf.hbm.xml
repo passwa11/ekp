@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrgRoleConf"
+		table="sys_org_role_conf">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200" 
+			access="com.landray.kmss.sys.organization.lang.SysOrgCommonAccessor"/>
+		<property
+			name="fdOrder"
+			column="fd_order"
+			update="true"
+			insert="true"
+			not-null="false" />
+		
+		<property
+			name="fdIsAvailable"
+			column="fd_is_available"
+			update="true"
+			insert="true"
+			not-null="false" />
+		
+		<property
+			name="fdCreateTime"
+			column="fd_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdAlterTime"
+			column="fd_alter_time"
+			update="true"
+			insert="true"
+			not-null="false" />				
+		<property
+			name="fdRoleLineAlterTime"
+			column="fd_rl_alter_time"
+			update="true"
+			insert="true"
+			not-null="false" />	
+		<bag
+			name="sysRoleLineEditors"
+			table="sys_org_role_line_editor"
+			lazy="true">
+			<key column="fd_role_line_conf_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_editor_id" />
+		</bag>
+		
+		<bag
+			name="sysRoleLineReaders"
+			table="sys_org_role_line_reader"
+			lazy="true">
+			<key column="fd_role_line_conf_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_reader_id" />
+		</bag>
+
+		<many-to-one
+			name="fdRoleConfCate"
+			class="com.landray.kmss.sys.organization.model.SysOrgRoleConfCate"
+			column="fd_cateid"
+			insert="true"
+			update="true"
+			not-null="false" />
+		
+	</class>
+</hibernate-mapping>

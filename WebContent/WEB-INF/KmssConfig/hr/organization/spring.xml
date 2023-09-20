@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="hrOrganizationElementDao" 
+        class="com.landray.kmss.hr.organization.dao.hibernate.HrOrganizationElementDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.hr.organization.model.HrOrganizationElement</value>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationElementTarget" 
+        class="com.landray.kmss.hr.organization.service.spring.HrOrganizationElementServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="hrOrganizationElementDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationElementService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrOrganizationElementTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationPersonTarget" 
+        class="com.landray.kmss.hr.organization.service.spring.HrOrganizationPersonServiceImp" 
+        parent="KmssExtendDataTarget">
+    </bean>
+    <bean 
+        id="hrOrganizationPersonService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrOrganizationPersonTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationDeptDao" 
+        class="com.landray.kmss.hr.organization.dao.hibernate.HrOrganizationDeptDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.hr.organization.model.HrOrganizationDept</value>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationDeptTarget" 
+        class="com.landray.kmss.hr.organization.service.spring.HrOrganizationDeptServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="hrOrganizationDeptDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationDeptService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrOrganizationDeptTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationPostDao" 
+        class="com.landray.kmss.hr.organization.dao.hibernate.HrOrganizationPostDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.hr.organization.model.HrOrganizationPost</value>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationPostTarget" 
+        class="com.landray.kmss.hr.organization.service.spring.HrOrganizationPostServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="hrOrganizationPostDao"/>
+        </property>
+        <property 
+            name="hrOrganizationElementService">
+            <ref bean="hrOrganizationElementService"/>
+        </property>
+        <property 
+            name="hrOrganizationPostSeqService">
+            <ref bean="hrOrganizationPostSeqService"/>
+        </property>
+        <property 
+            name="hrOrganizationRankService">
+            <ref bean="hrOrganizationRankService"/>
+        </property>
+        <property 
+            name="hrOrganizationGradeService">
+            <ref bean="hrOrganizationGradeService"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationPostService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrOrganizationPostTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationOrgDao" 
+        class="com.landray.kmss.hr.organization.dao.hibernate.HrOrganizationOrgDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.hr.organization.model.HrOrganizationOrg</value>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationOrgTarget" 
+        class="com.landray.kmss.hr.organization.service.spring.HrOrganizationOrgServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="hrOrganizationOrgDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationOrgService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrOrganizationOrgTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationPostSeqDao" 
+        class="com.landray.kmss.hr.organization.dao.hibernate.HrOrganizationPostSeqDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.hr.organization.model.HrOrganizationPostSeq</value>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationPostSeqTarget" 
+        class="com.landray.kmss.hr.organization.service.spring.HrOrganizationPostSeqServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="hrOrganizationPostSeqDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationPostSeqService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrOrganizationPostSeqTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationConPostDao" 
+        class="com.landray.kmss.hr.organization.dao.hibernate.HrOrganizationConPostDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.hr.organization.model.HrOrganizationConPost</value>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationConPostTarget" 
+        class="com.landray.kmss.hr.organization.service.spring.HrOrganizationConPostServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="hrOrganizationConPostDao"/>
+        </property>
+        <property name="hrOrganizationElementService">
+			<ref bean="hrOrganizationElementService" />
+		</property>
+		<property name="sysOrganizationStaffingLevelService">
+			<ref bean="sysOrganizationStaffingLevelService" />
+		</property>
+		<property name="hrStaffTrackRecordService">
+			<ref bean="hrStaffTrackRecordService" />
+		</property>
+    </bean>
+    <bean 
+        id="hrOrganizationConPostService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrOrganizationConPostTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationRankDao" 
+        class="com.landray.kmss.hr.organization.dao.hibernate.HrOrganizationRankDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.hr.organization.model.HrOrganizationRank</value>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationRankTarget" 
+        class="com.landray.kmss.hr.organization.service.spring.HrOrganizationRankServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="hrOrganizationRankDao"/>
+        </property>
+        <property name="hrOrganizationGradeService">
+			<ref bean="hrOrganizationGradeService" />
+		</property>
+    </bean>
+    <bean 
+        id="hrOrganizationRankService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrOrganizationRankTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationGradeDao" 
+        class="com.landray.kmss.hr.organization.dao.hibernate.HrOrganizationGradeDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.hr.organization.model.HrOrganizationGrade</value>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationGradeTarget" 
+        class="com.landray.kmss.hr.organization.service.spring.HrOrganizationGradeServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="hrOrganizationGradeDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationGradeService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrOrganizationGradeTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationLogDao" 
+        class="com.landray.kmss.hr.organization.dao.hibernate.HrOrganizationLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.hr.organization.model.HrOrganizationLog</value>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationLogTarget" 
+        class="com.landray.kmss.hr.organization.service.spring.HrOrganizationLogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="hrOrganizationLogDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrOrganizationLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrOrganizationLogTarget"/>
+        </property>
+    </bean>
+    
+    
+    <bean
+		id="hrOrganizationRecentContactDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.hr.organization.dao.hibernate.HrOrganizationRecentContactDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.hr.organization.model.HrOrganizationRecentContact" />
+	</bean>
+	<bean
+		id="hrOrganizationRecentContactTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.hr.organization.service.spring.HrOrganizationRecentContactServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="hrOrganizationRecentContactDao" />
+		</property>
+		<property
+			name="hrOrganizationElementService">
+			<ref
+				bean="hrOrganizationElementService" />
+		</property>
+		<property
+			name="sysOrgPersonService">
+			<ref
+				bean="sysOrgPersonService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="hrOrganizationRecentContactService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="hrOrganizationRecentContactTarget" />
+		</property>
+	</bean>
+    
+    <bean
+		id="hrOrgFileAuthorDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.hr.organization.dao.hibernate.HrOrgFileAuthorDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.hr.organization.model.HrOrgFileAuthor" />
+	</bean>
+
+	<bean
+		id="hrOrgFileAuthorTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.hr.organization.service.spring.HrOrgFileAuthorServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="hrOrgFileAuthorDao" />
+		</property>
+	</bean>
+	<bean
+		id="hrOrgFileAuthorService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="hrOrgFileAuthorTarget" />
+		</property>
+	</bean>
+    
+    <!-- 初始化加载同步人事档案数据  -->
+	<bean
+		id="initHrOrgPersonService"
+		class="com.landray.kmss.hr.organization.service.spring.InitHrOrgPersonServiceImpl">
+		<property name="hrOrganizationElementService">
+			<ref bean="hrOrganizationElementService" />
+		</property>
+	</bean>
+	
+	<!-- 定时任务同步组织架构 -->
+	<bean
+		id="synchroOrgEkpToHr"
+		class="com.landray.kmss.hr.organization.oms.SynchroOrgEkpToHrImp">
+		<property name="hrOrganizationElementService">
+			<ref bean="hrOrganizationElementService" />
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="hrStaffPersonInfoLogService">
+			<ref bean="hrStaffPersonInfoLogService" />
+		</property>
+		
+		<property name="taskExecutor">
+			<ref bean="orgTaskExecutor" />
+		</property>	
+	</bean>
+	<bean id="orgTaskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="20" />
+		<property name="maxPoolSize" value="50" />
+		<property name="keepAliveSeconds" value="200" />
+		<property name="queueCapacity" value="250" />
+		<property name="rejectedExecutionHandler">
+			<bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+		</property>
+	</bean>
+	<bean
+		id="synchroAllEkpToHr"
+		class="com.landray.kmss.hr.organization.oms.SynchroAllEkpToHrImp">
+		<property name="hrOrganizationElementService">
+			<ref bean="hrOrganizationElementService" />
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="taskExecutor">
+			<ref bean="orgTaskExecutor" />
+		</property>
+	</bean>
+	<bean
+		id="synchroOrgHrToEkp"
+		class="com.landray.kmss.hr.organization.oms.SynchroOrgHrToEkpImp">
+		<property name="hrOrganizationElementService">
+			<ref bean="hrOrganizationElementService" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="hrStaffTrackRecordService">
+			<ref bean="hrStaffTrackRecordService" />
+		</property>
+		<property name="hrStaffPersonInfoService">
+			<ref bean="hrStaffPersonInfoService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="taskExecutor">
+			<ref bean="orgTaskExecutor" />
+		</property>	
+	</bean>
+	<bean
+		id="synchroOrgTarget"
+		class="com.landray.kmss.hr.organization.oms.SynchroOrgImp">
+		<property name="synchroOrgEkpToHr">
+			<ref bean="synchroOrgEkpToHr" />
+		</property>
+		<property name="synchroOrgHrToEkp">
+			<ref bean="synchroOrgHrToEkp" />
+		</property>
+	</bean>
+	<bean
+		id="synchroOrg"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="target">
+			<ref bean="synchroOrgTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="synchro*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<bean
+		id="hrOrganizationTree"
+		class="com.landray.kmss.hr.organization.service.spring.HrOrganizationTree">
+		<property name="hrOrganizationElementService">
+			<ref bean="hrOrganizationElementService" />
+		</property>
+	</bean>
+	<bean
+		id="hrOrganizationChartTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.hr.organization.service.spring.HrOrganizationChartServiceImp">
+		<property
+			name="hrOrganizationElementService">
+			<ref
+				bean="hrOrganizationElementService" />
+		</property>
+	</bean>
+	<bean
+		id="hrOrganizationChartService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="hrOrganizationChartTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="hrOrganizationDialogList"
+		class="com.landray.kmss.hr.organization.service.spring.HrOrgDialogList">
+		<property
+			name="hrOrganizationElementService">
+			<ref
+				bean="hrOrganizationElementService" />
+		</property>
+		<property
+			name="roleValidator">
+			<ref 
+				bean="roleValidator" />
+		</property>
+		<property
+			name="sysOrganizationStaffingLevelService">
+			<ref
+				bean="sysOrganizationStaffingLevelService" />
+		</property>
+	</bean>
+	<bean
+		id="hrorganizationDialogSearch"
+		class="com.landray.kmss.hr.organization.service.spring.HrOrgDialogSearch">
+		<property
+			name="hrOrganizationElementService">
+			<ref
+				bean="hrOrganizationElementService" />
+		</property>
+		<property
+			name="sysOrganizationVisibleService">
+			<ref
+				bean="sysOrganizationVisibleService" />
+		</property>
+		<property
+			name="roleValidator">
+			<ref
+				bean="roleValidator" />
+		</property>
+		<property
+			name="sysOrganizationStaffingLevelService">
+			<ref
+				bean="sysOrganizationStaffingLevelService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="hrDialogRecentContactList"
+		class="com.landray.kmss.hr.organization.service.spring.HrDialogRecentContactList">
+		<property
+			name="hrOrganizationRecentContactService">
+			<ref
+				bean="hrOrganizationRecentContactService" />
+		</property>
+		<property
+			name="sysOrganizationStaffingLevelService">
+			<ref
+				bean="sysOrganizationStaffingLevelService" />
+		</property>
+	</bean>
+	
+	<!-- 自定义效验器 -->
+	<bean
+		id="hrOrganizationAddValidator"
+		class="com.landray.kmss.hr.organization.validator.HrOrganizationAddValidator">
+	</bean>
+	<bean
+		id="hrOrgPersonValidator"
+		class="com.landray.kmss.hr.organization.validator.HrOrgPersonValidator">
+	</bean>
+	<bean
+		id="hrOrgCompileValidator"
+		class="com.landray.kmss.hr.organization.validator.HrOrgCompileValidator">
+	</bean>
+	<bean
+		id="hrOrgConPostValidator"
+		class="com.landray.kmss.hr.organization.validator.HrOrgConPostValidator">
+	</bean>
+	
+</beans>

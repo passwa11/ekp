@@ -1,0 +1,84 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.follow.model.SysFollowDoc",
+        "messageKey": "sys-follow:table.sysFollowDoc",
+        "displayProperty": "docSubject",
+        "serviceBean": "sysFollowDocService",
+        "table": "sys_follow_doc",
+        "url": "/sys/follow/sys_follow_doc/sysFollowDoc.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "docSubject":         {
+            "propertyType": "simple",
+            "messageKey": "sys-follow:sysFollowDoc.docSubject",
+            "type": "String",
+            "column": "doc_subject",
+            "notNull": "true",
+            "length": "200",
+            "validate": "true"
+        },
+        "docStatus":         {
+            "propertyType": "simple",
+            "messageKey": "sys-follow:sysFollowDoc.docStatus",
+            "type": "String",
+            "column": "doc_status",
+            "notNull": "true",
+            "length": "20",
+            "validate": "false"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-follow:sysFollowDoc.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "docAlterTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-follow:sysFollowDoc.docAlterTime",
+            "type": "DateTime",
+            "column": "doc_alter_time",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "fdModelId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-follow:sysFollowDoc.fdModelId",
+            "type": "String",
+            "column": "fd_model_id",
+            "notNull": "false",
+            "length": "36",
+            "validate": "true"
+        },
+        "fdModelName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-follow:sysFollowDoc.fdModelName",
+            "type": "String",
+            "column": "fd_model_name",
+            "notNull": "false",
+            "length": "200",
+            "validate": "true"
+        },
+        "relatedCount":         {
+            "propertyType": "simple",
+            "messageKey": "sys-follow:sysFollowDoc.relatedCount",
+            "type": "Integer",
+            "column": "related_count",
+            "length": "6"
+        },
+        "followPersonDocRelation":         {
+            "propertyType": "list",
+            "messageKey": "sys-follow:sysFollowDoc.followPersonDocRelation",
+            "type": "com.landray.kmss.sys.follow.model.SysFollowPersonDocRelated",
+            "column": "follow_doc_id",
+            "cascade": "all-delete-orphan",
+            "inverse": "true",
+            "table": "sys_follow_person_doc_related"
+        }
+    }
+}

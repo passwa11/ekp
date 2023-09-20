@@ -1,0 +1,438 @@
+@CHARSET "UTF-8";
+/**CSS RESET**/
+ul,ol{
+	list-style: none;
+}
+/**日历视图CSS**/
+.meeting_calendar_state_highlight {
+	background-color: #d9e7fd!important;
+	border: 1px solid #ddd;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	opacity: .7;
+	filter: alpha(opacity=70);
+}
+
+.meeting_calendar_dialog_buttom .lui_toolbar_btn_gray {
+    width: 31%;
+    overflow: hidden;
+    margin: auto;
+}
+
+.meeting_calendar_content,.meeting_calendar_header {
+	width: 100%;
+	border: 1px solid #ddd;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	background-color: white;
+}
+
+.meeting_calendar_header .meeting_calendar_category_th{
+	width:10%;
+	text-align: center;
+	height: 42px;
+	border: 1px solid #efefef;
+	position: relative;
+	word-break:break-all;
+}
+.meeting_calendar_header .meeting_calendar_category_th .meeting_calendar_category_title{
+	padding-left: 21px;
+	padding-right: 20px;
+	cursor: pointer;
+	display: block;
+	background: url(../resource/images/meeting_icon_category.png) no-repeat 85% center;
+}
+
+.meeting_calendar_header .meeting_calendar_category_th .category_dialog {
+	padding: 15px 6px;
+	height: auto;
+	border: 1px solid #ebebeb;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	background-color: #fff;
+	-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+	-moz-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+	-ms-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+	-o-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+	box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+	position: absolute;
+	top: 42px;
+	z-index: 10;
+	display: none;
+}
+.meeting_calendar_header .on{
+	background-color:#83c2eb;
+}
+
+.meeting_calendar_header .meeting_calendar_category_th .category_ckAll{
+	float:left;
+	padding: 9px 10px;
+}
+
+.meeting_calendar_header .meeting_calendar_category_th ul{
+	margin-left: 92px;
+	border-left: 1px #aaa solid;
+	text-align: left;
+}
+
+.meeting_calendar_header .meeting_calendar_category_th .category_dialog li{
+	display:inline-block;
+	height: 18px;
+	line-height: 18px;
+	margin: 9px 10px;
+}
+
+.meeting_calendar_header .meeting_calendar_category_th .category_dialog .meeting_dialog_ck_all{
+	margin-right: 8px;
+}
+
+.meeting_calendar_header .meeting_calendar_category_th .category_dialog .meeting_dialog_ck{
+	margin-right: 8px;
+}
+
+.meeting_calendar_header .meeting_calendar_date_th,
+.meeting_calendar_content .meeting_calendar_date_th {
+	width: 13%;
+	text-align: center;
+	height: 42px;
+	border: 1px solid #efefef;
+}
+
+.meeting_calendar_content .meeting_calendar_date {
+	width: 13%;
+	height: 42px;
+	border: 1px solid #efefef;
+	vertical-align: top;
+	position: relative;
+}
+
+.meeting_calendar_content .meeting_calendar_name {
+	width: 10%;
+	text-align: center;
+	height: 42px;
+	border: 1px solid #efefef;
+	word-break:break-all;
+}
+
+.meeting_calendar_content .meeting_calendar_data {
+	border-radius: 3px;
+	display: block;
+	border: 1px solid #01c9ad;
+	background: #ecfefe;
+	width: 100%;
+	cursor: default;
+	position: absolute;
+	color: white;
+}
+
+.meeting_calendar_content .meeting_calendar_data_inner {
+	border-radius: 3px;
+	margin: 1px;
+}
+
+.meeting_calendar_content .meeting_calendar_data_inner:HOVER {
+	cursor: pointer;
+}
+
+.meeting_calendar_label_examing{
+	background:#F9905A;
+	width:35px;
+	display: inline-block;
+	height: 16px;
+	vertical-align: middle;
+}
+
+.meeting_calendar_label_unhold{
+	background:#51b749;
+	width:35px;
+	display: inline-block;
+	height: 16px;
+	vertical-align: middle;
+}
+
+.meeting_calendar_label_holding{
+	background:#5484ed;
+	width:35px;
+	display: inline-block;
+	height: 16px;
+	vertical-align: middle;
+}
+
+.meeting_calendar_label_hold{
+	background:#fbd75b;
+	width:30px;
+	display: inline-block;
+	height: 16px;
+	vertical-align: middle;
+}
+
+.meeting_calendar_label_text{
+	font-size: 14px;
+	vertical-align: middle;
+	margin: 0  8px;
+}
+
+.fc-event-container .fc-event{
+	/*border: 1px solid #01c9ad;*/
+	/*background: #f7f7f7;
+	color: black;*/
+}
+
+/**弹出框通用样式**/
+.fdHasExam {
+	display: flex!important;
+    align-items: center;
+    justify-content: center;
+    line-height:normal!important;
+}
+
+.meeting_calendar_dialog{
+	z-index: 999;
+	background-color: #fff;
+	border-radius: 4px;
+	border: 1px solid #efefef;
+	-webkit-box-shadow: 0 0 7px rgba(0,0,0,.15);
+		 -moz-box-shadow: 0 0 7px rgba(0,0,0,.15);
+			-ms-box-shadow: 0 0 7px rgba(0,0,0,.15);
+			 -o-box-shadow: 0 0 7px rgba(0,0,0,.15);
+					box-shadow: 0 0 7px rgba(0,0,0,.15);
+}
+
+.isCycle{
+	color:#FE9400;
+	width:77px;
+	padding:4px 6px 4px 6px;
+	height:22px;
+	border-radius:6px;
+	border:1px solid #FE9400;
+}
+
+.meeting_calendar_dialog_top {
+	height: 54px;
+	line-height: 54px;
+	border-bottom: 1px solid #efefef;
+	background-color: #fcfbfc;
+}
+.meeting_calendar_dialog_top:after{
+	content: '';
+	display: table;
+	visibility: hidden;
+	clear: both;
+}
+.meeting_calendar_dialog_top .meeting_calendar_dialog_title {
+	float: left;
+	color: #868686;
+	padding-left: 18px;
+}
+.meeting_calendar_dialog_recurrenceIcon{
+	float: left;
+    margin-left: 10px;
+}
+.meeting_calendar_dialog_top .meeting_calendar_dialog_close {
+	background: url(../resource/images/calendar_dialog_close.png) no-repeat 50%;
+	width: 32px;
+	height: 32px;
+	float: right;
+	cursor: pointer;
+	transition-duration: .3s;
+}
+.meeting_calendar_dialog_top .meeting_calendar_dialog_close:hover{ background-color: #eee; }
+.meeting_calendar_dialog .meeting_calendar_dialog_content{
+	padding: 15px;
+}
+
+.meeting_calendar_dialog .meeting_calendar_dialog_content>div{
+	margin-bottom: 5px;
+}
+
+.meeting_calendar_dialog_buttom {
+	display:flex;
+	height: 50px;
+	line-height: 50px;
+	background-color: #fcfbfc;
+	border-top: 1px solid #efefef;
+	text-align: center;
+	padding: 0 3px;
+	
+}
+.meeting_calendar_dialog_buttom .lui_widget_btn .lui_widget_btn_txt{ vertical-align:middle;}
+
+.meeting_calendar_dialog_buttom:before{
+	content:"";
+	height:100%;
+	vertical-align:middle;
+	display:inline-block;
+}
+
+.meeting_calendar_dialog .title{
+	margin:0px 10px;
+	display: inline-block;
+	width: 60px;
+}
+
+/**日历编辑页面CSS**/
+#meeting_calendar_add {
+	max-width: 380px;
+	min-width: 320px;
+}
+
+/**日历查看页面CSS**/
+#meeting_calendar_mainview{
+	max-width: 400px;
+	min-width: 320px;
+}
+
+#meeting_calendar_bookview{
+	max-width: 400px;
+	min-width: 320px;
+}
+
+.meeting_calendar_loadMore,
+.meeting_calendar_loading,
+.meeting_calendar_nodata{
+	display : none;
+	text-align: center;
+    margin-top: 10px;
+   
+}
+
+.meeting_calendar_loading i{ display: inline-block; width: 16px; height:16px; margin-left:3px; 
+	background:url(../resource/images/loading.gif) no-repeat center; vertical-align: middle;}
+.meeting_calendar_loading span,
+.meeting_calendar_loadMore span{ vertical-align: middle;}
+.meeting_calendar_loading img{ margin-left:3px; vertical-align: middle;}
+.meeting_calendar_loadMore img{ margin-left:3px;vertical-align: middle;}
+.meeting_calendar_nodata{ color:#969799;}
+
+@-webkit-keyframes refresh-rotate {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes refresh-rotate {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+.meeting_calendar_loadMore{
+	cursor: pointer;
+}
+.showMore_icon{
+	padding-top: 1px;
+}
+
+.res_calendar_rescontent_row .tag {
+	margin-left: 9px;
+    padding: 0 4px;
+    height: 16px;
+    line-height: 16px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: normal;
+    border-radius: 2px;
+    background-color: #F9905A;
+    display: inline-block;
+    position: relative;
+}
+
+.res_calendar_rescontent_row .tag::before {
+	content: '';
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+	content: '';
+    width: 0;
+    height: 0;
+    vertical-align: middle;
+    border-right: 6px dashed;
+    border-right: 6px solid \9;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    color: #F9905A;
+    left: -6px;
+    margin-top: -7px;
+}
+
+.res_calendar_rescontent_row .tag::after {
+	content: '';
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+	content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #fff;
+    left: -3px;
+    margin-top: -2px;
+}
+.km_imeeting_calendar_portal{
+	position: relative;
+}
+
+
+/* 会议预约相关CSS Starts */
+
+.lui_imeeting_order_list{
+  font-size: 14px;
+  padding:10px 15px
+}
+.lui_imeeting_order_list ul{
+  margin: 0;
+  padding: 0;
+}
+.lui_imeeting_order_list li{
+  list-style: none;
+  margin: 0;
+  display: table;
+  width: 100%;
+  padding: 5px 0;
+  table-layout: fixed;
+  line-height: 20px;
+}
+.lui_imeeting_order_list em{
+  word-break: keep-all;
+  font-style: normal;
+  display: table-cell;
+  max-width: 120px;
+  min-width: 80px;
+  width: 85px;
+  color: #666;
+}
+.lui_imeeting_order_list span{
+  /*word-break: keep-all; 修复#102858*/
+  display: table-cell;
+  padding-left: 10px;
+}
+
+.lui_imeeting_order_list .fdPlaceDetail{
+  	display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+/* 会议预约相关CSS Ends */
+
+.lui_imeeting_order_list .fdRemark{
+	word-break: break-all;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
+}

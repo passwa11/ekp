@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean
+        id="sysFormDetailsTableMainDao"
+        parent="KmssExtendDataDao"
+        class="com.landray.kmss.sys.xform.base.service.controls.seniorDetailsTable.dao.hibernate.SysFormDetailsTableMainDaoImp">
+        <property
+            name="modelName"
+            value="com.landray.kmss.sys.xform.base.service.controls.seniorDetailsTable.model.SysFormDetailsTableMain" />
+        <property name="sysMetadataParser">
+            <ref bean="sysMetadataParser" />
+        </property>
+    </bean>
+
+    <bean
+        id="sysFormDetailsTableMainServiceTarget"
+        parent="KmssExtendDataTarget"
+        class="com.landray.kmss.sys.xform.base.service.controls.seniorDetailsTable.spring.SysFormDetailsTableMainServiceImp">
+        <property
+            name="baseDao">
+            <ref bean="sysFormDetailsTableMainDao" />
+        </property>
+    </bean>
+
+    <bean
+        id="sysFormDetailsTableMainService"
+        parent="KmssBaseService">
+        <property
+            name="target">
+            <ref bean="sysFormDetailsTableMainServiceTarget" />
+        </property>
+    </bean>
+
+    <bean
+        class="com.landray.kmss.sys.xform.base.service.controls.seniorDetailsTable.spring.SysFormAdvancedDetailsTableDbService">
+        <property name="sysFormDbTableService">
+            <ref bean="sysFormDbTableService" />
+        </property>
+        <property name="dictLoadService">
+            <ref bean="sysDictLoader" />
+        </property>
+    </bean>
+
+</beans>

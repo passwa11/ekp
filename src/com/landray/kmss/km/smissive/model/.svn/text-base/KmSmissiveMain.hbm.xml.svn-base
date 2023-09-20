@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.smissive.model.KmSmissiveMain"
+		table="km_smissive_main">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+
+       <property
+			name="fdNeedContent"
+			column="fd_need_content"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="10" />
+		<many-to-one
+			name="fdTemplate"
+			column="fd_template_id"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdTitle"
+			column="fd_title"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200" />
+		<property
+			name="docSubject"
+			column="doc_subject"
+			update="true"
+			insert="true"
+			length="200" />
+		<property
+			name="fdUrgency"
+			column="fd_urgency"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="32" />
+		<property
+			name="fdSecret"
+			column="fd_secret"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="32" />
+		<property
+			name="fdFileNo"
+			column="fd_file_no"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100" />
+			<!-- 软删除配置 -->
+			<property
+			name="docDeleteFlag"
+			column="doc_delete_flag"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="5" />
+		<property
+			name="docDeleteTime"
+			column="doc_delete_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<many-to-one
+			name="docDeleteBy"
+			column="doc_delete_by"
+			insert="true"
+			update="true"
+			not-null="false" />
+			
+		<property
+			name="authChangeReaderFlag"
+			column="fd_change_reader_flag"
+			update="true"
+			insert="true"/>
+		<property
+			name="authChangeEditorFlag"
+			column="fd_change_editor_flag"
+			update="true"
+			insert="true"/>
+		<property
+			name="authRBPFlag"
+			column="fd_rbp_flag"
+			update="true"
+			insert="true" />
+		<property
+			name="authChangeAtt"
+			column="fd_change_att"
+			update="true"
+			insert="true"/>
+		<many-to-one
+			name="fdMainDept"
+			column="fd_main_dept_id"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<many-to-one
+			name="fdSendDept"
+			column="fd_send_dept_id"
+			update="true"
+			insert="true"
+			not-null="false" />
+
+		<many-to-one
+			name="authArea"
+			column="auth_area_id"
+			insert="true"
+			update="true"
+			not-null="false"
+            index="idx_kmSmissiveMain_authAreaId" />
+            			
+		<bag
+			name="fdSendDepts"
+			table="km_smissive_main_send_dept"
+			lazy="true">
+			<key column="fd_main_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="send_dept_id" />
+		</bag>
+		<many-to-one
+			name="fdCopyDept"
+			column="fd_copy_dept_id"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<bag
+			name="fdCopyDepts"
+			table="km_smissive_main_copy_dept"
+			lazy="true">
+			<key column="fd_main_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="send_copy_id" />
+		</bag>
+		<many-to-one
+			name="fdIssuer"
+			column="fd_issuer_id"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdFlowFlag"
+			column="fd_flow_flag"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<property
+			name="docStatus"
+			column="doc_status"
+			update="true"
+			insert="true"
+			length="2" />
+		<many-to-one
+			name="docAuthor"
+			column="doc_author_id"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<many-to-one
+			name="docCreator"
+			column="doc_creator_id"
+			update="true"
+			insert="true" />
+		<many-to-one
+			name="docAlteror"
+			column="doc_alteror_id"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<many-to-one
+			name="docDept"
+			column="doc_dept_id"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="docCreateTime"
+			column="doc_create_time"
+			update="true"
+			insert="true"/>
+		<property
+			name="docAlterTime"
+			column="doc_alter_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="docPublishTime"
+			column="doc_publish_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdLastModifiedTime"
+			column="fd_last_modified_time"
+			update="true"
+			insert="true" />
+		<property
+			name="authReaderFlag"
+			column="auth_reader_flag"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<property
+			name="authAttNodownload"
+			column="auth_att_nodownload"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<property
+			name="authAttNocopy"
+			column="auth_att_nocopy"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<property
+			name="authAttNoprint"
+			column="auth_att_noprint"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+
+
+		<bag
+			name="docProperties"
+			table="km_smissive_main_property"
+			lazy="true">
+			<key column="fd_main_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.category.model.SysCategoryProperty"
+				column="fd_property_id" />
+		</bag>
+
+
+		<bag
+			name="authAttDownloads"
+			table="km_smissive_main_attdl"
+			lazy="true">
+			<key column="fd_main_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_att_download_id" />
+		</bag>
+
+
+		<bag
+			name="authAttCopys"
+			table="km_smissive_main_attcopy"
+			lazy="true">
+			<key column="fd_main_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_att_copy_id" />
+		</bag>
+
+
+		<bag
+			name="authAttPrints"
+			table="km_smissive_main_attprint"
+			lazy="true">
+			<key column="fd_main_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_att_print_id" />
+		</bag>
+
+
+		<bag
+			name="authOtherReaders"
+			table="km_smissive_main_oreader"
+			lazy="true">
+			<key column="fd_main_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_other_reader_id" />
+		</bag>
+
+
+		<bag
+			name="authOtherEditors"
+			table="km_smissive_main_oeditor"
+			lazy="true">
+			<key column="fd_main_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_other_editor_id" />
+		</bag>
+
+
+		<bag
+			name="authAllReaders"
+			table="km_smissive_main_areader"
+			lazy="true">
+			<key column="fd_main_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_all_reader_id" />
+		</bag>
+
+
+		<bag
+			name="authAllEditors"
+			table="km_smissive_main_aeditor"
+			lazy="true">
+			<key column="fd_main_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_all_editor_id" />
+		</bag>
+
+
+		<bag
+			name="authReaders"
+			table="km_smissive_main_reader"
+			lazy="true">
+			<key column="fd_main_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_reader_id" />
+		</bag>
+
+
+		<bag
+			name="authEditors"
+			table="km_smissive_main_editor"
+			lazy="true">
+			<key column="fd_main_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_editor_id" />
+		</bag>
+		
+		<!--阅读统计 是Long型-->
+		<property
+			name="docReadCount"
+			column="doc_read_count"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="19" />
+		<!--点评统计-->
+		<property
+			name="docEvalCount"
+			column="doc_eval_count"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="10" />
+		<!--收藏统计-->
+		<property
+			name="docMarkCount"
+			column="doc_mark_count"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="10" />
+
+	</class>
+</hibernate-mapping>

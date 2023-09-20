@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/cache/KmssCache.do"
+		class="com.landray.kmss.sys.cache.actions.KmssCacheAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+				name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/sys/cache/kmsscache_data.jsp"/>
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/cache/HibernateCache.do"
+		class="com.landray.kmss.sys.cache.actions.HibernateCacheAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="forwards">
+			<map>
+				<entry
+					key="cacheView"
+					value="/sys/cache/hibernate/hibernatecache_view.jsp"/>
+			</map>
+		</property>
+	</bean>
+
+	<bean
+		name="/sys/cache/HibernateRegionConfig.do"
+		class="com.landray.kmss.sys.cache.actions.HibernateRegionConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+				name="formType"
+				value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+
+	<bean
+		name="/sys/cache/HibernateCacheStatisConfig.do"
+		class="com.landray.kmss.sys.cache.actions.HibernateCacheStatisConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+</beans>

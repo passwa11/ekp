@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!--表单事件引入 jsp 片段 扩展  -->
+	<bean id="ticSoapFormEventJspGenerator"
+		class="com.landray.kmss.tic.soap.mapping.service.spring.TicSoapFormEventJspGenerator">
+	</bean>
+	
+	<!-- soapui xml解析 类-->
+	<bean id="ticSoapMappingWebServiceXmlOperateService"
+		class="com.landray.kmss.tic.soap.mapping.service.spring.TicSoapMappingWebServiceXmlOperateServiceImp">
+	<property name="sysMetadataParser">
+			<ref bean="sysMetadataParser" />
+		</property>
+		<property name="ticCoreMappingFuncService">
+			<ref bean="ticCoreMappingFuncService" />
+		</property>
+		<property name="ticCoreMappingModuleService">
+			<ref bean="ticCoreMappingModuleService" />
+		</property>
+	</bean>
+
+	<!-- 执行机器人节点 -->
+	<bean id="ticSoapWfRobotNodeRunWebServiceService"
+		class="com.landray.kmss.tic.soap.mapping.service.spring.TicSoapWfRobotNodeRunWebServiceService">
+		<property name="ticCoreMappingFuncService">
+			<ref bean="ticCoreMappingFuncService" />
+		</property>
+		<property name="sysMetadataParser">
+			<ref bean="sysMetadataParser" />
+		</property>
+		<property name="ticSoap">
+			<ref bean="ticSoap" />
+		</property>
+		<property name="ticCoreMappingFuncXmlOperateService">
+			<ref bean="ticSoapMappingWebServiceXmlOperateService" />
+		</property>
+		<property name="ticCoreMappingMainService">
+			<ref bean="ticCoreMappingMainService" />
+		</property>
+		<property name="ticSoapMainService">
+			<ref bean="ticSoapMainService" />
+		</property>
+	</bean>
+	
+	<!-- 获取函数分类树 -->
+	<bean id="ticSoapMappingFuncTreeListService"
+		class="com.landray.kmss.tic.soap.mapping.service.spring.TicSoapMappingFuncTreeListService">
+		<property name="ticSoapCategoryService">
+			<ref bean="ticSoapCategoryService" />
+		</property>
+		<property name="ticSoapMainService">
+			<ref bean="ticSoapMainService" />
+		</property>
+	</bean>
+	
+	
+		<!-- 获取函数返回xml -->
+	<bean id="ticSoapMappingFuncXmlService"
+		class="com.landray.kmss.tic.soap.mapping.service.spring.TicSoapMappingFuncXmlService">
+		<property name="ticSoapMainService">
+			<ref bean="ticSoapMainService" />
+		</property>
+		<property name="ticCoreMappingFuncService">
+			<ref bean="ticCoreMappingFuncService" />
+		</property>
+	</bean>
+	
+	<!-- soapui集成扩展点 -->
+	<bean id="ticSoapMappingIntegration"
+		class="com.landray.kmss.tic.soap.mapping.plugins.TicSoapMappingIntegration">
+	</bean>
+	
+	<!-- 返回表单事件执行后的webservice soap -->
+	<bean id="ticSoapMappingFormEventFuncBackXmlService"
+		class="com.landray.kmss.tic.soap.mapping.service.spring.TicSoapMappingFormEventFuncBackXmlService">
+	<property name="ticSoapMainService">
+			<ref bean="ticSoapMainService" />
+		</property>
+	</bean>
+	
+	<!-- SOAP映射函数执行 -->
+	<bean id="ticSoapMappingRunFunction"
+		class="com.landray.kmss.tic.soap.mapping.service.spring.TicSoapMappingRunFunction">
+		<property name="sysMetadataParser">
+			<ref bean="sysMetadataParser" />
+		</property>
+		<property name="ticSoap">
+			<ref bean="ticSoap" />
+		</property>
+		<property name="ticSoapMappingWebServiceXmlOperateService">
+			<ref bean="ticSoapMappingWebServiceXmlOperateService" />
+		</property>
+		<property name="ticCoreMappingMainService">
+			<ref bean="ticCoreMappingMainService" />
+		</property>
+		<property name="ticSoapMainService">
+			<ref bean="ticSoapMainService" />
+		</property>
+	</bean>
+	<!-- 表单控件 
+	<bean id="ticSoapControlTreeInfo"
+		class="com.landray.kmss.tic.soap.mapping.plugins.controls.TicSoapControlTreeInfo">
+		<property name="ticSoapCategoryService">
+			<ref bean="ticSoapCategoryService" />
+		</property>
+		<property name="ticSoapMainService">
+			<ref bean="ticSoapMainService" />
+		</property>
+		<property name="ticCoreMappControlFieldService">
+			<ref bean="ticCoreMappControlFieldService" />
+		</property>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+
+		<property name="ticCacheMainTableService">
+			<ref bean="ticCacheMainTableService" />
+		</property>
+		<property name="ticCacheDbTableService">
+			<ref bean="ticCacheDbTableService" />
+		</property>
+		<property name="ticCacheInDbService">
+			<ref bean="ticCacheInDbService" />
+		</property>
+	</bean>
+	-->
+	
+	<!-- 流程驳回 -->
+	<bean id="ticSoapMappingFlowRefuseListener"
+		class="com.landray.kmss.tic.soap.mapping.service.spring.TicSoapMappingFlowRefuseListener">
+		<property name="ticCoreMappingFuncService">
+			<ref bean="ticCoreMappingFuncService"/>			
+		</property>
+		<property name="ticSoapMappingRunFunction">
+			<ref bean="ticSoapMappingRunFunction"/>			
+		</property>
+	</bean>
+	
+</beans>
+	

@@ -1,0 +1,99 @@
+
+var viewWgt = render.parent;
+var inputs = data.data.inputs;
+viewWgt.sourceData = viewWgt.classifyType(inputs);
+console.log(inputs);
+/*
+{
+	"data":{
+		"inputs":{
+			"记录id":{
+				"data":[
+					{
+						jtype: "where|target",
+						name:{
+							"text":"出版社",
+							"type":"String",
+							"value":"fd_37d6f2c3aa0b7e"
+						}
+					}
+				],
+				"name" : "文档标题",
+				"group":{
+					"where" : [
+						"控件id" :{}
+					]
+					"target" : [
+						"控件id" :{}
+					]
+				}
+			}
+		}
+	}
+}
+*/
+{$
+<div class="inputs_wrap">
+	<table class="tb_normal" width="98%"><tbody>$}
+	for(var recordId in inputs){
+	var group = inputs[recordId]["group"];
+	{$
+	<tr class="input_title">
+		<td colspan="2">{%inputs[recordId].name%}</td>
+	</tr>
+	$}
+	for(var key in group){
+	if(group[key].length > 0){
+	var groupName = '查询字段';
+	if(key === 'target'){
+		groupName = '目标字段';
+	}else if(key === 'preModelWhere'){
+		groupName = '前置表单查询字段';
+	}else if(key === 'preQueryWhere'){
+		groupName = '前置查询字段';
+	}else if(key === 'detailQueryWhere'){
+		groupName = '明细表查询字段';
+	}
+	{$<tr class="input_{%key%}">
+		<td class="td_normal_title">{%groupName%}</td>
+		<td>
+			<table width="98%" class="tb_normal">$}
+				for(var i = 0;i < group[key].length;i++){
+				var dymicInfo = group[key][i];
+				if(dymicInfo.widgetId && dymicInfo.widgetId.indexOf(".")>-1){
+					//#114687 明细表值类型加[]
+					dymicInfo.widgetType = dymicInfo.widgetType+"[]"
+				}
+				{$
+				<tr data-var-key="{% dymicInfo.id%}" data-record-id="{% recordId%}" data-record-type="{%key%}"
+					data-record-wgtid="{%dymicInfo.widgetId%}" data-record-wgttype="{%dymicInfo.widgetType%}">
+					<td width="20%" class="td_normal_title" title="{%dymicInfo.widgetFullLabel%}">{%dymicInfo.widgetName%}</td>
+					<td width="20%">
+						<select class="input_style">
+							<option value="formula">公式定义</option>
+							$}
+							if(dymicInfo.widgetType.indexOf("Attachment")==-1){
+							{$
+							<option value="fix">固定值</option>
+							$}
+							}
+							{$
+						</select>
+					</td>
+					<td width="40%">
+						<input name="valueType" type="hidden" value="{%dymicInfo.widgetType%}"/>
+						<div class="input_value">
+						</div>
+					</td>
+				</tr>
+				$}
+				}
+				{$</table>
+		</td>
+	</tr>$}
+	}
+	}
+	}
+	{$</tbody></table>
+</div>
+$}

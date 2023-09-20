@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+        <oper
+            id="kmArchivesMainOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.archives.model.KmArchivesMain"
+            action="/km/archives/km_archives_main/kmArchivesMain.do">
+            <query
+				method="downloadTemplate" logPoint="Base_UrlParam"
+				messageKey="km-archives:kmSuperviseMain.logOper.downloadTemplate" />
+			<query
+				method="importArchives" logPoint="Base_UrlParam"
+				messageKey="km-archives:kmSuperviseMain.logOper.importArchives" />
+			<query
+				method="manageList" logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="km-archives:kmSuperviseMain.logOper.manageList" />
+			<query
+				method="batchUpdate" logPoint="Base_UrlParam;batchUpdate"
+				messageKey="km-archives:kmArchivesMain.batchUpdate" />
+        </oper>
+         <oper
+            id="kmArchivesFileTemplateOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/km/archives/km_archives_file_template/kmArchivesFileTemplate.do">
+			<query
+				method="fileDoc" logPoint="fileDoc"
+				messageKey="km-archives:kmArchivesFileTemplate.logOper.fileDoc" />
+			<query
+				method="fileDocAll" logPoint="fileDocAll"
+				messageKey="km-archives:kmArchivesFileTemplate.logOper.fileDocAll" />
+        </oper>
+        <oper
+            id="kmArchivesDetailsOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.archives.model.KmArchivesDetails"
+            action="/km/archives/km_archives_details/kmArchivesDetails.do">
+			<query
+				method="comfirmReturnBack" logPoint="Base_UrlParam;comfirmReturnBack"
+				messageKey="km-archives:kmArchivesDetails.logOper.comfirmReturnBack" />
+		<query
+				method="data" logPoint="Base_UrlParam;detail_data"
+				messageKey="button.list" />
+        </oper>
+         <oper
+            id="kmArchivesAppraiseOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.archives.model.KmArchivesAppraise"
+            action="/km/archives/km_archives_appraise/kmArchivesAppraise.do">
+            <query
+				method="printAppraiseList" logPoint="Base_UrlParam"
+				messageKey="km-archives:kmArchivesAppraise.logOper.printAppraiseList" />
+        </oper>
+         <oper
+            id="kmArchivesDestroyOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.km.archives.model.KmArchivesDestroy"
+            action="/km/archives/km_archives_destroy/kmArchivesDestroy.do">
+            <query
+				method="printDestroyList" logPoint="Base_UrlParam"
+				messageKey="km-archives:kmArchivesDestroy.logOper.printDestroyList" />
+        </oper>
+
+	</logset>
+</log-oper>

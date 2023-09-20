@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/mobile/sys_mobile_module_category_config/sysMobileModuleCategoryConfig.do"
+		class="com.landray.kmss.sys.mobile.actions.SysMobileModuleCategoryConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.mobile.forms.SysMobileModuleCategoryConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/mobile/sys_mobile_module_category_config/sysMobileModuleCategoryConfig_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/mobile/sys_mobile_module_category_config/sysMobileModuleCategoryConfig_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/mobile/sys_mobile_compress/sysMobileCompress.do"
+		class="com.landray.kmss.sys.mobile.actions.SysMobileCompressAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/mobile/sys_mobile_compress/sysMobileCompress_list.jsp" />
+				<entry
+					key="data"
+					value="/sys/mobile/sys_mobile_compress/sysMobileCompress_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/mobile/bapi.do"
+		class="com.landray.kmss.sys.mobile.actions.BaiduApiAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/mobile/sys_mobile_retrieve_password/sysMobileRetrievePassword.do"
+		class="com.landray.kmss.sys.mobile.actions.SysMobileRetrievePasswordAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="validateUser"
+					value="/sys/mobile/sys_mobile_retrieve_password/validateUser.jsp" />
+				<entry
+					key="sendMobileCode"
+					value="/sys/mobile/sys_mobile_retrieve_password/sendMobileCode.jsp" />
+				<entry
+					key="retrievePassword"
+					value="/sys/mobile/sys_mobile_retrieve_password/retrievePassword.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/mobile/sys_mobile_offline/sysMobilePackage.do"
+		class="com.landray.kmss.sys.mobile.offline.actions.SysMobilePackageAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/mobile/sys_mobile_offline/sysMobileOffline_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/mobile/adapter.do"
+		class="com.landray.kmss.sys.mobile.actions.AdapterAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/sys/mobile/sys_mobile_module_navitem_config/sysMobileModuleNavItemConfig.do"
+		class="com.landray.kmss.sys.mobile.actions.SysMobileModuleNavItemConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+</beans>

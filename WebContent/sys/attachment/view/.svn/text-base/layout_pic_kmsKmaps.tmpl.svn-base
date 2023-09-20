@@ -1,0 +1,31 @@
+var self = this;
+var ___width = self.fdPicContentWidth ? self.fdPicContentWidth.indexOf('%') > 0
+		? self.fdPicContentWidth
+		: parseInt(self.fdPicContentWidth) : 160, ___height = self.fdPicContentHeight
+		? self.fdPicContentHeight.indexOf('%') > 0
+				? self.fdPicContentHeight
+				: parseInt(self.fdPicContentHeight)
+		: 116;
+function createUploadDiv() {
+	var xtxt = $("<span class='lui_upload_img_txt'>"+Data_GetResourceString("sys-attachment:sysAttMain.button.img.upload")+"</span>");
+	var xicon= $("<i class='icon icon-plus'></i>");
+	xtxt.prepend(xicon);
+	xtxt.css({
+	    width : ___width,
+		height : ___height
+	});
+	xicon.css({
+	    'margin-top' : (___height/2-30)+'px'
+	});
+	if(self.required){
+		xtxt.append("<span class='txtstrong'> *</span>");
+	}
+	return xtxt;
+}
+var xcontainer = $("<div data-lui-mark='attachmentlist' class='lui_upload_img_item lui_upload_img' id='upload_" + self.fdKey + "_div_buttom'/>");
+if (this.editMode == "edit" || this.editMode == "add") {
+	xcontainer.append(createUploadDiv());
+	if(this.fileList.length==1 && this.fdViewType == "pic_kmsKmaps")
+	   xcontainer.hide();
+}
+done(xcontainer);

@@ -1,0 +1,1340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+<!-- 所有流程 -->
+<portlet
+		id="km.review.all"
+		name="{km-review:kmReviewMain.portlet.myFlow.all}"
+		module="{km-review:module.km.review}"
+		description="{km-review:portlet.listtable.desc}">
+		<source
+			format="sys.ui.listtable"
+			type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/review/km_review_main/kmReviewMainPortlet.do?method=listPortlet&myFlow=all&fdCategoryId=!{cateid}&rowsize=!{rowsize}&scope=!{scope}"
+				}
+			]]>
+			</code>
+			
+			<example>
+				<code>
+				<![CDATA[
+					{
+					    "columns":[
+					        {
+					            "property":"fdId"
+					        },
+					        {
+					            "title":"主题",
+					            "property":"docSubject"
+					        },
+					        {
+					            "title":"创建时间",
+					            "property":"docCreateTime",
+					            "headerClass":"width100"
+					        },
+					        {
+					            "title":"文档状态",
+					            "property":"docStatus",
+					            "headerClass":"width60"
+					        },
+					        {
+					            "title":"申请人",
+					            "property":"docCreator.fdName",
+					            "headerClass":"width60"
+					        },
+					        {
+					            "title":"当前处理人",
+					            "property":"handlerName",
+					            "headerClass":"width80"
+					        },
+					        {
+					
+					        }
+					    ],
+					    "datas":[
+					        [
+					            {
+					                "col":"fdId",
+					                "value":"16f80226fe50e7b4566a4124b618e85a"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='公司元旦放假通知' href='#'>公司元旦放假通知</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2020-01-07",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"<div style='color:#4cbe45'>待审</div>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"王一博",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"程小雨",
+					                "styleClass":"width80"
+					            }
+					        ],
+					        [
+					            {
+					                "col":"fdId",
+					                "value":"16f7600dd29539f09578a48400b9ead0"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='企业年度评优，就“数”这一招狠' href='#'>企业年度评优，就“数”这一招狠</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2020-01-05",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"<div style='color:#4cbe45'>待审</div>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"张三",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"李四;哈罗1;张三;马老师",
+					                "styleClass":"width80"
+					            }
+					        ],
+					        [
+					            {
+					                "col":"fdId",
+					                "value":"16f64caa73d6afa76dedce44e8081106"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='员工穿越戈壁活动心得分享' href='#'>员工穿越戈壁活动心得分享</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2020-01-02",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"<div style='color:#4cbe45'>待审</div>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"刘智",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"程小雨",
+					                "styleClass":"width80"
+					            }
+					        ],
+					        [
+					            {
+					                "col":"fdId",
+					                "value":"16f5a7561eeaf7ed23c01f2460f83ff4"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='打造一体化综合管理平台' href='#'>打造一体化综合管理平台</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2019-12-31",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"<div style='color:#4cbe45'>待审</div>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"程序员",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"王一博",
+					                "styleClass":"width80"
+					            }
+					        ],
+					        [
+					            {
+					                "col":"fdId",
+					                "value":"16f5a60a4802043c47da88147c4b2366"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='公司元旦放假通知' href='#'>每一位加班人都值得被关爱</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2019-12-31",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"<div style='color:#4cbe45'>待审</div>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"程序员",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"王一博",
+					                "styleClass":"width80"
+					            }
+					        ],
+					        [
+					            {
+					                "col":"fdId",
+					                "value":"16f559e25be7b536e97a1b84e3caf4e3"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='儿童节爱心图书征集' href='#'>儿童节爱心图书征集</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2019-12-30",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"结束",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"王一博",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"王一博",
+					                "styleClass":"width80"
+					            }
+					        ]
+					    ]
+					}
+]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		   <var name="{km-review:kmReviewMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+                   "showType":"radio"
+                  }
+            </var>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		    <var
+				name="{portlet.cate}"
+				key="cateid"
+				kind="sys.category">
+				{"model":"com.landray.kmss.km.review.model.KmReviewTemplate","name":"{button.select}"}
+			</var>
+		</vars>
+		<operations>
+		   <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/review/km_review_main/kmReviewMain.do?method=add" />	 
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/review/#j_path=/listAll&amp;mydoc=all&amp;cri.q=fdTemplate:!{cateid}"/>
+	    </operations>
+</portlet>
+<!-- 简单列表 -->
+<portlet
+		id="km.review.simpleList"
+		name="{km-review:kmReviewMain.portlet.myFlow.all}"
+		module="{km-review:module.km.review}"
+		description="{portlet.list.desc1}">
+		<source
+			format="sys.ui.classic"
+			type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/review/km_review_main/kmReviewMainPortlet.do?method=listPortlet&myFlow=all&fdCategoryId=!{cateid}&rowsize=!{rowsize}&dataview=classic&scope=!{scope}"
+				}
+			]]>
+			</code>
+			
+			<example>
+				<code>
+				<![CDATA[
+					[
+					    {
+					        "text":"公司元旦放假通知",
+					        "creator":"张小雨",
+					        "created":"2020-01-07",
+					        "catename":"公司新闻"
+					    },
+					    {
+					        "text":"政务协同平台：让会议更简单",
+					        "creator":"张小雨",
+					        "created":"2020-01-05",
+					        "catename":"公司新闻"
+					    },
+					    {
+					        "text":"打造一体化综合管理平台",
+					        "creator":"刘智",
+					        "created":"2020-01-02",
+					        "catename":"公司新闻"
+					    },
+					    {
+					        "text":"美食节—此生唯美食不可辜负",
+					        "creator":"张小雨",
+					        "created":"2019-12-31",
+					        "catename":"公司新闻"
+					    },
+					    {
+					        "text":"爱心图书角走进江西贫困小学",
+					        "creator":"张小雨",
+					        "created":"2019-12-31",
+					        "catename":"公司新闻"
+					    },
+					    {
+					        "text":"每一位加班人都值得被关爱",
+					        "creator":"张小雨",
+					        "created":"2019-12-30",
+					        "catename":"公司新闻"
+					    }
+					 ]
+				]]>
+				</code>
+			</example>
+
+
+		</source>
+		<vars>
+		   <var name="{km-review:kmReviewMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+                   "showType":"radio"
+                  }
+            </var>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		    <var
+				name="{portlet.cate}"
+				key="cateid"
+				kind="sys.category">
+				{"model":"com.landray.kmss.km.review.model.KmReviewTemplate","name":"{button.select}"}
+			</var>
+		</vars>
+		<operations>
+		   <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/review/km_review_main/kmReviewMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/review/#j_path=/listAll&amp;mydoc=all&amp;cri.q=fdTemplate:!{cateid}" />
+	    </operations>
+</portlet>
+<portlet
+		id="km.review.myFlow"
+		name="{km-review:kmReviewMain.portlet.myFlow.involved}"
+		module="{km-review:module.km.review}"
+		description="{km-review:portlet.listtable.desc}">
+		<source
+			format="sys.ui.listtable"
+			type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/review/km_review_main/kmReviewMainPortlet.do?method=listPortlet&rowsize=!{rowsize}&myFlow=!{myFlow}&scope=!{scope}"
+				}
+			]]>
+			</code>
+			
+			<example>
+				<code>
+				<![CDATA[
+					{
+					    "columns":[
+					        {
+					            "property":"fdId"
+					        },
+					        {
+					            "title":"主题",
+					            "property":"docSubject"
+					        },
+					        {
+					            "title":"创建时间",
+					            "property":"docCreateTime",
+					            "headerClass":"width100"
+					        },
+					        {
+					            "title":"文档状态",
+					            "property":"docStatus",
+					            "headerClass":"width60"
+					        },
+					        {
+					            "title":"申请人",
+					            "property":"docCreator.fdName",
+					            "headerClass":"width60"
+					        },
+					        {
+					            "title":"当前处理人",
+					            "property":"handlerName",
+					            "headerClass":"width80"
+					        },
+					        {
+					
+					        }
+					    ],
+					"datas":[
+					        [
+					            {
+					                "col":"fdId",
+					                "value":"16e1be0536c50581d42d3074f7ca7132"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='政务协同平台：让会议更简单' href='#'>政务协同平台：让会议更简单</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2219-10-30",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"废弃",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"<a class='com_author'  href='javascript:void(0)'>程小雨</a>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"<无>",
+					                "styleClass":"width80"
+					            }
+					        ],
+					         [
+					            {
+					                "col":"fdId",
+					                "value":"16e1be0536c50581d42d3074f7ca7132"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='打造一体化综合管理平台' href='#'>打造一体化综合管理平台</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2219-10-30",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"结束",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"<a class='com_author'  href='javascript:void(0)'>程小雨</a>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"<无>",
+					                "styleClass":"width80"
+					            }
+					        ],
+					         [
+					            {
+					                "col":"fdId",
+					                "value":"16e1be0536c50581d42d3074f7ca7132"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='员工穿越戈壁活动心得分享' href='#'>员工穿越戈壁活动心得分享</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2219-10-30",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"<div style='color:#4cbe45'>待审</div>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"<a class='com_author'  href='javascript:void(0)'>程小雨</a>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"<div class='textEllipsis width80' style='font-weight: bold;'>程小雨</div>",
+					                "styleClass":"width80"
+					            }
+					        ],
+					         [
+					            {
+					                "col":"fdId",
+					                "value":"16e1be0536c50581d42d3074f7ca7132"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='爱心图书角走进江西贫困小学' href='#'>爱心图书角走进江西贫困小学</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2219-10-30",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"<div style='color:#4cbe45'>待审</div>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"<a class='com_author'  href='javascript:void(0)'>程小雨</a>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"<div class='textEllipsis width80' style='font-weight: bold;'>程小雨</div>",
+					                "styleClass":"width80"
+					            }
+					        ],
+					         [
+					            {
+					                "col":"fdId",
+					                "value":"16e1be0536c50581d42d3074f7ca7132"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='美食节—此生唯美食不可辜负' href='#'>美食节—此生唯美食不可辜负</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2219-10-30",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"<div style='color:#4cbe45'>待审</div>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"<a class='com_author'  href='javascript:void(0)'>程小雨</a>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"<div class='textEllipsis width80' style='font-weight: bold;'>王一博</div>",
+					                "styleClass":"width80"
+					            }
+					        ]
+						]
+					}
+				]]>
+				</code>
+			</example>
+
+		</source>
+		<vars>
+		   <var name="{km-review:kmReviewMain.docCreateTime}" key="scope" kind="enumValue" default="no">
+                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+                   "showType":"radio"
+                  }
+            </var>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		    <var name="{km-review:kmReviewMain.portlet.myFlow.involved}" key="myFlow" kind="enumValue" default="approval">
+			  {    "values":[{ "text":"{km-review:kmReviewMain.approval.my}", "value":"approval" },{ "text":"{km-review:kmReviewMain.approved.my}", "value":"approved" }],
+	               "showType":"radio"
+                }
+			</var>
+		</vars>
+		<operations>
+		   <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/review/km_review_main/kmReviewMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/review/portlet_option_more.jsp?mydoc=!{myFlow}" />
+			
+	    </operations>
+</portlet>
+<portlet
+		id="km.review.myFlow.approval"
+		name="{km-review:kmReviewMain.portlet.myFlow.create.my}"
+		module="{km-review:module.km.review}"
+		description="{km-review:portlet.listtable.desc}">
+		<source
+			format="sys.ui.listtable"
+			type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/review/km_review_main/kmReviewMainPortlet.do?method=listPortlet&owner=true&status=!{status}&rowsize=!{rowsize}&scope=!{scope}"
+				}
+			]]>
+			</code>
+			
+			<example>
+				<code>
+				<![CDATA[
+					{
+					    "columns":[
+					        {
+					            "property":"fdId"
+					        },
+					        {
+					            "title":"主题",
+					            "property":"docSubject"
+					        },
+					        {
+					            "title":"创建时间",
+					            "property":"docCreateTime",
+					            "headerClass":"width100"
+					        },
+					        {
+					            "title":"文档状态",
+					            "property":"docStatus",
+					            "headerClass":"width60"
+					        },
+					        {
+					            "title":"申请人",
+					            "property":"docCreator.fdName",
+					            "headerClass":"width60"
+					        },
+					        {
+					            "title":"当前处理人",
+					            "property":"handlerName",
+					            "headerClass":"width80"
+					        },
+					        {
+					
+					        }
+					    ],
+					"datas":[
+					        [
+					            {
+					                "col":"fdId",
+					                "value":"16e1be0536c50581d42d3074f7ca7132"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='公司元旦放假通知' href='#'>公司元旦放假通知</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2020-01-02",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"<div style='color:#4cbe45'>待审</div>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"<a class='com_author'  href='javascript:void(0)'>管理员</a>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"<div class='textEllipsis width80' style='font-weight: bold;'>程小雨</div>",
+					                "styleClass":"width80"
+					            }
+					        ],
+					         [
+					            {
+					                "col":"fdId",
+					                "value":"16e1be0536c50581d42d3074f7ca7132"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='企业年度评优，就“数”这一招狠' href='#'>企业年度评优，就“数”这一招狠</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2020-01-02",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"<div style='color:#4cbe45'>待审</div>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"<a class='com_author'  href='javascript:void(0)'>管理员</a>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"<div class='textEllipsis width80' style='font-weight: bold;'>程小雨</div>",
+					                "styleClass":"width80"
+					            }
+					        ],
+					         [
+					            {
+					                "col":"fdId",
+					                "value":"16e1be0536c50581d42d3074f7ca7132"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='员工穿越戈壁活动心得分享' href='#'>员工穿越戈壁活动心得分享</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2020-01-02",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"废弃",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"<a class='com_author'  href='javascript:void(0)'>管理员</a>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"<无>",
+					                "styleClass":"width80"
+					            }
+					        ]
+					        ,
+					         [
+					            {
+					                "col":"fdId",
+					                "value":"16e1be0536c50581d42d3074f7ca7132"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='员工穿越戈壁活动心得分享' href='#'>员工穿越戈壁活动心得分享</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2020-01-02",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"废弃",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"<a class='com_author'  href='javascript:void(0)'>管理员</a>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"<无>",
+					                "styleClass":"width80"
+					            }
+					        ]
+					        ,
+					         [
+					            {
+					                "col":"fdId",
+					                "value":"16e1be0536c50581d42d3074f7ca7132"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='员工穿越戈壁活动心得分享' href='#'>员工穿越戈壁活动心得分享</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2020-01-02",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"废弃",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"<a class='com_author'  href='javascript:void(0)'>管理员</a>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"<无>",
+					                "styleClass":"width80"
+					            }
+					        ],
+					         [
+					            {
+					                "col":"fdId",
+					                "value":"16e1be0536c50581d42d3074f7ca7132"
+					            },
+					            {
+					                "col":"docSubject",
+					                "value":"<a class='com_subject textEllipsis' title='美食节—此生唯美食不可辜负' href='#'>美食节—此生唯美食不可辜负</a>",
+					                "style":"text-align:left;min-width:100px"
+					            },
+					            {
+					                "col":"docCreateTime",
+					                "value":"2020-01-02",
+					                "styleClass":"width100"
+					            },
+					            {
+					                "col":"docStatus",
+					                "value":"废弃",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"docCreator.fdName",
+					                "value":"<a class='com_author'  href='javascript:void(0)'>管理员</a>",
+					                "styleClass":"width60"
+					            },
+					            {
+					                "col":"handlerName",
+					                "value":"<无>",
+					                "styleClass":"width80"
+					            }
+					        ]
+						]
+					}
+				]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		   <var name="{km-review:kmReviewMain.docCreateTime}" key="scope" kind="enumValue" default="no">
+                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+                   "showType":"radio"
+                  }
+            </var>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize"/>
+		     <var name="{km-review:kmReviewMain.portlet.myFlow.create.my}" key="status" kind="enumValue" default="all">
+			  {    "values":[{ "text":"{km-review:kmReviewMain.portlet.status.approval}", "value":"20" },{ "text":"{km-review:kmReviewMain.portlet.status.approved}", "value":"30" },{ "text":"{km-review:kmReviewMain.portlet.status.draft}", "value":"10" },{ "text":"{km-review:kmReviewMain.portlet.status.all}", "value":"all" }],
+	               "showType":"radio"
+                }
+			</var>
+		</vars>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/review/km_review_main/kmReviewMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/review/#j_path=/listCreate&amp;mydoc=create" />
+	    </operations>
+</portlet>
+<portlet
+		id="km.cate.review.flat"
+		name="{km-review:portlet.category.navigation.flat}"
+		module="{km-review:module.km.review}">
+		<source format="sys.ui.html" type="AjaxText">
+			<code>
+			<![CDATA[
+				{"url":"/sys/category/ui/nav_category_portletV.jsp?modelName=com.landray.kmss.km.review.model.KmReviewTemplate&categoryId=!{cateid}&url=/km/review/",
+				"formatKey":"html"}
+			]]>
+			</code>
+						
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/km/review/sys_portal_example_images_km_review1.jpg$}
+				]]>
+				</code>
+			</example>
+			
+		</source>
+		<vars>
+			 <var
+				name="{portlet.cate}"
+				key="cateid"
+				kind="sys.category">
+				{"model":"com.landray.kmss.km.review.model.KmReviewTemplate","name":"{button.select}"}
+			</var>
+		</vars>
+</portlet>
+<portlet
+	id="km.cate.review.level"
+	name="{km-review:portlet.category.navigation.level}"
+	module="{km-review:module.km.review}">
+	<source format="sys.ui.html" type="AjaxText">
+		<code>
+		<![CDATA[
+			{"url":"/sys/category/ui/nav_category_portletH.jsp?modelName=com.landray.kmss.km.review.model.KmReviewTemplate&categoryId=!{cateid}&url=/km/review/",
+			"formatKey":"html"}
+		]]>
+		</code>
+		
+		<example>
+			<code>
+			<![CDATA[
+				{^/sys/portal/example_images/km/review/sys_portal_example_images_km_review2.jpg$}
+			]]>
+			</code>
+		</example>
+			
+			
+	</source>
+	<vars>
+		 <var
+			name="{portlet.cate}"
+			key="cateid"
+			kind="sys.category">
+			{"model":"com.landray.kmss.km.review.model.KmReviewTemplate","name":"{button.select}"}
+		</var>
+	</vars>
+</portlet>
+
+<!-- 以下为支持cloud数据源 -->
+<!-- 所有流程（表格） -->
+<portlet
+		id="km.review.all"
+		name="{km-review:kmReviewMain.portlet.myFlow.all.table}"
+		module="{km-review:module.km.review}"
+		description="{km-review:portlet.listtable.desc}" forSystem="cloud" varExtend="km.review.all">
+		<source
+			id="km-review.all"
+			format="data.table"
+			type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-review/kmReviewMainPortlet/listPortlet?myFlow=all&fdCategoryId=!{cateid}&rowsize=!{rowsize}&scope=!{scope}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"docSubject","title":"主题","align":"center","width":"200px"},{"property":"docCreateTime","title":"创建时间","align":"center","width":"100px"},{"property":"docStatus","title":"文档状态","align":"center","width":"60px"},{"property":"docCreator","title":"申请人","align":"center","width":"60px"},{"property":"handlerName","title":"当前处理人","align":"center","width":"100px"}],"data":[{"href":"#","cells":[{"col":"docSubject","value":"变更唐超为“新产品平台开发项目”项目经理"},{"col":"docCreateTime","value":"2019-07-06"},{"col":"docStatus","value":"待审","color":"primary"},{"col":"docCreator","value":"唐超"},{"col":"handlerName","value":"张社丽"}]},{"href":"#","cells":[{"col":"docSubject","value":"申请开通BMP合同管理和项目管理权限"},{"col":"docCreateTime","value":"2019-07-01"},{"col":"docStatus","value":"驳回","color":"warning"},{"col":"docCreator","value":"郑超"},{"col":"handlerName","value":"郑超"}]},{"href":"#","cells":[{"col":"docSubject","value":"​产品研发中心申请新增Docker服务器用于体验环境搭建"},{"col":"docCreateTime","value":"2019-06-25"},{"col":"docStatus","value":"待审","color":"primary"},{"col":"docCreator","value":"周梓凡"},{"col":"handlerName","value":"张社丽"}]},{"href":"#","cells":[{"col":"docSubject","value":"五一节前休假申请"},{"col":"docCreateTime","value":"2019-04-25"},{"col":"docStatus","value":"废弃","color":"info"},{"col":"docCreator","value":"杨建宏"},{"col":"handlerName","value":"无"}]},{"href":"#","cells":[{"col":"docSubject","value":"关于成都分公司来深参与研发的人员电脑MAC信息登记"},{"col":"docCreateTime","value":"2019-04-20"},{"col":"docStatus","value":"结束","color":"success"},{"col":"docCreator","value":"易荣烽"},{"col":"handlerName","value":"无"}]},{"href":"#","cells":[{"col":"docSubject","value":"个人自备电脑补贴申请"},{"col":"docCreateTime","value":"2019-03-21"},{"col":"docStatus","value":"草稿","color":"weaken"},{"col":"docCreator","value":"唐超"},{"col":"handlerName","value":"无"}]}]}
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+		   <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/review/km_review_main/kmReviewMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/review/mobile/index.jsp?mydoc=all&amp;categoryId=!{cateid}"
+				href="/km/review/#j_path=/listAll&amp;mydoc=all&amp;cri.q=fdTemplate:!{cateid}"/>
+	    </operations>
+</portlet>
+<!-- 所有流程-简单列表 -->
+<portlet
+		id="km.review.simpleList"
+		name="{km-review:kmReviewMain.portlet.myFlow.all}"
+		module="{km-review:module.km.review}"
+		description="{portlet.list.desc1}" forSystem="cloud" varExtend="km.review.simpleList">
+		<source
+			id="km-review.simpleList"
+			format="data.list"
+			type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-review/kmReviewMainPortlet/listPortlet?myFlow=all&fdCategoryId=!{cateid}&rowsize=!{rowsize}&dataview=classic&scope=!{scope}&isnew=!{isnew}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[{"text":"变更唐超为“新产品平台开发项目”项目经理","href":"#","statusInfo":"待审","statusColor":"primary","cateName":"项目变更","cateHref":"#","creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":1562375640164,"icon":{"name":"new","type":"bitmap"}},{"text":"​申请开通BMP合同管理和项目管理权限","href":"#","statusInfo":"驳回","statusColor":"warning","cateName":"系统权限申请","cateHref":"#","creator":{"fdId":"t00174742","fdName":"郑超","fdLoginName":"tangchao_kf"},"created":1560403200164},{"text":"​产品研发中心申请新增Docker服务器用于体验环境搭建","href":"#","statusInfo":"待审","statusColor":"primary","cateName":"服务器资源申请","cateHref":"#","creator":{"fdId":"t00174742","fdName":"周梓凡","fdLoginName":"tangchao_kf"},"created":1557132149164},{"text":"​五一节前休假申请","href":"#","statusInfo":"废弃","statusColor":"info","cateName":"请假申请流程","cateHref":"#","creator":{"fdId":"t00174742","fdName":"杨建宏","fdLoginName":"tangchao_kf"},"created":1552290000164},{"text":"​关于成都分公司来深参与研发的人员电脑MAC信息登记","href":"#","statusInfo":"结束","statusColor":"success","cateName":"上网资源申请","cateHref":"#","creator":{"fdId":"t00174742","fdName":"易荣烽","fdLoginName":"tangchao_kf"},"created":1547345700164},{"text":"个人自备电脑补贴申请","href":"#","statusInfo":"草稿","statusColor":"weaken","cateName":"个人笔记本公用","cateHref":"#","creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":1547345700164}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<!-- <vars>
+	      <var name="{sys-ui:render.var.ishot}" key="isnew" kind="int" default="0">
+	           {"suffix":"{sys-ui:render.var.hotday.suffix}","help":"{sys-ui:render.var.hotday.help}"}
+	      </var>
+	    </vars> -->
+		<operations>
+		   <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/review/km_review_main/kmReviewMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/review/mobile/index.jsp?mydoc=all&amp;categoryId=!{cateid}"
+				href="/km/review/#j_path=/listAll&amp;mydoc=all&amp;cri.q=fdTemplate:!{cateid}" />
+	    </operations>
+</portlet>
+	<!-- 所有流程-简单列表 new-->
+	<portlet
+			id="km.review.simpleList.new"
+			name="{km-review:kmReviewMain.portlet.myFlow.all.new}"
+			module="{km-review:module.km.review}"
+			description="{portlet.list.desc1}" forSystem="cloud" varExtend="km.review.simpleList">
+		<source
+				id="km-review.simpleList.new"
+				format="data.fieldlist"
+				type="json">
+			<code>
+				<![CDATA[
+				{
+					"url":"/data/km-review/kmReviewMainPortlet/listPortlet?myFlow=all&fdCategoryId=!{cateid}&rowsize=!{rowsize}&dataview=classic&scope=!{scope}&isnew=!{isnew}&isNew2=true"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"变更唐超为“新产品平台开发项目”项目经理","href":"#","statusInfo":{"text":"待审","color":"primary"},"cateName":{"text":"项目变更","href":"#"},"creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":{"text":1562375640164},"icon":{"name":"new","type":"bitmap"}},{"text":"​申请开通BMP合同管理和项目管理权限","href":"#","statusInfo":{"text":"驳回","color":"primary"},"cateName":{"text":"系统权限申请","href":"#"},"creator":{"fdId":"t00174742","fdName":"郑超","fdLoginName":"tangchao_kf"},"created":{"text":1560403200164}},{"text":"​产品研发中心申请新增Docker服务器用于体验环境搭建","href":"#","statusInfo":{"text":"待审","color":"primary"},"cateName":{"text":"服务器资源申请","href":"#"},"creator":{"fdId":"t00174742","fdName":"周梓凡","fdLoginName":"tangchao_kf"},"created":{"text":1557132149164}},{"text":"​五一节前休假申请","href":"#","statusInfo":{"text":"废弃","color":"primary"},"cateName":{"text":"请假申请流程","href":"#"},"creator":{"fdId":"t00174742","fdName":"杨建宏","fdLoginName":"tangchao_kf"},"created":{"text":1552290000164}},{"text":"​关于成都分公司来深参与研发的人员电脑MAC信息登记","href":"#","statusInfo":{"text":"结束","color":"primary"},"cateName":{"text":"上网资源申请","href":"#"},"creator":{"fdId":"t00174742","fdName":"易荣烽","fdLoginName":"tangchao_kf"},"created":{"text":1547345700164}},{"text":"个人自备电脑补贴申请","href":"#","statusInfo":{"text":"草稿","color":"primary"},"cateName":{"text":"个人笔记本公用","href":"#"},"creator":{"fdId":"t00174742","fdName":"唐超","fdLoginName":"tangchao_kf"},"created":{"text":1547345700164}}]
+					]]>
+				</code>
+			</example>
+			<dataFields>
+				<code>
+					<![CDATA[
+					{
+					  "base": {
+						"label": "基础信息",
+						"items": [
+						  {"key": "statusInfo", "text": "状态"}
+						]
+					  },
+					  "info": {
+						"label": "辅助信息",
+						"items": [
+						  {"key": "created", "text": "创建时间", "type": "timestamp"},
+						  {"key": "creator", "text": "作者", "type": "person"},
+						  {"key": "cateName", "text": "分类", "type": "string"}
+						]
+					  },
+					  "tag": {
+						"label": "标签",
+						"items": [
+						  {"key": "icon", "text": "图标", "type": "icon"}
+						]
+					  }
+					}
+					]]>
+				</code>
+			</dataFields>
+		</source>
+		<!-- <vars>
+	      <var name="{sys-ui:render.var.ishot}" key="isnew" kind="int" default="0">
+	           {"suffix":"{sys-ui:render.var.hotday.suffix}","help":"{sys-ui:render.var.hotday.help}"}
+	      </var>
+	    </vars> -->
+		<operations>
+			<operation
+					name="{operation.create}"
+					type="create"
+					href="/km/review/km_review_main/kmReviewMain.do?method=add" />
+			<operation
+					name="{operation.more}"
+					type="more"
+					mobileHref="/km/review/mobile/index.jsp?mydoc=all&amp;categoryId=!{cateid}"
+					href="/km/review/#j_path=/listAll&amp;mydoc=all&amp;cri.q=fdTemplate:!{cateid}" />
+		</operations>
+	</portlet>
+<!-- 我审批的流程 -->
+<portlet
+		id="km.review.myFlow"
+		name="{km-review:kmReviewMain.portlet.myFlow.involved}"
+		module="{km-review:module.km.review}"
+		description="{km-review:portlet.listtable.desc}" forSystem="cloud" varExtend="km.review.myFlow">
+		<source
+			id="km-review.myFlow"
+			format="data.table"
+			type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-review/kmReviewMainPortlet/listPortlet?rowsize=!{rowsize}&myFlow=!{myFlow}&scope=!{scope}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"docSubject","title":"主题","align":"center","width":"200px"},{"property":"docCreateTime","title":"创建时间","align":"center","width":"100px"},{"property":"docStatus","title":"文档状态","align":"center","width":"60px"},{"property":"docCreator","title":"申请人","align":"center","width":"60px"},{"property":"handlerName","title":"当前处理人","align":"center","width":"100px"}],"data":[{"href":"#","cells":[{"col":"docSubject","value":"变更唐超为“新产品平台开发项目”项目经理"},{"col":"docCreateTime","value":"2019-07-06"},{"col":"docStatus","value":"待审","color":"primary"},{"col":"docCreator","value":"唐超"},{"col":"handlerName","value":"张社丽"}]},{"href":"#","cells":[{"col":"docSubject","value":"申请开通BMP合同管理和项目管理权限"},{"col":"docCreateTime","value":"2019-07-01"},{"col":"docStatus","value":"驳回","color":"warning"},{"col":"docCreator","value":"郑超"},{"col":"handlerName","value":"郑超"}]},{"href":"#","cells":[{"col":"docSubject","value":"​产品研发中心申请新增Docker服务器用于体验环境搭建"},{"col":"docCreateTime","value":"2019-06-25"},{"col":"docStatus","value":"待审","color":"primary"},{"col":"docCreator","value":"周梓凡"},{"col":"handlerName","value":"张社丽"}]},{"href":"#","cells":[{"col":"docSubject","value":"五一节前休假申请"},{"col":"docCreateTime","value":"2019-04-25"},{"col":"docStatus","value":"废弃","color":"info"},{"col":"docCreator","value":"杨建宏"},{"col":"handlerName","value":"无"}]},{"href":"#","cells":[{"col":"docSubject","value":"关于成都分公司来深参与研发的人员电脑MAC信息登记"},{"col":"docCreateTime","value":"2019-04-20"},{"col":"docStatus","value":"结束","color":"success"},{"col":"docCreator","value":"易荣烽"},{"col":"handlerName","value":"无"}]},{"href":"#","cells":[{"col":"docSubject","value":"个人自备电脑补贴申请"},{"col":"docCreateTime","value":"2019-03-21"},{"col":"docStatus","value":"草稿","color":"weaken"},{"col":"docCreator","value":"唐超"},{"col":"handlerName","value":"无"}]}]}
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+		   <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/review/km_review_main/kmReviewMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/review/mobile/index.jsp?mydoc=!{myFlow}"
+				href="/km/review/#j_path=/listApproval&amp;mydoc=!{myFlow}" />
+			
+	    </operations>
+</portlet>
+<!-- 我发起的流程 -->
+<portlet
+		id="km.review.myFlow.approval"
+		name="{km-review:kmReviewMain.portlet.myFlow.create.my}"
+		module="{km-review:module.km.review}"
+		description="{km-review:portlet.listtable.desc}" forSystem="cloud" varExtend="km.review.myFlow.approval">
+		<source
+			id="km-review.myFlowApproval"
+			format="data.table"
+			type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-review/kmReviewMainPortlet/listPortlet?owner=true&status=!{status}&rowsize=!{rowsize}&scope=!{scope}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"docSubject","title":"主题","align":"center","width":"200px"},{"property":"docCreateTime","title":"创建时间","align":"center","width":"100px"},{"property":"docStatus","title":"文档状态","align":"center","width":"60px"},{"property":"handlerName","title":"当前处理人","align":"center","width":"100px"}],"data":[{"href":"#","cells":[{"col":"docSubject","value":"变更唐超为“新产品平台开发项目”项目经理"},{"col":"docCreateTime","value":"2019-07-06"},{"col":"docStatus","value":"待审","color":"primary"},{"col":"handlerName","value":"张社丽"}]},{"href":"#","cells":[{"col":"docSubject","value":"申请开通BMP合同管理和项目管理权限"},{"col":"docCreateTime","value":"2019-07-01"},{"col":"docStatus","value":"驳回","color":"warning"},{"col":"handlerName","value":"郑超"}]},{"href":"#","cells":[{"col":"docSubject","value":"​产品研发中心申请新增Docker服务器用于体验环境搭建"},{"col":"docCreateTime","value":"2019-06-25"},{"col":"docStatus","value":"待审","color":"primary"},{"col":"handlerName","value":"张社丽"}]},{"href":"#","cells":[{"col":"docSubject","value":"五一节前休假申请"},{"col":"docCreateTime","value":"2019-04-25"},{"col":"docStatus","value":"废弃","color":"info"},{"col":"handlerName","value":"无"}]},{"href":"#","cells":[{"col":"docSubject","value":"关于成都分公司来深参与研发的人员电脑MAC信息登记"},{"col":"docCreateTime","value":"2019-04-20"},{"col":"docStatus","value":"结束","color":"success"},{"col":"handlerName","value":"无"}]},{"href":"#","cells":[{"col":"docSubject","value":"个人自备电脑补贴申请"},{"col":"docCreateTime","value":"2019-03-21"},{"col":"docStatus","value":"草稿","color":"weaken"},{"col":"handlerName","value":"无"}]}]}
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/review/km_review_main/kmReviewMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/review/mobile/index.jsp?mydoc=create"
+				href="/km/review/#j_path=/listCreate&amp;mydoc=create" />
+	    </operations>
+</portlet>
+<!-- 流程分类导航（面板） -->
+<portlet
+		id="km.cate.review.flat"
+		name="{km-review:portlet.category.navigation.flat}"
+		module="{km-review:module.km.review}" forSystem="cloud" varExtend="km.cate.review.flat">
+		<source id="km-review.cateFlat" format="data.link.tree" type="json">
+			<code>
+			<![CDATA[
+				{"url":"/data/sys-category/sysCategoryCriteria/index?modelName=com.landray.kmss.km.review.model.KmReviewTemplate&parentId=!{parentId}&nodeType=!{nodeType}&currId=!{cateid}&expand=true&authType=2&url=/km/review/"}
+			]]>
+			</code>
+		</source>
+</portlet>
+<!-- 流程分类导航（层级） -->
+<portlet
+	id="km.cate.review.level"
+	name="{km-review:portlet.category.navigation.level}"
+	module="{km-review:module.km.review}">
+	<source id="km-review.cateLevel" format="data.nav" type="json">
+		<code>
+		<![CDATA[
+				{"url":"/data/sys-category/sysCategoryCriteria/index2?modelName=com.landray.kmss.km.review.model.KmReviewTemplate&parentId=!{parentId}&nodeType=!{nodeType}&currId=!{cateid}&authType=2&url=/km/review/"}
+		]]>
+		</code>
+	</source>
+</portlet>
+<!--流程首页-统计部件-开始-->
+<portlet
+	id="km.review.statistics.index"
+	name="{km-review:portlet.km.review.statistics.index}"
+	module="{km-review:module.km.review}"
+	description="{km-review:portlet.description.km.review.statistics.index}">
+	<source format="sys.ui.iframe" type="Static">
+		<code>
+			<![CDATA[
+				{"src":"/km/review/km_review_index/kmReviewIndex.do?LUIID=!{lui.element.id}&method=homeInfo&modeType=isPortlet&isHome=true"}
+			]]>
+		</code>
+	</source>
+</portlet>
+<!--流程首页-统计部件-结束-->
+
+<!--流程首页-常用流程和最近使用流程部件-开始-->
+<portlet
+		id="km.review.usual.index"
+		name="{km-review:portlet.km.review.usual.index}"
+		module="{km-review:module.km.review}"
+		description="{km-review:portlet.description.km.review.usual.index}">
+	<source format="sys.ui.iframe" type="Static">
+		<code>
+			<![CDATA[
+				{"src":"/km/review/km_review_index/kmReviewIndex.do?method=toOftenOrRecent&oftenRecentFlow=!{oftenRecentFlow}&rowsize=!{rowsize}"}
+			]]>
+		</code>
+	</source>
+	<vars>
+		<var name="{km-review:kmReview.nav.create}" key="oftenRecentFlow" kind="enumValue" default="offen">
+			{
+				"values":
+					[
+						{ "text":"{km-review:kmReview.nav.offen.use}", "value":"offen" },
+						{ "text":"{km-review:kmReview.nav.recent.use}", "value":"recent" }
+					],
+				"showType":
+					"radio"
+			}
+		</var>
+		<var name="{portlet.rowsize}" key="rowsize" kind="rowsize"/>
+	</vars>
+	<operations>
+		<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/review/#j_path=%2Fcreate"/>
+	</operations>
+</portlet>
+<!--流程首页-常用流程和最近使用流程部件-结束-->
+<portlet
+		id="km.review.process.charts"
+		name="{km-review:kmReviewMain.portlet.myFlow.charts.summary}"
+		module="{km-review:module.km.review}"
+		description="{km-review:kmReviewMain.portlet.myFlow.charts.desc}">
+	<source
+			format="sys.ui.iframe"
+			type="Static">
+		<code>
+			<![CDATA[
+		{
+			"src":"/km/review/km_review_index/kmReviewIndex.do?LUIID=!{lui.element.id}&method=listProcessHomePageCharts&summary=!{summary}"
+		}
+	]]>
+		</code>
+		<example>
+			<code>
+				<![CDATA[
+			{
+				"src":"/km/review/km_review_index/kmReviewIndex.do?LUIID=!{lui.element.id}&method=listProcessHomePageCharts&summary=listCreateCharts"
+			}
+		]]>
+			</code>
+		</example>
+
+	</source>
+	<vars>
+		<var name="{km-review:kmReviewMain.portlet.summary}" key="summary" kind="enumValue" default="listCreateCharts">
+			{  "values":[{ "text":"{km-review:portlet.var.listApprovedCharts}", "value":"listApprovedCharts"},
+			{ "text":"{km-review:portlet.var.listCreateCharts}", "value":"listCreateCharts"}
+			],
+			"showType":"radio"
+			}
+		</var>
+	</vars>
+</portlet>
+<portlet
+		id="km.review.process.summary"
+		name="{km-review:kmReviewMain.portlet.summary.list}"
+		module="{km-review:module.km.review}"
+		description="{km-review:description.km.review.summary.list}">
+	<source format="sys.ui.iframe"
+			type="Static">
+		<code>
+			<![CDATA[
+		{
+			"src":"/km/review/km_review_index/kmReviewIndex.do?LUIID=!{lui.element.id}&method=listProcessSummaryPortlet&rowsize=!{rowsize}&processType=!{processType}"
+		}
+	]]>
+		</code>
+		<example>
+			<code>
+				<![CDATA[
+				{"src":"/km/review/km_review_index/kmReviewIndex.do?LUIID=!{lui.element.id}&method=listProcessSummaryPortlet&rowsize=!{rowsize}&processType=!{processType}"}
+			]]>
+			</code>
+		</example>
+	</source>
+	<vars>
+		<!-- 文档数-->
+		<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="6"/>
+		<!-- 我的流程：待我审的 我已审的 我发起的,我跟踪的-->
+		<var name="{km-review:kmReviewMain.portlet.myFlow}" key="processType" kind="enumValue" default="reviewProcessInfo">
+			{
+			"values":[	{"text":"{km-review:kmReviewMain.portlet.review}", "value":"reviewProcessInfo"},
+			{"text":"{km-review:kmReviewMain.portlet.reviewed}", "value":"reviewedProcessInfo"},
+			{"text":"{km-review:kmReviewMain.portlet.draft}","value":"draftProcessInfo"},
+			{"text":"{km-review:kmReviewMain.portlet.follow}","value":"followProcessInfo"}
+			],
+			"showType":"radio"
+			}
+		</var>
+	</vars>
+	<operations>
+		<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/review/portlet/km_review_more.jsp?mydoc=!{processType}" />
+	</operations>
+</portlet>
+</root>

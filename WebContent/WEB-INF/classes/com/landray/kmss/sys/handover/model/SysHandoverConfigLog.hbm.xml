@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.handover.model.SysHandoverConfigLog"
+		table="sys_handover_config_log">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="fdModule"
+			column="fd_module"
+			update="true"
+			insert="true"
+			length="200" />
+
+		<property
+			name="fdModuleName"
+			column="fd_module_name"
+			update="true"
+			insert="true"
+			length="200"/>
+
+		<property
+			name="fdItem"
+			column="fd_item"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="fdItemName"
+			column="fd_item_name"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="fdStatus"
+			column="fd_status"
+			update="true"
+			insert="true"
+			length="2" />
+
+		<property
+			name="fdCount"
+			column="fd_count"
+			update="true"
+			insert="true"
+			length="19" />
+			
+		<property
+			name="fdIgnoreCount"
+			column="fd_ignore_count"
+			update="true"
+			insert="true"
+			length="19"
+			not-null="false" />
+
+		<property
+			name="fdIsSucc"
+			column="fd_is_succ"
+			update="true"
+			insert="true"
+			length="1" />
+
+		<property
+			name="fdStartTime"
+			column="fd_start_time"
+			update="true"
+			insert="true"/>
+
+		<property
+			name="fdEndedTime"
+			column="fd_ended_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+
+		<many-to-one
+			name="fdMain"
+			column="fd_main"
+			insert="true"
+			update="true"/>
+		<bag
+			name="conLogDetails"
+			lazy="true"
+			inverse="true"
+			cascade="all-delete-orphan">
+			<key column="fd_log" />
+			<one-to-many
+				class="com.landray.kmss.sys.handover.model.SysHandoverConfigLogDetail" />
+		</bag>
+	</class>
+</hibernate-mapping>

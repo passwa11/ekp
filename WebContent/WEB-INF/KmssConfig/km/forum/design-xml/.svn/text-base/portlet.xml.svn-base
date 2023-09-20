@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+	
+	<!--论坛主题（表格列表） -->   
+	<portlet id="km.forum.topic.listable" 
+	         name="{km-forum:kmForumTopic.topic}" 
+	         module="{km-forum:module.km.forum}"
+	         description="{portlet.list.desc2}">
+		<source  format="sys.ui.listtable" type="AjaxJson" >
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/forum/km_forum_portlet/kmForumPortlet.do?method=getTopicList&rowsize=!{rowsize}&type=!{type}&fdForumIds=!{fdForumIds}&scope=!{scope}"
+				}
+			]]>    
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					{
+    "columns": [
+        {
+            "title": "标题",
+            "property": "text",
+            "headerStyle": "width:150px"
+        },
+        {
+            "title": "回复数",
+            "property": "returnnum",
+            "headerStyle": "width:125px"
+        },
+        {
+            "title": "日期",
+            "property": "create",
+            "headerStyle": "width:125px"
+        }
+    ],
+    "datas": [
+        [
+            {
+                "col": "text",
+                "value": "关于你的记忆，快来听听2019对你的告白"
+            },
+            {
+                "col": "returnnum",
+                "value": "230"
+            },
+            {
+                "col": "create",
+                "value": "2020/2/2"
+            }
+        ],
+        [
+            {
+                "col": "text",
+                "value": "【文化布道师】愿历尽千帆，归来仍少年"
+            },
+            {
+                "col": "returnnum",
+                "value": "103"
+            },
+            {
+                "col": "create",
+                "value": "2020/2/2"
+            }
+        ],
+        [
+            {
+                "col": "text",
+                "value": "蓝锐公司举办2019年开工誓师大会"
+            },
+            {
+                "col": "returnnum",
+                "value": "20"
+            },
+            {
+                "col": "create",
+                "value": "2020/2/2"
+            }
+        ],
+        [
+            {
+                "col": "text",
+                "value": "新人报道-需求分析部-张小雨"
+            },
+            {
+                "col": "returnnum",
+                "value": "1"
+            },
+            {
+                "col": "create",
+                "value": "2020/2/2"
+            }
+        ],
+        [
+            {
+                "col": "text",
+                "value": "一张图告诉您——如何正确追查流程引擎的报错"
+            },
+            {
+                "col": "returnnum",
+                "value": "8"
+            },
+            {
+                "col": "create",
+                "value": "2020/2/2"
+            }
+        ],
+        [
+            {
+                "col": "text",
+                "value": "AppStore强推HTTPS的计划推迟了，不用恐慌了！"
+            },
+            {
+                "col": "returnnum",
+                "value": "13"
+            },
+            {
+                "col": "create",
+                "value": "2020/2/2"
+            }
+        ],
+        [
+            {
+                "col": "text",
+                "value": "【戈壁故事】张小雨：只要出发，就一定能到达！"
+            },
+            {
+                "col": "returnnum",
+                "value": "25"
+            },
+            {
+                "col": "create",
+                "value": "2020/2/2"
+            }
+        ],
+        [
+            {
+                "col": "text",
+                "value": "POC操作指引--SAP集成篇"
+            },
+            {
+                "col": "returnnum",
+                "value": "11"
+            },
+            {
+                "col": "create",
+                "value": "2020/2/2"
+            }
+        ]
+    ]
+}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{km-forum:kmForumCategory.docCreateTime}" key="scope" kind="enumValue" default="no">
+	                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	                   "showType":"radio"
+	                  }
+	        </var>
+		    <var name="{km-forum:kmForum.portlet.topic.amount}" key="rowsize" kind="rowsize" />
+		      <var name="{km-forum:kmForum.portlet.topic.cate}" key="type" kind="enumValue"  default="new">
+		    	 { "values":[{ "text":"{km-forum:kmForum.portlet.topic.latest}", "value":"new" },{ "text":"{km-forum:menu.kmForum.Create.my}", "value":"owner" },{ "text":"{km-forum:kmForumTopic.pink.title}", "value":"pinked" },{ "text":"{km-forum:kmForumTopic.hot.title}", "value":"hot" }],
+              		"showType":"radio"
+              	 }
+		    </var>
+		     <var name="{km-forum:kmForumTopic.fdForumId}" key="fdForumIds" kind="dialogJs" >
+		    	{"jsp":"/km/forum/km_forum_ui/selectforum.jsp","help":""}
+		     </var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/forum/km_forum/kmForumPost.do?method=add&amp;fdForumId=!{fdForumIds}" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/forum/indexCriteria.jsp#cri.q=categoryId:!{fdForumIds}" />
+		</operations>
+	</portlet>
+	<!--多分类论坛部件-->
+	<portlet
+			id="km.forum.portlet.new.multSel"
+			name="{km-forum:kmForumTopic.topic.isMultSel}"
+			module="{km-forum:module.km.forum}"
+			description="{km-forum:kmForumTopic.topic.isMultSel.desc}">
+		<source format="sys.ui.classic.rich" type="AjaxJson">
+			<code>
+				<![CDATA[
+				{
+					"url":"/km/forum/km_forum_portlet/kmForumPortlet.do?method=getTopicList&rowsize=!{rowsize}&type=!{type}&persontype=!{persontype}&fdForumIds=!{fdForumIds}&dataview=classic&forumZxType=list&scope=!{scope}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+					{"catename":"文化与建议","text":"关于你的记忆，快来听听2019对你的告白","creator":"张小雨","created":"2020-2-2","readcount":"1156","evalcount":"230","docscore":"59","otherinfo":""},
+					{"catename":"文化与建议","text":"【文化布道师】愿历尽千帆，归来仍少年","creator":"张小雨","created":"2020-2-2","readcount":"561","evalcount":"103","docscore":"28","otherinfo":""},
+					{"catename":"文化与建议","text":"蓝锐公司举办2019年开工誓师大会","creator":"张小雨","created":"2020-2-2","readcount":"284","evalcount":"20","docscore":"0","otherinfo":""},
+					{"catename":"新人报到区","text":"新人报道-需求分析部-张小雨","creator":"张小雨","created":"2020-2-2","readcount":"174","evalcount":"1","docscore":"1","otherinfo":""},
+					{"catename":"技术沙龙","text":"一张图告诉您——如何正确追查流程引擎的报错","creator":"张小雨","created":"2020-2-2","readcount":"228","evalcount":"8","docscore":"2","otherinfo":""},
+					{"catename":"技术沙龙","text":"如果想过好元旦节，请预防“闰秒”事件，天干物燥，小心火烛！","creator":"张小雨","created":"2020-2-2","readcount":"155","evalcount":"21","docscore":"10","otherinfo":""},
+					{"catename":"技术沙龙","text":"AppStore强推HTTPS的计划推迟了，不用恐慌了！","creator":"张小雨","created":"2020-2-2","readcount":"305","evalcount":"25","docscore":"5","otherinfo":""},
+					{"catename":"达人访谈","text":"【戈壁故事】张小雨：只要出发，就一定能到达！","creator":"张小雨","created":"2020-2-2","readcount":"108","evalcount":"13","docscore":"0","otherinfo":""},
+					{"catename":"达人访谈","text":"【运营女神】张小雨：我与一线亲密接触、不得不说的故事","creator":"张小雨","created":"2020-2-2","readcount":"438","evalcount":"81","docscore":"0","otherinfo":""},
+					{"catename":"案例分享","text":"POC操作指引--SAP集成篇","creator":"张小雨","created":"2020-2-2","readcount":"307","evalcount":"11","docscore":"0","otherinfo":""}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{km-forum:kmForum.portlet.topic.display}" key="persontype" kind="enumValue" default="replier">
+				{"values":[{ "text":"{km-forum:kmForum.portlet.type.replier}", "value":"replier"},
+				{ "text":"{km-forum:kmForum.portlet.type.creator}", "value":"creator"}],
+				"showType":"radio",
+				"help":"{km-forum:kmForum.portlet.topic.display.help}"
+				}
+			</var>
+			<var name="{km-forum:kmForum.portlet.topic.amount}" key="rowsize" kind="rowsize" />
+			<var name="{km-forum:kmForum.portlet.topic.cate}" key="type" kind="enumValue"  default="new">
+				{ "values":[{ "text":"{km-forum:kmForum.portlet.topic.latest}", "value":"new" },{ "text":"{km-forum:kmForumTopic.pink.title}", "value":"pinked" },{ "text":"{km-forum:kmForumTopic.hot.title}", "value":"hot" }],
+				"showType":"radio"
+				}
+			</var>
+			<var name="{km-forum:kmForumTopic.fdForumId}" key="fdForumIds" kind="dialogJs" >
+				{"jsp":"/km/forum/km_forum_ui/selectforum.jsp?isMultSel=true","help":""}
+			</var>
+		</vars>
+		<operations>
+			<operation
+					name="{operation.create}"
+					type="create"
+					href="/km/forum/km_forum/kmForumPost.do?method=add" />
+			<operation
+					name="{operation.more}"
+					type="more"
+					href="/km/forum/indexCriteria.jsp" />
+		</operations>
+	</portlet>
+	<!-- 新增论坛列表 -->
+	<portlet
+		id="km.forum.portlet.new"
+		name="{km-forum:kmForumTopic.classify}"
+		module="{km-forum:module.km.forum}"
+		description="{km-forum:kmForumTopic.classify1}">
+		<source format="sys.ui.classic.rich" type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/forum/km_forum_portlet/kmForumPortlet.do?method=getTopicList&rowsize=!{rowsize}&type=!{type}&persontype=!{persontype}&fdForumIds=!{fdForumIds}&dataview=classic&forumZxType=list&scope=!{scope}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+					{"catename":"文化与建议","text":"关于你的记忆，快来听听2019对你的告白","creator":"张小雨","created":"2020-2-2","readcount":"1156","evalcount":"230","docscore":"59","otherinfo":""},
+					{"catename":"文化与建议","text":"【文化布道师】愿历尽千帆，归来仍少年","creator":"张小雨","created":"2020-2-2","readcount":"561","evalcount":"103","docscore":"28","otherinfo":""},
+					{"catename":"文化与建议","text":"蓝锐公司举办2019年开工誓师大会","creator":"张小雨","created":"2020-2-2","readcount":"284","evalcount":"20","docscore":"0","otherinfo":""},
+					{"catename":"新人报到区","text":"新人报道-需求分析部-张小雨","creator":"张小雨","created":"2020-2-2","readcount":"174","evalcount":"1","docscore":"1","otherinfo":""},
+					{"catename":"技术沙龙","text":"一张图告诉您——如何正确追查流程引擎的报错","creator":"张小雨","created":"2020-2-2","readcount":"228","evalcount":"8","docscore":"2","otherinfo":""},
+					{"catename":"技术沙龙","text":"如果想过好元旦节，请预防“闰秒”事件，天干物燥，小心火烛！","creator":"张小雨","created":"2020-2-2","readcount":"155","evalcount":"21","docscore":"10","otherinfo":""},
+					{"catename":"技术沙龙","text":"AppStore强推HTTPS的计划推迟了，不用恐慌了！","creator":"张小雨","created":"2020-2-2","readcount":"305","evalcount":"25","docscore":"5","otherinfo":""},
+					{"catename":"达人访谈","text":"【戈壁故事】张小雨：只要出发，就一定能到达！","creator":"张小雨","created":"2020-2-2","readcount":"108","evalcount":"13","docscore":"0","otherinfo":""},
+					{"catename":"达人访谈","text":"【运营女神】张小雨：我与一线亲密接触、不得不说的故事","creator":"张小雨","created":"2020-2-2","readcount":"438","evalcount":"81","docscore":"0","otherinfo":""},
+					{"catename":"案例分享","text":"POC操作指引--SAP集成篇","creator":"张小雨","created":"2020-2-2","readcount":"307","evalcount":"11","docscore":"0","otherinfo":""}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+	        <var name="{km-forum:kmForum.portlet.topic.display}" key="persontype" kind="enumValue" default="replier">
+                 {"values":[{ "text":"{km-forum:kmForum.portlet.type.replier}", "value":"replier"},
+	                        { "text":"{km-forum:kmForum.portlet.type.creator}", "value":"creator"}],
+	              "showType":"radio",
+	              "help":"{km-forum:kmForum.portlet.topic.display.help}"
+	              }
+            </var>
+		    <var name="{km-forum:kmForum.portlet.topic.amount}" key="rowsize" kind="rowsize" />
+		      <var name="{km-forum:kmForum.portlet.topic.cate}" key="type" kind="enumValue"  default="new">
+		    	 { "values":[{ "text":"{km-forum:kmForum.portlet.topic.latest}", "value":"new" },{ "text":"{km-forum:kmForumTopic.pink.title}", "value":"pinked" },{ "text":"{km-forum:kmForumTopic.hot.title}", "value":"hot" }],
+              		"showType":"radio"
+              	 }
+		    </var>
+		     <var name="{km-forum:kmForumTopic.fdForumId}" key="fdForumIds" kind="dialogJs" >
+		    	{"jsp":"/km/forum/km_forum_ui/selectforum.jsp","help":""}
+		     </var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/forum/km_forum/kmForumPost.do?method=add&amp;fdForumId=!{fdForumIds}" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/forum/indexCriteria.jsp#cri.q=categoryId:!{fdForumIds}" />
+		</operations>
+	</portlet>
+	
+	<!-- 论坛主题  简单列表-->  
+	<portlet id="km.forum.topic.classic"
+			 name="{km-forum:kmForumTopic.topic}" 
+			 module="{km-forum:module.km.forum}" 
+	 		 description="{portlet.list.desc1}">
+		<source  format="sys.ui.classic" type="AjaxJson" >
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/forum/km_forum_portlet/kmForumPortlet.do?method=getTopicList&rowsize=!{rowsize}&type=!{type}&persontype=!{persontype}&fdForumIds=!{fdForumIds}&dataview=classic&scope=!{scope}"
+				}
+			]]>    
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[
+					{"catename":"文化讨论与建议","otherinfo":"(回复数230)","text":"关于你的记忆，快来听听2019对你的告白","creator":"张小雨","created":"2020/2/2"},
+					{"catename":"文化讨论与建议","otherinfo":"(回复数103)","text":"【文化布道师】愿历尽千帆，归来仍少年","creator":"张小雨","created":"2020/2/2"},
+					{"catename":"文化讨论与建议","otherinfo":"(回复数20)","text":"蓝锐公司举办2019年开工誓师大会","creator":"张小雨","created":"2020/2/2"},
+					{"catename":"新人报到区","otherinfo":"(回复数1)","text":"新人报道-需求分析部-张小雨","creator":"张小雨","created":"2020/2/2"},
+					{"catename":"技术沙龙","otherinfo":"(回复数8)","text":"一张图告诉您——如何正确追查流程引擎的报错","creator":"张小雨","created":"2020/2/2"},
+					{"catename":"技术沙龙","otherinfo":"(回复数21)","text":"如果想过好元旦节，请预防“闰秒”事件，天干物燥，小心火烛！","creator":"张小雨","created":"2020/2/2"},
+					{"catename":"技术沙龙","otherinfo":"(回复数25)","text":"AppStore强推HTTPS的计划推迟了，不用恐慌了！","creator":"张小雨","created":"2020/2/2"},
+					{"catename":"达人访谈","otherinfo":"(回复数13)","text":"【戈壁故事】张小雨：只要出发，就一定能到达！","creator":"张小雨","created":"2020/2/2"},
+					{"catename":"达人访谈","otherinfo":"(回复数81)","text":"【运营女神】张小雨：我与一线亲密接触、不得不说的故事","creator":"张小雨","created":"2020/2/2"},
+					{"catename":"案例分享","otherinfo":"(回复数11)","text":"POC操作指引--SAP集成篇","creator":"张小雨","created":"2020/2/2"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{km-forum:kmForumCategory.docCreateTime}" key="scope" kind="enumValue" default="no">
+	                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	                   "showType":"radio"
+	                  }
+	        </var>
+	        <var name="{km-forum:kmForum.portlet.topic.display}" key="persontype" kind="enumValue" default="replier">
+                 {"values":[{ "text":"{km-forum:kmForum.portlet.type.replier}", "value":"replier"},
+	                        { "text":"{km-forum:kmForum.portlet.type.creator}", "value":"creator"}],
+	              "showType":"radio",
+	              "help":"{km-forum:kmForum.portlet.topic.display.help}"
+	              }
+            </var>
+		    <var name="{km-forum:kmForum.portlet.topic.amount}" key="rowsize" kind="rowsize" />
+		      <var name="{km-forum:kmForum.portlet.topic.cate}" key="type" kind="enumValue"  default="new">
+		    	 { "values":[{ "text":"{km-forum:kmForum.portlet.topic.latest}", "value":"new" },{ "text":"{km-forum:menu.kmForum.Create.my}", "value":"owner" },{ "text":"{km-forum:kmForumTopic.pink.title}", "value":"pinked" },{ "text":"{km-forum:kmForumTopic.hot.title}", "value":"hot" }],
+              		"showType":"radio"
+              	 }
+		    </var>
+		     <var name="{km-forum:kmForumTopic.fdForumId}" key="fdForumIds" kind="dialogJs" >
+		    	{"jsp":"/km/forum/km_forum_ui/selectforum.jsp","help":""}
+		     </var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/forum/km_forum/kmForumPost.do?method=add&amp;fdForumId=!{fdForumIds}" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/forum/indexCriteria.jsp#cri.q=categoryId:!{fdForumIds}" />
+		</operations>
+	</portlet>
+	
+	<!-- 论坛排名 -->
+	<portlet id="km.forum.portlet.rank.score.dept"
+	         name="{km-forum:kmForumTopic.ranking}" 
+	         module="{km-forum:module.km.forum}"
+	         description="{portlet.list.desc2}">
+		<source  format="sys.ui.listtable" type="AjaxJson" >
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/forum/km_forum_portlet/kmForumPortlet.do?method=getRankList&rowsize=!{rowsize}&type=!{type}&org=!{org}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					{
+    "columns": [
+        {
+            "title": "姓名",
+            "property": "creator"
+        },
+        {
+            "title": "积分",
+            "property": "score",
+            "headerStyle": "width:125px"
+        }
+    ],
+    "datas": [
+        [
+            {
+                "col": "creator",
+                "value": "张小雨"
+            },
+            {
+                "col": "score",
+                "value": "积分：5003"
+            }
+        ],
+        [
+            {
+                "col": "creator",
+                "value": "李晓霞"
+            },
+            {
+                "col": "score",
+                "value": "积分：4997"
+            }
+        ],
+        [
+            {
+                "col": "creator",
+                "value": "赵旭"
+            },
+            {
+                "col": "score",
+                "value": "积分：4688"
+            }
+        ],
+        [
+            {
+                "col": "creator",
+                "value": "何光宇"
+            },
+            {
+                "col": "score",
+                "value": "积分：4682"
+            }
+        ],
+        [
+            {
+                "col": "creator",
+                "value": "王东"
+            },
+            {
+                "col": "score",
+                "value": "积分：4300"
+            }
+        ],
+        [
+            {
+                "col": "creator",
+                "value": "张清华"
+            },
+            {
+                "col": "score",
+                "value": "积分：3590"
+            }
+        ],
+        [
+            {
+                "col": "creator",
+                "value": "赵建国"
+            },
+            {
+                "col": "score",
+                "value": "积分：3532"
+            }
+        ]
+    ]
+}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		    <var name="{portlet.cate}" key="type" kind="enumValue" default="score">
+		    	 {    "values":[{ "text":"{km-forum:kmForum.portlet.rank.score}", "value":"score" },{ "text":"{km-forum:kmForum.portlet.rank.reply}", "value":"postCount" }],
+              			"showType":"radio"
+              	 }
+		    </var>
+		    <var name="{km-forum:kmForum.portlet.rank.org}" key="org" kind="enumValue"  default="dept">
+	    	  {    "values":[{ "text":"{km-forum:kmForum.portlet.rank.dept}", "value":"dept" },{ "text":"{km-forum:kmForum.portlet.rank.company}", "value":"company" }],
+              		"showType":"radio"
+               }
+		    </var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/forum/km_forum/kmForumPost.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/forum/indexCriteria.jsp" />
+		</operations>
+	</portlet>
+	
+	<!-- 论坛主题  新版主题展现方式-->  
+	<portlet id="km.forum.topic.new.classic"
+	         name="{km-forum:kmForumTopic.topic}" 
+	         module="{km-forum:module.km.forum}"
+	         description="{portlet.list.desc5}">
+		<source  format="sys.ui.listtable" type="AjaxJson" >
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/forum/km_forum_portlet/kmForumPortlet.do?method=getTopicNewList&rowsize=!{rowsize}&type=!{type}&&fdForumIds=!{fdForumIds}&scope=!{scope}"
+				}
+			]]>
+			</code>
+			
+			<example>
+				<code>
+					<![CDATA[
+{
+    "columns": [
+		        {
+		            "title": "标题",
+		            "property": "titles"
+		        }
+    		   ],
+    "datas": [
+		        [
+		            {
+		                "col": "titles",
+		                "value": "<link href=\"/ekp15new/km/forum/resource/css/forum_portlet.css\" rel=\"stylesheet\" type=\"text/css\">"+
+		            "<div class=\"new_portlet\">"+
+		                	"<a class=\"pink\" title=\"精华\"><span style=\"color: white;\">精</span></a> "+
+		                	"<a class=\"hot\" title=\"热帖\"><span style=\"color: white;\">热</span></a>"+
+							"<a class=\"top\" title=\"置顶\"><span style=\"color: white;\">顶</span></a>"+
+						"<a class=\"text\" onclick=\"return false\">"+
+						"关于你的记忆，快来听听2019对你的告白"+
+						"</a>"+
+						"<a class=\"count\" title=\"回帖数\">230</a>"+
+					"</div>"
+		            }
+		        ],
+		        [
+		         {
+		                "col": "text",
+		                "value": "<link href=\"/ekp15new/km/forum/resource/css/forum_portlet.css\" rel=\"stylesheet\" type=\"text/css\">"+
+		           " <div class=\"new_portlet\">"+
+		                	"<a class=\"pink\" title=\"精华\"><span style=\"color: white;\">精</span></a> "+
+							"<a class=\"top\" title=\"置顶\"><span style=\"color: white;\">顶</span></a>"+
+						"<a class=\"text\" onclick=\"return false\">"+
+						"【文化布道师】愿历尽千帆，归来仍少年"+
+						"</a>"+
+						"<a class=\"count\" title=\"回帖数\">103</a>"+
+					"</div>"
+		            }
+		        ],
+		        [        
+		         {
+		                "col": "text",
+		                "value": "<link href=\"/ekp15new/km/forum/resource/css/forum_portlet.css\" rel=\"stylesheet\" type=\"text/css\">"+
+		            "<div class=\"new_portlet\">"+
+		                	"<a class=\"pink\" title=\"精华\"><span style=\"color: white;\">精</span></a> "+
+							"<a class=\"top\" title=\"置顶\"><span style=\"color: white;\">顶</span></a>"+
+						"<a class=\"text\" onclick=\"return false\">"+
+						"蓝锐公司举办2019年开工誓师大会"+
+						"</a>"+
+						"<a class=\"count\" title=\"回帖数\">22</a>"+
+					"</div>"
+		            }
+		        ],
+		        [  
+		         {
+		                "col": "text",
+		                "value": "<link href=\"/ekp15new/km/forum/resource/css/forum_portlet.css\" rel=\"stylesheet\" type=\"text/css\">"+
+		            "<div class=\"new_portlet\">"+
+		                	"<a class=\"pink\" title=\"精华\"><span style=\"color: white;\">精</span></a> "+
+						"<a class=\"text\" onclick=\"return false\">"+
+						"新人报道-需求分析部-张小雨"+
+						"</a>"+
+						"<a class=\"count\" title=\"回帖数\">21</a>"+
+					"</div>"
+		            }
+		        ],
+		        [
+		         {
+		                "col": "text",
+		                "value": "<link href=\"/ekp15new/km/forum/resource/css/forum_portlet.css\" rel=\"stylesheet\" type=\"text/css\">"+
+		            "<div class=\"new_portlet\">"+
+						"<a class=\"text\" onclick=\"return false\">"+
+						"一张图告诉您——如何正确追查流程引擎的报错"+
+						"</a>"+
+						"<a class=\"count\" title=\"回帖数\">8</a>"+
+					"</div>"
+		            }
+		        
+		        ],
+		        [
+		         {
+		                "col": "text",
+		                "value": "<link href=\"/ekp15new/km/forum/resource/css/forum_portlet.css\" rel=\"stylesheet\" type=\"text/css\">"+
+		            "<div class=\"new_portlet\">"+
+						"<a class=\"text\" onclick=\"return false\">"+
+						"POC操作指引--SAP集成篇"+
+						"</a>"+
+						"<a class=\"count\" title=\"回帖数\">15</a>"+
+					"</div>"
+		            }
+		        ],
+		        [
+		         {
+		                "col": "text",
+		                "value": "<link href=\"/ekp15new/km/forum/resource/css/forum_portlet.css\" rel=\"stylesheet\" type=\"text/css\">"+
+		            "<div class=\"new_portlet\">"+
+						"<a class=\"text\" onclick=\"return false\">"+
+						"关于你的梦想，快来听听2020对未来的期盼"+
+						"</a>"+
+						"<a class=\"count\" title=\"回帖数\">25</a>"+
+					"</div>"
+		            }
+		        ],
+		        [
+		         {
+		                "col": "text",
+		                "value": "<link href=\"/ekp15new/km/forum/resource/css/forum_portlet.css\" rel=\"stylesheet\" type=\"text/css\">"+
+		            "<div class=\"new_portlet\">"+
+						"<a class=\"text\" onclick=\"return false\">"+
+						"AppStore强推HTTPS的计划推迟了，不用恐慌了！"+
+						"</a>"+
+						"<a class=\"count\" title=\"回帖数\">15</a>"+
+					"</div>"
+		            }
+		        ],
+		        [
+		         {
+		                "col": "text",
+		                "value": "<link href=\"/ekp15new/km/forum/resource/css/forum_portlet.css\" rel=\"stylesheet\" type=\"text/css\">"+
+		            "<div class=\"new_portlet\">"+
+						"<a class=\"text\" onclick=\"return false\">"+
+						"【戈壁故事】张小雨：只要出发，就一定能到达！"+
+						"</a>"+
+						"<a class=\"count\" title=\"回帖数\">13</a>"+
+					"</div>"
+		            }
+		        ]
+    		 ]
+}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{km-forum:kmForumCategory.docCreateTime}" key="scope" kind="enumValue" default="no">
+	                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	                   "showType":"radio"
+	                  }
+	        </var>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		    <var name="{km-forum:kmForum.portlet.topic.cate}" key="type" kind="enumValue"  default="new">
+		    	 { "values":[{ "text":"{km-forum:kmForum.portlet.topic.latest}", "value":"new" },{ "text":"{km-forum:menu.kmForum.Create.my}", "value":"owner" },{ "text":"{km-forum:kmForumTopic.pink.title}", "value":"pinked" },{ "text":"{km-forum:kmForumTopic.hot.title}", "value":"hot" }],
+              		"showType":"radio"
+              	 }
+		    </var>
+		     <var name="{km-forum:kmForumTopic.fdForumId}" key="fdForumIds" kind="dialogJs" >
+		    	{"jsp":"/km/forum/km_forum_ui/selectforum.jsp","help":""}
+		     </var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/forum/km_forum/kmForumPost.do?method=add&amp;fdForumId=!{fdForumIds}" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/forum/indexCriteria.jsp#cri.q=categoryId:!{fdForumIds}" />
+		</operations>
+	</portlet>
+	<!-- 图文摘要 -->
+	<portlet
+		id="km.forum.image.desc"
+		name="{km-forum:kmForumTopic.portlet.topic1}"
+		module="{km-forum:module.km.forum}"
+		description="{km-forum:kmForumTopic.portlet.topic1}">
+		<source format="sys.ui.image.desc" type="AjaxXml">
+			<code>
+				<![CDATA[
+					{
+						"url":"/sys/common/dataxml.jsp?s_bean=kmForumTopicService&rowsize=!{rowsize}&type=!{type}&fdForumIds=!{fdForumIds}&scope=!{scope}"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/km/forum/forum.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		    <var name="{km-forum:kmForumCategory.docCreateTime}" key="scope" kind="enumValue" default="no">
+	                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	                   "showType":"radio"
+	                  }
+	        </var>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		    <var name="{km-forum:kmForum.portlet.topic.cate}" key="type" kind="enumValue"  default="new">
+		    	 { "values":[{ "text":"{km-forum:kmForum.portlet.topic.latest}", "value":"new" },{ "text":"{km-forum:menu.kmForum.Create.my}", "value":"owner" },{ "text":"{km-forum:kmForumTopic.pink.title}", "value":"pinked" },{ "text":"{km-forum:kmForumTopic.hot.title}", "value":"hot" }],
+              		"showType":"radio"
+              	 }
+		    </var>
+		    <var name="{km-forum:kmForumTopic.fdForumId}" key="fdForumIds" kind="dialogJs" >
+		    	{"jsp":"/km/forum/km_forum_ui/selectforum.jsp","help":""}
+		     </var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/forum/km_forum/kmForumPost.do?method=add&amp;fdForumId=!{fdForumIds}" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/forum/indexCriteria.jsp#cri.q=categoryId:!{fdForumIds}" />
+		</operations>
+	</portlet>
+	
+<!-- 以下为支持cloud数据源 -->
+<!--论坛主题（表格列表） -->   
+	<portlet id="km.forum.topic.listable" 
+	         name="{km-forum:kmForumTopic.topic.table}" 
+	         module="{km-forum:module.km.forum}"
+	         description="{portlet.list.desc2}"
+	         forSystem="cloud" varExtend="km.forum.topic.listable">
+		<source id="km-forum.topicListable" format="data.table" type="json" >
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-forum/kmForumPortlet/getTopicList?rowsize=!{rowsize}&type=!{type}&fdForumIds=!{fdForumIds}&scope=!{scope}"
+				}
+			]]>    
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"fdId","renderType":"hidden"},{"property":"docSubject","title":"主题","align":"left"},{"property":"fdReplyCount","title":"回复数"},{"property":"fdLastPostTime","title":"回复时间"}],"data":[{"href":null,"cells":[{"col":"fdId","value":"161c5971314760f142c42e84cfe8894d"},{"col":"docSubject","value":"羽毛球俱乐部报名","href":"/km/forum/km_forum/kmForumPost.do?method=view&fdTopicId=161c5971314760f142c42e84cfe8894d"},{"col":"fdReplyCount","value":2,"color":"green"},{"col":"fdLastPostTime","value":"2018-04-01 22:55"}]},{"href":null,"cells":[{"col":"fdId","value":"16274941bcbb645557201794d2dafa7e"},{"col":"docSubject","value":"个税改革再成两会热点：刘永好董明珠建议起征点调至1万元","href":"/km/forum/km_forum/kmForumPost.do?method=view&fdTopicId=16274941bcbb645557201794d2dafa7e"},{"col":"fdReplyCount","value":0,"color":"green"},{"col":"fdLastPostTime","value":"2018-03-30 09:46"}]},{"href":null,"cells":[{"col":"fdId","value":"16cd7891eac3e6dbcbd94fd454fb285a"},{"col":"docSubject","value":"【2019中秋】有你陪伴，皆是团圆","href":"/km/forum/km_forum/kmForumPost.do?method=view&fdTopicId=16cd7891eac3e6dbcbd94fd454fb285a"},{"col":"fdReplyCount","value":3,"color":"green"},{"col":"fdLastPostTime","value":"2019-08-28 17:54"}]},{"href":null,"cells":[{"col":"fdId","value":"16b92f5a37aaac3ae2625304800bf194"},{"col":"docSubject","value":"【2019体检】体检预约流程   (体检将于8月30日截止，小伙伴们抓紧预约啦~)","href":"/km/forum/km_forum/kmForumPost.do?method=view&fdTopicId=16b92f5a37aaac3ae2625304800bf194"},{"col":"fdReplyCount","value":14,"color":"green"},{"col":"fdLastPostTime","value":"2019-08-22 10:17"}]},{"href":null,"cells":[{"col":"fdId","value":"16cd71da983280aa3b6b5d54128bada0"},{"col":"docSubject","value":"喜讯！恭喜深圳市智慧财政OA软件三期开发项目 完成验收！","href":"/km/forum/km_forum/kmForumPost.do?method=view&fdTopicId=16cd71da983280aa3b6b5d54128bada0"},{"col":"fdReplyCount","value":1,"color":"green"},{"col":"fdLastPostTime","value":"2019-08-29 13:33"}]}]}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		     <var name="{km-forum:kmForumTopic.fdForumId}" key="fdForumIds" kind="tree" >
+		    	<![CDATA[
+		    	{
+		    		"url":"/data/sys-common/treexml?s_bean=kmForumCategoryTeeService&categoryId=!{parentId}&fromPrtlet=true",
+		    		"dataType":"xml",
+		    		"model":"com.landray.kmss.km.forum.model.KmForumCategory",
+		    		"help":""
+		    	}
+		     	]]>
+		     </var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/forum/km_forum/kmForumPost.do?method=add&amp;fdForumId=!{fdForumIds}" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/forum/mobile"
+				href="/km/forum/indexCriteria.jsp#cri.q=categoryId:!{fdForumIds}" />
+		</operations>
+	</portlet>
+	
+	
+	<!-- 论坛主题  简单列表-->  
+	<portlet id="km.forum.topic.classic"
+			 name="{km-forum:kmForumTopic.topic.list}" 
+			 module="{km-forum:module.km.forum}" 
+	 		 description="{portlet.list.desc1}"
+	 		 forSystem="cloud" varExtend="km.forum.topic.classic">
+		<source id="km-forum.topicClassic" format="data.list.rich" type="json" >
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-forum/kmForumPortlet/getTopicList?rowsize=!{rowsize}&type=!{type}&persontype=!{persontype}&fdForumIds=!{fdForumIds}&dataview=classic&scope=!{scope}"
+				}
+			]]>    
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"喜讯！恭喜深圳市智慧财政OA软件三期开发项目 完成验收！","creator":{"fdName":"唐超"},"created":1567056782137,"icons":[{"name":"top","type":"bitmap"}],"cateName":"验收喜讯","cateHref":"/km/forum/indexCriteria.jsp?categoryId=15c195f0e125d203d2da09241b9be9e5","href":"/km/forum/km_forum/kmForumPost.do?method=view&fdForumId=15c195f0e125d203d2da09241b9be9e5&fdTopicId=16cd71da983280aa3b6b5d54128bada0"},{"text":"蓝凌签约—重庆轨道交通产业投资有限公司OA系统技术服务合同","creator":{"fdName":"唐超"},"created":1567044110737,"icons":[{"name":"hot","type":"bitmap"}],"cateName":"签单中标祝贺区","cateHref":"/km/forum/indexCriteria.jsp?categoryId=122ba58dbaa96eb74a37bcd446a96dd7","href":"/km/forum/km_forum/kmForumPost.do?method=view&fdForumId=122ba58dbaa96eb74a37bcd446a96dd7&fdTopicId=16cd7e70b30ec97599c5c1146a5970b0"},{"text":"个税改革再成两会热点：刘永好董明珠建议起征点调至1万元","creator":{"fdName":"唐超"},"created":1522374392000,"icons":[{"name":"essence","type":"bitmap"},{"name":"top","type":"bitmap"}],"cateName":"时事评论","cateHref":"/km/forum/indexCriteria.jsp?categoryId=15e509ddb90e8768e65d2d84969a8b2f","href":"/km/forum/km_forum/kmForumPost.do?method=view&fdForumId=15e509ddb90e8768e65d2d84969a8b2f&fdTopicId=16274941bcbb645557201794d2dafa7e"},{"text":"【2019中秋】有你陪伴，皆是团圆","creator":{"fdName":"黄晓艳"},"created":1566986093903,"cateName":"其他文化活动","cateHref":"/km/forum/indexCriteria.jsp?categoryId=16a9bcce1097492d4b8c701497094518","href":"/km/forum/km_forum/kmForumPost.do?method=view&fdForumId=16a9bcce1097492d4b8c701497094518&fdTopicId=16cd7891eac3e6dbcbd94fd454fb285a"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+		     <var name="{km-forum:kmForumTopic.fdForumId}" key="fdForumIds" kind="tree" >
+		    	<![CDATA[
+		    	{
+		    		"url":"/data/sys-common/treexml?s_bean=kmForumCategoryTeeService&categoryId=!{parentId}&fromPrtlet=true",
+		    		"model":"com.landray.kmss.km.forum.model.KmForumCategory",
+		    		"dataType":"xml",
+		    		"help":""
+		    	}
+		     	]]>
+		     </var>
+		     <var name="{km-forum:kmForum.portlet.topic.display}" key="persontype" kind="enumValue" default="replier">
+                 {"values":[{ "text":"{km-forum:kmForum.portlet.type.replier}", "value":"replier"},
+	                        { "text":"{km-forum:kmForum.portlet.type.creator}", "value":"creator"}],
+	              "showType":"radio"
+	              }
+            </var>
+		</vars>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/forum/km_forum/kmForumPost.do?method=add&amp;fdForumId=!{fdForumIds}" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/forum/mobile"
+				href="/km/forum/indexCriteria.jsp#cri.q=categoryId:!{fdForumIds}" />
+		</operations>
+	</portlet>
+	
+	<!-- 论坛排名 -->
+	<portlet id="km.forum.portlet.rank.score.dept"
+	         name="{km-forum:kmForumTopic.ranking}" 
+	         module="{km-forum:module.km.forum}"
+	         description="{portlet.list.desc2}"
+	         forSystem="cloud" varExtend="km.forum.portlet.rank.score.dept">
+		<source id="km-forum.portletRankScoreDept" format="data.rank.image" type="json" >
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-forum/kmForumPortlet/getRankList?rowsize=!{rowsize}&type=!{type}&org=!{org}"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"潘永辉","href":"/km/forum/indexCriteria.jsp?myTopic=create&mode=default#cri.q=fdPoster:14ef1497672dba04db7702647569cff8","target":"_blank","count":195,"unit":"","image":"http://java.landray.com.cn/sys/person/image.jsp?personId=14ef1497672dba04db7702647569cff8"},{"text":"郑超","href":"/km/forum/indexCriteria.jsp?myTopic=create&mode=default#cri.q=fdPoster:15b89351ee33c517673406140be9eb96","target":"_blank","count":70,"unit":"","image":"http://java.landray.com.cn/sys/person/image.jsp?personId=15b89351ee33c517673406140be9eb96"},{"text":"李志威","href":"/km/forum/indexCriteria.jsp?myTopic=create&mode=default#cri.q=fdPoster:16797cf3ca88358687f01ea43ff83d8d","target":"_blank","count":25,"unit":"","image":"http://java.landray.com.cn/sys/person/image.jsp?personId=16797cf3ca88358687f01ea43ff83d8d"},{"text":"余朝丰","href":"/km/forum/indexCriteria.jsp?myTopic=create&mode=default#cri.q=fdPoster:1694dc2b81af831a93a2e40466bac7c6","target":"_blank","count":10,"unit":"","image":"http://java.landray.com.cn/sys/person/image.jsp?personId=1694dc2b81af831a93a2e40466bac7c6"},{"text":"陈鹏","href":"/km/forum/indexCriteria.jsp?myTopic=create&mode=default#cri.q=fdPoster:163b6364631a853e2b92633433ca3bff","target":"_blank","count":10,"unit":"","image":"http://java.landray.com.cn/sys/person/image.jsp?personId=163b6364631a853e2b92633433ca3bff"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation
+				name="{operation.create}"
+				type="create"
+				href="/km/forum/km_forum/kmForumPost.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/forum/mobile"
+				href="/km/forum/indexCriteria.jsp" />
+		</operations>
+	</portlet>
+</root>

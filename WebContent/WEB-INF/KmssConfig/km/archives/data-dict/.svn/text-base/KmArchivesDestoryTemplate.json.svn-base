@@ -1,0 +1,145 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.km.archives.model.KmArchivesDestroyTemplate",
+        "messageKey": "km-archives:table.kmArchivesDestroyTemplate",
+        "table": "km_archives_destroy_template",
+        "url": "/km/archives/km_archives_destroy_template/kmArchivesDestroyTemplate.do?method=view&fdId=${fdId}",
+        "displayProperty": "fdName",
+        "serviceBean": "kmArchivesDestroyTemplateService"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "type": "String",
+            "length": "200",
+            "defaultValue": "",
+            "messageKey": "km-archives:kmArchivesDestroyTemplate.fdName",
+            "column": "fd_name",
+            "notNull": "true",
+            "validate": "true",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "type": "DateTime",
+            "messageKey": "km-archives:kmArchivesDestroyTemplate.docCreateTime",
+            "column": "doc_create_time",
+            "notNull": "true",
+            "validate": "false",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "true"
+        },
+        "fdDefaultFlag":         {
+            "propertyType": "simple",
+            "messageKey": "km-archives:py.fdDefaultFlag",
+            "type": "Integer",
+            "column": "fd_default_flag",
+            "notNull": "false",
+            "length": "4",
+            "validate": "false"
+        },
+        "authReaderFlag":         {
+            "propertyType": "simple",
+            "type": "Boolean",
+            "messageKey": "km-archives:kmArchivesDestroyTemplate.authReaderFlag",
+            "column": "auth_reader_flag",
+            "notNull": "false",
+            "validate": "false",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "false",
+            "readOnly": "true"
+        },
+        "authNotReaderFlag":         {
+            "propertyType": "simple",
+            "messageKey": "km-archives:kmArchivesDestroyTemplate.authNotReaderFlag",
+            "type": "Boolean",
+            "column": "auth_not_reader_flag",
+            "notNull": "false",
+            "length": "1",
+            "canDisplay": "false"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "messageKey": "km-archives:kmArchivesDestroyTemplate.docCreator",
+            "column": "doc_creator_id",
+            "notNull": "true",
+            "validate": "false",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_PERSON);"
+        },
+        "authReaders":         {
+            "propertyType": "list",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "km_archives_des_temp_reader",
+            "elementColumn": "fd_target_id",
+            "messageKey": "km-archives:kmArchivesDestroyTemplate.authReaders",
+            "column": "fd_source_id",
+            "notNull": "false",
+            "validate": "true",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "true",
+            "readOnly": "false",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_ALL);"
+        },
+        "authEditors":         {
+            "propertyType": "list",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "km_archives_des_temp_editor",
+            "elementColumn": "fd_target_id",
+            "messageKey": "km-archives:kmArchivesDestroyTemplate.authEditors",
+            "column": "fd_source_id",
+            "notNull": "false",
+            "validate": "true",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "true",
+            "readOnly": "false",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_ALL);"
+        },
+        "authAllReaders":         {
+            "propertyType": "list",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "km_archives_des_temp_areader",
+            "elementColumn": "fd_target_id",
+            "messageKey": "km-archives:kmArchivesDestroyTemplate.authAllReaders",
+            "column": "fd_source_id",
+            "notNull": "false",
+            "validate": "false",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "false",
+            "readOnly": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',null);"
+        },
+        "authAllEditors":         {
+            "propertyType": "list",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "km_archives_des_temp_aeditor",
+            "elementColumn": "fd_target_id",
+            "messageKey": "km-archives:kmArchivesDestroyTemplate.authAllEditors",
+            "column": "fd_source_id",
+            "notNull": "false",
+            "validate": "false",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "false",
+            "readOnly": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',null);"
+        }
+    }
+}

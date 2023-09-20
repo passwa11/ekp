@@ -1,0 +1,22 @@
+由于EKP会议模块对于日历框架的使用要求有些特殊，对于原版的fullcalendar(1.6.4版本)做了部分改动，特记录如下
+(因eclipse无法对比fullcalendar.js记录，故此文件的修改，要求写该js代码的具体修改位置)：
+
+1、新增 日程支持按优先级排序
+		修改位置：9行
+		原内容：function ge(t,e){ e.rightCol-e.leftCol-(t.rightCol-t.leftCol)
+   		修改内容：function ge(t,e){return (e.event.priority || 0) - (t.event.priority || 0) || e.rightCol-e.leftCol-(t.rightCol-t.leftCol)
+
+2、修改agendaWeek（周）视图的宽度以便看到右边的边框
+		修改位置：2982行
+		原内容：$("<div style='position:absolute;width:100%;overflow-x:hidden;overflow-y:auto'/>")
+		修改内容：$("<div style='position:absolute;width:99.9%;overflow-x:hidden;overflow-y:auto'/>")
+		
+3、修改dd/MM/yyyy格式下 ，会议日历处的日期显示格式不对 
+		修改位置：55、56行
+		原内容：
+			week: 'ddd M/d',
+			day: 'dddd M/d'
+		修改内容：
+			week: (Com_Parameter && Com_Parameter.Date_format && Com_Parameter.Date_format.match(/^d.*M.*y.*$/)) ? 'ddd d/M' : 'ddd M/d',
+			day: (Com_Parameter && Com_Parameter.Date_format && Com_Parameter.Date_format.match(/^d.*M.*y.*$/)) ? 'ddd d/M' : 'ddd M/d'
+	

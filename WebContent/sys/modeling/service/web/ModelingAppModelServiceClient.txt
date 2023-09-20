@@ -1,0 +1,82 @@
+/**
+     * 创建文档及流程数据
+     */
+    ModelingAppModelParameterAddForm createForm() throws Exception {
+        ModelingAppModelParameterAddForm form = new ModelingAppModelParameterAddForm();
+
+        // 文档流程id
+        form.setFdFlowId("178255ec8a836a5ec1b588845d08c0b8");
+
+        // 文档模板id
+        form.setFdModelId("178255ec8a836a5ec1b588845d08c0b8");
+
+        // 文档标题
+        form.setDocSubject("物料采购申请单");
+
+        // 流程发起人
+        form.setDocCreator("{\"PersonNo\": \"00012\"}");
+
+
+        // 自定义表单字段
+        String formValues = "{\"fd_2eddbf023c8292\":\"张三\", \"fd_2edd2f83f68242\":\"咨询部\", \"fd_2edd2fa69f6fc6\":\"\", \"fd_2eddbf09f9bc96\":\"2011-10-26\", \"fd_2edd2fb18e7f90\":{\"fd_2edd2fb18e7f90.fd_2eddbef4da4688\":[\"555555\",\"777777\"], \"fd_2edd2fb18e7f90.fd_2edd2fc8001062\":[\"444444\",\"666666\"], \"fd_2edd2fb18e7f90.fdId\":[\"1332472122898ac618f3e22460cab595\",\"13324721228b50c184d82c44ceca5301\"]}}";
+        form.setFormValues(formValues);
+
+
+
+        List<AttachmentForm> attForms = createAllAtts();
+        form.getAttachmentForms().addAll(attForms);
+
+        return form;
+    }
+
+    /**
+     * 创建附件列表
+     */
+    List<AttachmentForm> createAllAtts() throws Exception {
+
+        List<AttachmentForm> attForms = new ArrayList<AttachmentForm>();
+
+        String fileName = "采购订单说明书1.doc";
+        AttachmentForm attForm01 = createAtt(fileName);
+        fileName = "采购订单说明书2.doc";
+        AttachmentForm attForm02 = createAtt(fileName);
+
+        attForms.add(attForm01);
+        attForms.add(attForm02);
+
+        return attForms;
+    }
+
+    /**
+     * 创建附件对象
+     */
+    AttachmentForm createAtt(String fileName) throws Exception {
+        AttachmentForm attForm = new AttachmentForm();
+        attForm.setFdFileName(fileName);
+        // 设置附件关键字，表单模式下为附件控件的id
+        attForm.setFdKey("fd_2eddbf161a3268");
+
+        byte[] data = file2bytes("C:\\" + fileName);
+        attForm.setFdAttachment(data);
+
+        return attForm;
+    }
+
+    /**
+     * 将文件转换为字节编码
+     */
+    byte[] file2bytes(String fileName) throws Exception {
+        InputStream in = new FileInputStream(fileName);
+        byte[] data = new byte[in.available()];
+
+        try {
+            in.read(data);
+        } finally {
+            try {
+                in.close();
+            } catch (IOException ex) {
+            }
+        }
+
+        return data;
+    }

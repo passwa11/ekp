@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	<!-- 组织架构接入 -->
+	<extension
+		point="com.landray.kmss.sys.oms">
+		<item
+			name="in"
+			enable="true">
+			<param
+				name="name"
+				value="java" />
+			<param
+				name="service"
+				value="ekpSynchroInIteratorProvider" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.oms">
+		<item
+			name="eco"
+			enable="true">
+			<param
+				name="service"
+				value="ekpSynchroIteratorEcoProvider" />
+		</item>
+	</extension>
+	<!-- 待办集成 -->
+	<extension
+		point="com.landray.kmss.sys.notify">
+		<item
+			name="todoExtend"
+			enable="true">
+			<param
+				name="bean"
+				value="ekpNotifyJavaTodoProvider" />
+			<param
+					name="name"
+					value="{third-ekp-java:module.third.ekp.java}" />
+		</item>
+	</extension>
+	<!-- 
+	<extension
+		point="com.landray.kmss.sys.config.admin.do">
+		<item
+			name="config">
+			<param
+				name="jsp"
+				value="/third/ekp/java/config.jsp" />
+		</item>
+	</extension>
+	 -->
+</plugin>

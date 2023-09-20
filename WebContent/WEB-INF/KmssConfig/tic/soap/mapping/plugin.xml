@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+
+	
+	<!-- 表单事件扩展 需要 在添加表单事件的配置模块添加 jsp 片段 -->
+	<extension point="com.landray.kmss.sys.xform.jsp.generator" model="*">
+		<item name="generator">
+			<param name="bean" value="ticSoapFormEventJspGenerator" />
+			<param name="order" value="53"/>
+		</item>
+	</extension>
+	
+	<!-- Soapui服务注册模块 -->
+	<extension
+		point="com.landray.kmss.tic.core.mapping.plugins.integration"
+		model="*">
+		<item
+			name="ticCoreMappingIntegration">
+			<param
+				name="integrationKey"
+				value="TIC-SOAP" />
+			<param
+				name="displayName"
+				value="{tic-core-log:ticCore.log.soap}" />
+				<!-- 中间件类型为 1 -->
+			<param
+				name="fdIntegrationType"
+				value="3" />
+			<param 
+				name="fdMapperConfigJsp"
+				value="tic/soap/mapping/tic_soap_mapping_func/ticSoapMappingFunc_edit.jsp" />
+			<param
+				name="ekpIntegrationBean"
+				value="ticSoapMappingIntegration" />	
+			<param
+				name="formEventJS"
+				value="/tic/soap/mapping/soapEkpFormEvent.js" />
+			<!-- 生成jsp片段路径 -->			
+			<param
+				name="formEventPath"
+				value="tic/soap/mapping/formEventJsp/" />
+			<!-- 表单事件js主体方法名称  用来生成jsp使用-->	
+			<param
+				name="formEventFuncName"
+				value="doSOAP" />
+			
+			<param
+				name="order"
+				value="53" />		
+			<!-- 表单控件  
+			<param
+				name="infoClass"
+				value="ticSoapControlTreeInfo" />
+			<param
+				name="formControlJS"
+				value="tic/soap/mapping/soapFormControl.js" />
+				-->
+		</item>
+	</extension>
+	
+	<!-- 公式定义器接口
+	<extension
+		point="com.landray.kmss.sys.formula"
+		model="*">
+		<item
+			name="function">
+			<param
+				name="className"
+				value="com.landray.kmss.tic.soap.mapping.service.spring.TicSoapMappingFormulaDefinition" />
+		</item>
+	</extension>
+	 -->
+	
+	<!-- TIC表单控件扩展 
+	<extension point="com.landray.kmss.sys.xform.relation.params">
+		<item name="config">
+			<param name="sourceName" value="SOAP"></param>
+			<param name="sourceUUID" value="SOAP"></param>
+			<param name="sourceBean" value="ticCoreMappingControlRelation"></param>
+			
+			<param name="paramsURL" value="tic/core/resource/jsp/dialog/dialog.jsp?springBean=ticCoreMappingControlTreeBean&amp;infoBean=ticSoapControlTreeInfo&amp;url=tic/soap/connector/tic_soap_main/ticSoapMain.do"></param>
+			<param name="order" value="0"></param>
+			
+		</item>
+	</extension>
+	-->
+	
+</plugin>

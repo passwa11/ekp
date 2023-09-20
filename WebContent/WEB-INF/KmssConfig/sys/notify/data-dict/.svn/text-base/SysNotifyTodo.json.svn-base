@@ -1,0 +1,242 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.notify.model.SysNotifyTodo",
+        "messageKey": "sys-notify:table.sysNotifyTodo",
+        "serviceBean": "sysNotifyTodoService",
+        "displayProperty": "fdSubject",
+        "table": "sys_notify_todo",
+        "url": "/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdAppName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdAppName",
+            "type": "String",
+            "column": "fd_app_name",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100"
+        },
+        "fdModelName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdModelName",
+            "type": "String",
+            "column": "fd_model_name",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100"
+        },
+        "fdModelId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdModelId",
+            "type": "String",
+            "column": "fd_model_id",
+            "notNull": "false",
+            "unique": "false"
+        },
+        "fdKey":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdKey",
+            "type": "String",
+            "column": "fd_key",
+            "notNull": "false",
+            "unique": "false",
+            "length": "50"
+        },
+        "fdCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.docCreateTime",
+            "type": "DateTime",
+            "column": "fd_create_time",
+            "notNull": "false",
+            "unique": "false"
+        },
+        "fdSubject":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdSubject",
+            "type": "String",
+            "column": "fd_subject",
+            "notNull": "true",
+            "unique": "false",
+            "length": "800",
+            "langSupport": "true"
+        },
+        "fdType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdType",
+            "type": "Integer",
+            "column": "fd_type",
+            "notNull": "true",
+            "enumType": "sys_todo_cate",
+            "unique": "false"
+        },
+        "fdLink":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdLink",
+            "type": "String",
+            "column": "fd_link",
+            "notNull": "false",
+            "unique": "false",
+            "length": "1200"
+        },
+        "fdMobileLink":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdLink",
+            "type": "String",
+            "column": "fd_mobile_link",
+            "notNull": "false",
+            "unique": "false",
+            "length": "1200"
+        },
+        "fdPadLink":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdLink",
+            "type": "String",
+            "column": "fd_pad_link",
+            "notNull": "false",
+            "unique": "false",
+            "length": "1200"
+        },  
+        "hbmTodoTargets":         {
+            "propertyType": "list",
+            "messageKey": "sys-notify:sysNotifyTodo.hbmTodoTargets",
+            "column": "fd_todoid",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "sys_notify_todotarget",
+            "elementColumn": "fd_orgid"
+        },
+        "hbmDoneInfos":         {
+            "propertyType": "list",
+            "messageKey": "sys-notify:sysNotifyTodo.hbmDoneInfos",
+            "column": "fd_todoid",
+            "type": "com.landray.kmss.sys.notify.model.SysNotifyTodoDoneInfo",
+            "cascade": "all-delete-orphan",
+            "table": "sys_notify_todo_done_info"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-notify:sysNotifyTodo.docCreatorName",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_creator_id",
+            "notNull": "false",
+            "canSearch": "true",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}', '!{nameField}', null, ORG_TYPE_PERSON);"
+        },
+        "fdParameter1":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdParameter1",
+            "type": "String",
+            "column": "fd_parameter1",
+            "length": "50"
+        },
+        "fdParameter2":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdParameter2",
+            "type": "String",
+            "column": "fd_parameter2",
+            "length": "50"
+        },
+        "fdBundle":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdBundle",
+            "type": "String",
+            "column": "fd_bundle",
+            "length": "500"
+        },
+        "fdReplaceText":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdReplaceText",
+            "type": "String",
+            "column": "fd_replace_text",
+            "length": "1000"
+        },
+        "fdMD5":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdMD5",
+            "type": "String",
+            "column": "fd_md5",
+            "length": "32"
+        },
+        "fdDeleteFlag":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdDeleteFlag",
+            "type": "String",
+            "column": "fd_del_flag",
+            "length": "2"
+        },
+        "fdLevel":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdLevel",
+            "type": "Integer",
+            "column": "fd_level"
+        },
+        "fdExtendContent":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdExtendContent",
+            "type": "String",
+            "column": "fd_extend_content",
+            "length": "2000",
+            "langSupport": "true"
+        },
+        "fdLang":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdLang",
+            "type": "String",
+            "column": "fd_lang",
+            "length": "40"
+        },
+        "fdCateId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdCateId",
+            "type": "String",
+            "column": "fd_cate_id"
+        },
+        "fdCateName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdCateName",
+            "type": "String",
+            "column": "fd_cate_name",
+            "length": "100"
+        },
+        "fdTemplateName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdTemplateName",
+            "type": "String",
+            "column": "fd_template_name",
+            "length": "200"
+        },
+        "fdTemplateId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdTemplateId",
+            "type": "String",
+            "column": "fd_template_id"
+        },
+        "fdHierarchyId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-notify:sysNotifyTodo.fdHierarchyId",
+            "type": "String",
+            "column": "fd_hierarchy_id",
+            "length": "1000"
+        },
+        "hbmReadTodoTargets":         {
+            "propertyType": "list",
+            "messageKey": "sys-notify:sysNotifyTodo.hbmReadTodoTargets",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_todoid",
+            "elementColumn": "fd_orgid",
+            "table": "sys_notify_read_todotarget"
+        },
+        "hbmStarTodoTargets":         {
+            "propertyType": "list",
+            "messageKey": "sys-notify:sysNotifyTodo.hbmStarTodoTargets",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_todoid",
+            "elementColumn": "fd_orgid",
+            "table": "sys_notify_star_todotarget"
+        }
+    }
+}

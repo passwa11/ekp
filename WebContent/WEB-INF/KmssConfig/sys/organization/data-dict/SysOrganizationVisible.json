@@ -1,0 +1,56 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.organization.model.SysOrganizationVisible",
+        "messageKey": "sys-organization:table.sysOrganizationVisible",
+        "serviceBean": "sysOrganizationVisibleService",
+        "table": "sys_org_visible",
+        "url": "/sys/organization/sys_organization_visible/sysOrganizationVisible.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrganizationVisible.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "docAlterTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrganizationVisible.docAlterTime",
+            "type": "DateTime",
+            "column": "doc_alter_time",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "fdDescription":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrganizationVisible.fdDescription",
+            "type": "String",
+            "column": "fd_description",
+            "notNull": "false",
+            "length": "1500",
+            "validate": "true"
+        },
+        "visiblePrincipals":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrganizationVisible.visiblePrincipals",
+            "column": "fd_doc_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "fd_org_id",
+            "table": "sys_org_visible_principal"
+        },
+        "visibleSubordinates":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrganizationVisible.visibleSubordinates",
+            "column": "fd_doc_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "fd_org_id",
+            "table": "sys_org_visible_sub"
+        }
+    }
+}

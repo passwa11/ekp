@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/fssc/mobile/" 
+        messageKey="fssc-mobile:module.fssc.mobile" 
+        defaultValidator="roleValidator(role=ROLE_FSSCMOBILE_DEFAULT)">
+        <roles>
+        		ROLE_FSSCMOBILE_DEFAULT;<!-- 借款默认权限 -->
+        		ROLE_FSSCMOBILE_SETTING;<!-- 后台维护权限 -->
+        		ROLE_FSSCMOBILE_LINK;<!-- 连接配置权限 -->
+        </roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_FSSCMOBILE_DEFAULT)"/>
+        <request 
+            path="fssc_mobile_note/fsscMobileNote.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.mobile.model.FsscMobileNote" 
+            defaultValidator="roleValidator(role=ROLE_FSSCMOBILE_DEFAULT)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCMOBILE_DEFAULT)"/>
+            <query 
+                queryString="method=viewPic" 
+                validator="roleValidator(role=ROLE_FSSCMOBILE_DEFAULT)"/>
+        </request>
+        <request 
+            path="fssc_mobile_invoice_title/fsscMobileInvoiceTitle.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.mobile.model.FsscMobileInvoiceTitle" 
+            defaultValidator="roleValidator(role=ROLE_FSSCMOBILE_SETTING)">
+            <query
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCMOBILE_SETTING)"/>
+        </request>
+    </module>
+    <homePage 
+        messageKey="fssc-mobile:module.fssc.mobile" 
+        urlPrefix="fssc/mobile" 
+        url="/fssc/mobile/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/fssc/mobile/tree.jsp"/>
+    <profileConfig 
+        key="fssc/mobile" 
+        messageKey="{fssc-mobile:module.fssc.mobile}" 
+        url="/sys/profile/moduleindex.jsp?nav=/fssc/mobile/tree.jsp" 
+        icon="third_aiguanhuai" 
+        type="fs" 
+        description="{fssc-mobile:module.fssc.mobile.description}"/>
+</configs>

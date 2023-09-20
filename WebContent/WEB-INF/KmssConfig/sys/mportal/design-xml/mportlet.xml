@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:m="http://www.landray.com.cn/schema/mportlet" xmlns="http://www.landray.com.cn/schema/lui"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.landray.com.cn/schema/mportlet 
+	../../../sys/mobile/mportlet.xsd
+		http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd">
+
+
+	<m:mportlet 
+		description="{sys-mportal:module.sys.mportal.tileDisplay.description}"
+		module="{sys-mportal:sysMportal.moudle.fast}"
+	    id="kms.common.menu" 
+	    name="{sys-mportal:sysMportal.moudle.fast}"
+		jsUrl="/sys/mportal/tmpl/sysMportalMenu.js?menuId=!{menuId}&amp;rowsize=!{rowsize}&amp;expand=!{expand}">
+		<m:vars>
+			<var key="menuId" kind="dialogJs" name="选择菜单" required="true">
+				{
+					"js":
+					"seajs.use('sys/mportal/sys_mportal_card/js/SelectMenu.js',function(SelectMenu){SelectMenu('!{idField}','!{nameField}')})"
+				}
+			</var>
+			<var name="{sys-mportal:sysMportalMenu.rowsize}" key="rowsize" kind="int" default="4" required="true" />
+			<var key="expand" kind="enumValue" name="是否默认展开菜单" default="yes">
+				{"values":[{"text":"是", "value":"yes"}],"showType":"checkbox"}
+			</var>	
+		</m:vars>
+	</m:mportlet>
+	
+	<m:mportlet 
+		description="{sys-mportal:module.sys.mportal.slideDisplay.description}"
+		module="{sys-mportal:sysMportal.moudle.fast}"
+	    id="kms.common.menu.slide"
+	    name="{sys-mportal:sysMportal.moudle.fast}"
+		jsUrl="/sys/mportal/tmpl/sysMportalMenuSlide.js?menuId=!{menuId}&amp;rows=!{rows}&amp;columns=!{columns}">
+		<m:vars>
+			<var key="rows" kind="int" name="行数" required="true" default="1"></var>
+			<var key="columns" kind="int" name="列数" required="true" default="4"></var>
+			<var key="menuId" kind="dialogJs" name="选择菜单" required="true">
+				{
+					"js":
+					"seajs.use('sys/mportal/sys_mportal_card/js/SelectMenu.js',function(SelectMenu){SelectMenu('!{idField}','!{nameField}')})"
+				}
+			</var>
+		</m:vars>
+	</m:mportlet>
+	
+    <!-- name:图文快捷方式 (两行三格排列)          module:图文快捷方式                 description:支持展示三个快捷链接，分两行展示，第1个快捷链接宽度占满第一行，第2、3个快捷链接平分宽度显示在第二行     -->
+    <m:mportlet 
+		description="{sys-mportal:sysMportal.moudle.graphicFastLink.twoRowsAndThreeLattices.description}"
+		module="{sys-mportal:sysMportal.moudle.graphicFastLink}"
+	    id="sys.mportal.graphicFastLink.twoRowsAndThreeLattices" 
+	    name="{sys-mportal:sysMportal.moudle.graphicFastLink.twoRowsAndThreeLattices}"
+		jsUrl="/sys/mportal/sys_mportal_graphicFastLink/twoRowsAndThreeLattices/graphicFastLink.js?firstMenuLink=!{firstMenuLink}&amp;firstMenuTitle=!{firstMenuTitle}&amp;firstMenuSubtitle=!{firstMenuSubtitle}&amp;secondMenuLink=!{secondMenuLink}&amp;secondMenuTitle=!{secondMenuTitle}&amp;secondMenuIcon=!{secondMenuIcon}&amp;thirdMenuLink=!{thirdMenuLink}&amp;thirdMenuTitle=!{thirdMenuTitle}&amp;thirdMenuIcon=!{thirdMenuIcon}&amp;themeStyleId=!{themeStyleId}">
+		
+		<m:vars>
+		
+		   <var name="主题风格" key="themeStyleId" kind="custom" required="true" default="">
+				{"file":'/sys/mportal/sys_mportal_graphicFastLink/twoRowsAndThreeLattices/varkind/themeStyleConfig.jsp'}
+		   </var>
+		   
+       	   <var name="第一个快捷链接" key="firstMenuLink" kind="custom" required="true" default="">
+				{"file":'/sys/mportal/sys_mportal_graphicFastLink/twoRowsAndThreeLattices/varkind/firstMenuLinkConfig.jsp'}
+		   </var>
+		   
+       	   <var name="第二个快捷链接" key="secondMenuLink" kind="custom" required="true" default="">
+				{"file":'/sys/mportal/sys_mportal_graphicFastLink/twoRowsAndThreeLattices/varkind/secondMenuLinkConfig.jsp'}
+		   </var>
+		   
+       	   <var name="第三个快捷链接" key="thirdMenuLink" kind="custom" required="true" default="">
+				{"file":'/sys/mportal/sys_mportal_graphicFastLink/twoRowsAndThreeLattices/varkind/thirdMenuLinkConfig.jsp'}
+		   </var>		   		   
+		   
+		</m:vars>
+	</m:mportlet>
+	
+	
+    <!-- name:图片快捷方式 (左右滑动)          module:图片快捷方式                description:支持水平排列展示图片快捷链接，可左右滑动     -->
+    <m:mportlet 
+		description="{sys-mportal:sysMportal.moudle.pictureFastLink.swipeLeftAndRight.description}"
+		module="{sys-mportal:sysMportal.moudle.pictureFastLink}"
+	    id="sys.mportal.pictureFastLink.swipeLeftAndRight" 
+	    name="{sys-mportal:sysMportal.moudle.pictureFastLink.swipeLeftAndRight}"
+		jsUrl="/sys/mportal/sys_mportal_pictureFastLink/swipeLeftAndRight/pictureFastLink.js?fdIds=!{fdIds}&amp;pictureWidth=!{pictureWidth}&amp;pictureHeight=!{pictureHeight}">
+		
+		<m:vars>
+		
+			<var key="fdIds" kind="dialogJs" name="选择图片数据源" required="true">
+				{
+					"js":
+					"seajs.use('sys/mportal/sys_mportal_imgsource/js/selectImgSource.js',function(SelectImgSource){SelectImgSource('!{idField}','!{nameField}')})"
+				}
+			</var>
+			<var key="pictureWidth" kind="int" name="图片宽度" default="250">
+			      {"help":"px （建议宽度为250px）"}
+			</var>
+			<var key="pictureHeight" kind="int" name="图片高度" default="130">
+			      {"help":"px （建议高度为130px）"}
+			</var>	   		   
+		   
+		</m:vars>
+	</m:mportlet>
+	
+	<!-- name:图片快捷方式 (格子平铺)          module:图片快捷方式                description:支持一行两列格子平铺展示图片快捷链接     -->
+    <m:mportlet 
+		description="{sys-mportal:sysMportal.moudle.pictureFastLink.gridTile.description}"
+		module="{sys-mportal:sysMportal.moudle.pictureFastLink}"
+	    id="sys.mportal.pictureFastLink.gridTile" 
+	    name="{sys-mportal:sysMportal.moudle.pictureFastLink.gridTile}"
+		jsUrl="/sys/mportal/sys_mportal_pictureFastLink/gridTile/pictureFastLink.js?fdIds=!{fdIds}&amp;pictureHeight=!{pictureHeight}">
+		
+		<m:vars>
+		
+			<var key="fdIds" kind="dialogJs" name="选择图片数据源" required="true">
+				{
+					"js":
+					"seajs.use('sys/mportal/sys_mportal_imgsource/js/selectImgSource.js',function(SelectImgSource){SelectImgSource('!{idField}','!{nameField}')})"
+				}
+			</var>
+			<var key="pictureHeight" kind="int" name="图片高度" default="120">
+			      {"help":"px （建议高度为120px）"}
+			</var>	   		   
+		   
+		</m:vars>
+	</m:mportlet>
+		
+	
+	<m:mportlet
+		id="sys.mportal.html" 
+		name="{sys-mportal:sysMportal.moudle.html}" 
+		module="{sys-mportal:module.sys.mportal}"
+		jsUrl="/sys/mportal/tmpl/sysMportalHtml.js?htmlId=!{htmlId}" >
+		<m:vars>
+			<var key="htmlId" kind="dialogJs" name="选择" required="true">
+				{
+					"jsp":"/sys/mportal/sys_mportal_html/sysMportalHtml_selectpage.jsp"
+				}
+			</var>
+		</m:vars>
+	</m:mportlet>
+	<m:mportlet 
+		description="{sys-mportal:module.sys.mportal.picslide.description}"
+		id="sys.mportal.picslide" 
+		module="{sys-mportal:module.sys.mportal}"
+		name="{sys-mportal:sysMportal.moudle.picslide}"
+		jsUrl="/sys/mportal/tmpl/sysMportalPicSlide.js?fdIds=!{fdIds}&amp;refreshtime=!{refreshtime}&amp;showSubject=!{showSubject}&amp;height=!{height}">
+		<m:vars>
+			<var key="fdIds" kind="dialogJs" name="选择幻灯片" required="true">
+			
+				{
+					"js":
+					"seajs.use('sys/mportal/sys_mportal_imgsource/js/selectImgSource.js',function(SelectImgSource){SelectImgSource('!{idField}','!{nameField}')})"
+				}
+			</var>
+			<var key="refreshtime" name="刷新时间（秒）" kind="int" default="0">
+				{"help":"（为0则不自动刷新）"}
+			</var>
+			<var name="{sys-news:sysNewsMain.portlet.image.height}" key="height" kind="int" default="180">
+			      {"help":"px （建议高度为180px）"}
+			</var>
+			<var key="showSubject" kind="enumValue" name="显示标题" default="true">
+				{"values":[{"text":"显示", "value":"true"}],"showType":"checkbox"}
+			</var>
+		</m:vars>
+	</m:mportlet>
+	
+	<m:mportlet
+		id="sys.mportal.url" 
+		name="{sys-mportal:sysMportal.moudle.url}" 
+		description="{sys-mportal:module.sys.mportal.url.description}"
+		module="{sys-mportal:module.sys.mportal}"
+		jspUrl="!{url}" >
+		<m:vars>
+			<var key="url" kind="string" name="链接" required="true">
+			</var>
+		</m:vars>
+	</m:mportlet>
+	
+	<m:mportlet
+		id="sys.mportal.iframe" 
+		name="{sys-mportal:module.sys.mportal.iframeDisplay}" 
+		description="{sys-mportal:module.sys.mportal.iframeDisplay.description}"
+		module="{sys-mportal:module.sys.mportal}"
+		jsUrl="/sys/mportal/tmpl/sysMportalIframe.js?url=!{url}&amp;name=!{name}&amp;height=!{height}" >
+		<m:vars>
+			<var key="url" kind="string" name="链接" required="true">
+			</var>
+			<var key="height" kind="int" name="高度" required="false">
+				{"help":"px"}
+			</var>
+		</m:vars>
+	</m:mportlet>
+</root>

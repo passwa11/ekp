@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrgMatrixTemplate"
+		table="sys_org_matrix_template">
+		<!-- 主结构配置 -->
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<!-- 流程模板ID -->
+		<property
+			name="fdTemplateId"
+			column="fd_template_id"
+			update="true"
+			insert="true"
+			length="36"
+			index="idx_sysOrgMatrixTemplate_tpl" />
+		<!-- 流程模板名称 -->
+		<property
+			name="fdTemplateName"
+			column="fd_template_name"
+			update="true"
+			insert="true"
+			length="400" />
+		<!-- 流程模板KEY -->
+		<property
+			name="fdKey"
+			column="fd_key"
+			update="true"
+			insert="true"
+			length="200" />
+		<!-- 流程定义ID -->
+		<property
+			name="fdProcessId"
+			column="fd_process_id"
+			update="true"
+			insert="true"
+			length="36"
+			index="idx_sysOrgMatrixTemplate_pro" />
+		<!-- 流程节点ID -->
+		<property
+			name="fdNodeId"
+			column="fd_node_id"
+			update="true"
+			insert="true"
+			length="200" />
+		<!-- 流程节点名称 -->
+		<property
+			name="fdNodeName"
+			column="fd_node_name"
+			update="true"
+			insert="true"
+			length="400" />
+		<!-- 矩阵ID -->
+		<property
+			name="fdMatrixId"
+			column="fd_matrix_id"
+			update="true"
+			insert="true"
+			length="36"
+			index="idx_sysOrgMatrixTemplate_mid" />
+		<!-- 矩阵版本 -->
+		<property
+			name="fdMatrixVersion"
+			column="fd_matrix_version"
+			update="true"
+			insert="true"
+			length="50" />
+		<!-- 修改时间 -->
+		<property
+			name="fdModifyTime"
+			column="fd_modifier_time"
+			update="true"
+			insert="true" />
+		<!-- 修改人 -->
+		<many-to-one
+			name="fdModifier"
+			column="fd_modifier_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+		
+	</class>
+</hibernate-mapping>

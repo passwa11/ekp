@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		urlPrefix="/sys/common/"
+		messageKey="common.moduleName"
+		defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)">
+		<roles>SYSROLE_ADMIN;SYSROLE_FORMULA</roles>
+		<roleType>
+          <sysadmin>
+              SYSROLE_SYSADMIN
+          </sysadmin>
+          <security>
+              SYSROLE_SECURITY
+          </security>
+          <auditor>
+              SYSROLE_AUDITOR
+          </auditor>
+          <useless>SYSROLE_ADMIN</useless>
+        </roleType>
+		<request
+			path="config*"
+			defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)" />
+		<request
+			path="upload*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)" />
+		<request
+			path="trustsite*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)" />	
+		<request
+			path="dataxml.jsp*"
+			defaultValidator="ajaxRoleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)">
+			<query
+				queryString="s_bean=XMLGetResourceService"
+				validator="true" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetDataService" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetPageService" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetDataByKeyService" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleEngineParser" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=flowSimulationService" />
+		</request>
+		<request
+			path="datajson.jsp*"
+			defaultValidator="ajaxRoleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)">
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetDataService" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetPageService" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetDataByKeyService" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleEngineParser" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=flowSimulationService" />
+		</request>
+		<request
+			path="treexml.jsp*"
+			defaultValidator="ajaxRoleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)">
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetTreeService" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleEngineParser" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=flowSimulationService" />
+		</request>
+		<request
+			path="treejson.jsp*"
+			defaultValidator="ajaxRoleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)">
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetTreeService" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleEngineParser" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=flowSimulationService" />
+		</request>
+		<request
+			path="debug.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)">
+		</request>		
+		<request
+			path="code.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)">
+		</request>
+		<request
+			path="configcacheclear.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)">
+		</request>	
+		<!-- 查看数据字典 -->
+		<request
+			path="editDbInfo.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)">
+		</request>	
+		<request
+			path="sessionValidate.jsp*"
+			defaultValidator="true">
+		</request>	
+		<request
+			path="user.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)">
+		</request>	
+	</module>
+	
+	<!-- 修改log4j级别 -->
+	<module urlPrefix="/sys/config/"
+		defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)">
+		<request path="SystemDebug.jsp*" defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN)" />
+	</module>
+
+	<!-- mk门户data开头的特殊url安全访问 -->
+	<module urlPrefix="/data/sys-common/"
+			defaultValidator="ajaxRoleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN;SYSROLE_SECURITY;SYSROLE_AUDITOR)">
+		<request path="dataxml*"
+				defaultValidator="roleValidator(role=SYSROLE_USER)">
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetDataService" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetPageService" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetDataByKeyService" />
+				<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleEngineParser" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=flowSimulationService" />
+				
+		</request>
+		<request path="datajson*"
+				 defaultValidator="roleValidator(role=SYSROLE_USER)">
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetDataService" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetPageService" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetDataByKeyService" />
+				<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleEngineParser" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=flowSimulationService" />
+				
+		</request>
+		<request path="treexml*"
+				 defaultValidator="roleValidator(role=SYSROLE_USER)">
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetDataService" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetPageService" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetDataByKeyService" />
+				<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleEngineParser" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=flowSimulationService" />
+				
+		</request>
+		<request path="treejson*"
+				 defaultValidator="roleValidator(role=SYSROLE_USER)">
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetDataService" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetPageService" />
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				position="bottom"
+				queryString="s_bean=XMLGetDataByKeyService" />
+				<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaValidateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=sysFormulaSimulateByJS" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaValidate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleFormulaSimulate" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=ruleEngineParser" />
+			<query
+				validator="roleValidator(role=SYSROLE_FORMULA)"
+				position="bottom"
+				queryString="s_bean=flowSimulationService" />
+				
+		</request>
+	</module>
+
+</configs>

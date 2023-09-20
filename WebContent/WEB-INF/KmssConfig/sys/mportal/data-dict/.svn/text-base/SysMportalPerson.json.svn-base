@@ -1,0 +1,29 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.mportal.model.SysMportalPerson",
+        "messageKey": "sys-mportal:table.sysMportalPerson",
+        "table": "sys_mportal_person",
+        "serviceBean": "sysMportalPersonService"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdDetails":         {
+            "propertyType": "list",
+            "messageKey": "sys-mportal:sysMportalPerson.fdDetails",
+            "type": "com.landray.kmss.sys.mportal.model.SysMportalPersonDetail",
+            "column": "fd_mportal_person_id",
+            "orderBy": "fd_order asc",
+            "table": "sys_mportal_person_detail",
+            "cascade": "all-delete-orphan"
+        },
+        "fdPerson":         {
+            "propertyType": "model",
+            "messageKey": "sys-mportal:sysMportalPerson.fdPerson",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "fd_person_id"
+        }
+    }
+}

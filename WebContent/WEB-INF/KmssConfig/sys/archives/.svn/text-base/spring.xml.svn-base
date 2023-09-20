@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<bean
+		id="sysArchivesFileTemplateDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.archives.dao.hibernate.SysArchivesFileTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.archives.model.SysArchivesFileTemplate" />
+	</bean>
+	<bean
+		id="sysArchivesFileTemplateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.archives.service.spring.SysArchivesFileTemplateServiceImp">
+		<property
+			name="baseDao">
+			<ref bean="sysArchivesFileTemplateDao" />
+		</property>
+		<property name="sysAttMainService">
+        	<ref bean="sysAttMainService"/>
+        </property>
+        <property name="sysFormTemplateService">
+        	<ref bean="sysFormTemplateService"/>
+        </property>
+        <property name="sysOrgCoreService">
+        	<ref bean="sysOrgCoreService"/>
+        </property>
+	</bean>
+	<bean
+		id="sysArchivesFileTemplateService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysArchivesFileTemplateTarget" />
+		</property>
+	</bean>
+	<bean id="sysArchivesFileTemplateCoreService" parent="KmssBaseCoreService">
+		<property name="target">
+			<bean class="com.landray.kmss.sys.archives.service.spring.SysArchivesFileTemplateCoreServiceImp">
+				<!--<property name="sysArchivesFileTemplateService">
+					<ref bean="sysArchivesFileTemplateService" />
+				</property>-->
+			</bean>
+		</property>
+	</bean>
+
+	<bean
+			id="sysArchivesSignDao"
+			parent="KmssBaseDao"
+			class="com.landray.kmss.sys.archives.dao.hibernate.SysArchivesSignDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.sys.archives.model.SysArchivesSign" />
+	</bean>
+	<bean
+			id="sysArchivesSignTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.sys.archives.service.spring.SysArchivesSignServiceImp">
+		<property name="baseDao">
+			<ref bean="sysArchivesSignDao" />
+		</property>
+	</bean>
+	<bean
+			id="sysArchivesSignService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysArchivesSignTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysArchivesModuleSelectService" class="com.landray.kmss.sys.archives.service.spring.SysArchivesModuleSelectService">
+	</bean>
+</beans>

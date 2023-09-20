@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        class="com.landray.kmss.sys.authentication.token.server.actions.SysTokenInfoAction"
+        parent="KmssBaseAction" 
+        name="/sys/token/sys_token_info/sysTokenInfo.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.sys.authentication.token.server.forms.SysTokenInfoForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry
+                        key="view"
+                        value="/sys/authentication/token/server/info_view.jsp" />
+                <entry
+                        key="list"
+                        value="/sys/authentication/token/server/info_list.jsp" />
+            </map>
+        </property>
+    </bean>
+    <bean 
+        class="com.landray.kmss.sys.authentication.token.server.actions.SysTokenConfigAction"
+        parent="KmssBaseAction" 
+        name="/sys/token/sys_token_config/sysTokenConfig.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.sys.authentication.token.server.forms.SysTokenConfigForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry
+                    key="editTokenConfig"
+                    value="/sys/authentication/token/server/editTokenConfig.jsp" />
+            </map>
+        </property>
+    </bean>
+
+   <!-- 匿名访问路径-->
+    <bean
+            class="com.landray.kmss.sys.authentication.token.server.actions.SysTokenAnonymousAction"
+            parent="KmssBaseAction"
+            name="/sys/anonymous/enter/token.do"
+            lazy-init="true">
+        <property
+                name="forwards">
+            <map>
+                <entry key="failure" value="/sys/config/resource/error.jsp" />
+            </map>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/third/idm/config.do"
+		class="com.landray.kmss.third.idm.actions.ConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formName"
+			value="configForm" />
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.config.form.SysConfigAdminForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="configView"
+					value="/third/idm/config_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/idm/oms/in/config.do"
+		class="com.landray.kmss.third.idm.oms.in.OMSSynchroInConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+</beans>

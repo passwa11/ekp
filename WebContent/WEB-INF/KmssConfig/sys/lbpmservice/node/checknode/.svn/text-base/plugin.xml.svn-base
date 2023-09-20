@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../plugin.xsd ">
+	<!-- 校验节点 -->
+	<extension
+		point="com.landray.kmss.lbpm.engine.node">
+		<item
+			name="nodeType"
+			id="checkNode">
+			<param
+				name="type"
+				value="checkNode" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-node-checknode:lbpm.nodeType.checkNode" />
+			<param
+				name="defClass"
+				value="com.landray.kmss.sys.lbpmservice.node.checknode.CheckNode" />
+			<param
+				name="attributesJsp"
+				value="/sys/lbpmservice/node/checknode/node_attribute.jsp" />
+			<param
+				name="nodeDescType"
+				value="checkNodeDesc" />
+			<param
+				name="taskDataAccess"
+				value="defaultManualNodeDataAccess" />
+			<param
+				name="subTaskType"
+				value="checkWorkitem" />
+			<param
+				name="taskBehaviour"
+				value="checkNodeBehaviourService" />
+		</item>
+		<item
+			name="nodeDescType"
+			id="checkNodeDesc">
+			<param
+				name="type"
+				value="checkNodeDesc" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/node/checknode/node_review.jsp" />
+			<param
+				name="chartJs"
+				value="/sys/lbpmservice/node/checknode/node_flowchart.js" />
+			<param
+				name="taskDesc"
+				value="checkNodeDesc" />
+		</item>
+		<item
+			name="taskType"
+			id="checkWorkitem">
+			<param
+				name="type"
+				value="checkWorkitem" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/node/checknode/workitem_checkworkitem.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/node/checknode/workitem_checknodeworkitem.jsp" />
+			<param
+				name="taskDesc"
+				value="checkNodeWorkitemDesc" />
+			<param
+				name="taskBehaviour"
+				value="checkNodeWorkitemBehaviourService" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.lbpm.engine.operation">
+	  	<item
+		 	name="operation" id="id_handler_giveup">
+			<param
+			 	name="type"
+				value="handler_giveup" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-node-checknode:lbpmOperations.fdOperType.processor.handlerGiveup" />
+			<param
+				name="behaviour"
+				value="lbpmHandlerGiveUpOperationBehaviour" />
+			<param
+				name="binder"
+				value="lbpmHandlerCheckNodeBinder" />
+			<param
+				name="accessor"
+				value="lbpmHandlerGiveUpOperationAccessor" />
+			<param
+				name="reviewJs"
+				value="/sys/lbpmservice/node/checknode/operation_handler_giveup.jsp" />
+			<param
+				name="mobileReviewJs"
+				value="/sys/lbpmservice/mobile/node/checknode/operation_handler_giveup.js" />
+			<param
+				name="handlerType"
+		 		value="handler" />
+			<param
+				name="apiHelpPage"
+		 		value="" />
+		 	<param
+				name="isPassType"
+				value="true" />																												
+	  	</item>
+	</extension>
+</plugin>

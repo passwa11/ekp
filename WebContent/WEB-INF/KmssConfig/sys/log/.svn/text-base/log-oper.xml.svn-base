@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+	    <!-- 
+	       oper 一个Action对应的日志集合配置
+	       oper.id  操作日志配置id
+	       oper.action  操作日志对应的url请求，即/**/*.do 或 /**/*.jsp
+	       oper.desc    描述
+           oper.extends  继承自某一个oper.id，注意，继承之后如果出现同标识的元素，将全量覆盖父oper的配置
+           oper.model    本操作对应的文档类型（ModelClassFullName） model="*"表示任意model，不填写时默认按action对应的model进行记录
+	     -->
+		<oper
+			id="BaseOperLog"
+			action="*">
+			<!-- ignoreFields忽略字段列表，多个字段使用';'分号分割，可继承自父类配置 -->
+			<ignoreFields></ignoreFields>
+			<!-- 
+			query 对应页面的请求参数
+			query.method  指定的method方法名，可以用'|'来描述，多个query.method之间不可以重名
+			*query.paramName	可选参数，当请求无method时，使用此方式，根据参数中的paramName对应值与paramValue匹配的情况也记录日志
+			*query.paramValue	可选参数，使用paramName验证方式时必填
+			query.messageKey  本次请求对应的操作名称的资源key，如果没有或在资源文件中没有对应的值，默认使用method的值填充
+			query.logPoint 指定的记录点，对应的代码规范如下：
+			    //如果logPoint不为空，则使用以下规范
+			    if (UserOperHelper.allowLogOper("XXX", modelClassFullName)) {
+		            UserOperContentHelper.putUpdate|Find|Add|Delete(....);
+		        }
+		        //如果logPoint没有配置，则使用以下规范（不建议）
+		        if (UserOperHelper.allowLogOper(modelClassFullName)) {
+                    UserOperContentHelper.putUpdate|Find|Add|Delete(....);
+                }
+		              以下几个是内置的记录点，在，UserOperHelper.log***方法会默认使用到，提供对应的配套便捷方式，
+		        logPoint			API
+			    Base_UrlParam		（特殊：在Filter中使用，没有对应方法）  
+			    Service_Delete	  	UserOperHelper.logDelete(...);
+			    Service_DeleteAll  	UserOperHelper.logDeleteAll(...);
+			    Action_Find  		UserOperHelper.logDelete(...);
+			    Action_FindAll  	UserOperHelper.logFindAll(...)
+			    Service_Update  	UserOperHelper.logUpdate(...);
+			    Service_Add   	 	UserOperHelper.logAdd(...);
+			query.isNeedAudit	可选参数(true/false)，特别标记本次请求是否需要审计，非特殊情况不需填写
+			query.model			可选参数(本操作对应的文档类型[ModelClassFullName])，优先级高于oper层的model配置
+			-->
+			<query
+				method="save|saveadd"
+				logPoint="Service_Add" />
+			<query
+				method="update"
+				logPoint="Service_Update" />
+			<query
+				method="delete"
+				logPoint="Base_UrlParam;Service_Delete" />
+			<query
+				method="deleteall"
+				logPoint="Base_UrlParam;Service_DeleteAll" />
+			<query
+				method="edit|view|print"
+				logPoint="Base_UrlParam;Action_Find" />
+			<query
+				method="list"
+				logPoint="Base_UrlParam;Action_FindAll" />
+			<query
+				method="data"
+				logPoint="Base_UrlParam;Action_FindAll" 
+				messageKey="button.list" />
+            <query
+                method="result"
+                logPoint="Base_UrlParam;Action_FindAll" 
+                messageKey="button.search" />
+            <query
+                method="exportResult"
+                logPoint="Base_UrlParam;Action_FindAll" 
+                messageKey="button.export" />				
+				
+		</oper>
+		
+		<oper id="sysLogdebugOperLog"
+			action="/sys/logdebug/action.do">
+		</oper>
+		
+		<oper id="TreeXmlOperLog"
+			action="/sys/common/treexml.jsp">
+		</oper>
+		
+		<oper id="DataXmlOperLog"
+			action="/sys/common/dataxml.jsp">
+		</oper>
+		
+		<oper
+			id="sysLogUserOperLog"
+			model="*"
+			action="/sys/log/sys_log_user_oper/sysLogUserOper.do">
+			<query 
+				method="audit"
+				logPoint="Base_UrlParam;audit"
+				messageKey="sys-log:sysLogUserOper.button.audit"
+				isNeedAudit="false" />
+		</oper>
+		
+		
+		<oper
+			id="sysLogSystemLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.log.model.SysLogSystem"
+			action="/sys/log/sys_log_system/sysLogSystem.do">
+			<query 
+				method="view"
+				logPoint="Base_UrlParam;view"/>
+			<query 
+				method="list"
+				logPoint="Base_UrlParam;list"/>
+		</oper>
+		
+		<oper
+			id="sysLogNotifyLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.log.model.SysLogNotify"
+			action="/sys/log/sys_log_notify/sysLogNotify.do">
+			<query 
+				method="view"
+				logPoint="Base_UrlParam;view"/>
+			<query 
+				method="list"
+				logPoint="Base_UrlParam;list"/>
+		</oper>
+		
+		<oper
+			id="sysLogExportLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.sys.log.model.SysLogExport"
+			action="/sys/log/sys_log_export/sysLogExport.do">
+			<query 
+				method="export"
+				logPoint="Base_UrlParam;export"/>
+			<query 
+				method="download"
+				logPoint="Base_UrlParam;download"
+				messageKey="sys-log:sysLogExport.download"/>
+			<query
+				method="delete"
+				logPoint="Base_UrlParam;Service_Delete" />
+			<query
+				method="deleteall"
+				logPoint="Base_UrlParam;Service_DeleteAll" />
+		</oper>
+	</logset>
+</log-oper>

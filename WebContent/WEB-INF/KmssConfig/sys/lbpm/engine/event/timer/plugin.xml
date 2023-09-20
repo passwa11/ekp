@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../../plugin.xsd ">
+	<extension-point
+		id="com.landray.kmss.lbpm.engine.event.timer">
+		<item
+			name="condition">
+			<param
+				name="type"
+				required="true"
+				kind="unid">
+				<description>唯一标识，触发条件的唯一标识。</description>
+			</param>
+			<param
+				name="messageKey"
+				required="true"
+				kind="string">
+				<description>触发条件显示名，多语言。</description>
+			</param>
+			<param
+				name="eventTypes"
+				kind="string">
+				<description>适用的事件类型的unid，对应事件类型扩展点中的unid参数。多值，以分号分隔。若适用所有事件，请设置为*或不设置此参数。</description>
+			</param>
+			<param
+				name="condition"
+				kind="spring"
+				basedOn="com.landray.kmss.sys.lbpm.engine.event.timer.TimerCondition">
+				<description>定时器触发条件是否满足触发条件的具体业务逻辑实现。若没设置此参数，则认为满足触发条件。</description>
+			</param>
+			<description>
+				定时器的触发条件扩展。
+				使用场景：
+					场景1. 节点启动X天后未完成则自动跳过，此时的触发条件就是当前处理人没处理完成。
+					场景2. 流程驳回后X天未处理通知起草人，此时的触发条件就是流程驳回到起草人时，起草人没处理完成。
+			</description>
+		</item>
+		<system>
+			<event
+				name="load"
+				class="com.landray.kmss.sys.lbpm.engine.event.timer.TimerPluginLoader" />
+		</system>
+		<description>
+			定时器触发条件扩展点。比如：当前处理人未处理。
+		</description>
+	</extension-point>
+	
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<item
+			name="event">
+			<param
+				name="type"
+				value="timerStart" />
+			<param
+				name="messageKey"
+				value="sys-lbpm-engine:lbpm.eventType.timerEvent" />
+			<param
+				name="provider"
+				value="com.landray.kmss.sys.lbpm.engine.event.timer.TimerStartProvider" />
+			<param
+				name="monitors"
+				value="com.landray.kmss.sys.lbpm.engine.event.timer.TimerEvent" />
+			<param
+				name="trigger"
+				value="timerStartTrigger" />
+			<param
+				name="bpmnType"
+				value="start" />
+			<param
+				name="conditionJsp"
+				value="/sys/lbpm/engine/event/timer/timer_start_attribute.jsp" />
+			<param
+				name="description"
+				value="sys-lbpm-engine:lbpm.eventType.timerStartEventDescription" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<item
+			name="event">
+			<param
+				name="type"
+				value="timerIntermediate" />
+			<param
+				name="messageKey"
+				value="sys-lbpm-engine:lbpm.eventType.timerEvent" />
+			<param
+				name="provider"
+				value="com.landray.kmss.sys.lbpm.engine.event.timer.TimerIntermediateProvider" />
+			<param
+				name="monitors"
+				value="com.landray.kmss.sys.lbpm.engine.event.timer.TimerEvent" />
+			<param
+				name="trigger"
+				value="timerIntermediateTrigger" />
+			<param
+				name="conditionJsp"
+				value="/sys/lbpm/engine/event/timer/timer_Intermediate_attribute.jsp" />
+			<param
+				name="description"
+				value="sys-lbpm-engine:lbpm.eventType.timerIntermediateEventDescription" />																								
+		</item>
+	</extension>
+</plugin>

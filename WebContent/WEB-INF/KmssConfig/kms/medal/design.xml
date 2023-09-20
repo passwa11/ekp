@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="kms-medal:module.kms.medal"
+		urlPrefix="/kms/medal/"
+		defaultValidator="roleValidator(role=ROLE_KMSMEDAL_DEFAULT)">
+		<roles>
+			ROLE_KMSMEDAL_DEFAULT;
+			ROLE_KMSMEDAL_CATEGORY_ADMIN;<!-- 勋章类别维护 -->
+			ROLE_KMSMEDAL_ADMIN;<!-- 勋章维护 -->
+			ROLE_KMSMEDAL_DECORATE;<!-- 勋章授勋 -->			
+			ROLE_KMSMEDAL_MANAGER
+		</roles>
+
+		<request path="tree.jsp*" defaultValidator="roleValidator(role=ROLE_KMSMEDAL_MANAGER)" />
+
+		<request
+			path="kms_medal_main/kmsMedalMain*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.kms.medal.model.KmsMedalMain">
+			<query
+				queryString="method=add|save|update|delete|edit|deleteall"
+				validator="roleValidator(role=ROLE_KMSMEDAL_ADMIN)&amp;kmsMedalValidator(role=ROLE_KMSMEDAL_CATEGORY_ADMIN)" />						
+			<query
+				queryString="method=importOwners|downloadTemplate"
+				validator="roleValidator(role=ROLE_KMSMEDAL_DECORATE)&amp;kmsMedalValidator(role=ROLE_KMSMEDAL_CATEGORY_ADMIN)" />			
+		</request>
+
+		<request
+			path="kms_medal_category/kmsMedalCategory*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.kms.medal.model.KmsMedalCategory">
+			<query
+				queryString="method=add|save|update|delete|edit|deleteall"
+				validator="roleValidator(role=ROLE_KMSMEDAL_CATEGORY_ADMIN)" />			
+		</request>
+
+		<request
+			path="kms_medal_owner/kmsMedalOwner*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.kms.medal.model.KmsMedalOwner">
+			<query
+				queryString="method=deleteByUserId"
+				validator="roleValidator(role=ROLE_KMSMEDAL_DECORATE)&amp;kmsMedalValidator(recid=medalId,model=com.landray.kmss.kms.medal.model.KmsMedalMain,role=ROLE_KMSMEDAL_CATEGORY_ADMIN)" />	
+			<query queryString="method=getUserMedalNum"
+				validator="areaRoleValidator(role=ROLE_KMSMEDAL_DEFAULT)" />
+			<query
+				queryString="method=add|save|update|delete|edit|deleteall"
+				validator="roleValidator(role=SYSROLE_ADMIN)" />
+		</request>
+		
+		<request
+			path="kms_medal_log/kmsMedalLog*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.kms.medal.model.KmsMedalLog">
+		</request>		
+
+	</module>
+	
+	<!-- 批量修改权限 -->
+	<module urlPrefix="/sys/right/">
+		<request path="rightCateChange*">
+			<query
+				queryString="method=cateRightEdit&amp;cateModelName=com.landray.kmss.kms.medal.model.KmsMedalCategory"
+				validator="roleValidator(role=ROLE_KMSMEDAL_CATEGORY_ADMIN)|roleValidator(role=ROLE_KMSMEDAL_ADMIN)" />
+		</request>
+	</module>
+
+	<homePage
+		urlPrefix="kms/medal"
+		config="/moduleindex_notopic.jsp?nav=/kms/medal/tree.jsp"
+		url="/sys/portal/page.jsp#j_start=/kms/medal/index.jsp&amp;j_target=_iframe"
+		messageKey="kms-medal:module.kms.medal" />
+		
+	 <profileConfig
+	    key="kms/medal"
+		messageKey="{kms-medal:module.kms.medal}" 
+		url="/sys/profile/moduleindex.jsp?nav=/kms/medal/tree.jsp" 
+		icon="kms_medal"
+		order="25"
+		description="{kms-medal:kmsMedal.profileCfg.description}"
+		type="kms"/>
+
+</configs>

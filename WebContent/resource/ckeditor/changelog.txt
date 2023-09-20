@@ -1,0 +1,83 @@
+由于EKP&KMS对于RTF的使用要求有些特殊，对于原版的CKEDTOR(4.5.6版本)做了部分改动，特记录如下
+(因eclipse无法对比ckeditor.js记录，故此文件的修改，要求写该js代码的具体修改位置)：
+
+1、新增 插件category，支持 wiki子章节功能，对应插件目录：/ckeditor/plugins/category.
+2、新增 插件toolbar，支持工具栏折叠功能，对应插件目录:/ckeditor/plugins/toolbar.
+3、新增 插件wikilink，支持wiki链接功能，对应目录：/ckeditor/plugins/wikilink.
+4、新增 重置RTF高宽的功能，对应文件：/ckeditor/ckresize.js.
+5、新增 RTF内容过滤功能，对应文件：/ckeditor/ckfilter.js.
+6、修复 word内容粘贴过滤问题【1、表格粘贴默认宽度设置成为100%；2、style中属性的过滤移除font】对应文件： /ckeditor/plugins/pastefromword/filter/default.js.
+7、修复 支持上传flash显示功能，对应文件： /ckeditor/plugins/flash/dialogs/flash.js.
+8、修复 支持上传图片显示功能，对应文件： /ckeditor/plugins/image/dialogs/image.js.
+9、修复 ckeditor样式丢失问题，文件： /ckeditor/ckeditor.js.
+	修改位置：203行
+	原内容：{style:1,script:1}?a.remove();
+   	修改内容：{style:1,script:1}?''
+10、修复 高度样式修改，文件： /ckeditor/ckeditor.js.
+	修改位置：527行
+	原内容：<html dir="'+g+'" lang="'+k+'"><head>
+   	修改内容：<html dir="'+g+'" lang="'+k+'" height="100%"><head>
+11、修复 RTF工具栏分组功能，文件： /ckeditor/ckeditor.js.
+	737行原内容：a.config.toolbarCanCollapse&&a.elementMode!=CKEDITOR.ELEMENT_MODE_INLINE
+	737行修改内容：var len=0,isInit=false;a.config.toolbarCanCollapse&&a.config.toolbarCanCollapse=='all'&&a.elementMode!=CKEDITOR.ELEMENT_MODE_INLINE
+	738行原内容：b.push('<span class="cke_toolbar_break"></span>');
+	738行修改内容：{len++;if(len==1&&isInit==false){a.config.toolbarCanCollapse&&a.config.toolbarCanCollapse=='true'&&a.elementMode != CKEDITOR.ELEMENT_MODE_INLINE && b.push('<span class="cke_toolbox_main"' + (d ? ">" : ' style="display:none">'));isInit=true;}b.push('<span class="cke_toolbar_break"></span>');}
+	740行原内容：a.config.toolbarCanCollapse&&b.push("</span>");
+	740行修改内容:if (len>=1) {a.config.toolbarCanCollapse&&a.config.toolbarCanCollapse=='true'&&b.push("</span>");}if(a.config.toolbarCanCollapse&&a.config.toolbarCanCollapse=='all')b.push('</span>');
+12、修复 高度样式修改，文件:/ckeditor/ckeditor.js.
+	修改位置：838行
+	原内容：(c.contentsLanguage||b.langCode)+'"><head><title>'+this._.docTitle+"</title>"+h+f+"</head><body 
+	修改内容：(c.contentsLanguage||b.langCode)+'" style="height:100%"><head><title>'+this._.docTitle+"</title>"+h+f+"</head><body style='height:94%' 
+	修改位置：975行
+	原内容：this.setStyle("width",this.getParent().$.clientWidth+"px");
+	修改内容：this.setStyle("width","100%"); 
+	备注：此修改已经还原
+13、修复 在IE杂项模式下编辑器toolbar结构混乱的问题，文件：/ckeditor/skins/moono/editor_iequirks.css
+	.cke_button_arrow
+	.cke_button
+	.cke_button_label
+	.cke_toolbar
+	.cke_reset_all *
+忽略 14、修复 在IE11杂项模式下，ckeditor报错问题，文件： /ckeditor/ckeditor.js.
+	修改位置：14行
+	原内容:quirks:document.compatMode=="BackCompat",
+	修改内容：quirks:document.compatMode=="BackCompat"&&(!document.documentMode||document.documentMode<10),
+	
+15、修复 文件加载新增缓存标识s_cache
+	修改位置：5行
+	原内容：timestamp:'DAED'
+	修改内容：timestamp:Com_Parameter.Cache||''
+	修改位置：6行
+	原内容：this.timestamp&&("/"!=b.charAt(b.length-1)&&!/[&?]t=/.test(b))&&(b+=(0<=b.indexOf("?")?"&":"?")+"t="+this.timestamp
+	修改内容：this.timestamp&&("/"!=b.charAt(b.length-1)&&!/[&?]s_cache=/.test(b))&&(b+=(0<=b.indexOf("?")?"&":"?")+"s_cache="+this.timestamp
+16、修复 表情url带dns的问题
+	修改位置：5行
+	删除：-1==b.indexOf(":/")&&(b=0===b.indexOf("/")?location.href.match(/^.*?:\/\/[^\/]*/)[0]+b:location.href.match(/^[^\?]*\/(?:)/)[0]+b)
+17、修复 由于编辑器升级导致script等注入过滤失效的问题
+	修改位置：233行
+	新增内容：a.fire('updateEditorElement');
+18、修复 编辑器合并多个空格的问题
+	修改位置：275行
+	原内容：/[\t\r\n ]{2,}|[\t\r\n]/g
+	修改内容：/[\t\r\n]/g
+19、优化 编辑器加密触发位置
+	修改位置：248行
+	新增内容：a.fire('updateEditorTextarea');
+20、修复 源码模式切换width和height为空时不清除
+	修改位置：977行
+	原内容：this.getValue()
+	修改内容：this.getValue().replace(/<([a-z][^>]*)(width|height)\s*=\s*("\s*"|'\s*')([^>]*)>/gi, "<$1$4>")
+21、修复 新增name属性，用于自动化测试使用
+	修改位置：832行
+	新增内容：d.setAttribute('name',"cke_frame_"+a.name);
+22、新增 获取当前语言环境参数，同时修改富文本框展示时的默认语言；
+	修改位置 ：ckeditor.js 212行
+	新增内容 ：currentLang参数以及相关判断
+23、优化 chrome下复制excel时，style标签丢失的问题
+	修改位置 ：ckeditor.js 662行
+	原内容 ：(b = this._.bodyRegExp.exec(a)) && b.length && a = b[1]
+	修改内容 ：(b = this._.bodyRegExp.exec(a)) && b.length && (ff = a,a = b[1],cc = /<style(?:[\s\S]*?)>([\s\S]*)<\/style>/i,(ll = cc.exec(ff)) && ll.length && (a=(ll[0].replace('<!--').replace('-->')+a))
+24、#77987 修复 复制excel表格的时候，没有边框的单元格会加上边框的问题
+	修改位置：ckeditor.js 972行
+	原内容：function(a){a=a.attributes;var b=a["class"],c=parseInt(a.border,10);c&&!(0>=c)||b&&-1!=b.indexOf("cke_show_border")||(a["class"]=(b||"")+" cke_show_border")}}}
+	修改内容：注释掉方法体，源码可见 plugins/showborders/pugin.js的afterInit方法，谷歌浏览器下，在复制表格的时候，ckeditor会加上类

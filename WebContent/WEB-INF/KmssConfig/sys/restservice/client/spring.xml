@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/mvc 
+            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+ <!-- 默认的clientBuilder，所有通过builder出来的client都复用同一套基础配置，如果不满足项目需求，可以再
+                定义一个bean，设置其它的参数，使用方式相同 -->
+    <bean id="defaultRestClientBuilder"
+        class="com.landray.kmss.sys.restservice.client.DefaultRestClientBuilder" 
+        init-method="init">
+        <property name="converters" ref="requiredMessageConverters"/>
+		<property name="restTemplateBuilder" value="default"/>
+
+        <!--已禁用OAuth2
+        <property name="clientTokenServices">
+            <bean class="com.landray.kmss.sys.restservice.client.tokenservice.RedisClientTokenServices"/>
+        </property>-->
+        <!-- 以下属性可按需配置，也可以使用默认值 -->
+        <!-- 从连接池获取连接的timeout 10000，毫秒 
+        <property name="connectionRequestTimeout" value="500000"/>
+        连接超时时间 3000，毫秒  
+        <property name="connectTimeout" value="300000"/>
+        读写超时时间 10000，毫秒 
+        <property name="socketTimeout" value="300000"/>
+        每个主机的并发   10
+        <property name="defaultMaxPerRoute" value="10"/>
+        整个连接池的并发  200
+        <property name="maxTotal" value="200"/>
+        链接存活的时间 300*1000，毫秒  
+        <property name="connTimeToLive" value="3600000"/>
+        闲置回收的时间 60，秒 
+        <property name="maxIdleTime" value="60"/>
+        数据传输超时  15000，毫秒 
+        <property name="soTimeout" value="3600000"/>
+        重试次数  1
+        <property name="retryCount" value="1"/>
+        熔断配置
+        <property name="circuitBreakerConfig">
+            <bean class="com.landray.kmss.util.breaker.CircuitBreakerConfig"/>
+        </property>
+        -->
+    </bean>
+    
+	<!-- 应用使用该bean对cloud里的服务进行访问 -->
+    <bean id="ekpCloudClient" 
+        class="com.landray.kmss.sys.restservice.client.DefaultClientFactoryBean">
+        <property name="restClientBuilder" ref="defaultRestClientBuilder"/>
+    </bean>
+    
+     <!-- 针对EKP-CLOUD的客户端配置   结束-->
+    
+    <bean id="defaultConnectionSocketFactoryBuilder" 
+        class="com.landray.kmss.sys.restservice.client.DefaultConnectionSocketFactoryBuilder">
+    </bean>
+    <bean id="configurationProperties" class="com.landray.kmss.sys.restservice.client.hystrix.conf.HystrixConfigurationProperties" init-method="initConfig">
+        <property name="executionIsolationThreadTimeoutInMilliseconds" value="5000"/>
+    </bean>
+</beans>

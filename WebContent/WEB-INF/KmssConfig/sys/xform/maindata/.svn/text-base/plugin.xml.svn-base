@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!-- 数据中台 -RTF -->
+	<extension-point id="com.landray.kmss.sys.xform.maindata.rtf">
+		<item name="config">
+			<param name="modelName" kind="string" required="true">
+				<description>主文档名称</description >
+			</param>
+			<param name="fields" kind="string" required="true">
+				<description>属性名称，多个属性用,号隔开</description >
+			</param>
+			<description>数据中台配置</description>
+		</item>
+		<description>
+			数据中台
+		</description>
+	</extension-point>
+	
+	<!--获取其他模块对数据的扩展数据-->
+	<extension-point id="com.landray.kmss.sys.xform.maindata.handler">
+		<item name="handler">
+			<param name="bean" kind="spring" 
+				basedOn="com.landray.kmss.sys.xform.maindata.interfaces.ISysFormMainDataExtendHandler">
+				<description>数据的处理类接口</description>
+			</param>
+			<description>数据的处理</description>
+		</item>
+		<description>
+			获取其他模块对数据的扩展数据
+		</description>
+	</extension-point>
+	
+	<!-- -->
+	<extension point="com.landray.kmss.sys.xform.relation.params">
+		<item name="config">
+			<param name="sourceName" value="{sys-xform-maindata:sysFormMainData.sysFormMainDataInSystem}"></param>
+			<param name="sourceUUID" value="MAINDATAINSYSTEM"></param>
+			<param name="sourceModelName" value="com.landray.kmss.sys.xform.maindata.model.SysFormMainDataInsystem"></param>
+			<param name="sourceBean" value="sysFormMainDataInsystemControlRelation"></param>
+			<param name="paramsURL" value="sys/xform/maindata/dialog/dialog.jsp?springBean=sysFormMainDataInsystemControlTreeBean&amp;infoBean=sysFormMainDataInsystemControlTreeInfo&amp;url=sys/xform/maindata/main_data_insystem/sysFormMainDataInsystem.do"></param>
+			<param name="order" value="0"></param>
+		</item>
+		<item name="config">
+			<param name="sourceName" value="{sys-xform-maindata:sysFormMainData.sysFormMainDataCustom}"></param>
+			<param name="sourceUUID" value="MAINDATACUSTOM"></param>
+			<param name="sourceModelName" value="com.landray.kmss.sys.xform.maindata.model.SysFormMainDataCustom"></param>
+			<param name="sourceBean" value="sysFormMainDataCustomControlRelation"></param>
+			<param name="paramsURL" value="sys/xform/maindata/dialog/dialog.jsp?springBean=sysFormMainDataCustomControlTreeBean&amp;infoBean=sysFormMainDataCustomControlTreeInfo&amp;url=sys/xform/maindata/main_data_custom/sysFormMainDataCustom.do"></param>
+			<param name="order" value="0"></param>
+		</item>
+		<item name="config">
+			<param name="sourceName" value="{sys-xform-maindata:sysFormMainData.sysFormJdbcDataSet}"></param>
+			<param name="sourceUUID" value="JDBCXFORM"></param>
+			<param name="sourceModelName" value="com.landray.kmss.sys.xform.maindata.model.SysFormJdbcDataSet"></param>
+			<param name="sourceBean" value="sysFormJdbcControlRelation"></param>
+			<param name="paramsURL" value="sys/xform/maindata/dialog/dialog.jsp?springBean=sysFormJdbcControlTreeBean&amp;infoBean=sysFormJdbcControlTreeInfo&amp;url=sys/xform/maindata/jdbc_data_set/xFormjdbcDataSet.do"></param>
+			<param name="order" value="0"></param>
+		</item>
+	</extension>
+	<!-- 表单主数据的自定义数据 数据迁移 -->
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid" value="com.landray.kmss.sys.xform.maindata.transfer.SysFormMainDataCustomTransferTask" />
+			<param name="name" value="{sys-xform-maindata:sysFormMainDataCustom.dataTransferTask}" />
+			<param name="path" value="/sys/xform/"/>
+			<param name="check" value="com.landray.kmss.sys.xform.maindata.transfer.SysFormMainDataCustomTransferChecker" />
+			<param name="upgrade" value="com.landray.kmss.sys.xform.maindata.transfer.SysFormMainDataCustomTransferTask" />
+			<param name="description" value="{sys-xform-maindata:sysFormMainDataCustom.dataTransferTaskDescription}" />
+		</item>
+	</extension>
+	<!-- 表单主数据的系统内数据 数据迁移 -->
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid" value="com.landray.kmss.sys.xform.maindata.transfer.SysFormMainDataInsystemTransferTask" />
+			<param name="name" value="{sys-xform-maindata:sysFormMainDataInsystem.dataTransferTask}" />
+			<param name="path" value="/sys/xform/"/>
+			<param name="check" value="com.landray.kmss.sys.xform.maindata.transfer.SysFormMainDataInsystemTransferChecker" />
+			<param name="upgrade" value="com.landray.kmss.sys.xform.maindata.transfer.SysFormMainDataInsystemTransferTask" />
+			<param name="description" value="{sys-xform-maindata:sysFormMainDataInsystem.dataTransferTaskDescription}" />
+		</item>
+	</extension>
+	<!-- 表单主数据的自定义数据fdOrder 数据迁移 -->
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid" value="com.landray.kmss.sys.xform.maindata.transfer.fdOrder.SysFormMainDataCustomFdOrderTransferTask" />
+			<param name="name" value="{sys-xform-maindata:sysFormMainDataCustom.fdOrderTransferTask}" />
+			<param name="path" value="/sys/xform/"/>
+			<param name="check" value="com.landray.kmss.sys.xform.maindata.transfer.fdOrder.SysFormMainDataCustomFdOrderTransferChecker" />
+			<param name="upgrade" value="com.landray.kmss.sys.xform.maindata.transfer.fdOrder.SysFormMainDataCustomFdOrderTransferTask" />
+			<param name="description" value="{sys-xform-maindata:sysFormMainDataCustom.fdOrderTransferTaskDescription}" />
+		</item>
+	</extension>
+	<!-- 表单主数据的jdbc数据fdOrder 数据迁移 -->
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid" value="com.landray.kmss.sys.xform.maindata.transfer.fdOrder.SysFormJdbcDataSetFdOrderTransferTask" />
+			<param name="name" value="{sys-xform-maindata:sysFormJdbcDataSet.fdOrderTransferTask}" />
+			<param name="path" value="/sys/xform/"/>
+			<param name="check" value="com.landray.kmss.sys.xform.maindata.transfer.fdOrder.SysFormJdbcDataSetFdOrderTransferChecker" />
+			<param name="upgrade" value="com.landray.kmss.sys.xform.maindata.transfer.fdOrder.SysFormJdbcDataSetFdOrderTransferTask" />
+			<param name="description" value="{sys-xform-maindata:sysFormJdbcDataSet.fdOrderTransferTaskDescription}" />
+		</item>
+	</extension>
+	<!-- 表单主数据的系统内数据fdOrder 数据迁移 -->
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid" value="com.landray.kmss.sys.xform.maindata.transfer.fdOrder.SysFormMainDataInSystemFdOrderTransferTask" />
+			<param name="name" value="{sys-xform-maindata:sysFormMainDataInsystem.fdOrderTransferTask}" />
+			<param name="path" value="/sys/xform/"/>
+			<param name="check" value="com.landray.kmss.sys.xform.maindata.transfer.fdOrder.SysFormMainDataInSystemFdOrderTransferChecker" />
+			<param name="upgrade" value="com.landray.kmss.sys.xform.maindata.transfer.fdOrder.SysFormMainDataInSystemFdOrderTransferTask" />
+			<param name="description" value="{sys-xform-maindata:sysFormMainDataInsystem.fdOrderTransferTaskDescription}" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.webservice2">
+		<item
+			name="registry">
+			<param
+				name="serviceName"
+				value="{sys-xform-maindata:sysFormMainDataInsystemWebservice.title}" />
+			<param
+				name="serviceClass"
+				value="com.landray.kmss.sys.xform.maindata.webservice.ISysFormMainDataInsystemWebservice" />
+			<param
+				name="serviceBean"
+				value="sysFormMainDataInsystemWebservice" />				
+			<param
+				name="serviceDoc"
+				value="/sys/xform/maindata/webservice/help.jsp" />
+		</item>
+	</extension>
+	
+</plugin>

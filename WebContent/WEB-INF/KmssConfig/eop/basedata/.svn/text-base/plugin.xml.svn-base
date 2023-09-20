@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <extension-point id="com.landray.kmss.eop.basedata.import.detail">
+    	<item  name="validate">
+    		<param  name="model" required="true" kind="string">
+				<description>当前导入的明细model</description>
+			</param>
+			<param  name="type" required="true" kind="string">
+				<description>校验的字段类型</description>
+			</param>
+			<param  name="service"  required="true"  kind="string">
+				<description>校验器在Spring容器中注册的id</description>
+			</param>
+			<description>
+				<![CDATA[
+					明细导入校验器定义
+				]]>
+			</description>
+		</item>
+		<description>
+			<![CDATA[
+				明细导入校验器定义
+			]]>
+		</description>
+    </extension-point>
+	<!-- EOP基本数据输入（从业务模块拉取）/输出（推送到业务）  -->
+	<extension-point id="com.landray.kmss.eop.basedata.io.put">
+		<item name="svr">
+			<param name="bean" required="true" kind="spring"
+				basedOn="com.landray.kmss.eop.basedata.service.IEopBasedataPullAndPushService">
+				<description>提供数据输出</description>
+			</param>
+			<param name="function" kind="string" required="true">
+				<description>功能点(eop基础数据主文档modelName)</description>
+			</param>
+			<param name="module" kind="string" required="true">
+				<description>业务模块名称(如km-agreemnet)</description>
+			</param>
+			<description>EOP基本数据输入（从业务模块拉取）/输出（推送到业务）</description>	
+		</item>
+		<description>EOP基本数据输入（从业务模块拉取）/输出（推送到业务）</description>			
+	</extension-point>
+
+	<!-- 判断供应商是否被采购业务使用 -->
+	<extension-point id="com.landray.kmss.eop.supplier.info.extend">
+		<item name="setting">
+			<param name="modelName" kind="string">
+				<description>判断供应商是否被采购业务使用</description>
+			</param>
+			<description>
+				判断供应商是否被采购业务使用
+			</description>
+		</item>
+		<description>
+			判断供应商是否被采购业务使用
+		</description>
+	</extension-point>
+
+	<!-- 判断物料是否被采购需求使用 -->
+	<extension-point id="com.landray.kmss.eop.material.info.extend">
+		<item name="setting">
+			<param name="modelName" kind="string">
+				<description>判断物料是否被采购需求使用</description>
+			</param>
+			<description>
+				判断物料是否被采购需求使用
+			</description>
+		</item>
+		<description>
+			判断物料是否被采购需求使用
+		</description>
+	</extension-point>
+
+	<!-- 物料修改的动态拓展声明 -->
+	<extension-point id="com.landray.kmss.eop.material.change.extend">
+		<item name="change">
+			<param name="modelName" kind="string">
+				<description>物料修改的动态拓展声明</description>
+			</param>
+			<description>
+				物料修改的动态拓展声明
+			</description>
+		</item>
+		<description>
+			物料修改的动态拓展声明
+		</description>
+	</extension-point>
+
+	<!-- 判断客户是否被其他业务模块 -->
+	<extension-point id="com.landray.kmss.eop.customer.info.extend">
+		<item name="setting">
+			<param name="modelName" kind="string">
+				<description>判断客户是否被其他业务模块使用</description>
+			</param>
+			<description>
+				判断客户是否被其他业务模块使用
+			</description>
+		</item>
+		<description>
+			判断客户是否被其他业务模块使用
+		</description>
+	</extension-point>
+
+	<!-- eop基础数据与业务模块实时同步扩展点-->
+	<extension-point id="com.landray.kmss.eop.data.sync.extend">
+		<item name="setting">
+			<param name="serviceName" kind="string">
+				<description>业务模块数据实时同步service</description>
+			</param>
+			<description>
+				eop基础数据与业务模块实时同步扩展点
+			</description>
+		</item>
+		<description>
+			eop基础数据与业务模块实时同步扩展点
+		</description>
+	</extension-point>
+
+	<extension point="com.landray.kmss.sys.config.design">
+		<item name="xml">
+			<param name="namespace" value="http://www.landray.com.cn/fsscxml" />
+			<param name="handler" value="com.landray.kmss.eop.basedata.xml.EopBasedataFsscxmlNamespaceHandler" />
+		</item>
+	</extension>
+	
+    <extension
+            point="com.landray.kmss.sys.number.config"
+            model="*">
+        <item
+                name="extend">
+            <param
+                    name="modelName"
+                    value="com.landray.kmss.eop.basedata.model.EopBasedataMaterial"/>
+            <param
+                    name="moduleName"
+                    value="{eop-basedata:module.eop.basedata}"/>
+        </item>
+    </extension>
+
+    <extension
+            point="com.landray.kmss.sys.number.config"
+            model="*">
+        <item
+                name="extend">
+            <param
+                    name="modelName"
+                    value="com.landray.kmss.eop.basedata.model.EopBasedataSupplier"/>
+            <param
+                    name="moduleName"
+                    value="{eop-basedata:module.eop.basedata}"/>
+        </item>
+    </extension>
+
+	<extension
+			point="com.landray.kmss.sys.number.config"
+			model="*">
+		<item
+				name="extend">
+			<param
+					name="modelName"
+					value="com.landray.kmss.eop.basedata.model.EopBasedataSupType"/>
+			<param
+					name="moduleName"
+					value="{eop-basedata:module.eop.basedata}"/>
+		</item>
+	</extension>
+
+	<extension
+			point="com.landray.kmss.sys.number.config"
+			model="*">
+		<item
+				name="extend">
+			<param
+					name="modelName"
+					value="com.landray.kmss.eop.basedata.model.EopBasedataSupGrade"/>
+			<param
+					name="moduleName"
+					value="{eop-basedata:module.eop.basedata}"/>
+		</item>
+	</extension>
+
+    <!--动态拓展 -->
+    <extension point="com.landray.kmss.sys.dynpage.custom.extend">
+        <item name="setting">
+            <param name="modelName" value="com.landray.kmss.eop.basedata.model.EopBasedataSupplier"/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.sys.dynpage.custom.extend">
+        <item name="setting">
+            <param name="modelName" value="com.landray.kmss.eop.basedata.model.EopBasedataContact"/>
+        </item>
+    </extension>
+    
+    <extension
+        point="com.landray.kmss.sys.admin.transfer">
+        <item
+            name="config">
+            <param
+                name="unid"
+                value="com.landray.kmss.eop.basedata.transfer.currency.EopBasedataCurrencyTransferTask" />
+            <param
+                name="name"
+                value="{eop-basedata:eopBasedataCurrencyTransferTask.name}" />
+            <param
+                name="path"
+                value="/eop/basedata/" />
+            <param
+                name="check"
+                value="com.landray.kmss.eop.basedata.transfer.currency.EopBasedataCurrencyChecker" />
+            <param
+                name="upgrade"
+                value="com.landray.kmss.eop.basedata.transfer.currency.EopBasedataCurrencyTransferTask" />
+            <param
+                name="description"
+                value="{eop-basedata:eopBasedataCurrencyTransferTask.des}"/>
+        </item>
+    </extension>
+    
+	<extension
+		point="com.landray.kmss.sys.webservice2">
+		<item name="registry">
+			<param name="serviceName" value="客商对外webservice接口" />
+			<param name="serviceClass"							
+				value="com.landray.kmss.eop.basedata.webservice.IEopBasedataSupplierWebserviceService" />
+			<param name="serviceBean"
+				value="eopBasedataSupplierWebserviceService" />
+			<param name="serviceDoc"
+				value="/eop/basedata/eop_basedata_supplier_webservice/eopBasedataSupplier_webserviceHelp.jsp" />
+		</item>
+	</extension>
+
+</plugin>

@@ -1,0 +1,67 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.lbpmext.voteweight.model.LbpmVoteWeight",
+        "messageKey": "sys-lbpmext-voteweight:table.lbpmVoteWeight",
+        "serviceBean": "lbpmVoteWeightMainService",
+        "table": "lbpm_vote_weight",
+        "url": "/sys/lbpmext/voteweight/lbpm_voteweight/lbpmVoteWeight.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdVoter":         {
+            "propertyType": "model",
+            "messageKey": "sys-lbpmext-voteweight:lbpmVoteWeight.fdVoter",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_voter_id",
+            "notNull": "true"
+        },
+        "fdVoteWeight":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-voteweight:lbpmVoteWeight.fdVoteWeight",
+            "type": "Integer",
+            "column": "fd_vote_weight",
+            "notNull": "true",
+            "length": "10"
+        },
+        "fdCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-voteweight:lbpmVoteWeight.fdCreateTime",
+            "type": "DateTime",
+            "column": "fd_create_time",
+            "notNull": "false"
+        },
+        "fdCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-lbpmext-voteweight:lbpmVoteWeight.fdCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_creator_id",
+            "notNull": "false"
+        },
+        "docAlterTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-voteweight:lbpmVoteWeight.docAlterTime",
+            "type": "DateTime",
+            "column": "doc_alter_time",
+            "notNull": "false"
+        },
+        "docAlteror":         {
+            "propertyType": "model",
+            "messageKey": "sys-lbpmext-voteweight:lbpmVoteWeight.docAlteror",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "doc_alteror_id",
+            "notNull": "false"
+        },
+        "lbpmVoteWeightScopeList":         {
+            "propertyType": "list",
+            "messageKey": "sys-lbpmext-voteweight:lbpmVoteWeight.lbpmVoteWeightScope",
+            "column": "fd_voteweight_id",
+            "type": "com.landray.kmss.sys.lbpmext.voteweight.model.LbpmVoteWeightScope",
+            "table": "lbpm_voteweight_scope",
+            "cascade": "all-delete-orphan",
+            "inverse": "true"
+        }
+    }
+}

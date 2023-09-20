@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.attend.model.SysAttendSignPatch"
+		table="sys_attend_sign_patch">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+		
+		<property
+			name="fdCateName"
+			column="fd_cate_name"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdPatchTime"
+			column="fd_patch_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<many-to-one
+			name="fdPatchPerson"
+			column="fd_patch_personid"
+			insert="true"
+			update="true"
+			not-null="false" />
+			
+		<bag
+			name="fdPatchDetail"
+			cascade="all-delete-orphan"
+			lazy="true">
+			<key
+				column="fd_patch_id" />
+			<one-to-many
+				class="com.landray.kmss.sys.attend.model.SysAttendSignPatchDetail" />
+		</bag>
+			
+	</class>
+</hibernate-mapping>

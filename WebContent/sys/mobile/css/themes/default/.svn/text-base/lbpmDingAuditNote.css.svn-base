@@ -1,0 +1,561 @@
+﻿/* 初始化 */
+html body,body {
+    color: #111F2C;
+}
+
+.muiDingAuditContainer {
+    background: #fff;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.muiDingAuditNodeItem {
+    position: relative;
+    padding-bottom: 40px;
+    min-height: 48px;
+}
+
+.muiDingAuditNodeItem:before {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    /* opacity: 0.12; */
+    background: #e2e5e6;
+    position: absolute;
+    left: 23px;
+    top: 0;
+    bottom: 0;
+}
+
+.muiDingAuditContainer .muiLbpmserviceAuditBranchItem{
+	margin:0 2.3rem!important;
+	border-left:2px solid #e8e8e8!important;
+}
+
+.auditLastNodeItem:before {
+    display: none;
+}
+
+/* 节点尺寸 -- 普通节点、会审 */
+.muiDingAuditLabelItemDot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    line-height: 40px;
+    border: 4px solid #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.muiDingAuditLabelItemDot .auditDingNoteHandlerIcon{
+    display:block;
+    border-radius: 50%;
+}
+
+.muiDingAuditLabelItemDot:before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-image: url(../default/images/record/flow-status-pend-m@2x.png);
+    background-repeat: no-repeat;
+    background-size: 14px auto;
+    background-position: center;
+    position: absolute;
+    right: -2px;
+    bottom: 0px;
+}
+/* 驳回 */
+.reject .muiDingAuditLabelItemDot:before {
+    background-image: url(../default/images/record/flow-status-reject-m@2x.png);
+}
+
+/* 通过 */
+.pass .muiDingAuditLabelItemDot:before {
+    background-image: url(../default/images/record/flow-status-pass-m@2x.png);
+}
+
+/* 通过 */
+.muiDingAuditNoteItemWrap .pass.muiDingAuditLabelItemDot:before {
+    background-image: url(../default/images/record/flow-status-pass-m@2x.png);
+     background-repeat: no-repeat;
+}
+
+/* 驳回 */
+.muiDingAuditNoteItemWrap .reject.muiDingAuditLabelItemDot:before {
+    background-image: url(../default/images/record/flow-status-reject-m@2x.png);
+     background-repeat: no-repeat;
+}
+
+/* 待审 */
+.muiDingAuditNoteItemWrap .handlering.muiDingAuditLabelItemDot:before {
+    background-image: url(../default/images/record/flow-status-pend-m@2x.png);
+}
+
+/* 会审并行节点通过或者驳回，节点终止 */
+.muiDingAuditNodeItem.reject .muiDingAuditNoteItemWrap:last-child .muiDingAuditNodeItem:before,
+.muiDingAuditNodeItem.pass .muiDingAuditNoteItemWrap:last-child .muiDingAuditNodeItem:before{
+
+    display:none;
+}
+
+
+.muiDingAuditLabelItemDot img, .muiLbpmserviceNodeHander img {
+    /*     max-width: 100%;
+    max-height: 100%; */
+    width:40px;
+    height:40px;
+    vertical-align: middle;
+    object-fit: contain;
+    border-radius: 50%;
+    }
+
+/* 钉钉文字类型 */
+.mui-ding-address-imgcontainer-sm {
+    display: block;
+    background: #4284f4;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    font-size: 13px;
+    width: 40px;
+}
+.muiDingNoteSystem{
+    display:inline-block;
+    width:40px;
+    height:40px;
+}
+
+/* 系统节点 */
+.muiLbpmProcessSystem,
+.muiDingNoteSystem {
+    background-image: url(../default/images/record/portrait-status-system@2x.png);
+    background-size: 40px auto;
+}
+
+/* 并行 */
+.muiLbpmProcessParallel {
+    background-image: url(../default/images/record/portrait-status-single-person@2x.png)
+}
+/* 并行 */
+.muiLbpmProcessJoint{
+    background-image: url(../default/images/record/portrait-status-multi-person@2x.png)
+}
+
+/*  */
+.muiDingAuditLabelItemTitle {
+    padding-left: 55px;
+    position: relative;
+    /* padding-bottom: 40px; */
+    /* min-height: 100px; */
+}
+
+/*  */
+.muiDingAuditLabelTitle {
+    font-size: 16px;
+    line-height: 44px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.muiDingAuditLabelTitle a {
+    font-size: 16px;
+}
+
+/*  */
+.muiDingAuditNoteCreateTime {
+    float: right;
+    color: rgba(25,31,37,0.40);
+    position: absolute;
+    right: 0;
+    top: 0;
+    line-height: 44px;
+}
+
+.muiDingAuditNoteItem {
+    padding-left: 55px;
+}
+
+/* 描述信息 */
+.muiDingAuditNodeInfo {
+    color: #7A8189;
+    line-height: 1.5;
+}
+
+/* 会审 */
+.luiLbpmserviceAuditLabelItem{
+    position:relative;
+}
+.muiDingAuditNoteHandler {
+    position: relative;
+    padding-left: 55px;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.muiDingAuditNodeHandler {
+    display: block;
+    float: left;
+}
+
+.muiDingAuditNodeHandler {
+    text-align: center;
+    max-width: 65px;
+    margin-right: 20px;
+    position: relative;
+}
+
+.muiDingAuditNodeHandler label {
+    display: block;
+    margin-top: 4px;
+    color: rgba(25,31,37,0.40);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.muiDingAuditNodeHandler img {
+    width: 36px;
+    height: 36px;
+    display: block;
+    object-fit:cover;
+    background: #fff;
+    border-radius:50%;
+    margin: 0 auto;
+}
+
+/* 小图标 */
+.muiDingAuditNodeHandler .mui-ding-address-imgcontainer-sm{
+     width: 36px;
+     height: 36px;
+     display: block;
+     font-size: 12px;
+}
+
+/* 小图标 状态 */
+.muiDingAuditNodeHandler:before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-size: 14px auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(../default/images/record/flow-status-pend-s@2x.png);
+    position: absolute;
+    right: -3px;
+    top: 24px;
+}
+
+/* 通过 */
+.history.muiDingAuditNodeHandler:before {
+    background-image: url(../default/images/record/flow-status-pass-s@2x.png);
+}
+
+/* 会审时间轴 */
+.muiDingAuditNoteItemWrap {
+    position: relative;
+    padding-left: 55px;
+}
+
+/*===== 会审状态 展开收起 starts  =====*/
+.muiDingAuditLabelItemHead{
+    padding-left: 55px;
+    font-size: 16px;
+    line-height: 40px;
+    padding-top: 4px;
+    position: relative;
+}
+.muiDingAuditLabelItemHead>div{
+    font-size:16px;
+}
+/*== 展开收起箭头 starts  ==*/
+.muiDingAuditNodeBtn{
+    position:absolute;
+    right:0;
+    top: 28px;
+    padding-right: 10px;
+}
+.muiLbpmserviceAuditCollapseBtn,
+.muiDingAuditNodeExpandBtn{
+    cursor:pointer;
+    font-size: 0;
+    position:relative;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+.muiDingAuditNodeCollapseBtn:before,
+.muiDingAuditNodeExpandBtn:before,
+.muiDingAuditNodeCollapseBtn:after,
+.muiDingAuditNodeExpandBtn:after{
+    content:"";
+    border: 6px solid transparent;
+    display:inline-block;
+    width:0;
+    height:0;
+    position:absolute;
+    right:0;
+    bottom:0;
+}
+.muiDingAuditNodeCollapseBtn:before{
+    border-bottom-color: #bdc1c4;
+}
+.muiDingAuditNodeCollapseBtn:after{
+    border-bottom-color:#fff;
+    bottom: -1px;
+}
+.muiDingAuditNodeExpandBtn:before{
+    border-top-color: #bdc1c4;
+    bottom: -1px;
+}
+.muiDingAuditNodeExpandBtn:after{
+    border-top-color:#fff;
+    
+}
+.muiDingAuditLabelNodeInfo{
+    color: #a8aaac;
+    padding-left: 55px;
+}
+/* 收起 */
+.muiDingAuditNodeCollapseBtn{top: 2px;right: 0;}
+/* 展开 */
+.muiDingAuditNodeExpandBtn{
+    display:none;
+    top: 4px;
+    right: -10px;
+}
+/*== 展开收起箭头 ends  ==*/
+.muiDingAuditNodeItem{
+    transition: max-height .3s;
+    /* max-height:1000px; */
+}
+.muiDingAuditNodeItem.collapse{
+    max-height: 43px;
+    overflow:hidden;
+    /* padding-bottom: 0; */
+    padding-bottom: 32px;
+}
+.muiDingAuditNodeItem.collapse .muiDingAuditLabelNodeInfo{
+    /* display:none; */
+}
+
+/*== 附言、编辑  ==*/
+.postscript,.auditNote_edit{
+    display:inline-block;
+    vertical-align:middle;
+    width:14px;
+    height:14px;
+    font-size:0;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:14px auto;
+    margin-left:8px;
+}
+.postscript{
+    background-image:url(../default/images/record/icon-msg@2x.png);
+}
+.auditNote_edit{
+    background-image:url(../default/images/record/icon-edit@2x.png);
+}
+/* 附言弹窗 */
+.muiDingPostscriptNode .muiLbpmPostscriptTableWrap{
+    background:#fff;
+    margin-bottom:10px;
+    border: 1px solid #e0e0e0;
+    box-shadow: none;
+    overflow: hidden;
+}
+.muiDingPostscriptNode .muiLbpmPostscriptTableWrap .tb_noborder{
+    background:#fff;
+}
+.muiDingAuditNote{
+    font-size:14px;
+    margin:10px 0;
+}
+body .muimuiLbpmPostscriptTableWrap{
+     background:#fff;
+    border: 1px solid #efefef;
+    border-radius:2px;
+}
+body .muimuiLbpmPostscriptTableWrap .tb_noborder{
+    background:#fff;
+}
+/*== 签章 ==*/
+.muiLbpmserviceSignature img{
+    float:none!important;
+    border-radius:5px;
+    max-height:100px;
+
+    border:1px solid #E2E2E2;
+}
+.muiLbpmserviceSignature{
+    margin-bottom:20px;
+    margin-top: 10px;
+}
+/* 缺省状态 */
+/* 新版-缺省图 Starts */
+.lui_prompt_container{}
+.lui_prompt_frame{}
+.lui_prompt_container{
+    overflow: hidden;
+}
+.lui_prompt_content_error{
+    width: 50px;
+    height: 50px;
+}
+.lui_prompt_content_right{}
+
+.lui_prompt_content_noData{
+    background: url(../default/image/img-noData-nor.png);
+}
+
+.lui_msgtitle{
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+.lui_prompt_content_timer{
+    color: #666;
+    font-size: 12px;
+}
+.lui_msgcontent{
+    font-size: 12px;
+    margin-top: 15px;
+}
+.lui_msgcontent>span{
+    color: #666;
+}
+.lui_msgtip{ color:#666;}
+
+.lui_msgtip ul{}
+.lui_msgtip ul li{
+    display:inline-block;
+    list-style: none;
+    position:relative;
+}
+.lui_msgtip ul li:before{
+    content:"";
+    width:
+}
+
+/* 水平分布 */
+.lui_prompt_horizontal{}
+.lui_prompt_horizontal .lui_prompt_content_error{
+    display: table-cell;
+}
+.lui_prompt_horizontal .lui_prompt_content_right{
+    display: table-cell;
+    padding-left: 15px;
+    vertical-align: middle;
+}
+.lui_prompt_horizontal .lui_msgcontent>span{
+   display:table-cell;
+}
+.lui_prompt_horizontal .lui_msgtip{ 
+display:table-cell;
+}
+
+/* 垂直分布 */
+.lui_prompt_vertical{
+    text-align: center;
+}
+.lui_prompt_vertical .lui_prompt_content_error{
+    margin: 0 auto 20px;
+}
+.lui_prompt_vertical .lui_prompt_content_right{}
+.lui_prompt_vertical .lui_msgcontent{
+    margin:0 auto;
+    margin-top: 15px;
+}
+.lui_prompt_vertical .lui_msgcontent>span{
+   display: inline-block;
+}
+.lui_prompt_vertical .lui_msgtip{display: inline-block;}
+/* 新版-缺省图 Ends */
+
+/* == 附言 Starts == */
+body .muimuiLbpmPostscriptTableWrap{
+    background:#fff;
+    margin-bottom: 15px;
+    border: 1px solid  rgba(17,31,44,0.08);
+    box-shadow: none;
+    overflow: hidden;
+    border-radius: 8px;
+}
+body .muiLbpmPostscriptTableWrap .tb_noborder{
+    background:#fff;
+}
+body .muiLbpmPostscriptTableWrap td{
+    font-size:12px;
+}
+body .muiLbpmPostscriptTableWrap .muiLbpmPostscriptContent{
+    font-size:14px;
+    /* line-height: 58px; */
+    width: 100%;
+    padding-left: 15px!important;
+    box-sizing: border-box;
+    padding-right: 15px;
+    padding-top: 10px!important;
+}
+body .muiLbpmPostscriptTableWrap .muiLbpmPostscriptContent.muiLbpmPostscriptTop{
+    background: #F8F9FA;
+    border-radius: 7px 7px 0 0;
+    border-bottom: 1px solid  rgba(17,31,44,0.08);
+    padding-top: 0!important;
+    line-height: 35px;
+    font-size: 12px;
+    white-space: nowrap;
+    padding-left: 5px!important;
+    padding-right: 5px;
+}
+body .muiLbpmPostscriptHead{
+    margin-right:0;
+}
+.muiLbpmPostscriptTableWrap .lbpmPostscriptHeadTime,
+.muiLbpmPostscriptHead:nth-child(2){
+    float:right;
+    margin-right:0;
+    color: rgba(25,31,37,0.40);
+    /* padding-right:15px; */
+}
+.muiLbpmPostscriptTableWrap .lbpmPostscriptHeadHandlerName{
+    font-size:16px;
+    margin-right: 0;
+    /* padding-left: 15px; */
+}
+.muiLbpmPostscriptTableWrap .lbpmPostscriptHeadContent{
+    font-size: 16px;
+    color: rgba(17,31,44,0.56);
+}
+.muiLbpmPostscriptTableWrap{
+/*     max-height:1000px; */
+    transition:max-height .3s;
+    overflow:hidden;
+}
+.muiLbpmPostscriptTableWrap.collapse{
+    max-height: 25px;
+}
+.lbpmPostscriptHeadBtns .muiLbpmserviceAuditExpandBtn,
+.lbpmPostscriptHeadBtns .muiLbpmserviceAuditCollapseBtn{
+    width:20px;
+    height:20px;
+    background-size:20px auto;
+    vertical-align: -5px;
+}
+.lbpmPostscriptHeadBtns .muiLbpmserviceAuditExpandBtn{
+    background-image:url(../default/images/record/icon-retract@2x.png);
+}
+.lbpmPostscriptHeadBtns .muiLbpmserviceAuditCollapseBtn{
+    background-image:url(../default/images/record/icon-spread@2x.png);
+}
+.lbpmPostscriptHeadBtns .muiLbpmserviceAuditExpandBtn:before,
+.lbpmPostscriptHeadBtns .muiLbpmserviceAuditCollapseBtn:before,
+.lbpmPostscriptHeadBtns .muiLbpmserviceAuditExpandBtn:after,
+.lbpmPostscriptHeadBtns .muiLbpmserviceAuditCollapseBtn:after{
+    display:none;:
+}
+/* == 附言 Ends == */

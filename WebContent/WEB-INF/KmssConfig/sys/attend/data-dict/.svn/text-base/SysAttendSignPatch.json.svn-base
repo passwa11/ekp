@@ -1,0 +1,40 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.attend.model.SysAttendSignPatch",
+        "messageKey": "sys-attend:table.sysAttendSignPatch",
+        "table": "sys_attend_sign_patch",
+        "serviceBean": "sysAttendSignPatchService"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdCateName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-attend:sysAttendSignPatch.fdCateName",
+            "type": "String",
+            "column": "fd_cate_name"
+        },
+        "fdPatchTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-attend:sysAttendSignPatch.fdPatchTime",
+            "type": "DateTime",
+            "column": "fd_patch_time"
+        },
+        "fdPatchPerson":         {
+            "propertyType": "model",
+            "messageKey": "sys-attend:sysAttendSignPatch.fdPatchPerson",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "fd_patch_personid"
+        },
+        "fdPatchDetail":         {
+            "propertyType": "list",
+            "messageKey": "sys-attend:sysAttendSignPatch.fdPatchDetail",
+            "type": "com.landray.kmss.sys.attend.model.SysAttendSignPatchDetail",
+            "column": "fd_patch_id",
+            "table": "sys_attend_sign_pdetail",
+            "cascade": "all-delete-orphan"
+        }
+    }
+}

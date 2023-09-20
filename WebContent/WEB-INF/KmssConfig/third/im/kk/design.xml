@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+<!--  控制权限 -->
+	<module
+		messageKey="third-im-kk:module.third.im.kk"
+		urlPrefix="/third/im/kk/"
+		defaultValidator="roleValidator(role=SYSROLE_USER)">
+		<roles>
+			ROLE_IM_KK_BACKSTAGE_MANAGER
+		</roles> 
+		
+		<request
+			path="connKKConfig.do*"
+			defaultValidator="roleValidator(role=ROLE_IM_KK_BACKSTAGE_MANAGER)">
+		</request>
+		
+		<request
+			path="config.do*"
+			defaultValidator="roleValidator(role=ROLE_IM_KK_BACKSTAGE_MANAGER)">
+		</request>
+		
+		<request
+			path="kkNotifyLog*"
+			defaultValidator="roleValidator(role=ROLE_IM_KK_BACKSTAGE_MANAGER)">
+		</request>
+		
+		<request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_IM_KK_BACKSTAGE_MANAGER)">
+		</request>
+		
+		<request
+			path="profile.jsp*"
+			defaultValidator="roleValidator(role=ROLE_IM_KK_BACKSTAGE_MANAGER)">
+		</request>
+
+		<request
+				path="kk_config/kkConfig_index.jsp*"
+				defaultValidator="roleValidator(role=ROLE_IM_KK_BACKSTAGE_MANAGER)">
+		</request>
+		
+		<request
+			path="kkNotify.do*"
+			defaultValidator="true">
+		</request>
+		
+		<request
+			path="kk_awareness*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+		</request>
+		
+		<request
+			path="webparts/getGzhInfo.jsp*"
+			defaultValidator="roleValidator(role=ROLE_IM_KK_BACKSTAGE_MANAGER)">
+		</request>
+		<request
+			path="webparts/chgKk5HeadImg.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+		</request>
+		<request
+			path="webparts/chgHeadImg.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+		</request>
+		<request
+			path="webparts/webKK.jsp*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)">
+		</request>
+		
+
+		<request
+			path="resource*"
+			defaultValidator="true">
+		</request>
+		
+		<!-- kk二维码登录 -->
+		<request
+			path="user.do*"
+			defaultValidator="true">
+		</request>
+		
+		<request
+			path="kk_sso/*"
+			defaultValidator="true">
+		</request>
+
+		<request
+				path="kk_notify/indexLog.jsp*"
+				defaultValidator="roleValidator(role=ROLE_IM_KK_BACKSTAGE_MANAGER)">
+		</request>
+		
+	</module>
+	
+	<!-- 后台配置权限 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.third.im.kk.KkConfig"
+				validator="roleValidator(role=ROLE_IM_KK_BACKSTAGE_MANAGER)" />
+		</request>
+	</module>
+
+	<homePage
+		urlPrefix="third/im/kk"
+		url="/moduleindex.jsp?nav=/third/im/kk/tree.jsp"
+		messageKey="third-im-kk:module.log" 
+		config="/moduleindex_notopic.jsp?nav=/third/im/kk/tree.jsp" 
+		type="global"/>
+		
+		
+    <quartz
+          messageKey="third-im-kk:kkNotifyLog.backUpLog"
+          jobService="kkNotifyLogService"
+          jobMethod="backUp"
+          enable="true"
+          cronExpression="0 0 3 * * ?"
+          runType="SINGLENODE"
+          description="third-im-kk:kkNotifyLog.backUpLog.description"
+ 	/>
+ 	
+ 	<quartz
+          messageKey="third-im-kk:kkNotifyLog.clean"
+          jobService="kkNotifyLogService"
+          jobMethod="clean"
+          enable="true"
+          cronExpression="0 0 5 * * ?"
+          runType="SINGLENODE"
+          description="third-im-kk:kkNotifyLog.clean.description"
+ 	/>
+ 	
+	<quartz messageKey="third-im-kk:writeDynamicInfo.quartz"
+		jobService="thirdImKKWriteDynamicInfoService" cronExpression="0 0/30 * * * ?"
+		jobMethod="writeDynamicInfo" description="third-im-kk:writeDynamicInfo.quartz.description" />	
+	
+	<!-- 定时任务，每天清理待办推送表记录 -->	
+	<quartz 
+		messageKey="third-im-kk:kkImNotify.clean"
+		jobService="thirdImKKNotifyTaskService" 
+		cronExpression="0 0 2 * * ?"
+		jobMethod="clean" 
+		description="third-im-kk:kkImNotify.clean.description" />	
+
+	<profileConfig 
+		key="kk"
+		messageKey="{third-im-kk:sys.profile.kk.name}"
+		url="/third/im/kk/profile.jsp"
+		icon="lui_icon_s_profile_navLeft_kk"
+		type="mobile"
+		order="3" />
+
+	<quartz
+		messageKey="third-im-kk:third.im.kk.notifyQueueError.resend.title"
+		jobService="kkNotifyQueueErrorService"
+		jobMethod="updateRunErrorQueue"
+		cronExpression="0 0/10 * * * ?"
+		enable="false"
+		description="third-im-kk:third.im.kk.notifyQueueError.resend.description" />
+</configs>

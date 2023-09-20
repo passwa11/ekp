@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/third/im/kk/kkNotifyLog.do"
+		class="com.landray.kmss.third.im.kk.actions.KkNotifyLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.im.kk.forms.KkNotifyLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/im/kk/kk_notify/kkNotifyLog_view.jsp" />
+				<entry
+					key="list"
+					value="/third/im/kk/kk_notify/kkNotifyLog_inner_list.jsp" />
+				<entry
+					key="searchView"
+					value="/third/im/kk/kk_notify/kkNotifyLog_inner_list.jsp" />
+				<entry
+					key="listFailTimes"
+					value="/third/im/kk/kk_notify/kk_notify_failTimes.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/im/kk/kkNotify.do"
+		class="com.landray.kmss.third.im.kk.actions.KkNotifyAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="noNotifyData"
+					value="/third/im/kk/kk_notify/kk_fail.jsp" />
+				<entry
+					key="redirect"
+					value="/resource/jsp/redirect.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- Error : Class Not Found!
+	<bean
+		name="/third/im/kk/third_im_kk_personInfo/thirdImKkPersonInfo.do"
+		class="com.landray.kmss.third.im.kk.actions.Kk5PersonPhotoAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	-->
+	<bean
+		name="/third/im/kk/config.do"
+		class="com.landray.kmss.third.im.kk.actions.ConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formName"
+			value="configForm" />
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.config.form.SysConfigAdminForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="configView"
+					value="/third/im/kk/kk_notify/kk_notify_cfg_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/im/kk/connKKConfig.do"
+		class="com.landray.kmss.third.im.kk.actions.ConnKKConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formName"
+			value="configForm" />
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.config.form.SysConfigAdminForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="connect"
+					value="/third/im/kk/kk_config/kkConfig_connect.jsp" />
+				<entry
+					key="simpleConnect"
+					value="/third/im/kk/kk_config/kkConfig_simple_connect.jsp" />
+				<entry
+					key="syn"
+					value="/third/im/kk/kk_config/kkConfig_syn.jsp" />
+				<entry
+					key="info"
+					value="/third/im/kk/kk_config/kkConfig_info.jsp" />
+				<entry
+					key="view"
+					value="/third/im/kk/kk_config/kkConfig_view.jsp" />
+				<entry
+					key="choose"
+					value="/third/im/kk/kk_config/kkConfig_choose.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/im/kk/user.do"
+		class="com.landray.kmss.third.im.kk.actions.KkUserAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="loginSuccess"
+					value="/third/im/kk/kk_sso/loginSuccess.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

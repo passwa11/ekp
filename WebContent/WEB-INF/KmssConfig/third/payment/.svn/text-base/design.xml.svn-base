@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/third/payment/" 
+        messageKey="third-payment:module.third.payment"
+        defaultValidator="roleValidator(role=ROLE_THIRDPAYMENT_SETTING)">
+
+        <roles>ROLE_THIRDPAYMENT_SETTING</roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_THIRDPAYMENT_SETTING)"/>
+        <request 
+            path="third_payment_order/thirdPaymentOrder.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.payment.model.ThirdPaymentOrder" 
+            defaultValidator="roleValidator(role=ROLE_THIRDPAYMENT_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDPAYMENT_SETTING)"/>
+            <query
+                    queryString="method=getOrderStatus"
+                    validator="roleValidator(role=SYSROLE_USER)"/>
+        </request>
+        <request 
+            path="third_payment_call_log/thirdPaymentCallLog.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.payment.model.ThirdPaymentCallLog" 
+            defaultValidator="roleValidator(role=ROLE_THIRDPAYMENT_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDPAYMENT_SETTING)"/>
+        </request>
+        <request 
+            path="third_payment_merchant/thirdPaymentMerchant.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.payment.model.ThirdPaymentMerchant" 
+            defaultValidator="roleValidator(role=ROLE_THIRDPAYMENT_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="authFieldValidator(type=SYS_EDITOR)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDPAYMENT_SETTING)"/>
+        </request>
+        <filters 
+            modelName="com.landray.kmss.third.payment.model.ThirdPaymentMerchant">
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+    </module>
+
+    <!-- 后台配置权限 -->
+    <module
+            messageKey=""
+            urlPrefix="/sys/appconfig/">
+        <request path="sys_appconfig/sysAppConfig*">
+            <query
+                    queryString="modelName=com.landray.kmss.third.payment.model.ThirdPaymentConfig"
+                    validator="roleValidator(role=ROLE_THIRDPAYMENT_SETTING)" />
+        </request>
+    </module>
+
+    <profileConfig 
+        key="third/payment" 
+        messageKey="{third-payment:module.third.payment}" 
+        url="/sys/profile/moduleindex.jsp?nav=/third/payment/tree.jsp"
+        icon="km_comminfo" 
+        type="other"
+        order="100"
+        description="{third-payment:module.third.payment.description}"/>
+</configs>

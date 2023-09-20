@@ -1,0 +1,100 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.km.archives.model.KmArchivesDetails",
+        "messageKey": "km-archives:table.kmArchivesDetails",
+        "table": "km_archives_details",
+        "url": "/km/archives/km_archives_details/kmArchivesDetails.do?method=view&fdId=${fdId}",
+        "displayProperty": "fdStatus",
+        "serviceBean": "kmArchivesDetailsService"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdAuthorityRange":         {
+            "propertyType": "simple",
+            "type": "String",
+            "length": "200",
+            "defaultValue": "",
+            "messageKey": "km-archives:kmArchivesDetails.fdAuthorityRange",
+            "column": "fd_authority_range",
+            "notNull": "false",
+            "validate": "false",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "fdStatus":         {
+            "propertyType": "simple",
+            "type": "String",
+            "length": "200",
+            "enumType": "km_archives_borrow_status",
+            "defaultValue": "",
+            "messageKey": "km-archives:kmArchivesDetails.fdStatus",
+            "column": "fd_status",
+            "notNull": "false",
+            "validate": "true",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "fdReturnDate":         {
+            "propertyType": "simple",
+            "type": "DateTime",
+            "messageKey": "km-archives:kmArchivesDetails.fdReturnDate",
+            "column": "fd_return_date",
+            "notNull": "false",
+            "validate": "true",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "fdRenewReturnDate":         {
+            "propertyType": "simple",
+            "type": "DateTime",
+            "messageKey": "km-archives:kmArchivesDetails.fdRenewReturnDate",
+            "column": "fd_renew_return_date",
+            "notNull": "false",
+            "validate": "true",
+            "canSearch": "true",
+            "canRelation": "true",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "fdBorrower":         {
+            "propertyType": "model",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "messageKey": "km-archives:kmArchivesDetails.fdBorrower",
+            "column": "fd_borrower_id",
+            "notNull": "true",
+            "validate": "false",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "true",
+            "readOnly": "false",
+            "dialogJS": "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_PERSON);"
+        },
+        "fdArchives":         {
+            "propertyType": "model",
+            "type": "com.landray.kmss.km.archives.model.KmArchivesMain",
+            "messageKey": "km-archives:kmArchivesDetails.fdArchives",
+            "column": "fd_archives_id",
+            "notNull": "true",
+            "validate": "false",
+            "canSearch": "false",
+            "canRelation": "false",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "docMain":         {
+            "propertyType": "model",
+            "messageKey": "km-archives:kmArchivesDetails.docMain",
+            "type": "com.landray.kmss.km.archives.model.KmArchivesBorrow",
+            "column": "doc_main_id"
+        }
+    }
+}

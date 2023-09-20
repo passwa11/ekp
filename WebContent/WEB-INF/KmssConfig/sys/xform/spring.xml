@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysFormDictLoadService"
+		name="sysDictLoader,sysFormCacheMannager"
+		class="com.landray.kmss.sys.xform.service.DictLoadService">
+		<property name="templateHistoryDao">
+			<ref bean="sysFormTemplateHistoryDao" />
+		</property>
+		<property name="commonTempHistoryDao">
+			<ref bean="sysFormCommonTempHistoryDao" />
+		</property>
+		<property name="cacheManager">
+			<ref bean="sysFormCacheManager" />
+		</property>
+		<property name="fileService">
+			<ref bean="fileService" />
+		</property>
+		
+	</bean>
+	
+	<bean
+		id="sysFormDictVarTree"
+		class="com.landray.kmss.sys.xform.service.SysFormDictTreeVarService">
+		<property name="loader">
+			<ref bean="sysFormDictLoadService" />
+		</property>
+		<property name="sysFormCommonTemplateService">
+			<ref bean="sysFormCommonTemplateService" />
+		</property>
+		<property name="sysFormTemplateService">
+			<ref bean="sysFormTemplateService" />
+		</property>
+	</bean>
+	<!-- 
+		<bean
+		id="hbmFileService"
+		class="com.landray.kmss.sys.xform.service.HbmFileServiceImp">
+		</bean> 
+	-->
+	<bean id="sysFormCacheManager"
+		class="com.landray.kmss.sys.xform.service.XFormCacheManager">
+	</bean>
+	<bean id="xformOrgElementDataInit"
+		class="com.landray.kmss.sys.xform.service.XformOrgElementDataInit">
+	</bean>
+	<bean id="sysXformMultiLangImportAndExport"
+		class="com.landray.kmss.sys.xform.service.SysXformMultiLangImportAndExport">
+		<property name="sysFormTemplateService">
+			<ref bean="sysFormTemplateService" />
+		</property>
+	</bean>
+	<bean id="sysFormLangkeyData"
+		class="com.landray.kmss.sys.xform.service.SysFormLangkeyData">
+	</bean>
+	<bean id="sysFormLangSyncService"
+		class="com.landray.kmss.sys.xform.service.SysFormLangSyncService">
+	</bean>
+	<bean id="sysFormTemplateLangJsonGeneraotr"
+		class="com.landray.kmss.sys.xform.service.parse.SysFormTemplateLangJsonGeneraotr">
+	</bean>
+	
+	<bean id="fileService"
+		class="com.landray.kmss.sys.xform.service.FileServiceImp">
+	</bean>
+	
+	<bean id="dictFileService"
+		class="com.landray.kmss.sys.xform.service.DictFileService">
+	</bean>
+	
+	<bean id="jspFileService"
+		class="com.landray.kmss.sys.xform.service.JspFileService">
+	</bean>
+	
+	<bean id="cssFileService"
+		class="com.landray.kmss.sys.xform.service.CssFileService">
+	</bean>
+	
+	<bean
+		id="sysSubFormValidator"
+		class="com.landray.kmss.sys.xform.validator.SysSubFormValidator">
+		<property name="sysFormTemplateService">
+			<ref bean="sysFormTemplateService" />
+		</property>
+		<property name="sysPrintTemplateService">
+			<ref bean="sysPrintTemplateService" />
+		</property>
+		<property name="templateHistoryDao">
+			<ref bean="sysFormTemplateHistoryDao" />
+		</property>
+		<property name="commonTempHistoryDao">
+			<ref bean="sysFormCommonTempHistoryDao" />
+		</property>
+		<property name="lbpmProcessExecuteService">
+			<ref bean="lbpmProcessExecuteService" />
+		</property>
+	</bean>
+
+	<bean id="sysFormCompressExecutor"
+		  class="com.landray.kmss.sys.xform.service.SysFormCompressExecutor">
+	</bean>
+</beans>

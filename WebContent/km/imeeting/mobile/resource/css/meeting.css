@@ -1,0 +1,925 @@
+body{
+  font-size:1.2rem;
+}
+
+/* 会议状态 */
+.muiMeetingStatus{
+	float:right;
+  display:inline-block;
+  height: 18px;
+  line-height: 18px;
+  padding:0 5px;
+  color:#8790B5;
+  background:#E8ECFF;
+}
+
+/* 未召开 */
+.muiMeetingStatus.unHold {
+  color:#8790B5;
+  background:#eaedff;
+}
+
+/* 进行中 */
+.muiMeetingStatus.holding {
+  background:#E5F5EE;
+  color: #5BD09D;
+}
+
+/* 已召开 */
+.muiMeetingStatus.hold {
+  color: #999;
+  background: #F4F4F4;
+}
+/* 待审批 */
+.muiMeetingStatus.wait {
+	background: #EEF4FF;
+	color: #4285F4;
+}
+
+/* 未通过 */
+.muiMeetingStatus.reject {
+  	color: #FF682B;
+    background: #FFF1EC;
+}
+
+/* 待审  */
+.muiMeetingStatus.examine {
+  	background: #EEF4FF;
+	color: #4285F4;
+}
+/* 草稿  */
+.muiMeetingStatus.draft {
+  	background: #E8ECFF;
+	color: #8790B5;
+}
+
+/* 驳回  */
+.muiMeetingStatus.refuse {
+  	color: #FF682B;
+    background: #FFF1EC;
+}
+
+/* 废弃  */
+.muiMeetingStatus.discard {
+  	color: #999999;
+    background: #F4F4F4;
+}
+
+/* 取消  */
+.muiMeetingStatus.cancel {
+  	color: #999999;
+    background: #F4F4F4;
+}
+
+.mui_ekp_meeting_switch_view {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 27.5rem;
+  height: 21.5rem;
+  margin: auto;
+}
+
+.mui_ekp_meeting_switch_view ul {
+  font-size: 0;
+}
+
+.mui_ekp_meeting_switch_view li {
+  display: inline-block;
+}
+
+.mui_ekp_meeting_switch_view li:first-child {
+  margin-right: 1.25rem;
+}
+
+.mui_ekp_meeting_switch_view li:nth-child(2) {
+  margin-left: 1.25rem;
+}
+
+.mui_ekp_meeting_switch_select.meeting_switch_thumb:after {
+  display: inline-block;
+}
+
+.meeting_switch_thumb {
+  width: 12.5rem;
+  height: 18.5rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12.5rem auto;
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+}
+
+/* 选中 */
+.mui_ekp_meeting_switch_select .meeting_switch_thumb {
+  box-shadow: 0 5px 12px 0 rgba(0,0,0,0.30);
+}
+
+.meeting_switch_thumb.meeting_switch_calendar {
+  background-image: url(./../images/thumb_view_calendar.png);
+}
+
+.meeting_switch_thumb.meeting_switch_list {
+  background-image: url(./../images/thumb_view_list.png);
+}
+
+.meeting_switch_thumb:after {
+  content: "";
+  display: none;
+  width: 2.1rem;
+  height: 2.1rem;
+  background: url(./../images/icon-switch-select@2x.png) no-repeat left top;
+  background-size: 2.1rem;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+.meeting_switch_txt {
+  font-size: 1.4rem;
+  color: #fff;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.meeting_switch_icon {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.2rem;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+.meeting_switch_icon.meeting_switch_calendar {
+  background-image: url(../images/icon-calendar-white@2x.png);
+}
+
+.meeting_switch_icon.meeting_switch_list {
+  background-image: url(../images/icon-list-white@2x.png);
+}
+
+.mui_ekp_meeting_switch_view .mui_ekp_meeting_btn_close {
+  display: inline-block;
+  width: 3.6rem;
+  height: 3.6rem;
+  position: fixed;
+  bottom: 4.1rem;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  background-size: 3.6rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(../images/icon-close@2x.png);
+}
+
+.mui_ekp_meeting_timeline_list{
+   margin-top: 2rem; 
+}
+
+.mui_ekp_meeting_timeline_list em,
+.mui_ekp_meeting_timeline_list i {
+  font-style: normal;
+}
+
+.mui_ekp_meeting_timeline_list .meeting_timeline_item {
+  position: relative;
+}
+
+.mui_ekp_meeting_timeline_list .meeting_timeline_item:last-child .meeting_timeline_item_tail {
+  display: none;
+}
+
+.mui_ekp_meeting_timeline_list .meeting_timeline_item_icon {
+  display: inline-block;
+  width: 7px;
+  height:7px;
+  border: 2px solid #e8e8e8;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  left: 22px;
+  top: 10px;
+}
+
+.mui_ekp_meeting_timeline_list .meeting_timeline_item_tail {
+  position: absolute;
+  left: 27px;
+  top: 21px;
+  bottom: -10px;
+  width: 1px;
+  background: #e8e8e8;
+}
+
+.mui_ekp_meeting_timeline_list .meeting_timeline_item_content {
+  padding-left: 4.6rem;
+  padding-bottom: 2rem;
+  color: #999FB7;
+  padding-top: .2rem;
+  padding-right:2rem;
+}
+
+.mui_ekp_meeting_timeline_list .meeting_timeline_item_hold .meeting_timeline_subject {
+  color: #999FB7;
+}
+
+.mui_ekp_meeting_timeline_list .meeting_timeline_date {
+  font-size: 1.2rem;
+  margin-bottom: .8rem;
+  color: #999FB7;
+}
+
+.mui_ekp_meeting_timeline_list .meeting_timeline_date em {
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+  font-weight: bold;
+}
+
+.mui_ekp_meeting_timeline_list .meeting_timeline_subject {
+  margin-bottom: .8rem;
+  margin-right:6rem;
+  font-size: 1.4rem;
+  color:#2A304A;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  word-wrap: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.mui_ekp_meeting_timeline_list .muiMeetingStatus {
+  right: 1rem;
+  border-radius: 2px;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_date {
+  background: #F7F7F8;
+  color: #999FB7;
+  line-height: 3rem;
+  padding: 0 1.5rem;
+  font-size: 1.2rem;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_content {
+  padding: 0 1.5rem;
+  background: #fff;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  /* width: 100%; */
+  flex-shrink: 0;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  font-size: 1.2rem;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item .meeting_dateList_item_content {
+  border-bottom: .5px solid #EAEBF0;
+}
+
+.meeting_timeline_info{
+	margin-bottom: .8rem;
+	margin-right:1rem;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+.meeting_timeline_info .item_other_place,
+.meeting_dateList_item_info .item_other_place{
+	margin-left:2rem;
+}
+.meeting_timeline_info span{
+	margin-right:2rem;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_date {
+  width: 5rem;
+  height: 5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  margin-right: 1.5rem;
+  color: #fff;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 5rem auto;
+  background-image: url(../images/icon-list-canlendar-cur@2x.png);
+  flex-shrink: 0;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_hold .meeting_dateList_item_date {
+  background-image: url(../images/icon-list-canlendar-gray@2x.png);
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_content {
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  color: #999FB7;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_status {
+  /* position: absolute; */
+  right: 0;
+  top: 1.5rem;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_date_day {
+  font-size: 1.4rem;
+  padding-top: .9rem;
+  line-height: 2rem;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_date_week {
+  -webkit-transform: scale(0.85);
+          transform: scale(0.85);
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_subject {
+  font-size: 1.4rem;
+  color: #2A304A;
+  margin-bottom: 1rem;
+  padding-right: 2em;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  word-wrap: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_info {
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  word-wrap: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_info span {
+  margin-right: 1rem;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_info .item_icon,
+.mui_ekp_meeting_timeline_list .item_icon{
+  display: inline-block;
+  width: 1.6rem;
+  height: 1.6rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.4rem auto;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_info .item_icon.item_icon_date,
+.mui_ekp_meeting_timeline_list .meeting_timeline_info .item_icon.item_icon_date {
+  background-image: url(./../images/item_icon_date@2x.png);
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_info .item_icon.item_icon_person,
+.mui_ekp_meeting_timeline_list .meeting_timeline_info .item_icon.item_icon_person{
+  background-image: url(./../images/item_icon_person@2x.png);
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_info .item_icon.item_icon_author,
+.mui_ekp_meeting_timeline_list .meeting_timeline_info .item_icon.item_icon_author {
+  background-image: url(./../images/item_icon_author@2x.png);
+}
+
+.mui_ekp_meeting_dateList .meeting_dateList_item_info .item_icon.item_icon_place,
+.mui_ekp_meeting_timeline_list .meeting_timeline_info .item_icon.item_icon_place{
+  background-image: url(./../images/item_icon_place.png);
+}
+
+.meeting_dateList_item_info.item_other_place{
+	padding-left:2rem;
+}
+
+.mui_ekp_meeting_cardList .meeting_cardList_item {
+    margin: 1rem 1.5rem;
+    padding: 1.5rem 1.5rem 1rem;
+    background: #fff;
+    -webkit-box-shadow: 0 0 3rem 0 rgba(153, 179, 210, 0.2);
+    box-shadow: 0 0 3rem 0 rgba(153, 179, 210, 0.2);
+    border-radius: 0.5rem;
+}
+
+.mui_ekp_meeting_cardList .meeting_btn {
+  display: inline-block;
+  white-space: nowrap;
+  background: #EEF4FF;
+  height: 1.8rem;
+  line-height: 1.8rem;
+  border-radius: 0.4rem;
+  padding: 0 0.8rem;
+  font-size: 1.2rem;
+  color: #4285F4;
+  border: none;
+}
+
+.mui_ekp_meeting_cardList .meeting_btn.meeting_btn_discard{
+	color: #FF682B;
+  	background: #FFF1EC;
+}
+
+.mui_ekp_meeting_cardList .meeting_btn.meeting_btn_refuse{
+	color: #8790B5;
+  	background: #E8ECFF;
+}
+
+.mui_ekp_meeting_cardList .meeting_btn.meeting_btn_publish{
+	color: #999999;
+  	background: #F4F4F4;
+}
+
+.mui_ekp_meeting_cardList .meeting_btn.meeting_btn_reject {
+  color: #999;
+  background: #ffffff;
+}
+
+.mui_ekp_meeting_cardList .meeting_btn.meeting_btn_gray {
+  color: #999;
+  background: #f5f5f5;
+}
+
+.mui_ekp_meeting_cardList .meeting_cardList_item_head {
+  border-bottom: .5px solid #eee;
+  /* padding-top: 1.5rem; */
+  padding-bottom: 1rem;
+}
+
+.mui_ekp_meeting_cardList .meeting_cardList_item_head.meeting_cardList_item_head_hasBtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.mui_ekp_meeting_cardList .meeting_cardList_item_head.meeting_cardList_item_head_hasBtn .meeting_cardList_address {
+  margin-bottom: 0.5rem;
+}
+
+.mui_ekp_meeting_cardList .meeting_cardList_subject {
+  font-size: 1.4rem;
+  color: #2A304A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mui_ekp_meeting_cardList .meeting_cardList_item_footer {
+  padding: 1rem 0;
+  color: #999FB7;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  font-size: 1.2rem;
+}
+.meeting_cardList_address{
+	color: #999FB7;
+  	margin-bottom: .1rem;
+  	margin-right: 1.5rem;
+  	display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.meeting_cardList_item_footerL span{
+	margin-right:1rem;
+}
+.meeting_cardList_date{
+	color:#999FB7;
+	/* margin-top:1rem; */
+}
+
+.meeting_cardList_author{
+	display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    width: 7.5rem;
+    text-align: right;
+}
+
+.meeting_cardList_item_footerL,
+.meeting_cardList_item_footerR{
+	padding: 1rem 0 0;
+  	color: #999FB7;
+  	display: -webkit-box;
+  	display: -ms-flexbox;
+ 	display: flex;
+  	-webkit-box-pack: justify;
+  	-ms-flex-pack: justify;
+  	justify-content: space-between;
+  	font-size: 1.2rem;
+}
+.meeting_cardList_item_footerR{
+	float:right;
+}
+
+ .meeting_room_cardList_item {
+  margin: 1rem 1.5rem;
+  padding: 1rem 1.5rem;
+  background: #fff;
+  -webkit-box-shadow: 0 0 3rem 0 rgba(153, 179, 210, 0.2);
+  box-shadow: 0 0 3rem 0 rgba(153, 179, 210, 0.2);
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.meeting_room_cardList_item_head {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+ .meeting_room_cardList_item_icon {
+  width: 5.7rem;
+  height: 5.7rem;
+  background-image: linear-gradient(135deg, #C2D4FB 0%, #8FA9F6 100%);
+  border-radius: 0.5rem;
+  margin-right: 2rem;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  background: url(./../images/icon-list-video@2x.png) no-repeat center;
+  background-size: 5.7rem auto;
+}
+
+ .meeting_room_cardList_subject {
+  font-size: 1.4rem;
+  color: #2A304A;
+  margin-bottom: 1rem;
+}
+
+ .meeting_room_cardList_info {
+  color: #999FB7;
+  margin-bottom: 0.5rem;
+}
+
+ .meeting_room_cardList_info span {
+  margin-right: 1rem;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  word-wrap: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+ .meeting_room_cardList_item_footer {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.mui_ekp_meeting_cardList .meeting_room_cardList_item .meeting_btn {
+  display: inline-block;
+  padding: 0 1.5rem;
+  height: 2.6rem;
+  line-height: 2.6rem;
+  border: 1px solid #DADADA;
+  margin-left: 1rem;
+  color: #2A304A;
+  border-radius: 0.2rem;
+}
+
+.meeting_room_cardList_item_footer .meeting_btn.meeting_btn_primary {
+  background: #4285F4;
+  color: #fff;
+  border-color: #4285F4;
+}
+
+.mui_ekp_meeting_newPop {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 100%;
+  height: 9.2rem;
+  margin: auto;
+}
+
+.mui_ekp_meeting_newPop .mui_ekp_meeting_newPop_list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.mui_ekp_meeting_newPop li {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  text-align: center;
+}
+
+.mui_ekp_meeting_newPop a {
+  display: block;
+}
+
+.mui_ekp_meeting_newPop .meeting_newPop_icon {
+  display: inline-block;
+  width: 5.8rem;
+  height: 5.8rem;
+  font-size: 0;
+  line-height: 5.8rem;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.mui_ekp_meeting_newPop .meeting_newPop_icon i {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 3rem auto;
+}
+
+.mui_ekp_meeting_newPop .meeting_newPop_icon.meeting_newPop_book {
+  background-color: #FFB900;
+}
+
+.mui_ekp_meeting_newPop .meeting_newPop_icon.meeting_newPop_book i {
+  background-image: url(../images//icon-pop-meeting-book@2x.png);
+}
+
+.mui_ekp_meeting_newPop .meeting_newPop_icon.meeting_newPop_arrange {
+  background-color: #2BCF8F;
+}
+
+.mui_ekp_meeting_newPop .meeting_newPop_icon.meeting_newPop_arrange i {
+  background-image: url(../images//icon-pop-meeting-arrange@2x.png);
+}
+
+.mui_ekp_meeting_newPop .meeting_newPop_icon.meeting_newPop_period {
+  background-color: #827DFF;
+}
+
+.mui_ekp_meeting_newPop .meeting_newPop_icon.meeting_newPop_period i {
+  background-image: url(../images//icon-pop-meeting-arrange@2x.png);
+}
+
+.mui_ekp_meeting_newPop .meeting_newPop_icon.meeting_newPop_video {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#6E93FF), to(#6E93FF));
+  background-image: linear-gradient(180deg, #6E93FF 0%, #6E93FF 100%);
+}
+
+.mui_ekp_meeting_newPop .meeting_newPop_icon.meeting_newPop_video i {
+  background-image: url(../images//icon-pop-meeting-video@2x.png);
+}
+
+.mui_ekp_meeting_newPop .meeting_newPop_txt {
+  display: block;
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.mui_ekp_meeting_newPop .mui_ekp_meeting_btn_close {
+  display: inline-block;
+  width: 3.6rem;
+  height: 3.6rem;
+  position: fixed;
+  bottom: 4.1rem;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  background-size: 3.6rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(../images/icon-close@2x.png);
+}
+/*# sourceMappingURL=meeting.css.map */
+.mui_meeting_other_audit,
+.mui_meeting_other_search,
+.mui_meeting_other_stat{
+  background-size: 3rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 3.8rem;
+  width: 3.8rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.mui_meeting_other_audit{
+	background-image: url(../images/icon_more_audit.png);	
+}
+
+.mui_meeting_other_search{
+	background-image: url(../images/icon_more_search.png);
+}
+
+.mui_meeting_other_stat{
+	background-image: url(../images/icon_more_stat.png);	
+}
+
+.mui_ekp_meeting_to_calendar{
+	background-image: url(../images/icon_list_calendar.png);
+	background-size: 3rem;
+  	background-repeat: no-repeat;
+  	background-position: center;
+  	height: 3.8rem;
+    line-height: 3.8rem;
+    display: table-cell;
+    text-align: center;
+    min-width: 4rem;
+    cursor: pointer;
+    width: 4rem;
+}
+
+.mui_ekp_portal_date_btn>li.mui_ekp_meeting_to_list{
+	background-image: url(../images/icon_list.png);
+	background-size: 2.5rem auto;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: transparent;
+	position: fixed;
+	right: 1rem;
+	top: 1.2rem;
+}
+
+
+/* 引导页 Starts */
+.mui_ekp_meeting_guide_view{
+  z-index: 120;
+}
+.meeting_guide_content{
+  position: fixed;
+  top:1rem;
+  right:0;
+}
+.meeting_guide_content .meeting_icon{
+  display:inline-block;
+  width:3.5rem;
+  height:3.5rem;
+  background-color:#fff;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  right: 1rem;
+  top:0;
+}
+.meeting_guide_content .icon_list{
+  background-image: url(../images/icon_list.png);
+  background-size:2rem;
+}
+.meeting_guide_content .meeting_guide_txt{
+  /* display: inline-block; */
+  font-size:1.4rem;
+  color:#fff;
+  height: 3.8rem;
+  line-height: 3.8rem;
+  padding:0 1rem;
+  background-color:#4285F4;
+  border-radius: 4px;
+  position: absolute;
+  top:4rem;
+  right:1.5rem;
+  white-space: nowrap;
+}
+.meeting_guide_content .meeting_guide_txt:before{
+  content:"";
+  display: inline-block;
+  width:5.5rem;
+  height: 3rem;
+  background-image: url(../images/icon-guide@2x.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:5.5rem auto;
+  position: absolute;
+  top:-2.5rem;
+
+}
+.meeting_guide_content .meeting_guide_txt:after{
+  content: "";
+  display:inline-block;
+  width:0;
+  height: 0;
+  border:5px solid transparent;
+  border-bottom-color:#4285F4;
+  position: absolute;
+  right:1rem;
+  top:-1rem;
+}
+
+/* 引导页 Ends */
+
+/* 页脚 starts */
+.lui_db_footer {
+  height: 50px;
+  background-color: #fff;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+.lui_db_footer_item {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.lui_db_footer_item p {
+  font-size: 10px;
+  color: #999999;
+}
+.lui_db_footer_item.active p {
+  color: #4285f4;
+}
+.lui_db_footer_item_img {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 5px;
+}
+.lui_db_footer_item_img.my {
+  background: url(../images/icon_footer_my@2x.png) no-repeat center;
+  background-size: 20px;
+}
+.lui_db_footer_item_img.place {
+  background: url(../images/icon_footer_place@2x.png) no-repeat center;
+  background-size: 20px;
+}
+.lui_db_footer_item_img.summary {
+  background: url(../images/icon_footer_summary@2x.png) no-repeat center;
+  background-size: 20px;
+}
+.lui_db_footer_item_img.more {
+  background: url(../images/icon_footer_more@2x.png) no-repeat center;
+  background-size: 20px;
+}
+.active .lui_db_footer_item_img.my {
+  background-image: url(../images/icon_footer_my_select@2x.png);
+}
+.active .lui_db_footer_item_img.place {
+  background-image: url(../images/icon_footer_place_select@2x.png);
+}
+.active .lui_db_footer_item_img.summary {
+  background-image: url(../images/icon_footer_summary_select@2x.png);
+}
+.active .lui_db_footer_item_img.more {
+  background-image: url(../images/icon_footer_more_select@2x.png);
+}
+/* 页脚 ends */

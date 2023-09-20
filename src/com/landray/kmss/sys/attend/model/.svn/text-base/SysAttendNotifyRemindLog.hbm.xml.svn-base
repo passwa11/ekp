@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.attend.model.SysAttendNotifyRemindLog"
+		table="sys_attend_remind_log">
+		
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+		
+		<property
+			name="fdSubject"
+			column="fd_subject"
+			update="true"
+			insert="true"
+			not-null="false" />
+		
+		<property
+			name="fdNotifyType"
+			column="fd_notify_type"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdTime"
+			column="fd_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdCategoryId"
+			column="fd_category_id"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<property
+			name="fdCategoryName"
+			column="fd_category_name"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<bag
+			name="fdTargets"
+			table="sys_attend_remind_target"
+			lazy="true">
+			<key
+				column="fd_log_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_org_id" />
+		</bag>
+		
+	</class>
+</hibernate-mapping>

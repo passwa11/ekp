@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="ticSoapSyncTempFuncDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.soap.sync.dao.hibernate.TicSoapSyncTempFuncDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.soap.sync.model.TicSoapSyncTempFunc" />
+	</bean>
+	<bean
+		id="ticSoapSyncTempFuncTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.soap.sync.service.spring.TicSoapSyncTempFuncServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticSoapSyncTempFuncDao" />
+		</property>
+		<property name="compDbcpService">
+		  <ref bean="compDbcpService"/>
+		</property>
+	</bean>
+	<bean
+		id="ticSoapSyncTempFuncService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticSoapSyncTempFuncTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticSoapSyncCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.soap.sync.dao.hibernate.TicSoapSyncCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.soap.sync.model.TicSoapSyncCategory" />
+	</bean>
+	<bean
+		id="ticSoapSyncCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.soap.sync.service.spring.TicSoapSyncCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticSoapSyncCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticSoapSyncCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticSoapSyncCategoryTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticSoapSyncJobDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.soap.sync.dao.hibernate.TicSoapSyncJobDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.soap.sync.model.TicSoapSyncJob" />
+	</bean>
+	<bean
+		id="ticSoapSyncJobTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.soap.sync.service.spring.TicSoapSyncJobServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticSoapSyncJobDao" />
+		</property>
+		<property name="sysQuartzJobService">
+		    <ref bean="sysQuartzJobTarget"/>
+		</property>
+	</bean>
+	<bean
+		id="ticSoapSyncJobService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticSoapSyncJobTarget" />
+		</property>
+	</bean>
+	<bean
+		id="ticSoapSyncCategoryTreeService"
+		class="com.landray.kmss.tic.soap.sync.service.bean.TicSoapSyncCategoryTreeServiceImp">
+		<property name="ticSoapSyncCategoryService">
+			<ref bean="ticSoapSyncCategoryService" />
+		</property>
+	</bean>
+	<bean
+		id="ticSoapSyncLoadDBTableService"
+		class="com.landray.kmss.tic.soap.sync.service.bean.TicSoapSyncLoadDBTableService">
+	</bean>
+	<!-- 定时任务执行同步 -->
+	<bean
+		id="ticSoapSyncUniteQuartzService"
+		class="com.landray.kmss.tic.soap.sync.service.spring.TicSoapSyncUniteQuartzService">
+		<property name="ticSoapSyncJobService">
+			<ref bean="ticSoapSyncJobService" />
+		</property>
+		<property name="ticSoap">
+			<ref bean="ticSoap" />
+		</property>
+		<property name="ticSoapSyncTempFuncService">
+			<ref bean="ticSoapSyncTempFuncService" />
+		</property>
+		<property name="ticCoreLogInterface">
+			<ref bean="ticCoreLogInterface" />
+		</property>
+	</bean>
+
+</beans>

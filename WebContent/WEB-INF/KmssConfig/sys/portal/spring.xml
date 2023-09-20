@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="portalNamespaceHandler"
+		class="com.landray.kmss.sys.portal.xml.PortalNamespaceHandler">
+		<property name="groupConfigStorer">
+			<ref bean="groupConfigStorer"/>
+		</property>
+	</bean>
+	
+	<bean id="authPortalValidator"
+		class="com.landray.kmss.sys.portal.auth.AuthPortalValidator" parent="authFieldValidator">		 
+	</bean>
+	
+	<bean id="portalThemeGetter"
+		class="com.landray.kmss.sys.portal.util.PortalThemeGetter"></bean>
+	
+	<bean id="sysPortalMainTreeService"
+		class="com.landray.kmss.sys.portal.service.spring.SysPortalMainTreeService"></bean>
+		
+		
+		
+	<bean id="sysPortalJspService"
+		class="com.landray.kmss.sys.portal.quartz.SysPortalJspService">
+	</bean>
+	
+	<!-- 以上是ModelsTry生成的代码 -->
+	<bean id="sysPortalPortletDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalPortletDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.portal.model.SysPortalPortlet" />
+	</bean>
+	<bean id="sysPortalPortletTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.portal.service.spring.SysPortalPortletServiceImp">
+		<property name="baseDao">
+			<ref bean="sysPortalPortletDao" />
+		</property>
+	</bean>
+	<bean id="sysPortalPortletService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPortalPortletTarget" />
+		</property>
+	</bean>
+	<bean id="sysPortalPageDao" parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalPageDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.portal.model.SysPortalPage" />
+	</bean>
+	<bean id="sysPortalPageTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.portal.service.spring.SysPortalPageServiceImp">
+		<property name="baseDao">
+			<ref bean="sysPortalPageDao" />
+		</property>
+	</bean>
+	<bean id="sysPortalPageService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPortalPageTarget" />
+		</property>
+	</bean> 
+	<bean id="sysPortalPageDataInit"
+	    class="com.landray.kmss.sys.portal.service.spring.SysPortalPageDataInit">
+	    <property name="baseDao">
+	      <ref bean="sysPortalPageDao" />
+	    </property>
+	    <property name="sysPortalLinkService">
+	      <ref bean="sysPortalLinkService" />
+	    </property>
+	    <property name="sysPortalNavService">
+	      <ref bean="sysPortalNavService" />
+	    </property>
+	    <property name="sysPortalTreeService">
+	      <ref bean="sysPortalTreeService" />
+	    </property>
+	    <property name="sysPortalMapTplService">
+	      <ref bean="sysPortalMapTplService" />
+	    </property>
+	    <property name="sysPortalTopicService">
+	      <ref bean="sysPortalTopicService" />
+	    </property>
+	    <property name="sysPortalHtmlService">
+	      <ref bean="sysPortalHtmlService" />
+	    </property>
+  	</bean>
+	
+	<bean id="sysPortalHtmlDao" parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalHtmlDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.portal.model.SysPortalHtml" />
+	</bean>
+	<bean id="sysPortalHtmlTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.portal.service.spring.SysPortalHtmlServiceImp">
+		<property name="baseDao">
+			<ref bean="sysPortalHtmlDao" />
+		</property>
+	</bean>
+	<bean id="sysPortalHtmlService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPortalHtmlTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysPortalTreeDao" parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalTreeDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.portal.model.SysPortalTree" />
+	</bean>
+	<bean id="sysPortalTreeTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.portal.service.spring.SysPortalTreeServiceImp">
+		<property name="baseDao">
+			<ref bean="sysPortalTreeDao" />
+		</property>
+	</bean>
+	<bean id="sysPortalTreeService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPortalTreeTarget" />
+		</property>
+	</bean>
+	
+	<bean id="sysPortalNavDao" parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalNavDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.portal.model.SysPortalNav" />
+	</bean>
+	<bean id="sysPortalNavTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.portal.service.spring.SysPortalNavServiceImp">
+		<property name="baseDao">
+			<ref bean="sysPortalNavDao" />
+		</property>
+	</bean>
+	<bean id="sysPortalNavService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPortalNavTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysPortalLinkDao" parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalLinkDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.portal.model.SysPortalLink" />
+	</bean>
+	<bean id="sysPortalLinkTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.portal.service.spring.SysPortalLinkServiceImp">
+		<property name="baseDao">
+			<ref bean="sysPortalLinkDao" />
+		</property>
+	</bean>
+	<bean id="sysPortalLinkService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPortalLinkTarget" />
+		</property>
+	</bean>
+	
+	<bean id="sysPortalMainDao" parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalMainDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.portal.model.SysPortalMain" />
+	</bean>
+	<bean id="sysPortalMainTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.portal.service.spring.SysPortalMainServiceImp">
+		<property name="baseDao">
+			<ref bean="sysPortalMainDao" />
+		</property>
+	</bean>
+	<bean id="sysPortalMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPortalMainTarget" />
+		</property>
+	</bean>
+	
+	<bean id="sysPortalGuideDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalGuideDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.portal.model.SysPortalGuide" />
+	</bean>
+	<bean id="sysPortalGuideTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.portal.service.spring.SysPortalGuideServiceImp">
+		<property name="baseDao">
+			<ref bean="sysPortalGuideDao" />
+		</property>
+	</bean>
+	<bean id="sysPortalGuideService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPortalGuideTarget" />
+		</property>
+	</bean>
+	<bean id="sysPortalNoticeDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalNoticeDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.portal.model.SysPortalNotice" />
+	</bean>
+	<bean id="sysPortalNoticeTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.portal.service.spring.SysPortalNoticeServiceImp">
+		<property name="baseDao">
+			<ref bean="sysPortalNoticeDao" />
+		</property>
+	</bean>
+	<bean id="sysPortalNoticeService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPortalNoticeTarget" />
+		</property>
+	</bean>
+	
+	<bean id="sysPortalPersonDefaultDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalPersonDefaultDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.portal.model.SysPortalPersonDefault" />
+	</bean>
+	<bean id="sysPortalPersonDefaultTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.portal.service.spring.SysPortalPersonDefaultServiceImp">
+		<property name="baseDao">
+			<ref bean="sysPortalPersonDefaultDao" />
+		</property>
+		<property name="sysPortalMainService">
+			<ref bean="sysPortalMainService" />
+		</property>
+	</bean>
+	<bean id="sysPortalPersonDefaultService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPortalPersonDefaultTarget" />
+		</property>
+	</bean>
+	
+	<bean id="sysPortalTopicDao" parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalTopicDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.sys.portal.model.SysPortalTopic" />
+	</bean>
+	<bean id="sysPortalTopicTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.portal.service.spring.SysPortalTopicServiceImp">
+		<property name="baseDao">
+			<ref bean="sysPortalTopicDao" />
+		</property>
+	</bean>
+	<bean id="sysPortalTopicService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysPortalTopicTarget" />
+		</property>
+	</bean>
+
+	<bean 
+	    id="sysPortalPopTplDao" 
+	    class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalPopTplDaoImp" 
+	    parent="KmssAuthBaseDao">
+	    <property 
+	        name="modelName">
+	        <value>com.landray.kmss.sys.portal.model.SysPortalPopTpl</value>
+	    </property>
+	</bean>
+	<bean 
+	    id="sysPortalPopTplTarget" 
+	    class="com.landray.kmss.sys.portal.service.spring.SysPortalPopTplServiceImp" 
+	    parent="KmssExtendDataTarget">
+	    <property 
+	        name="baseDao">
+	        <ref 
+	            bean="sysPortalPopTplDao"/>
+	    </property>
+	</bean>
+	<bean 
+	    id="sysPortalPopTplService" 
+	    parent="KmssBaseService">
+	    <property 
+	        name="target">
+	        <ref 
+	            bean="sysPortalPopTplTarget"/>
+	    </property>
+	</bean>
+	<bean 
+	    id="sysPortalPopMainDao" 
+	    class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalPopMainDaoImp" 
+	    parent="KmssAuthBaseDao">
+	    <property 
+	        name="modelName">
+	        <value>com.landray.kmss.sys.portal.model.SysPortalPopMain</value>
+	    </property>
+	</bean>
+	<bean 
+	    id="sysPortalPopMainTarget" 
+	    class="com.landray.kmss.sys.portal.service.spring.SysPortalPopMainServiceImp" 
+	    parent="KmssExtendDataTarget">
+	    <property 
+	        name="baseDao">
+	        <ref 
+	            bean="sysPortalPopMainDao"/>
+	    </property>
+	</bean>
+	<bean 
+	    id="sysPortalPopMainService" 
+	    parent="KmssBaseService">
+	    <property 
+	        name="target">
+	        <ref 
+	            bean="sysPortalPopMainTarget"/>
+	    </property>
+	</bean>
+	<bean 
+	    id="sysPortalPopTplCategoryDao" 
+	    class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalPopTplCategoryDaoImp" 
+	    parent="KmssAuthBaseDao">
+	    <property 
+	        name="modelName">
+	        <value>com.landray.kmss.sys.portal.model.SysPortalPopTplCategory</value>
+	    </property>
+	</bean>
+	<bean 
+	    id="sysPortalPopTplCategoryTarget" 
+	    class="com.landray.kmss.sys.portal.service.spring.SysPortalPopTplCategoryServiceImp" 
+	    parent="KmssExtendDataTarget">
+	    <property 
+	        name="baseDao">
+	        <ref 
+	            bean="sysPortalPopTplCategoryDao"/>
+	    </property>
+	</bean>
+	<bean 
+	    id="sysPortalPopTplCategoryService" 
+	    parent="KmssBaseService">
+	    <property 
+	        name="target">
+	        <ref 
+	            bean="sysPortalPopTplCategoryTarget"/>
+	    </property>
+	</bean>
+	<bean 
+	    id="sysPortalPopCategoryDao" 
+	    class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalPopCategoryDaoImp" 
+	    parent="KmssAuthBaseDao">
+	    <property 
+	        name="modelName">
+	        <value>com.landray.kmss.sys.portal.model.SysPortalPopCategory</value>
+	    </property>
+	</bean>
+	<bean 
+	    id="sysPortalPopCategoryTarget" 
+	    class="com.landray.kmss.sys.portal.service.spring.SysPortalPopCategoryServiceImp" 
+	    parent="KmssExtendDataTarget">
+	    <property 
+	        name="baseDao">
+	        <ref 
+	            bean="sysPortalPopCategoryDao"/>
+	    </property>
+	</bean>
+	<bean 
+	    id="sysPortalPopCategoryService" 
+	    parent="KmssBaseService">
+	    <property 
+	        name="target">
+	        <ref 
+	            bean="sysPortalPopCategoryTarget"/>
+	    </property>
+	</bean>
+    <bean 
+        id="sysPortalMapTplDao" 
+        class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalMapTplDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.portal.model.SysPortalMapTpl</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysPortalMapTplTarget" 
+        class="com.landray.kmss.sys.portal.service.spring.SysPortalMapTplServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysPortalMapTplDao"/>
+        </property>
+        <property name="sysAttMainCoreInnerService">
+	    	<ref bean="sysAttMainService"/>
+	    </property>
+    </bean>
+    <bean 
+        id="sysPortalMapTplService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysPortalMapTplTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysPortalMaterialMainDao" 
+        class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalMaterialMainDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.portal.model.SysPortalMaterialMain</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysPortalMaterialMainTarget" 
+        class="com.landray.kmss.sys.portal.service.spring.SysPortalMaterialMainServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysPortalMaterialMainDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysPortalMaterialMainService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysPortalMaterialMainTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysPortalMaterialTagDao" 
+        class="com.landray.kmss.sys.portal.dao.hibernate.SysPortalMaterialTagDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.portal.model.SysPortalMaterialTag</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysPortalMaterialTagTarget" 
+        class="com.landray.kmss.sys.portal.service.spring.SysPortalMaterialTagServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysPortalMaterialTagDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysPortalMaterialTagService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysPortalMaterialTagTarget"/>
+        </property>
+    </bean>
+
+	<!--门户导入导出-->
+	<bean
+			id="sysPortalService"
+			class="com.landray.kmss.sys.portal.service.spring.SysPortalServiceImp">
+	</bean>
+	<!--门户安装-->
+	<bean
+			id="portalApplicationInstallLogService"
+			class="com.landray.kmss.sys.portal.service.spring.PortalApplicationInstallLogServiceImp">
+	</bean>
+	<bean
+			id="initExtendComponentService"
+			class="com.landray.kmss.sys.portal.service.spring.InitExtendComponentServiceImpl">
+	</bean>
+
+	<bean id="portalCacheConfigHandler" class="com.landray.kmss.sys.portal.cache.PortalCacheConfigHandler"/>
+</beans>

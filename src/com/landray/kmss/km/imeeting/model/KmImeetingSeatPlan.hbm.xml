@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.imeeting.model.KmImeetingSeatPlan"
+		table="km_imeeting_seat_plan">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+			
+		<property
+			name="fdSeatDetail"
+			column="fd_seat_detail"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1000000"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true" />
+			
+		<property
+			name="fdIsTopicPlan"
+			column="fd_is_topic_plan"
+			update="true"
+			insert="true"
+			length="1"
+			not-null="false" />
+			
+		<many-to-one 
+            name="fdImeetingMain" 
+            column="fd_imeeting_main_id" 
+            update="true" 
+            insert="true"/>
+            
+        <property
+			name="fdCols"
+			column="fd_cols"
+			update="true"
+			insert="true"
+			length="36"
+			not-null="false" />
+			
+		<property
+			name="fdRows"
+			column="fd_rows"
+			update="true"
+			insert="true"
+			length="36"
+			not-null="false" />
+			
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+	<extension-point
+		id="com.landray.kmss.sys.lbpmext.notify">
+		<item 
+			name="context">
+			<param
+				name="convertor"
+				required="true"
+				kind="spring"
+				basedOn="com.landray.kmss.sys.lbpmext.notify.ContextConvertor">
+				<description>消息服务提供的上下文转换器实现。</description>
+			</param>
+			<param
+				name="range"
+				required="true"
+				kind="string">
+				<description>
+					使用访问设置，请使用主文档类（mainModel）的全限定路径来设置使用范围。若出现多个使用范围重叠的规则提供器，则以范围最小优先级最高来选择。
+					例如：a提供器的使用范围为：com.kmss.km.review, b提供器的使用范围为：com.kmss.km，那么范围为com.kmss.km.review的规则服务提供器为a。
+				</description>
+			</param>
+			<description>消息服务依赖的上下文转换器扩展</description>
+		</item>
+		<description>消息服务相关扩展。</description>
+	</extension-point>
+	
+	<!--缺省消息上下文转换器扩展 -->
+	<extension 
+		point="com.landray.kmss.sys.lbpmext.notify">
+		<item 
+			name="context">
+			<param 
+				name="convertor" 
+				value="defaultContextConvertor" />
+			<param 
+				name="range" 
+				value="all" />
+		</item>
+	</extension>
+</plugin>

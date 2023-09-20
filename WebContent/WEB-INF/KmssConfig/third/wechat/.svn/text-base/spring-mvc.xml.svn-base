@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/third/wechat/wechatLoginHelper.do"
+		class="com.landray.kmss.third.wechat.actions.WechatLoginHelperAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.wechat.forms.WechatConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/wechat/wechatIndex.jsp" />
+				<entry
+					key="edit"
+					value="/third/wechat/wechatConfig_edit.jsp" />
+				<entry
+					key="login"
+					value="/third/wechat/welogin.jsp" />
+				<entry
+					key="bindSuccess"
+					value="/third/wechat/bindSuccess.jsp" />
+				<entry
+					key="bindFail"
+					value="/third/wechat/bindFail.jsp" />
+				<entry
+					key="relogin"
+					value="/third/wechat/relogin.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/wechat/wechatConfig.do"
+		class="com.landray.kmss.third.wechat.actions.WechatConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.wechat.forms.WechatSysConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/wechat/wechatIndex.jsp" />
+				<entry
+					key="edit"
+					value="/third/wechat/wechatSysConfig_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/wechat/wechatMainConfig.do"
+		class="com.landray.kmss.third.wechat.actions.WechatMainConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.wechat.forms.WechatMainConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/third/wechat/wechatMainConfig_view.jsp" />
+				<entry
+					key="edit"
+					value="/third/wechat/wechatMainConfig_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/wechat/wechatNotify.do"
+		class="com.landray.kmss.third.wechat.actions.WechatNotifyAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.third.wechat.forms.WeChatPostDataForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="toNotify"
+					value="/third/wechat/wechatMainConfig_notify.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

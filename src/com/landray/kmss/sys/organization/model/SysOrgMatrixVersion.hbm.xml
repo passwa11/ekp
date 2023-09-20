@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrgMatrixVersion"
+		table="sys_org_matrix_version">
+		<!-- 主结构配置 -->
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<!-- 简单属性 -->
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			length="200"/>
+		<property
+			name="fdVersion"
+			column="fd_version"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdCreateTime"
+			column="fd_create_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdIsEnable"
+			update="true"
+			insert="true"
+			not-null="false">
+			<!-- 兼容历史数据，默认启用 -->
+			<column name="fd_is_enable" default="1"/>
+		</property>
+		<property
+				name="fdIsDelete"
+				update="true"
+				insert="true"
+				not-null="false">
+			<!-- 兼容历史数据，默认未删除 -->
+			<column name="fd_is_delete" default="0"/>
+		</property>
+		<!-- 对象属性 -->
+		<many-to-one
+			name="hbmMatrix"
+			column="fd_matrix_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+	</class>
+</hibernate-mapping>

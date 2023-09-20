@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="kmCalendarMainDao" parent="KmssAuthBaseDao" class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarMainDaoImp">
+		<property name="modelName" value="com.landray.kmss.km.calendar.model.KmCalendarMain" />
+	</bean>
+	<bean id="kmCalendarMainTarget" parent="KmssBaseTarget" class="com.landray.kmss.km.calendar.service.spring.KmCalendarMainServiceImp">
+		<property name="baseDao">
+			<ref bean="kmCalendarMainDao" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="kmCalendarSyncMappingService">
+			<ref bean="kmCalendarSyncMappingService" />
+		</property>
+		<property name="sysQuartzCoreService">
+			<ref bean="sysQuartzCoreService" />
+		</property>
+		<property name="sysNotifyRemindCommonService">
+			<ref bean="sysNotifyRemindCommonService" />
+		</property>
+		<property name="sysNotifyTodoService">
+			<ref bean="sysNotifyTodoService" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="kmCalendarOutCacheService">
+			<ref bean="kmCalendarOutCacheService" />
+		</property>
+		<property name="sysNotifyRemindMainService">
+			<ref bean="sysNotifyRemindMainService" />
+		</property>
+		<property name="kmCalendarLabelService">
+			<ref bean="kmCalendarLabelService" />
+		</property>
+		<property name="kmCalendarSyncBindService">
+			<ref bean="kmCalendarSyncBindService" />
+		</property>
+		<property name="kmCalendarMainGroupService">
+			<ref bean="kmCalendarMainGroupService" />
+		</property>
+		<property name="kmCalendarAuthService">
+			<ref bean="kmCalendarAuthService" />
+		</property>
+		<property name="kmCalendarDetailsService">
+			<ref bean="kmCalendarDetailsService" />
+		</property>
+	</bean>
+	<bean id="kmCalendarMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmCalendarMainTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmCalendarSyncBindDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarSyncBindDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.calendar.model.KmCalendarSyncBind" />
+	</bean>
+	<bean
+		id="kmCalendarSyncBindTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarSyncBindServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmCalendarSyncBindDao" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarSyncBindService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmCalendarSyncBindTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmCalendarSyncMappingDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarSyncMappingDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.calendar.model.KmCalendarSyncMapping" />
+	</bean>
+	<bean
+		id="kmCalendarSyncMappingTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarSyncMappingServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmCalendarSyncMappingDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarSyncMappingService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmCalendarSyncMappingTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="kmCalendarLabelDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarLabelDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.calendar.model.KmCalendarLabel" />
+	</bean>
+	<bean
+		id="kmCalendarLabelTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarLabelServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmCalendarLabelDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarLabelService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmCalendarLabelTarget" />
+		</property>
+	</bean>
+	
+	
+	<bean
+		id="kmCalendarAgendaLabelDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarAgendaLabelDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.calendar.model.KmCalendarAgendaLabel" />
+	</bean>
+	<bean
+		id="kmCalendarAgendaLabelTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarAgendaLabelServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmCalendarAgendaLabelDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarAgendaLabelService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmCalendarAgendaLabelTarget" />
+		</property>
+	</bean>
+	
+
+	<bean
+		id="kmCalendarOutCacheDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarOutCacheDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.calendar.model.KmCalendarOutCache" />
+	</bean>
+	<bean
+		id="kmCalendarOutCacheTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarOutCacheServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kmCalendarOutCacheDao" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="kmCalendarSyncMappingService">
+			<ref bean="kmCalendarSyncMappingService" />
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarOutCacheService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmCalendarOutCacheTarget" />
+		</property>
+		
+	</bean>
+	
+	
+	<bean
+		id="kmCalendarShareGroupDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarShareGroupDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.calendar.model.KmCalendarShareGroup" />
+	</bean>
+	<bean
+		id="kmCalendarShareGroupTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarShareGroupServiceImp">
+		<property name="baseDao">
+			<ref bean="kmCalendarShareGroupDao" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarShareGroupService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmCalendarShareGroupTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmCalendarAuthDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarAuthDaoImp">
+		<property name="modelName" value="com.landray.kmss.km.calendar.model.KmCalendarAuth" />
+	</bean>
+	<bean
+		id="kmCalendarAuthTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarAuthServiceImp">
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="baseDao">
+			<ref bean="kmCalendarAuthDao" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="kmCalendarShareGroupService">
+			<ref bean="kmCalendarShareGroupService"/>
+		</property>
+		<property name="kmCalendarRequestAuthService">
+			<ref bean="kmCalendarRequestAuthService"/>
+		</property>
+		<property name="kmCalendarMainService">
+			<ref bean="kmCalendarMainService"/>
+		</property>
+		<property name="kmCalendarAuthListService">
+			<ref bean="kmCalendarAuthListService"/>
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarAuthService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmCalendarAuthTarget" />
+		</property>
+	</bean>
+	
+	<bean 
+        id="kmCalendarAuthListDao" 
+        class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarAuthListDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.km.calendar.model.KmCalendarAuthList</value>
+        </property>
+    </bean>
+    <bean 
+        id="kmCalendarAuthListTarget" 
+        class="com.landray.kmss.km.calendar.service.spring.KmCalendarAuthListServiceImp" 
+        parent="KmssBaseTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="kmCalendarAuthListDao"/>
+        </property>
+        <property name="kmCalendarMainService">
+			<ref bean="kmCalendarMainService"/>
+		</property>
+    </bean>
+    <bean 
+        id="kmCalendarAuthListService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="kmCalendarAuthListTarget"/>
+        </property>
+    </bean>
+	
+	<bean id="CMSSynchroService" class="com.landray.kmss.km.calendar.cms.CMSSynchroService">
+				
+	</bean>
+	
+	<bean
+		id="kmCalendarTimingDeleteTarget"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarTimingDeleteService">
+		<property name="kmCalendarMainService">
+			<ref bean="kmCalendarMainService" />
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarTimingDeleteService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kmCalendarTimingDeleteTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="deleteCalendarTiming*">
+					PROPAGATION_REQUIRED
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean
+		id="kmCalendarWebserviceServiceTarget"
+		class="com.landray.kmss.km.calendar.webservice.KmCalendarWebserviceServiceImpl">
+			<property name="kmCalendarMainService" ref="kmCalendarMainService" />
+			<property name="sysWsAttService" ref="sysWsAttService" />
+			<property name="sysWsOrgService" ref="sysWsOrgService" />	
+			<property name="backgroundAuthService" ref="backgroundAuthService" />	
+			<property name="kmCalendarSyncMappingService" ref="kmCalendarSyncMappingService" />
+			<property name="sysOrgCoreService" ref="sysOrgCoreService" />
+			<property name="kmCalendarLabelService" ref="kmCalendarLabelService" />
+			<property name="kmCalendarDetailsService" ref="kmCalendarDetailsService"/>
+	</bean>
+	<bean
+		id="kmCalendarWebserviceService"
+		parent="KmssBaseService">
+		<property name="target" ref="kmCalendarWebserviceServiceTarget" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW</prop>
+			</props>
+		</property>
+	</bean>	
+	
+	<bean
+		id="kmCalendarAgendaLabelInitService"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarAgendaLabelInitServiceImp">
+	</bean>
+	
+	<bean
+		id="kmCalendarPersonGroupDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarPersonGroupDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.calendar.model.KmCalendarPersonGroup" />
+	</bean>
+	<bean
+		id="kmCalendarPersonGroupTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarPersonGroupServiceImp">
+		<property name="baseDao">
+			<ref bean="kmCalendarPersonGroupDao" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="kmCalendarMainService">
+			<ref bean="kmCalendarMainService" />
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarPersonGroupService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmCalendarPersonGroupTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmCalendarMainGroupDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarMainGroupDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.calendar.model.KmCalendarMainGroup" />
+	</bean>
+	<bean
+		id="kmCalendarMainGroupTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarMainGroupServiceImp">
+		<property name="baseDao">
+			<ref bean="kmCalendarMainGroupDao" />
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarMainGroupService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmCalendarMainGroupTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="kmCalendarRequestAuthDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarRequestAuthDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.km.calendar.model.KmCalendarRequestAuth" />
+	</bean>
+	<bean
+		id="kmCalendarRequestAuthTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarRequestAuthServiceImp">
+		<property name="baseDao">
+			<ref bean="kmCalendarRequestAuthDao" />
+		</property>
+		<property name="sysNotifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarRequestAuthService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kmCalendarRequestAuthTarget" />
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarUserShareGroupDataBean"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarUserShareGroupDataBean">
+		<property name="kmCalendarAuthService">
+			<ref bean="kmCalendarAuthService"/>
+		</property>
+		<property name="kmCalendarAuthListService">
+			<ref bean="kmCalendarAuthListService"/>
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarGroupEventValidator"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarGroupEventValidator">
+		<property name="kmCalendarPersonGroupService">
+			<ref bean="kmCalendarPersonGroupService"/>
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService"/>
+		</property>
+	</bean>
+	<!--智能门户新增接口-->
+	<bean
+		id="kmCalendarMainDataService"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarMainDataServiceImp">
+		<property name="kmCalendarMainService">
+			<ref bean="kmCalendarMainService"/>
+		</property>
+	</bean>
+	<!--日程相关人详情-->
+	<bean
+		id="kmCalendarDetailsDao"
+		class="com.landray.kmss.km.calendar.dao.hibernate.KmCalendarDetailsDaoImp"
+		parent="KmssAuthBaseDao">
+	<property
+		name="modelName"
+		value="com.landray.kmss.km.calendar.model.KmCalendarDetails">
+	</property>
+	</bean>
+	<bean
+		id="kmCalendarDetailsTarget"
+		class="com.landray.kmss.km.calendar.service.spring.KmCalendarDetailsServiceImp"
+		parent="KmssBaseTarget">
+		<property
+			name="baseDao">
+		<ref
+			bean="kmCalendarDetailsDao"/>
+		</property>
+	</bean>
+	<bean
+		id="kmCalendarDetailsService"
+		parent="KmssBaseService">
+		<property
+		name="target">
+		<ref
+			bean="kmCalendarDetailsTarget"/>
+		</property>
+	</bean>
+	<bean
+		id="Ding2CalendarListener"
+		class="com.landray.kmss.km.calendar.cms.Ding2CalendarListener">
+		<property name="sysOrgPersonService" ref="sysOrgPersonService"></property>
+		<property name="kmCalendarMainService" ref="kmCalendarMainService"></property>
+		<property name="kmCalendarDetailsService" ref="kmCalendarDetailsService"></property>
+		<property name="kmCalendarSyncMappingService" ref="kmCalendarSyncMappingService"></property>
+	</bean>
+
+</beans>

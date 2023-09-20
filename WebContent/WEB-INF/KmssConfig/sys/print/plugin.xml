@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.print.transfer.SysPrintWordTransferTask" />
+			<param
+				name="name"
+				value="打印机制word附件数据迁移" />
+			<param
+				name="path"
+				value="/sys/print/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.print.transfer.SysPrintWordTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.print.transfer.SysPrintWordTransferTask" />
+			<param
+				name="description"
+				value="流程模板中word书签打印附件fdKey更新为sysprint_editonline,避免与业务文档附件fdKey冲突" />
+		</item>
+	</extension>
+	<extension 
+		point="com.landray.kmss.sys.cluster">
+		<item 
+			name="messageReceiver">
+			<param 
+				name="type" 
+				value="com.landray.kmss.sys.print.util.PrintMessage" />
+			<param 
+				name="service" 
+				value="sysPrintMessageUtil" />
+		</item>
+	</extension>
+
+    <!-- 前后端分离列表字段信息 -->
+    <extension point="com.landray.kmss.sys.list.field.config"
+               model="com.landray.kmss.sys.print.model.SysPrintLog">
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdFileTitle"></param>
+            <param name="title" value="{sys-print:sysPrintLog.fdFileTitle}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="docCreator.fdName"></param>
+            <param name="title" value="{sys-print:sysPrintLog.docCreator}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdDepartment.fdName"></param>
+            <param name="title" value="{sys-organization:sysOrgElement.dept}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="docCreateTime"></param>
+            <param name="title" value="{sys-print:sysPrintLog.docCreateTime}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="list"></param>
+            <param name="property" value="fdIp"></param>
+            <param name="title" value="{sys-print:sysPrintLog.fdIp}"></param>
+            <param name="convertor" value="modelPropertyConvertor"></param>
+        </item>
+    </extension>
+	<extension
+			point="com.landray.kmss.sys.cluster">
+		<item
+				name="messageReceiver">
+			<param
+					name="type"
+					value="com.landray.kmss.sys.print.message.SysPrintTemplateJspClearMessage" />
+			<param
+					name="service"
+					value="sysPrintTemplateJspClearMessageReceiver" />
+		</item>
+	</extension>
+</plugin>

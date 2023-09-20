@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="fsscCashierPaymentDao" 
+        class="com.landray.kmss.fssc.cashier.dao.hibernate.FsscCashierPaymentDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.cashier.model.FsscCashierPayment</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscCashierPaymentTarget" 
+        class="com.landray.kmss.fssc.cashier.service.spring.FsscCashierPaymentServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="fsscCashierPaymentDao"/>
+        </property>
+        <property name="sysOrgCoreService">
+            <ref bean="sysOrgCoreService"/>
+        </property>
+        <property name="backgroundAuthService">
+            <ref bean="backgroundAuthService"/>
+        </property>
+        <property name="lbpmProcessService">
+            <ref bean="lbpmProcessService"/>
+        </property>
+        <property name="sysNumberFlowService">
+            <ref bean="sysNumberFlowService"/>
+        </property>
+        <property name="fsscCashierModelConfigService">
+            <ref bean="fsscCashierModelConfigService"/>
+        </property>
+        <property name="fsscCashierRuleConfigService">
+            <ref bean="fsscCashierRuleConfigService"/>
+        </property>
+        <property name="fsscCashierPaymentDetailService">
+            <ref bean="fsscCashierPaymentDetailService"/>
+        </property>
+        <property name="eopBasedataExchangeRateService">
+            <ref bean="eopBasedataExchangeRateService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscCashierPaymentService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscCashierPaymentTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscCashierPaymentDetailDao" 
+        class="com.landray.kmss.fssc.cashier.dao.hibernate.FsscCashierPaymentDetailDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.cashier.model.FsscCashierPaymentDetail</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscCashierPaymentDetailTarget" 
+        class="com.landray.kmss.fssc.cashier.service.spring.FsscCashierPaymentDetailServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property
+            name="baseDao">
+            <ref
+                bean="fsscCashierPaymentDetailDao"/>
+        </property>
+         <property name="sysOrgCoreService">
+            <ref bean="sysOrgCoreService"/>
+        </property>
+        <property name="backgroundAuthService">
+            <ref bean="backgroundAuthService"/>
+        </property>
+        <property name="lbpmProcessService">
+            <ref bean="lbpmProcessService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscCashierPaymentDetailService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscCashierPaymentDetailTarget"/>
+        </property>
+    </bean>
+    
+    <bean id="fsscCommonCashierPaymentService" class="com.landray.kmss.fssc.cashier.service.spring.FsscCommonCashierPaymentServiceImp" >
+        <property name="fsscCashierPaymentService">
+            <ref bean="fsscCashierPaymentService"/>
+        </property>
+        <property name="fsscCashierPaymentDetailService">
+            <ref bean="fsscCashierPaymentDetailService"/>
+        </property>
+        <property name="fsscCashierModelConfigService">
+            <ref bean="fsscCashierModelConfigService"/>
+        </property>
+        <property name="fsscCashierRuleConfigService">
+            <ref bean="fsscCashierRuleConfigService"/>
+        </property>
+    </bean>
+
+    <bean
+        id="fsscCashierModelConfigDao"
+        class="com.landray.kmss.fssc.cashier.dao.hibernate.FsscCashierModelConfigDaoImp"
+        parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.fssc.cashier.model.FsscCashierModelConfig</value>
+        </property>
+    </bean>
+    <bean
+        id="fsscCashierModelConfigTarget"
+        class="com.landray.kmss.fssc.cashier.service.spring.FsscCashierModelConfigServiceImp"
+        parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="fsscCashierModelConfigDao"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscCashierModelConfigService"
+        parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="fsscCashierModelConfigTarget"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscCashierRuleConfigDao"
+        class="com.landray.kmss.fssc.cashier.dao.hibernate.FsscCashierRuleConfigDaoImp"
+        parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.fssc.cashier.model.FsscCashierRuleConfig</value>
+        </property>
+    </bean>
+    <bean
+        id="fsscCashierRuleConfigTarget"
+        class="com.landray.kmss.fssc.cashier.service.spring.FsscCashierRuleConfigServiceImp"
+        parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="fsscCashierRuleConfigDao"/>
+        </property>
+        <property name="fsscCashierModelConfigService">
+            <ref bean="fsscCashierModelConfigService"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscCashierRuleConfigService"
+        parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="fsscCashierRuleConfigTarget"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscCashierRuleDetailDao"
+        class="com.landray.kmss.fssc.cashier.dao.hibernate.FsscCashierRuleDetailDaoImp"
+        parent="KmssAuthBaseDao">
+        <property
+                name="modelName">
+            <value>com.landray.kmss.fssc.cashier.model.FsscCashierRuleDetail</value>
+        </property>
+    </bean>
+    <bean
+        id="fsscCashierRuleDetailTarget"
+        class="com.landray.kmss.fssc.cashier.service.spring.FsscCashierRuleDetailServiceImp"
+        parent="KmssExtendDataTarget">
+        <property
+                name="baseDao">
+            <ref
+                    bean="fsscCashierRuleDetailDao"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscCashierRuleDetailService"
+        parent="KmssBaseService">
+        <property
+                name="target">
+            <ref
+                    bean="fsscCashierRuleDetailTarget"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscCashierAutoCreateListener"
+        class="com.landray.kmss.fssc.cashier.listener.FsscCashierAutoCreateListener">
+        <property name="fsscCashierPaymentService">
+            <ref bean="fsscCashierPaymentService" />
+        </property>
+    </bean>
+    <bean
+        id="fsscCashierPaymentHandlerPassListener"
+        class="com.landray.kmss.fssc.cashier.listener.FsscCashierPaymentHandlerPassListener">
+        <property name="fsscCashierPaymentService">
+            <ref bean="fsscCashierPaymentService" />
+        </property>
+    </bean>
+    <bean
+        id="fsscCashierStatusAuthValidator"
+        class="com.landray.kmss.fssc.cashier.authValidator.FsscCashierStatusAuthValidator">
+        <property name="fsscCashierPaymentService">
+            <ref bean="fsscCashierPaymentService" />
+        </property>
+    </bean>
+    <bean
+        id="fsscCashierHanderAuthValidator"
+        class="com.landray.kmss.fssc.cashier.authValidator.FsscCashierHanderAuthValidator">
+        <property name="fsscCashierPaymentService">
+            <ref bean="fsscCashierPaymentService" />
+        </property>
+    </bean>
+     <bean
+        id="fsscCashierCmbHanderAuthValidator"
+        class="com.landray.kmss.fssc.cashier.authValidator.FsscCashierCmbHanderAuthValidator">
+    </bean>
+     <bean
+        id="fsscCashierQueryCmbPaymentService"
+        class="com.landray.kmss.fssc.cashier.service.spring.FsscCashierQueryCmbPaymentService">
+        <property name="fsscCashierPaymentDetailService">
+            <ref bean="fsscCashierPaymentDetailService" />
+        </property>
+        <property name="sysOrgCoreService">
+            <ref bean="sysOrgCoreService"/>
+        </property>
+        <property name="backgroundAuthService">
+            <ref bean="backgroundAuthService"/>
+        </property>
+        <property name="lbpmProcessService">
+            <ref bean="lbpmProcessService"/>
+        </property>
+       
+    </bean>
+     <bean
+        id="fsscCashierQueryBocPaymentService"
+        class="com.landray.kmss.fssc.cashier.service.spring.FsscCashierQueryBocPaymentService">
+        <property name="fsscCashierPaymentDetailService">
+            <ref bean="fsscCashierPaymentDetailService" />
+        </property>
+         <property name="sysOrgCoreService">
+            <ref bean="sysOrgCoreService"/>
+        </property>
+        <property name="backgroundAuthService">
+            <ref bean="backgroundAuthService"/>
+        </property>
+        <property name="lbpmProcessService">
+            <ref bean="lbpmProcessService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscCashierSuccessNotifyListener" 
+        class="com.landray.kmss.fssc.cashier.listener.FsscCashierSuccessNotifyListener" >
+    </bean>
+    <bean
+        id="fsscCashierQueryCbsPaymentService"
+        class="com.landray.kmss.fssc.cashier.service.spring.FsscCashierQueryCbsPaymentService">
+        <property name="fsscCashierPaymentDetailService">
+            <ref bean="fsscCashierPaymentDetailService" />
+        </property>
+        <property name="sysOrgCoreService">
+            <ref bean="sysOrgCoreService"/>
+        </property>
+        <property name="backgroundAuthService">
+            <ref bean="backgroundAuthService"/>
+        </property>
+        <property name="lbpmProcessService">
+            <ref bean="lbpmProcessService"/>
+        </property>
+       
+    </bean>
+    <bean
+        id="fsscCashierPortletService"
+        class="com.landray.kmss.fssc.cashier.service.spring.FsscCashierPortletService">
+        <property name="fsscCashierPaymentService">
+            <ref bean="fsscCashierPaymentService" />
+        </property>
+    </bean>
+    
+    <bean
+        id="fsscCashierQueryCmbIntPaymentService"
+        class="com.landray.kmss.fssc.cashier.service.spring.FsscCashierQueryCmbIntPaymentService">
+        <property name="fsscCashierPaymentDetailService">
+            <ref bean="fsscCashierPaymentDetailService" />
+        </property>
+        <property name="sysOrgCoreService">
+            <ref bean="sysOrgCoreService"/>
+        </property>
+        <property name="backgroundAuthService">
+            <ref bean="backgroundAuthService"/>
+        </property>
+        <property name="lbpmProcessService">
+            <ref bean="lbpmProcessService"/>
+        </property>
+       
+    </bean>
+</beans>

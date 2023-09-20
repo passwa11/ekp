@@ -1,0 +1,918 @@
+@charset "utf-8";
+
+/* 签到情况 Starts
+   ========================================================================== */
+.lui-singin-condition-panel-group:after,
+.lui-singin-condition-list:after{
+  content: '';
+  display: table;
+  visibility: hidden;
+  clear: both;
+}
+
+.lui-singin-condition{
+  padding: 20px;
+}
+
+.lui-singin-condition-timeBoard{
+  margin-bottom: 30px;
+  text-align: center;
+  vertical-align: middle;
+}
+.lui-singin-condition-timeBoard > .timeBoard-item{
+  margin: 0 73px;
+  vertical-align: top;
+  display: inline-block;
+  position: relative;
+}
+.lui-singin-condition-timeBoard > .timeBoard-item .time,
+.lui-singin-condition-timeBoard > .timeBoard-item .txt{
+  color: #888;
+  display: block;
+}
+.lui-singin-condition-timeBoard > .timeBoard-item .time{
+  margin-bottom: 3px;
+  color: #ff8b24;
+  font-size: 2.6em;
+}
+.lui-singin-condition-timeBoard > .timeBoard-item.date{
+  margin: 0 50px;
+  padding-top: 18px;
+  color: #666;
+}
+.lui-singin-condition-timeBoard > .timeBoard-item.date:after,
+.lui-singin-condition-timeBoard > .timeBoard-item.date:before{
+  content: '';
+  width: 70px;
+  border-top: 1px dashed #999;
+  position: absolute;
+  top: 28px;
+}
+.lui-singin-condition-timeBoard > .timeBoard-item.date:after{ right: -80px; }
+.lui-singin-condition-timeBoard > .timeBoard-item.date:before{ left: -80px; }
+
+
+
+.lui-singin-condition-panel-group{
+  margin: 0 auto;
+  padding: 40px;
+  width: 855px;
+  vertical-align: top;
+  background-color: #f8f9fa;
+  text-align: center;
+}
+.lui-singin-condition-panel{
+  margin: 0 73px;
+  width: 274px;
+  height: 294px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 5px 8px rgba(0,0,0,.035);
+     -moz-box-shadow: 0 5px 8px rgba(0,0,0,.035);
+      -ms-box-shadow: 0 5px 8px rgba(0,0,0,.035);
+       -o-box-shadow: 0 5px 8px rgba(0,0,0,.035);
+          box-shadow: 0 5px 8px rgba(0,0,0,.035);
+  border: 1px solid #ddd\9;
+  display: inline-block;
+  position: relative;
+}
+.lui-singin-condition-panel-heading{
+  margin: 0;
+  padding: 18px 20px;
+  line-height: 1.42857143;
+  color: #333;
+  font-size: 16px;
+  font-weight: normal;
+  border-bottom: 1px dashed #ddd;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lui-singin-condition-panel-body{
+  padding: 15px;
+  min-height: 170px;
+}
+.lui-singin-condition-panel-body img{
+  max-width: 100%;
+  max-height: 100%;
+}
+.lui-singin-condition-panel-footer{
+  color: #888;
+}
+.lui-singin-condition-panel-footer > a{
+  margin-left: 15px;
+  color: #15a4fa;
+}
+.lui-singin-condition-panel-footer > a:hover{ text-decoration: underline; }
+
+.lui-singin-condition-panel-tag{
+  width: 58px;
+  height: 58px;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  font-style: normal;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.lui-singin-condition-list{
+  margin: 0;
+  padding: 30px 12px;
+  list-style: none;
+}
+.lui-singin-condition-list > li{
+  width: 50%;
+  float: left;
+}
+.lui-singin-condition-list > li .content{ }
+.lui-singin-condition-list > li .num,
+.lui-singin-condition-list > li .txt{
+  color: #999;
+  display: block;
+}
+.lui-singin-condition-list > li .num{
+  margin: 0 auto 10px;
+  width: 78px;
+  height: 78px;
+  line-height: 78px;
+  font-size: 1.8em;
+  border-radius: 50%;
+  border: 1px solid #999;
+}
+
+
+.lui-singin-condition.running .lui-singin-condition-panel-tag{ background-image: url(../images/tag-running.png); }
+.lui-singin-condition.running .lui-singin-condition-list > li .txt{
+  color: #888;
+}
+.lui-singin-condition.running .lui-singin-condition-list > li .num{
+  color: #15a4fa;
+  border-color: #15a4fa;
+}
+.lui-singin-condition.running .lui-singin-condition-list > li.noSignin .num{
+  color: #ff6c6c;
+  border-color: #ff6c6c;
+}
+
+
+.lui-singin-condition.waiting .lui-singin-condition-panel-tag{ background-image: url(../images/tag-waiting.png); }
+.lui-singin-condition.waiting .lui-singin-condition-list > li .txt{
+  color: #888;
+}
+.lui-singin-condition.waiting .lui-singin-condition-list > li .num{
+  color: #666;
+  border-color: #888;
+}
+.lui-singin-condition.waiting .lui-singin-condition-timeBoard > .timeBoard-item .time{ color: #666; }
+.lui-singin-condition.finished .lui-singin-condition-panel-tag{ background-image: url(../images/tag-finished.png); }
+.lui-singin-condition.finished .lui-singin-condition-list > li .txt{
+  color: #888;
+}
+.lui-singin-condition.finished .lui-singin-condition-list > li .num{
+  color: #666;
+  border-color: #888;
+}
+.lui-singin-condition.finished .lui-singin-condition-timeBoard > .timeBoard-item .time{ color: #666; }
+
+/* 签到情况 Ends
+   ========================================================================== */
+
+
+/* 图标 Starts
+   ========================================================================== */
+.lui-singin-icon {
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  display: inline-block;
+  position: relative;
+}
+.lui-singin-icon > img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.lui-singin-icon.icon-location{ background-image: url(../images/icon-location.png); }
+.lui-singin-icon.icon-download{ background-image: url(../images/icon-lg-download.png); }
+
+
+/* 图标 Ends
+   ========================================================================== */
+
+
+/* 签到详情 Starts
+   ========================================================================== */
+.lui-singin-detailPage{
+  padding: 25px 130px;
+  background-color: #fff;
+}
+.lui-singin-detailPage-heading{
+  text-align: center;
+}
+.lui-singin-detailPage-title{
+  margin: 0;
+  color: #636879;
+  font-size: 24px;
+  font-weight: normal;
+}
+.lui-singin-detailPage-title > .status { margin-right: 5px; }
+.lui-singin-detailPage-title.underway > .status { color: #15a4fa; }
+.lui-singin-detailPage-title.waiting > .status { color: #48bc9d; }
+.lui-singin-detailPage-title.finished { color: #aaa; }
+.lui-singin-detailPage-tips{
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  font-size: 0;
+}
+.lui-singin-detailPage-tips > li{
+  margin: 0 20px;
+  display: inline-block;
+  color: #888;
+  font-size: 14px;
+}
+
+.lui-singin-detailPage-panel{
+  padding: 10px 0;
+  color: #636879;
+  font-size: 14px;
+}
+.lui-singin-detailPage-panel-title{
+  margin: 0 0 20px;
+  padding: 0 12px;
+  line-height: 1;
+  color: #15a4fa;
+  font-size: 16px;
+  font-weight: normal;
+  border-left: 2px solid #15a4fa;
+}
+.lui-singin-detailPage-panel-body{
+  padding-left: 14px;
+}
+.lui-singin-detailPage-panel-body > dl{
+  margin: 15px 0;
+  padding: 0;
+  list-style: none;
+  line-height: 2;
+}
+.lui-singin-detailPage-panel-body > dl:after,
+.lui-singin-QRcode-download-list > li:after{
+  content: '';
+  display: table;
+  visibility: hidden;
+  clear: both;
+}
+.lui-singin-detailPage-panel-body > dl > dt,
+.lui-singin-detailPage-panel-body > dl > dd {
+  margin: 0;
+  padding: 0;
+}
+.lui-singin-detailPage-panel-body > dl > dd.pl-70{ padding-left: 70px; }
+.lui-singin-detailPage-panel-body > dl > dd.pl-70 .lui_map_icon.view{ bottom: 6.5px;}
+.lui-singin-detailPage-panel-body > dl > dt{ float: left;}
+.lui-singin-detailPage-panel-body > dl > dd .lui-singin-icon{
+  margin-right: 3px;
+  top: -2px;
+}
+.lui-singin-QRcode {
+  padding: 10px 0;
+  width: 145px;
+  height: 145px;
+}
+.lui-singin-QRcode > .imgbox{
+  padding: 5px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  display: block;
+}
+.lui-singin-QRcode > .txt a{
+  color: #15a4fa;
+  text-align: center;
+  display: block;
+}
+.lui-singin-QRcode > .txt a:hover{ text-decoration: underline; }
+.lui-singin-QRcode img{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+  /*二维码下载弹窗 Starts*/
+.lui-singin-modal{
+  border: 1px solid #e6e6e6;
+  background-color: #fff;
+}
+.lui-singin-modal-heading{
+  padding: 12px;
+  line-height: 1.42857143;
+  border-bottom: 1px solid #e6e6e6;
+  position: relative;
+}
+.lui-singin-modal-heading-title{
+  margin: 0;
+  color: #15a4fa;
+  font-size: 14px;
+  font-weight: normal;
+}
+.lui-singin-modal-close{
+  line-height: 1;
+  font-family: Arial;
+  color: #999;
+  font-size: 24px;
+  transition: all .3s ease;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -14px;
+}
+.lui-singin-modal-body{}
+.lui-singin-QRcode-download-list{
+  margin: 0;
+  padding: 30px 40px 30px 190px;
+  list-style: none;
+  min-height: 150px;
+  position: relative;
+}
+.lui-singin-QRcode-download-list > li{ }
+.lui-singin-QRcode-download-list > li > .content{
+  width: 40%;
+  padding: 16px 30px 16px 70px;
+  line-height: 1.5;
+  color: #666;
+  font-size: 14px;
+  float: left;
+}
+.lui-singin-QRcode-download-list > li .sequence{
+  margin-left: -28px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #a2845e;
+  display: inline-block;
+  float: left;
+}
+.lui-singin-QRcode-download-list > li .btnbar{
+  margin-top: 18px;
+  padding-left: 30px;
+  height: 36px;
+  border-left: 1px dashed #d1d1d1;
+  float: right;
+}
+.lui-singin-QRcode-download-list > li .btnbar > .btn{
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  border-radius: 3px;
+  display: block;
+  transition: all .3s ease;
+}
+.lui-singin-QRcode-download-list > li .btnbar > .btn:hover{ background-color: #f8f8f8; }
+.lui-singin-QRcode-download-list > li .btnbar .lui-singin-icon.icon-download{
+  width: 30px;
+  height: 30px;
+}
+.lui-singin-QRcode-download-list > li .img{
+  width: 150px;
+  height: 150px;
+  background: url(../images/QRcode-sizing.png) no-repeat 50%;
+  position: absolute;
+  left: 40px;
+  top: 30px;
+}
+  /*二维码下载弹窗 Ends*/
+
+/* 签到详情 Ends
+   ========================================================================== */
+
+
+/* 新建会议发起签到 Starts
+   ========================================================================== */
+.lui-singin-creatPage {
+  padding: 10px 40px;
+  background-color: #fff;
+}
+.lui-singin-creatPage-panel{
+  margin-bottom: 25px;
+}
+.lui-singin-creatPage-panel-heading{
+  margin-bottom: 15px;
+}
+.lui-singin-creatPage-panel-heading-title{
+  margin: 0;
+  line-height: 1.42857143;
+  text-align: center;
+  color: #15a4fa;
+  font-size: 14px;
+  font-weight: normal;
+  position: relative;
+}
+.lui-singin-creatPage-panel-heading-title:before{
+  content: '';
+  display: block;
+  width: 100%;
+  border-bottom: 1px dashed #636879;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+}
+.lui-singin-fdAppName-title{
+	margin-left: 30%;	
+}
+.lui-singin-creatPage-panel-heading-title > span{
+  padding: 2px 10px;
+  background-color: #fff;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+.lui-singin-creatPage-panel-heading-title > span:hover{ color: #3393cf; }
+.lui-singin-creatPage-panel-body{
+  color: #636879;
+}
+/**覆盖common.css--start**/
+.lui-singin-creatPage-panel-body .tb_simple>tbody>tr>td{
+    padding: 8px 5px;
+	line-height: 25px;
+}
+.lui-singin-creatPage-panel-body .tb_simple>tbody>tr>td>.tb_simple td{
+	padding: 8px 0;
+}
+.lui-singin-creatPage-panel-body .tb_simple>tbody>tr>.td_normal_title{
+    padding: 8px 5px;
+	width: 80px;
+}
+.lui-singin-creatPage-panel-body .tb_simple>tbody>tr>.td_tab_title{
+  	color: #636879;
+	width: 60px;
+}
+.lui-singin-creatPage-panel-body .tb_simple>tbody>tr>td > label {
+  	margin-right: 10px;
+}
+.lui-singin-creatPage-panel-body .tb_simple>tbody>tr>td .txtstrong{
+	padding-left: 3px;
+	line-height: 27px;
+}
+
+.lui-singin-creatPage-panel-body .tb_simple .inputsgl,
+.lui-singin-creatPage-panel-body .tb_simple .inputselectsgl,
+.lui-singin-creatPage-panel-body .inputmul,
+.lui-singin-creatPage-panel-body .inputselectmul{
+	border: 1px solid #eaebec;
+  	float: left;
+}
+/**覆盖common.css--end**/
+.lui-singin-creatPage-table{
+  margin-bottom: 15px;
+  width: 100%;
+  display: table;
+  border-collapse: collapse;
+}
+.lui-singin-creatPage-table > .caption,
+.lui-singin-creatPage-table > .content{
+  display: table-cell;
+  vertical-align: top;
+  padding: 5px;
+  color: #333;
+  font-size: 14px;
+}
+.lui-singin-creatPage-table > .caption{
+  padding-top: 8px;
+  width: 80px;
+  text-align: right;
+}
+
+.lui-singin-creatPage-tab{ }
+.lui-singin-creatPage-tab-heading{
+  margin: 0;
+  padding: 0 0 12px;
+  list-style: none;
+  border-bottom: 1px solid #e1e1e1;
+}
+.lui-singin-creatPage-tab-heading:after{
+  content: '';
+  display: table;
+  visibility: hidden;
+  clear: both;
+}
+.lui-singin-creatPage-tab-heading > li {
+  margin-right: 14px;
+  float: left;
+}
+.lui-singin-creatPage-tab-heading > li > a {
+  padding: 3px 8px;
+  line-height: 1.42857143;
+  border: 1px solid #abadb3;
+  transition: all .3s ease;
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+.lui-singin-creatPage-tab-heading > li > a:after,
+.lui-singin-creatPage-tab-heading > li > a:before{
+  content: '';
+  width: 0;
+  height: 0;
+  border-width: 4px 8px;
+  border-style: dashed dashed solid;
+  border-color: transparent transparent #e1e1e1;
+  /*color: #e1e1e1;
+  border-bottom: 4px dashed;
+  border-bottom: 4px solid \9;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;*/
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-bottom: -14px;
+  margin-left: -8px;
+  display: none;
+}
+.lui-singin-creatPage-tab-heading > li > a:after{
+  border-color: transparent transparent #fff;
+  margin-bottom: -15px;
+}
+.lui-singin-creatPage-tab-heading > li.active > a,
+.lui-singin-creatPage-tab-heading > li > a:hover{
+  color: #15a4fa;
+  border-color: #15a4fa;
+}
+.lui-singin-creatPage-tab-heading > li.active > a:after,
+.lui-singin-creatPage-tab-heading > li.active > a:before{ display: block; }
+.lui-sign-date-type.disable a:hover{
+	cursor: not-allowed;
+}
+.lui-singin-creatPage-tab-body{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.lui-attend-bus-setting-add, .lui-attend-bus-setting-delete{
+	display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+.lui-attend-bus-setting-add {
+	background-image: url(../images/lui_attend_opration_add.png);
+}
+.lui-attend-bus-setting-delete {
+	background-image: url(../images/lui_attend_opration_del.png);
+}
+.lui-attend-bus-btn-container {
+	padding: 30px 50px;
+	background-color: #fff;
+}
+.lui-attend-bus-btn-container .lui-attend-bus-btn{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background-color: #f6f6f6;
+	border: 1px solid #dadada;
+	border-radius: 2px;
+	color: #333;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+.lui-attend-bus-btn-container .lui-attend-bus-btn:hover{
+	background-color: #ddd;
+	color: #333;
+}
+
+/* 新建会议发起签到 Ends
+   ========================================================================== */
+
+
+/*** 签到日历 ***/
+.lui_calendar_content .fc-event {
+    background-color: rgba(0,0,0,0);
+    border-color: rgba(0,0,0,0);
+}
+
+.sysAttendCalItem {
+    position: relative;
+    display: block;
+    line-height: 20px;
+    height: 20px;
+    color: #666;
+}
+
+.sysAttendCalItem .sysAttendCalIcon{
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background-color: #ccc;
+    margin-left: 5px;
+    border-radius: 50%;
+    vertical-align: 1px;
+}
+.sysAttendCalItem .sysAttendCalIcon.none {
+	background-color: #cd0a0a;
+}
+.sysAttendCalItem .sysAttendCalIcon.normal {
+	background-color: #47b5e6;
+}
+.sysAttendCalItem .sysAttendCalIcon.late {
+	background-color: #cd0a0a;
+}
+.sysAttendCalItem .sysAttendCalIcon.left {
+	background-color: #cd0a0a;
+}
+.sysAttendCalItem .sysAttendCalIcon.outside {
+	background-color: #fba437;
+}
+.sysAttendCalItem .lui_attendCalendar_txt{
+	background: #F7F7F7;
+    border-radius: 1px;
+    width: 100%;
+    display: inline-block;
+}
+.sysAttendCalItem .lui_attendCalendar_detail{
+	position: absolute;
+    right: 10px;
+    color: #AAAAAA;
+}
+
+.lui_attendCalendar_status_title .sysAttendCalItemLabel{
+	border: 1px solid #A9C6F7;
+    background-color: #DCE6F7;
+    padding: 0 5px;
+    margin-left:5px;
+    font-size: 12px;
+}
+#calendar_buss_dialog_view {
+    max-width: 380px;
+    min-width: 320px;
+}
+.calendar_buss_dialog {
+    z-index: 999;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #efefef;
+    -webkit-box-shadow: 0 0 7px rgba(0,0,0,.15);
+    -moz-box-shadow: 0 0 7px rgba(0,0,0,.15);
+    -ms-box-shadow: 0 0 7px rgba(0,0,0,.15);
+    -o-box-shadow: 0 0 7px rgba(0,0,0,.15);
+    box-shadow: 0 0 7px rgba(0,0,0,.15);
+}
+.calendar_buss_dialog_top {
+    height: 54px;
+    line-height: 54px;
+    border-bottom: 1px solid #efefef;
+    background-color: #fcfbfc;
+}
+.calendar_buss_dialog_top .calendar_buss_dialog_title {
+    float: left;
+    color: #868686;
+    padding-left: 18px;
+}
+.calendar_buss_dialog_top .calendar_buss_dialog_close {
+    background: url(../images/calendar_dialog_close.png) no-repeat 50%;
+    width: 32px;
+    height: 32px;
+    float: right;
+    cursor: pointer;
+    transition-duration: .3s;
+}
+.calendar_buss_dialog .calendar_buss_dialog_content {
+    padding: 15px;
+}
+.calendar_buss_dialog .title {
+    margin: 0px 10px;
+    display: inline-block;
+    width: 60px;
+}
+.calendar_buss_dialog_buttom {
+    height: 50px;
+    line-height: 50px;
+    background-color: #fcfbfc;
+    border-top: 1px solid #efefef;
+    text-align: center;
+}
+/*** 签到每日统计 ***/
+
+.lui-attend-stat-table {
+	padding: 30px;
+	padding-top: 0;
+}
+.lui-attend-stat-table .lui_listview_columntable_table{
+	width: 100%;
+    background-color: #fff;
+    border-bottom: 0;
+}
+.lui-attend-stat-table .lui_listview_columntable_table thead tr th{
+	min-width: 40px;
+    font-size: 14px;
+    padding: 0 2px;
+    height: 45px;
+    line-height: 45px;
+    border: 1px solid #ccc;;
+}
+.lui-attend-stat-table .lui_listview_columntable_table thead tr th .lui_listview_columntable_table_title{
+	font-size: 14px;
+}
+.lui-attend-stat-table .lui_listview_columntable_table thead tr th.lui_thead{
+	line-height:20px;
+}
+.lui-attend-stat-table .lui_listview_columntable_table thead tr th.lui_thead br{
+	display:block;
+}
+.lui-attend-stat-table .lui_listview_columntable_table tbody tr td{
+	min-width: 40px;
+	padding: 10px 2px;
+    border: 1px solid #ccc;;
+}
+
+/* 考勤月统计 Starts
+   ========================================================================== */
+.lui-attend-report-container{
+	padding: 10px 0 10px 15px;
+    max-width: 1140px;
+}
+.lui-attend-report-container #reportListview{
+	overflow-x: auto;
+}
+.lui-attend-report-section{
+	position: relative;
+	height: 20px;
+	width: 100%;
+}
+.lui-attend-report-section-line{
+	position: absolute;
+	top:10px;
+	height: 1px;
+	width: 100%;
+	border-bottom: 1px solid #e0e0e0;
+}
+.lui-attend-report-section-title{
+	position: absolute;
+	top:0px;
+	left:50px;
+	height: 20px;
+	line-height: 20px;
+	vertical-align:middle;
+	background-color:#FFFFFF;
+	padding:0px 15px;
+	z-index: 3px;
+	color:#2590c0;
+	font-weight: bolder;
+	cursor: pointer;
+}
+.lui-attend-report-line-icon{
+	display:inline-block;
+	background: url("../images/slide-down.png") center center no-repeat;
+	height:7px;
+	width: 15px;
+}
+.lui-attend-report-line-icon.slideUp{
+	background: url("../images/slide-up.png") center center no-repeat;
+}
+.lui-attend-report-btn-group{
+	text-align: center;
+}
+.lui_attend_report_list .lui_stat_status_red{
+	color:#f00;
+}
+.lui_attend_report_list .lui_stat_status_light{
+	color:#999999;
+}
+/* 考勤月统计 Ends
+   ========================================================================== */
+   
+/* 考勤组-工作时间设置 Starts
+   ========================================================================== */
+.lui-singin-timesheet {
+  padding: 10px;
+  background-color: #fff;
+}
+.lui-singin-timesheet-panel{
+}
+.lui-singin-timesheet-panel-body {
+    color: #636879;
+}
+.lui-singin-timesheet-table{
+  margin-bottom: 5px;
+  width: 100%;
+  display: table;
+  border-collapse: collapse;
+}
+.lui-singin-timesheet-table > .caption,
+.lui-singin-timesheet-table > .content{
+  display: table-cell;
+  vertical-align: top;
+  padding: 5px;
+  color: #333;
+  font-size: 14px;
+}
+.lui-singin-timesheet-table > .caption{
+  padding-top: 8px;
+  width: 80px;
+  text-align: right;
+}
+
+/**覆盖common.css--start**/
+.lui-singin-timesheet-panel-body .tb_simple>tbody>tr>td{
+    padding: 8px 5px;
+	line-height: 25px;
+}
+.lui-singin-timesheet-panel-body .tb_simple>tbody>tr>td>.tb_simple td{
+	padding: 8px 0;
+}
+.lui-singin-timesheet-panel-body .tb_simple>tbody>tr>.td_normal_title{
+    padding: 8px 5px;
+	width: 80px;
+}
+.lui-singin-timesheet-panel-body .tb_simple>tbody>tr>.td_tab_title{
+  	color: #636879;
+	width: 60px;
+}
+.lui-singin-timesheet-panel-body .tb_simple>tbody>tr>td > label {
+  	margin-right: 10px;
+}
+.lui-singin-timesheet-panel-body .tb_simple>tbody>tr>td .txtstrong{
+	padding-left: 3px;
+	line-height: 27px;
+}
+
+.lui-singin-timesheet-panel-body .tb_simple .inputsgl,
+.lui-singin-timesheet-panel-body .tb_simple .inputselectsgl,
+.lui-singin-timesheet-panel-body .inputmul,
+.lui-singin-timesheet-panel-body .inputselectmul{
+	border: 1px solid #eaebec;
+  	float: left;
+}
+/**覆盖common.css--end**/
+
+.lui-singin-timesheet-tab{ }
+.lui-singin-timesheet-tab-heading{
+  margin: 0;
+  padding: 0 0 12px;
+  list-style: none;
+  border-bottom: 1px solid #e1e1e1;
+}
+.lui-singin-timesheet-tab-heading:after{
+  content: '';
+  display: table;
+  visibility: hidden;
+  clear: both;
+}
+.lui-singin-timesheet-tab-heading > li {
+  margin-right: 14px;
+  float: left;
+}
+.lui-singin-timesheet-tab-heading > li > a {
+  padding: 3px 8px;
+  line-height: 1.42857143;
+  border: 1px solid #abadb3;
+  transition: all .3s ease;
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+.lui-singin-timesheet-tab-heading > li > a:after,
+.lui-singin-timesheet-tab-heading > li > a:before{
+  content: '';
+  width: 0;
+  height: 0;
+  border-width: 4px 8px;
+  border-style: dashed dashed solid;
+  border-color: transparent transparent #e1e1e1;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-bottom: -14px;
+  margin-left: -8px;
+  display: none;
+}
+.lui-singin-timesheet-tab-heading > li > a:after{
+  border-color: transparent transparent #fff;
+  margin-bottom: -15px;
+}
+.lui-singin-timesheet-tab-heading > li.active > a,
+.lui-singin-timesheet-tab-heading > li > a:hover{
+  color: #15a4fa;
+  border-color: #15a4fa;
+}
+.lui-singin-timesheet-tab-heading > li.active > a:after,
+.lui-singin-timesheet-tab-heading > li.active > a:before{ display: block; }
+.lui-singin-timesheet-tab-body{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+   
+/* 考勤组-工作时间设置 Ends
+   ========================================================================== */
+.lui_attend_security_tip{font-size: 12px;color: red;}

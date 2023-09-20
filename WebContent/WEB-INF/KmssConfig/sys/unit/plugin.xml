@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+        xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd"
+        xmlns="http://www.example.org/plugin-config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <extension-point id="com.landray.kmss.sys.unit.rest.setting">
+        <item name="options">
+            <param name="fdModelName" required="true" kind="unid">
+                <description>该拓展点的唯一标识，一般对接交换中心需要开通rest服务的模块类全名</description>
+            </param>
+            <param name="fdKey" required="true">
+                <description>代替模块类全名保存在数据库的数据</description>
+            </param>
+            <param name="policyBeanName" required="true">
+                <description>rest服务注册的beanName，可填写多个用;隔开</description>
+            </param>
+            <param name="messageKey" required="true">
+                <description>展示名称</description>
+            </param>
+            <description>对接交换中心设置开通rest服务备选项</description>
+        </item>
+        <description>对接交换中心设置开通rest服务备选项</description>
+    </extension-point>
+
+    <extension point="com.landray.kmss.sys.formula" model="*">
+        <item name="function">
+            <param name="className" value="com.landray.kmss.sys.unit.provider.function.UnitFunctionExtend"/>
+        </item>
+    </extension>
+</plugin>

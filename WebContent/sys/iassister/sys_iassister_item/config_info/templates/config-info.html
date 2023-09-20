@@ -1,0 +1,144 @@
+<div class="config_info_wrapper">
+	<el-form :model="ruleForm" :rules="configRules" ref="ruleForm">
+	<el-form-item label="" prop="config"> </el-form-item> </el-form>
+	<div class="config_hint">{{langHere["msg.config.hint"]}}</div>
+	<el-tabs v-model="config.curTabKey" type="card"> <el-tab-pane
+		v-for="(tab, idx) in configTabs" :key="tab.key" :label="tab.label"
+		:name="tab.key">
+	<div class="config_container">
+		<div v-if="tab.key=='default'" class="config_default">
+			{{langHere["msg.config.default.hint.1"]}}
+			<el-select :disabled="!editAuth" v-model="config.default" size="mini">
+			<el-option v-for="opt in configTabs" v-if="opt.key!='default'"
+				:key="opt.key" :label="opt.label" :value="opt.key"> </el-option> </el-select>
+			{{langHere["msg.config.default.hint.2"]}}
+		</div>
+		<template v-else>
+		<div v-if="curCondition" class="config condition">
+			<el-radio-group v-model="curCondition.type" :disabled="!editAuth">
+			<el-radio v-for="ct in condTypes" :key="ct.key" :label="ct.key">{{ct.label}}</el-radio>
+			</el-radio-group>
+			<div v-if="curCondition.type=='check'" class="cond_content check">
+				{{langHere["msg.check.content.hint.1"]}}{{langHere["msg.check.content.hint.2"]}}
+				<el-select v-model="curCondContent.ruleType" size="mini"
+					:disabled="!editAuth"> <el-option
+					v-for="opt in ruleTypes" :key="opt.key" :label="opt.label"
+					:value="opt.key"> </el-option> </el-select>
+				<template v-if="tab.key=='warning'">
+				{{langHere["msg.check.content.hint.3"]}}{{langHere["msg.check.content.hint.5"]}}{{langHere["msg.check.content.hint.6"]}}<font
+					class="tab_title">{{tab.label}}</font> </template>
+				<template v-else>
+				{{langHere["msg.check.content.hint.3"]}}<font class="tab_title">{{tab.label}}</font>{{langHere["msg.check.content.hint.6"]}}
+				</template>
+				<el-checkbox-group v-model="curCondContent.ruleIds"
+					:disabled="!editAuth"> <el-checkbox
+					v-for="rule in filterRules" :key="rule.key" :label="rule.key"
+					:disabled="rule.disabled">{{rule.label}}</el-checkbox> </el-checkbox-group>
+			</div>
+			<div v-else class="cond_content config">
+				<div class="cond_config_hint">
+					{{langHere["msg.check.content.hint.1"]}}{{langHere["msg.cond.config.hint.1"]}}
+					<template v-if="tab.key=='warning'">
+					{{langHere["msg.check.content.hint.3"]}}{{langHere["msg.check.content.hint.5"]}}{{langHere["msg.check.content.hint.6"]}}<font
+						class="tab_title">{{tab.label}}</font> </template>
+					<template v-else>
+					{{langHere["msg.check.content.hint.3"]}}<font class="tab_title">{{tab.label}}</font>{{langHere["msg.check.content.hint.6"]}}
+					</template>
+				</div>
+				<el-button type="text" size="mini" @click="editCond"> <font
+					class="tab_title">{{langHere["msg.cond.config.hint.2"]}}</font></el-button>
+				<el-input readonly :value="showCond(curCondContent.content)"
+					@focus="editCond"></el-input>
+			</div>
+		</div>
+		<template v-if="tab.key!='success'">
+		<div class="config submit">
+			<div class="submit_hint">
+				<template v-if="tab.key=='warning'">
+				{{langHere["msg.check.content.hint.1"]}}{{langHere["msg.check.content.hint.5"]}}{{langHere["msg.check.content.hint.6"]}}<font
+					class="tab_title">{{tab.label}}</font>{{langHere["msg.check.content.hint.7"]}}
+				</template>
+				<template v-if="tab.key=='error'">
+				{{langHere["msg.check.content.hint.1"]}}<font class="tab_title">{{tab.label}}</font>{{langHere["msg.check.content.hint.6"]}}{{langHere["msg.check.content.hint.7"]}}
+				</template>
+			</div>
+			<el-radio-group v-model="curTab.submitType" :disabled="!editAuth">
+			<el-radio v-for="st in submitTypes" :key="st.key" :label="st.key">{{st.label}}</el-radio>
+			</el-radio-group>
+		</div>
+		<div v-if="curShowInfos" class="config showinfos">
+			<el-checkbox v-model="curShowInfos.showNone"
+				:disabled="!editAuth||curShowInfos.showTypes&&curShowInfos.showTypes.length>0">{{langHere["msg.check.content.hint.10"]}}</el-checkbox>
+			<el-checkbox-group v-if="curShowInfos.showTypes"
+				:disabled="!editAuth||curShowInfos.showNone"
+				v-model="curShowInfos.showTypes" @change="showTypesChanged">
+			<el-checkbox v-for="st in showTypes" :label="st.key">{{st.label}}</el-checkbox>
+			</el-checkbox-group>
+			<el-tabs v-model="curShowInfos.showType" tab-position="left">
+			<el-tab-pane v-for="(st,idx) in curShowTypes" :key="st.key"
+				:label="st.simpleL" :name="st.key">
+			<div v-if="st.key=='text'" class="showinfo text">
+				<div v-if="editAuth" :id="'txtEditor_'+tab.key"></div>
+				<div v-else v-html="curShowInfos.text.content"></div>
+			</div>
+			<div v-if="st.key=='pic'" class="showinfo pic">
+				<el-upload :ref="'picUploader_'+tab.key" :disabled="!editAuth"
+					:action="picAction" name="picFile"
+					:file-list="curShowInfos.pic.fileList" list-type="picture-card"
+					:on-success="onSuccess" :on-error="onError" :on-remove="onRemove"
+					:multiple="true" accept="image/png,image/jpg,image/jpeg">
+				<i class="el-icon-plus"></i> </el-upload>
+			</div>
+			<div v-if="st.key=='link'" class="showinfo link">
+				<el-button v-if="editAuth" type="primary" size="mini"
+					icon="el-icon-circle-plus-outline" @click="addLink()">{{langHere["msg.btn.addHref.title"]}}</el-button>
+				<el-table :data="curShowInfos.link.linkList" border
+					@cell-click="cellClick"> <el-table-column type="index"
+					width="80" :label="langHere['msg.index']" align="center" /> <el-table-column
+					:label="langHere['msg.link.title']" width="260" align="center"
+					type="title" class-name="input_container title_th"> <template
+					slot-scope="scope"> <el-input v-if="scope.row.writable"
+					:ref="'title_'+scope.row.key" v-model="scope.row.title"
+					@keydown.enter.native="enterKeydown($event)"
+					@blur="linkTitleBlured"></el-input> <template v-else>{{scope.row.title}}</template></template>
+				</el-table-column> <el-table-column :label="langHere['msg.link.href']" align="center"
+					type="href" class-name="input_container"> <template
+					slot-scope="scope"> <el-input v-if="scope.row.writable"
+					:ref="'href_'+scope.row.key" v-model="scope.row.href"
+					@keydown.enter.native="enterKeydown($event)"></el-input> <template
+					v-else>{{scope.row.href}}</template></template></el-table-column> <el-table-column
+					v-if="editAuth" width="120"
+					:label="langHere['msg.check.content.hint.21']" align="center">
+				<template slot-scope="scope"> <el-button size="mini"
+					@click.stop="delLink(scope.$index)" icon="el-icon-delete" circle />
+				</template></el-table-column> </el-table>
+			</div>
+			</el-tab-pane> </el-tabs>
+		</div>
+		</template> </template>
+	</div>
+	</el-tab-pane> </el-tabs>
+	<el-dialog :title="langHere['msg.cond.config.hint.2']"
+		:visible.sync="configVisible" :close-on-click-modal="false"
+		:close-on-press-escape="false" custom-class="cond_editor">
+	<template slot="footer"> <el-button v-if="editAuth"
+		@click="configVisible=false">{{langHere["msg.cond.config.hint.6"]}}</el-button>
+	<el-button v-if="!editAuth" @click="configVisible=false">{{langHere["msg.cond.config.hint.3"]}}</el-button>
+	<el-button v-if="editAuth" type="primary" @click="submitCondConfig">{{langHere["msg.cond.config.hint.5"]}}</el-button>
+	</template> <el-row> <el-col :span="8"> <el-collapse
+		v-model="activeGroupName" accordion> <el-collapse-item
+		:title="langHere['msg.cond.config.hint.7']" name="rules">
+	<el-tree class="rules" :data="rulesData" @node-click="handleNodeClick"
+		:default-expand-all="true"></el-tree> </el-collapse-item> </el-collapse> </el-col> <el-col :span="16">
+	<el-input v-if="curCondContent" :disabled="!editAuth" ref="condEditor"
+		type="textarea" :autosize="{ minRows: 6, maxRows: 16}" placeholder=""
+		:value="showCond(condContent)" readonly />
+	<div class="btns" v-if="editAuth">
+		<el-button type="primary" class="symbol" @click.stop="addSymbol('(')">(</el-button>
+		<el-button type="primary" class="symbol" @click.stop="addSymbol(')')">)</el-button>
+		<el-button type="primary" class="symbol" @click.stop="addSymbol('&&')">&&</el-button>
+		<el-button type="primary" class="symbol" @click.stop="addSymbol('||')">||</el-button>
+		<el-button type="primary" @click.stop="clearCond()">{{langHere["msg.cond.config.hint.8"]}}</el-button>
+	</div>
+	</el-col> </el-row> </el-dialog>
+</div>

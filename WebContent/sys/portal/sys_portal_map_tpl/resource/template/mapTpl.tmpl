@@ -1,0 +1,622 @@
+/*数据格式
+var data = [
+			{name:"aaa",content:[
+				{text:"文档",href:"",children:[{text:"tttt",href:""},{text:"ddd",href:"bbb"}]},
+				{text:"ggg",href:"",children:[{text:"ee",href:""},{text:"dggdd",href:"bbb"}]},
+				{text:"ggg",href:"",children:[{text:"ee",href:""},{text:"dggdd",href:"bbb"}]},
+				
+			]},
+			{name:"bbb",content:[
+				{text:"abkk",href:"",children:[{text:"tttt",href:""},{text:"ddd",href:"bbb"}]}
+			]},
+			{name:"cc",content:[{text:"tttt",href:"",children:[{text:"tttt",href:""},{text:"ddd",href:"bbb"}]}]}
+		  ];
+var inlet = [
+		{text:"aaa",href:""},
+		{text:"aaa",href:""},
+		{text:"aaa",href:""},
+		{text:"aaa",href:""},
+		];
+*/
+var JsData = data[0];
+if(!JsData||JsData.length<1){
+	//如果data数据为空，可能是处在预览模式下
+	try{
+		if(window._templateData&&window._templateData.length>1){
+			JsData = JSON.parse(window._templateData);
+			delete window._templateData;
+		}else{
+			JsData = [];
+		}
+	}catch(e){
+	
+	}
+}else{
+	
+}
+
+var inletData = data[1]||[];
+try{
+	for(var aj = 0;aj<JsData.length;aj++){
+		JsData[aj].content = JSON.parse(JsData[aj].content);
+	}
+}catch(e){
+
+}
+
+if(inletData.length<1){
+	if(window._templateInlet&&window._templateInlet.length>1){
+		inletData = JSON.parse(window._templateInlet);
+		delete window._templateInlet;
+	}else{
+		
+	}
+}
+
+
+//window.__data__ = JsData;
+//window.__inlet__=inletData;
+
+if(JsData.length>0){
+	if(JsData[0].type==0){
+		createNewStaff(JsData);
+	}else if(JsData[0].type==1){
+		createFarmNav(JsData,inletData);
+	}else if(JsData[0].type==2){
+		createMapNav(JsData,inletData);
+	}else if(JsData[0].type==3){
+		createWorkMap(JsData,render);
+	}
+}else{
+	{$没有数据$}
+}
+
+
+function createFarmNav(dataJson,interfaces){
+	
+	var arr = [];
+	arr[0] = Com_Parameter.ContextPath+"sys/portal/sys_portal_map_tpl/resource/css/farmcss.css";
+	loadSource(arr);
+{$<div style='width:100%;overflow:auto;'><div class="bmp-mapnav">$}
+	{$<ul class="bmp-asdie-nav">$}
+		for(var i = 0;i<interfaces.length;i++){
+			if(i<5){ 
+				{$
+					<li>
+	        			<a class="bmp-btn bmp-btn-default" href="{%interfaces[i].href%}" target="_blank" title="{%interfaces[i].text%}">{%interfaces[i].text%}</a>
+	      			</li>
+				$}
+			}else{
+				
+				 if(i===5){
+					 {$<li class="bmp-dropdown">
+				        <span class="bmp-btn bmp-btn-default" title="更多">更多 <i>+</i></span>
+				        	<div class="bmp-dropdown-meun">
+				     $}
+			      }
+			      	 		{$<a href="{%interfaces[i].href%}" target="_blank" title="{%interfaces[i].text%}">{%interfaces[i].text%}</a>$}
+			      if(i===interfaces.length-1){
+				     {$ 	</div>
+				      </li>
+				     $}
+					}
+			}
+		}
+	{$</ul>$}
+	{$ <div class="bmp-bg-box" ></div> $}
+	{$ <div class="bmp-tabs">$}
+		{$<ul class="bmp-tab-heading">$}
+			var dataJsonLen = dataJson.length<4?dataJson.length:4;
+			for(var t = 0;t<dataJsonLen;t++){
+				{$ 
+					<li class="{%t===0?'active':''%}" title="{%dataJson[t].name%}">
+          				<a class="bmp-btn bmp-btn-default" href="javascript:void(0)" >{%dataJson[t].name%}</a>
+        			</li> 
+        		$}
+			}
+		{$</ul>$}
+		{$<div class="bmp-tab-content">$}
+			var len = dataJson[0].content.length<4?4:dataJson[0].content.length;
+			for(var s = 0;s<4;s++){
+				{$
+			          <div class="bmp-post bmp-post-{%s+1%}" id="bmp-post-id-{%s+1%}">
+			            <h2 class="bmp-post-title"><span>{%s<dataJson[0].content.length?dataJson[0].content[s].text:''%}</span></h2>
+			            <div class="bmp-post-content">
+			              <ul class="bmp-post-list">
+			     $}     
+			     if(s<dataJson[0].content.length){
+			     	if(dataJson[0].content[s].children){
+			     		var dataJsonChildLen = dataJson[0].content[s].children.length;
+			     		if(dataJsonChildLen>8){dataJsonChildLen=8;}
+			     		for(var a = 0;a<dataJsonChildLen;a++){
+			     			{$  <li><a href="{%env.fn.formatUrl(dataJson[0].content[s].children[a].href)%}" target="{%dataJson[0].content[s].children[a].target%}" title="">{%dataJson[0].content[s].children[a].text%}</a></li> $}
+			     		}
+			     	}
+			     }  
+			    {$        
+			    		  </ul>
+			              <div class="bmp-post-platform"></div>
+			              <div class="bmp-post-icon"></div>
+			            </div>
+			          </div>
+				$}
+			}
+			
+		{$</div>$}	
+		
+	{$ </div>$}
+{$</div>$}
+}
+
+function createNewStaff(dataJson){
+	var arr = [];
+	arr[0] = Com_Parameter.ContextPath+"sys/portal/sys_portal_map_tpl/resource/css/common.css";
+	loadSource(arr);
+
+{$<div class="demo-entry-handbook handbook-group" id="newStaffBox"> $}
+	{$<ul class="demo-entry-handbook-tab-heading" id="tablist"></ul>$}
+	{$<div class="demo-entry-handbook-tab-content" id="demo-guide-content">$}
+		{$
+			<div class="tab-pane active" id="mapview-content" >
+				<ul class="demo-entry-handbook-innerlist"></ul>
+			</div>
+		$}
+	{$</div>$}
+	
+	{$ <div class="lui_map_button_group_inner" id="mapAA"> $}
+			for(var d = 0;d<dataJson.length;d++){
+				if(d===0){
+					{$<div class="lui_map_button">
+						<a href="javascript:void(0);" title="">
+							<span>{%dataJson[d].name%}</span>
+						</a>
+					</div>$}
+			   }
+			   if(d===0){ {$<ul class="lui_map_options">$} }
+					{$<li title="{%dataJson[d].name%}" class="{%d===0?'active':''%}" item="{%d%}">{%dataJson[d].name%}</li>$}
+			   if(d===dataJson.length-1){{$</ul>$}}
+			}
+	{$
+	   </div>
+	$}
+{$</div></div>$}
+
+
+
+}
+
+function createMapNav(dataJson,interfaces){
+	
+	var arr = [];
+	arr[0] = Com_Parameter.ContextPath+"sys/portal/sys_portal_map_tpl/resource/css/maincss.css";
+	loadSource(arr);
+	
+	{$<div style="width:100%;overflow:scroll;"><div class="mot-box">$}
+		{$
+		    <div class="mot-bg-picgroup">
+		      <!--云 Starts-->
+		      <span class="mot-bg-cloud cloud-1"></span>
+		      <span class="mot-bg-cloud cloud-2"></span>
+		      <span class="mot-bg-cloud cloud-3"></span>
+		      <span class="mot-bg-cloud cloud-4"></span>
+		      <span class="mot-bg-cloud cloud-5"></span>
+		      <!--云 Ends-->
+		      <!--树 Starts-->
+		      <span class="mot-bg-tree tree-1"></span>
+		      <span class="mot-bg-tree tree-2"></span>
+		      <!--树 Ends-->
+		      <!--山 Starts-->
+		      <span class="mot-bg-mountain"></span>
+		      <!--山 Ends-->
+		    </div>
+		$}
+
+		{$<ul class="mot-interface-list">$}
+			var interfacesLen = interfaces.length<5?interfaces.length:5;
+			for(a = 0;a<interfacesLen;a++){
+				{$<li><a href="{%env.fn.formatUrl(interfaces[a].href)%}" target="_blank" title="">{%interfaces[a].text%}</a></li>$}
+			}
+		{$</ul>$}
+		{$ <ul class="mot-tab-head"> $}
+			for(var b = 0;b<dataJson.length;b++){
+				{$<li class="{%b===0?'active':''%}"><a href="javascript:void(0)" title="{%dataJson[b].name%}">{%dataJson[b].name%}</a></li>$}
+			}	
+		{$ </ul> $}
+		{$ <div class="mot-tab-content"> $}
+				{$<div class="mot-section-1" id="mot-section-content">$}
+						var mapDataJsonContentLen = dataJson[0].content.length<5?dataJson[0].content.length:5;
+						for(var d = 0;d<mapDataJsonContentLen;d++){
+							var motBgColor = "";
+							switch(d){
+								case 0:
+								 motBgColor="yellow";
+								 break;
+								case 1:
+								 motBgColor="pink";
+								 break;
+								case 2:
+								motBgColor="purle";
+								break;
+								case 3:
+								motBgColor="blue";
+								break;
+								case 4:
+								motBgColor="magenta";
+								break;
+							}
+							{$<dl class="mot-list mot-bg-{%motBgColor%} mot-list-{%d+1%}">$}
+								{$<dt>{%dataJson[0].content[d].text%}</dt>$}
+								if(dataJson[0].content[d].children){
+									var mapNavChildrenLen = dataJson[0].content[d].children.length||0;
+									if(mapNavChildrenLen>5){mapNavChildrenLen=5;}
+									for(var e = 0;e<mapNavChildrenLen;e++){
+										{$ <dd><a href="{%env.fn.formatUrl(dataJson[0].content[d].children[e].href)%}" target="{%dataJson[0].content[d].children[e].target%}" title="{%dataJson[0].content[d].children[e].text%}">{%dataJson[0].content[d].children[e].text%}</a></dd>$}
+									}	
+								}
+						
+							{$</dl>$}
+						}
+				{$</div>$}
+			
+		{$ </div>$}		
+		
+		
+	{$</div></div>$}
+
+}
+
+function createWorkMap(jsons,render){
+
+
+
+	var arr = [];
+	arr[0] = Com_Parameter.ContextPath+"sys/portal/sys_portal_map_tpl/resource/css/work.css";
+	loadSource(arr);
+
+
+	{$ <div class="lui_new_map_box" data-id="{%render.cid%}"> 
+		    <div class="lui_new_map_content" style="background: url('{% getBgUrl(jsons[0].attId) %}') no-repeat center;"> 
+				<div class="lui_new_map_nav">
+						<ul class="lui_nmn_navList_ul">$}
+	if(jsons.length>1){
+		for(var i=0;i<jsons.length;i++){
+			var className = "lui_nmn_nu_item textEllipsis";
+			if(i==0){
+				className += " lui_nmn_nu_item_active"
+			}
+			{$<li class="{%className%}" title="{% jsons[i].name %}" data-index="{%i%}"> {% jsons[i].name %}</li> $}
+		}
+	}
+		    	
+
+	{$</ul></div>$}
+		for(var i=0;i<jsons.length;i++){
+			var json = jsons[i].content
+			{$<div class="lui_new_map" style="display:{% i==0?'block':'none'%}">
+					      <div class="lui_new_map_label">
+					        <ul class="lui_nmn_labelList_ul animated bounceInLeft" > $}
+
+					        var lev2Children;
+
+					        for(var j=0 ;j<json.length;j++){
+					        	var lev2 = json[j];
+					        	var className = 'lui_nmn_lu_item textEllipsis'
+					        	if(j==0){
+					        		className += ' lui_nmn_lu_item-active'
+					        	}
+					        	if(json.length>1){
+					        		{$<li class="{%className%}" title="{%lev2.text%}" data-index="{%j%}">{%lev2.text%}</li>$}
+					        	}
+					        	
+					    	}
+					        {$</ul></div> $}
+
+					        for(var j=0 ;j<json.length;j++){
+					        	var lev2 = json[j];
+					        	lev2Children = lev2.children;
+					        	{$<div class="lui_new_map_cardList" data-index="{%j%}" style="display:{% j==0?'block':'none'%}" >$}
+					        		if(lev2Children){
+					        			for(var k=0;k<lev2Children.length;k++){
+						        			var lev3 = lev2Children[k]
+						        			var style = "";
+						        			if(k%2==1){
+						        				style = "margin-top: 20px;"
+						        			}
+						        			{$
+						        				<ul class="lui_nm_cardList_ul" style="{%style%}">
+										          <li class="lui_nm_clu_card animated swing">
+										            <div class="lui_nm_cluc_title">
+										              <span class="textEllipsis">{%lev3.text%}</span>
+										            </div>
+										            <ul class="lui_nm_cluc_itemList">$}
+										            if(lev3.children){
+										            	for(var l=0;l<lev3.children.length;l++){
+										            		var lev4 = lev3.children[l];
+										            		{$ <li class="lui_nm_cluc_il_item"><a href="{%env.fn.formatUrl(lev4.href)%}" title="{%lev4.text%}" class="textEllipsis" target="{%lev4.target%}">{%lev4.text%}</a></li> $}
+										            	}
+										        	}								          
+										            {$</ul>
+										          </li>
+									        	</ul>
+						        			$}
+						        		}
+					        		}
+					        			
+							    {$</div>$}
+					   	 	} 	      	
+	  			{$</div>$}
+		}
+	{$ </div></div>  $}
+
+	
+
+}
+
+/******************************************************************/
+var timer= setTimeout(function(){
+	if(JsData.length>0){
+		if(JsData[0].type==0){
+			newStaffJs(JsData,inletData);
+		}else if(JsData[0].type==1){
+			farmNavJs(JsData,inletData);
+		}else if(JsData[0].type==2){
+			mapNavJs(JsData,inletData);
+		}else if(JsData[0].type==3){
+			work(JsData,render);
+		}
+	}else{
+		{$没有数据$}
+	}
+});
+
+	function getBgUrl(attId){
+		return env.fn.formatUrl('/sys/attachment/sys_att_main/sysAttMain.do?method=download&fdId='+attId);
+	}
+
+
+	function work(JsData,render){
+		var renderContainer = $('[data-id="'+render.cid+'"]');
+		renderContainer.find('.lui_nmn_nu_item').on('click',function(evt){
+			var target = $(evt.target);
+			var index = target.data('index')			
+			var parent = target.parents('.lui_new_map_box')		
+			parent.find('.lui_new_map').hide()
+			$(parent.find('.lui_new_map')[index]).show()
+			parent.find('.lui_nmn_nu_item').removeClass('lui_nmn_nu_item_active')
+			target.addClass('lui_nmn_nu_item_active')
+			var bgUrl = getBgUrl(JsData[index].attId);
+			parent.find('.lui_new_map_content').css('background',('url("'+bgUrl+'") no-repeat center'));
+		})
+
+		renderContainer.find('.lui_nmn_lu_item').on('click',function(evt){
+			var target = $(evt.target);
+			var parent = target.parents('.lui_new_map_box')		
+			var index = target.data('index')		
+			var container = target.parents('.lui_new_map')
+			container.find('.lui_nmn_lu_item').removeClass('lui_nmn_lu_item-active')
+			target.addClass('lui_nmn_lu_item-active')
+			var list = container.find('.lui_new_map_cardList');
+			list.hide();
+			$(list[index]).show();
+			
+		})
+
+	}
+
+
+
+
+	//通过父级获取元素
+	function getDom(dom){
+		var widgitId = "#"+render.parent.id;
+		return $(widgitId+" "+dom);
+	}
+	
+	
+	function newStaffJs(dataJson){
+		if(JsData[0].type!=0){return null;}
+		var index = 0;
+		clearTimeout(timer);
+		renderLevelOne(dataJson[0].content);
+		var popStatus = false;
+		getDom(".lui_map_button").on("click",function(){
+		
+				if(getDom(".lui_map_options").children().length>0&&!popStatus){
+					getDom(".lui_map_options").css("display","block");
+					popStatus = true;
+				}else{
+					getDom(".lui_map_options").css("display","none");
+					popStatus = false;
+				}
+
+				getDom(".lui_map_options").on("click",function(e){
+					var selectValue = e.target.innerText;
+					index = $(e.target).attr("item");
+					getDom(".lui_map_options li").removeClass("active");
+					$(e.target).addClass("active");
+					getDom(".lui_map_button span").html(selectValue);
+					getDom(".lui_map_options").css("display","none");
+					popStatus = false;
+					renderLevelOne(dataJson[index].content);
+					return false;
+				});
+				return false;
+		})
+		getDom("#newStaffBox").on("click",function(){
+			getDom(".lui_map_options").css("display","none");
+			popStatus = false;
+		});
+		
+		//初始化
+		getDom("#tablist li").on("click",function(e){
+				getDom("#tablist li").removeClass("active");
+				$(e.target.parentNode).addClass("active");
+				renderLevelTwo(dataJson[index].content[$(e.target.parentNode).index()].children);
+				
+		});
+		
+		function renderLevelOne(data){
+			try{
+				var str ="";
+				var len = data.length||0;
+				for(var i = 0;i<len;i++){
+					 str+= "<li oIndex ='"+i+"' class='"+(i===0?'active':'')+"' ><a item ='"+i+"' href='javascript:void(0)' title='"+data[i].text+"'>"+data[i].text+"</a></li>";
+				}
+				getDom("#tablist").html(str);
+				renderLevelTwo(data[0].children);
+				getDom("#tablist li").on("click",function(e){
+					getDom("#tablist li").removeClass("active");
+					$(e.target.parentNode).addClass("active");
+					renderLevelTwo(dataJson[index].content[$(e.target.parentNode).index()].children);
+				
+				});
+			}catch(e){
+				console.log(e);
+			}
+		}
+		function renderLevelTwo(data){
+			var str = "";
+			try{
+				if(data){
+					for(var i = 0;i<data.length;i++){
+						 str+= "<li><a href="+env.fn.formatUrl(data[i].href)+" target="+data[i].target+" >"+data[i].text+"</a></li>";
+					}
+					getDom("#mapview-content ul").html(str);
+				}else{
+					console.log("子节点数据不存在,清除节点");
+					getDom("#mapview-content ul").html("");
+				}
+			}catch(e){
+				console.log(e);
+			}
+		}
+
+	}
+	
+	
+	function farmNavJs(dataJson){
+	
+		if(JsData[0].type!=1){return null;}
+		try{
+			if(getDom(".bmp-dropdown")){
+				getDom(".bmp-dropdown").on("mouseenter",function(){
+					var oWidth = getDom(".bmp-dropdown-meun").outerWidth();
+					getDom(".bmp-dropdown-meun").animate({left:-(oWidth-115)+'px'},20);
+					getDom(".bmp-dropdown-meun").on("mouseleave",function(){
+						getDom(".bmp-dropdown-meun").animate({left:115+'px'},20);
+						return false;
+					});
+				});
+			}
+		}catch(e){
+			console.log(e);
+		}
+		
+		getDom(".bmp-tab-heading li").on("click",function(e){
+		
+			getDom(".bmp-tab-heading li").removeClass("active");
+			$(this).addClass("active");
+			var index = $(this).index();
+			for(var i = 0;i<4;i++){
+				var str = "#bmp-post-id-"+(i+1);
+				var text = i<dataJson[index].content.length?dataJson[index].content[i].text:''
+				getDom(str).find("span").html(text);
+				var oUl = getDom(str+" "+".bmp-post-list");				
+				oUl.html("");
+				if(!dataJson[index].content[i]){continue;}
+				try{
+					var farmNavJsonLen = dataJson[index].content[i].children.length;
+					if(farmNavJsonLen>8){farmNavJsonLen=8;}
+					for(var j = 0;j<farmNavJsonLen;j++){
+						var oLi = $("<li><a href='javascript:void(0);' target='_blank' title=''></a></li>");
+						oLi.attr("title",dataJson[index].content[i].children[j].text);
+						oLi.find("a").html(dataJson[index].content[i].children[j].text);
+						oLi.find("a").attr("href",env.fn.formatUrl(dataJson[index].content[i].children[j].href));
+						oLi.appendTo(oUl);
+					}
+				}catch(e){
+					console.log(e);
+				}
+
+			}
+		});
+	}
+
+	function mapNavJs(dataJson){
+		if(JsData[0].type!=2){return null;}
+		
+			getDom(".mot-tab-head li").on("click",function(e){
+			getDom(".mot-tab-head li").removeClass("active");
+			$(this).addClass("active");
+			var index = $(this).index();
+	
+			getDom("#mot-section-content").html("");
+			var mapNavLen = dataJson[index].content.length<5?dataJson[index].content.length:5;
+			for(var i = 0;i<mapNavLen;i++){
+				
+				var motBgColor = "";
+				switch(i){
+					case 0:
+					 motBgColor="yellow";
+					 break;
+					case 1:
+					 motBgColor="pink";
+					 break;
+					case 2:
+					motBgColor="purle";
+					break;
+					case 3:
+					motBgColor="blue";
+					break;
+					case 4:
+					motBgColor="magenta";
+					break;
+				}
+				var dl = $("<dl class='mot-list mot-bg-"+motBgColor+" mot-list-"+(i+1)+"'></dl>");
+				var dt = $("<dt>"+dataJson[index].content[i].text+"</dt>");
+				dt.appendTo(dl);
+				try{
+					if(dataJson[index].content[i].children){
+						var dataJsonChildrenlen = dataJson[index].content[i].children.length;
+						if(dataJsonChildrenlen>5){dataJsonChildrenlen=5;}
+						for(var j = 0;j<dataJsonChildrenlen;j++){
+							var dd = $("<dd><a href='"+env.fn.formatUrl(dataJson[index].content[i].children[j].href)+"' target='"+dataJson[index].content[i].children[j].target+"' title='"+dataJson[index].content[i].children[j].text+"'>"+dataJson[index].content[i].children[j].text+"</a></dd>");
+							dd.appendTo(dl);
+						}
+					}
+				}catch(e){
+					console.log(e);
+				}
+				dl.appendTo(getDom("#mot-section-content"));
+			}
+
+		});
+	}
+	
+	function loadSource(sourceArray){
+		
+		if(sourceArray instanceof Array){
+			for(var i = 0;i<sourceArray.length;i++){
+				if(/\.(css)$/.test(sourceArray[i])){
+					$("<link rel='stylesheet' type='text/css'>").attr("href",sourceArray[i]).appendTo($("head"));
+				}
+				if(/\.(js)$/.test(sourceArray[i])){
+					$("<script></script>").attr("src",sourceArray[i]).appendTo($("head"));
+				}
+			}
+			
+		}
+	
+	}
+	
+	
+
+
+
+
+
+
+
+
+
+

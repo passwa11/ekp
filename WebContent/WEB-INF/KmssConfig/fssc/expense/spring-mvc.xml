@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/fssc/expense/fssc_expense_main/fsscExpenseMain.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/fssc/expense/fssc_expense_main/fsscExpenseMain_data.jsp" />
+				<entry
+					key="edit"
+					value="/fssc/expense/fssc_expense_main/fsscExpenseMain_edit.jsp" />
+				<entry
+					key="data.4m"
+					value="/fssc/expense/fssc_expense_main/mobile/data.jsp" />
+				<entry
+					key="edit.4m"
+					value="/fssc/expense/fssc_expense_main/mobile/edit.jsp" />
+				<entry
+					key="view.4m"
+					value="/fssc/expense/fssc_expense_main/mobile/view.jsp" />
+				<entry
+					key="view"
+					value="/fssc/expense/fssc_expense_main/fsscExpenseMain_view.jsp" />
+				<entry
+					key="listLoan"
+					value="/fssc/expense/fssc_expense_offset_detail/fsscExpenseOffsetDetail_edit_query.jsp" />
+				<entry
+					key="stickyNote"
+					value="/fssc/expense/fssc_expense_main/fsscExpenseStickyNote_print.jsp" />
+				<entry
+					key="expenseNote"
+					value="/fssc/expense/fssc_expense_main/fsscExpenseMain_file_print.jsp" />
+			    <entry 
+                    key="printall" 
+                    value="/fssc/expense/fssc_expense_main/fsscExpenseMain_printall.jsp"/>
+				<entry
+					key="printall_xform"
+					value="/fssc/expense/fssc_expense_main/fsscExpenseMain_printall_xform.jsp" />
+				<entry
+					key="viewFlow"
+					value="/fssc/expense/resource/jsp/viewFlow.jsp" />
+				<entry
+					key="listDetail"
+					value="/fssc/expense/fssc_expense_detail/fsscExpenseDetail_data.jsp" />
+				<entry
+					key="viewMsg"
+					value="/fssc/expense/fssc_expense_main/fsscExpenseMain_msg.jsp" />
+				<entry
+					key="expenseArch"
+					value="/fssc/expense/fssc_expense_main/fsscExpenseMain_file_print.jsp" />
+				<entry
+						key="cashierPrint"
+						value="/fssc/cashier/fssc_cashier_payment/fsscCashierPaymen_file_print.jsp" />
+				<entry
+						key="voucherPrint"
+						value="/fssc/voucher/fssc_voucher_main/fsscVoucherMain_file_print.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/expense/fssc_expense_main/fsscExpenseMainData.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseMainDataAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="getExpenseMain"
+					value="/fssc/expense/fssc_expense_main/fsscExpenseMain_dialog_getExpenseMain.jsp" />
+				<entry
+					key="detail"
+					value="/fssc/expense/fssc_expense_detail/fsscExpenseDetail_result.jsp" />
+				<entry
+					key="selectFee"
+					value="/fssc/expense/fssc_expense_category/fsscExpenseCategory_data_feeMain.jsp" />
+				<entry
+					key="selectNote"
+					value="/fssc/expense/fssc_expense_detail/fsscExpenseDetail_selectNote.jsp" />
+				<entry
+					key="selectTranData"
+					value="/fssc/ccard/fssc_ccard_tran_data/fsscCcardTranData_dialog.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+			class="com.landray.kmss.fssc.expense.actions.FsscExpenseMainArchivesAction"
+			parent="KmssBaseAction"
+			name="/fssc/expense/fssc_expense_main/fsscExpenseMainArchives.do"
+			lazy-init="true">
+		<property
+				name="formType"
+				value="com.landray.kmss.fssc.expense.forms.FsscExpenseMainForm" />
+		<property
+				name="forwards">
+			<map>
+				<entry
+						key="expenseArch"
+						value="/fssc/expense/fssc_expense_main/fsscExpenseMain_file_print.jsp" />
+				<entry
+						key="cashierPrint"
+						value="/fssc/cashier/fssc_cashier_payment/fsscCashierPaymen_file_print.jsp" />
+				<entry
+						key="voucherPrint"
+						value="/fssc/voucher/fssc_voucher_main/fsscVoucherMa/fsscExpenseMain_file_print.jsp" />
+				<entry
+						key="cashierPrint"
+						value="/fssc/cashier/fssc_cashier_payment/fsscCashierPaymen_file_print.jsp" />
+				<entry
+						key="voucherPrint"
+						value="/fssc/voucher/fssc_voucher_main/fsscVoucherMain_file_print.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/expense/fssc_expense_category/fsscExpenseCategory.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseCategoryAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseCategoryForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/fssc/expense/fssc_expense_category/fsscExpenseCategory_edit.jsp" />
+				<entry
+					key="view"
+					value="/fssc/expense/fssc_expense_category/fsscExpenseCategory_view.jsp" />
+				<entry
+					key="selectFeeTemplate"
+					value="/fssc/expense/fssc_expense_category/fsscExpenseCategory_data_feeTemplate.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/expense/fssc_expense_category/fsscExpenseCategoryData.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseCategoryDataAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseCategoryForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="getCategory"
+					value="/fssc/expense/fssc_expense_category/fsscExpenseCategory_dialog_getCategory.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/expense/fssc_expense_item_config/fsscExpenseItemConfig.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseItemConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseItemConfigForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/fssc/expense/fssc_expense_item_config/fsscExpenseItemConfig_edit.jsp" />
+				<entry
+					key="view"
+					value="/fssc/expense/fssc_expense_item_config/fsscExpenseItemConfig_view.jsp" />
+				<entry
+					key="data"
+					value="/fssc/expense/fssc_expense_item_config/fsscExpenseItemConfig_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/expense/fssc_expense_share_category/fsscExpenseShareCategory.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseShareCategoryAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseShareCategoryForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/fssc/expense/fssc_expense_share_category/fsscExpenseShareCategory_edit.jsp" />
+				<entry
+					key="view"
+					value="/fssc/expense/fssc_expense_share_category/fsscExpenseShareCategory_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/expense/fssc_expense_category/fsscExpenseShareCategoryData.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseShareCategoryDataAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseCategoryForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="getCategory"
+					value="/fssc/expense/fssc_expense_share_category/fsscExpenseShareCategory_dialog_getCategory.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/expense/fssc_expense_share_main/fsscExpenseShareMain.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseShareMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseShareMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/fssc/expense/fssc_expense_share_main/fsscExpenseShareMain_edit.jsp" />
+				<entry
+					key="view"
+					value="/fssc/expense/fssc_expense_share_main/fsscExpenseShareMain_view.jsp" />
+				<entry
+					key="data"
+					value="/fssc/expense/fssc_expense_share_main/fsscExpenseShareMain_data.jsp" />
+				<entry
+					key="print"
+					value="/fssc/expense/fssc_expense_share_main/fsscExpenseShareMain_print.jsp" />
+				<entry
+					key="data.4m"
+					value="/fssc/expense/fssc_expense_share_main/mobile/data.jsp" />
+				<entry
+					key="view.4m"
+					value="/fssc/expense/fssc_expense_share_main/mobile/view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/expense/fssc_expense_balance/fsscExpenseBalance.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseBalanceAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseBalanceForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/fssc/expense/fssc_expense_balance/fsscExpenseBalance_data.jsp" />
+				<entry
+					key="edit"
+					value="/fssc/expense/fssc_expense_balance/fsscExpenseBalance_edit.jsp" />
+				<entry
+					key="edit.4m"
+					value="/fssc/expense/fssc_expense_balance/mobile/edit.jsp" />
+				<entry
+					key="view.4m"
+					value="/fssc/expense/fssc_expense_balance/mobile/view.jsp" />
+				<entry
+					key="data.4m"
+					value="/fssc/expense/fssc_expense_balance/mobile/data.jsp" />
+				<entry
+					key="view"
+					value="/fssc/expense/fssc_expense_balance/fsscExpenseBalance_view.jsp" />
+				<entry
+					key="print"
+					value="/fssc/expense/fssc_expense_balance/fsscExpenseBalance_print.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/expense/fssc_expense_balance_category/fsscExpenseBalanceCategory.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseBalanceCategoryAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseBalanceCategoryForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/fssc/expense/fssc_expense_balance_category/fsscExpenseBalanceCategory_edit.jsp" />
+				<entry
+					key="view"
+					value="/fssc/expense/fssc_expense_balance_category/fsscExpenseBalanceCategory_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/expense/fssc_expense_temp/fsscExpenseTemp.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseTempAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseTempForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="edit"
+					value="/fssc/expense/fssc_expense_temp/fsscExpenseTemp_edit.jsp" />
+				<entry
+					key="view"
+					value="/fssc/expense/fssc_expense_temp/fsscExpenseTemp_view.jsp" />
+				<entry
+					key="data"
+					value="/fssc/expense/fssc_expense_temp/fsscExpenseTemp_data.jsp" />
+				<entry
+					key="result"
+					value="/fssc/expense/fssc_expense_temp/fsscExpenseTempInport_result.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- 报销移动端 -->
+	<bean
+		name="/fssc/expense/fssc_expense_mobile/fsscExpenseMobile.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseMobileAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseMainForm" />
+		<property name="forwards">
+			<map>
+             	<entry 
+                    key="data" 
+                    value="/fssc/mobile/fssc_mobile_expense/fsscMobileExpense_data.jsp"/>
+              <entry 
+                    key="edit" 
+                    value="/fssc/mobile/fssc_mobile_expense/fsscMobileExpense_edit.jsp"/>      
+              <entry 
+                    key="editTemp" 
+                    value="/fssc/mobile/fssc_mobile_expense/editTemp.jsp"/>      
+              <entry 
+                    key="view" 
+                    value="/fssc/mobile/fssc_mobile_expense/fsscMobileExpense_view.jsp"/>        
+              <entry 
+                    key="view.4m" 
+                    value="/fssc/mobile/fssc_mobile_expense/fsscMobileExpense_view.jsp"/>        
+            </map>
+		</property>
+	</bean>
+	<bean
+		name="/fssc/expense/fssc_expense_main/fsscExpenseMainPortlet.do"
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseMainPortletAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="listPortlet"
+					value="/fssc/expense/fssc_expense_main/fsscExpenseMainPortlet_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean 
+        class="com.landray.kmss.fssc.expense.actions.FsscExpenseDidiDetailAction" 
+        parent="KmssBaseAction" 
+        name="/fssc/expense/fssc_expense_didi_detail/fsscExpenseDidiDetail.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.fssc.expense.forms.FsscExpenseDidiDetailForm"/>
+        <property 
+            name="forwards">
+            <map>
+            </map>
+        </property>
+    </bean>
+    <bean 
+        class="com.landray.kmss.fssc.expense.actions.FsscExpenseDidiDetailDataAction" 
+        parent="KmssBaseAction" 
+        name="/fssc/expense/fssc_expense_didi_detail/fsscExpenseDidiDetailData.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.fssc.expense.forms.FsscExpenseDidiDetailForm"/>
+        <property 
+            name="forwards">
+            <map>
+            	<entry
+					key="getDidiDetail"
+					value="/fssc/expense/fssc_expense_didi_detail/fsscExpenseDidiDetail_dialog_didiDetail.jsp" />
+            </map>
+        </property>
+    </bean>
+	<bean
+		class="com.landray.kmss.fssc.expense.actions.FsscExpenseTranDataAction"
+		parent="KmssBaseAction"
+		name="/fssc/expense/fssc_expense_main/fsscExpenseTranData.do"
+		lazy-init="true">
+		<property
+			name="formType"
+			value="com.landray.kmss.fssc.expense.forms.FsscExpenseTranDataForm"/>
+		<property
+			name="forwards">
+			<map/>
+		</property>
+	</bean>
+</beans>

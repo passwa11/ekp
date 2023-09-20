@@ -1,0 +1,2219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="dingPcScanLogin" class="com.landray.kmss.third.ding.sso.DingPcScanLogin"></bean>
+
+	<bean id="dingOauth2ProcessingFilter"
+		class="com.landray.kmss.third.ding.sso.Oauth2AuthProcessingFilter">
+		<property name="autoLoginHelper">
+			<ref bean="autoLoginHelper" />
+		</property>
+	</bean>
+	<bean id="dingPcAuthProcessingFilter"
+		class="com.landray.kmss.third.ding.sso.DingPcAuthProcessingFilter">
+		<property name="autoLoginHelper">
+			<ref bean="autoLoginHelper" />
+		</property>
+	</bean>
+
+	<bean id="omsRelationDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.ding.dao.hibernate.OmsRelationDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.ding.model.OmsRelationModel" />
+	</bean>
+	<bean id="omsRelationTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.ding.service.spring.OmsRelationServiceImp">
+		<property name="baseDao">
+			<ref bean="omsRelationDao" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+	</bean>
+	<bean id="omsRelationService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="omsRelationTarget" />
+		</property>
+	</bean>
+
+	<bean id="synchroOrg2DingTarget" class="com.landray.kmss.third.ding.oms.SynchroOrg2DingImp">
+		<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>		
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>		
+		<property name="thirdDingOmsPostService">
+			<ref bean="thirdDingOmsPostService" />
+		</property>		
+		<property name="taskExecutor">
+			<ref bean="dingTaskExecutor" />
+		</property>		
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>		
+		<property name="thirdDingOmsErrorService">
+			<ref bean="thirdDingOmsErrorService" />
+		</property>
+	</bean>
+
+	<bean id="synchroOrg2Ding" lazy-init="true"
+		  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="synchroOrg2DingTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="triggerSynchro">PROPAGATION_REQUIRES_NEW</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="synchroOrgDing2Ekp" class="com.landray.kmss.third.ding.oms.SynchroOrgDing2EkpImp">
+		<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="sysOrgDeptService">
+			<ref bean="sysOrgDeptService" />
+		</property>
+		<property name="sysOrgOrgService">
+			<ref bean="sysOrgOrgService" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property
+			name="passwordEncoder">
+			<ref
+				bean="passwordEncoder" />
+		</property>
+		<property name="synchroOrgDingRole2Ekp">
+			<ref bean="synchroOrgDingRole2Ekp" />
+		</property>
+	</bean>
+
+	<bean id="dingCodeDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.ding.dao.hibernate.DingCodeDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.ding.model.DingCodeModel" />
+	</bean>
+	<bean id="dingCodeTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.ding.service.spring.DingCodeServiceImp">
+		<property name="baseDao">
+			<ref bean="dingCodeDao" />
+		</property>
+	</bean>
+	<bean id="dingCodeService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="dingCodeTarget" />
+		</property>
+	</bean>
+
+	<!-- 待办集成 -->
+	<bean id="dingNotifyProvider" class="com.landray.kmss.third.ding.provider.DingNotifyProvider">
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="thirdDingNotifyService">
+			<ref bean="thirdDingNotifyService" />
+		</property>
+		<property name="thirdDingNotifylogService">
+			<ref bean="thirdDingNotifylogService" />
+		</property>
+		<property name="thirdDingErrorService">
+			<ref bean="thirdDingErrorService" />
+		</property>
+		<property name="thirdDingDinstanceService">
+			<ref bean="thirdDingDinstanceService" />
+		</property>
+		<property name="thirdDingDtaskService">
+			<ref bean="thirdDingDtaskService" />
+		</property>
+	</bean>
+
+	<!-- 机器人节点设置 -->
+	<bean id="robotNodeSendDynamicInfoToDingService"
+		class="com.landray.kmss.third.ding.service.spring.RobotNodeSendDynamicInfoToDingServiceImp">
+		<property name="thirdDingDynamicinfoService">
+			<ref bean="thirdDingDynamicinfoService" />
+		</property>
+		<property name="thirdDingWriteDynamicInfoService">
+			<ref bean="thirdDingWriteDynamicInfoService" />
+		</property>
+	</bean>
+	
+	<!-- 机器人节点写入流程到钉钉 -->
+	<bean id="robotNodeFlowToDingService"
+		class="com.landray.kmss.third.ding.service.robot.RobotNodeFlowToDingServiceImp">
+		<property name="thirdDingOrmTempService">
+			<ref bean="thirdDingOrmTempService" />
+		</property>
+		<property name="thirdDingFinstanceService">
+			<ref bean="thirdDingFinstanceService" />
+		</property>
+		<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+	</bean>
+
+	<bean id="thirdDingDynamicinfoDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingDynamicinfoDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.ding.model.ThirdDingDynamicinfo" />
+	</bean>
+	<bean id="thirdDingDynamicinfoTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingDynamicinfoServiceImp">
+		<property name="baseDao">
+			<ref bean="thirdDingDynamicinfoDao" />
+		</property>
+	</bean>
+	<bean id="thirdDingDynamicinfoService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdDingDynamicinfoTarget" />
+		</property>
+	</bean>
+
+	<!-- 定时任务设置 -->
+	<bean id="thirdDingWriteDynamicInfoService"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingWriteDynamicInfoServiceImp">
+		<property name="thirdDingDynamicinfoService">
+			<ref bean="thirdDingDynamicinfoService" />
+		</property>
+		<property name="dingTaskExecutor">
+			<ref bean="dingTaskExecutor" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+	</bean>
+
+	<bean id="thirdDingOmsInitDao" parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingOmsInitDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.ding.model.ThirdDingOmsInit" />
+	</bean>
+
+	<bean id="thirdDingOmsInitTarget" parent="KmssExtendDataTarget"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingOmsInitServiceImp">
+		<property name="baseDao">
+			<ref bean="thirdDingOmsInitDao" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+	</bean>
+	<bean id="thirdDingOmsInitService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdDingOmsInitTarget" />
+		</property>
+	</bean>
+	
+	<bean id="thirdDingRoleSynchronizedService"
+		class="com.landray.kmss.third.ding.oms.ThirdDingRoleSynchronizedService">
+		
+	</bean>
+
+
+	<bean id="thirdDingOmsInitListService"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingOmsInitListService">
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="sysOrganizationVisibleService">
+			<ref bean="sysOrganizationVisibleService" />
+		</property>
+		<property name="roleValidator">
+			<ref bean="roleValidator" />
+		</property>
+		<property name="sysOrganizationStaffingLevelService">
+			<ref bean="sysOrganizationStaffingLevelService" />
+		</property>
+	</bean>
+
+	<bean id="synchroOrg2DingCheck" class="com.landray.kmss.third.ding.oms.SynchroOrg2DingCheckImp">
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+	</bean>
+
+	<bean id="thirdDingOmsPostDao" parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingOmsPostDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.ding.model.ThirdDingOmsPost" />
+	</bean>
+
+	<bean id="thirdDingOmsPostTarget" parent="KmssExtendDataTarget"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingOmsPostServiceImp">
+		<property name="baseDao">
+			<ref bean="thirdDingOmsPostDao" />
+		</property>
+	</bean>
+	<bean id="thirdDingOmsPostService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdDingOmsPostTarget" />
+		</property>
+	</bean>
+
+	<bean id="dingTaskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="20" />
+		<property name="maxPoolSize" value="50" />
+		<property name="keepAliveSeconds" value="200" />
+		<property name="queueCapacity" value="250" />
+		<property name="rejectedExecutionHandler">
+			<bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+		</property>
+	</bean>
+
+	<bean id="thirdDingGroupDao"
+		class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingGroupDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.third.ding.model.ThirdDingGroup</value>
+		</property>
+	</bean>
+	<bean id="thirdDingGroupTarget"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingGroupServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="thirdDingGroupDao" />
+		</property>
+	</bean>
+	<bean id="thirdDingGroupService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdDingGroupTarget" />
+		</property>
+	</bean>
+
+
+	<bean id="thirdDingOrmTempDao"
+		class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingOrmTempDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.third.ding.model.ThirdDingOrmTemp</value>
+		</property>
+	</bean>
+	<bean id="thirdDingOrmTempTarget"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingOrmTempServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="thirdDingOrmTempDao" />
+		</property>
+	</bean>
+	<bean id="thirdDingOrmTempService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdDingOrmTempTarget" />
+		</property>
+	</bean>
+	<bean id="thirdDingOrmDeDao"
+		class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingOrmDeDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.third.ding.model.ThirdDingOrmDe</value>
+		</property>
+	</bean>
+	<bean id="thirdDingOrmDeTarget"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingOrmDeServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="thirdDingOrmDeDao" />
+		</property>
+	</bean>
+	<bean id="thirdDingOrmDeService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdDingOrmDeTarget" />
+		</property>
+	</bean>
+	<bean id="thirdDingEventDao"
+		class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingEventDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.third.ding.model.ThirdDingEvent</value>
+		</property>
+	</bean>
+	<bean id="thirdDingEventTarget"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingEventServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="thirdDingEventDao" />
+		</property>
+	</bean>
+	<bean id="thirdDingEventService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdDingEventTarget" />
+		</property>
+	</bean>
+	<bean id="thirdDingNotifyDao"
+		class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingNotifyDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.third.ding.model.ThirdDingNotify</value>
+		</property>
+	</bean>
+	
+	<bean id="thirdDingNotifyTarget"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingNotifyServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="thirdDingNotifyDao" />
+		</property>
+		<property name="thirdDingNotifyWFService">
+			<ref bean="thirdDingNotifyWFService" />
+		</property>
+		<property name="thirdDingNotifyWRService">
+			<ref bean="thirdDingNotifyWRService" />
+		</property>	
+	</bean>
+	<bean id="thirdDingNotifyService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdDingNotifyTarget" />
+		</property>
+	</bean>
+	<bean id="thirdDingNotifyWFTarget"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingNotifyWFServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="thirdDingNotifyDao" />
+		</property>
+	</bean>
+	<bean id="thirdDingNotifyWFService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdDingNotifyWFTarget" />
+		</property>
+	</bean>
+	<bean id="thirdDingNotifyWRTarget"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingNotifyWRServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="thirdDingNotifyDao" />
+		</property>
+	</bean>
+	<bean id="thirdDingNotifyWRService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdDingNotifyWRTarget" />
+		</property>
+	</bean>
+	
+	<bean id="thirdDingFinstanceDao"
+		class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingFinstanceDaoImp"
+		parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.third.ding.model.ThirdDingFinstance</value>
+		</property>
+	</bean>
+	<bean id="thirdDingFinstanceTarget"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingFinstanceServiceImp"
+		parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="thirdDingFinstanceDao" />
+		</property>
+	</bean>
+	<bean id="thirdDingFinstanceService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdDingFinstanceTarget" />
+		</property>
+	</bean>
+
+	<bean id="thirdDingLBPMEventHandlerService"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingLBPMEventHandlerService">
+		<property name="thirdDingOrmTempService">
+			<ref bean="thirdDingOrmTempService" />
+		</property>
+		<property name="thirdDingFinstanceService">
+			<ref bean="thirdDingFinstanceService" />
+		</property>
+		<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+	</bean>
+	<bean id="thirdDingFlowEventHandlerService"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingFlowEventHandlerService">
+		<property name="thirdDingFinstanceService">
+			<ref bean="thirdDingFinstanceService" />
+		</property>
+		<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="dingFormTreeService"
+		class="com.landray.kmss.third.ding.service.bean.DingFormTreeService">
+		<property name="loader">
+			<ref bean="sysFormDictLoadService" />
+		</property>
+	</bean>
+	<bean
+		id="dingProcessTreeService"
+		class="com.landray.kmss.third.ding.service.bean.DingProcessTreeService">
+	</bean>
+	
+	 <bean 
+        id="thirdDingAppDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingAppDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingApp</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingAppTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingAppServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingAppDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingAppService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingAppTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingOmsErrorDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingOmsErrorDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingOmsError</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingOmsErrorTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingOmsErrorServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingOmsErrorDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingOmsErrorService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingOmsErrorTarget"/>
+        </property>
+    </bean>
+     <bean 
+        id="thirdDingNotifylogDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingNotifylogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingNotifylog</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingNotifylogTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingNotifylogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingNotifylogDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingNotifylogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingNotifylogTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="thirdDingErrorDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingErrorDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingError</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingErrorTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingErrorServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingErrorDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingErrorService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingErrorTarget"/>
+        </property>
+    </bean>
+     <bean 
+        id="thirdDingClockService" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingClockServiceImp" >
+    </bean>
+    
+    <bean id="dingCalendarProvider"
+    	class="com.landray.kmss.third.ding.provider.DingCalendarProvider">
+    </bean>
+    
+    
+    <bean 
+        id="thirdDingDtemplateDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingDtemplateDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingDtemplate</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDtemplateTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingDtemplateServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingDtemplateDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDtemplateService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingDtemplateTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingTemplateDetailDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingTemplateDetailDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingTemplateDetail</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingTemplateDetailTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingTemplateDetailServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingTemplateDetailDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingTemplateDetailService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingTemplateDetailTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDinstanceDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingDinstanceDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingDinstance</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDinstanceTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingDinstanceServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingDinstanceDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDinstanceService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingDinstanceTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingInstanceDetailDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingInstanceDetailDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingInstanceDetail</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingInstanceDetailTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingInstanceDetailServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingInstanceDetailDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingInstanceDetailService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingInstanceDetailTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDtaskDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingDtaskDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingDtask</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDtaskTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingDtaskServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingDtaskDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDtaskService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingDtaskTarget"/>
+        </property>
+    </bean>
+    
+    <!-- 请假审批节点结束事件 -->
+    <bean
+    	id="leaveApprovalListener"
+    	class="com.landray.kmss.third.ding.listener.LeaveApprovalListener">
+    	<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+    </bean>
+    
+    <!-- 外出审批节点结束事件 -->
+    <bean
+    	id="businessApprovalListener"
+    	class="com.landray.kmss.third.ding.listener.BusinessApprovalListener">
+    	<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+    </bean>
+    
+  <!-- ================销假监听事件 start==================== -->
+    <!-- 销假(请假/外出/出差/加班)审批节点结束事件 -->
+    <bean
+    	id="cancelApprovalListener"
+    	class="com.landray.kmss.third.ding.listener.CancelApprovalListener">
+    	<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+    </bean>
+    
+    <bean
+    	id="cancelBusinessApprovalListener"
+    	class="com.landray.kmss.third.ding.listener.CancelBusinessApprovalListener">
+    	<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+    </bean>
+    
+    <bean
+    	id="cancelTripApprovalListener"
+    	class="com.landray.kmss.third.ding.listener.CancelTripApprovalListener">
+    	<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+    </bean>
+    
+    <bean
+    	id="cancelOverTimeApprovalListener"
+    	class="com.landray.kmss.third.ding.listener.CancelOverTimeApprovalListener">
+    	<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+    </bean>
+    <!-- ================销假监听事件 end==================== -->
+    
+ 	<!-- 补卡审批节点结束事件 -->
+    <bean
+    	id="checkApprovalListener"
+    	class="com.landray.kmss.third.ding.listener.CheckApprovalListener">
+    	<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+    </bean>
+    
+    <!-- 换班审批节点结束事件 -->
+    <bean
+    	id="switchApprovalListener"
+    	class="com.landray.kmss.third.ding.listener.SwitchApprovalListener">
+    	<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+    </bean>
+
+  	<!-- 加班审批节点结束事件 -->
+    <bean
+    	id="overtimeApprovalListener"
+    	class="com.landray.kmss.third.ding.listener.OvertimeApprovalListener">
+    	<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+    </bean>
+
+    <!-- 考勤同步日志 -->
+	<bean 
+        id="thirdDingLeavelogDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingLeavelogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingLeavelog</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingLeavelogTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingLeavelogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="thirdDingLeavelogDao"/>
+        </property>
+        <property name="thirdDingLeaveService">
+			<ref bean="thirdDingLeaveService"/>
+		</property>
+		<property name="thirdDingBussService">
+			<ref bean="thirdDingBussService"/>
+		</property>
+		<property name="thirdDingOvertimeService">
+			<ref bean="thirdDingOvertimeService"/>
+		</property>
+    </bean>
+    <bean 
+        id="thirdDingLeavelogService" 
+        parent="KmssBaseService">
+        <property name="target">
+            <ref bean="thirdDingLeavelogTarget"/>
+        </property>
+    </bean>
+    
+    <!-- 请假明细 -->
+    <bean 
+        id="thirdDingLeaveDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingLeaveDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingLeave</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingLeaveTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingLeaveServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref bean="thirdDingLeaveDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingLeaveService" 
+        parent="KmssBaseService">
+        <property name="target">
+            <ref bean="thirdDingLeaveTarget"/>
+        </property>
+    </bean>
+    
+    <!-- 外出明细 -->
+    <bean 
+        id="thirdDingBussDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingBussDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingBuss</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingBussTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingBussServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="thirdDingBussDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingBussService" 
+        parent="KmssBaseService">
+        <property name="target">
+            <ref bean="thirdDingBussTarget"/>
+        </property>
+    </bean>
+    
+    <!-- 加班明细 -->
+    <bean 
+        id="thirdDingOvertimeDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingOvertimeDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingOvertime</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingOvertimeTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingOvertimeServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingOvertimeDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingOvertimeService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingOvertimeTarget"/>
+        </property>
+    </bean>
+    
+    <!-- 自定义业务函数 -->
+    <bean
+		id="schduleDataAdapta"
+		class="com.landray.kmss.third.ding.adapta.SchduleDataAdapta">
+	</bean>
+	
+	<!--================== 销假  自定义业务函数    start ================ -->
+	<bean
+		id="cancelDataAdapta"
+		class="com.landray.kmss.third.ding.adapta.CancelDataAdapta">
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+	</bean>
+	<!-- 出差 -->
+	<bean
+		id="tripDataAdapta"
+		class="com.landray.kmss.third.ding.adapta.TripDataAdapta">
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+	</bean>
+	<!-- 外出 -->
+	<bean
+		id="businessDataAdapta"
+		class="com.landray.kmss.third.ding.adapta.BusinessDataAdapta">
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+	</bean>
+	<!-- 加班 -->
+	<bean
+		id="overtimeDataAdapta"
+		class="com.landray.kmss.third.ding.adapta.OvertimeDataAdapta">
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+	</bean>
+	
+	<!--================== 销假  自定义业务函数    end ================ -->
+	
+	
+	<!-- 考勤同步到钉钉定时任务失败同步 -->
+	<bean
+		id="thirdDingLeavelogSyncService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="leavelogSyncTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="leavelogSyncTarget" class="com.landray.kmss.third.ding.service.spring.ThirdDingLeavelogSyncServiceImp">
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+	</bean>
+	<bean
+		id="thirdDingGetUserInfoWebService"
+		class="com.landray.kmss.third.ding.webservice.ThirdDingGetUserInfoWebServiceImp">
+	</bean>
+	
+	<!-- PC版钉钉在外部浏览器打开时实现单点登录的过滤器 -->
+	<bean id="dingPcOutOpenFilter"
+		class="com.landray.kmss.third.ding.sso.DingPcOutOpenFilter">
+		<property name="autoLoginHelper">
+			<ref bean="autoLoginHelper" />
+		</property>
+	</bean>
+	
+	<!-- 蓝钉映射数据获取的定时任务 -->
+	<bean
+		id="thirdDingLdingORGTarget"
+		class="com.landray.kmss.third.ding.service.spring.ThirdDingLdingORGServiceImp">
+	</bean>
+	<bean
+		id="thirdDingLdingORGService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="thirdDingLdingORGTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="synchro">PROPAGATION_REQUIRED</prop>
+				<prop key="**">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	 <bean 
+        id="thirdDingCallbackLogDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingCallbackLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingCallbackLog</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingCallbackLogTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingCallbackLogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingCallbackLogDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingCallbackLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingCallbackLogTarget"/>
+        </property>
+    </bean> 
+    
+    
+    
+    
+    <bean 
+        id="thirdDingNotifyWorkrecordDao" 
+        class="com.landray.kmss.third.ding.notify.dao.hibernate.ThirdDingNotifyWorkrecordDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.notify.model.ThirdDingNotifyWorkrecord</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingNotifyWorkrecordTarget" 
+        class="com.landray.kmss.third.ding.notify.service.spring.ThirdDingNotifyWorkrecordServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingNotifyWorkrecordDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingNotifyWorkrecordService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingNotifyWorkrecordTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingNotifyLogDao" 
+        class="com.landray.kmss.third.ding.notify.dao.hibernate.ThirdDingNotifyLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.notify.model.ThirdDingNotifyLog</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingNotifyLogTarget" 
+        class="com.landray.kmss.third.ding.notify.service.spring.ThirdDingNotifyLogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingNotifyLogDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingNotifyLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingNotifyLogTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingNotifyQueueErrorDao" 
+        class="com.landray.kmss.third.ding.notify.queue.dao.hibernate.ThirdDingNotifyQueueErrorDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.notify.queue.model.ThirdDingNotifyQueueError</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingNotifyQueueErrorTarget" 
+        class="com.landray.kmss.third.ding.notify.queue.service.spring.ThirdDingNotifyQueueErrorServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingNotifyQueueErrorDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingNotifyQueueErrorService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingNotifyQueueErrorTarget"/>
+        </property>
+    </bean>
+    
+    <bean
+		id="thirdDingWorkrecordProvider"
+		class="com.landray.kmss.third.ding.notify.provider.ThirdDingWorkrecordProvider">
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="thirdDingNotifyLogService">
+			<ref bean="thirdDingNotifyLogService" />
+		</property>
+		<property name="thirdDingNotifyQueueErrorService">
+			<ref bean="thirdDingNotifyQueueErrorService" />
+		</property>
+		<property name="thirdDingNotifyWorkrecordService">
+			<ref bean="thirdDingNotifyWorkrecordService" />
+		</property>
+		<property name="thirdDingDtaskService">
+			<ref bean="thirdDingDtaskService" />
+		</property>
+		<property name="thirdDingNotifylogService">
+			<ref bean="thirdDingNotifylogService" />
+		</property>
+	</bean>
+
+	<bean
+			id="thirdDingTodoTaskProvider"
+			class="com.landray.kmss.third.ding.notify.provider.ThirdDingTodoTaskProvider">
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="thirdDingNotifyLogService">
+			<ref bean="thirdDingNotifyLogService" />
+		</property>
+		<property name="thirdDingNotifyQueueErrorService">
+			<ref bean="thirdDingNotifyQueueErrorService" />
+		</property>
+		<property name="thirdDingNotifyWorkrecordService">
+			<ref bean="thirdDingNotifyWorkrecordService" />
+		</property>
+		<property name="thirdDingDtaskService">
+			<ref bean="thirdDingDtaskService" />
+		</property>
+		<property name="thirdDingNotifylogService">
+			<ref bean="thirdDingNotifylogService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="thirdDingTodoProvider"
+		class="com.landray.kmss.third.ding.notify.provider.ThirdDingTodoProvider">
+		
+	</bean>
+	
+	<bean 
+        id="thirdDingTodoTemplateDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingTodoTemplateDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingTodoTemplate</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingTodoTemplateTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingTodoTemplateServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingTodoTemplateDao"/>
+        </property>
+        <property name="loader">
+			<ref bean="sysFormDictLoadService" />
+		</property>
+    </bean>
+    <bean 
+        id="thirdDingTodoTemplateService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingTodoTemplateTarget"/>
+        </property>
+        
+    </bean>
+    
+     <bean 
+        id="thirdDingWorkDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingWorkDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingWork</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingWorkTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingWorkServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingWorkDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingWorkService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingWorkTarget"/>
+        </property>
+    </bean>
+    
+    <!-- DING通知集成 -->
+	<bean id="sendDINGNotifyProvider"
+		class="com.landray.kmss.third.ding.provider.SendDINGNotifyProvider">
+		  <property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+	</bean>
+	
+	<bean 
+        id="thirdDingSendDingDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingSendDingDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingSendDing</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingSendDingTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingSendDingServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingSendDingDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingSendDingService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingSendDingTarget"/>
+        </property>
+    </bean>
+    
+    <!-- 钉钉考勤套件：审批节点结束事件 -->
+    <bean
+    	id="attendenceLeaveApprovalListener"
+    	class="com.landray.kmss.third.ding.listener.attendance.AttendenceLeaveApprovalListener">
+    	<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="thirdDingLeavelogService">
+			<ref bean="thirdDingLeavelogService"/>
+		</property>
+    </bean>
+     <bean
+    	id="attendenceDrafterSubmitListener"
+    	class="com.landray.kmss.third.ding.listener.attendance.AttendenceDrafterSubmitListener">
+    	<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+    </bean>
+     <bean
+    	id="attendenceAbandonListener"
+    	class="com.landray.kmss.third.ding.listener.attendance.AttendenceAbandonListener">
+    	<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+    </bean>
+	<bean id="dingCalendarApiProviderImpV1"
+    	class="com.landray.kmss.third.ding.provider.DingCalendarApiProviderImpV1">
+    </bean>
+    
+    <bean id="dingCalendarApiProviderImpV2"
+    	class="com.landray.kmss.third.ding.provider.DingCalendarApiProviderImpV2">
+    </bean>
+	<bean id="dingCalendarApiProviderImpV3"
+		  class="com.landray.kmss.third.ding.provider.DingCalendarApiProviderImpV3">
+	</bean>
+	
+	<bean
+		id="thirdDingXFormTemplateService"
+		class="com.landray.kmss.third.ding.xform.service.spring.ThirdDingXFormTemplateService">
+	</bean>
+	 <bean 
+        id="thirdDingDtemplateXformDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingDtemplateXformDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingDtemplateXform</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDtemplateXformTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingDtemplateXformServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingDtemplateXformDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDtemplateXformService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingDtemplateXformTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingTemplateXDetailDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingTemplateXDetailDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingTemplateXDetail</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingTemplateXDetailTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingTemplateXDetailServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingTemplateXDetailDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingTemplateXDetailService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingTemplateXDetailTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDinstanceXformDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingDinstanceXformDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingDinstanceXform</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDinstanceXformTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingDinstanceXformServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingDinstanceXformDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDinstanceXformService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingDinstanceXformTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingIndanceXDetailDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingIndanceXDetailDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingIndanceXDetail</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingIndanceXDetailTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingIndanceXDetailServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingIndanceXDetailDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingIndanceXDetailService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingIndanceXDetailTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDtaskXformDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingDtaskXformDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingDtaskXform</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDtaskXformTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingDtaskXformServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingDtaskXformDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingDtaskXformService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingDtaskXformTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingCategoryLogDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingCategoryLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingCategoryLog</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingCategoryLogTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingCategoryLogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingCategoryLogDao"/>
+        </property>
+        <property name="thirdDingCategoryXformService">
+			<ref bean="thirdDingCategoryXformService"/>
+		</property>
+    </bean>
+    <bean 
+        id="thirdDingCategoryLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingCategoryLogTarget"/>
+        </property>
+        
+    </bean>
+    <bean 
+        id="thirdDingCategoryXformDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingCategoryXformDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingCategoryXform</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingCategoryXformTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingCategoryXformServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingCategoryXformDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingCategoryXformService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingCategoryXformTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingXformNotifyLogDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingXformNotifyLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingXformNotifyLog</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingXformNotifyLogTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingXformNotifyLogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingXformNotifyLogDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingXformNotifyLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingXformNotifyLogTarget"/>
+        </property>
+    </bean>
+    <bean
+    	id="synDingDirService"
+    	class="com.landray.kmss.third.ding.service.spring.SynDingDirService">
+    </bean>
+	<!-- 过滤从PC版钉钉跳转到外部浏览器打开的URL，并使用单点页面跳转
+		（用于钉钉审批高级版的后台管理，新建、编辑、查看统一跳转到外部浏览器中打开） -->
+	<bean id="dingPc2OuterBrowserFilter"
+		  class="com.landray.kmss.third.ding.sso.DingPc2OuterBrowserFilter">
+	</bean>
+	
+	<bean 
+        id="thirdDingCspaceDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingCspaceDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingCspace</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingCspaceTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingCspaceServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingCspaceDao"/>
+        </property>
+        <property name="taskExecutor">
+			<ref bean="dingTaskExecutor" />
+		</property>	
+    </bean>
+    <bean 
+        id="thirdDingCspaceService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingCspaceTarget"/>
+        </property>
+    </bean>
+    
+    <!-- 钉盘 -->
+    <bean 
+        id="dingAttachmentTransmissionProvider" 
+        class="com.landray.kmss.third.ding.service.spring.DingAttachmentTransmissionProvider">
+    </bean>
+    
+    <bean 
+        id="thirdDingNotifyQueueDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingNotifyQueueDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingNotifyQueue</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingNotifyQueueTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingNotifyQueueServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingNotifyQueueDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingNotifyQueueService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingNotifyQueueTarget"/>
+        </property>
+    </bean>
+    
+    
+    <bean 
+        id="thirdDingScenegroupMappDao" 
+        class="com.landray.kmss.third.ding.scenegroup.dao.hibernate.ThirdDingScenegroupMappDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.scenegroup.model.ThirdDingScenegroupMapp</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingScenegroupMappTarget" 
+        class="com.landray.kmss.third.ding.scenegroup.service.spring.ThirdDingScenegroupMappServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingScenegroupMappDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingScenegroupMappService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingScenegroupMappTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingRobotmsgLogDao" 
+        class="com.landray.kmss.third.ding.scenegroup.dao.hibernate.ThirdDingRobotmsgLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.scenegroup.model.ThirdDingRobotmsgLog</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingRobotmsgLogTarget" 
+        class="com.landray.kmss.third.ding.scenegroup.service.spring.ThirdDingRobotmsgLogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingRobotmsgLogDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingRobotmsgLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingRobotmsgLogTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingRobotDao" 
+        class="com.landray.kmss.third.ding.scenegroup.dao.hibernate.ThirdDingRobotDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.scenegroup.model.ThirdDingRobot</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingRobotTarget" 
+        class="com.landray.kmss.third.ding.scenegroup.service.spring.ThirdDingRobotServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingRobotDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingRobotService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingRobotTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingScenegroupModuleDao" 
+        class="com.landray.kmss.third.ding.scenegroup.dao.hibernate.ThirdDingScenegroupModuleDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.scenegroup.model.ThirdDingScenegroupModule</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingScenegroupModuleTarget" 
+        class="com.landray.kmss.third.ding.scenegroup.service.spring.ThirdDingScenegroupModuleServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingScenegroupModuleDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingScenegroupModuleService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingScenegroupModuleTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingGroupmsgLogDao" 
+        class="com.landray.kmss.third.ding.scenegroup.dao.hibernate.ThirdDingGroupmsgLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.scenegroup.model.ThirdDingGroupmsgLog</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingGroupmsgLogTarget" 
+        class="com.landray.kmss.third.ding.scenegroup.service.spring.ThirdDingGroupmsgLogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingGroupmsgLogDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingGroupmsgLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingGroupmsgLogTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="thirdDingScenegroupTarget" 
+        class="com.landray.kmss.third.ding.scenegroup.service.spring.ThirdDingScenegroupServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property name="thirdDingScenegroupModuleService">
+			<ref bean="thirdDingScenegroupModuleService" />
+		</property>
+		<property name="thirdDingScenegroupMappService">
+			<ref bean="thirdDingScenegroupMappService" />
+		</property>
+    </bean>
+    <bean 
+        id="thirdDingScenegroupService" 
+        lazy-init="true"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingScenegroupTarget"/>
+        </property>
+        <property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="copy*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="init*">PROPAGATION_REQUIRED</prop>
+                <prop key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop key="send*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+    </bean>
+    
+    <bean 
+        id="thirdDingRolelineMappDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingRolelineMappDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingRolelineMapp</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingRolelineMappTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingRolelineMappServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingRolelineMappDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingRolelineMappService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingRolelineMappTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="thirdDingRoleCateMappDao" 
+        class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingRoleCateMappDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.ding.model.ThirdDingRoleCateMapp</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingRoleCateMappTarget" 
+        class="com.landray.kmss.third.ding.service.spring.ThirdDingRoleCateMappServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdDingRoleCateMappDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdDingRoleCateMappService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdDingRoleCateMappTarget"/>
+        </property>
+    </bean>
+
+	<bean
+			id="thirdDingCalendarLogDao"
+			class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingCalendarLogDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.ding.model.ThirdDingCalendarLog</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingCalendarLogTarget"
+			class="com.landray.kmss.third.ding.service.spring.ThirdDingCalendarLogServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdDingCalendarLogDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingCalendarLogService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdDingCalendarLogTarget"/>
+		</property>
+	</bean>
+
+	<!---->
+	<bean
+			id="thirdDingCalendarDao"
+			class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingCalendarDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.ding.model.ThirdDingCalendar</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingCalendarTarget"
+			class="com.landray.kmss.third.ding.service.spring.ThirdDingCalendarServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdDingCalendarDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingCalendarService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdDingCalendarTarget"/>
+		</property>
+	</bean>
+	<!---->
+
+	<bean
+			id="thirdDingTodoCardDao"
+			class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingTodoCardDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.ding.model.ThirdDingTodoCard</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingTodoCardTarget"
+			class="com.landray.kmss.third.ding.service.spring.ThirdDingTodoCardServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdDingTodoCardDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingTodoCardService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdDingTodoCardTarget"/>
+		</property>
+	</bean>
+    
+
+	<bean
+		id="dingGroupEnterNodeListener"
+		class="com.landray.kmss.third.ding.listener.DingGroupEnterNodeListener">
+		<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+	</bean>
+
+	<bean
+			id="thirdDingNotifyMessageDao"
+			class="com.landray.kmss.third.ding.notify.dao.hibernate.ThirdDingNotifyMessageDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.ding.notify.model.ThirdDingNotifyMessage</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingNotifyMessageTarget"
+			class="com.landray.kmss.third.ding.notify.service.spring.ThirdDingNotifyMessageServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdDingNotifyMessageDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingNotifyMessageService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdDingNotifyMessageTarget"/>
+		</property>
+	</bean>
+
+
+	<bean id="synchroOrg2DingV2" class="com.landray.kmss.third.ding.oms.SynchroOrg2DingImpV2">
+		<property name="omsRelationService">
+			<ref bean="omsRelationService" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="taskExecutor">
+			<ref bean="dingTaskExecutor" />
+		</property>
+		<property name="thirdDingOmsErrorService">
+			<ref bean="thirdDingOmsErrorService" />
+		</property>
+		<property name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+		<property name="componentLockService">
+			<ref bean="componentLockService" />
+		</property>
+		<property name="thirdDingOmsPostService">
+			<ref bean="thirdDingOmsPostService" />
+		</property>
+	</bean>
+
+	<bean
+			id="rateLimiterFactory"
+			class="com.landray.kmss.third.ding.ratelimit.RateLimiterFactory">
+	</bean>
+
+	<bean
+			id="thirdDingCardConfigDao"
+			class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingCardConfigDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.ding.model.ThirdDingCardConfig</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingCardConfigTarget"
+			class="com.landray.kmss.third.ding.service.spring.ThirdDingCardConfigServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdDingCardConfigDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingCardConfigService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdDingCardConfigTarget"/>
+		</property>
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop key="addInteractivecard">PROPAGATION_REQUIRES_NEW,ISOLATION_READ_COMMITTED</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="init*">PROPAGATION_REQUIRED</prop>
+				<prop key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingCardMappingDao"
+			class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingCardMappingDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.ding.model.ThirdDingCardMapping</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingCardMappingTarget"
+			class="com.landray.kmss.third.ding.service.spring.ThirdDingCardMappingServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdDingCardMappingDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingCardMappingService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdDingCardMappingTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingCardLogDao"
+			class="com.landray.kmss.third.ding.dao.hibernate.ThirdDingCardLogDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.ding.model.ThirdDingCardLog</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingCardLogTarget"
+			class="com.landray.kmss.third.ding.service.spring.ThirdDingCardLogServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdDingCardLogDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdDingCardLogService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdDingCardLogTarget"/>
+		</property>
+	</bean>
+
+	<bean
+			id="cardEventListener"
+			class="com.landray.kmss.third.ding.listener.interactiveCard.CardEventListener">
+	</bean>
+
+	<bean id="synchroOrgDingRole2Ekp" class="com.landray.kmss.third.ding.oms.SynchroOrgDingRole2EkpImp">
+		<property name="sysOrganizationStaffingLevelService">
+			<ref bean="sysOrganizationStaffingLevelService" />
+		</property>
+		<property name="sysOrgGroupService">
+			<ref bean="sysOrgGroupService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="sysOrgRoleConfCateService">
+			<ref bean="sysOrgRoleConfCateService" />
+		</property>
+		<property name="sysOrgPostService">
+			<ref bean="sysOrgPostService" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="sysOrgRoleConfService">
+			<ref bean="sysOrgRoleConfService" />
+		</property>
+		<property name="sysOrgRoleLineService">
+			<ref bean="sysOrgRoleLineService" />
+		</property>
+		<property name="thirdDingRolelineMappService">
+			<ref bean="thirdDingRolelineMappService" />
+		</property>
+		<property name="thirdDingRoleCateMappService">
+			<ref bean="thirdDingRoleCateMappService" />
+		</property>
+	</bean>
+
+	<bean
+		id="dingModuleSelectDialog"
+		class="com.landray.kmss.third.ding.service.bean.DingModuleSelectDialog">
+	</bean>
+</beans>

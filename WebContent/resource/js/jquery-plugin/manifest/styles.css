@@ -1,0 +1,149 @@
+/*** Manifest ***/
+
+/* Manifest container that wraps the elements and now acts as, and should be
+   styled as, the input. */
+div.mf_container {
+  border: 0px;
+  cursor: text;
+  display: inline-block;
+  /* padding: 2px; */
+  width: 100%;
+  white-space: normal;
+}
+
+/* Ordered list for displaying selected items. */
+div.mf_container ol.mf_list {
+  display: inline;
+  padding-left:0px;
+}
+
+/* Selected item, regardless of state (highlighted, selected). */
+div.mf_container ol.mf_list li.mf_item {
+  border: 1px solid transparent;
+  border-radius:10px;
+  cursor: pointer;
+  display: inline-block;
+  margin: 2px 0px;
+  padding-left: 2px;
+  padding-right: 0px;
+  color: #4285f4;
+  transition-duration: .3s;
+  float: left;
+  text-align: left;
+}
+
+/* Selected item that's highlighted by mouseover. */
+div.mf_container ol.mf_list li.mf_item.mf_highlighted {
+  color: #f56b6b;
+  background-color: transparent;
+}
+
+div.mf_container ol.mf_list li.mf_item.mf_selected a.mf_remove,
+div.mf_container ol.mf_list li.mf_item.mf_highlighted a.mf_remove{
+  visibility: visible;
+  color: #f56b6b!important;
+}
+/* Selected item that's selected by click or keyboard. */
+div.mf_container ol.mf_list li.mf_item.mf_selected {
+  color: #f56b6b;
+  background-color: transparent;
+}
+
+/* Remove link. */
+div.mf_container ol.mf_list li.mf_item a.mf_remove {
+  color: #e0e0e0;
+  font-size: 12px;
+  margin-left: 2px;
+  text-decoration: none;
+  transition-duration: .3s;
+  visibility: hidden;
+}
+
+/* Remove link that's highlighted. */
+div.mf_container ol.mf_list li.mf_item.mf_highlighted a.mf_remove {
+  color: #FFFFFF;
+}
+
+/* Remove link that's selected. */
+div.mf_container ol.mf_list li.mf_item.mf_selected a.mf_remove {
+  color: #FFFFFF;
+}
+
+/* Actual input, styled to be invisible within the container. */
+div.mf_container input.mf_input {
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  /* margin: 2px; */
+  outline: none;
+  /* padding: 4px; */
+  min-height:20px;
+}
+
+/*** Marco Polo ***/
+
+/* Ordered list for display results. */
+ol.mp_list {
+  min-width: 200px;
+  width: 100%!important;
+  max-width: 550px;
+  margin: 3px 0 0;
+  padding-left:0;
+  max-height: 400px;
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
+  -webkit-box-shadow: 0 1px 8px rgba(0,0,0,.125);
+     -moz-box-shadow: 0 1px 8px rgba(0,0,0,.125);
+      -ms-box-shadow: 0 1px 8px rgba(0,0,0,.125);
+       -o-box-shadow: 0 1px 8px rgba(0,0,0,.125);
+          box-shadow: 0 1px 8px rgba(0,0,0,.125);
+  overflow: hidden;
+  overflow-y:auto;
+  position: absolute;
+  z-index: 1030;
+}
+
+/* Each list item, regardless of success, error, etc. */
+ol.mp_list li {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 8px 10px;
+  font-size:14px;
+  font-weight: normal;
+  line-height:20px;
+  color:#333;
+}
+ol.mp_list li>span {
+  color:#999;
+}
+
+/* Each list item from a successful request. */
+ol.mp_list li.mp_item {
+  overflow:visible;
+}
+
+/* Each list item that's selectable. */
+ol.mp_list li.mp_selectable {
+  cursor: pointer;
+  overflow:visible;
+}
+
+/* Currently highlighted list item. */
+ol.mp_list li.mp_highlighted {
+  background-color: #f7f7f7;
+  overflow:visible;
+}
+
+/* When a request is made that returns zero results. */
+ol.mp_list li.mp_no_results {
+
+}
+
+/* When a request is made that doesn't meet the 'minChars' length option. */
+ol.mp_list li.mp_min_chars {
+
+}
+
+/* When a request is made that fails during the ajax request. */
+ol.mp_list li.mp_error {
+
+}

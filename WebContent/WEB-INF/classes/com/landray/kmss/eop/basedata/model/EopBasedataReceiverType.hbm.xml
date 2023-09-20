@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.eop.basedata.model.EopBasedataReceiverType" 
+        table="eop_basedata_receiver_type">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property 
+            name="fdName" 
+            column="fd_name" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+        <property 
+            name="docCreateTime" 
+            column="doc_create_time" 
+            update="true" 
+            insert="true" 
+            index="idx_eop_receType_createTime"/>
+        <property 
+            name="fdCode" 
+            column="fd_code" 
+            update="true" 
+            insert="true" 
+            length="30"/>
+        <property
+            name="fdType"
+            column="fd_type"
+            update="true"
+            insert="true"
+            length="2"
+            not-null="false" />
+        <property 
+            name="fdIsAvailable" 
+            column="fd_is_available" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="docCreator" 
+            column="doc_creator_id" 
+            update="true" 
+            insert="true"/>
+        <many-to-one 
+            name="fdAccounts" 
+            column="fd_accounts_id" 
+            update="true" 
+            insert="true"/>
+        <bag 
+            name="fdCompanyList" 
+            table="eop_basedata_rece_type_com"
+            lazy="true">
+            <key 
+                column="fd_source_id"/>
+            <many-to-many 
+                class="com.landray.kmss.eop.basedata.model.EopBasedataCompany" 
+                column="fd_target_id"/>
+        </bag>
+    </class>
+</hibernate-mapping>

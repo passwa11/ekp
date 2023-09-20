@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+	
+	<!-- 审批意见展示控件，展示模板扩展点 -->
+	<extension-point id="com.landray.kmss.sys.xform.jsp.auditnote.viewstyle">
+		<item name="config">
+			
+			<param name="viewName" required="true" kind="string">
+				<description>展示名称</description>
+			</param>
+			<param name="viewValue" required="true" kind="spring" basedOn="com.landray.kmss.sys.workflow.tablib.auditnote.AuditNoteStyle">
+				<description><![CDATA[
+				展示样式Bean
+				预定义处理字符串， 审批意见：${msg},处理时间：${time},部门：${dept},岗位：${post},处理人${person} 展示宽度:${width}
+				]]>
+				</description>
+			</param>
+			<param name="order" required="true" kind="string">
+				<description>扩展实现排序</description>
+			</param>
+			<param name="previewPictureURL" kind="string">
+				<description><![CDATA[预览图片路径。图片规格建议（170*80）]]></description>
+			</param>
+			<description>展示模板配置</description>
+		</item>
+		<description>
+			审批意见展示扩展点
+		</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.sys.xform.base.auditshow.mould">
+		<item name="opts">
+			<param name="value" kind="string" required="true">
+				<description>类型的实际值</description>
+			</param>
+			<param name="beanName" kind="string" required="true">
+				<description>类型的处理类的beanName，预先注入到Spring中，这里提供的是字符串的beanName</description>
+			</param>
+			<param name="textMessageKey" kind="string" required="true">
+				<description>类型显示的文本资源文件bundle:key，比如sys-xform-base:Designer_Lang.auditshow_mould_handler1</description>
+			</param>
+			<param name="name" kind="string">
+				<description>前端需要一个name的属性（auditshow.js)，比如handler1</description>
+			</param>
+			<description>审批意见控件类型扩展</description>
+		</item>
+		<description>审批意见控件的类型扩展</description>
+	</extension-point>
+
+	<extension point="com.landray.kmss.sys.xform.base.auditshow.mould" model="*">
+		<item name="opts">
+			<param name="value" value="11"/>
+			<param name="beanName" value="auditNoteDataShowByHandler"/>
+			<param name="textMessageKey" value="sys-xform-base:Designer_Lang.auditshow_mould_handler1"/>
+			<param name="name" value="handler1"/>
+		</item>
+		<item name="opts">
+			<param name="value" value="12"/>
+			<param name="beanName" value="auditNoteDataShowByHandlerFormula"/>
+			<param name="textMessageKey" value="sys-xform-base:Designer_Lang.auditshow_mould_handler2"/>
+			<param name="name" value="handler2"/>
+		</item>
+		<item name="opts">
+			<param name="value" value="21"/>
+			<param name="beanName" value="auditNoteDataShowByNode"/>
+			<param name="textMessageKey" value="sys-xform-base:Designer_Lang.auditshow_mould_node1"/>
+			<param name="name" value="node1"/>
+		</item>
+		<item name="opts">
+			<param name="value" value="22"/>
+			<param name="beanName" value="auditNoteDataShowByNodeTable"/>
+			<param name="textMessageKey" value="sys-xform-base:Designer_Lang.auditshow_mould_node2"/>
+			<param name="name" value="node2"/>
+		</item>
+		<item name="opts">
+			<param name="value" value="31"/>
+			<param name="beanName" value="auditNoteDataShowByHandlerAndNote"/>
+			<param name="textMessageKey" value="sys-xform-base:Designer_Lang.auditshow_mould_node1AndHandler1"/>
+			<param name="name" value="node1AndHandler1"/>
+		</item>
+		<item name="opts">
+			<param name="value" value="41"/>
+			<param name="beanName" value="auditNoteDataShowByDistribution"/>
+			<param name="textMessageKey" value="sys-xform-base:Designer_Lang.auditshow_mould_distribution"/>
+			<param name="name" value="distribution"/>
+		</item>
+		<item name="opts">
+			<param name="value" value="42"/>
+			<param name="beanName" value="auditNoteDataShowByRecycling"/>
+			<param name="textMessageKey" value="sys-xform-base:Designer_Lang.auditshow_mould_recycling"/>
+			<param name="name" value="recycling"/>
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.xform.jsp.auditnote.viewstyle" model="*">
+		<item name="config">
+			<param name="viewName" value="sys-xform-base:Designer_Lang.approvalOpinionHandlerDate" />
+			<param name="viewValue" value="auditNoteStyleDefaultOnlyHandler" />	
+			<param name="order" value="0"/>
+			<param name="previewPictureURL" value="style/img/auditshow/auditShow.png"/>
+		</item>
+		<item name="config">
+			<param name="viewName" value="sys-xform-base:Designer_Lang.approvalOpinionHandlerDate2" />
+			<param name="viewValue" value="auditNoteStyleDefaultOnlyHandler2" />	
+			<param name="order" value="0.1"/>
+			<param name="previewPictureURL" value="style/img/auditshow/auditShow2.png"/>
+		</item>
+		<item name="config">
+			<param name="viewName" value="sys-xform-base:Designer_Lang.approvalOpinionHandlerShowDate" />
+			<param name="viewValue" value="auditNoteStyleDefaultOnlyHandlerDate" />	
+			<param name="order" value="0.2"/>
+			<param name="previewPictureURL" value="style/img/auditshow/auditShow.png"/>
+		</item>
+		<item name="config">
+			<param name="viewName" value="sys-xform-base:Designer_Lang.approvalOpinionPostHandlerDate" />
+			<param name="viewValue" value="auditNoteStyleDefaultPostHandler" />	
+			<param name="order" value="1"/>
+			<param name="previewPictureURL" value="style/img/auditshow/defaultPostHandler.png"/>
+		</item>
+		<item name="config">
+			<param name="viewName" value="sys-xform-base:Designer_Lang.approvalOpinionDepartmentPostHandlerDate" />
+			<param name="viewValue" value="auditNoteStyleDefaultDeptPostHandler" />	
+			<param name="order" value="2"/>
+			<param name="previewPictureURL" value="style/img/auditshow/defaultDeptPostHandler.png"/>
+		</item>
+		<!-- added by weiby 2014-12-19 -->
+		<item name="config">
+			<param name="viewName" value="sys-xform-base:Designer_Lang.approvalOpinionDepartmentHandlerDate" />
+			<param name="viewValue" value="auditNoteStyleDefaultDeptHandler" />	
+			<param name="order" value="3"/>
+			<param name="previewPictureURL" value="style/img/auditshow/defaultDeptHandler.png"/>
+		</item>
+		<item name="config">
+			<param name="viewName" value="sys-xform-base:Designer_Lang.handler" />
+			<param name="viewValue" value="auditNoteStyleDefaultShowOnlyHandler" />	
+			<param name="order" value="5"/>
+			<param name="previewPictureURL" value="style/img/auditshow/defaultHandler.png"/>
+		</item>
+		<!-- added by weiby 2014-12-19 -->
+	</extension>
+	
+</plugin>

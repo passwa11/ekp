@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../../design.xsd ">
+	<module
+		messageKey="sys-lbpmext-authorize:module.sys.lbpmext.authorize"
+		urlPrefix="/sys/lbpmext/authorize/">
+		<roles>
+			ROLE_LBPM_WORKFLOW_AUTHORITY_MANAGER;
+			ROLE_LBPM_WORKFLOW_AUTHORIZE_ASSIGN;
+			ROLE_LBPM_WORKFLOW_AUTHORITY_STOPAUTHORITY;
+		</roles>
+
+		<!-- 流程授权管理员权限  -->
+		<request
+			path="lbpm_authorize/lbpmAuthorize*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmext.authorize.model.LbpmAuthorize">
+			<!-- 编辑和删除 -->
+			<query
+				queryString="method=edit|update|delete"
+				validator="authFieldValidator(type=authorize_editor)" />
+			<!-- 阅读 -->
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=authorize_reader)" />
+			<!-- 删除所有 -->
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_LBPM_WORKFLOW_AUTHORITY_MANAGER)|roleValidator(role=SYSROLE_ADMIN)" />
+			<!-- 终止授权 -->
+			<query
+				queryString="method=stop|stopView"
+				validator="roleValidator(role=ROLE_LBPM_WORKFLOW_AUTHORITY_MANAGER)|roleValidator(role=ROLE_LBPM_WORKFLOW_AUTHORITY_STOPAUTHORITY)|authFieldValidator(type=authorize_creator)" />
+		</request>
+		
+		
+			<!-- 流程授权设置权限控制  -->
+		<request
+			path="/sys/lbpmext/authorize/lbpm_authorize/userAuthorizeScope.do"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.lbpmext.authorize.model.LbpmAuthorize">
+			<!-- 编辑和删除 -->
+			<query
+				queryString="method=save|update|delete"
+				validator="roleValidator(role=ROLE_LBPM_WORKFLOW_AUTHORITY_MANAGER)" />
+		</request>
+		
+		
+		
+		<request path="tree.jsp" defaultValidator="roleValidator(role=ROLE_LBPM_WORKFLOW_AUTHORITY_MANAGER)|roleValidator(role=ROLE_LBPM_WORKFLOW_AUTHORITY_STOPAUTHORITY)">
+		</request>
+		<request path="lbpm_authorize/index.jsp" defaultValidator="roleValidator(role=ROLE_LBPM_WORKFLOW_AUTHORITY_MANAGER)|roleValidator(role=ROLE_LBPM_WORKFLOW_AUTHORITY_STOPAUTHORITY)">
+		</request>
+
+		<filters
+			modelName="com.landray.kmss.sys.lbpmext.authorize.model.LbpmAuthorize">
+			<filter
+				type="authorize_reader"
+				expression="roleFilter(role=ROLE_LBPM_WORKFLOW_AUTHORITY_MANAGER)" />
+			<filter
+				type="authorize_reader"
+				expression="roleFilter(role=ROLE_LBPM_WORKFLOW_AUTHORITY_STOPAUTHORITY)" />
+			<filter
+				type="authorize_reader"
+				expression="authFieldFilter(field=fdCreator.fdId)" />
+			<filter
+				type="authorize_reader"
+				expression="authFieldFilter(field=fdAuthorizer.fdId)" />
+			<filter
+				type="authorize_reader"
+				expression="authFieldFilter(field=fdAuthorizedPerson.fdId)" />
+			<filter
+				type="authorize_editor"
+				expression="roleFilter(role=ROLE_LBPM_WORKFLOW_AUTHORITY_MANAGER)" />
+			<filter
+				type="authorize_editor"
+				expression="authFieldFilter(field=fdCreator.fdId)" />
+			<filter
+				type="authorize_editor"
+				expression="authFieldFilter(field=fdAuthorizer.fdId)" />
+
+			<filter
+				type="authorize_creator"
+				expression="authFieldFilter(field=fdCreator.fdId)" />
+
+		</filters>
+	</module>
+	<!-- 授权过期删除定时任务 -->
+	<!-- <quartz
+		messageKey="sys-lbpmext-authorize:lbpmAuthorize.deleteExpiressAuthorizeDoc"
+		jobService="lbpmAuthorizeExpireService"
+		jobMethod="doTask"
+		cronExpression="0 30 22 * * ?"
+		description="sys-lbpmext-authorize:lbpmAuthorize.deleteExpiressAuthorizeDoc.description" /> -->
+	<homePage
+		urlPrefix="sys/lbpmext/authorize"
+		url="/moduleindex.jsp?nav=/sys/lbpmext/authorize/tree.jsp"
+		messageKey="sys-lbpmext-authorize:lbpmAuthorize.tree.title" />
+	
+	<!-- 流程授权 -->
+	<profileConfig
+		key="authorize"
+		messageKey="{sys-lbpmext-authorize:module.sys.lbpmext.authorize}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/profile/lbpm/process_auth.jsp" 
+		icon="lui_icon_s_profile_navLeft_authorize"
+		type="lbpm"
+		order="7"/>
+</configs>

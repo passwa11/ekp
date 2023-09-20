@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<bean name="/sys/anonym/sysAnonymData.do"
+		class="com.landray.kmss.sys.anonym.actions.SysAnonymDataAction"
+		lazy-init="true" parent="KmssBaseAction">
+		<property name="formType"
+			value="com.landray.kmss.sys.anonym.forms.SysAnonymMainForm" />
+		<property name="forwards">
+			<map>
+				<entry key="result"
+					value="/sys/anonym/dataview/result.jsp" />
+				<entry key="dataPage"
+					value="/sys/anonym/dataview/dataPage.jsp" />
+				<entry key="listTable"
+					value="/sys/anonym/dataview/listTable.jsp" />
+				<entry key="dataView"
+					value="/sys/anonym/dataview/dataView.jsp" />
+			</map>
+		</property>
+	</bean>
+
+	<bean class="com.landray.kmss.sys.anonym.actions.SysAnonymMainAction"
+		parent="KmssBaseAction" name="/sys/anonym/sys_anonym_main/sysAnonymMain.do"
+		lazy-init="true">
+		<property name="formType"
+			value="com.landray.kmss.sys.anonym.forms.SysAnonymMainForm" />
+		<property name="forwards">
+			<map>
+				<entry key="data"
+					value="/sys/anonym/sys_anonym_main/sysAnonymMain_data.jsp" />
+				<entry key="edit"
+					value="/sys/anonym/sys_anonym_main/sysAnonymMain_edit.jsp" />
+				<entry key="view"
+					value="/sys/anonym/sys_anonym_main/sysAnonymMain_view.jsp" />
+				<entry key="editAnonymPublish"
+					value="/sys/anonym/sys_anonym_main/sysAnonymMain_editPublish.jsp" />
+				<entry key="sysPubRecord"
+					value="/sys/anonym/sys_anonym_main/sysAnonymMain_pubRecord.jsp" />
+				<entry key="sysOptRecord"
+					value="/sys/anonym/sys_anonym_main/sysAnonymMain_optRecord.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean class="com.landray.kmss.sys.anonym.actions.SysAnonymLogAction"
+		parent="KmssBaseAction" name="/sys/anonym/sys_anonym_log/sysAnonymLog.do"
+		lazy-init="true">
+		<property name="formType"
+			value="com.landray.kmss.sys.anonym.forms.SysAnonymLogForm" />
+		<property name="forwards">
+			<map>
+				<entry key="data"
+					value="/sys/anonym/sys_anonym_log/sysAnonymLog_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean 
+        class="com.landray.kmss.sys.anonym.actions.SysAnonymCommonAction" 
+        parent="KmssBaseAction" 
+        name="/sys/anonym/sys_anonym_common/sysAnonymCommon.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.sys.anonym.forms.SysAnonymCommonForm"/>
+        <property 
+            name="forwards">
+            <map/>
+        </property>
+    </bean>
+	<bean 
+        class="com.landray.kmss.sys.anonym.actions.SysAnonymCateAction" 
+        parent="KmssBaseAction" 
+        name="/sys/anonym/sys_anonym_cate/sysAnonymCate.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.sys.anonym.forms.SysAnonymCateForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry 
+                    key="edit" 
+                    value="/sys/anonym/sys_anonym_cate/sysAnonymCate_edit.jsp"/>
+                <entry 
+                    key="view" 
+                    value="/sys/anonym/sys_anonym_cate/sysAnonymCate_view.jsp"/>
+                <entry 
+                    key="list" 
+                    value="/sys/anonym/sys_anonym_cate/sysAnonymCate_list.jsp"/>
+            </map>
+        </property>
+    </bean>
+	
+</beans>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 流程模板更改日志start -->
+	<bean
+		id="lbpmTemplateChangeLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.lbpmservice.changelog.dao.hibernate.LbpmTemplateChangeLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.lbpmservice.changelog.model.LbpmTemplateChangeLog" />
+		<property name="hqlBuilder">
+			<ref bean="kmssAuthAreaHQLBuilder" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmTemplateChangeLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.LbpmTemplateChangeLogServiceImp">
+		<property name="baseDao">
+			<ref bean="lbpmTemplateChangeLogDao" />
+		</property>
+		<property name="lbpmProcessDefinitionCompareService">
+			<ref bean="lbpmProcessDefinitionCompareService" />
+		</property>
+		<property name="accessManager">
+			<ref bean="accessManager" />
+		</property>
+		<property name="internalProcessDefinitionService">
+			<ref bean="lbpmProcessDefinitionService" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmTemplateChangeLogService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="lbpmTemplateChangeLogTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="lbpmTemplateChangeLogDetailDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.lbpmservice.changelog.dao.hibernate.LbpmTemplateChangeLogDetailDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.lbpmservice.changelog.model.LbpmTemplateChangeLogDetail" />
+	</bean>
+	<bean
+		id="lbpmTemplateChangeLogDetailTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.LbpmTemplateChangeLogDetailServiceImp">
+		<property name="baseDao">
+			<ref bean="lbpmTemplateChangeLogDetailDao" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmTemplateChangeLogDetailService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="lbpmTemplateChangeLogDetailTarget" />
+		</property>
+	</bean>
+	<!-- xml解析服务 -->
+	<bean
+		id="lbpmProcessDefinitionXmlParseService"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.LbpmProcessDefinitionXmlParserServiceImp">
+		<property name="internalProcessDefinitionService">
+			<ref bean="lbpmProcessDefinitionService" />
+		</property>
+	</bean>
+	<!-- xml比较服务 -->
+	<bean
+		id="lbpmProcessDefinitionCompareService"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.LbpmProcessDefinitionCompareServiceImp">
+		<property name="lbpmProcessDefinitionXmlParseService">
+			<ref bean="lbpmProcessDefinitionXmlParseService" />
+		</property>
+	</bean>
+	<!-- 标签或者属性比较规则 start -->
+	<bean
+		id="lbpmDefaultBranchAttrTranslator"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.rule.LbpmDefaultBranchAttrTranslator">
+	</bean>
+	<bean
+		id="lbpmSimpleAttrTranslator"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.rule.LbpmSimpleAttrTranslator">
+	</bean>
+	
+	<bean
+		id="lbpmNodeTranslator"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.rule.LbpmNodeTranslator">
+	</bean>
+	
+	<bean
+		id="lbpmValueAttrTranslator"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.rule.LbpmValueAttrTranslator">
+	</bean> 
+	
+	<bean
+		id="lbpmHandlerSameAttrTranslator"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.rule.LbpmHandlerSameAttrTranslator">
+	</bean>
+	
+	<bean
+		id="lbpmTimeAttrTranslator"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.rule.LbpmTimeAttrTranslator">
+	</bean>
+	
+	<bean
+		id="lbpmJsonObjectAttrTranslator"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.rule.LbpmJsonObjectAttrTranslator">
+	</bean>
+	
+	<bean
+		id="lbpmEventAttrTranslator"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.rule.LbpmEventAttrTranslator">
+	</bean>
+	
+	<bean
+		id="lbpmDetailAttrTranslator"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.rule.LbpmDetailAttrTranslator">
+	</bean>
+	
+	<bean
+		id="lbpmModelPropAttrTranslator"
+		class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.rule.LbpmModelPropAttrTranslator">
+	</bean>
+	
+	<bean
+    	id="lbpmPluginParamTranslator"
+    	class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.rule.LbpmPluginParamTranslator">
+  	</bean>
+  	
+  	<bean
+    	id="adHocSubFlowNodeComparator"
+    	class="com.landray.kmss.sys.lbpmservice.changelog.service.spring.rule.AdHocSubFlowNodeComparator">
+    	<property name="lbpmProcessDefinitionXmlParseService">
+			<ref bean="lbpmProcessDefinitionXmlParseService" />
+		</property>
+  	</bean>
+	<!-- 标签或者属性比较规则end -->
+	<!-- 流程更改日志end -->
+	
+</beans>

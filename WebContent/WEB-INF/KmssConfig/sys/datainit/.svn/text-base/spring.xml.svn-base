@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysDatainitXMLDataBean"
+		class="com.landray.kmss.sys.datainit.service.spring.SysDatainitXMLDataBean">
+		<property name="sysDatainitMainService">
+			<ref bean="sysDatainitMainService" />
+		</property>
+	</bean>
+	<bean
+		id="sysDatainitMainService"
+		class="com.landray.kmss.sys.datainit.service.spring.SysDatainitMainServiceImp">
+		<property name="sysDatainitProcessService">
+			<ref bean="sysDatainitProcessService" />
+		</property>
+		<property name="dispatchCoreService">
+			<ref bean="dispatchCoreService" />
+		</property>
+		<property name="validPath">
+			<!-- 需要扫描的模块路径，多个配置用;分隔 -->
+			<!--
+				一、展现原则：
+				1、km下的模块默认展现
+				2、kms下的模块默认展现
+				3、fs下的模块默认展现
+				4、lfs下的模块默认展现
+				5、其它路径下的模块默认不展现
+				6、其它路径下的特殊需要展现的模块：
+					新闻管理（sys/news）、任务管理（sys/task）、门户管理（sys/portal）、签到服务（sys/attend）
+					图表中心（dbcenter/echarts）、流程效率统计基础模块（dbcenter/flowstat）、LBPM流程效率统计（dbcenter/flowstatplug）、管理驾驶舱（dbcenter/meterview）
+					数据源（component/dbop）
+				7、km/kms/fs/lfs路径下特殊不需要展现的模块：暂无
+				8、某些机制需要扫描，但扫描的数据需要放到对应的模块中显示，如“全局分类”、“通用编号机制”、“通用流程模板”、“通用表单模板”
+				二、排序原则，从上到下的展现按路径排序：km、kms、fs、lfs、sys、dbcenter、其它
+			-->
+			<value>
+				/km/**;
+				/elec/**;
+				/kms/**;
+				/fs/**;
+				/lfs/**;
+				/hr/**;
+				/sys/category/;
+				/sys/number/;
+				/sys/lbpmservice/support/;
+				/sys/xform/;
+				/sys/news/;
+				/sys/task/;
+				/sys/portal/;
+				/sys/attend/;
+				/sys/unit/;
+				/dbcenter/echarts/**;
+				/dbcenter/flowstat/;
+				/dbcenter/flowstatplug/;
+				/dbcenter/meterview/;
+				/component/dbop/;
+				/third/pda/;
+				/sys/time/;
+			</value>
+		</property>
+		<property name="invalidModel">
+			<!-- 需要忽略的model，多个配置用;分隔 -->
+			<value>
+				com.landray.kmss.km.institution.model.KmInstitutionKnowledgePre;
+				com.landray.kmss.km.review.model.KmReviewOverview;
+				com.landray.kmss.km.review.model.KmReviewDocKeyword;
+				
+				com.landray.kmss.sys.category.model.SysCategoryProperty;
+				com.landray.kmss.sys.number.model.SysNumberMainFlow;
+				com.landray.kmss.sys.number.model.SysNumberMainMapp;
+				
+				com.landray.kmss.km.asset.model.KmAssetConfig;
+				com.landray.kmss.km.collaborate.model.KmCollaborateConfig;
+				com.landray.kmss.kms.exam.model.KmsExamConfig;
+				
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmAuditNote;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmAuditNoteReader;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmAuditNoteRtNode;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmAuditNoteRtReader;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmFollow;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmHistoryAuditNote;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmOperations;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmOperMain;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmPersonSet;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmProcessReadLog;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmSetting;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmSettingDefault;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmSimulationExample;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmTemplateChangeHistory;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmTempStorage;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmUsage;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmUsageContent;
+				com.landray.kmss.sys.lbpmservice.support.model.LbpmWorkingproxy;
+                com.landray.kmss.sys.lbpmservice.changelog.model.LbpmTemplateChangeLog;
+                com.landray.kmss.sys.lbpmservice.changelog.model.LbpmTemplateChangeLogDetail;
+				
+				com.landray.kmss.sys.xform.base.model.AbstractFormTemplate;
+				com.landray.kmss.sys.xform.base.model.BaseFormTemplate;
+				com.landray.kmss.sys.xform.base.model.BaseFormTemplateHistory;
+				com.landray.kmss.sys.xform.base.model.EditionManager;
+				com.landray.kmss.sys.xform.base.model.IFileNameBuilder;
+				com.landray.kmss.sys.xform.base.model.ModuleFileNameBuilder;
+				com.landray.kmss.sys.xform.base.model.SysFormCommonTempHistory;
+				com.landray.kmss.sys.xform.base.model.SysFormDbColumn;
+				com.landray.kmss.sys.xform.base.model.SysFormDbTableTemplate;
+				com.landray.kmss.sys.xform.base.model.SysFormImExBaseModel;
+				com.landray.kmss.sys.xform.base.model.SysFormRelevanceLog;
+				com.landray.kmss.sys.xform.base.model.SysFormRelevanceNode;
+				com.landray.kmss.sys.xform.base.model.SysFormRelevanceTemplateConfig;
+				com.landray.kmss.sys.xform.base.model.SysFormTemplate;
+				com.landray.kmss.sys.xform.base.model.SysFormTemplateHistory;
+				com.landray.kmss.sys.xform.base.model.controls.auditshow.SysXformAuditshow;
+                com.landray.kmss.sys.xform.base.model.SysFormModifiedLog;
+                com.landray.kmss.sys.xform.base.model.SysFormFieldModifiedLog;
+				
+				com.landray.kmss.km.review.model.KmReviewDocKeyword;
+				com.landray.kmss.km.review.model.KmReviewFeedbackInfo;
+				com.landray.kmss.km.review.model.KmReviewOverview;
+				com.landray.kmss.km.review.model.KmReviewTemplateKeyword;
+				
+				com.landray.kmss.km.smissive.model.KmSmissiveCirculation;
+				
+				com.landray.kmss.km.imissive.model.KmImissiveAttTrack;
+				com.landray.kmss.km.imissive.model.KmImissiveRegDetailList;
+				com.landray.kmss.km.imissive.model.KmImissiveReturnOpinion;
+				com.landray.kmss.km.imissive.model.KmImissiveSignature;
+				
+				com.landray.kmss.sys.news.model.SysNewsMainKeyword;
+				com.landray.kmss.sys.news.model.SysNewsTemplateKeyword;
+				com.landray.kmss.sys.news.model.SysNewsPublishCategory;
+				com.landray.kmss.sys.news.model.SysNewsPublishMain;
+				
+				com.landray.kmss.km.doc.model.KmDocKnowledgeKeyword;
+				com.landray.kmss.km.doc.model.KmDocTemplateKeyword;
+				
+				com.landray.kmss.km.institution.model.KmInstitutionKnowledgeAbolish;
+				com.landray.kmss.km.institution.model.KmInstitutionTemplateKeyword;
+				com.landray.kmss.km.institution.model.KmInstitutionKnowledgeAbolish;
+				com.landray.kmss.km.institution.model.KmInstitutionKnowledgePre;
+				
+				com.landray.kmss.km.imeeting.model.KmImeetingAgenda;
+				com.landray.kmss.km.imeeting.model.KmImeetingBook;
+				com.landray.kmss.km.imeeting.model.KmImeetingMainFeedback;
+				com.landray.kmss.km.imeeting.model.KmImeetingMainHistory;
+				
+				com.landray.kmss.sys.task.model.SysTaskEvaluate;
+				com.landray.kmss.sys.task.model.SysTaskFeedback;
+				com.landray.kmss.sys.task.model.SysTaskOverrule;
+				com.landray.kmss.sys.task.model.SysTaskMain;
+				
+				com.landray.kmss.km.collaborate.model.KmCollaborateLogs;
+				com.landray.kmss.km.collaborate.model.KmCollaborateMainReply;
+				com.landray.kmss.km.collaborate.model.KmCollaboratePartnerInfo;
+				com.landray.kmss.km.collaborate.model.KmCollaborateMain;
+				
+				com.landray.kmss.km.vote.model.KmVoteMainItem;
+				com.landray.kmss.km.vote.model.KmVoteMain;
+				com.landray.kmss.km.vote.model.KmVoteRecord;
+				
+				com.landray.kmss.km.pindagate.model.KmPindagateMain;
+				com.landray.kmss.km.pindagate.model.KmPindagateQuestionRes;
+				com.landray.kmss.km.pindagate.model.KmPindagateResponse;
+				com.landray.kmss.km.pindagate.model.KmPindagateStatisticHistory;
+				
+				com.landray.kmss.km.forum.model.KmForumScore;
+				com.landray.kmss.km.forum.model.KmForumPost;
+				com.landray.kmss.km.forum.model.KmForumTopic;
+				
+				com.landray.kmss.km.archives.model.KmArchivesAppraise;
+				com.landray.kmss.km.archives.model.KmArchivesDestroy;
+				com.landray.kmss.km.archives.model.KmArchivesDetails;
+				com.landray.kmss.km.archives.model.KmArchivesRenew;
+				com.landray.kmss.km.asset.model.KmAssetApplyBase;
+				com.landray.kmss.km.asset.model.KmAssetApplyBuyList;
+				com.landray.kmss.km.asset.model.KmAssetApplyChangeList;
+				com.landray.kmss.km.asset.model.KmAssetApplyDealList;
+				com.landray.kmss.km.asset.model.KmAssetApplyDivertList;
+				com.landray.kmss.km.asset.model.KmAssetApplyGetList;
+				com.landray.kmss.km.asset.model.KmAssetApplyInList;
+				com.landray.kmss.km.asset.model.KmAssetApplyRentList;
+				com.landray.kmss.km.asset.model.KmAssetApplyReturnList;
+				com.landray.kmss.km.asset.model.KmAssetApplyStockList;
+				com.landray.kmss.km.asset.model.KmAssetApplyTaskDetail;
+				com.landray.kmss.km.asset.model.KmAssetApplyRepairExpend;
+				com.landray.kmss.km.books.model.KmBooksRemind;
+				com.landray.kmss.km.calendar.model.KmCalendarAuth;
+				com.landray.kmss.km.calendar.model.KmCalendarOutCache;
+				com.landray.kmss.km.calendar.model.KmCalendarMain;
+				com.landray.kmss.km.calendar.model.KmCalendarSyncMapping;
+				com.landray.kmss.km.calendar.model.KmCalendarSyncBind;
+				com.landray.kmss.km.calendar.model.KmCalendarAgendaLabel;
+				com.landray.kmss.km.carmng.model.KmCarmngDispatchersInfo;
+				com.landray.kmss.km.carmng.model.KmCarmngDriversInfo;
+				com.landray.kmss.km.carmng.model.KmCarmngRegisterInfo;
+				com.landray.kmss.km.carmng.model.KmCarmngUserFeeInfo;
+				com.landray.kmss.km.certificate.model.KmCertificateDetail;
+				com.landray.kmss.km.contract.model.KmContractMainPay;
+				com.landray.kmss.km.contract.model.KmContractMainPurchase;
+				com.landray.kmss.km.oitems.model.KmOitemsMonthReport;
+				com.landray.kmss.km.oitems.model.KmOitemsReportListing;
+				com.landray.kmss.km.oitems.model.KmOitemsShoppingTrolley;
+				com.landray.kmss.km.resource.model.KmResourceReportByMon;
+				com.landray.kmss.km.resource.model.KmResourceReportByUnitMon;
+							
+				com.landray.kmss.dbcenter.echarts.application.model.DbEchartsNavTreeShowItem;
+			</value>
+		</property>
+		<property name="invalidPath">
+			<!-- 需要忽略的path，多个配置用;分隔 -->
+			<value>
+				/kms/common/**;
+				/kms/log/**;
+			</value>
+		</property>
+	</bean>
+	<bean
+		id="sysDatainitProcessTarget"
+		class="com.landray.kmss.sys.datainit.service.spring.SysDatainitProcessServiceImp">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysDatainitProcessService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="sysDatainitProcessTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="exportToFile*">PROPAGATION_REQUIRES_NEW</prop>
+				<prop key="importFile*">PROPAGATION_REQUIRES_NEW</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

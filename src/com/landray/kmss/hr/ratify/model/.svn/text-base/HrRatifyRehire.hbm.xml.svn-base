@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <subclass 
+        name="com.landray.kmss.hr.ratify.model.HrRatifyRehire" 
+        extends="com.landray.kmss.hr.ratify.model.HrRatifyMain"
+        discriminator-value="com.landray.kmss.hr.ratify.model.HrRatifyRehire">
+        <join table="hr_ratify_rehire">
+	        <key
+				column="fd_id"></key>
+	        <property 
+	            name="fdRehireDate" 
+	            column="fd_rehire_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdRehireEnterDate" 
+	            column="fd_rehire_enter_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdRehireReason" 
+	            column="fd_rehire_reason" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdRehireLeaderView" 
+	            column="fd_rehire_leader_view" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdRehireHrView" 
+	            column="fd_rehire_hr_view" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdRehireRemark" 
+	            column="fd_rehire_remark" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <many-to-one 
+	            name="fdRehireStaff" 
+	            column="fd_rehire_staff_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one 
+	            name="fdRehireDept" 
+	            column="fd_rehire_dept_id" 
+	            update="true" 
+	            insert="true"/>
+        </join>
+    </subclass>
+</hibernate-mapping>

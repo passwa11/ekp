@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/third/ekp/java/config.do"
+		class="com.landray.kmss.third.ekp.java.ConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formName"
+			value="configForm" />
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.config.form.SysConfigAdminForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="configView"
+					value="/third/ekp/java/config_view.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/third/ekp/java/oms/in/config.do"
+		class="com.landray.kmss.third.ekp.java.oms.in.OMSSynchroInConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+	
+	
+	<bean 
+        class="com.landray.kmss.third.ekp.java.notify.actions.ThirdEkpJavaNotifyLogAction" 
+        parent="KmssBaseAction" 
+        name="/third/ekp/java/notify/third_ekp_java_notify_log/thirdEkpJavaNotifyLog.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.third.ekp.java.notify.forms.ThirdEkpJavaNotifyLogForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry 
+                    key="data" 
+                    value="/third/ekp/java/notify/third_ekp_java_notify_log/thirdEkpJavaNotifyLog_data.jsp"/>
+                <entry 
+                    key="view" 
+                    value="/third/ekp/java/notify/third_ekp_java_notify_log/thirdEkpJavaNotifyLog_view.jsp"/>
+            </map>
+        </property>
+    </bean>
+    <bean 
+        class="com.landray.kmss.third.ekp.java.notify.actions.ThirdEkpJavaNotifyMappAction" 
+        parent="KmssBaseAction" 
+        name="/third/ekp/java/notify/third_ekp_java_notify_mapp/thirdEkpJavaNotifyMapp.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.third.ekp.java.notify.forms.ThirdEkpJavaNotifyMappForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry 
+                    key="data" 
+                    value="/third/ekp/java/notify/third_ekp_java_notify_mapp/thirdEkpJavaNotifyMapp_data.jsp"/>
+                <entry 
+                    key="view" 
+                    value="/third/ekp/java/notify/third_ekp_java_notify_mapp/thirdEkpJavaNotifyMapp_view.jsp"/>
+            </map>
+        </property>
+    </bean>
+    <bean 
+        class="com.landray.kmss.third.ekp.java.notify.actions.ThirdEkpJavaNotifyQueErrAction" 
+        parent="KmssBaseAction" 
+        name="/third/ekp/java/notify/third_ekp_java_notify_que_err/thirdEkpJavaNotifyQueErr.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.third.ekp.java.notify.forms.ThirdEkpJavaNotifyQueErrForm"/>
+        <property 
+            name="forwards">
+            <map>
+                <entry 
+                    key="data" 
+                    value="/third/ekp/java/notify/third_ekp_java_notify_que_err/thirdEkpJavaNotifyQueErr_data.jsp"/>
+                <entry 
+                    key="view" 
+                    value="/third/ekp/java/notify/third_ekp_java_notify_que_err/thirdEkpJavaNotifyQueErr_view.jsp"/>
+            </map>
+        </property>
+    </bean>
+    
+</beans>

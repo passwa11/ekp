@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/util 
+   		http://www.springframework.org/schema/util/spring-util.xsd "
+	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util">
+
+    <bean
+		id="elecCaCertBindCoreService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<bean
+				class="com.landray.kmss.elec.core.certification.service.spring.ElecCoreCertBindCoreServiceImp">
+			</bean>
+		</property>
+	</bean>
+	
+	<bean 
+        id="elecCoreCertBindDao" 
+        class="com.landray.kmss.elec.core.certification.dao.hibernate.ElecCoreCertBindDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.elec.core.certification.model.ElecCoreCertBind</value>
+        </property>
+    </bean>
+    <bean 
+        id="elecCoreCertBindTarget" 
+        class="com.landray.kmss.elec.core.certification.service.spring.ElecCoreCertBindServiceImp" 
+        parent="KmssBaseCoreTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="elecCoreCertBindDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="elecCoreCertBindService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="elecCoreCertBindTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="elecCoreFaceVerifyTaskDao" 
+        class="com.landray.kmss.elec.core.authentication.dao.hibernate.ElecCoreFaceVerifyTaskDaoImpl" 
+        parent="KmssAuthBaseDao">
+        <property name="modelName" value="com.landray.kmss.elec.core.authentication.model.ElecCoreFaceVerifyTask"/>
+    </bean>
+    <bean 
+        id="elecCoreFaceVerifyTaskTarget" 
+        class="com.landray.kmss.elec.core.authentication.service.spring.ElecCoreFaceVerifyTaskServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="elecCoreFaceVerifyTaskDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="elecCoreFaceVerifyTaskService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="elecCoreFaceVerifyTaskTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="elecCoreFaceVerifyLogDao" 
+        class="com.landray.kmss.elec.core.authentication.dao.hibernate.ElecCoreFaceVerifyLogDaoImpl" 
+        parent="KmssAuthBaseDao">
+        <property name="modelName" value="com.landray.kmss.elec.core.authentication.model.ElecCoreFaceVerifyLog"/>
+    </bean>
+    <bean 
+        id="elecCoreFaceVerifyLogTarget" 
+        class="com.landray.kmss.elec.core.authentication.service.spring.ElecCoreFaceVerifyLogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="elecCoreFaceVerifyLogDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="elecCoreFaceVerifyLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="elecCoreFaceVerifyLogTarget"/>
+        </property>
+    </bean>
+    
+    <bean 
+        id="elecAuthenLogDao" 
+        class="com.landray.kmss.elec.core.authentication.dao.hibernate.ElecAuthenLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName" value="com.landray.kmss.elec.core.authentication.model.ElecAuthenLog">
+        </property>
+    </bean>
+    
+    
+</beans>

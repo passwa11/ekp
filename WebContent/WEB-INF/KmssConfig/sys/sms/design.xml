@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="sys-sms:module.sys.sms"
+		urlPrefix="/sys/sms/"
+		defaultValidator="roleValidator(role=ROLE_SYSSMS_DEFAULT;SYSROLE_SYSADMIN)">
+		<roles>
+			ROLE_SYSSMS_DEFAULT;ROLE_SYSSMS_READER;ROLE_SYSSMS_CREATE;
+			ROLE_SYSSMS_DELETE;ROLE_SYSSMS_EDITOR; ROLE_SYSSMS_BASE_SET
+		</roles>
+		<!-- 主文档权限 -->
+		<request
+			path="sys_sms_main/sysSmsMain.do*"
+			defaultValidator="roleValidator(role=SYSROLE_USER)"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.sms.model.SysSmsMain">
+			<!-- 新建 -->
+			<query
+				queryString="method=add"
+				validator="roleValidator(role=ROLE_SYSSMS_CREATE)" />
+			<!-- 保存 -->
+			<query
+				queryString="method=save|saveadd"
+				validator="roleValidator(role=ROLE_SYSSMS_DEFAULT)" />
+			<!-- 编辑 -->
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_SYSSMS_EDITOR)" />
+			<!-- 删除 -->
+			<query
+				queryString="method=delete"
+				validator="roleValidator(role=ROLE_SYSSMS_DELETE)" />
+			<!-- 删除所有 -->
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYSSMS_DELETE)" />
+		</request>
+
+		<!-- 短信接口初始化配置 -->
+		<request path="sys_sms_config/sysSmsConfig*">
+			<query
+				queryString="method=add|save|saveadd|edit|update|delete|deleteall|list|view"
+				validator="roleValidator(role=SYSROLE_SYSADMIN)|[roleValidator(role=ROLE_SYSSMS_BASE_SET)&amp;uselessRoleValidator()]" />
+		</request>
+
+		<!-- 短信号码分类 -->
+		<request path="sys_sms_sorts/sysSmsSorts*">
+			<query
+				queryString="method=add|save|saveadd|edit|update|delete|deleteall|list|view"
+				validator="roleValidator(role=ROLE_SYSSMS_BASE_SET)" />
+		</request>
+
+		<!-- 可发送短信量设置-->
+		<request path="sys_sms_upperlimit/sysSmsUpperlimit*">
+			<query
+				queryString="method=add|save|saveadd|edit|update|delete|deleteall|list|view"
+				validator="roleValidator(role=ROLE_SYSSMS_BASE_SET)" />
+		</request>
+		
+		<request path="sys_sms_main/index.jsp*" defaultValidator="roleValidator(role=SYSROLE_USER)" />
+		
+		<!-- 主文档过滤器 -->
+		<filters modelName="com.landray.kmss.sys.sms.model.SysSmsMain">
+			<filter
+				type="creator"
+				expression="authFieldFilter(field=fdCreator.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_SYSSMS_READER)" />
+		</filters>
+	</module>
+	<!-- 一般全文检索权限 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/ftsearch/">
+		<request path="searchBuilder*">
+			<query
+				queryString="modelName=com.landray.kmss.sys.sms.model.SysSmsMain"
+				validator="roleValidator(role=ROLE__SYSSMS_DEFAULT)" />
+		</request>
+	</module>
+	
+	<quartz
+		messageKey="sys-sms:sysSmsConfig.timeJob"
+		jobService="sysSmsShortMessageService"
+		cronExpression="0 0 1 * * ?"
+		jobMethod="deleteSendedMessage"
+		description="sys-sms:sysSmsConfig.timeJob.description" />
+	<quartz
+		messageKey="sys-sms:sysSmsConfig.failureTimeJob"
+		jobService="sysSmsShortMessageService"
+		cronExpression="0 0 1 * * ?"
+		jobMethod="deleteFailureMessage"
+		description="sys-sms:sysSmsConfig.failureTimeJob.description" />
+	<quartz
+		messageKey="sys-sms:sysSmsConfig.notifyTimeJob"
+		jobService="sysSmsShortMessageService"
+		cronExpression="0 0/30 * * * ?"
+		jobMethod="updateSendFailureNotify"
+		description="sys-sms:sysSmsConfig.notifyTimeJob.description" />
+	
+	<!-- 普通搜索 -->
+
+	<search
+		modelName="com.landray.kmss.sys.notify.model.SysNotifyShortMessageSend"
+		messageKey="sys-sms:sysSmsMain.sms.search"
+		resultProperties="fdReceiver;fdReceiverNumber;fdSender;fdCreateTime;fdFlag;" />
+
+	<!-- 全文检索
+	<ftSearch
+		modelName="com.landray.kmss.sys.sms.model.SysSmsMain"
+		boost="2.0"
+		timeField="docCreateTime">
+		<luceneField
+			name="creator"
+			property="fdCreator.fdName"
+			type="text" />
+		<luceneField
+			name="createTime"
+			property="docCreateTime"
+			type="keyword" />
+	</ftSearch>
+	 -->
+
+
+	<treeNodes type="myjob">
+		<treeNode messageKey="sys-sms:sysSmsMain.tree.myJob.title">
+			<treeNode messageKey="sys-sms:sysSmsMain.byDocStatus">
+				<treeNode
+					messageKey="sys-sms:sysSmsMain.docStatus.success"
+					url="/sys/sms/sys_sms_main/sysSmsMain.do?method=list&amp;docStatus=2">
+				</treeNode>
+				<treeNode
+					messageKey="sys-sms:sysSmsMain.docStatus.failure"
+					url="/sys/sms/sys_sms_main/sysSmsMain.do?method=list&amp;docStatus=3">
+				</treeNode>
+				<treeNode
+					messageKey="sys-sms:sysSmsMain.docStatus.waiting"
+					url="/sys/sms/sys_sms_main/sysSmsMain.do?method=list&amp;docStatus=1">
+				</treeNode>
+			</treeNode>
+
+		</treeNode>
+	</treeNodes>
+	<!-- 主页配置 -->
+	<homePage
+		urlPrefix="sys/sms"
+		url="/sys/sms/index.jsp"
+		messageKey="sys-sms:sysSmsMain.service" 
+		config="/moduleindex_notopic.jsp?nav=/sys/sms/tree.jsp"/>
+	<!-- 短信 -->
+	<profileConfig
+		key="sms"
+		messageKey="{sys-sms:sysSmsMain.sms}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/sms/sms.jsp" 
+		icon="lui_icon_s_profile_navLeft_sms"
+		type="notify"
+		userType="1;2"
+		order="2"/>
+
+</configs>

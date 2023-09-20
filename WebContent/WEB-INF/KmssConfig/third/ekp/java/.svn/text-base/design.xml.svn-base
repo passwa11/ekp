@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+		
+	<module
+		messageKey="third-ekp-java:module.third.ekp.java"
+		urlPrefix="/third/ekp/java/"
+		defaultValidator="roleValidator(role=ROLE_EKP_JAVA_BACKSTAGE_MANAGER)">
+		<roles>
+			<!-- 后台管理  -->
+			ROLE_EKP_JAVA_BACKSTAGE_MANAGER
+		</roles>
+		<roleType>
+			<!-- 系统管理员权限 -->
+			<sysadmin>
+				ROLE_EKP_JAVA_BACKSTAGE_MANAGER
+			</sysadmin>
+		</roleType>
+		
+		<request path="config*" defaultValidator="roleValidator(role=ROLE_EKP_JAVA_BACKSTAGE_MANAGER)">
+		</request>
+		
+		
+		<request 
+            path="notify/third_ekp_java_notify_log/thirdEkpJavaNotifyLog.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ekp.java.notify.model.ThirdEkpJavaNotifyLog" 
+            defaultValidator="roleValidator(role=ROLE_EKP_JAVA_BACKSTAGE_MANAGER)">
+            
+        </request>
+        <request 
+            path="notify/third_ekp_java_notify_mapp/thirdEkpJavaNotifyMapp.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ekp.java.notify.model.ThirdEkpJavaNotifyMapp" 
+            defaultValidator="roleValidator(role=ROLE_EKP_JAVA_BACKSTAGE_MANAGER)">
+            
+        </request>
+        <request 
+            path="notify/third_ekp_java_notify_que_err/thirdEkpJavaNotifyQueErr.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ekp.java.notify.model.ThirdEkpJavaNotifyQueErr" 
+            defaultValidator="roleValidator(role=ROLE_EKP_JAVA_BACKSTAGE_MANAGER)">
+            
+        </request>
+        
+	</module>
+
+	<!-- 后台配置权限 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.third.ekp.java.EkpJavaConfig"
+				validator="roleValidator(role=ROLE_EKP_JAVA_BACKSTAGE_MANAGER)" />
+		</request>
+	</module>
+	
+	<quartz
+		messageKey="third-ekp-java:ekp.java.tag.job"
+		jobService="sysTagSyncTask"
+		jobMethod="sync"
+		cronExpression="0 0 2 * * ?"
+		runType="SINGLENODE"
+		description="third-ekp-java:ekp.java.tag.job" />
+	<!-- 消息推送出错重复执行 -->
+	<quartz
+		messageKey="third-ekp-java:ekp.java.notifyQueueError.title"
+		jobService="thirdEkpNotifyQueueErrorService"
+		jobMethod="updateRunErrorQueue"
+		cronExpression="0 0/10 * * * ?" 
+		description="third-ekp-java:ekp.java.notifyQueueError.description" />
+	<quartz
+		messageKey="third-ekp-java:ekp.java.notifyQueueError.clear.title"
+		jobService="thirdEkpNotifyQueueErrorService"
+		jobMethod="clearNotifyQueueError"
+		cronExpression="0 0 4 * * ?" 
+		description="third-ekp-java:ekp.java.notifyQueueError.clear.description" />
+		
+	<profileConfig 
+		key="java"
+		messageKey="{third-ekp-java:ekp.java.integration}"
+		url="/third/ekp/java/profile.jsp"
+		icon="third_ekp_java"
+		type="user"
+		order="4" 
+		userType="2"
+		description="{third-ekp-java:ekpJava.profileCfg.description}"/>
+		
+		
+	<quartz
+		messageKey="third-ekp-java-notify:third.ekp.java.notifyQueueError.resend.title"
+		jobService="thirdEkpJavaNotifyQueErrService"
+		jobMethod="updateRunErrorQueue"
+		cronExpression="0 0/10 * * * ?" 
+		enable="true"
+		runType="SINGLENODE"
+		description="third-ekp-java-notify:third.ekp.java.notifyQueueError.resend.description" />
+		
+	<quartz
+		messageKey="third-ekp-java-notify:third.ekp.java.notifyQueueError.clear.title"
+		jobService="thirdEkpJavaNotifyQueErrService"
+		jobMethod="clearNotifyQueueError"
+		cronExpression="0 0 2 * * ?" 
+		enable="true"
+		runType="SINGLENODE"
+		description="third-ekp-java-notify:third.ekp.java.notifyQueueError.clear.description" />
+	
+	
+</configs>

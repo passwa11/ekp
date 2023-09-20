@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        class="com.landray.kmss.sys.rule.actions.SysRuleSetDocAction" 
+        parent="KmssBaseAction" 
+        name="/sys/rule/sys_ruleset_doc/sysRuleSetDoc.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.sys.rule.forms.SysRuleSetDocForm"/>
+        <property 
+            name="forwards">
+            <map>
+            	<entry key="list" value="/sys/rule/sys_ruleset_doc/sysRuleSetDoc_list.jsp"/>
+            	<entry key="edit" value="/sys/rule/sys_ruleset_doc/sysRuleSetDoc_edit.jsp"/>
+            	<entry key="view" value="/sys/rule/sys_ruleset_doc/sysRuleSetDoc_view.jsp"/>
+            	<entry key="relationData" value="/sys/rule/sys_ruleset_doc/sysRuleSetDoc_relation_dataList.jsp"/>
+            	<entry key="referenceInfo" value="/sys/rule/sys_ruleset_doc/sysRuleSetDoc_relation_ref.jsp"/>
+            	<entry key="simple" value="/sys/rule/sys_ruleset_doc/sysRuleSetDoc_simple_edit.jsp"/>
+            </map>
+        </property>
+    </bean>
+    <bean 
+        class="com.landray.kmss.sys.rule.actions.SysRuleSetCateAction" 
+        parent="KmssBaseAction" 
+        name="/sys/rule/sys_ruleset_cate/sysRuleSetCate.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.sys.rule.forms.SysRuleSetCateForm"/>
+        <property 
+            name="forwards">
+            <map>
+            	<entry key="list" value="/sys/rule/sys_ruleset_cate/sysRuleSetCate_list.jsp"/>
+            	<entry key="edit" value="/sys/rule/sys_ruleset_cate/sysRuleSetCate_edit.jsp"/>
+            	<entry key="view" value="/sys/rule/sys_ruleset_cate/sysRuleSetCate_view.jsp"/>
+            </map>
+        </property>
+    </bean>
+    <bean 
+        class="com.landray.kmss.sys.rule.actions.SysRuleTemplateAction" 
+        parent="KmssBaseAction" 
+        name="/sys/rule/sys_ruleset_temp/sysRuleTemplate.do" 
+        lazy-init="true">
+        <property 
+            name="formType" 
+            value="com.landray.kmss.sys.rule.forms.SysRuleTemplateForm"/>
+        <property 
+            name="forwards">
+            <map>
+            	<entry key="relationData" value="/sys/rule/sys_ruleset_temp/relation_dataList.jsp"/>
+            	<entry key="referenceInfo" value="/sys/rule/sys_ruleset_temp/relation_ref.jsp"/>
+            </map>
+        </property>
+    </bean>
+</beans>

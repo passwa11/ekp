@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.restservice.server.model.SysRestserviceServerMain"
+		table="sys_rest_server_main">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			length="100"
+			not-null="false" />
+
+		<property
+			name="fdServiceClass"
+			column="fd_service_class"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="fdServiceName"
+			column="fd_service_name"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false"
+			unique="true" />
+
+		<property
+			name="fdDocUrl"
+			column="fd_doc_url"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="fdResourceKey"
+			column="fd_resource_key"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="fdUriPrefix"
+			column="fd_uri_prefix"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+		<property
+			name="fdServiceStatus"
+			column="fd_service_status"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+
+		<property
+			name="fdStartupType"
+			column="fd_startup_type"
+			update="true"
+			insert="true"
+			length="2"
+			not-null="false" />
+			
+		<property
+			name="fdMaxConn"
+			column="fd_max_conn"
+			update="true"
+			insert="true"
+			length="4"
+			not-null="false" />
+
+		<property
+			name="fdTimeOut"
+			column="fd_time_out"
+			update="true"
+			insert="true"
+			length="8"
+			not-null="false" />
+
+		<property
+			name="fdMaxBodySize"
+			column="fd_max_body_size"
+			update="true"
+			insert="true"
+			length="8"
+			not-null="false" />
+			
+		<property
+			name="fdDescription"
+			column="fd_description"
+			update="true"
+			insert="true"
+			length="500"
+			not-null="false" />
+
+		<bag
+			name="fdPolicy"
+			table="sys_rest_server_main_user"
+			lazy="false">
+			<key
+				column="fd_service_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.restservice.server.model.SysRestserviceServerPolicy"
+				column="fd_user_id" />
+		</bag>
+
+	</class>
+</hibernate-mapping>

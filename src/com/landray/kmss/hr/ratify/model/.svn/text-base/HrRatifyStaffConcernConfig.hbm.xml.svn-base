@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.hr.ratify.model.HrRatifyStaffConcernConfig"
+		table="hr_ratify_staff_concern_config">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		
+		<property
+			name="fdEntry"
+			column="fd_entry"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdLeave"
+			column="fd_leave"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdPositive"
+			column="fd_positive"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdTransfer"
+			column="fd_transfer"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<property
+			name="fdContract"
+			column="fd_contract"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<bag
+			name="fdManagers"
+			table="hr_ratify_staff_concern_mg">
+			<key column="fd_config_id" />
+			<many-to-many class="com.landray.kmss.sys.organization.model.SysOrgElement" column="fd_mg_id" />
+        </bag>
+        
+	</class>
+</hibernate-mapping>

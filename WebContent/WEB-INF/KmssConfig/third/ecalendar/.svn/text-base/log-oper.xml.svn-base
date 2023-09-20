@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="ecalendarBindDataOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ecalendar.model.EcalendarBindData"
+            action="/third/ecalendar/ecalendar_bind_data/ecalendarBindData.do">
+        </oper>
+        <oper
+            id="ecalendarOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/third/ecalendar/ecalendar.do">
+            <query
+				method="testConnect" 
+				logPoint="Base_UrlParam;testConnect"/>
+			<query
+				method="getNotReadMail" 
+				logPoint="Base_UrlParam;getNotReadMail"/>
+			<query
+				method="testGetCalendars" 
+				logPoint="Base_UrlParam;testGetCalendars"/>
+        </oper>
+		<oper
+            id="ecalendarConfigOperLog"
+            extends="sysAdminOperLog"
+            model="*"
+            action="/third/ecalendar/config.do">
+        </oper>
+	</logset>
+</log-oper>

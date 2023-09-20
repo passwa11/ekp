@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--业务集成组件数据初始化 -->
+	<bean id="ticBusinessInitExecute" 
+		  class="com.landray.kmss.tic.business.connector.interfaces.TicBusinessInitExecute">
+	</bean>
+	
+	<bean 
+        id="ticBusinessCategoryDao" 
+        class="com.landray.kmss.tic.business.connector.dao.hibernate.TicBusinessCategoryDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.tic.business.connector.model.TicBusinessCategory</value>
+        </property>
+    </bean>
+	<bean 
+        id="ticBusinessCategoryTarget" 
+        class="com.landray.kmss.tic.business.connector.service.spring.TicBusinessCategoryServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="ticBusinessCategoryDao"/>
+        </property>
+    </bean>
+	<bean 
+        id="ticBusinessCategoryService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="ticBusinessCategoryTarget"/>
+        </property>
+    </bean>
+        <bean
+		id="ticBusinessCategoryTreeService"
+		class="com.landray.kmss.tic.business.connector.service.spring.TicBusinessCategoryTreeServiceImp">
+		<property name="ticBusinessCategoryService">
+			<ref bean="ticBusinessCategoryService" />
+		</property>
+	</bean>
+</beans>
+	

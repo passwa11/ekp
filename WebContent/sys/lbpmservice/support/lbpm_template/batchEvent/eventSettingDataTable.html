@@ -1,0 +1,50 @@
+var massDataView = render.parent;
+var columns = massDataView.config.columns;
+{$
+<div class="massdata-container">
+	<div class="massdata-toolbar">$}
+	{$</div>
+	<div class="massdata-content">
+		<table width="100%" class="massdata-table">
+			<thead class="massdata-table-thead"><tr> <td></td>$}
+			var length = Object.keys(columns).length;
+			if(length > 0){
+				var width = parseInt(100/length) + "%";
+				for(var c =0;c < columns.length;c++){
+					{$ <td>{%columns[c]%}</td>$}
+				}			
+			}
+			{$</tr></thead>
+			<tbody>$}
+			// [{docSubject:{value:xx},fdId:{value:xx},fdName:{value:xx},docCreateTime:{value:xx}}]
+			var records = data;
+			if(records && records.length && records.length > 0){
+				// 遍历所有行记录
+				for(var i = 0;i < records.length;i++){
+			{$ <tr> <td><input type="checkbox" name="list_events" value="{%JSON.stringify(records[i]).replace(/"/g,'&quot;')%}"></td>$}
+					// 每行记录都是一个json，key为字段名
+					var record = records[i];
+					record['rowIndex'] = i+1;
+					if(record != null && typeof record != "undefined"){
+						for(var key in record){
+							if(key != 'type' && key != 'listenerId' && key != 'id'){
+								massDataView.config.allColInvalid = false;
+								{$ <td>{%record[key]%}</td>$}
+							}
+						}
+					}else{
+						// 没有记录，可能是该列已被删除
+						{$ <td></td>$}
+					}
+				{$ <td><a href="javascript:void(0)" onclick="deleteEventOnNode('{%record.id%}','{%record.type%}','{%record.listenerId%}','{%record.nodeId%}','{%record.nodeName%}')">删除</td></tr>$}
+				}
+			}
+			{$</tbody>
+		</table>
+	</div>
+	<div class="massdata-foot">
+		<div class="massdata-foot-paging">
+		</div>
+	</div>
+</div>
+$}

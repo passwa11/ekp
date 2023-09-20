@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../plugin.xsd ">
+	<extension
+		point="com.landray.kmss.lbpm.engine.event.timer">
+		<item
+			name="condition">
+			<param
+				name="type"
+				value="noApproval" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-event-timer:lbpm.event.timer.condition.noApproval" />
+			<param
+				name="eventTypes"
+				value="enterWorkitemEvent" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.lbpm.engine.event">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="notifyRelatedPerson" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice-event-timer:lbpm.listener.timer.notifyRelatedPerson" />
+			<param
+				name="eventTypes"
+				value="timerIntermediate" />
+			<param
+				name="listener"
+				value="notifyRelatedPerson" />
+			<param
+				name="conditionJsp"
+				value="/sys/lbpmservice/listener/notifyRelatedPerson.jsp" />
+			<param
+				name="description"
+				value="sys-lbpmservice-event-timer:lbpm.listener.timer.notifyRelatedPersonDescription" />													
+		</item>
+	</extension>
+</plugin>

@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!-- 计税类型（工作性质） -->
+	<extension-point id="com.landray.kmss.hr.staff.taxtype">
+		<item name="taxtype">
+			<param name="name" required="true" kind="string">
+				<description>计税类型名称，多语言以{}包围</description>
+			</param>
+			<param name="default" required="true" kind="string">
+				<description>true或false</description>
+			</param>
+			<description>计税类型</description>
+		</item>
+		<description>
+			计税类型
+		</description>
+	</extension-point>
+	
+	<extension point="com.landray.kmss.hr.staff.taxtype" model="*">
+		<item name="taxtype">
+			<param name="name" value="{hr-staff:hrStaffPersonInfoSettingNew.fdNatureWork.1}"></param>
+			<param name="default" value="true"></param>
+		</item>
+		<item name="taxtype">
+			<param name="name" value="{hr-staff:hrStaffPersonInfoSettingNew.fdNatureWork.2}"></param>
+			<param name="default" value="true"></param>
+		</item>
+		<item name="taxtype">
+			<param name="name" value="{hr-staff:hrStaffPersonInfoSettingNew.fdNatureWork.3}"></param>
+			<param name="default" value="true"></param>
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.lbpm.engine.robot"
+		model="*">
+		<!-- 薪酬福利 -->
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="hrStaffEmolumentWelfare" />
+			<param
+				name="category"
+				value="{hr-staff:module.hr.staff}" />
+			<param
+				name="type"
+				value="{hr-staff:table.hrStaffEmolumentWelfareDetalied}" />
+			<param
+				name="bean"
+				value="hrStaffEmolumentWelfareRobotService" />
+			<param
+				name="url"
+				value="/hr/staff/hr_staff_emolument_welfare/robot/robotnode_form_mapping.jsp" />
+			<param 
+				name="class" 
+				value="app" />
+			<param 
+				name="description" 
+				value="{hr-staff:hrStaff.robot.emolumentDesc}" />
+		</item>
+		<!-- 员工信息 -->
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="hrStaffInfo" />
+			<param
+				name="category"
+				value="{hr-staff:module.hr.staff}" />
+			<param
+				name="type"
+				value="{hr-staff:table.HrStaffPersonInfo}" />
+			<param
+				name="bean"
+				value="hrStaffPersonInfoRobotService" />
+			<param
+				name="url"
+				value="/hr/staff/hr_staff_person_info/robot/robotnode_form_mapping.jsp" />
+			<param 
+				name="class" 
+				value="app" />
+			<param 
+				name="description" 
+				value="{hr-staff:hrStaff.robot.personInfoDesc}" />
+		</item>
+		
+		<!-- 合同信息 -->
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="hrStaffContract" />
+			<param
+				name="category"
+				value="{hr-staff:module.hr.staff}" />
+			<param
+				name="type"
+				value="{hr-staff:hrStaffPersonExperience.type.contract}" />
+			<param
+				name="bean"
+				value="hrStaffContractRobotService" />
+			<param
+				name="url"
+				value="/hr/staff/hr_staff_person_experience/contract/robot/robotnode_form_mapping.jsp" />
+			<param 
+				name="class" 
+				value="app" />
+			<param 
+				name="description" 
+				value="{hr-staff:hrStaff.robot.contractDesc}" />
+		</item>
+		
+		<!-- 工作经历 -->
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="hrStaffExperienceWork" />
+			<param
+				name="category"
+				value="{hr-staff:module.hr.staff}" />
+			<param
+				name="type"
+				value="{hr-staff:hrStaffPersonExperience.type.work}" />
+			<param
+				name="bean"
+				value="hrStaffWorkRobotService" />
+			<param
+				name="url"
+				value="/hr/staff/hr_staff_person_experience/work/robot/robotnode_form_mapping.jsp" />
+			<param 
+				name="class" 
+				value="app" />
+			<param 
+				name="description" 
+				value="{hr-staff:hrStaff.robot.workDesc}" />
+		</item>
+		
+		<!-- 教育记录 -->
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="hrStaffEducation" />
+			<param
+				name="category"
+				value="{hr-staff:module.hr.staff}" />
+			<param
+				name="type"
+				value="{hr-staff:hrStaffPersonExperience.type.education}" />
+			<param
+				name="bean"
+				value="hrStaffEducationRobotService" />
+			<param
+				name="url"
+				value="/hr/staff/hr_staff_person_experience/education/robot/robotnode_form_mapping.jsp" />
+			<param 
+				name="class" 
+				value="app" />
+			<param 
+				name="description" 
+				value="{hr-staff:hrStaff.robot.educationDesc}" />
+		</item>
+		
+		<!-- 培训记录 -->
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="hrStaffTraining" />
+			<param
+				name="category"
+				value="{hr-staff:module.hr.staff}" />
+			<param
+				name="type"
+				value="{hr-staff:hrStaffPersonExperience.type.training}" />
+			<param
+				name="bean"
+				value="hrStaffTrainingRobotService" />
+			<param
+				name="url"
+				value="/hr/staff/hr_staff_person_experience/training/robot/robotnode_form_mapping.jsp" />
+			<param 
+				name="class" 
+				value="app" />
+			<param 
+				name="description" 
+				value="{hr-staff:hrStaff.robot.trainingDesc}" />
+		</item>
+		
+		<!-- 资格证书 -->
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="hrStaffQualification" />
+			<param
+				name="category"
+				value="{hr-staff:module.hr.staff}" />
+			<param
+				name="type"
+				value="{hr-staff:hrStaffPersonExperience.type.qualification}" />
+			<param
+				name="bean"
+				value="hrStaffQualificationRobotService" />
+			<param
+				name="url"
+				value="/hr/staff/hr_staff_person_experience/qualification/robot/robotnode_form_mapping.jsp" />
+			<param 
+				name="class" 
+				value="app" />
+			<param 
+				name="description" 
+				value="{hr-staff:hrStaff.robot.qualificationDesc}" />
+		</item>
+		
+		<!-- 奖惩信息 -->
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="hrStaffBonusMalus" />
+			<param
+				name="category"
+				value="{hr-staff:module.hr.staff}" />
+			<param
+				name="type"
+				value="{hr-staff:hrStaffPersonExperience.type.bonusMalus}" />
+			<param
+				name="bean"
+				value="hrStaffBonusMalusRobotService" />
+			<param
+				name="url"
+				value="/hr/staff/hr_staff_person_experience/bonusMalus/robot/robotnode_form_mapping.jsp" />
+			<param 
+				name="class" 
+				value="app" />
+			<param 
+				name="description" 
+				value="{hr-staff:hrStaff.robot.bonusMalusDesc}" />
+		</item>
+
+		<!-- 家庭信息 -->
+		<item
+				name="robot">
+			<param
+					name="unid"
+					value="hrStaffFamily" />
+			<param
+					name="category"
+					value="{hr-staff:module.hr.staff}" />
+			<param
+					name="type"
+					value="{hr-staff:hrStaffPersonExperience.type.family}" />
+			<param
+					name="bean"
+					value="hrStaffFamilyRobotService" />
+			<param
+					name="url"
+					value="/hr/staff/hr_staff_person_family/robot/robotnode_form_mapping.jsp" />
+			<param
+					name="class"
+					value="app" />
+			<param
+					name="description"
+					value="{hr-staff:hrStaff.robot.familyDesc}" />
+		</item>
+		<!-- 家庭信息 -->
+		<item
+				name="robot">
+			<param
+					name="unid"
+					value="hrStaffWelfare" />
+			<param
+					name="category"
+					value="{hr-staff:module.hr.staff}" />
+			<param
+					name="type"
+					value="{hr-staff:hrStaffPersonExperience.type.welfare}" />
+			<param
+					name="bean"
+					value="hrStaffWelfareRobotService" />
+			<param
+					name="url"
+					value="/hr/staff/hr_staff_social_security/robot/robotnode_form_mapping.jsp" />
+			<param
+					name="class"
+					value="app" />
+			<param
+					name="description"
+					value="{hr-staff:hrStaff.robot.welfareDesc}" />
+		</item>
+
+		<!-- 离职信息 -->
+		<item
+				name="robot">
+			<param
+					name="unid"
+					value="hrStaffLeave" />
+			<param
+					name="category"
+					value="{hr-staff:module.hr.staff}" />
+			<param
+					name="type"
+					value="{hr-staff:hrStaffPersonExperience.type.leave}" />
+			<param
+					name="bean"
+					value="hrStaffLeaveRobotService" />
+			<param
+					name="url"
+					value="/hr/staff/hr_staff_person_info/robot/robotnode_leave_form_mapping.jsp" />
+			<param
+					name="class"
+					value="app" />
+			<param
+					name="description"
+					value="{hr-staff:hrStaff.robot.leaveDesc}" />
+		</item>
+
+		<!-- 异动信息 -->
+		<item
+				name="robot">
+			<param
+					name="unid"
+					value="hrStaffMove" />
+			<param
+					name="category"
+					value="{hr-staff:module.hr.staff}" />
+			<param
+					name="type"
+					value="{hr-staff:hrStaffPersonExperience.type.move}" />
+			<param
+					name="bean"
+					value="hrStaffMoveRobotService" />
+			<param
+					name="url"
+					value="/hr/staff/hr_staff_move_record/robot/robotnode_move_form_mapping.jsp" />
+			<param
+					name="class"
+					value="app" />
+			<param
+					name="description"
+					value="{hr-staff:hrStaff.robot.moveDesc}" />
+		</item>
+		<!-- 劳动合同续签 -->
+		<item
+				name="robot">
+			<param
+					name="unid"
+					value="hrStaffContractContinue" />
+			<param
+					name="category"
+					value="{hr-staff:module.hr.staff}" />
+			<param
+					name="type"
+					value="{hr-staff:hrStaffPersonExperience.type.contract.continue}" />
+			<param
+					name="bean"
+					value="hrStaffContractContinueRobotService" />
+			<param
+					name="url"
+					value="/hr/staff/hr_staff_contract_type/robot/robotnode_contract_form_mapping.jsp" />
+			<param
+					name="class"
+					value="app" />
+			<param
+					name="description"
+					value="{hr-staff:hrStaff.robot.ContractContinueDesc}" />
+		</item>
+		<!-- 劳动合同续签 -->
+		<item
+				name="robot">
+			<param
+					name="unid"
+					value="hrStaffEmploymentConfirmationApplication" />
+			<param
+					name="category"
+					value="{hr-staff:module.hr.staff}" />
+			<param
+					name="type"
+					value="{hr-staff:hrStaffPersonExperience.type.employment.confirmation.application}" />
+			<param
+					name="bean"
+					value="hrStaffEmploymentConfirmationApplicationRobotService" />
+			<param
+					name="url"
+					value="/hr/staff/hr_staff_employment_confirmation_application_type/robot/robotnode_employment_confirmation_application_form_mapping.jsp" />
+			<param
+					name="class"
+					value="app" />
+			<param
+					name="description"
+					value="{hr-staff:hrStaff.robot.EmploymentConfirmationApplicationDesc}" />
+		</item>
+	</extension>
+
+	<!-- 下属工作 -->
+	<extension point="com.landray.kmss.sys.subordinate">
+		<item name="config">
+			<param
+				name="modelName"
+				value="com.landray.kmss.hr.staff.model.HrStaffPersonInfo" />
+			<param
+				name="messageKey"
+				value="hr-staff:table.HrStaffPersonInfo" />
+			<param
+				name="moduleMessageKey"
+				value="hr-staff:module.hr.staff" />
+			<param
+				name="type"
+				value="dept" />
+			<param
+				name="provider"
+				value="com.landray.kmss.hr.staff.subordinate.HrStaffPersonInfoProvider" />
+			<param
+				name="indexPath"
+				value="/hr/staff/subordinate/hrStaffPersonInfo_index.jsp" />
+			<param
+				name="listPath"
+				value="/hr/staff/hr_staff_person_info/hrStaffPersonInfo_list.jsp" />
+			<param
+				name="viewPath"
+				value="/hr/staff/hr_staff_person_info/hrStaffPersonInfo_view.jsp" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.hr.staff.transfer.HrStaffAttendanceTransferTask" />
+			<param
+				name="name"
+				value="{hr-staff:hrStaffAttendance.transfer.leave.name}" />
+			<param
+				name="path"
+				value="/hr/staff/" />
+			<param
+				name="check"
+				value="com.landray.kmss.hr.staff.transfer.HrStaffAttendanceTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.hr.staff.transfer.HrStaffAttendanceTransferTask" />
+			<param
+				name="description"
+				value="{hr-staff:hrStaffAttendance.transfer.leave.desc}" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.hr.staff.transfer.HrStaffPersonExperienceContractTransferTask" />
+			<param
+				name="name"
+				value="{hr-staff:hrStaffPersonExperience.contract.transfer.name}" />
+			<param
+				name="path"
+				value="/hr/staff/" />
+			<param
+				name="check"
+				value="com.landray.kmss.hr.staff.transfer.HrStaffPersonExperienceContractTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.hr.staff.transfer.HrStaffPersonExperienceContractTransferTask" />
+			<param
+				name="description"
+				value="{hr-staff:hrStaffPersonExperience.contract.transfer.desc}" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.hr.staff.transfer.HrStaffBirthDayOfYearTransferTask" />
+			<param
+				name="name"
+				value="{hr-staff:hrStaffPersonExperience.birthDayOfYear.transfer.name}" />
+			<param
+				name="path"
+				value="/hr/staff/" />
+			<param
+				name="check"
+				value="com.landray.kmss.hr.staff.transfer.HrStaffBirthDayOfYearTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.hr.staff.transfer.HrStaffBirthDayOfYearTransferTask" />
+			<param
+				name="description"
+				value="{hr-staff:hrStaffPersonExperience.birthDayOfYear.transfer.desc}" />
+		</item>
+	</extension>
+		<extension
+		point="com.landray.kmss.sys.webservice2">
+		<item
+			name="registry">
+			<param
+				name="serviceName"
+				value="{hr-staff:hrStaffGetOrg.title}" />
+			<param
+				name="serviceClass"
+				value="com.landray.kmss.hr.staff.webservice.IHrStaffWebService" />
+			<param
+				name="serviceBean"
+				value="hrStaffWebService" />				
+			<param
+				name="serviceDoc"
+				value="/hr/staff/rest/hr_staff_out_ws_help.jsp" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain">
+		<!--入职流程提交事件，增加编号-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="hrRzSubmitEven" />
+			<param
+				name="messageKey"
+				value="hr-staff:flow.event.submit.rz" />
+			<param
+				name="eventTypes"
+				value="drafterSubmitEvent" />
+			<param
+				name="listener"
+				value="hrRzSubmitEven" />
+			<param
+				name="enforce"
+				value="false" />
+				</item>
+		<!--报销流程结束修改对应的预算状态-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="hrFinshEven" />
+			<param
+				name="messageKey"
+				value="hr-staff:flow.event.finish" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessFinishEvent" />
+			<param
+				name="listener"
+				value="hrFinshEven" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		</extension>
+</plugin>

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/fssc/loan/" 
+        messageKey="fssc-loan:module.fssc.loan" 
+        defaultValidator="roleValidator(role=ROLE_FSSCLOAN_DEFAULT)">
+        <roles>
+        	ROLE_FSSCLOAN_DEFAULT;	<!-- 借款默认权限 -->
+        	ROLE_FSSCLOAN_SETTING;	<!-- 后台维护权限 -->
+            ROLE_FSSCLOAN_ADD;	<!-- 新建角色 -->
+            ROLE_FSSCLOAN_DELETE; 	<!-- 借款删除权限 -->
+            ROLE_FSSCLOAN_VIEW;	<!-- 借款查看权限 -->
+            ROLE_FSSCLOAN_REPAYME_ADD;	<!-- 还款新建权限 -->
+            ROLE_FSSCLOAN_REPAYME_VIEW;	<!-- 还款查看权限 -->
+            ROLE_FSSCLOAN_REPAYME_DELETE;	<!-- 还款删除权限 -->
+            ROLE_FSSCLOAN_TRANSFER_ADD;	<!-- 借款转移新建权限 -->
+            ROLE_FSSCLOAN_TRANSFER_VIEW;	<!-- 借款转移查看权限 -->
+            ROLE_FSSCLOAN_TRANSFER_DELETE;	<!-- 借款删除查看权限 -->
+            ROLE_FSSCLOAN_UPDATEFDOFFSETTERS;	<!-- 修改可冲销者 -->
+            ROLE_FSSCLOAN_SEARCHLIST;	<!-- 借款台账查询 -->
+            ROLE_FSSCLOAN_PRINT;	<!-- 打印角色 -->
+            ROLE_FSSCLOAN_REPAYME_ALL;	<!-- 替人还款角色 -->
+            ROLE_FSSCLOAN_CHANGERIGHT;  <!-- 批量修改权限 -->
+            ROLE_FSSCLOAN_REPAYMENT_CHANGERIGHT;    <!-- 员工还款批量修改权限 -->
+            ROLE_FSSCLOAN_TRANSFER_CHANGERIGHT;    <!-- 借款转移批量修改权限 -->
+        </roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_FSSCLOAN_SETTING)"/>
+        <request 
+            path="fssc_loan_main/fsscLoanMain.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.loan.model.FsscLoanMain,cateModel=com.landray.kmss.fssc.loan.model.FsscLoanCategory,adminRoleName=ROLE_FSSCLOAN_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCLOAN_DEFAULT)">
+            <query 
+                queryString="method=add|save|saveadd&amp;i.docTemplate=*" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_ADD)&amp;authSimpleCategoryReaderValidator(cateId=i.docTemplate)"/>	    
+	   		<query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_ADD)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)|authSimpleCategoryEditorValidator(cateId=docTemplate)"/>
+            <query 
+                queryString="method=edit" 
+                validator="authFieldValidator(type=SYS_EDITOR)|[fieldValueValidator(fieldproperty=docStatus,value=10;11)&amp;authFieldValidator(type=creator)]"/>
+            <query 
+                queryString="method=update" 
+                validator="authFieldValidator(type=SYS_EDITOR)|lbpmCurHandlerValidator(method=update)"/>
+            <query
+                queryString="method=delete"
+                validator="[authFieldValidator(type=creator)|roleValidator(role=ROLE_FSSCLOAN_DELETE)]&amp;fieldValueValidator(fieldproperty=docStatus,value=00;10;11)"/>
+            <query
+                queryString="method=deleteall"
+                validator="roleValidator(role=ROLE_FSSCLOAN_DELETE)"/>
+            <query
+                queryString="method=openUpdateFdOffsetters|updateFdOffsetters"
+                validator="authFieldValidator(type=creator)|authFieldValidator(type=CHARGE_PERSON)|roleValidator(role=ROLE_FSSCLOAN_UPDATEFDOFFSETTERS)"/>
+            <query
+                queryString="method=print"
+                validator="roleValidator(role=ROLE_FSSCLOAN_PRINT)|authFieldValidator(type=creator)"/>
+            <query 
+                queryString="method=refreshPaymentForm" 
+                validator="fsscCommonRefreshPaymentAuthValidator()"/>
+            <query 
+                queryString="method=repayment" 
+                validator="authFieldValidator(type=CHARGE_PERSON)|roleValidator(role=ROLE_FSSCLOAN_REPAYME_ALL)"/>
+        </request>
+        <request 
+            path="fssc_loan_category/fsscLoanCategory.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.loan.model.FsscLoanCategory,adminRoleName=ROLE_FSSCLOAN_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCLOAN_SETTING)">
+        </request>
+        <request 
+            path="fssc_loan_repayment/fsscLoanRepayment.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.loan.model.FsscLoanRepayment,cateModel=com.landray.kmss.fssc.loan.model.FsscLoanReCategory,adminRoleName=ROLE_FSSCLOAN_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCLOAN_DEFAULT)">
+            <query 
+                queryString="method=add|save|saveadd&amp;i.docTemplate=*" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_REPAYME_ADD)&amp;authSimpleCategoryReaderValidator(cateId=i.docTemplate)"/>
+            <!-- 按钮权限 -->
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_REPAYME_ADD)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)|authSimpleCategoryEditorValidator(cateId=docTemplate)"/>
+            <query 
+                queryString="method=edit" 
+                validator="authFieldValidator(type=SYS_EDITOR)|[fieldValueValidator(fieldproperty=docStatus,value=10;11)&amp;authFieldValidator(type=creator)]"/>
+            <query 
+                queryString="method=update" 
+                validator="authFieldValidator(type=SYS_EDITOR)|lbpmCurHandlerValidator(method=update)"/>
+            <query 
+                queryString="method=delete" 
+                validator="[authFieldValidator(type=creator)|roleValidator(role=ROLE_FSSCLOAN_REPAYME_DELETE)]&amp;fieldValueValidator(fieldproperty=docStatus,value=00;10;11)"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_REPAYME_DELETE)"/>
+        </request>
+        <request 
+            path="fssc_loan_re_category/fsscLoanReCategory.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.loan.model.FsscLoanReCategory,adminRoleName=ROLE_FSSCLOAN_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCLOAN_SETTING)">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="sysSimpleCategoryEditorValidator(recid=parentId)"/>
+            <query 
+                queryString="method=view" 
+                validator="sysSimpleCategoryReaderValidator()"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=delete" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_SETTING)"/>
+        </request>
+        <request 
+            path="fssc_loan_transfer/fsscLoanTransfer.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.loan.model.FsscLoanTransfer" 
+            defaultValidator="roleValidator(role=ROLE_FSSCLOAN_DEFAULT)">
+            <query 
+               queryString="method=add|save|saveadd&amp;i.docTemplate=*" 
+               validator="roleValidator(role=ROLE_FSSCLOAN_TRANSFER_ADD)&amp;authSimpleCategoryReaderValidator(cateId=i.docTemplate)"/>
+            <!-- 按钮权限 -->
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_TRANSFER_ADD)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="authFieldValidator(type=SYS_EDITOR)"/>
+            <query 
+                queryString="method=delete" 
+                validator="[authFieldValidator(type=creator)|roleValidator(role=ROLE_FSSCLOAN_TRANSFER_DELETE)]&amp;fieldValueValidator(fieldproperty=docStatus,value=00;10;11)"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_TRANSFER_DELETE)"/>
+        </request>
+        <request 
+            path="fssc_loan_control/fsscLoanControl.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.loan.model.FsscLoanControl" 
+            defaultValidator="roleValidator(role=ROLE_FSSCLOAN_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_SETTING)"/>
+        </request>
+        <request 
+            path="fssc_loan_pay_warn/fsscLoanPayWarn.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.loan.model.FsscLoanPayWarn" 
+            defaultValidator="roleValidator(role=ROLE_FSSCLOAN_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_SETTING)"/>
+        </request>
+        <request
+                path="fssc_loan_main/fsscLoanMainArchives.do*"
+                defaultValidator="true" />
+        <request
+                path="fssc_loan_repayment/fsscLoanRepaymentArchives.do*"
+                defaultValidator="true" />
+
+        <filters 
+            modelName="com.landray.kmss.fssc.loan.model.FsscLoanMain">
+            <filter
+                type="creator"
+                expression="authFieldFilter(field=docCreator.fdId)" />
+            <filter
+                type="CHARGE_PERSON"
+                expression="authFieldFilter(field=fdLoanChargePerson.fdId)"/>
+            <filter
+                type="SYS_READER"
+                expression="authFieldFilter(field=docCreator.fdId)"/>
+            <filter
+                type="SYS_READER"
+                expression="authFieldFilter(field=fdLoanChargePerson.fdId)"/>
+            <filter
+                type="SYS_READER"
+                expression="authFieldFilter(field=fdLoanPerson.fdId)"/>
+            <filter
+                type="SYS_READER"
+                expression="authFieldFilter(field=fdOffsetters.fdId)"/>
+            <filter
+                type="SYS_READER"
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter
+                type="SYS_READER"
+                expression="roleFilter(role=ROLE_FSSCLOAN_VIEW)"/>
+            <!-- 类别维护者 -->
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docTemplate.authEditors.fdId)"/>
+            <!-- 类别可阅读者 -->
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docTemplate.authTmpReaders.fdId)"/>
+            <!-- 类别可编辑者 -->
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docTemplate.authTmpEditors.fdId)"/>
+            <filter
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.loan.model.FsscLoanCategory">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCLOAN_SETTING)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_FSSCLOAN_SETTING)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.loan.model.FsscLoanRepayment">
+            <filter 
+                type="creator" 
+                expression="authFieldFilter(field=fdRepaymentPerson.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter
+                type="SYS_READER"
+                expression="roleFilter(role=ROLE_FSSCLOAN_REPAYME_VIEW)"/>
+             <!-- 类别维护者 -->
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docTemplate.authEditors.fdId)"/>
+            <!-- 类别可阅读者 -->
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docTemplate.authTmpReaders.fdId)"/>
+            <!-- 类别可编辑者 -->
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docTemplate.authTmpEditors.fdId)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.loan.model.FsscLoanReCategory">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCLOAN_SETTING)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_FSSCLOAN_SETTING)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <filters
+            modelName="com.landray.kmss.fssc.loan.model.FsscLoanTransfer">
+            <filter 
+                type="creator" 
+                expression="authFieldFilter(field=fdTurnOut.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER"
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter
+                type="SYS_READER"
+                expression="roleFilter(role=ROLE_FSSCLOAN_TRANSFER_VIEW)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+    </module>
+    <module 
+        urlPrefix="/sys/lbpmservice/support/">
+        <request 
+            path="lbpm_template/lbpmTemplate*">
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.loan.model.FsscLoanCategory" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_SETTING)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.loan.model.FsscLoanReCategory" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_SETTING)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.loan.model.FsscLoanTransfer" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_SETTING)"/>
+        </request>
+    </module>
+    <module 
+        urlPrefix="/sys/number/">
+        <request 
+            path="sys_number_main/sysNumberMain*">
+            <query 
+                queryString="modelName=com.landray.kmss.fssc.loan.model.FsscLoanMain" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_SETTING)"/>
+            <query
+                queryString="modelName=com.landray.kmss.fssc.loan.model.FsscLoanRepayment"
+                validator="roleValidator(role=ROLE_FSSCLOAN_SETTING)"/>
+            <query
+                queryString="modelName=com.landray.kmss.fssc.loan.model.FsscLoanTransfer"
+                validator="roleValidator(role=ROLE_FSSCLOAN_SETTING)"/>
+        </request>
+    </module>
+    <module 
+        urlPrefix="/sys/circulation/">
+       <request 
+            path="sys_circulation_main/sysCirculationMain*">
+            <query 
+                queryString="method=add|save|saveadd&amp;fdModelName=com.landray.kmss.fssc.loan.model.FsscLoanMain" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_DEFAULT)|roleValidator(role=ROLE_FSSCLOAN_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.loan.model.FsscLoanMain)"/>
+            <query 
+                queryString="method=delete&amp;fdModelName=com.landray.kmss.fssc.loan.model.FsscLoanMain" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.loan.model.FsscLoanMain)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.loan.model.FsscLoanMain" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_DEFAULT)"/>
+            <query 
+                queryString="method=add|save|saveadd&amp;fdModelName=com.landray.kmss.fssc.loan.model.FsscLoanRepayment" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_DEFAULT)|roleValidator(role=ROLE_FSSCLOAN_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.loan.model.FsscLoanRepayment)"/>
+            <query 
+                queryString="method=delete&amp;fdModelName=com.landray.kmss.fssc.loan.model.FsscLoanRepayment" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.loan.model.FsscLoanRepayment)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.loan.model.FsscLoanRepayment" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_DEFAULT)"/>
+              <query 
+                queryString="method=delete&amp;fdModelName=com.landray.kmss.fssc.loan.model.FsscLoanTransfer" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.loan.model.FsscLoanTransfer)"/>
+              <query 
+                queryString="fdModelName=com.landray.kmss.fssc.loan.model.FsscLoanTransfer" 
+                validator="roleValidator(role=ROLE_FSSCLOAN_DEFAULT)"/>
+        </request>
+    </module>
+        	<!-- 文档视图列表批量修改权限 -->
+	<module urlPrefix="/sys/right/">
+		<request path="rightDocChange*">
+			<query queryString="method=docRightEdit&amp;modelName=com.landray.kmss.fssc.loan.model.FsscLoanMain"
+				validator="areaRoleValidator(role=ROLE_FSSCLOAN_CHANGERIGHT)" />
+		</request>
+	</module>
+    <module urlPrefix="/sys/right/">
+        <request path="rightDocChange*">
+            <query queryString="method=docRightEdit&amp;modelName=com.landray.kmss.fssc.loan.model.FsscLoanRepayment"
+                   validator="areaRoleValidator(role=ROLE_FSSCLOAN_REPAYMENT_CHANGERIGHT)" />
+        </request>
+    </module>
+    <module urlPrefix="/sys/right/">
+        <request path="rightDocChange*">
+            <query queryString="method=docRightEdit&amp;modelName=com.landray.kmss.fssc.loan.model.FsscLoanTransfer"
+                   validator="areaRoleValidator(role=ROLE_FSSCLOAN_TRANSFER_CHANGERIGHT)" />
+        </request>
+    </module>
+    
+    
+    <!-- 【费控系统】借款模块  还款提醒定时任务 -->
+    <quartz
+        messageKey="fssc-loan:fsscLoanPayWarn.quartz"
+        jobService="fsscLoanRepaymentReminder"
+        jobMethod="quartzRemind"
+        cronExpression="0 0 1 * * ?"
+        description="fssc-loan:fsscLoanPayWarn.quartz.description" />
+    <homePage 
+        messageKey="fssc-loan:module.fssc.loan" 
+        urlPrefix="fssc/loan" 
+        url="/fssc/loan/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/fssc/loan/tree.jsp"/>
+    <homePage 
+        messageKey="fssc-loan:table.fsscLoanRepayment" 
+        urlPrefix="fssc/loan/repay" 
+        url="/fssc/loan/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/fssc/loan/tree.jsp"/>
+    <flowDef 
+        modelName="com.landray.kmss.fssc.loan.model.FsscLoanMain" 
+        key="fsscLoanMain" 
+        type="oa" 
+        templatePropertyName="docTemplate" 
+        moduleMessageKey="fssc-loan:table.fsscLoanMain" 
+        templateModelName="com.landray.kmss.fssc.loan.model.FsscLoanCategory">
+         <variant name="examine" key="fssc-loan:flow.variant.examine"/><!-- 财务审核 -->
+         <variant 
+        	name="confirmPayment" 
+        	key="fssc-loan:flow.variant.confirmPayment"/><!-- 流程确认提交，推送到银行付款 -->
+        <variant
+            name="paymentVariant"
+            key="fssc-loan:fsscLoanMain.paymentVariant" /><!-- 修改付款单 -->
+        <variant
+            name="voucherVariant"
+            key="fssc-loan:fsscLoanMain.voucherVariant" /><!-- 凭证附加选项 -->
+        <variant
+            name="presOperation"
+            key="fssc-loan:fsscLoanMain.presOperation"/><!-- 退单/补齐 -->
+    </flowDef>
+    <flowDef 
+        modelName="com.landray.kmss.fssc.loan.model.FsscLoanRepayment" 
+        key="fsscLoanRepayment" 
+        type="oa" 
+        templatePropertyName="docTemplate" 
+        moduleMessageKey="fssc-loan:table.fsscLoanRepayment" 
+        templateModelName="com.landray.kmss.fssc.loan.model.FsscLoanReCategory">
+        <variant
+            name="voucherVariant"
+            key="fssc-loan:fsscLoanMain.voucherVariant" /><!-- 生成凭证附加选项 -->
+    </flowDef>
+    <flowDef 
+        modelName="com.landray.kmss.fssc.loan.model.FsscLoanTransfer" 
+        key="fsscLoanTransfer" 
+        type="oa" 
+        moduleMessageKey="fssc-loan:table.fsscLoanTransfer" 
+        templateModelName="com.landray.kmss.fssc.loan.model.FsscLoanTransfer">
+        <variant
+            name="voucherVariant"
+            key="fssc-loan:fsscLoanMain.voucherVariant" /><!-- 生成凭证附加选项 -->
+    </flowDef>
+    <profileConfig 
+        key="fssc/loan" 
+        messageKey="{fssc-loan:module.fssc.loan}" 
+        url="/sys/profile/moduleindex.jsp?nav=/fssc/loan/tree.jsp" 
+        icon="kk_notify" 
+        type="fs" 
+        description="{fssc-loan:module.fssc.loan.description}"/>
+</configs>

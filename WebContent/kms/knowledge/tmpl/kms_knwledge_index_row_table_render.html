@@ -1,0 +1,268 @@
+var datas = data;
+var imgUrl = '/sys/person/sys_person_zone/sysPersonZone.do?method=img&fdId=';
+for (var i = 0; i < datas.length; i ++) { 
+	var row = datas[i];
+	{$
+		<div class="clearfloat lui_listview_rowtable_summary_content_box" kmss_fdId="{%row.fdId.text%}">
+			<div class="lui_listview_rowtable_summary_content_left">
+				<div class="lui_listview_rowtable_div lui_listview_rowtable_summary_content_checkbox" >
+					<span>
+		$}
+						if(template.showCheckbox){
+						
+							{$<input type="checkbox" data-lui-mark="table.content.checkbox" value="{%row.fdId.text%}" name="{%template['checkBoxName'] ? template['checkBoxName'] : 'List_Selected'%}"/>$}
+						}
+				{$
+						<span class="lui_listview_rowtable_summary_content_serial">{% i+1 %}</span>
+					</span>
+				</div>
+				<div class="lui_listview_rowtable_div lui_listview_rowtable_title">
+					<div>
+				$}
+					if(row.docSubject){
+						{$<a href="javascript:;" 
+							data-lui-mark-id="{%row.rowId%}" 
+							title="{%row.docSubject.text%}" 
+							class="com_subject textEllipsis">$}
+							if(row.icon && row.icon.text){
+								{$<span style="position: relative; top: -2px">{% row.icon.text %}</span>$}
+							}
+							{$ {%row.docSubject.text%} $}
+						{$</a>$}
+					}
+				{$	
+					</div>
+				</div>
+			$}
+			
+
+			if(row.fdDescription && row.fdDescription.text){
+				{$
+				<div class="lui_listview_rowtable_desc">
+						<span class="index_desc_span" title="{%row.fdDescription.text%}">
+							{%row.fdDescription.text%}
+						</span>
+				</div>
+			$}
+			}
+			{$
+			</div>
+			<div class="lui_listview_rowtable_div lui_listview_rowtable_summary_content_right">
+				<dd class="lui_listview_rowtable_summary_content_box_foot_info">
+					$}
+					if(row['docCategory.fdName']&&row['docCategory.fdName'].text){
+						{$ 
+						<em>
+					 		{%row['docCategory.fdName'].text%}
+						</em>
+						$}
+					}
+
+					if(row['docTemplate']&&row['docTemplate'].text){
+						{$ 
+						<em>
+					 		{%row['docTemplate'].text%}
+						</em>
+						$}
+					}
+					
+					if(row['docDept.fdName']&&row['docDept.fdName'].text){
+						{$<span>
+						 	{%row['docDept.fdName'].label%}:{%row['docDept.fdName'].text%}
+						</span>$}
+					}
+					
+				 	if(row.tag && row.tag.text){
+				 		var __href = [env.fn.formatUrl('/sys/ftsearch/searchBuilder.do?method=search&queryString='),'','&modelName=','','&searchFields=tag&newLUI=true']
+						{$<span>
+					 		{%row.tag.label%}:$}
+					 		var ___rowText = str.toJSON(row.tag.text);
+					 		for(var jj = 0;jj < ___rowText.length; jj++){
+					 			__href[1] = encodeURIComponent(___rowText[jj].text)||'';
+					 			__href[3] = ___rowText[jj].model||'';
+					 			{$
+				 					<a class="com_subject" target="_blank" href="{% __href.join('') %}">{%___rowText[jj].text%}</a>
+					 			$}
+					 			if(jj <  ___rowText.length-1){
+					 				{$ | $}
+					 			}
+					 		}
+					 	{$</span>$}			 	
+				 	}
+				 	
+			{$
+				</dd>
+			</div>
+			<div class="lui_listview_rowtable_summary_content_bottom">
+			$}
+			if(row['markTime']) {
+				{$
+					<span class="lui_listview_landrayblue_bottom_bookmark">
+	                     <span>{%row['markTime'].text%}</span>
+	                     <span style="margin-left: 10px; margin-right: 10px;">{%row['markTime'].label%}</span>
+                   	</span>
+				$}
+			}
+			if(row.docReadTime && row.docReadTime.text){
+			 	{$
+					<span class="lui_listview_landrayblue_bottom_bookmark" style="margin-right: 10px; border-right: 1px solid #eeeeee">
+	                     <span>{%row['docReadTime'].text%}</span>
+	                     <span style="margin-left: 10px; margin-right: 10px;">{%row['docReadTime'].label%}</span>
+                   	</span>
+				$}
+		 	}
+			
+			if(row['evalTime']) {
+				if(row['docScoreStar']) {
+					{$
+						<span class="lui_listview_landrayblue_bottom_star">
+		                     <span title="{%row['docScoreStar'].text%}">{%row['docScoreStarHtml'].text%}</span>
+	                   	</span>
+					$}
+				}
+				{$
+					<span class="lui_listview_landrayblue_bottom_myeval">
+	                     <span>{%row['evalTime'].text%}</span>
+	                     <span style="margin-left: 10px; margin-right: 10px;">{%row['evalTime'].label%}</span>
+                   	</span>
+				$}
+			}
+			
+			if(row['docAuthorId']||row['docAuthor.fdId']){
+				var text = row['docAuthorId']?row['docAuthorId'].text:row['docAuthor.fdId'].text;
+				if(row['docAuthor.fdAuthorImageUrl']){
+				  var text1=row['docAuthor.fdAuthorImageUrl'].text;
+				  if(text1!=""){
+				     {$
+						<span class="lui_listview_landrayblue_bottom_avator_img">
+		                   <img src="{%env.fn.formatUrl(text1)%}">
+	                   	</span>
+                   	  $}
+				  }else{
+				    {$
+						<span class="lui_listview_landrayblue_bottom_avator_img">
+		                     <img src="{%env.fn.formatUrl(imgUrl+text)%}">
+	                   	</span>
+                    	$}
+				  }
+				}else{
+				    {$
+						<span class="lui_listview_landrayblue_bottom_avator_img">
+		                     <img src="{%env.fn.formatUrl(imgUrl+text)%}">
+	                   	</span>
+                   	$}
+				}
+			}
+			if(row['docAuthor.fdName']&&row['docAuthor.fdName'].text){
+				{$
+				<span class="index_docAuthor">
+			 		{%row['docAuthor.fdName'].text%}
+				</span>
+				$}
+			}
+			
+			if(row.lbpmTime && row.lbpmTime.text){
+			 	{$<span class="time">
+			 		{% row.lbpmTime.label %} :
+			 		{% row.lbpmTime.text  %}
+			 	</span>$}
+		 	} else if (row.alterTime && row.alterTime.text){
+		 		{$<span class="time">
+			 		{% row.alterTime.label %} :
+			 		{% row.alterTime.text %}
+			 	</span>$}
+		 	} else {
+		 	
+		 		if(row.docAlterTime && row.docAlterTime.text){
+				 	{$<span class="time">
+				 		{% row.docAlterTime.label %} :
+				 		{% row.docAlterTime.text %}
+				 	</span>$}
+			 	}
+		 		
+		 		if(row.docPublishTime && row.docPublishTime.text){
+				 	{$<span class="time">
+				 		{% row.docPublishTime.label %} :
+				 		{% row.docPublishTime.text %}
+				 	</span>$}
+			 	}
+		 		
+			 }
+		 	
+			for(var r in row){
+		 		var f = false;
+		 		if(template.isShowOtherProp(r)){
+			 		f = true;
+		 		}
+		 		if(f){
+                    if(r=="docBorrowFlagName"){
+                        // 只显示可借阅的标志
+                        if(row["docBorrowFlag"].text=="1" || row["docBorrowFlag"].text=="3"){
+		                 {$
+		                 <span class="docBorrowFlag">
+		                     {%row[r].text%}
+		                 </span>
+		                 $}
+                        }
+                    }
+                    if(r=="borrowEndTime"){
+                        if(row["docBorrowFlag"].text=="3"){
+		                 {$
+		                 <span class="borrowEndTime">
+		                     {%row[r].label%}: {%row[r].text%}
+		                 </span>
+		                 $}
+                        }
+                    }
+                    
+		 		}
+		 	}
+		 	
+		 	{$
+		 		<div class="other_prop">
+		 	$}
+			 	for(var r in row){
+			 		var f = false;
+			 		if(template.isShowOtherProp(r)){
+				 		f = true;
+			 		}
+			 		if(f && r != "docBorrowFlagName" && r != "borrowEndTime"){
+			 			if(r == "docScore" && row['docScoreStar']) {
+			 				continue;
+			 			} else if(r == "fdTotalCount") {
+	 						{$
+		                       <span title="{%row[r].label%}">
+		                           <span class="icon_read row_icon"></span> {%row[r].text%}
+		                       </span>
+	                       $}
+	 					} else if(r == "docEvalCount") {
+	 						{$
+		                       <span title="{%row[r].label%}">
+		                           <span class="icon_eval row_icon"></span> {%row[r].text%}
+		                       </span>
+	                       $}
+	 					} else if(r == "docIntrCount") {
+	 						{$
+		                       <span title="{%row[r].label%}">
+		                           <span class="icon_intr row_icon"></span> {%row[r].text%}
+		                       </span>
+	                       $}
+	 					} else if(r == "docScore" && !row['docScoreStar']) {
+	 						{$
+		                       <span title="{%row[r].label%}">
+		                           <span class="icon_score row_icon"></span> {%row[r].text%}
+		                       </span>
+	                       $}
+	 					}
+			 		}
+			 	}
+		 	
+		 	{$
+		 		</div>
+		 	
+		 	$}
+			{$
+			</div>
+		</div>
+	$}
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<extension-point id="com.landray.kmss.kms.knowledge.batch">
+		<item name="module">
+			<param name="service" required="true" kind="spring" 
+				basedOn="com.landray.kmss.kms.common.interfaces.IKmsIstorageBatchModuleService">
+				<description>必选，入库逻辑</description>
+			</param>
+			<param name="modelName" required="true" kind="string">
+				<description>必选，主模块名</description>
+			</param>
+			<param name="cateName" required="true" kind="string">
+				<description>必选，分类模块名</description>
+			</param>
+			<param name="order" required="true" kind="int">
+				<description>必选，排序号</description>
+			</param>
+			<description>入库模块扩展点定义。</description>
+		</item>
+		<item name="type">
+			<param name="unid" required="true" kind="unid">
+				<description>必选，存储类型唯一标识</description>
+			</param>
+			<param name="title" required="true" kind="string">
+				<description>必选，存储类型名称</description>
+			</param>
+			<param name="service" required="true" kind="spring" 
+				basedOn="com.landray.kmss.sys.filestore.location.interfaces.ISysFileLocationBatchTypeService">
+				<description>必选，存储逻辑</description>
+			</param>
+			<param name="jsp" required="false" kind="string">
+				<description>非必选，配置页面</description>
+			</param>
+			<param name="order" required="true" kind="int">
+				<description>必选，排序号</description>
+			</param>
+			<description>入库存储扩展点定义。</description>
+		</item>
+		<description>文档批量入库扩展点。</description>
+	</extension-point>
+	
+	<extension point="com.landray.kmss.kms.knowledge.batch">
+		<item name="type">
+			<param name="unid" value="server" />
+			<param name="title"
+				value="kms-knowledge-batch:kmsKnowledgeBatch.type.server.title" />
+			<param name="service" value="kmsKnowledgeBatchTypeServerService" />
+			<param name="order" value="1" />
+		</item>
+	</extension>
+	
+</plugin>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/cluster/sys_cluster_server/sysClusterServer.do"
+		class="com.landray.kmss.sys.cluster.actions.SysClusterServerAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.cluster.forms.SysClusterServerForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/cluster/sys_cluster_server/sysClusterServer_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/cluster/sys_cluster_server/sysClusterServer_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/cluster/sys_cluster_server/sysClusterServer_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/cluster/sys_cluster_group/sysClusterGroup.do"
+		class="com.landray.kmss.sys.cluster.actions.SysClusterGroupAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.cluster.forms.SysClusterGroupForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/cluster/sys_cluster_group/sysClusterGroup_view.jsp" />			
+				<entry
+					key="edit"
+					value="/sys/cluster/sys_cluster_group/sysClusterGroup_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/cluster/sys_cluster_group/sysClusterGroup_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/cluster/sys_cluster_dispatcher/sysClusterDispatcher.do"
+		class="com.landray.kmss.sys.cluster.actions.SysClusterDispatcherAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/cluster/sys_cluster_dispatcher/sysClusterDispatcher_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/cluster/sys_cluster_group_func/sysClusterGroupFunc.do"
+		class="com.landray.kmss.sys.cluster.actions.SysClusterGroupFuncAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="list"
+					value="/sys/cluster/sys_cluster_group_func/sysClusterGroupFunc_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/resource/sys/cluster/config.do"
+		class="com.landray.kmss.sys.cluster.actions.SysClusterConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+</beans>

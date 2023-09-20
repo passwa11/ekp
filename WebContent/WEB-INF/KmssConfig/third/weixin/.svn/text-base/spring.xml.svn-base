@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		id="wxWorkPcScanLogin"
+		class="com.landray.kmss.third.weixin.work.sso.WxWorkPcScanLogin"></bean>
+	
+	<bean
+		id="wxOauth2ProcessingFilter"
+		class="com.landray.kmss.third.weixin.sso.WxOauth2AuthProcessingFilter">
+		<property
+			name="autoLoginHelper">
+			<ref
+				bean="autoLoginHelper" />
+		</property>
+	</bean>
+
+	<!-- 待办集成 -->
+	<bean
+		id="wxNotifyProvider"
+		class="com.landray.kmss.third.weixin.notify.WxNotifyProvider">
+		<property name="wxOmsRelationService">
+			<ref bean="wxOmsRelationService" />
+		</property>
+	</bean>
+
+	<bean
+		id="wxOmsRelationDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.weixin.spi.dao.hibernate.WxOmsRelationDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.weixin.spi.model.WxOmsRelationModel" />
+	</bean>
+	<bean
+		id="wxOmsRelationTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.third.weixin.spi.service.spring.WxOmsRelationServiceImp">
+		<property name="baseDao">
+			<ref bean="wxOmsRelationDao" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+	</bean>
+	<bean
+		id="wxOmsRelationService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="wxOmsRelationTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="synchroOrg2WxTarget"
+		class="com.landray.kmss.third.weixin.oms.SynchroOrg2WxImp">
+		<property
+			name="wxOmsRelationService">
+			<ref
+				bean="wxOmsRelationService" />
+		</property>
+		<property
+			name="sysOrgCoreService">
+			<ref
+				bean="sysOrgCoreService" />
+		</property>
+		<property
+			name="sysOrgElementService">
+			<ref
+				bean="sysOrgElementService" />
+		</property>
+		<property
+			name="sysOrgPersonService">
+			<ref
+				bean="sysOrgPersonService" />
+		</property>
+		<property
+			name="thirdWeixinOmsPostService">
+			<ref
+				bean="thirdWeixinOmsPostService" />
+		</property>
+	</bean>
+	<bean
+		id="synchroOrg2Wx"
+		lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property
+			name="transactionManager">
+			<ref
+				bean="transactionManager" />
+		</property>
+		<property
+			name="target">
+			<ref
+				bean="synchroOrg2WxTarget" />
+		</property>
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop
+					key="triggerSynchro">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean
+		id="wxMenuDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.weixin.spi.dao.hibernate.WxMenuDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.weixin.spi.model.WxMenuModel" />
+	</bean>
+	<bean
+		id="wxMenuTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.third.weixin.spi.service.spring.WxMenuServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="wxMenuDao" />
+		</property>
+	</bean>
+	<bean
+		id="wxMenuService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="wxMenuTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="wxPdaModelSelectDialog"
+		class="com.landray.kmss.third.weixin.spi.service.spring.WxPdaModelSelectDialog">
+	</bean>
+
+	<bean
+		id="synchroOrg2WxCheck"
+		class="com.landray.kmss.third.weixin.oms.SynchroOrg2WxCheckImp">
+		<property
+			name="sysOrgElementService">
+			<ref
+				bean="sysOrgElementService" />
+		</property>
+		<property
+            name="sysOrgCoreService">
+            <ref
+                bean="sysOrgCoreService" />
+        </property>
+	</bean>
+
+	<!-- 机器人节点设置 -->
+	<bean id="robotNodeSendDynamicInfoToWxService"
+		class="com.landray.kmss.third.weixin.service.spring.RobotNodeSendDynamicInfoToWxServiceImp">
+		<property name="thirdWxDynamicinfoService">
+			<ref bean="thirdWxDynamicinfoService" />
+		</property>
+		<property name="thirdWxWriteDynamicInfoService">
+			<ref bean="thirdWxWriteDynamicInfoService" />
+		</property>
+	</bean>
+	
+	<bean id="thirdWxDynamicinfoDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWxDynamicinfoDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.weixin.model.ThirdWxDynamicinfo" />
+	</bean>
+	<bean id="thirdWxDynamicinfoTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.weixin.service.spring.ThirdWxDynamicinfoServiceImp">
+		<property name="baseDao">
+			<ref bean="thirdWxDynamicinfoDao" />
+		</property>
+	</bean>
+	<bean id="thirdWxDynamicinfoService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdWxDynamicinfoTarget" />
+		</property>
+	</bean>
+	
+	<!-- 定时任务设置 -->
+	<bean id="thirdWxWriteDynamicInfoService"
+		class="com.landray.kmss.third.weixin.service.spring.ThirdWxWriteDynamicInfoServiceImp">
+		<property name="thirdWxDynamicinfoService">
+			<ref bean="thirdWxDynamicinfoService" />
+		</property>
+		<property name="wxTaskExecutor">
+			<ref bean="wxTaskExecutor" />
+		</property>
+	</bean>
+
+	<bean
+		id="thirdWxOmsInitDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWxOmsInitDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.weixin.model.ThirdWxOmsInit" />
+	</bean>
+
+	<bean
+		id="thirdWxOmsInitTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.third.weixin.service.spring.ThirdWxOmsInitServiceImp">
+		<property name="baseDao">
+			<ref bean="thirdWxOmsInitDao" />
+		</property>
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="wxOmsRelationService">
+			<ref bean="wxOmsRelationService" />
+		</property>
+	</bean>
+	<bean
+		id="thirdWxOmsInitService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdWxOmsInitTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="thirdWxOmsInitListService"
+		class="com.landray.kmss.third.weixin.service.spring.ThirdWxOmsInitListService">
+		<property name="sysOrgElementService">
+			<ref bean="sysOrgElementService" />
+		</property>
+		<property name="wxOmsRelationService">
+			<ref bean="wxOmsRelationService" />
+		</property>
+		<property name="sysOrganizationVisibleService">
+			<ref bean="sysOrganizationVisibleService" />
+		</property>
+		<property name="roleValidator">
+			<ref bean="roleValidator" />
+		</property>
+		<property name="sysOrganizationStaffingLevelService">
+			<ref bean="sysOrganizationStaffingLevelService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="wxTaskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property
+			name="corePoolSize"
+			value="20" />
+		<property
+			name="maxPoolSize"
+			value="50" />
+		<property
+			name="keepAliveSeconds"
+			value="200" />
+		<property
+			name="queueCapacity"
+			value="250" />
+		<property name="rejectedExecutionHandler">
+			<bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+		</property>
+	</bean>
+			
+	<bean
+		id="thirdWeixinOmsPostDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinOmsPostDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.weixin.model.ThirdWeixinOmsPost" />
+	</bean>
+	<bean
+		id="thirdWeixinOmsPostTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinOmsPostServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="thirdWeixinOmsPostDao" />
+		</property>
+	</bean>
+	<bean
+		id="thirdWeixinOmsPostService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="thirdWeixinOmsPostTarget" />
+		</property>
+	</bean>
+
+	<bean
+			id="thirdWeixinPayOrderDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinPayOrderDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinPayOrder</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinPayOrderTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinPayOrderServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinPayOrderDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinPayOrderService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinPayOrderTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinPayCbDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinPayCbDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinPayCb</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinPayCbTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinPayCbServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinPayCbDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinPayCbService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinPayCbTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinPayLogDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinPayLogDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinPayLog</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinPayLogTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinPayLogServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinPayLogDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinPayLogService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinPayLogTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinPayBlDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinPayBlDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinPayBl</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinPayBlTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinPayBlServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinPayBlDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinPayBlService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinPayBlTarget"/>
+		</property>
+	</bean>
+
+	<bean
+			id="thirdWeixinContactMappDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinContactMappDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinContactMapp</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinContactMappTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinContactMappServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinContactMappDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinContactMappService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinContactMappTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinContactCbDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinContactCbDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinContactCb</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinContactCbTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinContactCbServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinContactCbDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinContactCbService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinContactCbTarget"/>
+		</property>
+	</bean>
+
+	<bean
+			id="thirdWeixinContactOrgTypeDataSource"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinContactOrgTypeDataSource">
+	</bean>
+
+	<bean
+			id="thirdWeixinDomainCheckDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinDomainCheckDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinDomainCheck</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinDomainCheckTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinDomainCheckServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinDomainCheckDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinDomainCheckService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinDomainCheckTarget"/>
+		</property>
+	</bean>
+
+	<bean
+			id="thirdWeixinAppchatDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinAppchatDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinAppchat</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinAppchatTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinAppchatServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinAppchatDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinAppchatService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinAppchatTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinChatDataMainDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinChatDataMainDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinChatDataMain</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinChatDataMainTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinChatDataMainServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinChatDataMainDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinChatDataMainService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinChatDataMainTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinChatDataBakDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinChatDataBakDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinChatDataBak</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinChatDataBakTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinChatDataBakServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinChatDataBakDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinChatDataBakService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinChatDataBakTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinRobotMsgDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinRobotMsgDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinRobotMsg</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinRobotMsgTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinRobotMsgServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinRobotMsgDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinRobotMsgService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinRobotMsgTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinGroupChatDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinGroupChatDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinGroupChat</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinGroupChatTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinGroupChatServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinGroupChatDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinGroupChatService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinGroupChatTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinChatDataTempDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinChatDataTempDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinChatDataTemp</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinChatDataTempTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinChatDataTempServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinChatDataTempDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinChatDataTempService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinChatDataTempTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinChatGroupDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinChatGroupDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinChatGroup</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinChatGroupTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinChatGroupServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinChatGroupDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinChatGroupService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinChatGroupTarget"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinAccountDao"
+			class="com.landray.kmss.third.weixin.dao.hibernate.ThirdWeixinAccountDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.weixin.model.ThirdWeixinAccount</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinAccountTarget"
+			class="com.landray.kmss.third.weixin.service.spring.ThirdWeixinAccountServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWeixinAccountDao"/>
+		</property>
+	</bean>
+	<bean
+			id="thirdWeixinAccountService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWeixinAccountTarget"/>
+		</property>
+	</bean>
+
+	<bean id="textHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.TextHandler"/>
+	<bean id="agreeHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.AgreeHandler"/>
+	<bean id="calendarHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.CalendarHandler"/>
+	<bean id="cardHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.CardHandler"/>
+	<bean id="chatrecordHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.ChatrecordHandler"/>
+	<bean id="collectHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.CollectHandler"/>
+	<bean id="disagreeHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.DisagreeHandler"/>
+	<bean id="docmsgHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.DocmsgHandler"/>
+	<bean id="emotionHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.EmotionHandler"/>
+	<bean id="externalredpacketHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.ExternalredpacketHandler"/>
+	<bean id="fileHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.FileHandler"/>
+	<bean id="imageHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.ImageHandler"/>
+	<bean id="linkHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.LinkHandler"/>
+	<bean id="locationHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.LocationHandler"/>
+	<bean id="markdownHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.MarkdownHandler"/>
+	<bean id="meetingHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.MeetingHandler"/>
+	<bean id="meetingvoicecallHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.MeetingvoicecallHandler"/>
+	<bean id="mixedHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.MixedHandler"/>
+	<bean id="newsHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.NewsHandler"/>
+	<bean id="redpacketHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.RedpacketHandler"/>
+	<bean id="revokeHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.RevokeHandler"/>
+	<bean id="sphfeedHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.SphfeedHandler"/>
+	<bean id="todoHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.TodoHandler"/>
+	<bean id="videoHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.VideoHandler"/>
+	<bean id="voiceHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.VoiceHandler"/>
+	<bean id="voipdocshareHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.VoipdocshareHandler"/>
+	<bean id="voteHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.VoteHandler"/>
+	<bean id="weappHandler"
+		  class="com.landray.kmss.third.weixin.chat.msgtype.WeappHandler"/>
+
+
+</beans>

@@ -1,0 +1,248 @@
+data = data || {};
+var viewWgt = render.parent;
+var lang = viewWgt.getModelingLang();
+var fieldInfos = viewWgt.getFieldInfos();
+// 列表穿透，默认是true
+var viewFlag = data.fdViewFlag === "0" ? "0":"1";
+// 是否权限过滤，默认是true
+var authEnabled = data.fdAuthEnabled === "0" ? "0":"1";
+
+// 获取标题字段的文本值
+var fdSubject = data.fdSubject || {};
+var fdSummaryTitleShow = data.fdSummaryTitleShow === "1" ? "1":"0";
+
+{$
+<!--需要覆盖一些样式-->
+<style>
+<!--	重影样式覆盖-->
+	.model-view-panel-table .model-view-panel-table-td .inputselectsgl .selectitem:before{
+		opacity:0 ;
+	}
+</style>
+	<table class="tb_simple model-view-panel-table" width="100%">
+		<tr lui-pam-hidden="true">
+			<td class="td_normal_title">
+				{%lang['listview.tab.name']%}
+			</td>
+		</tr>
+		<tr lui-pam-hidden="true">
+			<td class="model-view-panel-table-td td-bottom">
+				<input name="fd_{%viewWgt.id%}_fdName" placeholder="{%lang['modeling.please.enter']%}" subject="{%lang['modelingAppListview.fdName']%}" style="width:93%;height:28px!important;padding-bottom:0" class="inputsgl border-color" value="{%data.fdName%}" type="text" validate="required maxLength(200)"  />
+				<span class="txtstrong">*</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="td_normal_title" data-lui-position='fdSubject'>
+				{%lang['listview.title.field']%}
+			</td>
+		</tr>
+		<tr class="fdSubjectTr">
+			<td class="model-view-panel-table-td">
+				<div class="model-mask-panel-table-select" style="margin-left: 0px;width:96%;display:inline-block;height:28px">
+					<p class="model-mask-panel-table-select-val" placeholder="{%lang['modeling.page.choose']%}">{%fdSubject.text || lang['modeling.page.choose']%}</p>
+					<div class="model-mask-panel-table-option">$}
+					for(var i = 0;i < fieldInfos.length;i++){
+						var fieldInfo = fieldInfos[i];
+						{$
+							<div option-value="{%fieldInfo.field%}" data-field-type="{%fieldInfo.type%}" title="{%fieldInfo.text%}">{%fieldInfo.text%}</div>
+						$}
+					}
+					{$</div>
+					<input name="fd_{%viewWgt.id%}_fdSubject" type="text" style='display: none' validate='required' subject="{%lang['listview.title.field']%}" value="{%fdSubject.field%}" />
+				</div>
+				<span class="txtstrong">*</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="td_normal_title" data-lui-position='fdDisplay'>
+				{%lang['listview.summary.item']%}
+			</td>
+		</tr>
+		<tr>
+			<td class="model-view-panel-table-td">
+				<div class="inputselectsgl multiSelectDialog" data-lui-position='fdDisplay'  style="width:100%;height: 28px!important;">
+					<input name="fd_{%viewWgt.id%}_fdSummary" value='{%JSON.stringify(data.fdSummary)%}' type="hidden">
+					<div class="input">
+						<input name="fd_{%viewWgt.id%}_fdSummaryText" value="{%data.fdSummaryText%}" placeholder="{%lang['modeling.page.choose']%}" type="text" readonly />
+					</div>
+					<div class="selectitem"></div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="model-view-panel-table-td">
+				{%lang['listview.whether.displays.summary.item']%}
+				<input type="hidden" name="fd_{%viewWgt.id%}_fdSummaryTitleShow" value='{%fdSummaryTitleShow%}'>
+				<div class="view_flag_radio" style="display: inline-block;">
+					<div class="view_flag_radio_yes" style="display: inline-block;cursor: pointer;"
+						 onclick="changeViewFlag(this,'fd_{%viewWgt.id%}_fdSummaryTitleShow',1)">
+						<i class="view_flag_no {%fdSummaryTitleShow === '1'?'view_flag_yes':''%}"></i>{%lang['enums.viewtab_fdIsOpen.1']%}
+					</div>
+					<div class="view_flag_radio_no view_flag_last" style="display:inline-block;cursor: pointer;"
+						 onclick="changeViewFlag(this,'fd_{%viewWgt.id%}_fdSummaryTitleShow',0)">
+						<i class="view_flag_no {%fdSummaryTitleShow === '0'?'view_flag_yes':''%}"></i>{%lang['enums.viewtab_fdIsOpen.0']%}
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="td_normal_title" data-lui-position='fdCondition'>
+				{%lang['modelingAppListview.fdCondition']%}
+			</td>
+		</tr>
+		<tr>
+			<td class="model-view-panel-table-td">
+				<div class="inputselectsgl multiSelectDialog"  data-lui-position='fdCondition' style="width:100%;height: 28px!important;">
+					<input name="fd_{%viewWgt.id%}_fdCondition" value='{%JSON.stringify(data.fdCondition)%}' type="hidden">
+					<div class="input">
+						<input name="fd_{%viewWgt.id%}_fdConditionText" value="{%data.fdConditionText%}" placeholder="{%lang['modeling.page.choose']%}" type="text" readonly />
+					</div>
+				<div class="selectitem"></div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="td_normal_title" data-lui-position='fdOrderBy'>
+				{%lang['modelingAppListview.fdOrderBy']%}
+			</td>
+		</tr>
+		<tr>
+			<td class="model-view-panel-table-td">
+				<div class="model-panel-table-base" style="display:none;margin-bottom:0">
+					<table class="tb_simple model-edit-view-oper-content-table" data-table-type="order" style="width:100%;">
+					</table>	
+				</div>
+				<div class="model-data-create">
+					<div>{%lang['button.add']%}</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="td_normal_title" data-lui-position='fdWhere'>
+				{%lang['sysModelingRelation.fdDetailWhere']%}
+			</td>
+		</tr>
+		<tr>
+			<td class="model-view-panel-table-td">
+				<div class="model-query">
+			        <div class="model-query-wrap">
+			            <div class="model-query-tab">
+			                <ul class="clearfix">
+			                    <li class="active"><span>{%lang['modeling.custom.query']%}</span></li>
+			                    <li><span>{%lang['modeling.builtIn.query']%}</span></li>
+			                </ul>
+			            </div>
+			            <div class="model-query-content">
+			                <!-- 自定义查询 -->
+			                <div class="model-query-content-cust model-query-cont">
+			                    <div class="model-query-content-rule clearfix">
+			                        <p>{%lang['listview.query.rules']%}</p>
+			                        <div>
+			                           <label style="margin-left:10px;">
+			                           		<input type="radio" value="0" name="fd_{%viewWgt.id%}_fdMobileWhereType" style="margin-left:5px" {%typeof(data.fdMobileWhereType) === 'undefined'?'checked':data.fdMobileWhereType === '0'?'checked':''%} />{%lang['relation.meet.all.conditions']%}
+			                           </label>
+									   <label style="margin-left:10px;">
+											<input type="radio" value="1" name="fd_{%viewWgt.id%}_fdMobileWhereType" style="margin-left:5px" {%data.fdMobileWhereType === '1'?'checked':''%}/>{%lang['relation.meet.any.conditions']%}
+									   </label>
+			                        </div>
+			                    </div>
+			                    <div class="model-query-content-add">
+			                    	<div class="model-panel-table-base" style="display:none;margin-bottom:0">
+										<table class="tb_simple model-edit-view-oper-content-table" name="custom_query" data-table-type="where" style="width:100%;">
+										</table>
+									</div>
+			                    </div>
+			                    <div class="model-data-create">
+									<div>{%lang['button.add']%}</div>
+								</div>
+			                </div>
+			                <!-- 内置查询 -->
+			                <div class="model-query-content-sys model-query-cont">
+			                    <div class="model-query-content-rule clearfix">
+			                        <p>{%lang['listview.query.rules']%}</p>
+									<div>
+										<label style="margin-left:10px;">
+											<input type="radio" value="0" name="fd_{%viewWgt.id%}_fdMobileInWhereType" style="margin-left:5px" {%typeof(data.fdMobileInWhereType) === 'undefined'?'checked':data.fdMobileInWhereType === '0'?'checked':''%} />{%lang['relation.meet.all.conditions']%}
+										</label>
+										<label style="margin-left:10px;">
+											<input type="radio" value="1" name="fd_{%viewWgt.id%}_fdMobileInWhereType" style="margin-left:5px" {%data.fdMobileInWhereType === '1'?'checked':''%}/>{%lang['relation.meet.any.conditions']%}
+										</label>
+									</div>
+			                    </div>
+			                    <div class="model-query-content-add">
+									<div class="model-panel-table-base" style="display:none;margin-bottom:0">
+										<table class="tb_simple model-edit-view-oper-content-table" name="sys_query" data-table-type="where" style="width:100%;">
+										</table>
+									</div>
+			                    </div>
+			                    <div class="model-data-create">
+									<div>{%lang['button.add']%}</div>
+								</div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+		    </td>
+		</tr>
+
+		<tr>
+			<td class="td_normal_title">
+				{%lang['sysModelingRelation.fdIsThroughList']%}
+			</td>
+		</tr>
+		<tr>
+			<td class="model-view-panel-table-td">
+				<input type="hidden" name="fd_{%viewWgt.id%}_fdViewFlag" value='{%viewFlag%}'>
+	            <div class="view_flag_radio" style="display: inline-block;">
+	            	<div class="view_flag_radio_yes" style="display: inline-block;cursor: pointer;"  onclick="changeViewFlag(this,'fd_{%viewWgt.id%}_fdViewFlag',1,'fd_{%viewWgt.id%}_fdViewId')"><i class="view_flag_no {%viewFlag === '1'?'view_flag_yes':''%}"></i>{%lang['enums.viewtab_fdIsOpen.1']%}</div>
+	            	<div class="view_flag_radio_no view_flag_last" style="display:inline-block;cursor: pointer;"  onclick="changeViewFlag(this,'fd_{%viewWgt.id%}_fdViewFlag',0,'fd_{%viewWgt.id%}_fdViewId')"><i class="view_flag_no {%viewFlag === '0'?'view_flag_yes':''%}"></i>{%lang['enums.viewtab_fdIsOpen.0']%}</div>
+	            </div>
+		        <span style="margin-right:20px"></span>
+		        <select class='inputsgl selectCover' name="fd_{%viewWgt.id%}_fdViewId" style="{%viewFlag === '1'?'':'display:none'%}">
+					<option value="">{%lang['listview.default.view']%}</option>$}
+				// listviewOption.baseInfo在edit.jsp里面定义
+				for(var i = 0;i < listviewOption.baseInfo.views.length;i++){
+					var option = listviewOption.baseInfo.views[i];
+					{$
+						<option value="{%option[0]%}" {%data.fdViewId === option[0]?'selected':''%}>{%option[1]%}</option>
+					$}
+				}
+				{$</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="td_normal_title">
+				{%lang['listview.whether.filter']%}
+			</td>
+		</tr>
+		<tr>
+			<td class="model-view-panel-table-td">
+				<input type="hidden" name="fdAuthEnabled" value='{%authEnabled%}'>
+				<div class="view_flag_radio" style="display: inline-block;">
+					<div class="view_flag_radio_yes" style="display: inline-block;cursor: pointer;"  onclick="changeViewFlag(this,'fdAuthEnabled',1)"><i class="view_flag_no {%authEnabled === '1'?'view_flag_yes':''%}"></i>{%lang['enums.viewtab_fdIsOpen.1']%}</div>
+					<div class="view_flag_radio_no view_flag_last" style="display:inline-block;cursor: pointer;"  onclick="changeViewFlag(this,'fdAuthEnabled',0)"><i class="view_flag_no {%authEnabled === '0'?'view_flag_yes':''%}"></i>{%lang['enums.viewtab_fdIsOpen.0']%}</div>
+				</div>
+				<div><span style="color: red;">{%listviewOption.fdAuthEnabledHit%}</span></div>
+			</td>
+		</tr>
+
+		<tr lui-pam-hidden="true">
+			<td class="td_normal_title">
+				{%lang['modelingAppListview.authSearchReaders']%}
+			</td>
+		</tr>
+		<tr lui-pam-hidden="true">
+			<td class="model-view-panel-table-td">
+				<div class="inputselectsgl addressDialog"
+					onclick="Dialog_Address(true, 'fd_{%viewWgt.id%}_authSearchReaderIds','fd_{%viewWgt.id%}_authSearchReaderNames', ';', ORG_TYPE_ALL);">
+					<input name="fd_{%viewWgt.id%}_authSearchReaderIds" value="{%data.authSearchReaderIds%}" type="hidden">
+					<div class="input">
+						<input placeholder="{%lang['listview.select.fdAuthReaders']%}" name="fd_{%viewWgt.id%}_authSearchReaderNames" value="{%data.authSearchReaderNames%}" type="text" readonly style="color:#1b83d8;"/>
+					</div>
+					<div class="selectitem"></div>
+				</div> 
+				{%lang['modelingAppListview.allUsersCanUse']%}
+			</td>
+		</tr>
+	</table>
+$}

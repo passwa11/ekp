@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+
+	<extension-point id="com.landray.kmss.sys.authorization">
+		<item name="roleOperation">
+			<param name="modulePath"  kind="string">
+				<description>必选，模块信息多个模块使用英文;分隔</description>
+			</param>
+			<param name="serviceName" basedOn="com.landray.kmss.sys.authorization.interfaces.extendsion.ISysInitAuthorizationHandleService" kind="spring">
+				<description>必选，系统初始化权限信息的时候会执行实现该扩展点serviceName handle 方法，实现对系统权限的干预，比如排除一些不必要的权限信息等</description>
+			</param>
+			<description>系统初始化模块权限操作</description>
+		</item>
+		<description>系统授权扩展点</description>
+	</extension-point>
+
+	<extension
+		point="com.landray.kmss.sys.config.admin.do">
+		<item
+			name="config">
+			<param
+				name="jsp"
+				value="/sys/authorization/areaConfig.jsp" />
+			<param
+				name="type"
+				value="enterprise" />
+			<param
+				name="order"
+				value="30" />
+		</item>			
+	</extension>
+
+</plugin>

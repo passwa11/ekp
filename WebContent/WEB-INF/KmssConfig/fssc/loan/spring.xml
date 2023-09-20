@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="fsscLoanMainDao" 
+        class="com.landray.kmss.fssc.loan.dao.hibernate.FsscLoanMainDaoImp" 
+        parent="KmssExtendDataDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.loan.model.FsscLoanMain</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanMainTarget" 
+        class="com.landray.kmss.fssc.loan.service.spring.FsscLoanMainServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="fsscLoanMainDao"/>
+        </property>
+        <property name="sysNumberFlowService">
+            <ref bean="sysNumberFlowService"/>
+        </property>
+        <property name="eopBasedataAccountService">
+            <ref bean="eopBasedataAccountService"/>
+        </property>
+        <property name="fsscLoanControlService">
+            <ref bean="fsscLoanControlService"/>
+        </property>
+        <property name="fsscLoanExecuteDetailService">
+            <ref bean="fsscLoanExecuteDetailService"/>
+        </property>
+        <property name="sysOrgElementService">
+            <ref bean="sysOrgElementService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanMainService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscLoanMainTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanCategoryDao" 
+        class="com.landray.kmss.fssc.loan.dao.hibernate.FsscLoanCategoryDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.loan.model.FsscLoanCategory</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanCategoryTarget" 
+        class="com.landray.kmss.fssc.loan.service.spring.FsscLoanCategoryServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscLoanCategoryDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanCategoryService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscLoanCategoryTarget"/>
+        </property>
+    </bean>
+    <bean
+        id="fsscLoanRepaymentDao" 
+        class="com.landray.kmss.fssc.loan.dao.hibernate.FsscLoanRepaymentDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.loan.model.FsscLoanRepayment</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanRepaymentTarget" 
+        class="com.landray.kmss.fssc.loan.service.spring.FsscLoanRepaymentServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscLoanRepaymentDao"/>
+        </property>
+        <property name="sysNumberFlowService">
+            <ref bean="sysNumberFlowService"/>
+        </property>
+        <property name="fsscLoanExecuteDetailService">
+            <ref bean="fsscLoanExecuteDetailService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanRepaymentService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscLoanRepaymentTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanReCategoryDao" 
+        class="com.landray.kmss.fssc.loan.dao.hibernate.FsscLoanReCategoryDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.loan.model.FsscLoanReCategory</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanReCategoryTarget" 
+        class="com.landray.kmss.fssc.loan.service.spring.FsscLoanReCategoryServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscLoanReCategoryDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanReCategoryService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscLoanReCategoryTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanTransferDao" 
+        class="com.landray.kmss.fssc.loan.dao.hibernate.FsscLoanTransferDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.loan.model.FsscLoanTransfer</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanTransferTarget" 
+        class="com.landray.kmss.fssc.loan.service.spring.FsscLoanTransferServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscLoanTransferDao"/>
+        </property>
+        <property name="sysNumberFlowService">
+            <ref bean="sysNumberFlowService"/>
+        </property>
+        <property name="fsscLoanExecuteDetailService">
+            <ref bean="fsscLoanExecuteDetailService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanTransferService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscLoanTransferTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanControlDao" 
+        class="com.landray.kmss.fssc.loan.dao.hibernate.FsscLoanControlDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.loan.model.FsscLoanControl</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanControlTarget" 
+        class="com.landray.kmss.fssc.loan.service.spring.FsscLoanControlServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="fsscLoanControlDao"/>
+        </property>
+        <property name="sysOrgElementService">
+            <ref bean="sysOrgElementService"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanControlService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscLoanControlTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanPayWarnDao" 
+        class="com.landray.kmss.fssc.loan.dao.hibernate.FsscLoanPayWarnDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.loan.model.FsscLoanPayWarn</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanPayWarnTarget" 
+        class="com.landray.kmss.fssc.loan.service.spring.FsscLoanPayWarnServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscLoanPayWarnDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanPayWarnService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscLoanPayWarnTarget"/>
+        </property>
+    </bean>
+    <!-- <bean 
+        id="fsscLoanMobileService" 
+        class="com.landray.kmss.sys.mobile.service.spring.SysMobileModuleRegisterService">
+        <property 
+            name="modulePath">
+            <value>fssc/loan</value>
+        </property>
+    </bean> -->
+	<bean id="fsscLoanMainImportService" class="com.landray.kmss.fssc.loan.service.spring.FsscLoanMainImportService">
+			<property name="sysNumberFlowService">
+				<ref bean="sysNumberFlowService"/>
+			</property>
+			<property name="fsscLoanCategoryService">
+				<ref bean="fsscLoanCategoryService"/>
+			</property>
+			<property name="sysOrgPersonService">
+				<ref bean="sysOrgPersonService"/>
+			</property>
+			<property name="eopBasedataCompanyService">
+				<ref bean="eopBasedataCompanyService"/>
+			</property>
+			<property name="eopBasedataProjectService">
+				<ref bean="eopBasedataProjectService"/>
+			</property>
+			<property name="eopBasedataCostCenterService">
+				<ref bean="eopBasedataCostCenterService"/>
+			</property>
+			<property name="fsscLoanMainService">
+				<ref bean="fsscLoanMainService"/>
+			</property>
+			<property name="eopBasedataAccountService">
+				<ref bean="eopBasedataAccountService"/>
+			</property>
+			<property name="dispatchCoreService">
+				<ref bean="dispatchCoreService"/>
+			</property>
+			<property name="backgroundAuthService">
+				<ref bean="backgroundAuthService"/>
+			</property>
+			<property name="sysWfProcessSubService">
+				<ref bean="sysWfProcessSubService"/>
+			</property>
+			<property name="fsscLoanExecuteDetailService">
+				<ref bean="fsscLoanExecuteDetailService"/>
+			</property>
+            <property name="eopBasedataCurrencyService">
+                <ref bean="eopBasedataCurrencyService"/>
+            </property>
+            <property name="eopBasedataExchangeRateService">
+                <ref bean="eopBasedataExchangeRateService"/>
+            </property>
+	</bean>
+	
+    <bean 
+        id="fsscLoanExecuteDetailDao" 
+        class="com.landray.kmss.fssc.loan.dao.hibernate.FsscLoanExecuteDetailDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.loan.model.FsscLoanExecuteDetail</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanExecuteDetailTarget" 
+        class="com.landray.kmss.fssc.loan.service.spring.FsscLoanExecuteDetailServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property name="baseDao">
+            <ref bean="fsscLoanExecuteDetailDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscLoanExecuteDetailService" 
+        parent="KmssBaseService">
+        <property name="target">
+            <ref bean="fsscLoanExecuteDetailTarget"/>
+        </property>
+    </bean>
+    <bean id="fsscLoanRepaymentReminder" class="com.landray.kmss.fssc.loan.service.spring.FsscLoanRepaymentReminder">
+        <property name="sysNotifyMainCoreService">
+            <ref bean="sysNotifyMainCoreService"/>
+        </property>
+        <property name="fsscLoanMainService">
+            <ref bean="fsscLoanMainService"/>
+        </property>
+        <property name="fsscLoanPayWarnService">
+            <ref bean="fsscLoanPayWarnService"/>
+        </property>
+    </bean>
+    <bean id="fsscCommonLoanService" class="com.landray.kmss.fssc.loan.service.spring.FsscCommonLoanServiceImp">
+        <property name="fsscLoanExecuteDetailService">
+            <ref bean="fsscLoanExecuteDetailService"/>
+        </property>
+        <property name="fsscLoanMainService">
+            <ref bean="fsscLoanMainService"/>
+        </property>
+        <property name="sysAppConfigService">
+            <ref bean="sysAppConfigService"/>
+        </property>
+    </bean>
+    
+    <bean id="fsscLoanEnterNodeListener" class="com.landray.kmss.fssc.loan.listener.FsscLoanEnterNodeListener">
+        <property name="fsscLoanExecuteDetailService">
+            <ref bean="fsscLoanExecuteDetailService"/>
+        </property>
+    </bean>
+    <bean id="fsscLoanDraftorSubmitListener" class="com.landray.kmss.fssc.loan.listener.FsscLoanDraftorSubmitListener">
+        <property name="fsscLoanExecuteDetailService">
+            <ref bean="fsscLoanExecuteDetailService"/>
+        </property>
+    </bean>
+    <bean id="fsscLoanAbandonListener" class="com.landray.kmss.fssc.loan.listener.FsscLoanAbandonListener">
+        <property name="fsscLoanExecuteDetailService">
+            <ref bean="fsscLoanExecuteDetailService"/>
+        </property>
+    </bean>
+    <bean id="fsscLoanFinishListener" class="com.landray.kmss.fssc.loan.listener.FsscLoanFinishListener">
+        <property name="fsscLoanExecuteDetailService">
+            <ref bean="fsscLoanExecuteDetailService"/>
+        </property>
+        <property name="fsscLoanMainService">
+            <ref bean="fsscLoanMainService"/>
+        </property>
+    </bean>
+    <bean id="fsscLoanMobileService" class="com.landray.kmss.fssc.loan.service.spring.FsscLoanMobileService">
+    	<property name="fsscLoanCategoryService">
+            <ref bean="fsscLoanCategoryService"/>
+        </property>
+    </bean>
+    <bean id="fsscLoanRepayMobileService" class="com.landray.kmss.fssc.loan.service.spring.FsscLoanRepayMobileService">
+    	<property name="fsscLoanReCategoryService">
+            <ref bean="fsscLoanReCategoryService"/>
+        </property>
+    	<property name="eopBasedataCompanyService">
+            <ref bean="eopBasedataCompanyService"/>
+        </property>
+    	<property name="fsscLoanMainService">
+            <ref bean="fsscLoanMainService"/>
+        </property>
+    </bean>
+    <bean
+            id="FsscLoanArchivesAutoFileEvent"
+            class="com.landray.kmss.fssc.loan.listener.FsscLoanArchivesAutoFileEvent">
+        <!-- 异步线程等待时长（毫秒） -->
+        <property name="joinTime" value="3000"></property>
+    </bean>
+    <bean
+            id="fsscLoanRepaymentArchivesAutoFileEvent"
+            class="com.landray.kmss.fssc.loan.listener.FsscLoanRepaymentArchivesAutoFileEvent">
+        <!-- 异步线程等待时长（毫秒） -->
+        <property name="joinTime" value="3000"></property>
+    </bean>
+
+</beans>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<extension-point id="com.landray.kmss.sys.category.auth.filter">
+		<item name="dataFilter">
+			<param name="modelName" required="true" kind="unid">
+				<description>模板modelName</description>
+			</param>
+			<param name="filter" required="true" basedOn="com.landray.kmss.sys.category.service.ISysCategoryAuthFilter" kind="java">
+				<description>过滤器</description>
+			</param>
+			<description>分类权限过滤扩展</description>
+		</item>
+		<description>分类权限过滤扩展</description>
+	</extension-point>
+	
+	<!-- 兼容性检测 -->
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid" value="com.landray.kmss.sys.category.model.SysCategoryConfig" />
+			<param name="name" value="{sys-category:sysCategoryConfig.transfer.fdName}" />
+			<param name="type" value="notify"/>
+			<param name="path" value="/sys/category/" />
+			<param name="description" value="{sys-category:sysCategoryConfig.transfer.desc}" />
+		</item>
+	</extension>
+	
+</plugin>

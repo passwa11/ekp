@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.imeeting.model.KmImeetingSyncBind"
+		table="km_imeeting_sync_bind">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="fdAppKey"
+			column="fd_app_key"
+			update="true"
+			insert="true"
+			length="200" />
+
+		<property
+			name="fdSyncTimestamp"
+			column="fd_sync_timestamp"
+			update="true"
+			insert="true"
+			not-null="false" />
+
+		<many-to-one
+			name="fdOwner"
+			column="fd_owner_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+	</class>
+</hibernate-mapping>

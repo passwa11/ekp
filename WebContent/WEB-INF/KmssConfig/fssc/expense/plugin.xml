@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <extension 
+        point="com.landray.kmss.sys.number.config" 
+        model="*">
+        <item 
+            name="extend">
+            <param 
+                name="modelName" 
+                value="com.landray.kmss.fssc.expense.model.FsscExpenseMain"/>
+            <param 
+                name="templatePropertyName" 
+                value="docTemplate"/>
+            <param 
+                name="moduleName" 
+                value="{fssc-expense:module.fssc.expense}"/>
+        </item>
+    </extension>
+    <extension 
+        point="com.landray.kmss.sys.number.config" 
+        model="*">
+        <item 
+            name="extend">
+            <param 
+                name="modelName" 
+                value="com.landray.kmss.fssc.expense.model.FsscExpenseShareMain"/>
+            <param 
+                name="templatePropertyName" 
+                value="docTemplate"/>
+            <param 
+                name="moduleName" 
+                value="{fssc-expense:module.fssc.expense}"/>
+        </item>
+    </extension>
+    <extension 
+        point="com.landray.kmss.sys.number.config" 
+        model="*">
+        <item 
+            name="extend">
+            <param 
+                name="modelName" 
+                value="com.landray.kmss.fssc.expense.model.FsscExpenseBalance"/>
+            <param 
+                name="templatePropertyName" 
+                value="docTemplate"/>
+            <param 
+                name="moduleName" 
+                value="{fssc-expense:module.fssc.expense}"/>
+        </item>
+    </extension>
+	<extension point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.fssc.expense.model.FsscExpenseMain">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="fsscExpensePaymentStatusListener" />
+			<param
+				name="messageKey"
+				value="fssc-expense:flow.event.node.enter.payment.status" />
+			<param
+				name="eventTypes"
+				value="enterNodeEvent" />
+			<param
+				name="listener"
+				value="fsscExpensePaymentStatusListener" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.fssc.expense.model.FsscExpenseMain">
+	
+		<!--报销流程结束修改对应的预算状态-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscExpenseFinishEvent" />
+			<param
+				name="messageKey"
+				value="fssc-expense:flow.event.finish" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessFinishEvent" />
+			<param
+				name="listener"
+				value="fsscExpenseFinishEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+		<!--报销流程废弃将占用金额释放-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscExpenseAbandonEvent" />
+			<param
+				name="messageKey"
+				value="fssc-expense:flow.event.abandon" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessAbandonedEvent;drafterAbandonEvent;lbpmHandlerAbandonEvent" />
+			<param
+				name="listener"
+				value="fsscExpenseAbandonEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+		<!--报销流程驳回到起草节点将占用金额释放-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscExpenseEnterNodeEvent" />
+			<param
+				name="messageKey"
+				value="fssc-expense:flow.event.node.enter.draft" />
+			<param
+				name="eventTypes"
+				value="enterNodeEvent" />
+			<param
+				name="listener"
+				value="fsscExpenseEnterNodeEvent" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+		<!--起草人撤回报销流程将占用金额释放-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscExpenseDraftorReturnEvent" />
+			<param
+				name="messageKey"
+				value="fssc-expense:flow.event.draftor.return" />
+			<param
+				name="eventTypes"
+				value="drafterReturnEvent" />
+			<param
+				name="listener"
+				value="fsscExpenseDraftorReturnEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+		<!--起草人提交报销流程将占用预算金额-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscExpenseDraftorSubmitEvent" />
+			<param
+				name="messageKey"
+				value="fssc-expense:flow.evnet.draftor.submit" />
+			<param
+				name="eventTypes"
+				value="drafterSubmitEvent" />
+			<param
+				name="listener"
+				value="fsscExpenseDraftorSubmitEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+		<!--付款节点通过事件，将单据设置为已付款-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscExpensePaymentNodePassEvent" />
+			<param
+				name="messageKey"
+				value="fssc-expense:flow.evnet.payment.node.pass" />
+			<param
+				name="eventTypes"
+				value="handlerPassOperationEvent" />
+			<param
+				name="listener"
+				value="fsscExpensePaymentNodePassEvent" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+	</extension>
+	
+	<extension point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.fssc.expense.model.FsscExpenseBalance">
+	
+		<!--报销流程结束修改对应的预算状态-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscExpenseBalanceFinishEvent" />
+			<param
+				name="messageKey"
+				value="fssc-expense:flow.event.finish" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessFinishEvent" />
+			<param
+				name="listener"
+				value="fsscExpenseBalanceFinishEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+		<!--报销流程废弃将占用金额释放-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscExpenseBalanceAbandonEvent" />
+			<param
+				name="messageKey"
+				value="fssc-expense:flow.event.abandon" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessAbandonedEvent;drafterAbandonEvent;lbpmHandlerAbandonEvent" />
+			<param
+				name="listener"
+				value="fsscExpenseBalanceAbandonEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+		<!--报销流程驳回到起草节点将占用金额释放-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscExpenseBalanceEnterNodeEvent" />
+			<param
+				name="messageKey"
+				value="fssc-expense:flow.event.node.enter.draft" />
+			<param
+				name="eventTypes"
+				value="enterNodeEvent" />
+			<param
+				name="listener"
+				value="fsscExpenseBalanceEnterNodeEvent" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+		
+		<!--起草人撤回报销流程将占用金额释放-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscExpenseBalanceDraftorReturnEvent" />
+			<param
+				name="messageKey"
+				value="fssc-expense:flow.event.draftor.return" />
+			<param
+				name="eventTypes"
+				value="drafterReturnEvent" />
+			<param
+				name="listener"
+				value="fsscExpenseBalanceDraftorReturnEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+		<!--起草人提交报销流程将占用预算金额-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscExpenseBalanceDraftorSubmitEvent" />
+			<param
+				name="messageKey"
+				value="fssc-expense:flow.evnet.draftor.submit" />
+			<param
+				name="eventTypes"
+				value="drafterSubmitEvent" />
+			<param
+				name="listener"
+				value="fsscExpenseBalanceDraftorSubmitEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+		
+	</extension>
+	
+	<extension 
+        point="com.landray.kmss.sys.listshow.listShowConfig" 
+        model="com.landray.kmss.fssc.expense.model.FsscExpenseMain">
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="list.create"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.expense.model.FsscExpenseMain"/>
+            <param 
+                name="page" 
+                value="/listCreate"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;fdTotalApprovedMoney;docStatus;docCreator.name;docCreateTime;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-expense:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-expense:lbpm.currentHandler"/>
+        </item>
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="list.alldoc"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.expense.model.FsscExpenseMain"/>
+            <param 
+                name="page" 
+                value="/listAll"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;fdTotalApprovedMoney;docStatus;docCreator.name;docCreateTime;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-expense:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-expense:lbpm.currentHandler"/>
+        </item>
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="list.approved"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.expense.model.FsscExpenseMain"/>
+            <param 
+                name="page" 
+                value="/listApproved"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;fdTotalApprovedMoney;docStatus;docCreator.name;docCreateTime;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-expense:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-expense:lbpm.currentHandler"/>
+        </item>
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="list.approval"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.expense.model.FsscExpenseMain"/>
+            <param 
+                name="page" 
+                value="/listApproval"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;fdTotalApprovedMoney;docStatus;docCreator.name;docCreateTime;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-expense:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-expense:lbpm.currentHandler"/>
+        </item>
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="fssc-expense:py.DaiFuKuan"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.expense.model.FsscExpenseMain"/>
+            <param 
+                name="page" 
+                value="/listDaiFuKuan"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;fdTotalApprovedMoney;docStatus;docCreator.name;docCreateTime;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-expense:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-expense:lbpm.currentHandler"/>
+        </item>
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="fssc-expense:py.YiFuKuan"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.expense.model.FsscExpenseMain"/>
+            <param 
+                name="page" 
+                value="/listYiFuKuan"/>
+             <param 
+                name="default" 
+                value="docSubject;docNumber;fdTotalApprovedMoney;docStatus;docCreator.name;docCreateTime;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-expense:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-expense:lbpm.currentHandler"/>
+        </item>
+    </extension>
+	<extension 
+        point="com.landray.kmss.sys.listshow.listShowConfig" 
+        model="com.landray.kmss.fssc.expense.model.FsscExpenseShareMain">
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="fssc-expense:table.fsscExpenseShareMain"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.expense.model.FsscExpenseShareMain"/>
+            <param 
+                name="page" 
+                value="share"/>
+             <param 
+                name="default" 
+                value="docSubject;fdNumber;fdExpenseMain.docSubject;fdOperator.name;fdOperateDate;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-expense:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-expense:lbpm.currentHandler"/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.lbpm.engine.event" model="com.landray.kmss.fssc.expense.model.FsscExpenseShareMain">
+        <!--事后分摊流程结束，增加发布时间-->
+		<item name="listener">
+			<param
+				name="unid"
+				value="fsscExpenseShareMainFinishEvent" />
+			<param
+				name="messageKey"
+				value="fssc-expense:share.main.add.publish.time" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessFinishEvent" />
+			<param
+				name="listener"
+				value="fsscExpenseShareMainFinishEvent" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+    </extension>
+   
+	<extension 
+        point="com.landray.kmss.sys.listshow.listShowConfig" 
+        model="com.landray.kmss.fssc.expense.model.FsscExpenseBalance">
+        <item 
+            name="listShowConfig">
+            <param 
+                name="name" 
+                value="fssc-expense:table.fsscExpenseBalance"/>
+            <param 
+                name="model" 
+                value="com.landray.kmss.fssc.expense.model.FsscExpenseBalance"/>
+            <param 
+                name="page" 
+                value="balance"/>
+             <param 
+                name="default" 
+                value="docSubject;fdCompany.name;fdCostCenter.name;fdVoucherType.name;fdMonth;docCreateTime;docCreator.name;docStatus.name;lbpm_main_listcolumn_node;lbpm_main_listcolumn_handler"/>
+            <param 
+                name="customized" 
+                value="lbpm_main_listcolumn_summary;fssc-expense:lbpm.currentSummary,lbpm_main_listcolumn_handler;fssc-expense:lbpm.currentHandler"/>
+        </item>
+    </extension>
+    
+    <!-- 表单关联控件的模块扩展点 -->
+	<extension point="com.landray.kmss.sys.xform.base.service.controls.relevance" model="*">
+		<item name="node">
+			<param name="modelName" value="com.landray.kmss.fssc.expense.model.FsscExpenseMain" />
+			<param name="templateModelName" value="com.landray.kmss.fssc.expense.model.FsscExpenseCategory" />
+			<param name="key" value="expenseMainDoc" />
+			<param name="templatePropertyName" value="docTemplate" />
+			<param name="moduleMessageKey" value="fssc-expense:module.fssc.expense" />
+		</item>
+		<item name="node">
+			<param name="modelName" value="com.landray.kmss.fssc.expense.model.FsscExpenseShareMain" />
+			<param name="templateModelName" value="com.landray.kmss.fssc.expense.model.FsscExpenseShareCategory" />
+			<param name="key" value="expenseShareMainDoc" />
+			<param name="templatePropertyName" value="docTemplate" />
+			<param name="moduleMessageKey" value="fssc-expense:table.fsscExpenseShareMain" />
+		</item>
+		<item name="node">
+			<param name="modelName" value="com.landray.kmss.fssc.expense.model.FsscExpenseBalance" />
+			<param name="templateModelName" value="com.landray.kmss.fssc.expense.model.FsscExpenseBalanceCategory" />
+			<param name="key" value="expenseBalanceMainDoc" />
+			<param name="templatePropertyName" value="docTemplate" />
+			<param name="moduleMessageKey" value="fssc-expense:table.fsscExpenseBalance" />
+		</item>
+	</extension>
+	<!-- 软删除功能扩展点实现 -->
+	<extension point="com.landray.kmss.sys.recycle">
+		<item name="softDelete">
+			<!-- 模块(文档)名称 -->
+			<param
+				name="modelName"
+				value="fssc-expense:table.fsscExpenseMain" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.fssc.expense.model.FsscExpenseMain" />
+			<!-- 主文档对应的分类(模板)全名称 -->
+			<param
+				name="categoryClassName"
+				value="com.landray.kmss.fssc.expense.model.FsscExpenseCategory" />
+			<!-- 主文档中分类(模板)的属性名称 -->
+			<param
+				name="categoryField"
+				value="docTemplate" />
+			<!-- 主文档中标题的属性名称 -->
+			<param
+				name="titleField"
+				value="docSubject" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.recycle">
+		<item name="softDelete">
+			<!-- 模块(文档)名称 -->
+			<param
+				name="modelName"
+				value="fssc-expense:table.fsscExpenseBalance" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.fssc.expense.model.FsscExpenseBalance" />
+			<!-- 主文档对应的分类(模板)全名称 -->
+			<param
+				name="categoryClassName"
+				value="com.landray.kmss.fssc.expense.model.FsscExpenseBalanceCategory" />
+			<!-- 主文档中分类(模板)的属性名称 -->
+			<param
+				name="categoryField"
+				value="docTemplate" />
+			<!-- 主文档中标题的属性名称 -->
+			<param
+				name="titleField"
+				value="docSubject" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.recycle">
+		<item name="softDelete">
+			<!-- 模块(文档)名称 -->
+			<param
+				name="modelName"
+				value="fssc-expense:table.fsscExpenseShareMain" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelClassName"
+				value="com.landray.kmss.fssc.expense.model.FsscExpenseShareMain" />
+			<!-- 主文档对应的分类(模板)全名称 -->
+			<param
+				name="categoryClassName"
+				value="com.landray.kmss.fssc.expense.model.FsscExpenseShareCategory" />
+			<!-- 主文档中分类(模板)的属性名称 -->
+			<param
+				name="categoryField"
+				value="docTemplate" />
+			<!-- 主文档中标题的属性名称 -->
+			<param
+				name="titleField"
+				value="docSubject" />
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.eop.basedata.import.detail" model="*">
+		<item name="validate">
+			<param name="model" value="com.landray.kmss.fssc.expense.model.FsscExpenseDetail"/>
+			<param name="type" value="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem"/>
+			<param name="service" value="fsscExpenseItemConfigService"/>
+		</item>
+	</extension>
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.fssc.expense.model.FsscExpenseMain">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="fsscExpenseArchivesAutoFileEvent" />
+			<param
+					name="messageKey"
+					value="fssc-expense:fsscExpenseMain.event.lbpmEndOnfile" />
+			<param
+					name="eventTypes"
+					value="lbpmProcessFinishEvent" />
+			<param
+					name="listener"
+					value="fsscExpenseArchivesAutoFileEvent" />
+			<param
+					name="conditionJsp"
+					value="/fssc/expense/fssc_expense_main/fsscExpenseMain_archives.jsp" />
+			<param
+					name="description"
+					value="fssc-expense:fsscExpenseMain.event.lbpmEndOnfileDescription" />
+		</item>
+	</extension>
+
+</plugin>

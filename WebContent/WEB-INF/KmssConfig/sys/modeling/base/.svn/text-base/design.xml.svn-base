@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+        xmlns="http://www.example.org/design-config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+    <module
+            messageKey="sys-modeling-base:module.sys.modeling"
+            urlPrefix="/sys/modeling/base/"
+            defaultValidator="roleValidator(role=ROLE_MODELING_SETTING)|porletValidator(role=ROLE_MODELING_DEFAULT)">
+        <roles>
+            <!-- 默认权限 -->
+            ROLE_MODELING_DEFAULT;
+            <!-- 后台基础设置（能否进去后台设置） -->
+            ROLE_MODELING_SETTING;
+            <!-- 新建应用 -->
+            ROLE_MODELING_APP_CREATE;
+            <!-- 编辑应用 -->
+            ROLE_MODELING_APP_EDITOR;
+            <!-- 删除应用 -->
+            ROLE_MODELING_APP_DELETE;
+            <!-- 导出应用 -->
+            ROLE_MODELING_APP_EXPORT;
+            <!-- 导入应用 -->
+            ROLE_MODELING_APP_IMPORT;
+            <!-- 版本管理 -->
+            ROLE_MODELING_APP_VERSION;
+            <!-- 新建业务分类 -->
+            ROLE_MODELING_APPCATE_CREATE;
+            <!-- 编辑业务分类 -->
+            ROLE_MODELING_APPCATE_EDITOR;
+            <!-- 删除业务分类 -->
+            ROLE_MODELING_APPCATE_DELETE;
+            <!-- 操作日志 -->
+            ROLE_SYSMODELING_OPER_LOG;
+            <!-- 工具箱使用权限 -->
+            ROLE_MODELING_MAINTENANCE;
+            <!-- 应用监控权限 -->
+            ROLE_MODELING_MONITOR;
+        </roles>
+
+        <!-- 应用 start -->
+        <request
+                path="modelingApplication*"
+                validatorParameter="recid=fdId,model=com.landray.kmss.sys.modeling.base.model.ModelingApplication">
+            <query queryString="method=add|save|saveBaseInfoByAjax"
+                   validator="roleValidator(role=ROLE_MODELING_APP_CREATE)"/>
+            <!-- 更新应用只有创建者、可维护者、应用编辑权限的才能更新 -->
+            <query queryString="method=edit|update|appIndex"
+                   validator="authFieldValidator(type=creator)|authFieldValidator(type=SYS_EDITOR)"/>
+            <query queryString="method=delete|deleteByAjax|deleteData"
+                   validator="authFieldValidator(type=creator)|roleValidator(role=ROLE_MODELING_APP_DELETE)"/>
+
+        </request>
+        <filters modelName="com.landray.kmss.sys.modeling.base.model.ModelingApplication">
+            <filter type="creator" expression="authFieldFilter(field=docCreator.fdId)"/>
+            <filter type="SYS_READER" expression="roleFilter(role=ROLE_MODELING_APP_CREATE)"/>
+            <filter type="SYS_READER" expression="authFieldInnerJoinFilter(field=authAllReaders.fdId)"/>
+            <filter type="SYS_EDITOR" expression="roleFilter(role=ROLE_MODELING_APP_EDITOR)"/>
+            <filter type="SYS_EDITOR" expression="authFieldInnerJoinFilter(field=authAllEditors.fdId)"/>
+            <filter type="ROLE_APP_USER" expression="authFieldFilter(field=docCreator.fdId)"/>
+            <filter type="ROLE_APP_USER" expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter type="ROLE_APP_USER" expression="authFieldFilter(field=authReaders.fdId)"/>
+<!--            <filter type="ROLE_APP_USER" expression="authFieldFilter(field=authEditors.fdId)"/>-->
+            <filter type="ROLE_APP_USER" expression="authFieldFilter(field=fdBusinessAdmins.fdId)"/>
+        </filters>
+        <!-- 应用 end -->
+        <!-- 导航-->
+        <filters modelName="com.landray.kmss.sys.modeling.base.profile.model.ModelingAppNav">
+            <filter type="creator" expression="authFieldFilter(field=docCreator.fdId)" />
+            <filter type="SYS_READER" expression="authFieldInnerJoinFilter(field=authAllReaders.fdId)" />
+            <!--            <filter type="SYS_EDITOR" expression="authFieldInnerJoinFilter(field=authAllEditors.fdId)" />-->
+        </filters>
+        <filters modelName="com.landray.kmss.sys.modeling.base.mobile.model.ModelingAppMobile">
+            <filter type="creator" expression="authFieldFilter(field=docCreator.fdId)" />
+            <filter type="SYS_READER" expression="authFieldInnerJoinFilter(field=authAllReaders.fdId)" />
+            <!--            <filter type="SYS_EDITOR" expression="authFieldInnerJoinFilter(field=authAllEditors.fdId)" />-->
+        </filters>
+
+        <!--流程文档-->
+        <filters modelName="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+            <filter
+                type="creator"
+                expression="authFieldFilter(field=docCreator.fdId)" />
+        </filters>
+
+        <!-- 列表视图 -->
+        <request
+                path="search*"
+                defaultValidator="roleValidator(role=SYSROLE_USER)">
+        </request>
+        <request
+                path="base/modelingAppListview*"
+                defaultValidator="roleValidator(role=SYSROLE_ADMIN)">
+            <query
+                    queryString="method=listConfig"
+                    validator="roleValidator(role=SYSROLE_USER)"/>
+            <query
+                    queryString="method=getTempNameByMain"
+                    validator="roleValidator(role=SYSROLE_USER)"/>
+        </request>
+        <!-- 查看视图 -->
+        <request
+                path="view/modelingAppView.do*"
+                validatorParameter="recid=fdId,model=com.landray.kmss.sys.modeling.base.model.ModelingAppView"
+                defaultValidator="roleValidator(role=SYSROLE_ADMIN)">
+            <query
+                    queryString="method=view|edit"
+                    validator="roleValidator(role=SYSROLE_USER)"/>
+        </request>
+        <!--导入导出-->
+        <request path="modelingDatainitMain*">
+            <query queryString="method=import" validator="roleValidator(role=ROLE_MODELING_APP_IMPORT)"/>
+            <query queryString="method=export|checkRelated" validator="roleValidator(role=ROLE_MODELING_APP_EXPORT)"/>
+        </request>
+        <!-- 版本管理 -->
+        <request path="modelingAppVersion*">
+            <query queryString="method=addNewVersion|switchVersion"
+                   validator="roleValidator(role=ROLE_MODELING_APP_VERSION)"/>
+        </request>
+
+        <!-- 业务建模应用的可维护者权限 -->
+        <request
+                path="modelingAppModel*"
+                validatorParameter="recid=fdId,model=com.landray.kmss.sys.modeling.base.model.ModelingAppModel">
+            <query queryString="method=frame"
+                   validator="roleValidator(role=ROLE_MODELING_APP_EDITOR)|sysModelingEditorValidator()"/>
+        </request>
+
+        <!-- 业务分类权限 -->
+        <request
+                path="modelingAppCategory*"
+                validatorParameter="recid=fdId,model=com.landray.kmss.sys.modeling.base.model.ModelingAppCategory">
+            <query queryString="method=add|save"
+                   validator="roleValidator(role=ROLE_MODELING_APPCATE_CREATE)"/>
+            <query queryString="method=edit|update"
+                   validator="authFieldValidator(type=creator)|roleValidator(role=ROLE_MODELING_APPCATE_EDITOR)"/>
+            <query queryString="method=delete"
+                   validator="authFieldValidator(type=creator)|roleValidator(role=ROLE_MODELING_APPCATE_DELETE)"/>
+            <query queryString="method=deleteall"
+                   validator="roleValidator(role=ROLE_MODELING_APPCATE_DELETE)"/>
+        </request>
+        <filters modelName="com.landray.kmss.sys.modeling.base.model.ModelingAppCategory">
+            <filter type="creator" expression="authFieldFilter(field=docCreator.fdId)" />
+        </filters>
+
+        <!-- 操作日志 -->
+        <request
+                path="modelingOperLog.do*"
+                validatorParameter="recid=fdId,model=com.landray.kmss.sys.modeling.base.model.ModelingOperLog"
+                defaultValidator="roleValidator(role=ROLE_SYSMODELING_OPER_LOG)">
+        </request>
+        <!-- 操作日志 -->
+        <request
+                path="modeling/base/maintenance.do*"
+                validatorParameter="recid=fdId,model=com.landray.kmss.sys.modeling.base.maintenance.model.ModelingMaintenanceLog"
+                defaultValidator="roleValidator(role=ROLE_MODELING_MAINTENANCE)">
+        </request>
+        <!-- 接口日志 -->
+        <request
+                path="interfaceLog.do*"
+                validatorParameter="recid=fdId,model=com.landray.kmss.sys.modeling.base.monitor.model.SysModelingInterfaceLog"
+                defaultValidator="roleValidator(role=ROLE_MODELING_MONITOR)">
+        </request>
+        <!-- 接口日志 -->
+        <!-- 应用监控 -->
+        <request
+                path="monitor.do*"
+                defaultValidator="roleValidator(role=ROLE_MODELING_MONITOR)">
+        </request>
+        <!-- 应用监控 -->
+        <!-- 触发日志 -->
+        <request
+                path="behaviorLog.do*"
+                validatorParameter="recid=fdId,model=com.landray.kmss.sys.modeling.base.monitor.model.SysModelingBehaviorLog"
+                defaultValidator="roleValidator(role=ROLE_MODELING_MONITOR)">
+        </request>
+        <!-- 触发日志 -->
+    </module>
+
+    <!-- 业务建模 -->
+    <profileConfig
+            key="homePage"
+            messageKey="{sys-modeling-base:sys.profile.modeling.homePage}"
+            url="/sys/modeling/base/profile/homePage.jsp"
+            icon="lui_icon_s_profile_navLeft_modelingWorkbench"
+            type="modeling"
+            order="1"/>
+
+    <profileConfig
+            key="application"
+            messageKey="{sys-modeling-base:sys.profile.modeling.application}"
+            url="/sys/modeling/base/profile/application.jsp"
+            icon="lui_icon_s_profile_navLeft_modelingManage"
+            type="modeling"
+            order="2"/>
+
+    <profileConfig
+            key="applicationMall"
+            messageKey="{sys-modeling-base:sys.profile.modeling.application.mall}"
+            url="/sys/modeling/base/profile/applicationMall.jsp"
+            icon="lui_icon_s_profile_navLeft_modelingCBD"
+            type="modeling"
+            order="3"/>
+
+    <profileConfig
+            key="category"
+            messageKey="{sys-modeling-base:sys.profile.modeling.category}"
+            url="/sys/modeling/base/profile/category.jsp"
+            icon="lui_icon_s_profile_navLeft_modelingCategory"
+            type="modeling"
+            order="4"/>
+
+    <profileConfig
+            key="baseDbInfo"
+            messageKey="{sys-modeling-base:sys.profile.modeling.baseDbInfo}"
+            url="/sys/modeling/base/profile/baseinfo.jsp"
+            icon="lui_icon_s_profile_navLeft_modelingBaseDbInfo"
+            type="modeling"
+            order="5"/>
+    <profileConfig
+            key="monitor"
+            messageKey="{sys-modeling-base:sys.profile.modeling.monitor}"
+            url="/sys/modeling/base/profile/monitor.jsp"
+            icon="lui_icon_s_profile_navLeft_modelingMonitor"
+            type="modeling"
+            order="6"/>
+    <profileConfig
+            key="maintenance"
+            messageKey="{sys-modeling-base:sys.profile.modeling.maintenance.admin}"
+            url="/sys/modeling/base/profile/maintenance.jsp"
+            icon="lui_icon_s_profile_navLeft_modelingTool"
+            type="modeling"
+            order="7"/>
+
+
+    <flowDef
+            modelName="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain"
+            templateModelName="com.landray.kmss.sys.modeling.base.model.ModelingAppFlow"
+            key="modelingApp"
+            templatePropertyName="fdFlow"
+            moduleMessageKey="sys-modeling-base:module.sys.modeling"
+            type="oa">
+        <!-- e签宝 -->
+        <variant
+                name="eqbSign"
+                key="sys-modeling-base:sysModeling.eqbSign"
+                depend="elec/eqb"/>
+    </flowDef>
+
+</configs>

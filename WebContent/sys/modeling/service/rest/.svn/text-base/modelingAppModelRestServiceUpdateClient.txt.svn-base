@@ -1,0 +1,72 @@
+	/**
+     * 多层级的VO对象，且包含上传功能的样例
+     * 注意key的书写格式,类似EL表达式的方式，属性关系用'.', 列表和数组关系用[]，Map关系用["xxx"]
+     */
+    public static void testUpdateNewsInRestTemplate() throws Exception{
+        RestTemplate yourRestTemplate = new RestTemplate();
+        
+        String url = "http://localhost:8080/ekp/api/sys-modeling/appModelRestService/updateModel"; //指向EKP的接口url
+        //把ModelingAppModelParameterForm转换成MultiValueMap
+        MultiValueMap<String,Object> wholeForm = new LinkedMultiValueMap<>();
+        wholeForm.add("docSubject", new String("接口发起流程".getBytes("UTF-8"),"ISO-8859-1") );
+        wholeForm.add("docCreator", "{"Id":"17ce39abb7a818c6a7ce8be4b3ba9aa5"}");
+        wholeForm.add("docStatus", 20);
+        wholeForm.add("fdId", "17d0d08ca238fc191ebc6bd411581fff");
+        wholeForm.add("fdModelId", "17cdf9572032e20ed39131d478287ae0");
+        wholeForm.add("fdFlowId", "17cdfa5d8ef5e0295aebe2c45b09389c");
+        wholeForm.add("formValues", new String("{\"fd_37310fdc84a55e\":\"王五\", \"fd_37310fe0aa2334\":\"2019-03-26\", \"fd_37310fde1759a4\":\"这里内容\"}".getBytes("UTF-8"),"ISO-8859-1") );
+        
+        
+        LinkedMultiValueMap<String,Object> innerMap = new LinkedMultiValueMap<>();
+        //注意附件列表的key是一样的
+        wholeForm.add("attachmentForms[0].fdKey", "fd_3731bf4852e8fe");//第一个附件
+        wholeForm.add("attachmentForms[0].fdFileName", new String("测试文档.txt".getBytes("UTF-8"),"ISO-8859-1"));
+        wholeForm.add("attachmentForms[0].fdAttachment", new FileSystemResource(new File("E:/测试文档.txt")));
+       
+        
+        HttpHeaders headers = new HttpHeaders();
+        //如果EKP对该接口启用了Basic认证，那么客户端需要加入
+        //addAuth(headers,"yourAccount"+":"+"yourPassword");是VO，则使用APPLICATION_JSON
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        //必须设置上传类型，如果入参是字符串，使用MediaType.TEXT_PLAIN；如果
+        HttpEntity<MultiValueMap<String,Object>> entity = new HttpEntity<MultiValueMap<String,Object>>(wholeForm,headers);
+       
+
+        //有返回值的情况 VO可以替换成具体的JavaBean
+        ResponseEntity<String> obj = yourRestTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        String body = obj.getBody();
+        System.out.println(body);
+    }
+	
+	/**
+	 * 创建附件列表
+	 */
+	public static List<AttachmentForm> createAllAtts() throws Exception {
+
+		List<AttachmentForm> attForms = new ArrayList<AttachmentForm>();
+
+		String fileName = "测试文档.txt";
+		AttachmentForm attForm01 = createAtt(fileName);
+
+		attForms.add(attForm01);
+
+		return attForms;
+	}
+	
+	/**
+	 * 创建附件对象
+	 */
+	public static AttachmentForm createAtt(String fileName) throws Exception {
+		AttachmentForm attForm = new AttachmentForm();
+		attForm.setFdFileName(fileName);
+		// 设置附件关键字，表单模式下为附件控件的id
+		attForm.setFdKey("fd_3731bf4852e8fe");
+
+		File file=new File("E:\\" + fileName);
+		DataSource dataSource = new FileDataSource(file);
+	    DataHandler dataHandler = new DataHandler(dataSource);
+	        
+		attForm.setFdAttachment(dataHandler);
+
+		return attForm;
+	}

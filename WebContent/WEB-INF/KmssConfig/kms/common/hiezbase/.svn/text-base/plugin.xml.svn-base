@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+
+	<extension-point id="com.landray.kmss.kms.common.hiezbase">
+		<item name="knowledgeSync">
+			<param name="fdModelName" required="true" kind="string">
+				<description>modelName</description>
+			</param>
+			<param name="serviceBean" required="true" kind="string" basedOn="com.landray.kmss.kms.common.hiezbase.service.IKmsHiezKnowledgeSyncService">
+				<description>处理Bean</description>
+			</param>
+			<description>海乂知集成知识同步扩展点</description>
+		</item>
+		<item name="hiezConfig">
+			<param name="serviceBean" required="true" kind="string" basedOn="com.landray.kmss.kms.common.hiezbase.service.IGetHiezConfigService">
+				<description>处理Bean</description>
+			</param>
+			<description>海乂知集成知识同步扩展点</description>
+		</item>
+		<item name="modules">
+			<param name="messageKey" required="true" kind="string">
+				<description>模块名称</description>
+			</param>
+			<param name="fdModelName" required="true" kind="string">
+				<description>modelName</description>
+			</param>
+			<param name="type" required="true" kind="string">
+				<description>
+					模块类型，取值如下
+					1:文档知识
+					2:维基知识
+					3:原子知识
+				</description>
+			</param>
+			<description>海乂之集成模块扩展点。</description>
+		</item>
+		<description>海乂知集成基础扩展点信息</description>
+	</extension-point>
+</plugin>

@@ -1,0 +1,171 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.remind.model.SysRemindMain",
+        "messageKey": "sys-remind:table.sysRemindMain",
+        "displayProperty": "fdName",
+        "serviceBean": "sysRemindMainService",
+        "table": "sys_remind_main"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "false",
+            "validate": "false",
+            "length": "450"
+        },
+        "fdIsEnable":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.fdIsEnable",
+            "type": "Boolean",
+            "column": "fd_is_enable",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "fdIsFilter":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.fdIsFilter",
+            "type": "Boolean",
+            "column": "fd_is_filter",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "fdConditionId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.fdCondition",
+            "type": "String",
+            "column": "fd_condition_id",
+            "notNull": "false",
+            "validate": "false",
+            "length": "450"
+        },
+        "fdConditionName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.fdCondition",
+            "type": "String",
+            "column": "fd_condition_name",
+            "notNull": "false",
+            "validate": "false",
+            "length": "450"
+        },
+        "fdNotifyType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.fdNotifyType",
+            "type": "String",
+            "column": "fd_notify_type",
+            "notNull": "false",
+            "validate": "false",
+            "length": "50"
+        },
+        "fdSenderType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.fdSenderType",
+            "type": "String",
+            "column": "fd_sender_type",
+            "notNull": "false",
+            "validate": "false",
+            "length": "50"
+        },
+        "fdSenderId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.fdSenderId",
+            "type": "String",
+            "column": "fd_sender_id",
+            "notNull": "false",
+            "validate": "false",
+            "length": "100"
+        },
+        "fdSenderName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.fdSenderName",
+            "type": "String",
+            "column": "fd_sender_name",
+            "notNull": "false",
+            "validate": "false",
+            "length": "200"
+        },
+        "fdSubjectId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.fdSubject",
+            "type": "String",
+            "column": "fd_subject_id",
+            "notNull": "false",
+            "validate": "false",
+            "length": "450"
+        },
+        "fdSubjectName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.fdSubject",
+            "type": "String",
+            "column": "fd_subject_name",
+            "notNull": "false",
+            "validate": "false",
+            "length": "450"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.fdOrder",
+            "type": "Integer",
+            "column": "fd_order",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "fdTemplate":         {
+            "propertyType": "model",
+            "messageKey": "sys-remind:sysRemindMain.fdTemplate",
+            "type": "com.landray.kmss.sys.remind.model.SysRemindTemplate",
+            "column": "fd_template_id",
+            "notNull": "false"
+        },
+        "fdReceivers" : {
+        	"propertyType" : "list",
+            "messageKey" : "sys-remind:sysRemindMain.fdReceivers",
+            "type" : "com.landray.kmss.sys.remind.model.SysRemindMainReceiver",
+            "column": "fd_remind_id",
+            "canDisplay": "false",
+            "readOnly": "true",
+            "orderBy": "fd_order",
+            "cascade": "all-delete-orphan",
+            "table": "sys_remind_main_receiver"
+        },
+        "fdTriggers" : {
+        	"propertyType" : "list",
+            "messageKey" : "sys-remind:sysRemindMain.fdTriggers",
+            "type" : "com.landray.kmss.sys.remind.model.SysRemindMainTrigger",
+            "column": "fd_remind_id",
+            "canDisplay": "false",
+            "readOnly": "true",
+            "orderBy": "fd_order",
+            "cascade": "all-delete-orphan",
+            "table": "sys_remind_main_trigger"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-remind:sysRemindMain.docCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_creator_id",
+            "notNull": "false",
+            "unique": "false",
+            "canSearch": "true",
+            "canRelation": "true",
+            "dialogJS": "Dialog_Address(false, '!{idField}','!{nameField}', ';',ORG_TYPE_PERSON);"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-remind:sysRemindMain.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "true",
+            "unique": "false",
+            "canSearch": "true",
+            "canDisplay": "true",
+            "canRelation": "true"
+        }
+    }
+}

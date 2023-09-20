@@ -1,0 +1,824 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<extension-point id="com.landray.kmss.sys.attend">
+		<item name="extendItem">
+			<param name="modelKey" kind="string" required="true">
+				<description>主域模型唯一标识符</description>
+			</param>
+			<param name="modelName" kind="string" required="true">
+				<description>主域模型名</description>
+			</param>
+			<param name="moduleName" kind="string" required="true">
+				<description>模块名，支持多语言</description>
+			</param>
+			<param name="initProvider" kind="string" required="true">
+				<description>初始化Provider</description>
+			</param>
+			<param name="initMethod" kind="string" required="true">
+				<description>
+					初始化方法名,initProvider必须存在此方法;该方法拥有一个参数modelId(String),且需返回一个JSONObject对象,其中包括如下字段:
+						1、subject(String,选填):签到事项标题
+						2、date(Long,必填,时间戳):签到时间
+						3、startTime(String,必填,格式MM:hh):打卡开始时间
+						4、endTime(String,必填,格式MM:hh):关闭打卡时间
+						5、targetIds(String ,必填):签到对象Id
+						6、targetNames(String ,必填):签到对象Name
+						7、managerId(String,必填):签到负责人Id
+						8、managerName(String,必填):签到负责人Name
+						9、appId
+						10、appName
+						11、appUrl
+				</description>
+			</param>
+			<description>第三方发起签到拓展项</description>
+		</item>
+		<description>第三方发起签到拓展点</description>
+	</extension-point>
+	
+	<extension point="com.landray.kmss.sys.xform.base.service.controls" model="*">
+		<item name="control">
+			<param name="class" value="com.landray.kmss.sys.attend.xform.SysAttendTemplateMapControl" />
+			<param name="file" value="/sys/attend/map/xform/map_lang.jsp;/sys/attend/map/xform/map.js" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="sysAttendBusinessListener" />
+			<param
+				name="messageKey"
+				value="sys-attend:sysAttendMain.lbpmevent.business"/>
+			<param
+				name="eventTypes"
+				value="endedNodeEvent"/>
+			<param
+				name="listener"
+				value="sysAttendBusinessListener" />
+			<param
+				name="conditionJsp"
+				value="/sys/attend/sys_attend_main/sysAttendMain_listener_business.jsp"/>
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="sysAttendBusinessResumeListener" />
+			<param
+				name="messageKey"
+				value="sys-attend:sysAttendMain.lbpmevent.business.resume"/>
+			<param
+				name="eventTypes"
+				value="endedNodeEvent"/>
+			<param
+				name="listener"
+				value="sysAttendBusinessResumeListener" />
+			<param
+				name="conditionJsp"
+				value="/sys/attend/sys_attend_main/sysAttendMain_listener_bus_resume.jsp"/>
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="*">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="sysAttendLeaveListener" />
+			<param
+				name="messageKey"
+				value="sys-attend:sysAttendMain.lbpmevent.askforleave"/>
+			<param
+				name="eventTypes"
+				value="endedNodeEvent"/>
+			<param
+				name="listener"
+				value="sysAttendLeaveListener" />
+			<param
+				name="conditionJsp"
+				value="/sys/attend/sys_attend_main/sysAttendMain_listener_leave.jsp"/>
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="sysAttendOvertimeListener" />
+			<param
+				name="messageKey"
+				value="sys-attend:sysAttendMain.lbpmevent.overtime"/>
+			<param
+				name="eventTypes"
+				value="endedNodeEvent"/>
+			<param
+				name="listener"
+				value="sysAttendOvertimeListener" />
+			<param
+				name="conditionJsp"
+				value="/sys/attend/sys_attend_main/sysAttendMain_listener_ovt.jsp"/>
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+
+
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="*">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="sysAttendOutgoingListener" />
+			<param
+				name="messageKey"
+				value="sys-attend:sysAttendMain.lbpmevent.outgoing"/>
+			<param
+				name="eventTypes"
+				value="endedNodeEvent"/>
+			<param
+				name="listener"
+				value="sysAttendOutgoingListener" />
+			<param
+				name="conditionJsp"
+				value="/sys/attend/sys_attend_main/sysAttendMain_listener_outgoing.jsp"/>
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="sysAttendOutgoingResumeListener" />
+			<param
+				name="messageKey"
+				value="sys-attend:sysAttendMain.lbpmevent.businessOutgoing.resume"/>
+			<param
+				name="eventTypes"
+				value="endedNodeEvent"/>
+			<param
+				name="listener"
+				value="sysAttendOutgoingResumeListener" />
+			<param
+				name="conditionJsp"
+				value="/sys/attend/sys_attend_main/sysAttendMain_listener_outgoing.jsp"/>
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+		<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain;com.landray.kmss.fssc.expense.model.FsscExpenseMain">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="sysAttendEASListener" />
+			<param
+				name="messageKey"
+				value="sys-attend:sysAttendMain.lbpmevent.EAS"/>
+			<param
+				name="eventTypes"
+				value="endedNodeEvent;lbpmProcessFinishEvent"/>
+			<param
+				name="listener"
+				value="sysAttendEASListener" />
+			<param
+				name="conditionJsp"
+				value="/sys/attend/sys_attend_main/sysAttendMain_listener_EAS.jsp"/>
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="sysAttendAddCardListener" />
+			<param
+				name="messageKey"
+				value="sys-attend:sysAttendMain.lbpmevent.addCard"/>
+			<param
+				name="eventTypes"
+				value="endedNodeEvent"/>
+			<param
+				name="listener"
+				value="sysAttendAddCardListener" />
+			<param
+				name="conditionJsp"
+				value="/sys/attend/sys_attend_main/sysAttendMain_listener_card.jsp"/>
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="sysAttendAddWeekDayCardListener" />
+			<param
+				name="messageKey"
+				value="sys-attend:sysAttendMain.lbpmevent.sysAttendAddWeekDayCardListener"/>
+			<param
+				name="eventTypes"
+				value="endedNodeEvent"/>
+			<param
+				name="listener"
+				value="sysAttendAddWeekDayCardListener" />
+			<param
+				name="conditionJsp"
+				value="/sys/attend/sys_attend_main/sysAttendMain_listener_card2.jsp"/>
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="sysAttendResumeListener" />
+			<param
+				name="messageKey"
+				value="sys-attend:sysAttendMain.lbpmevent.resume"/>
+			<param
+				name="eventTypes"
+				value="endedNodeEvent"/>
+			<param
+				name="listener"
+				value="sysAttendResumeListener" />
+			<param
+				name="conditionJsp"
+				value="/sys/attend/sys_attend_main/sysAttendMain_listener_resume.jsp"/>
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<extension 
+        point="com.landray.kmss.lbpm.engine.event" 
+        model="com.landray.kmss.km.review.model.KmReviewMain">
+        <item 
+            name="listener">
+            <param 
+                name="unid" 
+                value="sysAttendExchangeListener"/>
+            <param 
+                name="messageKey" 
+                value="sys-attend:sysAttendMain.lbpmevent.exchange"/>
+            <param 
+                name="eventTypes" 
+                value="endedNodeEvent"/>
+            <param 
+                name="enforce" 
+                value="false"/>
+            <param 
+                name="listener" 
+                value="sysAttendExchangeListener"/>
+            <param
+				name="conditionJsp"
+				value="/sys/attend/sys_attend_main/sysAttendMain_listener_exchange.jsp"/>
+        </item>
+    </extension>
+	
+	<extension
+		point="com.landray.kmss.sys.webservice2">
+		<item
+			name="registry">
+			<param
+				name="serviceName"
+				value="{sys-attend:sysAttendmain.webservice.title}" />
+			<param
+				name="serviceClass"
+				value="com.landray.kmss.sys.attend.webservice.ISysAttendWebService" />
+			<param
+				name="serviceBean"
+				value="sysAttendWebService" />
+			<param
+				name="serviceDoc"
+				value="/sys/attend/webservice/SysAttendWebServiceHelp.jsp" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.third.im.kk.transfer">
+		<item
+			name="config">
+			<param
+				name="key"
+				value="attend" />
+			<param
+				name="method"
+				value="getKKConfig" />
+			<param
+				name="service"
+				value="sysAttendConfigService" />
+			<param
+				name="modelName"
+				value="com.landray.kmss.sys.attend.model.SysAttendConfig" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendStatSortTransferTask" />
+			<param
+				name="name"
+				value="考勤统计排序数据迁移" />
+			<param
+				name="path"
+				value="/sys/attend/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendStatSortTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendStatSortTransferTask" />
+			<param
+				name="description"
+				value="考勤统计表相关为空字段进行数据迁移处理,方便统计排序" />
+		</item>
+	</extension>
+	
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendLeaveRuleTransferTask" />
+			<param
+				name="name"
+				value="考勤请假类型数据迁移" />
+			<param
+				name="path"
+				value="/sys/attend/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendLeaveRuleTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendLeaveRuleTransferTask" />
+			<param
+				name="description"
+				value="请假类型数据从签到服务模块迁移到排班管理，若排班已有请假类型则不做迁移" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param 
+				name="unid"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendAppKeyTransferTask" />
+			<param 
+				name="name" 
+				value="会议签到数据迁移" />
+			<param 
+				name="path" 
+				value="/sys/attend/" />
+			<param 
+				name="check"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendAppKeyTransferTask" />
+			<param 
+				name="upgrade"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendAppKeyTransferTask" />
+			<param 
+				name="description"
+				value="会议签到增加fdAppKey字段值填充，便于国际化处理" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendSynDingTransferTask" />
+			<param
+				name="name"
+				value="原始考勤记录数据迁移" />
+			<param
+				name="path"
+				value="/sys/attend/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendSynDingTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendSynDingTransferTask" />
+			<param
+				name="description"
+				value="原始考勤记录表新增创建人字段值填充,方便集团分级数据迁移" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendOverTimeTransferTask" />
+			<param
+				name="name"
+				value="签到服务跨天排班数据迁移" />
+			<param
+				name="path"
+				value="/sys/attend/" />
+			<param
+				name="check"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendOverTimeTransferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.attend.transfer.SysAttendOverTimeTransferTask" />
+			<param
+				name="description"
+				value="考勤跨天排班新增字段填充，避免旧数据报错" />
+		</item>
+	</extension>
+
+	<extension
+			point="com.landray.kmss.sys.admin.transfer">
+		<item
+				name="config">
+			<param
+					name="unid"
+					value="com.landray.kmss.sys.attend.transfer.SysAttendCategoryTransferTask" />
+			<param
+					name="name"
+					value="签到服务-考勤组改造历史数据迁移" />
+			<param
+					name="path"
+					value="/sys/attend/" />
+			<param
+					name="check"
+					value="com.landray.kmss.sys.attend.transfer.SysAttendCategoryTransferTask" />
+			<param
+					name="upgrade"
+					value="com.landray.kmss.sys.attend.transfer.SysAttendCategoryTransferTask" />
+			<param
+					name="description"
+					value="生成考勤组版本管理机制，将考勤数据中的记录所属考勤组归属迁移，如果历史考勤组存在冲突，执行不成功，请查看日志来分析！" />
+		</item>
+	</extension>
+
+	<extension
+			point="com.landray.kmss.sys.admin.transfer">
+		<item
+				name="config">
+			<param
+					name="unid"
+					value="com.landray.kmss.sys.attend.transfer.SysAttendCategoryContentTransferTask" />
+			<param
+					name="name"
+					value="签到服务-考勤组配置字段迁移" />
+			<param
+					name="path"
+					value="/sys/attend/" />
+			<param
+					name="check"
+					value="com.landray.kmss.sys.attend.transfer.SysAttendCategoryContentTransferTask" />
+			<param
+					name="upgrade"
+					value="com.landray.kmss.sys.attend.transfer.SysAttendCategoryContentTransferTask" />
+			<param
+					name="description"
+					value="考勤组配置字段从历史考勤组中剥离、减少关联历史考勤组表的性能消耗！" />
+		</item>
+	</extension>
+
+	<extension
+			point="com.landray.kmss.sys.admin.transfer">
+		<item
+				name="config">
+			<param
+					name="unid"
+					value="com.landray.kmss.sys.attend.transfer.SysAttendCategoryQuartTransferTask" />
+			<param
+					name="name"
+					value="签到服务-考勤组生成缺卡定时任务迁移" />
+			<param
+					name="path"
+					value="/sys/attend/" />
+			<param
+					name="check"
+					value="com.landray.kmss.sys.attend.transfer.SysAttendCategoryQuartTransferTask" />
+			<param
+					name="upgrade"
+					value="com.landray.kmss.sys.attend.transfer.SysAttendCategoryQuartTransferTask" />
+			<param
+					name="description"
+					value="原来由统一系统定时任务生成缺卡，拆分为每个考勤组一个普通定时任务！" />
+		</item>
+	</extension>
+	<!--加班流程启动事件-->
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="sysAttendOvertimeStartListener" />
+			<param
+					name="messageKey"
+					value="sys-attend:sysAttendMain.lbpmevent.overtime.start"/>
+			<param
+					name="eventTypes"
+					value="endedNodeEvent"/>
+			<param
+					name="listener"
+					value="sysAttendOvertimeStartListener" />
+			<param
+					name="conditionJsp"
+					value="/sys/attend/sys_attend_main/sysAttendMain_listener_ovt.jsp"/>
+			<param
+					name="enforce"
+					value="false" />
+		</item>
+	</extension>
+
+	<!--外出流程启动事件-->
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="sysAttendOutgoingStartListener" />
+			<param
+					name="messageKey"
+					value="sys-attend:sysAttendMain.lbpmevent.outgoing.start"/>
+			<param
+					name="eventTypes"
+					value="endedNodeEvent"/>
+			<param
+					name="listener"
+					value="sysAttendOutgoingStartListener" />
+			<param
+					name="conditionJsp"
+					value="/sys/attend/sys_attend_main/sysAttendMain_listener_outgoing.jsp"/>
+			<param
+					name="enforce"
+					value="false" />
+		</item>
+	</extension>
+
+	<!--销假 提交事件-->
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="sysAttendResumeStartListener" />
+			<param
+					name="messageKey"
+					value="sys-attend:sysAttendMain.lbpmevent.resume.start"/>
+			<param
+					name="eventTypes"
+					value="endedNodeEvent"/>
+			<param
+					name="listener"
+					value="sysAttendResumeStartListener" />
+			<param
+					name="conditionJsp"
+					value="/sys/attend/sys_attend_main/sysAttendMain_listener_resume.jsp"/>
+			<param
+					name="enforce"
+					value="false" />
+		</item>
+	</extension>
+
+	<!--销假 流程结束、作废、起草人撤回事件 -->
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="sysAttendResumeOverListener" />
+			<param
+					name="messageKey"
+					value="sys-attend:sysAttendMain.lbpmevent.leave.end"/>
+			<param
+					name="eventTypes"
+					value="lbpmProcessFinishEvent;lbpmProcessAbandonEvent;drafterReturnEvent"/>
+			<param
+					name="listener"
+					value="sysAttendResumeOverListener" />
+			<param
+					name="enforce"
+					value="true" />
+		</item>
+	</extension>
+
+	<!--请假提交事件-->
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="sysAttendLeaveStartListener" />
+			<param
+					name="messageKey"
+					value="sys-attend:sysAttendMain.lbpmevent.leave.start"/>
+			<param
+					name="eventTypes"
+					value="endedNodeEvent"/>
+			<param
+					name="listener"
+					value="sysAttendLeaveStartListener" />
+			<param
+					name="conditionJsp"
+					value="/sys/attend/sys_attend_main/sysAttendMain_listener_leave.jsp"/>
+			<param
+					name="enforce"
+					value="false" />
+		</item>
+	</extension>
+
+	<!--请假 流程结束、作废、起草人撤回事件 -->
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="sysAttendLeaveOverListener" />
+			<param
+					name="messageKey"
+					value="sys-attend:sysAttendMain.lbpmevent.leave.end"/>
+			<param
+					name="eventTypes"
+					value="lbpmProcessFinishEvent;lbpmProcessAbandonEvent;drafterReturnEvent;lbpmHandlerRefuseEvent;lbpmAdminJumpEvent"/>
+			<param
+					name="listener"
+					value="sysAttendLeaveOverListener" />
+			<param
+					name="enforce"
+					value="true" />
+		</item>
+	</extension>
+
+	<!-- 出差提交事件-->
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="sysAttendBusinessStartListener" />
+			<param
+					name="messageKey"
+					value="sys-attend:sysAttendMain.lbpmevent.business.start"/>
+			<param
+					name="eventTypes"
+					value="endedNodeEvent"/>
+			<param
+					name="listener"
+					value="sysAttendBusinessStartListener" />
+			<param
+					name="conditionJsp"
+					value="/sys/attend/sys_attend_main/sysAttendMain_listener_business.jsp"/>
+			<param
+					name="enforce"
+					value="false" />
+		</item>
+	</extension>
+
+	<!--出差/销出差/外出/加班 流程结束、作废、起草人撤回事件 -->
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="sysAttendFlowOverListener" />
+			<param
+					name="messageKey"
+					value="sys-attend:sysAttendMain.lbpmevent.business.over"/>
+			<param
+					name="eventTypes"
+					value="lbpmProcessFinishEvent;lbpmProcessAbandonEvent;drafterReturnEvent"/>
+			<param
+					name="listener"
+					value="sysAttendFlowOverListener" />
+			<param
+					name="enforce"
+					value="true" />
+		</item>
+	</extension>
+
+	<!--销出差提交事件-->
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="sysAttendBusinessResumeStartListener" />
+			<param
+					name="messageKey"
+					value="sys-attend:sysAttendMain.lbpmevent.business.resume.start"/>
+			<param
+					name="eventTypes"
+					value="endedNodeEvent"/>
+			<param
+					name="listener"
+					value="sysAttendBusinessResumeStartListener" />
+			<param
+					name="conditionJsp"
+					value="/sys/attend/sys_attend_main/sysAttendMain_listener_bus_resume.jsp"/>
+			<param
+					name="enforce"
+					value="false" />
+		</item>
+	</extension>
+
+
+
+	<extension
+			point="com.landray.kmss.sys.admin.transfer">
+		<item
+				name="config">
+			<param
+					name="unid"
+					value="com.landray.kmss.sys.attend.transfer.SysAttendCategoryManagerTransferTask" />
+			<param
+					name="name"
+					value="签到服务-原始考勤组负责人数据同步到历史考勤组" />
+			<param
+					name="path"
+					value="/sys/attend/" />
+			<param
+					name="check"
+					value="com.landray.kmss.sys.attend.transfer.SysAttendCategoryManagerTransferTask" />
+			<param
+					name="upgrade"
+					value="com.landray.kmss.sys.attend.transfer.SysAttendCategoryManagerTransferTask" />
+			<param
+					name="description"
+					value="原始考勤组的负责人数据同步到历史考勤组中，历史考勤组中负责人数据有的则不同步" />
+		</item>
+	</extension>
+</plugin>

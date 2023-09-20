@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean
+            id="modelingAppMobileDao"
+          parent="modelingAuthBaseDao"
+          class="com.landray.kmss.sys.modeling.base.mobile.dao.hibernate.ModelingAppMobileDaoImp">
+        <property name="modelName" value="com.landray.kmss.sys.modeling.base.mobile.model.ModelingAppMobile"/>
+    </bean>
+
+    <bean id="modelingAppMobileServiceTarget" parent="KmssBaseTarget"
+          class="com.landray.kmss.sys.modeling.base.mobile.service.spring.ModelingAppMobileServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingAppMobileDao"/>
+        </property>
+    </bean>
+
+    <bean id="modelingAppMobileService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAppMobileServiceTarget"/>
+        </property>
+    </bean>
+
+    <!-- 移动列表 -->
+    <bean id="modelingAppMobileListViewDao" parent="modelingBaseDao"
+          class="com.landray.kmss.sys.modeling.base.mobile.dao.hibernate.ModelingAppMobileListViewDaoImp">
+        <property name="modelName" value="com.landray.kmss.sys.modeling.base.mobile.model.ModelingAppMobileListView"/>
+    </bean>
+
+    <bean id="modelingAppMobileListViewServiceTarget" parent="KmssExtendDataTarget"
+          class="com.landray.kmss.sys.modeling.base.mobile.service.spring.ModelingAppMobileListViewServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingAppMobileListViewDao"/>
+        </property>
+        <property name="modelingAppViewtabService">
+            <ref bean="modelingAppViewtabService"/>
+        </property>
+    </bean>
+
+    <bean id="modelingAppMobileListViewService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAppMobileListViewServiceTarget"/>
+        </property>
+    </bean>
+    <!-- 新版移动列表运行时 -->
+    <bean id="modelingAppMobileCollectionLvDao" parent="modelingBaseDao"
+          class="com.landray.kmss.sys.modeling.base.mobile.dao.hibernate.ModelingAppMobileListViewDaoImp">
+        <property name="modelName" value="com.landray.kmss.sys.modeling.base.views.collection.model.ModelingAppCollectionView"/>
+    </bean>
+    <bean id="modelingAppMobileCollectionLvServiceTarget" parent="KmssExtendDataTarget"
+          class="com.landray.kmss.sys.modeling.main.views.mobile.service.spring.ModelingAppMobileCollectionLvServiceImp">
+        <property name="baseDao">
+            <ref bean="modelingAppMobileCollectionLvDao"/>
+        </property>
+    </bean>
+    <bean id="modelingAppMobileCollectionLvService" parent="KmssBaseService">
+        <property name="target">
+            <ref bean="modelingAppMobileCollectionLvServiceTarget"/>
+        </property>
+    </bean>
+</beans>

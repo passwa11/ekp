@@ -1,0 +1,44 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.tic.core.provider.model.TicCoreTag",
+        "messageKey": "tic-core-provider:table.ticCoreTag",
+        "displayProperty": "fdTagName",
+        "serviceBean": "ticCoreTagService",
+        "table": "tic_core_tag",
+        "url": "/tic/core/provider/tic_core_tag/ticCoreTag.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdTagName":         {
+            "propertyType": "simple",
+            "messageKey": "tic-core-provider:ticCoreTag.fdTagName",
+            "type": "String",
+            "column": "fd_tag_name",
+            "notNull": "true",
+            "length": "200",
+            "validate": "true"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "tic-core-provider:ticCoreTag.fdOrder",
+            "type": "Integer",
+            "column": "fd_order",
+            "notNull": "false",
+            "length": "10",
+            "validate": "true"
+        },
+        "ticCoreIfaces":         {
+            "propertyType": "list",
+            "messageKey": "tic-core-provider:ticCoreTag.ticCoreIfaces",
+            "type": "com.landray.kmss.tic.core.provider.model.TicCoreIface",
+            "column": "fd_tag_id",
+            "elementColumn": "fd_iface_id",
+            "table": "tic_core_iface_tags",
+            "cascade": "save-update",
+            "canDisplay": "false"
+        }
+    }
+}

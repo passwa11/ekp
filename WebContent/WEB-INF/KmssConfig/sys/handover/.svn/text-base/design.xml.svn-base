@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="sys-handover:module.sys.handover"
+		urlPrefix="/sys/handover/"
+		defaultValidator="roleValidator(role=ROLE_SYSHANDOVER_DEFAULT)">
+		<roles>
+			ROLE_SYSHANDOVER_DEFAULT;
+			ROLE_SYSHANDOVER_READER;
+			ROLE_SYSHANDOVER_CREATE;
+			ROLE_SYSHANDOVER_MAINTAIN;
+		</roles> 
+		<request
+			path="sys_handover_config_main/sysHandoverConfigMain*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.handover.model.SysHandoverConfigMain,adminRoleName=ROLE_SYSHANDOVER_MAINTAIN">
+			<!-- 新建交接 -->
+			<query
+				queryString="method=add|search|perform"
+				validator="roleValidator(role=ROLE_SYSHANDOVER_CREATE)" />
+			<query
+				queryString="method=delete|deleteAll"
+				validator="roleValidator(role=ROLE_SYSHANDOVER_CREATE)" />
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_SYSHANDOVER_CREATE)|authFieldValidator(type=SYS_READER)" />
+		</request>
+
+		<filters
+			modelName="com.landray.kmss.sys.handover.model.SysHandoverConfigMain">
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_SYSHANDOVER_READER)" />
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+		</filters>
+		<filters
+			modelName="com.landray.kmss.sys.handover.model.SysHandoverConfigAuthLogDetail">
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_SYSHANDOVER_READER)" />
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=fdMain.docCreator.fdId)" />
+		</filters>
+	</module>
+	
+	<module
+		messageKey="sys-handover-support-config-auth:module.sys.handover.support.config.auth"
+		urlPrefix="/sys/handover/support/config/auth/">
+	</module>
+	
+	<module
+		urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				validator="roleValidator(role=SYSROLE_ADMIN)"
+				queryString="modelName=com.landray.kmss.sys.handover.model.SysHandoverTaskSetting" />
+		</request>
+	</module>
+	
+	<!-- 文档权限交接定时任务 -->
+	<quartz
+		messageKey="sys-handover:sysHandoverConfigMain.authJob"
+		jobService="sysHandoverConfigMainService"
+		cronExpression="0 0 0 * * ?"
+		jobMethod="executeAuth" 
+		description="sys-handover:sysHandoverConfigMain.authJob.desc"/>
+
+	<homePage
+		urlPrefix="sys/handover"
+		config="/sys/handover/config.jsp"
+		messageKey="sys-handover:module.sys.handover"
+		type="global" />
+		
+	<!-- 后台配置 -->
+	<profileConfig
+		key="handover"
+		messageKey="{sys-profile:sys.profile.org.handover}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/handover/tree.jsp" 
+		type="org"
+		icon="lui_icon_s_profile_navLeft_handover" 
+		order="6"/>
+
+</configs>

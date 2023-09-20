@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		id="dbAttMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attachment.dao.hibernate.SysAttMainCoreInnerDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attachment.model.SysAttMain" />
+	</bean>
+	
+	<bean
+		id="sysAttDownloadLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.attachment.dao.hibernate.SysAttDownloadLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.attachment.model.SysAttDownloadLog" />
+	</bean>
+	
+	<bean
+        id="sysAttToggleTarget"
+        parent="KmssBaseTarget"
+        class="com.landray.kmss.sys.attachment.service.spring.SysAttToggleServiceImp">
+        <property name="sysQuartzCoreService">
+            <ref bean="sysQuartzCoreService" />
+        </property>
+    </bean>
+    <bean
+        id="sysAttToggleService"
+        parent="KmssBaseService">
+        <property name="target">
+            <ref bean="sysAttToggleTarget" />
+        </property>
+    </bean>
+	
+	<bean
+		id="sysAttMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attachment.service.spring.SysAttMainCoreInnerServiceImp">
+		<property name="baseDao">
+			<ref bean="dbAttMainDao" />
+		</property>
+		<property name="sysAttUploadService">
+			<ref bean="sysAttUploadService"/>
+		</property>
+		<property name="sysAttDownloadLogService">
+			<ref bean="sysAttDownloadLogService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysAttMainService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysAttMainTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysAttDownloadLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.attachment.service.spring.SysAttDownloadLogServiceImp">
+		<property name="baseDao">
+			<ref bean="sysAttDownloadLogDao" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysAttDownloadLogService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysAttDownloadLogTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysAttachmentService"
+		parent="KmssBaseCoreService">
+		<property
+			name="target">
+			<bean
+				class="com.landray.kmss.sys.attachment.service.spring.SysAttachmentCoreOuterService">
+			</bean>
+		</property>
+	</bean>
+	 
+	<bean
+		id="sysAttachmentValidator"
+		class="com.landray.kmss.sys.attachment.service.spring.SysAttachmentValidator">
+		<property name="sysAttMainService">
+			<ref bean="sysAttMainService" />
+		</property>
+	</bean>
+	  
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<value>sysAttachmentService</value>
+		</property>
+		<property name="interceptorNames">
+			<list>  
+				<value>docKeyWriteAttAdvice</value> 
+				<value>luceneSaveAttAdvisor</value>
+				<value>luceneDeleteAttAdvisor</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<value>sysAttMainService</value>
+		</property>
+		<property name="interceptorNames">
+			<list>  
+				<value>docKeyWriteAttAdvice</value> 
+				<value>luceneSaveAttAdvisor</value>
+				<value>luceneDeleteAttAdvisor</value>
+			</list>
+		</property>
+	</bean>
+	  
+	<bean
+		id="attachmentDataInit"
+		class="com.landray.kmss.sys.attachment.service.spring.AttachmentDataInit">
+		<property name="baseDao">
+			<ref bean="KmssBaseDao" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysAttRtfService"
+		parent="KmssBaseCoreService">
+		<property
+			name="target">
+			<bean
+				class="com.landray.kmss.sys.attachment.service.spring.SysAttRtfCoreServiceImp">
+			</bean>
+		</property>
+	</bean>
+	
+	<bean
+		id="sysAttImageCropTarget"
+		class="com.landray.kmss.sys.attachment.service.spring.SysAttImageCropServiceImp">
+		<property name="sysAttMainService">
+			<ref bean="sysAttMainService" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysAttImageCropService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysAttImageCropTarget" />
+		</property>
+	</bean>	
+	
+	
+	<bean 
+        id="sysAttPlayLogDao" 
+        class="com.landray.kmss.sys.attachment.dao.hibernate.SysAttPlayLogDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.attachment.model.SysAttPlayLog</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysAttPlayLogTarget" 
+        class="com.landray.kmss.sys.attachment.service.spring.SysAttPlayLogServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysAttPlayLogDao"/>
+        </property>
+        <property name="sysAttMainService">
+        	<ref bean="sysAttMainService" />
+        </property>
+    </bean>
+    <bean 
+        id="sysAttPlayLogService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysAttPlayLogTarget"/>
+        </property>
+    </bean>
+    <bean id="sysAttachmentRestService" class="com.landray.kmss.sys.attachment.restservice.SysAttachmentRestServiceImp">
+    	<property name="sysAttMainService">
+			<ref bean="sysAttMainService" />
+		</property>
+		<property name="sysAttUploadService">
+			<ref bean="sysAttUploadService" />
+		</property>
+	</bean>
+	
+	 <bean id="sysAttachmentWpsController" class="com.landray.kmss.sys.attachment.restservice.wps.controller.SysAttachmentWpsController">
+    	<property name="sysAttMainService">
+			<ref bean="sysAttMainService" />
+		</property>
+		<property name="sysAttUploadService">
+			<ref bean="sysAttUploadService" />
+		</property>
+	</bean>
+	
+	<!-- 定时清理无用历史版本附件 -->
+	<bean id="sysAttMainBakDao"
+		  class="com.landray.kmss.sys.attachment.dao.hibernate.SysAttMainBakDaoImp"
+		  parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.sys.attachment.model.SysAttMainBak</value>
+		</property>
+	</bean>
+	<bean id="sysAttMainBakService" class="com.landray.kmss.sys.attachment.service.spring.SysAttMainBakServiceImpl">
+		<property name="baseDao">
+			<ref bean="sysAttMainBakDao"/>
+		</property>
+	</bean>
+	<bean id="sysAttClearService" class="com.landray.kmss.sys.attachment.service.spring.SysAttClearServiceImpl">
+		<property name="sysAttMainService">
+			<ref bean="sysAttMainService"></ref>
+		</property>
+		<property name="sysAttUploadService">
+			<ref bean="sysAttUploadService" />
+		</property>
+		<property name="sysAttMainBakService">
+			<ref bean="sysAttMainBakService" />
+		</property>
+		<property name="sysAttFileBakService">
+			<ref bean="sysAttFileBakService" />
+		</property>
+	</bean>
+	
+	<bean id="sysAttMainHistoryDataSource" class="com.landray.kmss.sys.attachment.service.spring.SysAttMainHistoryDataSource"></bean>
+	
+	<bean id="wpsCloudAutoSaveNoDataSource" class="com.landray.kmss.sys.attachment.service.spring.WpsCloudAutoSaveNoDataSource"></bean>
+	
+	<!-- wps加载项jsplugins.xml跳转过滤器 -->
+    <bean id="wpsOAassistRedirectFilter"
+        class="com.landray.kmss.sys.attachment.integrate.wps.filter.WpsPluginRedirectFilter">
+    </bean>
+    
+    <bean 
+        id="sysAttachmentWpsDao" 
+        class="com.landray.kmss.sys.attachment.dao.hibernate.SysAttachmentWpsDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.sys.attachment.model.SysAttachmentWps</value>
+        </property>
+    </bean>
+    <bean 
+        id="sysAttachmentWpsTarget" 
+        class="com.landray.kmss.sys.attachment.service.spring.SysAttachmentWpsServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="sysAttachmentWpsDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="sysAttachmentWpsService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="sysAttachmentWpsTarget"/>
+        </property>
+    </bean>
+
+	<bean id="sysAttachmentWpsAddonsLock" class="com.landray.kmss.sys.attachment.plugin.wpsAddons.service.impl.SysAttachmentWpsAddonsLock"></bean>
+	<bean id="sysAttachmentWpsAddonsUnlock" class="com.landray.kmss.sys.attachment.plugin.wpsAddons.service.impl.SysAttachmentWpsAddonsUnlock"></bean>
+
+    <bean id="uploaderServletController" class="com.landray.kmss.sys.attachment.controller.UploaderServletController"/>
+    <bean id="sysAttDownloadLogController" class="com.landray.kmss.sys.attachment.controller.SysAttDownloadLogController"/>
+    <bean id="sysAttMainController" class="com.landray.kmss.sys.attachment.controller.SysAttMainController"/>
+    <bean id="sysJgWebOfficeController" class="com.landray.kmss.sys.attachment.controller.SysJgWebOfficeController"/>
+
+	<bean id="sysAttWpsCenterCallbackController" class="com.landray.kmss.sys.attachment.restservice.wps.controller.SysAttWpsCenterCallbackController"/>
+
+	<bean id="sysAttDianJuCallbackController" class="com.landray.kmss.sys.attachment.restservice.dianju.controller.SysAttDianJuCallbackController"/>
+
+	<bean id="sysAttMainFoxitService" class="com.landray.kmss.sys.attachment.service.spring.SysAttMainFoxitServiceImp"/>
+	<bean id="sysAttFoxitController" class="com.landray.kmss.sys.attachment.restservice.foxit.controller.SysAttFoxitController"/>
+	<bean
+			id="thirdWpsOfficeTokenDao"
+			class="com.landray.kmss.sys.attachment.integrate.wps.dao.hibernate.ThirdWpsOfficeTokenDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.sys.attachment.integrate.wps.model.ThirdWpsOfficeToken</value>
+		</property>
+	</bean>
+	<bean
+			id="thirdWpsOfficeTokenokenServiceTarget"
+			class="com.landray.kmss.sys.attachment.integrate.wps.service.spring.ThirdWpsOfficeTokenServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+				name="baseDao">
+			<ref
+					bean="thirdWpsOfficeTokenDao"/>
+		</property>
+	</bean>
+
+	<bean
+			id="thirdWpsOfficeTokenokenService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdWpsOfficeTokenokenServiceTarget"/>
+		</property>
+	</bean>
+	<bean id="sysAttachmentWpsAddinProviderImp" class="com.landray.kmss.sys.attachment.integrate.wps.provider.SysAttachmentWpsAddinProviderImp">
+	</bean>
+</beans>

@@ -1,0 +1,53 @@
+﻿
+   \set SQLTERM v8数据库，需要按顺序单独执行以下每一条sql语句/
+
+    create or replace internal function  bool_eq_numeric(bool, numeric) returns bool as 
+    $$ select $1::numeric = $2; $$ language sql;
+	/
+    
+    create operator sys_catalog.= (
+    procedure = bool_eq_numeric,
+    leftarg = bool,
+    rightarg = numeric,
+    commutator = =);
+	/
+    
+    
+    create or replace internal function  numeric_eq_bool(numeric, bool) returns bool as 
+    $$ select $1 = $2::numeric; $$ language sql;
+	/
+    
+    create operator sys_catalog.= (
+    procedure = numeric_eq_bool,
+    leftarg = numeric,
+    rightarg = bool,
+    commutator = =);
+	/
+    
+    create or replace internal function  varchar_eq_bool(varchar, bool) returns bool as 
+    $$ select $1::bool = $2; $$ language sql;
+	/
+    
+    create operator sys_catalog.= (
+    procedure = varchar_eq_bool,
+    leftarg = varchar,
+    rightarg = bool,
+    commutator = =);
+	/
+    
+ -- 支持DATA_FORMAT函数
+ create or replace function DATE_FORMAT(timestamp, text) returns text as
+	declare
+    fm_string text;
+	begin
+    fm_string := $2;
+    fm_string := replace (fm_string, '%Y', 'yyyy');
+    fm_string := replace (fm_string, '%m', 'mm');
+    fm_string := replace (fm_string, '%d', 'dd');
+    fm_string := replace (fm_string, '%H', 'hh24');
+    fm_string := replace (fm_string, '%i', 'mi');
+
+    return to_char($1, fm_string);
+	end;   
+	/
+    

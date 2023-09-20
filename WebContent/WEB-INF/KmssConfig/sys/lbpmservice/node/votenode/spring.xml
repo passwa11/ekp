@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="voteNodeBehaviourService"
+		parent="defaultManualNodeBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.votenode.VoteNodeBehaviour" />
+	<bean
+		id="voteNodeDesc"
+		class="com.landray.kmss.sys.lbpmservice.node.votenode.VoteNodeDesc" />
+
+	<bean
+		id="voteNodeWorkitemBehaviourService"
+		parent="abstractManualWorkitemBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.votenode.VoteNodeWorkitemBehaviour">
+		<property name="lbpmVoteService">
+			<ref bean="lbpmVoteService" />
+		</property>
+	</bean>
+	<bean
+		id="voteNodeWorkitemDesc"
+		class="com.landray.kmss.sys.lbpmservice.node.votenode.VoteNodeWorkitemDesc" />
+	<bean
+		id="lbpmDayOfVoteListener"
+		class="com.landray.kmss.sys.lbpmservice.node.votenode.quartz.DayOfVoteListener" />
+	<bean
+		id="lbpmVoteService"
+		class="com.landray.kmss.sys.lbpmservice.node.votenode.LbpmVoteServiceImp">
+		<property name="accessManager">
+			<ref bean="accessManager" />
+		</property>
+		<property name="lbpmVoteWeightMainService">
+			<ref bean="lbpmVoteWeightMainService" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmVoteNodeDataBean"
+		class="com.landray.kmss.sys.lbpmservice.node.votenode.LbpmVoteNodeDataBean">
+	</bean>
+</beans>

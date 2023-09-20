@@ -1,0 +1,1818 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module xmlns="http://www.landray.com.cn/fsscxml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.landray.com.cn/fsscxml import.xsd ">
+	<!-- 员工账户 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataAccount" key-col="fdBankAccount;fdPerson">
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdBankName" type="String">
+		</column>
+		<column property="fdBankNo" type="String">
+		</column>
+		<column property="fdBankAccount" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdPerson.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdPerson" type="Object">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdIsDefault" type="Radio">
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdAccountArea" switch-field="fdUseBank:CMB|CMInt|CBS" type="String">
+		</column>
+	</model>
+	<!-- 招行商务卡 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataCardInfo" key-col="fdCardNumber;fdHolder">
+		<column property="fdCorNum" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCorChiName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCompany.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompany" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdActNum" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdAcctNbr" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCardNumber" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdHolder.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdHolder" type="Object">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdHolderChiName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdHolderEngName" type="String">
+		</column>
+		<column property="fdEmpNumber" type="String">
+		</column>
+		<column property="fdActivationCode" type="Enums">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdActivationDate" type="Date">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCirculationFlag" type="Enums">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdCancelDate" type="Date">
+			<validator rel="required"/>
+		</column>
+	</model>
+	<!-- 提单转授权 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataAuthorize" key-col="fdAuthorizedBy">
+		<column property="fdAuthorizedBy.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdAuthorizedBy" type="Object">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdToOrg.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdToOrg" type="List">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdDesc" type="String">
+			<validator rel="required"/>
+		</column>
+	</model>
+	<!-- 货币 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataCurrency" key-col="fdAbbreviation">
+		<column property="fdCountry" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdAbbreviation" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdEnglishName" type="String">
+		</column>
+		<column property="fdCode" type="String">
+		</column>
+		<column property="fdSymbol" type="String">
+		</column>
+		<column property="fdOrder" type="Integer">
+		</column>
+	</model>
+	<!-- 公司组 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataCompanyGroup" key-col="fdCode">
+		<column property="hbmParent.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompanyGroup">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="hbmParent" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompanyGroup">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+	</model>
+	<!-- 记账公司 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataCompany" key-col="fdCode">
+		<column property="fdGroup.fdName" type="Unused" switch-field="fdCompanyGroup:true">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompanyGroup">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdGroup" type="Object" switch-field="fdCompanyGroup:true">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompanyGroup">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdDutyParagraph" type="String">
+		</column>
+		<column property="fdAccountCurrency.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCurrency">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdAccountCurrency" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCurrency">
+				<key name="fdAbbreviation"/>
+				<field name="fdStatus" type="static" data-type="Integer" value="0"/>
+			</rel>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+		</column>
+		<column property="fdBudgetCurrency.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCurrency">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdBudgetCurrency" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCurrency">
+				<key name="fdAbbreviation"/>
+				<field name="fdStatus" type="static" data-type="Integer" value="0"/>
+			</rel>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+		</column>
+		<column property="fdEkpOrg.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdEkpOrg" type="List">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdNo"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+			</rel>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+		</column>
+		<column property="fdFinancialStaff.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdFinancialStaff" type="List">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdNo"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+			</rel>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+		</column>
+		<column property="fdFinancialManager.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdFinancialManager" type="List">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdNo"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+			</rel>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+		</column>
+		<column property="fdType" type="Radio">
+			<validator rel="required"/>
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdJoinSystem" type="Radio">
+			<validator rel="radio"/>
+		</column>
+		<column property="fdUEightUrl" type="String">
+		</column>
+		<column property="fdKUrl" type="String">
+		</column>
+		<column property="fdKUserName" type="String">
+		</column>
+		<column property="fdKPassWord" type="String">
+		</column>
+		<column property="fdEUserName" type="String">
+		</column>
+		<column property="fdEPassWord" type="String">
+		</column>
+		<column property="fdESlnName" type="String">
+		</column>
+		<column property="fdEDcName" type="String">
+		</column>
+		<column property="fdELanguage" type="String">
+		</column>
+		<column property="fdEDbType" type="String">
+		</column>
+		<column property="fdEAuthPattern" type="String">
+		</column>
+		<column property="fdELoginWsdlUrl" type="String">
+		</column>
+		<column property="fdEImportVoucherWsdlUrl" type="String">
+		</column>
+		<column property="fdSystemParam" type="String">
+		</column>
+	</model>
+	<!-- 成本中心类型 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataCostType" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+	</model>
+	<!-- 成本中心 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataCostCenter" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="hbmParent.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCostCenter">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="hbmParent" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCostCenter">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdIsGroup" type="Radio">
+			<validator rel="required"/>
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdEkpOrg.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdEkpOrg" type="List">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdNo"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdFirstCharger.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdFirstCharger" type="List">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdSecondCharger.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdSecondCharger" type="List">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdManager.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdManager" type="List">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdBudgetManager.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdBudgetManager" type="List">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdType.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCostType">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdType" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCostType">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdOrder" type="Integer"/>
+	</model>
+	<!-- ERP人员 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataErpPerson" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdDeptCode" type="String">
+		</column>
+		<column property="fdOrg" type="Object">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+	</model>
+	<!-- 会计科目 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataAccounts" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="hbmParent.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="hbmParent" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCostItem" type="Enums">
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+	</model>
+	<!-- 预算科目 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataBudgetItem" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="hbmParent.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataBudgetItem">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="hbmParent" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataBudgetItem">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+	</model>
+	<!-- 项目 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataProject" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="hbmParent.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataProject">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="hbmParent" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataProject">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdType" type="Radio">
+			<validator rel="required"/>
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+		<column type="Unused" property="fdProjectManager.fdName">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdProjectManager" type="Object">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+			</rel>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+	</model>
+	<!-- 内部订单 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataInnerOrder" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="hbmParent.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataInnerOrder">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="hbmParent" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataInnerOrder">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+	</model>
+	<!-- WBS号 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataWbs" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="hbmParent.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataWbs">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="hbmParent" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataWbs">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdProject.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataProject">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdProject" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataProject">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+	</model>
+	<!-- 客商 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataSupplier" key-col="fdCompany;fdCode">
+		<column property="fdCompany.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompany" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdSupplierType" type="Radio">
+			<validator rel="required"/>
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdTaxNo" type="String">
+		</column>
+		<column property="fdAccountName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdBankName" type="String">
+		</column>
+		<column property="fdBankNo" type="String">
+		</column>
+		<column property="fdBankAccount" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdSourceLink" type="String">
+		</column>
+		<column property="fdErpNo" type="String">
+		</column>
+		<column property="fdAddress" type="String">
+		</column>
+		<column property="fdPhoneNo" type="String">
+		</column>
+		<column property="fdBankSwift" type="String">
+		</column>
+		<column property="fdReceiveBankName" type="String">
+		</column>
+		<column property="fdReceiveBankAddress" type="String">
+		</column>
+		<column property="fdInfo" type="String">
+		</column>
+		<column property="fdType" type="Radio">
+			<validator rel="required"/>
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+	</model>
+	<!-- 凭证类型 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataVoucherType" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+	</model>
+	<!-- 汇率 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataExchangeRate" key-col="fdCompanyList;fdSourceCurrency;fdTargetCurrency;fdType">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdSourceCurrency.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCurrency">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdSourceCurrency" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCurrency">
+				<key name="fdAbbreviation"/>
+				<field name="fdStatus" data-type="Integer" type="static" value="0"/>
+			</rel>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+		</column>
+		<column property="fdTargetCurrency.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCurrency">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdTargetCurrency" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCurrency">
+				<key name="fdAbbreviation"/>
+				<field name="fdStatus" data-type="Integer" type="static" value="0"/>
+			</rel>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+		</column>
+		<column property="fdRate" type="Double">
+			<validator rel="required"/>
+		</column>
+		<column property="fdType" type="Radio" switch-field="fdRateEnabled:true">
+			<validator rel="required"/>
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdOrder" type="Integer">
+		</column>
+	</model>
+	<!-- 现金流量项目 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataCashFlow" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="hbmParent.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCashFlow">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="hbmParent" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCashFlow">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<!--#127062 新增导出模板“会计科目”字段名称和编码-->
+		<column property="fdAccountsList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdAccountsList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+	</model>
+	<!-- 付款方式 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataPayWay" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdIsDefault" type="Radio">
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdAccount.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdAccount" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdStatus" type="Enums">
+		</column>
+		<column property="fdOrder" type="Integer">
+		</column>
+		<column property="fdIsTransfer" type="Radio">
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+	</model>
+	<!-- 付款方式 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataReceiverType" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdType" type="Radio">
+			<validator rel="required"/>
+		</column>
+		<column property="fdAccounts.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdAccounts" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+	</model>
+	<!-- 付款银行 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataPayBank" key-col="fdCompanyList;fdBankAccount">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdAccountName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdBankName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdBankType" type="String" switch-field="fdUseBank:CBS">
+		</column>
+		<column property="fdBankAccount" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdBankNo" type="String">
+		</column>
+		<column property="fdUse" type="String">
+		</column>
+		<column property="fdPayBankBelong" type="Enums" switch-field="fdUseBank:CMB|BOC|CMInt">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdAccounts.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdAccounts" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdAccountAreaName" type="Unused" switch-field="fdUseBank:CMB">
+			<rel type="weak" ref="com.landray.kmss.fssc.cmb.model.FsscCmbAccountArea">
+				<key name="fdArea"/>
+			</rel>
+		</column>
+		<column property="fdAccountAreaName" type="Unused" switch-field="fdUseBank:CMInt">
+			<rel type="weak" ref="com.landray.kmss.fssc.cmbint.model.FsscCmbIntAccountArea">
+				<key name="fdArea"/>
+			</rel>
+		</column>
+		<column property="fdAccountAreaId" type="Object" switch-field="fdUseBank:CMB">
+			<rel type="weak" ref="com.landray.kmss.fssc.cmb.model.FsscCmbAccountArea">
+				<key name="fdAreaCode"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdAccountAreaId" type="Object" switch-field="fdUseBank:CMInt">
+			<rel type="weak" ref="com.landray.kmss.fssc.cmbint.model.FsscCmbIntAccountArea">
+				<key name="fdAreaCode"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+	</model>
+	<!-- 费用类型 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="hbmParent.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="hbmParent" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdBudgetItems.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataBudgetItem">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdBudgetItems" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataBudgetItem">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdAccounts.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdAccounts" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdOrder" type="Integer">
+		</column>
+	</model>
+	<!-- 费用类型-预算控制维护 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataItemBudget" key-col="fdCompanyList;fdItems;fdCategory">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdItems.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdItems" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdCategory.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataBudgetScheme">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCategory" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataBudgetScheme">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdOrgs.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdOrgs" type="List">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdNo"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+	</model>
+	<!-- 费用类型-显示字段维护 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataItemField" key-col="fdCompany;fdItems">
+		<column property="fdCompany.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompany" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdItems.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdItems" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdCode"/>
+				<field name="fdCode" type="ref" rel-column="fdCompany"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdFields" type="Enums">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+	</model>
+	<!-- 标准方案 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataStandardScheme" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdItems.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdItems" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdDimension" type="Enums">
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+			<validator rel="expectedStandardDimension"/>
+		</column>
+		<column property="fdType" type="Radio">
+			<validator rel="required"/>
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdTarget" type="Radio">
+			<validator rel="required"/>
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdForbid" type="Radio">
+			<validator rel="required"/>
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdOrder" type="Integer">
+		</column>
+	</model>
+	<!-- 地域 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataArea" key-col="fdCompanyList;fdArea">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdArea" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdType" type="Radio">
+			<validator rel="required"/>
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdOrder" type="Integer">
+		</column>
+	</model>
+	<!-- 职级 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataLevel" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdPersonList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdPersonList" type="List">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+			</rel>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+	</model>
+	<!-- 交通工具 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataVehicle" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdLevel" type="Enums">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+	</model>
+	<!-- 舱位 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataBerth" key-col="fdCompanyList;fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdLevel" type="Enums">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdVehicle.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataVehicle">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdVehicle" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataVehicle">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+	</model>
+	<!-- 特殊事项 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataSpecialItem" key-col="fdCompany;fdCode">
+		<column property="fdCompany.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompany" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdDescription" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+	</model>
+	<!-- 标准数据 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataStandard" key-col="fdCompanyList;fdItem;fdPerson;fdDept;fdLevel;fdArea;fdCity;fdVehicle;fdBerth">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdItem.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdItem" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdPerson.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdPerson" type="Object">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdDept.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdDept" type="Object">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdNo"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdLevel.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataLevel">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdLevel" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataLevel">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdArea" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataArea">
+				<key name="fdArea"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+				<field name="fdArea" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdCity.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCity">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCity" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCity">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdVehicle.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataVehicle">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdVehicle" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataVehicle">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdBerth.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataBerth">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdBerth" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataBerth">
+				<key name="fdCode"/>
+				<field name="fdCode" type="ref" rel-column="fdVehicle"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdCurrency.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCurrency">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCurrency" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCurrency">
+				<key name="fdAbbreviation"/>
+				<field name="fdStatus" type="static" data-type="Integer" value="0"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdMoney" type="Double">
+		</column>
+		<column property="fdOrder" type="Integer">
+		</column>
+	</model>
+	<!-- 预算方案 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataBudgetScheme" key-col="fdCode">
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+		</column>
+		<column property="fdDimension" type="Enums">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdType" type="Radio">
+			<validator rel="required"/>
+			<validator rel="radio"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdPeriod" type="Enums">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdOrder" type="Integer">
+		</column>
+	</model>
+	<!-- 员工护照 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataPassport" key-col="fdPerson">
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdPerson.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgElement">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdPerson" type="Object">
+			<rel type="strong" ref="com.landray.kmss.sys.organization.model.SysOrgPerson">
+				<key name="fdNo;fdLoginName"/>
+				<field name="fdIsAvailable" type="static" data-type="Boolean" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+			<validator rel="unique"/>
+		</column>
+	</model>
+	<!-- 费用类型与科目对照表 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataItemAccount" key-col="fdCompanyList;fdExpenseItem">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdExpenseItem.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdExpenseItem" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdAmortize.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdAmortize" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdAccruals.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdAccruals" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdDesc" type="String">
+		</column>
+	</model>
+	<!-- 进项税率 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataInputTax" key-col="fdCompanyList;fdItem;fdTaxRate">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdItem.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdItem" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataExpenseItem">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="required"/>
+			<validator rel="unique"/>
+			<validator rel="exists"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdIsInputTax" type="Radio">
+			<validator rel="required"/>
+		</column>
+		<column property="fdTaxRate" type="Double">
+			<validator rel="required"/>
+		</column>
+		<column property="fdAccount.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdAccount" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+			<!-- <validator rel="companyContained"/> -->
+		</column>
+		<column property="fdDesc" type="String">
+		</column>
+	</model>
+	<!-- 销项税率 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataOutTax" key-col="fdCompanyList;fdRate">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdRate" type="Double">
+			<validator rel="required"/>
+		</column>
+		<column property="fdAccount.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdAccount" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataAccounts">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+		</column>
+		<column property="fdOrder" type="Integer">
+		</column>
+	</model>
+	<!-- 国家 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataCountry" key-col="fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+		</column>
+	</model>
+	<!-- 省份 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataProvince" key-col="fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdCountry.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCountry">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCountry" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCountry">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+		</column>
+	</model>
+	<!-- 城市 -->
+	<model name="com.landray.kmss.eop.basedata.model.EopBasedataCity" key-col="fdCode">
+		<column property="fdCompanyList.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdCompanyList" type="List">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataCompany">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+			</rel>
+			<validator rel="exists"/>
+		</column>
+		<column property="fdArea" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataArea">
+				<key name="fdArea"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+		</column>
+		<column property="fdProvince.fdName" type="Unused">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataProvince">
+				<key name="fdName"/>
+			</rel>
+		</column>
+		<column property="fdProvince" type="Object">
+			<rel type="strong" ref="com.landray.kmss.eop.basedata.model.EopBasedataProvince">
+				<key name="fdCode"/>
+				<field name="fdIsAvailable" data-type="Boolean" type="static" value="true"/>
+				<field name="fdCode" type="ref" rel-column="fdCompanyList"/>
+			</rel>
+			<validator rel="exists"/>
+			<validator rel="required"/>
+		</column>
+		<column property="fdName" type="String">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+		</column>
+		<column property="fdCode" type="String">
+			<validator rel="required"/>
+			<validator rel="unique"/>
+		</column>
+	</model>
+</module>

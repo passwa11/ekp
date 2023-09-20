@@ -1,0 +1,161 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.lbpmext.authorize.model.LbpmAuthorize",
+        "messageKey": "sys-lbpmext-authorize:table.lbpmAuthorize",
+        "serviceBean": "lbpmAuthorizeService",
+        "table": "lbpm_authorize",
+        "url": "/sys/lbpmext/authorize/lbpm_authorize/lbpmAuthorize.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdAuthorizeCategory":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdAuthorizeCategory",
+            "type": "Long",
+            "column": "fd_authorize_cate",
+            "notNull": "false",
+            "length": "1"
+        },
+        "fdAuthorizeType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdAuthorizeType",
+            "type": "Long",
+            "column": "fd_authorize_type",
+            "notNull": "false",
+            "length": "1"
+        },
+        "fdStartTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdStartTime",
+            "type": "DateTime",
+            "column": "fd_start_time",
+            "notNull": "true",
+            "validate": "false"
+        },
+        "fdEndTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdEndTime",
+            "type": "DateTime",
+            "column": "fd_end_time",
+            "notNull": "true",
+            "validate": "false"
+        },
+        "fdExpireDeleted":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdExpireDeleted",
+            "type": "Boolean",
+            "column": "fd_expire_deleted",
+            "notNull": "false",
+            "length": "1"
+        },
+        "fdExpireRecover":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdExpireRecover",
+            "type": "Boolean",
+            "column": "fd_expire_recover",
+            "notNull": "false",
+            "length": "1"
+        },
+        "fdCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdCreateTime",
+            "type": "DateTime",
+            "column": "fd_create_time",
+            "notNull": "false"
+        },
+        "fdRelationId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdRelationId",
+            "type": "String",
+            "column": "fd_relation_id",
+            "notNull": "false",
+            "length": "36"
+        },
+        "fdAuthContents":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdAuthContents",
+            "type": "String",
+            "column": "fd_auth_contents",
+            "notNull": "false",
+            "length": "1000000"
+        },
+        "fdAuthFormula":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdAuthFormula",
+            "type": "String",
+            "column": "fd_auth_formula",
+            "notNull": "false",
+            "length": "4000"
+        },
+        "fdAuthorizer":         {
+            "propertyType": "model",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdAuthorizer",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_authorizer",
+            "notNull": "false"
+        },
+        "fdCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_creator",
+            "notNull": "false"
+        },
+        "fdAuthorizedPerson":         {
+            "propertyType": "model",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdAuthorizedPerson",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_authorized_person",
+            "notNull": "true",
+            "validate": "true"
+        },
+        "fdDrafterDeptConstraints":         {
+            "propertyType": "list",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdDrafterDeptConstraints",
+            "column": "fd_authorize_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "lbpm_authorize_drafter_depts",
+            "cascade": "all-delete-orphan",
+            "inverse": "true"
+        },
+        "lbpmAuthorizeScopeList":         {
+            "propertyType": "list",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.lbpmAuthorizeScope",
+            "column": "fd_authorize_id",
+            "type": "com.landray.kmss.sys.lbpmext.authorize.model.LbpmAuthorizeScope",
+            "table": "lbpm_authorize_scope",
+            "cascade": "all-delete-orphan",
+            "inverse": "true"
+        },
+        "lbpmAuthorizeItemList":         {
+            "propertyType": "list",
+            "messageKey": "sys-lbpmext-authorize:table.lbpmAuthorizeItem",
+            "column": "fd_authorize_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "fd_authorize_org_id",
+            "table": "lbpm_authorize_item"
+        },
+        "fdStoppedFlag":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdStoppedFlag",
+            "type": "String",
+            "column": "fd_stopped_flag",
+            "length": "2"
+        },
+        "fdStoppedDate":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdStoppedDate",
+            "type": "DateTime",
+            "column": "fd_stopped_date"
+        },
+        "fdStoppedPerson":         {
+            "propertyType": "model",
+            "messageKey": "sys-lbpmext-authorize:lbpmAuthorize.fdStoppedPerson",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_stopped_person"
+        }
+    }
+}

@@ -1,0 +1,45 @@
+{$
+<div>
+<div data-lui-mark='panel.content.inside' class='lui_panel_content_inside'></div>
+<div data-lui-mark='panel.content.operation' class='lui_portlet_operations clearfloat'>
+		$}
+		var config = layout.content.config;
+		var vars = {};
+		$.extend(vars,layout.content.vars);
+		if(config.operations){
+		for(var i=0;i<config.operations.length;i++){
+		var oper = config.operations[i];
+		if(oper.vertical=='top')
+		continue;
+		var target = oper.target ? oper.target : "_blank";
+		var href = oper.href;
+		href = env.fn.variableResolver(href,vars);
+		href = env.fn.formatUrl(href);
+		var align = oper.align;
+		var linkClass = 'lui_portlet_operation'
+		if(oper.type == 'create'){
+		linkClass += ' lui_portlet_operation_create';
+		}
+		if(oper.type == 'more'){
+		linkClass += ' lui_portlet_operation_more';
+		}
+		if(href.indexOf('javascript') == -1) {
+		if(oper.icon){
+		{$<a class='{%linkClass%}' data-href="{%href%}" target='{%target%}' onclick='Com_OpenNewWindow(this);' style="float:{%align%}" ><span class='lui_icon_s {%oper.icon%}'></span><span>{%oper.name%}</span></a>$}
+		}else{
+		{$<a class='{%linkClass%}' data-href="{%href%}" target='{%target%}' onclick='Com_OpenNewWindow(this);' style="float:{%align%}">{%oper.name%}</a>$}
+		}
+		} else {
+		if(oper.icon){
+		{$<a class='{%linkClass%}' href="{%href%}" target='{%target%}' style="float:{%align%}" ><span class='lui_icon_s {%oper.icon%}'></span><span>{%oper.name%}</span></a>$}
+		}else{
+		{$<a class='{%linkClass%}' href="{%href%}" target='{%target%}' style="float:{%align%}">{%oper.name%}</a>$}
+		}
+		}
+
+		}
+		}
+		{$
+</div>
+</div>
+		$}

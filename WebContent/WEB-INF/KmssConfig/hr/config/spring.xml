@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="hrConfigOvertimeConfigDao" 
+        class="com.landray.kmss.hr.config.dao.hibernate.HrConfigOvertimeConfigDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.hr.config.model.HrConfigOvertimeConfig</value>
+        </property>
+    </bean>
+    <bean 
+        id="hrConfigOvertimeConfigTarget" 
+        class="com.landray.kmss.hr.config.service.spring.HrConfigOvertimeConfigServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="hrConfigOvertimeConfigDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="hrConfigOvertimeConfigService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="hrConfigOvertimeConfigTarget"/>
+        </property>
+    </bean>
+    
+    <bean id="kmReviewMainEventByHrAttendJiaBan"
+		class="com.landray.kmss.hr.config.event.KmReviewMainEventByHrAttendJiaBan"
+		autowire="byName" />
+</beans>

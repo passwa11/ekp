@@ -1,0 +1,1530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root
+	xmlns="http://www.landray.com.cn/schema/lui"
+	xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+        <!--   name：列表（阅读类-待处理）         module：待办事宜            description：列表展现，状态为待处理的阅读类消息       -->	
+		<portlet
+		id="sys.notify.toview"
+		name="{sys-notify:sysNotifyTodo.type.toView}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.toView.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source
+			format="sys.ui.iframe"
+			type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&home=1&rowsize=!{rowSize}&isShowBtLable=0&fdType=2&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}"),
+					"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=getCount&fdType=2&fdAppName=!{fdAppName}")
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_simple_4.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}"  href="javascript:(function(){ 
+			    var url;
+			    var AppName='!{fdAppName}';
+			    if(AppName !=''){
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fread&amp;dataType=toview&amp;cri.list_toview.q=fdAppName:!{fdAppName}';
+			    }else{
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fread&amp;dataType=toview';
+			    }
+			    window.open(url);
+			})();" target="_self" />
+		</operations>
+	</portlet> 
+	
+	    <!--   name：列表（系统通知类-待处理）         module：待办事宜            description：列表展现，状态为待处理的系统通知类消息       -->
+		<portlet
+		id="sys.notify.sys.toview"
+		name="{sys-notify:sysNotifySystemTodo.type.toView}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifySystemTodo.type.toView.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source
+			format="sys.ui.iframe"
+			type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifySystemTodo.do?method=list&home=1&rowsize=!{rowSize}&isShowBtLable=0&fdType=4&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}"),
+					"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifySystemTodo.do?method=getCount&fdType=4&fdAppName=!{fdAppName}")
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_simple_4.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}"  href="javascript:(function(){ 
+			    var url;
+			    var AppName='!{fdAppName}';
+			    if(AppName !=''){
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fsystem&amp;dataType=systoview&amp;cri.list_systoview.q=fdAppName:!{fdAppName}';
+			    }else{
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fsystem&amp;dataType=systoview';
+			    }
+			    window.open(url);
+			})();" target="_self" />
+		</operations>
+	</portlet> 	
+	
+	<!--   name：列表（处理类-待处理）         module：待办事宜           description：列表展现，状态为待处理的处理类消息       -->
+	<portlet
+		id="sys.notify.todo"
+		name="{sys-notify:sysNotifyTodo.type.toDo}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.toDo.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.fdType.1}" key="fdType" kind="enumValue" default="13">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.cate.all}","value":"13"},{"text":"{sys-notify:sysNotifyTodo.cate.audit}","value":"1"},
+					{"text":"{sys-notify:sysNotifyTodo.cate.suspend}","value":"3"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source
+			format="sys.ui.iframe"
+			type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&home=1&fdType=!{fdType}&_oldFdType=13&rowsize=!{rowSize}&isShowBtLable=0&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}"),
+					"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=getCount&fdType=!{fdType}&_oldFdType=13&fdAppName=!{fdAppName}")
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_simple_1.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+			    var url;
+			    var AppName='!{fdAppName}';
+			    if(AppName !=''){
+				url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=todo&amp;cri.list_todo.q=fdType:!{fdType};fdAppName:!{fdAppName}';
+				}else{
+				url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=!{dataType}&amp;cri.list_todo.q=fdType:!{fdType}';
+			    }
+			    window.open(url);
+			})();" target="_self" />
+		</operations>
+	</portlet>  
+	
+	<!--   name：列表（处理类-已处理）         module：待办事宜           description：列表展现，状态为已处理的处理类消息       -->
+	<portlet
+		id="sys.notify.done"
+		name="{sys-notify:sysNotifyTodo.type.done}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.done.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.dataType}" key="dataType" kind="enumValue" default="tododone" required="true">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.dataType.todoDone}","value":"tododone"},
+					{"text":"{sys-notify:sysNotifyTodo.dataType.toviewDone}","value":"toviewdone"}],
+					"showType":"checkbox"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source
+			format="sys.ui.iframe"
+			type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&home=1&isShowBtLable=0&finish=1&rowsize=!{rowSize}&LUIID=!{lui.element.id}&sortType=!{sortType}&dataType=!{dataType}&fdAppName=!{fdAppName}")
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_simple_2.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+					seajs.use(['sys/notify/sys_notify_todo_ui/js/notifyLink.js'], function(notifyLink) {
+						var jpath = notifyLink.getJPath('!{dataType}');
+						var url;
+						var AppName='!{fdAppName}';
+						if(AppName !=''){
+						url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath+'&amp;cri.list_done.q=fdAppName:!{fdAppName}';
+						}else{
+						url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath;
+						}
+						window.open(url);
+					});			    
+			})();" target="_self" />
+		</operations>
+	</portlet>
+	
+		<!--   name：简单列表表格（阅读类-待处理）         module：待办事宜           description：简单列表表格方式展现，状态为待处理的阅读类消息       -->
+		<portlet
+		id="sys.notify.simple.view"
+		name="{sys-notify:sysNotifyTodo.type.simple.toview}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.simple.toview.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+			<var key="showDocCreator" kind="enumValue" name="{sys-notify:sysNotifyTodo.docCreator}" default="true">
+				{"values":[{"text":"{sys-notify:sysNotifyTodo.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showFdCreateTime" kind="enumValue" name="{sys-notify:sysNotifyTodo.fdCreateTime}" default="true">
+				{"values":[{"text":"{sys-notify:sysNotifyTodo.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="target" kind="enumType" name="{sys-notify:sysNotifyTodo.portlet.targetWindow}" default="_blank">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+		</vars>
+		<source
+			format="sys.ui.iframe"
+			type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=listByTable&home=1&rowsize=!{rowSize}&isShowBtLable=0&fdType=2&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}&showDocCreator=!{showDocCreator}&showFdCreateTime=!{showFdCreateTime}&newDay=!{newDay}&target=!{target}"),
+					"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=getCount&fdType=2&fdAppName=!{fdAppName}")
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_simple_4.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+			    var url;		    
+			    var AppName='!{fdAppName}';
+			    if(AppName !=''){
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fread&amp;dataType=toview&amp;cri.list_toview.q=fdAppName:!{fdAppName}';
+			    }else{
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fread&amp;dataType=toview';
+			    }
+			    var target='!{target}';
+			    if('_blank'==target){
+			    window.open(url);
+			    }else{
+			    window.location.href=url;
+			    }
+			})();" target="_self" />
+		</operations>
+	</portlet> 
+	
+		<!--   name：简单列表表格（系统通知类-待处理）         module：待办事宜           description：简单列表表格方式展现，状态为待处理的系统通知类消息       -->
+		<portlet
+		id="sys.notify.sys.simple.view"
+		name="{sys-notify:sysNotifySystemTodo.type.simple.toview}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifySystemTodo.type.simple.toview.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+			<var key="showDocCreator" kind="enumValue" name="{sys-notify:sysNotifyTodo.docCreator}" default="true">
+				{"values":[{"text":"{sys-notify:sysNotifyTodo.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showFdCreateTime" kind="enumValue" name="{sys-notify:sysNotifyTodo.fdCreateTime}" default="true">
+				{"values":[{"text":"{sys-notify:sysNotifyTodo.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="target" kind="enumType" name="{sys-notify:sysNotifyTodo.portlet.targetWindow}" default="_blank">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+		</vars>
+		<source
+			format="sys.ui.iframe"
+			type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifySystemTodo.do?method=listByTable&home=1&rowsize=!{rowSize}&isShowBtLable=0&fdType=4&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}&showDocCreator=!{showDocCreator}&showFdCreateTime=!{showFdCreateTime}&newDay=!{newDay}&target=!{target}"),
+					"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifySystemTodo.do?method=getCount&fdType=4&fdAppName=!{fdAppName}")
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_simple_4.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+			    var url;		    
+			    var AppName='!{fdAppName}';
+			    if(AppName !=''){
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fsystem&amp;dataType=systoview&amp;cri.list_systoview.q=fdAppName:!{fdAppName}';
+			    }else{
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fsystem&amp;dataType=systoview';
+			    }
+			    var target='!{target}';
+			    if('_blank'==target){
+			    window.open(url);
+			    }else{
+			    window.location.href=url;
+			    }
+			})();" target="_self" />
+		</operations>
+	</portlet> 	
+	
+	    <!--   name：简单列表表格（处理类-待处理）         module：待办事宜           description：简单列表表格方式展现，状态为待处理的处理类消息       -->	
+		<portlet
+		id="sys.notify.simple.todo"
+		name="{sys-notify:sysNotifyTodo.type.simple.todo}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.simple.todo.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+			<var key="showDocCreator" kind="enumValue" name="{sys-notify:sysNotifyTodo.docCreator}" default="true">
+				{"values":[{"text":"{sys-notify:sysNotifyTodo.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showFdCreateTime" kind="enumValue" name="{sys-notify:sysNotifyTodo.fdCreateTime}" default="true">
+				{"values":[{"text":"{sys-notify:sysNotifyTodo.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="target" kind="enumType" name="{sys-notify:sysNotifyTodo.portlet.targetWindow}" default="_blank">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+		</vars>
+		<source
+			format="sys.ui.iframe"
+			type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=listByTable&home=1&fdType=!{fdType}&_oldFdType=13&rowsize=!{rowSize}&isShowBtLable=0&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}&showDocCreator=!{showDocCreator}&showFdCreateTime=!{showFdCreateTime}&newDay=!{newDay}&target=!{target}"),
+					"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=getCount&fdType=!{fdType}&_oldFdType=13&fdAppName=!{fdAppName}")
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_simple_1.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+			    var url;
+			    var AppName='!{fdAppName}';
+			    if(AppName !=''){
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=todo&amp;cri.list_todo.q=fdAppName:!{fdAppName}';
+			    }else{
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=todo';
+			    }
+			    var target='!{target}';
+			    if('_blank'==target){
+			    window.open(url);
+			    }else{
+			    window.location.href=url;
+			    }
+				
+			})();" target="_self" />
+		</operations>
+	</portlet> 
+	
+	<!--   name：简单列表表格（处理类-已处理）         module：待办事宜           description：简单列表表格方式展现，状态为已处理的处理类消息       -->
+	<portlet
+		id="sys.notify.simple.done"
+		name="{sys-notify:sysNotifyTodo.type.simple.done}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.simple.done.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.dataType}" key="dataType" kind="enumValue" default="tododone" required="true">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.dataType.todoDone}","value":"tododone"},
+					{"text":"{sys-notify:sysNotifyTodo.dataType.toviewDone}","value":"toviewdone"}],
+					"showType":"checkbox"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+			<var key="showDocCreator" kind="enumValue" name="{sys-notify:sysNotifyTodo.docCreator}" default="true">
+				{"values":[{"text":"{sys-notify:sysNotifyTodo.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showFdCreateTime" kind="enumValue" name="{sys-notify:sysNotifyTodo.fdCreateTime}" default="true">
+				{"values":[{"text":"{sys-notify:sysNotifyTodo.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="target" kind="enumType" name="{sys-notify:sysNotifyTodo.portlet.targetWindow}" default="_blank">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+		</vars>
+		<source
+			format="sys.ui.iframe"
+			type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=listByTable&home=1&isShowBtLable=0&finish=1&rowsize=!{rowSize}&LUIID=!{lui.element.id}&sortType=!{sortType}&dataType=!{dataType}&fdAppName=!{fdAppName}&showDocCreator=!{showDocCreator}&showFdCreateTime=!{showFdCreateTime}&newDay=!{newDay}&target=!{target}")
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_simple_2.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+					seajs.use(['sys/notify/sys_notify_todo_ui/js/notifyLink.js'], function(notifyLink) {
+						var jpath = notifyLink.getJPath('!{dataType}');
+		                var url;
+			            var AppName='!{fdAppName}';
+			            if(AppName !=''){
+					    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath+'&amp;cri.list_done.q=fdAppName:!{fdAppName}';
+					    }else{
+					    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath;
+					    }
+					    var target='!{target}';
+					    if('_blank'==target){
+					    window.open(url);
+					    }else{
+					    window.location.href=url;
+					    }
+					});								
+			})();" target="_self" />
+		</operations>
+	</portlet>
+	
+	<!--   name：列表待办         module：待办事宜           description：列表呈现，包含待审、待阅消息       -->
+	<portlet
+		id="sys.notify.list.all"
+		name="{sys-notify:sysNotifyTodo.type.list}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.list.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source
+			format="sys.ui.iframe"
+			type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&home=1&rowsize=!{rowSize}&isShowBtLable=0&fdType=14&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}"),
+					"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=getCount&fdAppName=!{fdAppName}")
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_listall.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+			    var url;
+			    var AppName='!{fdAppName}';
+			    if(AppName !=''){
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=todo&amp;cri.list_todo.q=fdAppName:!{fdAppName}';
+			    }else{
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=todo';
+			    }
+			    window.open(url);
+			})();" target="_self" />
+		</operations>
+	</portlet> 
+	
+	<!--   name：图文（处理类、阅读类待处理）         module：待办事宜           description：图文展现，可选择处理类、阅读类待处理消息      -->
+	<portlet id="sys.notify.graphic" 
+			 name="{sys-notify:sysNotifyTodo.type.graphic}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifyTodo.type.graphic.desc}" >
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.dataType}" key="dataType" kind="enumValue" default="todo">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.dataType.todo}","value":"todo"},
+					{"text":"{sys-notify:sysNotifyTodo.dataType.toView}","value":"toview"},
+					{"text":"{sys-notify:sysNotifyTodo.dataType.suspend}","value":"suspend"}],
+					"showType":"checkbox"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source format="sys.ui.iframe"
+				type="Static">
+			<code>
+				<![CDATA[
+					{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=listByGraphic&home=1&rowsize=!{rowSize}&isShowBtLable=0&LUIID=!{lui.element.id}&dataType=!{dataType}&sortType=!{sortType}&fdAppName=!{fdAppName}"),
+					"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=getCount&fdType=!{dataType}&fdAppName=!{fdAppName}")
+					}
+					
+				]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_graphic_1.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+					seajs.use(['sys/notify/sys_notify_todo_ui/js/notifyLink.js'], function(notifyLink) {
+						var jpath = notifyLink.getPortletJPath('!{dataType}');
+						var url;
+						var AppName='!{fdAppName}';
+						if(AppName !=''){
+						url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath+'&amp;cri.list_todo.q=fdAppName:!{fdAppName}&amp;cri.list_toview.q=fdAppName:!{fdAppName}';
+						}else{
+						url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath;
+						}
+						window.open(url);
+					});
+			})();" target="_self" />
+		</operations>
+	</portlet>
+	
+	<!--   name：图文（系统通知类待处理）         module：待办事宜           description：图文展现，系统通知类待处理消息       -->
+	<portlet id="sys.notify.sys.graphic" 
+			 name="{sys-notify:sysNotifySystemTodo.type.graphic}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifySystemTodo.type.graphic.desc}" >
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source format="sys.ui.iframe"
+				type="Static">
+			<code>
+				<![CDATA[
+					{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifySystemTodo.do?method=listByGraphic&home=1&rowsize=!{rowSize}&isShowBtLable=0&LUIID=!{lui.element.id}&dataType=systoview&sortType=!{sortType}&fdAppName=!{fdAppName}"),
+					"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifySystemTodo.do?method=getCount&fdType=systoview&fdAppName=!{fdAppName}")
+					}
+					
+				]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_graphic_3.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+			    var url;
+			    var AppName='!{fdAppName}';
+			    if(AppName !=''){
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fsystem&amp;dataType=systoview&amp;cri.list_systoview.q=fdAppName:!{fdAppName}';
+			    }else{
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fsystem&amp;dataType=systoview';
+			    }
+			    window.open(url);
+			})();" target="_self" />
+		</operations>
+	</portlet>	
+	
+	<!--   name：图文（处理类、阅读类已处理）         module：待办事宜           description：图文展现，处理类、阅读类已处理消息      -->
+	<portlet id="sys.notify.graphic.done" 
+			 name="{sys-notify:sysNotifyTodo.type.graphic.done}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifyTodo.type.graphic.done.desc}" >
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.dataType}" key="dataType" kind="enumValue" default="tododone" required="true">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.dataType.todoDone}","value":"tododone"},
+					{"text":"{sys-notify:sysNotifyTodo.dataType.toviewDone}","value":"toviewdone"}],
+					"showType":"checkbox"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source format="sys.ui.iframe"
+				type="Static">
+			<code>
+				<![CDATA[
+					{"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=listByGraphic&home=1&finish=1&rowsize=!{rowSize}&isShowBtLable=0&LUIID=!{lui.element.id}&dataType=!{dataType}&sortType=!{sortType}&fdAppName=!{fdAppName}")}
+				]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_graphic_2.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+					seajs.use(['sys/notify/sys_notify_todo_ui/js/notifyLink.js'], function(notifyLink) {
+						var jpath = notifyLink.getJPath('!{dataType}');
+						var url;
+						var AppName='!{fdAppName}';
+						if(AppName !=''){
+						url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath+'&amp;cri.list_done.q=fdAppName:!{fdAppName}&amp;cri.list_toview_done.q=fdAppName:!{fdAppName}';
+						}else{
+						url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath;
+						}
+						window.open(url);
+					});	
+			})();" target="_self" />
+		</operations>
+	</portlet>
+	
+	<!--   name：图文（系统通知类已处理）         module：待办事宜           description：图文展现，系统通知类已处理消息       -->
+	<portlet id="sys.notify.sys.graphic.done" 
+			 name="{sys-notify:sysNotifySystemTodo.type.graphic.done}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifySystemTodo.type.graphic.done.desc}" >
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source format="sys.ui.iframe"
+				type="Static">
+			<code>
+				<![CDATA[
+					{"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifySystemTodo.do?method=listByGraphic&home=1&finish=1&rowsize=!{rowSize}&isShowBtLable=0&LUIID=!{lui.element.id}&dataType=systoviewdone&sortType=!{sortType}&fdAppName=!{fdAppName}")}
+				]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_graphic_4.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+					seajs.use(['sys/notify/sys_notify_todo_ui/js/notifyLink.js'], function(notifyLink) {
+					    var dataType = 'systoviewdone';
+						var jpath = notifyLink.getJPath(dataType);
+						var url;
+						var AppName='!{fdAppName}';
+						if(AppName !=''){
+						url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath+'&amp;cri.list_systoview_done.q=fdAppName:!{fdAppName}';
+						}else{
+						url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath;
+						}
+						window.open(url);
+					});	
+			})();" target="_self" />
+		</operations>
+	</portlet>	
+	
+	<!--   name：分类（处理类、阅读类待处理）         module：待办事宜           description：分类展现，可选择处理类、阅读类待处理消息       -->
+	<portlet id="sys.notify.cate"
+			 name="{sys-notify:sysNotifyTodo.type.cate}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifyTodo.type.cate.desc}" >
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.dataType}" key="dataType" kind="enumValue" default="todo" required="true">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.dataType.todo}","value":"todo"},
+					{"text":"{sys-notify:sysNotifyTodo.dataType.toView}","value":"toview"},
+					{"text":"{sys-notify:sysNotifyTodo.dataType.suspend}","value":"suspend"}],
+					"showType":"checkbox"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.displayMode}" key="displayMode" kind="custom" default="widthData">
+				{"file":'/sys/notify/varkind/notifyCategoryDisplayModeConfig.jsp'}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source format="sys.ui.iframe"
+				type="Static">
+			<code>
+				<![CDATA[
+					{
+						"src":"/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=listByCate&home=1&rowsize=!{rowSize}&isShowBtLable=0&dataType=!{dataType}&LUIID=!{lui.element.id}&sortType=!{sortType}&displayMode=!{displayMode}&notifyCategoryId=!{notifyCategory}",
+					    "counturl":"/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=getSingleCategoryCount&dataType=!{dataType}&displayMode=!{displayMode}&notifyCategoryId=!{notifyCategory}"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_cate_1.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+					seajs.use(['sys/notify/sys_notify_todo_ui/js/notifyLink.js'], function(notifyLink) {
+						var jpath = notifyLink.getPortletJPath('!{dataType}');
+						var url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath;
+						window.open(url);
+					});	
+			})();" target="_self" />
+		</operations>
+	</portlet>
+	
+	<!--   name：分类（系统通知类待处理）         module：待办事宜           description：分类展现，可选择系统通知类待处理消息        -->
+	<portlet id="sys.notify.sys.cate"
+			 name="{sys-notify:sysNotifySystemTodo.type.cate}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifySystemTodo.type.cate.desc}" >
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.displayMode}" key="displayMode" kind="custom" default="widthData">
+				{"file":'/sys/notify/varkind/notifyCategoryDisplayModeConfig.jsp'}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source format="sys.ui.iframe"
+				type="Static">
+			<code>
+				<![CDATA[
+					{
+						"src":"/sys/notify/sys_notify_todo/sysNotifySystemTodo.do?method=listByCate&home=1&rowsize=!{rowSize}&isShowBtLable=0&dataType=systoview&LUIID=!{lui.element.id}&sortType=!{sortType}&displayMode=!{displayMode}&notifyCategoryId=!{notifyCategory}",
+						"counturl":"/sys/notify/sys_notify_todo/sysNotifySystemTodo.do?method=getSingleCategoryCount&dataType=!{dataType}&displayMode=!{displayMode}&notifyCategoryId=!{notifyCategory}"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_cate_3.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+					seajs.use(['sys/notify/sys_notify_todo_ui/js/notifyLink.js'], function(notifyLink) {
+					    var dataType = 'systoview';
+						var jpath = notifyLink.getPortletJPath(dataType);
+						var url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath;
+						window.open(url);
+					});	
+			})();" target="_self" />
+		</operations>
+	</portlet>	
+	
+	<!--   name：分类（处理类、阅读类已处理）         module：待办事宜           description：分类展现，处理类、阅读类已处理消息        -->
+	<portlet id="sys.notify.cate.done"
+			 name="{sys-notify:sysNotifyTodo.type.cate.done}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifyTodo.type.cate.done.desc}" >
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.dataType}" key="dataType" kind="enumValue" default="tododone" required="true">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.dataType.todoDone}","value":"tododone"},
+					{"text":"{sys-notify:sysNotifyTodo.dataType.toviewDone}","value":"toviewdone"}],
+					"showType":"checkbox"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.displayMode}" key="displayMode" kind="custom" default="widthData">
+				{"file":'/sys/notify/varkind/notifyCategoryDisplayModeConfig.jsp'}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source format="sys.ui.iframe"
+				type="Static">
+			<code>
+				<![CDATA[
+					{"src":"/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=listByCate&home=1&finish=1&rowsize=!{rowSize}&isShowBtLable=0&dataType=!{dataType}&LUIID=!{lui.element.id}&sortType=!{sortType}&displayMode=!{displayMode}&notifyCategoryId=!{notifyCategory}"}
+				]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_cate_2.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){
+					seajs.use(['sys/notify/sys_notify_todo_ui/js/notifyLink.js'], function(notifyLink) {
+						var jpath = notifyLink.getPortletJPath('!{dataType}');
+						var url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath;
+						window.open(url);
+					});	
+			})();" target="_self" />
+		</operations>
+	</portlet>
+	
+	<!--   name：分类（系统通知类已处理）         module：待办事宜           description：分类展现，系统通知类已处理消息        -->
+	<portlet id="sys.notify.sys.cate.done"
+			 name="{sys-notify:sysNotifySystemTodo.type.cate.done}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifySystemTodo.type.cate.done.desc}" >
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.displayMode}" key="displayMode" kind="custom" default="widthData">
+				{"file":'/sys/notify/varkind/notifyCategoryDisplayModeConfig.jsp'}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source format="sys.ui.iframe"
+				type="Static">
+			<code>
+				<![CDATA[
+					{"src":"/sys/notify/sys_notify_todo/sysNotifySystemTodo.do?method=listByCate&home=1&finish=1&rowsize=!{rowSize}&isShowBtLable=0&dataType=systoviewdone&LUIID=!{lui.element.id}&sortType=!{sortType}&displayMode=!{displayMode}&notifyCategoryId=!{notifyCategory}"}
+				]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_cate_4.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){
+					seajs.use(['sys/notify/sys_notify_todo_ui/js/notifyLink.js'], function(notifyLink) {
+					    var dataType = 'systoviewdone';
+						var jpath = notifyLink.getPortletJPath(dataType);
+						var url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path='+jpath;
+						window.open(url);
+					});	
+			})();" target="_self" />
+		</operations>
+	</portlet>	
+	
+	<!--   name：简单列表表格（处理类-已暂挂）         module：待办事宜           description：简单列表表格方式展现，状态为已暂挂的处理类消息       -->
+	<portlet
+		id="sys.notify.simple.suspend"
+		name="{sys-notify:sysNotifyTodo.type.simple.suspend}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.simple.suspend.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+			<var key="showDocCreator" kind="enumValue" name="{sys-notify:sysNotifyTodo.docCreator}" default="true">
+				{"values":[{"text":"{sys-notify:sysNotifyTodo.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="showFdCreateTime" kind="enumValue" name="{sys-notify:sysNotifyTodo.fdCreateTime}" default="true">
+				{"values":[{"text":"{sys-notify:sysNotifyTodo.portlet.show}", "value":"true"}],"showType":"checkbox"}
+			</var>
+			<var key="target" kind="enumType" name="{sys-notify:sysNotifyTodo.portlet.targetWindow}" default="_blank">
+				{type:"sysUi_target", showType:"radio"}
+			</var>
+		</vars>
+		<source
+			format="sys.ui.iframe"
+			type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=listByTable&home=1&rowsize=!{rowSize}&isShowBtLable=0&fdType=3&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}&showDocCreator=!{showDocCreator}&showFdCreateTime=!{showFdCreateTime}&newDay=!{newDay}&target=!{target}"),
+					"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=getCount&fdType=3&fdAppName=!{fdAppName}")
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_simple_3.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function(){ 
+			    var url;		    
+			    var AppName='!{fdAppName}';
+			    if(AppName !=''){
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=todo&amp;cri.list_todo.q=fdType:3;fdAppName:!{fdAppName}';
+			    }else{
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=todo&amp;cri.list_todo.q=fdType:3';
+			    }
+			    var target='!{target}';
+			    if('_blank'==target){
+			    window.open(url);
+			    }else{
+			    window.location.href=url;
+			    }
+				
+			})();" target="_self" />
+		</operations>
+	</portlet>
+	
+	<!--   name：列表（处理类-已暂挂）         module：待办事宜           description：列表展现，状态为已暂挂的处理类消息        -->
+	<portlet
+		id="sys.notify.suspend"
+		name="{sys-notify:sysNotifyTodo.type.pause}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.suspend.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},
+					{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source
+			format="sys.ui.iframe"
+			type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&home=1&rowsize=!{rowSize}&isShowBtLable=0&fdType=3&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}"),
+					"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=getCount&fdType=3&fdAppName=!{fdAppName}")
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+				<![CDATA[
+					{^/sys/portal/example_images/sys/notify/sys_notify_simple_3.png$}
+				]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}"  href="javascript:(function(){ 
+			    var url;
+			    var AppName='!{fdAppName}';
+			    if(AppName !=''){
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=todo&amp;cri.list_todo.q=fdType:3;fdAppName:!{fdAppName}';
+			    }else{
+			    url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=todo&amp;cri.list_todo.q=fdType:3';
+			    }
+			    window.open(url);
+			})();" target="_self" />
+		</operations>
+	</portlet>
+	
+	
+	
+	
+	
+	
+	
+	<!-- cloud数据源 -->
+	<!--   name：分类（处理类、阅读类待处理）         module：待办事宜           description：分类展现，可选择处理类、阅读类待处理消息        -->
+	<portlet id="sys.notify.cate"
+			 name="{sys-notify:sysNotifyTodo.type.cate}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifyTodo.type.cate.desc}" forSystem="cloud" varExtend="sys.notify.cate">
+		<source 
+			id="sys-notify.cate"
+			format="data.page.iframe"
+			type="json">
+			<code>
+				<![CDATA[
+					{
+						"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByCate&home=1&rowsize=!{rowSize}&isShowBtLable=0&dataType=!{dataType}&LUIID=!{lui.element.id}&sortType=!{sortType}&displayMode=!{displayMode}"
+					}
+				]]>
+			</code>
+		</source>
+		<operations>
+			<operation 
+				type="more" 
+				name="{operation.more}" 
+				href="/sys/notify/index.jsp#j_path=/process&amp;dataType=todo"/>
+		</operations>
+	</portlet>
+	
+	<!--   name：分类（处理类、阅读类已处理）         module：待办事宜           description：分类展现，处理类、阅读类已处理消息       -->
+	<portlet id="sys.notify.cate.done"
+			 name="{sys-notify:sysNotifyTodo.type.cate.done}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifyTodo.type.cate.done.desc}" forSystem="cloud" varExtend="sys.notify.cate.done">
+		<source 
+			id="sys-notify.cate.done"
+			format="data.page.iframe"
+			type="json">
+			<code>
+				<![CDATA[
+					{
+						"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByCate&home=1&finish=1&rowsize=!{rowSize}&isShowBtLable=0&dataType=!{dataType}&LUIID=!{lui.element.id}&sortType=!{sortType}&displayMode=!{displayMode}"
+					}
+				]]>
+			</code>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="/sys/notify/index.jsp#j_path=/process&amp;dataType=todo"/>
+		</operations>
+	</portlet>
+	
+	<!--   name：分类（系统通知类待处理）         module：待办事宜           description：分类展现，可选择系统通知类待处理消息        -->
+	<portlet id="sys.notify.sys.cate"
+			 name="{sys-notify:sysNotifySystemTodo.type.cate}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifySystemTodo.type.cate.desc}" forSystem="cloud" varExtend="sys.notify.sys.cate">
+		<source
+			id="sys-notify.sys.cate"
+			format="data.page.iframe"
+			type="json">
+			<code>
+				<![CDATA[
+					{
+						"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByCate&system=1&home=1&rowsize=!{rowSize}&isShowBtLable=0&dataType=!{dataType}&LUIID=!{lui.element.id}&sortType=!{sortType}&displayMode=!{displayMode}"
+					}
+				]]>
+			</code>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="/sys/notify/index.jsp#j_path=/process&amp;dataType=todo"/>
+		</operations>
+	</portlet>
+	
+	<!--   name：分类（系统通知类已处理）         module：待办事宜           description：分类展现，系统通知类已处理消息       -->
+	<portlet id="sys.notify.sys.cate.done"
+			 name="{sys-notify:sysNotifySystemTodo.type.cate.done}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifySystemTodo.type.cate.done.desc}" forSystem="cloud" varExtend="sys.notify.sys.cate.done">
+		<source 
+			id="sys-notify.sys.cate.done"
+			format="data.page.iframe"
+			type="json">
+			<code>
+				<![CDATA[
+					{
+						"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByCate&system=1&home=1&finish=1&rowsize=!{rowSize}&isShowBtLable=0&dataType=!{dataType}&LUIID=!{lui.element.id}&sortType=!{sortType}&displayMode=!{displayMode}"
+					}
+				]]>
+			</code>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="/sys/notify/index.jsp#j_path=/process&amp;dataType=todo"/>
+		</operations>
+	</portlet>	
+	
+	<!--   name：简单列表表格（处理类-待处理）         module：待办事宜           description：简单列表表格方式展现，状态为待处理的处理类消息       -->
+	<portlet
+		id="sys.notify.simple.todo"
+		name="{sys-notify:sysNotifyTodo.type.simple.todo}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.simple.todo.desc}" forSystem="cloud" varExtend="sys.notify.simple.todo">
+		<source
+			id="sys-notify.simple.todo"
+			format="data.page.iframe"
+			type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByTable&home=1&fdType=!{fdType}&_oldFdType=13&rowsize=!{rowSize}&isShowBtLable=0&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}&showDocCreator=!{showDocCreator}&showFdCreateTime=!{showFdCreateTime}&newDay=!{newDay}&target=!{target}"
+				}
+			]]>
+			</code>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=todo&amp;cri.list_todo.q=fdType:!{fdType}" />
+		</operations>
+	</portlet> 
+	
+	<!--   name：简单列表表格（处理类-已处理）         module：待办事宜           description：简单列表表格方式展现，状态为已处理的处理类消息       -->
+	<portlet
+		id="sys.notify.simple.done"
+		name="{sys-notify:sysNotifyTodo.type.simple.done}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.simple.done.desc}" forSystem="cloud" varExtend="sys.notify.simple.todo">
+		<source
+			id="sys-notify.simple.done"
+			format="data.page.iframe"
+			type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByTable&home=1&isShowBtLable=0&finish=1&rowsize=!{rowSize}&LUIID=!{lui.element.id}&sortType=!{sortType}&dataType=!{dataType}&fdAppName=!{fdAppName}&showDocCreator=!{showDocCreator}&showFdCreateTime=!{showFdCreateTime}&newDay=!{newDay}&target=!{target}"
+				}
+			]]>
+			</code>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="/sys/notify/index.jsp#j_path='+jpath+'&amp;cri.list_done.q=fdAppName:!{fdAppName}" />
+		</operations>
+	</portlet>
+	
+	<!--   name：简单列表表格（处理类-已暂挂）         module：待办事宜           description：简单列表表格方式展现，状态为已暂挂的处理类消息  -->
+	<portlet
+		id="sys.notify.simple.suspend"
+		name="{sys-notify:sysNotifyTodo.type.simple.suspend}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.simple.suspend.desc}" forSystem="cloud" varExtend="sys.notify.simple.suspend">
+		<source
+			id="sys-notify.simple.suspend"
+			format="data.page.iframe"
+			type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByTable&home=1&rowsize=!{rowSize}&isShowBtLable=0&fdType=3&sortType=!{sortType}&fdAppName=!{fdAppName}&showDocCreator=!{showDocCreator}&showFdCreateTime=!{showFdCreateTime}&newDay=!{newDay}&target=!{target}"
+				}
+			]]>
+			</code>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=todo&amp;cri.list_todo.q=fdType:3;fdAppName:!{fdAppName}" />
+		</operations>
+	</portlet>
+	
+	<!--   name：简单列表表格（系统通知类-待处理）         module：待办事宜           description：简单列表表格方式展现，状态为待处理的系统通知类消息         -->
+	<portlet
+		id="sys.notify.sys.simple.view"
+		name="{sys-notify:sysNotifySystemTodo.type.simple.toview}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifySystemTodo.type.simple.toview.desc}" forSystem="cloud" varExtend="sys.notify.sys.simple.view">
+		<source
+			id="sys-notify.sys.simple.view"
+			format="data.page.iframe"
+			type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByTable&system=1&home=1&rowsize=!{rowSize}&isShowBtLable=0&fdType=4&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}&showDocCreator=!{showDocCreator}&showFdCreateTime=!{showFdCreateTime}&newDay=!{newDay}&target=!{target}"
+				}
+			]]>
+			</code>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="/sys/notify/index.jsp#j_path=%2Fsystem&amp;dataType=systoview&amp;cri.list_systoview.q=fdAppName:!{fdAppName}" />
+		</operations>
+	</portlet> 	
+	
+	<!--   name：简单列表表格（阅读类-待处理）         module：待办事宜           description：简单列表表格方式展现，状态为待处理的阅读类消息         -->
+	<portlet
+		id="sys.notify.simple.view"
+		name="{sys-notify:sysNotifyTodo.type.simple.toview}"
+		module="{sys-notify:table.sysNotifyTodo}"
+		description="{sys-notify:sysNotifyTodo.type.simple.toview.desc}" forSystem="cloud" varExtend="sys.notify.simple.view">
+		<source
+			id="sys-notify.simple.view"
+			format="data.page.iframe"
+			type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByTable&home=1&rowsize=!{rowSize}&isShowBtLable=0&fdType=2&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}&showDocCreator=!{showDocCreator}&showFdCreateTime=!{showFdCreateTime}&newDay=!{newDay}&target=!{target}"
+				}
+			]]>
+			</code>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="/sys/notify/index.jsp#j_path=%2Fread&amp;dataType=toview&amp;cri.list_toview.q=fdAppName:!{fdAppName}" />
+		</operations>
+	</portlet> 
+	
+	<!--   name：图文（处理类、阅读类待处理）         module：待办事宜           description：图文展现，可选择处理类、阅读类待处理消息         -->
+	<portlet id="sys.notify.graphic" 
+			 name="{sys-notify:sysNotifyTodo.type.graphic}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifyTodo.type.graphic.desc}" forSystem="cloud" varExtend="sys.notify.graphic">
+		<source 
+			id="sys-notify.graphic"
+			format="data.page.iframe"
+			type="json">
+			<code>
+				<![CDATA[
+					{
+						"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByGraphic&home=1&rowsize=!{rowSize}&isShowBtLable=0&LUIID=!{lui.element.id}&dataType=!{dataType}&sortType=!{sortType}&fdAppName=!{fdAppName}"
+					}
+					
+				]]>
+			</code>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="/sys/notify/index.jsp#j_path='+jpath+'&amp;cri.list_todo.q=fdAppName:!{fdAppName}&amp;cri.list_toview.q=fdAppName:!{fdAppName}" />
+		</operations>
+	</portlet>
+	
+	<!--   name：图文（处理类、阅读类已处理）         module：待办事宜           description：图文展现，处理类、阅读类已处理消息         -->
+	<portlet id="sys.notify.graphic.done" 
+			 name="{sys-notify:sysNotifyTodo.type.graphic.done}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifyTodo.type.graphic.done.desc}" forSystem="cloud" varExtend="sys.notify.graphic.done">
+		<source 
+			id="sys-notify.graphic.done"
+			format="data.page.iframe"
+			type="json">
+			<code>
+				<![CDATA[
+					{
+						"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByGraphic&home=1&finish=1&rowsize=!{rowSize}&isShowBtLable=0&LUIID=!{lui.element.id}&dataType=!{dataType}&sortType=!{sortType}&fdAppName=!{fdAppName}"
+					}
+				]]>
+			</code>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="/sys/notify/index.jsp#j_path='+jpath+'&amp;cri.list_done.q=fdAppName:!{fdAppName}&amp;cri.list_toview_done.q=fdAppName:!{fdAppName}" />
+		</operations>
+	</portlet>
+	
+	<!--   name：图文（系统通知类待处理）         module：待办事宜           description：图文展现，系统通知类待处理消息        -->
+	<portlet id="sys.notify.sys.graphic" 
+			 name="{sys-notify:sysNotifySystemTodo.type.graphic}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifySystemTodo.type.graphic.desc}" forSystem="cloud" varExtend="sys.notify.sys.graphic">
+		<source 
+			id="sys-notify.sys.graphic"
+			format="data.page.iframe"
+			type="json">
+			<code>
+				<![CDATA[
+					{
+						"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByGraphic&system=1&home=1&rowsize=!{rowSize}&isShowBtLable=0&LUIID=!{lui.element.id}&dataType=systoview&sortType=!{sortType}&fdAppName=!{fdAppName}"
+					}
+					
+				]]>
+			</code>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="/sys/notify/index.jsp#j_path=%2Fsystem&amp;dataType=systoview&amp;cri.list_systoview.q=fdAppName:!{fdAppName}" />
+		</operations>
+	</portlet>	
+	
+	<!--   name：图文（系统通知类已处理）         module：待办事宜           description：图文展现，系统通知类已处理消息        -->
+	<portlet id="sys.notify.sys.graphic.done" 
+			 name="{sys-notify:sysNotifySystemTodo.type.graphic.done}"
+			 module="{sys-notify:table.sysNotifyTodo}"
+			 description="{sys-notify:sysNotifySystemTodo.type.graphic.done.desc}" forSystem="cloud" varExtend="sys.notify.sys.graphic">
+		<source 
+			id="sys-notify.sys.graphic.done"
+			format="data.page.iframe"
+			type="json">
+			<code>
+				<![CDATA[
+					{
+						"url":"/data/sys-notify/sysNotifyPortlet/listPortlet?methodName=listByGraphic&system=1&home=1&finish=1&rowsize=!{rowSize}&isShowBtLable=0&LUIID=!{lui.element.id}&dataType=!{dataType}&sortType=!{sortType}&fdAppName=!{fdAppName}"
+					}
+				]]>
+			</code>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="/sys/notify/index.jsp#j_path='+jpath+'&amp;cri.list_systoview_done.q=fdAppName:!{fdAppName}" />
+		</operations>
+	</portlet>
+
+	<!-- 简约图文列表（待办） -->
+	<portlet
+			id="sys.notify.simplicity.todo"
+			name="{sys-notify:sysNotifyTodo.simplicity.toDo}"
+			module="{sys-notify:table.sysNotifyTodo}"
+			description="{sys-notify:sysNotifyTodo.simplicity.toDo.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.fdType.1}" key="fdType" kind="enumValue" default="13">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.cate.all}","value":"13"},{"text":"{sys-notify:sysNotifyTodo.cate.audit}","value":"1"},{"text":"{sys-notify:sysNotifyTodo.cate.suspend}","value":"3"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.simplicity.showAvatar}" key="showAvatar" kind="enumValue" default="0">
+				{
+					"values":[{"text":"{message.yes}","value":"1"},{"text":"{message.no}","value":"0"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source format="sys.ui.iframe" type="Static">
+			<code>
+				<![CDATA[
+					{
+						"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&home=1&fdType=!{fdType}&_oldFdType=13&rowsize=!{rowSize}&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}&showAvatar=!{showAvatar}&simplicity=true"),
+						"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=getCount&fdType=!{fdType}&_oldFdType=13&fdAppName=!{fdAppName}")
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[{^/sys/portal/example_images/sys/notify/sys_notify_simple_1.png$}]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}" href="javascript:(function() {
+			    var url;
+			    var AppName = '!{fdAppName}';
+			    if (AppName != '') {
+					url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=todo&amp;cri.list_todo.q=fdType:!{fdType};fdAppName:!{fdAppName}';
+				} else {
+					url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fprocess&amp;dataType=!{dataType}&amp;cri.list_todo.q=fdType:!{fdType}';
+			    }
+			    Com_OpenWindow(url);
+			})();" target="_self" />
+		</operations>
+	</portlet>
+
+	<!-- 简约图文列表（待阅） -->
+	<portlet
+			id="sys.notify.simplicity.view"
+			name="{sys-notify:sysNotifyTodo.simplicity.toView}"
+			module="{sys-notify:table.sysNotifyTodo}"
+			description="{sys-notify:sysNotifyTodo.simplicity.toView.desc}">
+		<vars>
+			<var name="{sys-notify:sysNotifyTodo.fdAppName}" key="fdAppName" kind="custom" default="">
+				{"file":'/sys/notify/varkind/enumValue.jsp'}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.sortType}" key="sortType" kind="enumValue" default="datetime">
+				{
+					"values":[{"text":"{sys-notify:sysNotifyTodo.sortType.date}","value":"datetime"},{"text":"{sys-notify:sysNotifyTodo.sortType.level}","value":"level"}],
+					"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.simplicity.showAvatar}" key="showAvatar" kind="enumValue" default="0">
+				{
+				"values":[{"text":"{message.yes}","value":"1"},{"text":"{message.no}","value":"0"}],
+				"showType":"radio"
+				}
+			</var>
+			<var name="{sys-notify:sysNotifyTodo.rowSize}" key="rowSize" kind="int" default="10"/>
+		</vars>
+		<source format="sys.ui.iframe" type="Static">
+			<code>
+				<![CDATA[
+					{
+						"src":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=list&home=1&rowsize=!{rowSize}&fdType=2&LUIID=!{lui.element.id}&sortType=!{sortType}&fdAppName=!{fdAppName}&showAvatar=!{showAvatar}&simplicity=true"),
+						"counturl":encodeURI("/sys/notify/sys_notify_todo/sysNotifyTodo.do?method=getCount&fdType=2&fdAppName=!{fdAppName}")
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[{^/sys/portal/example_images/sys/notify/sys_notify_simple_4.png$}]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+			<operation type="more" name="{operation.more}"  href="javascript:(function() {
+			    var url;
+			    var AppName = '!{fdAppName}';
+			    if (AppName != '') {
+			    	url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fread&amp;dataType=toview&amp;cri.list_toview.q=fdAppName:!{fdAppName}';
+			    } else {
+			    	url = '${LUI_ContextPath }/sys/notify/index.jsp#j_path=%2Fread&amp;dataType=toview';
+			    }
+			    Com_OpenWindow(url);
+			})();" target="_self" />
+		</operations>
+	</portlet>
+
+</root>

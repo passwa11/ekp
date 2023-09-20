@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 模块配置 -->
+	<bean id="pdaModuleConfigMainDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaModuleConfigMainDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaModuleConfigMain" />
+	</bean>
+	<bean id="pdaModuleCateDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaModuleCateDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaModuleCate" />
+	</bean>
+
+	<bean id="pdaModuleConfigMainTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaModuleConfigMainServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaModuleConfigMainDao" />
+		</property>
+	</bean>
+
+	<bean id="pdaModuleConfigMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaModuleConfigMainTarget" />
+		</property>
+	</bean>
+	<bean id="pdaModuleCateTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaModuleCateServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaModuleCateDao" />
+		</property>
+	</bean>
+
+	<bean id="pdaModuleCateService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaModuleCateTarget" />
+		</property>
+	</bean>
+	<bean
+		id="pdaModuleCateTreeService"
+		class="com.landray.kmss.third.pda.service.spring.PdaModuleCateTreeService">
+		<property
+			name="pdaModuleCateService">
+			<ref
+				bean="pdaModuleCateService" />
+		</property>
+	</bean>
+
+	<!-- 模块列表配置 -->
+	<bean id="pdaModuleLabelListDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaModuleLabelListDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaModuleLabelList" />
+	</bean>
+
+	<bean id="pdaModuleLabelListTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaModuleLabelListServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaModuleLabelListDao" />
+		</property>
+	</bean>
+
+	<bean id="pdaModuleLabelListService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaModuleLabelListTarget" />
+		</property>
+	</bean>
+
+	<!-- 模块文档类型配置 -->
+	<bean id="pdaModuleConfigViewDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaModuleConfigViewDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaModuleConfigView" />
+	</bean>
+
+	<bean id="pdaModuleConfigViewTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaModuleConfigViewServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaModuleConfigViewDao" />
+		</property>
+	</bean>
+
+	<bean id="pdaModuleConfigViewService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaModuleConfigViewTarget" />
+		</property>
+	</bean>
+
+	<!-- 模块页面页签配置 -->
+	<bean id="pdaModuleLabelViewDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaModuleLabelViewDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaModuleLabelView" />
+	</bean>
+
+	<bean id="pdaModuleLabelViewTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaModuleLabelViewServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaModuleLabelViewDao" />
+		</property>
+	</bean>
+
+	<bean id="pdaModuleLabelViewService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaModuleLabelViewTarget" />
+		</property>
+	</bean>
+
+	<!-- ipad主页portlet设置 -->
+	<bean id="pdaHomePagePortletDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaHomePagePortletDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaHomePagePortlet" />
+	</bean>
+
+	<bean id="pdaHomePagePortletTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaHomePagePortletServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaHomePagePortletDao" />
+		</property>
+	</bean>
+
+	<bean id="pdaHomePagePortletService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaHomePagePortletTarget" />
+		</property>
+	</bean>
+
+	<!-- iPad窗口设置 -->
+	<bean id="pdaHomeCustomPortletDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaHomeCustomPortletDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaHomeCustomPortlet" />
+	</bean>
+
+	<bean id="pdaHomeCustomPortletTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaHomeCustomPortletServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaHomeCustomPortletDao" />
+		</property>
+	</bean>
+
+	<bean id="pdaHomeCustomPortletService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaHomeCustomPortletTarget" />
+		</property>
+	</bean>
+
+	<!-- ipad主页设置 -->
+	<bean id="pdaHomePageConfigDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaHomePageConfigDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaHomePageConfig" />
+	</bean>
+
+	<bean id="pdaHomePageConfigTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaHomePageConfigServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaHomePageConfigDao" />
+		</property>
+	</bean>
+
+	<bean id="pdaHomePageConfigService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaHomePageConfigTarget" />
+		</property>
+	</bean>
+
+	<!-- 模块授权配置 -->
+	<bean id="pdaLicenseSettingDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaLicenseSettingDaoImp"
+		parent="KmssBaseDao">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaLicenseSetting" />
+	</bean>
+
+	<bean id="pdaLicenseSettingService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaLicenseSettingTarget" />
+		</property>
+	</bean>
+
+	<bean id="pdaLicenseSettingTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaLicenseSettingServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaLicenseSettingDao" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+	</bean>
+
+	<!-- pda信息推送人信息 -->
+	<bean id="pdaMessagePushMemberDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaMessagePushMemberDaoImp"
+		parent="KmssBaseDao">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaMessagePushMember" />
+	</bean>
+
+	<bean id="pdaMessagePushMemberService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaMessagePushMemberTarget" />
+		</property>
+	</bean>
+
+	<bean id="pdaMessagePushMemberTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaMessagePushMemberServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaMessagePushMemberDao" />
+		</property>
+	</bean>
+
+	<!-- pda推送信息 操作-->
+	<bean id="pdaMessagePushInfoDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaMessagePushInfoDaoImp"
+		parent="KmssBaseDao">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaMessagePushInfo" />
+	</bean>
+
+	<bean id="pdaMessagePushInfoService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaMessagePushInfoTarget" />
+		</property>
+	</bean>
+
+	<bean id="pdaMessagePushInfoTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaMessagePushInfoServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaMessagePushInfoDao" />
+		</property>
+	</bean>
+
+	<!-- 系统模块选择对话框 -->
+	<bean id="pdaModuleSelectDialog"
+		class="com.landray.kmss.third.pda.service.spring.PdaModuleSelectDialog">
+		<property name="allowAllModuleFlag">
+			<value>false</value>
+		</property>
+		<property name="allowModules">
+			<value>sys/modeling;sys/follow;km/certificate;km/supervise;km/archives;sys/attend;km/oitems;sys/lbpmext;km/carmng;km/imissive;km/asset;km/forum;km/calendar;km/missive;km/smissive;km/review;sys/notify;sys/news;km/doc;km/meeting;km/expert;km/institution;km/summary;km/contract;km/collaborate;sys/communicate;sys/calendar;sys/task;kms/multidoc;kms/multimedia;kms/wiki;kms/ask;kms/knowledge;kms/doc;kms/expert;kms/exam;kms/learn;km/imeeting;sys/person;sys/zone;sns/group;sns/topic;sns/event;sns/album;km/bam2;km/comminfo;km/pindagate;third/aiguanhuai;sys/mportal;km/resource;kms/qa;km/vote;dbcenter/echarts;km/empactivity;kms/homework;kms/reminder;km/cusledger;kms/train;kms/lmap;hr/staff;hr/okr;kms/kmaps;sys/introduce;kms/common;kms/kmtopic;kms/imall;kms/tcourse;hr/ratify;fssc/budget;fssc/expense;fssc/fee;fssc/loan;fssc/purch;fssc/payment;fssc/supplier;km/proposal;kms/kem;sys/lbpmperson;sys/lbpmservice;</value>
+		</property>
+		<property name="anonymousPaths">
+			<value>
+				/third/pda/resource/**,/resource/**,/third/pda/login.jsp*,/third/pda/access.jsp*,/third/pda/banner.jsp*,
+				/j_acegi_security_check*, /favicon.ico*, /logoutConfirm.jsp*,/logout.jsp*, /vcode*,
+				/third/wechat/wechatLoginHelper.do*,/third/ywork/yworkSso.do*,/admin.do*, /wechatWebserviceService*,
+				/sys/mobile/**,/sys/authentication/validate.do*,/sys/attachment/mobile/viewer/play.jsp*,/scormcourse/**,
+				/third/yworkWechat/wechat.do*,/sys/attachment/uploaderServlet*,
+				/kms/diploma/kms_diploma_ui/kmsDiplomaPersonAtt.do*,/kms/cowriting/wordplugin/login.jsp*,
+				/resource/hr/recruit/anonymous/hrRecruitApplicant.do*,/third/ding/jsapi.do*,/hr/recruit/invite_qr_code/*,/third/pda/attdownload.jsp*,/third/govding/jsapi.do*,
+				/sys/authentication/sso/login_auto.jsp*,,/sys/attachment/sys_att_main/downloadFile.jsp*,
+				/resource/hr/recruit/anonymous/hrRecruitApplicant.do*,/third/ding/jsapi.do*,/hr/recruit/invite_qr_code/*,/third/pda/attdownload.jsp*,
+				/sysInfo*,/third/weixin/work/sso/sso.jsp*,/third/wxwork/jsapi/wxJsapi.do*,/sys/anonymous/enter/token.do*
+			</value>
+		</property>
+	</bean>
+
+	<!-- 模块数据字典对话框 -->
+	<bean id="pdaDictModelSelectDialog"
+		class="com.landray.kmss.third.pda.service.spring.PdaDictModelSelectDialog" />
+
+	<!-- 数据字典属性选择 -->
+	<bean id="pdaDictPropertySelectList"
+		class="com.landray.kmss.third.pda.service.spring.PdaDictPropertySelectList" />
+
+	<!-- pda模块选择对话框 -->
+	<bean id="moduleSelectBean"
+		class="com.landray.kmss.third.pda.service.spring.PdaModuleSelectLocal">
+		<property name="pdaModuleConfigMainService">
+			<ref bean="pdaModuleConfigMainService" />
+		</property>
+	</bean>
+
+	<!-- pda系统内页签列表对话框 -->
+	<bean id="pdaSysConfigDialog"
+		class="com.landray.kmss.third.pda.service.spring.PdaSysConfigDialog">
+		<property name="pdaModuleConfigMainService">
+			<ref bean="pdaModuleConfigMainService" />
+		</property>
+	</bean>
+
+	<!-- pda门户主页配置对话框 -->
+	<bean id="pdaModulePortletTreeDialog"
+		class="com.landray.kmss.third.pda.service.spring.PdaModulePortletTreeDialog">
+		<property name="pdaModuleConfigMainService">
+			<ref bean="pdaModuleConfigMainService" />
+		</property>
+		<property name="pdaHomeCustomPortletService">
+			<ref bean="pdaHomeCustomPortletService" />
+		</property>
+	</bean>
+
+	<!-- pda跳转过滤器 -->
+	<bean id="thirdPdaRedirectFilter"
+		class="com.landray.kmss.third.pda.interfaces.ThirdPdaRedirectFilter">
+	</bean>
+	
+	<!-- 移动端体验优化，三级页面分离工具 -->
+	<bean id="thirdPdaSeparateService"
+		class="com.landray.kmss.third.pda.interfaces.ThirdPdaSeparateService">
+	</bean>
+
+	<!-- pda文档展示service -->
+	<bean id="pdaDataShowService"
+		class="com.landray.kmss.third.pda.service.spring.PdaDataShowServiceImp">
+		<property name="viewCfgService">
+			<ref bean="pdaModuleConfigViewService" />
+		</property>
+		<property name="configMainService">
+			<ref bean="pdaModuleConfigMainService" />
+		</property>
+	</bean>
+
+	<!-- pda待办接口provider -->
+	<bean id="pdaNotifyTodoProvider"
+		class="com.landray.kmss.third.pda.service.spring.PdaNotifyTodoProviderImp">
+		<property name="pdaMessagePushInfoService">
+			<ref bean="pdaMessagePushInfoService" />
+		</property>
+		<property name="pdaMemberService">
+			<ref bean="pdaMessagePushMemberService" />
+		</property>
+	</bean>
+
+	<!-- 功能区配置 -->
+	<bean id="pdaTabViewConfigMainDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaTabViewConfigMainDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaTabViewConfigMain" />
+	</bean>
+
+	<bean id="pdaTabViewConfigMainTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaTabViewConfigMainServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaTabViewConfigMainDao" />
+		</property>
+	</bean>
+
+	<bean id="pdaTabViewConfigMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaTabViewConfigMainTarget" />
+		</property>
+	</bean>
+	
+	<bean id="pdaTabViewLabelListDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaTabViewLabelListDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaTabViewLabelList" />
+	</bean>
+
+	<bean id="pdaTabViewLabelListTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaTabViewLabelListServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaTabViewLabelListDao" />
+		</property>
+	</bean>
+
+	<bean id="pdaTabViewLabelListService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaTabViewLabelListTarget" />
+		</property>
+	</bean>
+	
+	<bean id="pdaModuleConfigSelectDialog" class="com.landray.kmss.third.pda.service.spring.PdaModuleConfigSelectDialog">
+		<property name="pdaModuleConfigMainService">
+			<ref bean="pdaModuleConfigMainService"/>
+		</property>
+	</bean>
+	
+	<!-- 对外数据源配置 -->
+	<bean
+		id="pdaDataExtendConfigDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.third.pda.dao.hibernate.PdaDataExtendConfigDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.pda.model.PdaDataExtendConfig" />
+	</bean>
+	<bean
+		id="pdaDataExtendConfigTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.third.pda.service.spring.PdaDataExtendConfigServiceImp">
+		<property name="baseDao">
+			<ref bean="pdaDataExtendConfigDao" />
+		</property>
+	</bean>
+	<bean
+		id="pdaDataExtendConfigService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="pdaDataExtendConfigTarget" />
+		</property>
+	</bean>
+	
+</beans>

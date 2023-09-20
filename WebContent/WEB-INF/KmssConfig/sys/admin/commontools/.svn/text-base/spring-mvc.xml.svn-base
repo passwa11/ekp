@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/sys/admin/commontools.do"
+		class="com.landray.kmss.sys.admin.commontools.actions.SysAdminCommontoolsAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/admin/commontools/sysAdminCommonTools_Main.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/admin/commontools/sqlview.do"
+		class="com.landray.kmss.sys.admin.commontools.actions.SysAdminSqlViewAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/admin/commontools/sqlview.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/admin/commontools/clearLog.do"
+		class="com.landray.kmss.sys.admin.commontools.actions.SysAdminCommontoolsClearLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+</beans>

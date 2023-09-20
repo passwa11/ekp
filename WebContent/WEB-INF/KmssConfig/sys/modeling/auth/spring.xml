@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="sysModelingAuthRoleDao"
+		parent="modelingAuthBaseDao"
+		class="com.landray.kmss.sys.modeling.auth.dao.hibernate.SysModelingAuthRoleDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.modeling.auth.model.SysModelingAuthRole" />
+	</bean>
+	<bean
+		id="sysModelingAuthRoleTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.modeling.auth.service.spring.SysModelingAuthRoleServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysModelingAuthRoleDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysModelingAuthRoleService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysModelingAuthRoleTarget" />
+		</property>
+	</bean>
+				
+	<bean
+		id="sysModelingAuthUraDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.modeling.auth.dao.hibernate.SysModelingAuthUraDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.modeling.auth.model.SysModelingAuthUra" />
+	</bean>	
+	<bean
+		id="sysModelingAuthUraTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.modeling.auth.service.spring.SysModelingAuthUraServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysModelingAuthUraDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysModelingAuthUraService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysModelingAuthUraTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysAuthSuccessInModelingListener"
+		class="com.landray.kmss.sys.modeling.auth.service.spring.SysAuthSuccessInModelingListener">
+		<property
+			name="sysModelingAuthRoleService">
+			<ref
+				bean="sysModelingAuthRoleService" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysModelingRightConfigDao"
+		parent="modelingBaseDao"
+		class="com.landray.kmss.sys.modeling.auth.dao.hibernate.SysModelingRightConfigDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.modeling.auth.model.SysModelingRightConfig" />
+	</bean>
+	<bean
+		id="sysModelingRightConfigTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.modeling.auth.service.spring.SysModelingRightConfigServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysModelingRightConfigDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysModelingRightConfigService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysModelingRightConfigTarget" />
+		</property>
+	</bean>
+
+	<bean id="sysModelingAuthValidator"
+		class="com.landray.kmss.sys.modeling.auth.service.spring.SysModelingAuthValidator">
+	</bean>
+	<bean id="sysModelingAuthMechanismValidator"
+		class="com.landray.kmss.sys.modeling.auth.service.spring.SysModelingAuthMechanismValidator">
+		<property name="modelingAppModelService">
+			<ref bean="modelingAppModelService" />
+		</property>
+	</bean>
+
+	<bean id="modelingRoleFilter" class="com.landray.kmss.sys.modeling.auth.service.spring.SysModelingRoleFilter" >
+		<property name="sysModelingAuthRoleService">
+			<ref bean="sysModelingAuthRoleService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysModelingDefaultAuthService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<bean
+				class="com.landray.kmss.sys.modeling.auth.service.spring.SysModelingDefaultService">
+				<property
+					name="sysOrgCoreService">
+					<ref
+						bean="sysOrgCoreService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="sysModelingCirculationAuthValidator"
+		  class="com.landray.kmss.sys.modeling.auth.service.spring.SysModelingCirculationAuthValidator">
+	</bean>
+</beans>

@@ -1,0 +1,9 @@
+package com.landray.kmss.sys.zone.dao.hibernate;
+
+import com.landray.kmss.common.dao.BaseDaoImp;
+import com.landray.kmss.sys.zone.dao.ISysZoneAddressCateVoDao;
+
+public class SysZoneAddressCateVoDaoImp extends BaseDaoImp
+		implements ISysZoneAddressCateVoDao {
+
+}

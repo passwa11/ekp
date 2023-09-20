@@ -1,0 +1,238 @@
+/*---------------- 文档查看页面标准头部组件(mui/header/DocViewHeader)相关样式     Start----------------*/
+.muiDocViewHeader{
+	position: relative;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 3rem 0 rgba(153,179,210,0.20);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.muiDocViewHeaderStatus{
+	position: absolute;
+    bottom: -2.2rem;
+    right: 0;
+    z-index: 0;
+    transform: rotate(-28deg);
+	-o-transform: rotate(-28deg);
+	-webkit-transform: rotate(-28deg);
+	-moz-transform: rotate(-28deg);
+}
+
+/*------- 流程状态  Start -------*/
+.muiDocViewHeaderStatus.processStatusDiscard{ /* 已废弃   */
+	color: #D9D9D9;
+}
+.muiDocViewHeaderStatus.processStatusExamine{ /* 审批中   */
+	color: #B3CEFB;
+}
+.muiDocViewHeaderStatus.processStatusDone{ /* 已办结   */
+	color: #A7E2CB;
+}
+/*------- 流程状态  End -------*/
+
+.muiDocViewHeaderStatus>i{
+	font-size: 9.4rem;
+}
+
+.muiDocViewHeaderBase{
+	position: relative;
+}
+
+.muiDocViewHeaderBase>div:not(.muiDocViewHeaderStatus){
+	position: relative;
+	z-index: 1;
+}
+
+.muiDocViewHeaderStatus>span{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: .1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;	
+}
+
+.muiDocViewHeaderStatus>span{
+	font-size: var(--muiFontSizeM);	
+}
+
+.muiDocViewHeaderSubject{
+    color: var(--muiFontColorInfo);
+    font-size: var(--muiFontSizeMA);
+    line-height: 2rem;
+    font-weight: bold;
+    overflow: hidden;
+    word-break: break-all;
+    word-wrap: break-word;	
+}
+
+.muiDocViewHeaderPerson{
+	display: table;
+	margin-top: 1.2rem;
+}
+
+.muiDocViewHeaderPerson>.muiDocViewHeaderIcon,
+.muiDocViewHeaderPerson>.muiDocViewHeaderUser{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.muiDocViewHeaderPerson>.muiDocViewHeaderIcon{
+	width: 2.2rem;
+	height: 2.2rem;
+}
+
+.muiDocViewHeaderPerson>.muiDocViewHeaderIcon>img{
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8;	
+}
+
+.muiDocViewHeaderPerson>.muiDocViewHeaderUser{
+	padding-left: 1rem;
+	color: var(--muiFontColorInfo);
+	font-size: var(--muiFontSizeMS);
+	/* font-weight: bold; */
+}
+
+.muiDocViewHeaderDetailContainer{
+    position: relative;
+    margin-top: 1rem;
+    padding-top: 1rem;
+}
+
+.muiDocViewHeaderDetailContainer:before {
+    content: " ";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: .1rem solid #E7E7E7;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+}
+
+.muiDocViewHeaderDetail{
+	display: table;
+}
+.muiDocViewHeaderDetailItem{
+	display: table-row;
+}
+.muiDocViewHeaderDetailItemL,.muiDocViewHeaderDetailItemR{
+	display: table-cell;
+}
+
+.muiDocViewHeaderDetailItemR{
+	padding-left: 2rem;
+}
+.muiDocViewHeaderDetailItemL>span,
+.muiDocViewHeaderDetailItemR>span{
+	display: block;
+	padding-top: .2rem;
+    padding-bottom: .2rem;
+	color: var(--muiFontColorMuted);
+    font-size: var(--muiFontSizeS);	
+}
+
+.muiDocViewHeaderDetailItemL>span{
+	min-width: 5.4rem;
+	max-width: 8rem;
+	text-align: right;
+}
+
+.muiDocViewHeaderExpandBtn,.muiDocViewHeaderCollapseBtn{
+	position: relative;
+    color: #D8D8D8;
+    height: 1rem;
+}
+.muiDocViewHeaderExpandBtn>i,.muiDocViewHeaderCollapseBtn>i{
+	position: absolute;
+	font-size: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);	
+}
+.muiDocViewHeaderExpandBtn>i{
+	top: 0;
+}
+.muiDocViewHeaderCollapseBtn>i{
+	top: -.4rem;
+}
+@keyframes doc-view-header-fade-In{
+	0% {
+	  opacity: 0; /*初始状态 透明度为0*/
+	}
+	50% {
+	  opacity: 0; /*中间状态 透明度为0*/
+	}
+	100% {
+	  opacity: 1; /*结尾状态 透明度为1*/
+	}
+}
+@-webkit-keyframes doc-view-header-fade-In {
+	0% {
+	  opacity: 0; /*初始状态 透明度为0*/
+	}
+	50% {
+	  opacity: 0; /*中间状态 透明度为0*/
+	}
+	100% {
+	  opacity: 1; /*结尾状态 透明度为1*/
+	}
+}
+.muiDocViewHeaderExpandBtn{
+	padding-top: 1rem;
+
+}
+.muiDocViewHeaderBtnFadeIn{
+	animation-name: doc-view-header-fade-In;
+	animation-duration: 0.8s;
+	animation-iteration-count: 1;
+	animation-delay: 0s;
+	-webkit-animation-name: doc-view-header-fade-In;
+	-webkit-animation-duration: 0.8s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-delay: 0s;	
+}
+.muiDocViewHeaderCollapseBtn{
+	padding-top: .6rem;
+}
+
+@keyframes doc-view-header-slide-down{
+    0%{transform:scale(1,0);}
+    100%{transform:scale(1,1);}
+}
+@-webkit-keyframes doc-view-header-slide-down{
+   0%{-webkit-transform:scale(1,0);}
+   100%{-webkit-transform:scale(1,1);}
+}
+.muiDocViewHeaderWarpShow { /* 明细项展开动画 */
+   transition: max-height 0.3s ease-in;
+   transform-origin: 50% 0;
+   animation: doc-view-header-slide-down 0.3s ease-in;
+   -webkit-animation: doc-view-header-slide-down 0.3s ease-in;
+}
+.muiDocViewHeaderWarpHidden { /* 明细项收起动画 */
+   transition: max-height 0.3s ease-out;
+}
+
+/*---------------- 文档查看页面标准头部组件(mui/header/DocViewHeader)相关样式     End----------------*/
+
+/*title属性设置*/
+[data-dojo-block="title"]{
+	display: none;
+}
+.nodeNamesShow{
+	font-family: PingFangSC-Regular;
+	font-size: 13px;
+	color: #FF9F00 ;
+	line-height: 18px;
+	margin-top: 16px;
+	margin-bottom: 8px;
+}

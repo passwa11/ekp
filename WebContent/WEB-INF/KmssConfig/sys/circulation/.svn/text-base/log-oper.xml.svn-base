@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+    <!-- 传阅机制-->
+	<logset>
+        <oper
+            id="sysCirculationMainLog"
+            desc="日志配置"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/circulation/sys_circulation_main/sysCirculationMain.do">
+            <query
+                method="save"
+                logPoint="Base_UrlParam;Service_Add"
+                messageKey="sys-circulation:sysCirculationMain.button.circulation" />
+            <query
+            	method="listData|viewAll|viewlist"
+            	logPoint="Base_UrlParam;Action_FindAll"
+            	messageKey="button.list" />
+        </oper>
+	</logset>
+</log-oper>

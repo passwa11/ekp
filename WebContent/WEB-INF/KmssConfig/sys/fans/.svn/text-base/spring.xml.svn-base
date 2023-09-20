@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysFansMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.fans.dao.hibernate.SysFansMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.fans.model.SysFansMain" />
+	</bean>
+	<bean
+		id="sysFansMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.fans.service.spring.SysFansMainServiceImp" >
+		<property
+			name="baseDao">
+			<ref
+				bean="sysFansMainDao" />
+		</property>
+		<property
+			name="sysOrgPersonService">
+			<ref
+				bean="sysOrgPersonService" />
+		</property>
+	</bean>
+	<bean
+		id="sysFansMainService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysFansMainTarget" />
+		</property>
+	</bean>
+	<bean id="sysFansWebService" class="com.landray.kmss.sys.fans.webservice.SysFansWebService">
+		<property
+			name="sysOrgPersonService">
+			<ref
+				bean="sysOrgPersonService" />
+		</property>
+		<property
+			name="sysFansMainService">
+			<ref
+				bean="sysFansMainService" />
+		</property>
+	</bean>
+
+</beans>

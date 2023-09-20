@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../plugin.xsd ">	
+	<!-- 下属工作扩展点 -->
+	<extension-point id="com.landray.kmss.sys.subordinate">
+		<item
+			name="config">
+			<param
+				name="modelName"
+				kind="string"
+				required="true" >
+				<description>Model全类名，如：com.landray.kmss.km.review.model.KmReviewMain</description>
+			</param>
+			<param
+				name="messageKey"
+				kind="string"
+				required="true" >
+				<description>主文档名称，如：km-review:subordinate.kmReviewMain</description>
+			</param>
+			<param
+				name="moduleMessageKey"
+				kind="string"
+				required="true" >
+				<description>模块名称，如：km-review:module.km.review</description>
+			</param>
+			<param
+				name="type"
+				kind="string"
+				restriction="dept;person"
+				required="true" >
+				<description>查询维度，有所属部门的按部门查询，没有所属部门的按人员查询。</description>
+			</param>
+			<param
+				name="provider"
+				required="true"
+				kind="java"
+				basedOn="com.landray.kmss.sys.subordinate.plugin.AbstractSubordinateProvider">
+				<description>
+					属性提供者
+				</description>
+			</param>
+			<param
+				name="indexPath"
+				kind="string"
+				required="true" >
+				<description>列表主页URL</description>
+			</param>
+			<param
+				name="listPath"
+				kind="string"
+				required="true" >
+				<description>列表页URL</description>
+			</param>
+			<param
+				name="viewPath"
+				kind="string"
+				required="true" >
+				<description>详情页URL</description>
+			</param>
+			<description>扩展属性</description>
+		</item>
+		<description>
+			下属工作扩展点
+		</description>
+	</extension-point>
+
+	<!-- 附件权限扩展 -->
+	<extension point="com.landray.kmss.sys.attachment.borrow.business.module.validator"
+			   model="com.landray.kmss.hr.ratify.model.HrRatifyMain;com.landray.kmss.hr.staff.model.HrStaffPersonInfo;com.landray.kmss.km.calendar.model.KmCalendarMain;com.landray.kmss.km.collaborate.model.KmCollaborateMain;com.landray.kmss.km.doc.model.KmDocKnowledge;com.landray.kmss.km.imeeting.model.KmImeetingMain;com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.km.summary.model.KmSummaryMain;com.landray.kmss.sys.task.model.SysTaskMain">
+		<item name="validator">
+			<param name="bean" value="sysSubordinateAttachmentValidator" />
+		</item>
+	</extension>
+</plugin>

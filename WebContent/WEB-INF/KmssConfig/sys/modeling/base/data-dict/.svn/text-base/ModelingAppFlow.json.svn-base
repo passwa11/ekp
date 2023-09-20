@@ -1,0 +1,227 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.modeling.base.model.ModelingAppFlow",
+        "messageKey": "sys-modeling-base:module.model",
+        "table": "modeling_app_flow",
+        "displayProperty": "fdName",
+        "serviceBean": "modelingAppFlowService",
+        "url": "/sys/modeling/base/modelingAppFlow.do?method=edit&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modeling.flow.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "length": "200",
+            "notNull": "true"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "model.fdCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "true"
+        },
+        "fdModel":         {
+            "propertyType": "model",
+            "messageKey": "sys-modeling-base:modelingAppListview.fdModel",
+            "type": "com.landray.kmss.sys.modeling.base.model.ModelingAppModel",
+            "column": "fd_model_id",
+            "notNull": "true"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "model.fdCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_creator_id",
+            "notNull": "true"
+        },
+        "fdValid":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modeling.flow.fdValid",
+            "type": "Boolean",
+            "column": "fd_valid",
+            "length": "1"
+        },
+        "fdIsMobileApprove":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modeling.flow.fdIsMobileApprove",
+            "type": "Boolean",
+            "column": "fd_is_mobile_approve",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "0",
+            "canSearch": "true"
+        },
+        "authNotReaderFlag":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:right.read.authNotReaderFlag",
+            "canDisplay": "false",
+            "type": "Boolean",
+            "column": "auth_not_reader_flag",
+            "length": "1"
+        },
+        "authReaderFlag":         {
+            "propertyType": "simple",
+            "messageKey": "sys-right:right.read.authReaderFlag",
+            "canDisplay": "false",
+            "type": "Boolean",
+            "column": "auth_reader_flag",
+            "length": "1"
+        },
+        "authEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-right:right.edit.authEditors",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_flow_id",
+            "elementColumn": "fd_org_id",
+            "table": "modeling_flow_editor"
+        },
+        "authReaders":         {
+            "propertyType": "list",
+            "messageKey": "sys-right:right.read.authReaders",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_flow_id",
+            "elementColumn": "fd_org_id",
+            "table": "modeling_flow_reader"
+        },
+        "authRBPFlag":         {
+            "propertyType": "simple",
+            "messageKey": "sys-right:right.effect.time",
+            "type": "Boolean",
+            "column": "fd_rbp_flag",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "authChangeReaderFlag":         {
+            "propertyType": "simple",
+            "messageKey": "sys-right:right.read.authChangeReaderFlag",
+            "type": "Boolean",
+            "column": "fd_change_reader_flag",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "authChangeEditorFlag":         {
+            "propertyType": "simple",
+            "messageKey": "sys-right:right.edit.authChangeEditorFlag",
+            "type": "Boolean",
+            "column": "fd_change_editor_flag",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "authChangeAtt":         {
+            "propertyType": "simple",
+            "messageKey": "sys-right:right.att.authChangeAttFlag",
+            "type": "Boolean",
+            "column": "fd_change_att",
+            "canDisplay": "true",
+            "readOnly": "false"
+        },
+        "authTmpAttNodownload":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modeling.flow.authTmpAttNodownload",
+            "type": "Boolean",
+            "column": "auth_tmp_att_nodownload",
+            "notNull": "false",
+            "length": "1"
+        },
+        "authTmpAttNocopy":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modeling.flow.authTmpAttNocopy",
+            "type": "Boolean",
+            "column": "auth_tmp_att_nocopy",
+            "notNull": "false",
+            "length": "1"
+        },
+        "authTmpAttNoprint":         {
+            "propertyType": "simple",
+            "messageKey": "sys-modeling-base:modeling.flow.authTmpAttNoprint",
+            "type": "Boolean",
+            "column": "auth_tmp_att_noprint",
+            "notNull": "false",
+            "length": "1"
+        },
+        "authTmpReaders":         {
+            "propertyType": "list",
+            "messageKey": "sys-right:right.read.authTmpReaders",
+            "column": "fd_flow_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_reader_id",
+            "table": "modeling_flow_tmp_reader"
+        },
+        "authTmpEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modeling.flow.authTmpEditors",
+            "column": "fd_flow_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_editor_id",
+            "table": "modeling_flow_tmp_editor",
+            "canDisplay": "false"
+        },
+        "authTmpAttDownloads":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modeling.flow.authTmpAttDownloads",
+            "column": "fd_flow_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_att_download_id",
+            "table": "modeling_flow_tmp_attdl"
+        },
+        "authTmpAttCopys":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modeling.flow.authTmpAttCopys",
+            "column": "fd_flow_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_att_copy_id",
+            "table": "modeling_flow_tmp_attcopy"
+        },
+        "authTmpAttPrints":         {
+            "propertyType": "list",
+            "messageKey": "sys-modeling-base:modeling.flow.authTmpAttPrints",
+            "column": "fd_flow_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_att_print_id",
+            "table": "modeling_flow_tmp_attprint"
+        },
+        "authAllEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-right:right.edit.authAllEditors",
+            "canDisplay": "false",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_flow_id",
+            "elementColumn": "fd_org_id",
+            "table": "modeling_flow_aeditor"
+        },
+        "authAllReaders":         {
+            "propertyType": "list",
+            "messageKey": "sys-right:right.read.authAllReaders",
+            "canDisplay": "false",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_flow_id",
+            "elementColumn": "fd_org_id",
+            "table": "modeling_flow_areader"
+        },
+        "authOtherReaders":         {
+            "propertyType": "list",
+            "messageKey": "sys-right:right.read.authOtherReaders",
+            "canDisplay": "false",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_flow_id",
+            "elementColumn": "auth_other_reader_id",
+            "table": "modeling_flow_oreader"
+        },
+        "authOtherEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-right:right.edit.authOtherEditors",
+            "canDisplay": "false",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_flow_id",
+            "elementColumn": "auth_other_editor_id",
+            "table": "modeling_flow_oeditor"
+        }
+    }
+}

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="lbpmAuthorizeDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.lbpmext.authorize.dao.hibernate.LbpmAuthorizeDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.lbpmext.authorize.model.LbpmAuthorize" />
+	</bean>
+	<bean
+		id="lbpmAuthorizeTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmext.authorize.service.spring.LbpmAuthorizeMainServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="lbpmAuthorizeDao" />
+		</property>
+		<property
+			name="lbpmNotifyService">
+			<ref
+				bean="lbpmNotifyService" />
+		</property>
+		<property
+			name="lbpmAuthorizeLogService">
+			<ref
+				bean="lbpmAuthorizeLogService" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmAuthorizeMainService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="lbpmAuthorizeTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="lbpmAuthorizeScopeDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.lbpmext.authorize.dao.hibernate.LbpmAuthorizeScopeDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.lbpmext.authorize.model.LbpmAuthorizeScope" />
+	</bean>
+	<bean
+		id="lbpmAuthorizeScopeTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmext.authorize.service.spring.LbpmAuthorizeScopeServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="lbpmAuthorizeScopeDao" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmAuthorizeScopeService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="lbpmAuthorizeScopeTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="lbpmAuthorizeScopeTreeService"
+		class="com.landray.kmss.sys.lbpmext.authorize.service.spring.LbpmAuthorizeScopeTreeServiceImp">
+		<property
+			name="sysCategoryMainService">
+			<ref
+				bean="sysCategoryMainService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="lbpmAuthorizeModelTreeService"
+		class="com.landray.kmss.sys.lbpmext.authorize.service.spring.LbpmAuthorizeModelTreeServiceImp">
+		<property
+			name="sysCategoryMainService">
+			<ref
+				bean="sysCategoryMainService" />
+		</property>
+		
+	</bean>
+	
+	<bean
+		id="userAuthorizeScopeTreeService"
+		class="com.landray.kmss.sys.lbpmext.authorize.service.spring.UserAuthorizeScopeTreeServiceImp">
+		<property
+			name="sysCategoryMainService">
+			<ref
+				bean="sysCategoryMainService" />
+		</property>
+		
+		<property
+			name="userAuthorizeScopeService">
+			<ref
+				bean="userAuthorizeScopeService" />
+		</property>
+		
+	</bean>
+	
+	
+	<bean
+		id="lbpmAuthorizeService"
+		class="com.landray.kmss.sys.lbpmext.authorize.service.spring.LbpmAuthorizeServiceImp">
+		<property
+			name="lbpmAuthorizeMainService">
+			<ref
+				bean="lbpmAuthorizeMainService" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmAuthorizeExpireService"
+		class="com.landray.kmss.sys.lbpmext.authorize.service.spring.LbpmAuthorizeExpireService">
+		<property
+			name="lbpmAuthorizeMainService">
+			<ref
+				bean="lbpmAuthorizeMainService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="lbpmAuthorizeLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.lbpmext.authorize.dao.hibernate.LbpmAuthorizeLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.lbpmext.authorize.model.LbpmAuthorizeLog" />
+	</bean>
+	<bean
+		id="lbpmAuthorizeLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmext.authorize.service.spring.LbpmAuthorizeLogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="lbpmAuthorizeLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmAuthorizeLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="lbpmAuthorizeLogTarget" />
+		</property>
+	</bean>
+	<bean
+		id="lbpmCurHandlerValidator"
+		class="com.landray.kmss.sys.lbpmext.authorize.validator.LbpmCurHandlerValidator">
+		<property
+			name="lbpmProcessExecuteService">
+			<ref
+				bean="lbpmProcessExecuteService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="modelRestInfoServiceTarget"
+		class="com.landray.kmss.sys.lbpmext.webservice.ModelRestInfoService">
+	</bean>
+	<bean
+		id="modelRestInfoService"
+		parent="KmssBaseService">
+		<property name="target" ref="modelRestInfoServiceTarget" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean
+			id="draftNodeInfoServiceTarget"
+			class="com.landray.kmss.sys.lbpmext.webservice.DraftNodeInfoService">
+		<property
+				name="accessManager">
+			<ref
+					bean="accessManager" />
+		</property>
+	</bean>
+
+	<bean
+			id="draftNodeInfoService"
+			parent="KmssBaseService">
+		<property name="target" ref="draftNodeInfoServiceTarget" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	
+	<bean
+		id="userAuthorizeScopeDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.lbpmext.authorize.dao.hibernate.UserAuthorizeScopeDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.lbpmext.authorize.model.UserAuthorizeScope" />
+	</bean>
+	<bean
+		id="userAuthorizeScopeServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.lbpmext.authorize.service.spring.UserAuthorizeScopeServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="userAuthorizeScopeDao" />
+		</property>
+	</bean>
+	<bean
+		id="userAuthorizeScopeService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="userAuthorizeScopeServiceTarget" />
+		</property>
+		 <property
+			name="transactionAttributes">
+			<props>
+				<prop key="chartStat">PROPAGATION_REQUIRED,ISOLATION_READ_COMMITTED</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="batchSave">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="init*">PROPAGATION_REQUIRED</prop>
+				<prop key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+		
+	</bean>
+	<bean
+		id="lbpmAuthorizeModelDataService"
+		class="com.landray.kmss.sys.lbpmext.authorize.service.spring.LbpmAuthorizeModelDataServiceImp">	
+		<property
+			name="sysCategoryMainService">
+			<ref
+				bean="sysCategoryMainService" />
+		</property>
+	</bean>
+</beans>

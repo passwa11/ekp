@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="sysAdminOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/admin.do">
+            <query 
+                method="exportModuleVersion"
+                logPoint="exportModuleVersion"
+                messageKey="sys.common.moduleInfo.exportModuleVersion">
+            </query>
+        </oper>
+		<oper
+            id="sysConfigOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/common/config.do">
+            <query 
+                method="resetConfig"
+                logPoint="resetConfig"
+                messageKey="sys-config:sys.sysAdminCommonTools.reloadConfigInfo">
+            </query>
+            <query 
+                method="chgLog"
+                logPoint="Base_UrlParam"
+                messageKey="sys-config:sys.sysAdminCommonTools.updateLog4jLevel">
+            </query>
+            <query 
+                method="exportModuleDict"
+                logPoint="Base_UrlParam"
+                messageKey="sys-config:sysAdmin.dataDict.editDbInfo.export">
+            </query>
+        </oper>
+	</logset>
+</log-oper>

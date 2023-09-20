@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>使用帮助-组织可见性配置</title>
+	<style type="text/css">
+		body{
+			padding-left:50px;
+			font-size: 14px;
+		}
+		p{
+			margin-top:0px;
+			line-height: 32px;
+		}
+		.number{
+			margin:0 5px;
+			color: red;	
+		}
+		.text{
+			color: #4372C7;
+		}
+		.secondLine{
+			margin-left: 42px;
+		}
+		.img{
+			display:block;
+			margin: 5px;
+			width: 432px;
+    		height: 417px;
+		}
+		.warning{
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<h2>组织可见性配置</h2>
+	<p>
+		<span class='number'>0</span>表示显示所有组织架构，默认值为0；
+		<span class='number'>1</span>代表本机构；
+		<span class='number'>2</span>代表机构下的1级部门；以此类推 。
+		<br/>
+		例如：<span class='firstLine'>1、配置员工只能查看本机构人员（没有机构则以最顶层部门为准），则配置参数为1 </span>
+		<br/>
+		<span class='secondLine'>2、配置员工只能查看机构下1级部门以下的人员，则配置参数为2</span>
+		<br/>
+		举例：
+		<img class='img' src="sysOrganizationVisible_help.png" />
+		若设置为仅显示第<span class='number'>1</span>层组织，则<span class='text'>部门c</span>的地址本，从<span class='text'>机构A</span>开始，但是不可查阅机构<span class='text'>B</span>下面的部分；<span class='text'>部门e</span>的地址本从<span class='text'>机构C</span>开始，不可查阅其他部门。
+		<br/>
+		若是设置为第<span class='number'>2</span>层组织，则<span class='text'>部门c</span>的地址本，从<span class='text'>部门b</span>开始，不可查阅<span class='text'>部门b</span>以外的地址本；<span class='text'>部门e</span>的地址本从<span class='text'>部门d</span>开始，不可以查阅<span class='text'>部门d</span>以外的地址本。
+		<br/>
+		<span class='warning'>注意：机构虽然在展示上是层级的，但计算的时候按平级计算。</span>
+	</p>
+</body>
+</html>

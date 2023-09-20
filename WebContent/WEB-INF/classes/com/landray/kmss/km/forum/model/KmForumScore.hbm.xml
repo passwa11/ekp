@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.forum.model.KmForumScore"
+		table="km_forum_score">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="foreign">
+				<param name="property">person</param>
+			</generator>
+		</id>
+
+
+		<property
+			name="fdScore"
+			column="fd_score"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="10" />
+		<property
+			name="fdPostCount"
+			column="fd_post_count"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="10" />
+		<property
+			name="fdReplyCount"
+			column="fd_reply_count"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="10" />	
+		<property
+			name="fdNickName"
+			column="fd_nick_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100" />
+		<property
+			name="fdSign"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true"
+			length="1000000"
+			column="fd_sign"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<one-to-one
+			name="person"
+			class="com.landray.kmss.sys.organization.model.SysOrgPerson"
+			constrained="true" />
+
+	</class>
+</hibernate-mapping>

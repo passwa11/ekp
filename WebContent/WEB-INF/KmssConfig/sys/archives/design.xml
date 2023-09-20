@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module
+        urlPrefix="/sys/archives/"
+        messageKey="sys-archives:module.sys.archives"
+        defaultValidator="true">
+        <!--机制请求可能外部来源、故开匿名访问-->
+        <areaRoles>
+            ROLE_SYSARCHIVES_DEFAULT
+        </areaRoles>
+        <request
+            path="sys_archives_main/sysArchivesConfig.do"
+            defaultValidator="roleValidator(role=ROLE_SYSARCHIVES_DEFAULT)"/>
+    </module>
+    <profileConfig
+        key="sys/archives"
+        messageKey="{sys-archives:module.sys.archives}"
+        url="/sys/archives/sys_archives_main/sysArchivesConfig.do?method=edit&amp;modelName=com.landray.kmss.sys.archives.config.SysArchivesConfig"
+        icon="km_archives"
+        type="mechanism"
+        description="{sys-archives:module.sys.archives.description}"
+        order="106"/>
+</configs>

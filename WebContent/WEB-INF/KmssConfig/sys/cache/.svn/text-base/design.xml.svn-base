@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+        xmlns="http://www.example.org/design-config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+    <module
+            messageKey="sys-cache:module.sys.cache"
+            urlPrefix="/sys/cache/"
+            defaultValidator="roleValidator(role=ROLE_SYSCACHE_ADMIN)">
+        <areaRoles>
+            ROLE_SYSCACHE_ADMIN;
+            ROLE_HIBERNATE_CACHE_ADMIN
+        </areaRoles>
+        <request
+                path="KmssCache.do*"
+                defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN;ROLE_SYSCACHE_ADMIN)"/>
+        <request
+                path="HibernateRegionConfig.do*"
+                defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN;ROLE_HIBERNATE_CACHE_ADMIN)"/>
+        <request
+                path="HibernateCache.do*"
+                defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN;ROLE_HIBERNATE_CACHE_ADMIN)"/>
+        <request
+                path="kmsscache.jsp*"
+                defaultValidator="roleValidator(role=SYSROLE_ADMIN;SYSROLE_SYSADMIN;ROLE_SYSCACHE_ADMIN)"/>
+        <request
+                path="tree.jsp*"
+                defaultValidator="roleValidator(role=SYSROLE_SYSADMIN;ROLE_SYSCACHE_ADMIN;ROLE_HIBERNATE_CACHE_ADMIN)"/>
+    </module>
+    <module urlPrefix="/sys/appconfig/">
+        <request path="sys_appconfig/sysAppConfig*">
+            <query queryString="modelName=com.landray.kmss.sys.cache.SysCacheConfig"
+                   validator="roleValidator(role=SYSROLE_SYSADMIN;ROLE_SYSCACHE_ADMIN)"/>
+        </request>
+    </module>
+    <quartz
+            messageKey="sys-config:cache.clearHbmCache.job"
+            jobService="kmssCacheService"
+            jobMethod="clearHbmCache"
+            cronExpression="0 0 0 ? * 1"/>
+
+    <profileConfig
+            key="sys/cache"
+            messageKey="{sys-cache:module.sys.cache}"
+            url="/sys/profile/moduleindex.jsp?nav=/sys/cache/tree.jsp"
+            type="mechanism"
+            description="{sys-cache:syscache.profileCfg.description}"/>
+</configs>

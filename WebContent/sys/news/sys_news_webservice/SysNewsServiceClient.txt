@@ -1,0 +1,90 @@
+/**
+ * 创建文档及流程数据
+ */
+SysNewsParamterForm createForm() throws Exception {
+	SysNewsParamterForm form = new SysNewsParamterForm();
+
+	// 文档模板id
+	form.setFdTemplateId("144498844e3ab7f96c5318d4247a431c");
+
+	// 文档标题
+	form.setDocSubject("签约喜讯");
+
+	// 流程发起人
+	form.setDocCreator("{Id:136de261933e76eecb880dc4f57a2354}");
+   //所属部门
+	form.setFdTemplateId("136de1718fdf70e611badfa4d5588993");
+	//作者
+	form.setFdAuthorId("136de249e7aadd7a783fb2846a398a5b");
+	//文档内容的编辑方式
+	form.setFdContentType("rtf");
+	//新闻重要度
+	form.setFdImportance("1");
+	// 流程参数
+	String flowParam = "{auditNode:\"请审核\", futureNodeId:\"N7\", changeNodeHandlers:[\"N7:1183b0b84ee4f581bba001c47a78b2d9;131d019fbac792eab0f0a684c8a8d0ec\"]}";
+	form.setFlowParam(flowParam);
+
+	List<AttachmentForm> attForms = createAllAtts();
+	form.getAttachmentForms().addAll(attForms);
+
+	return form;
+}
+
+/**
+ * 创建附件列表
+ */
+List<AttachmentForm> createAllAtts() throws Exception {
+
+	List<AttachmentForm> attForms = new ArrayList<AttachmentForm>();
+
+	String fileName = "合同1.doc";
+	AttachmentForm attForm01 = createAtt(fileName);
+	fileName = "合同22.doc";
+	AttachmentForm attForm02 = createAtt(fileName);
+
+	attForms.add(attForm01);
+	attForms.add(attForm02);
+
+	return attForms;
+}
+
+
+
+/**
+ * 创建附件对象
+ */
+AttachmentForm createAtt(String fileName) throws Exception {
+	AttachmentForm attForm = new AttachmentForm();
+	attForm.setFdFileName(fileName);
+	// 设置附件关键字，普通附件为fdAttachment
+	attForm.setFdKey("fdAttachment");
+
+	byte[] data = file2bytes("C:\\" + fileName);
+	attForm.setFdAttachment(data);
+
+	return attForm;
+}
+
+/**
+ * 创建图片对象与附件对象相同，但FdKey为Attachment
+ */
+
+
+/**
+ * 将文件转换为字节编码
+ */
+byte[] file2bytes(String fileName) throws Exception {
+	InputStream in = new FileInputStream(fileName);
+	byte[] data = new byte[in.available()];
+
+	try {
+		in.read(data);
+	} finally {
+		try {
+			in.close();
+		} catch (IOException ex) {
+		}
+	}
+
+	return data;
+}

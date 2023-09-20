@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.organization.model.SysOrgRoleLine"
+		table="sys_org_role_line">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="200" 
+			access="com.landray.kmss.sys.organization.lang.SysOrgCommonAccessor"/>
+		<property
+			name="fdOrder"
+			column="fd_order"
+			update="true"
+			insert="true"
+			not-null="false"/>
+		<property
+			name="fdCreateTime"
+			column="fd_create_time"
+			update="true"
+			insert="true"
+			not-null="false"/>
+		<property
+			name="fdHierarchyId"
+			column="fd_hierarchy_id"
+			update="true"
+			insert="true"
+			length="2500" />
+		<property
+			name="fdHasChild"
+			column="fd_has_child"
+			update="true"
+			insert="true"
+			not-null="false" />			
+
+		<many-to-one
+			name="sysOrgRoleMember"
+			column="fd_member_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+		<many-to-one
+			name="sysOrgRoleConf"
+			column="fd_role_line_conf_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+			
+		<property
+			name="fdAlterTime"
+			column="fd_alter_time"
+			update="true"
+			insert="true"
+			not-null="false" />				
+
+		<many-to-one
+			name="hbmParent"
+			class="com.landray.kmss.sys.organization.model.SysOrgRoleLine"
+			cascade="save-update"
+			outer-join="auto"
+			update="true"
+			insert="true"
+			access="property"
+			column="fd_parent_id"
+			not-null="false" />
+			
+		<bag
+			name="hbmChildren"
+			lazy="true"
+			inverse="true"
+			cascade="all">
+			<key column="fd_parent_id"></key>
+			<one-to-many class="com.landray.kmss.sys.organization.model.SysOrgRoleLine" />
+		</bag>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/mvc 
+            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+<!--    <bean id="defaultRestClient"
+            factory-bean="defaultRestClientBuilder" factory-method="buildRestClient"
+            depends-on="defaultRestClientBuilder" lazy-init="true">
+        </bean>-->
+    
+   
+    
+    <!-- 针对EKP-CLOUD的客户端配置   开始-->
+    <bean id="eurekaEventListener"
+        class="com.landray.kmss.third.mk.cloud.eureka.EurekaEventListenerImpl" />
+    <!-- eureka客户端创建 -->
+    <bean id="ekpCloudEurekaClientBuilder"
+        class="com.landray.kmss.third.mk.cloud.eureka.EkpCloudEurekaClientBuilder">
+        <property name="eventListener" ref="eurekaEventListener"/>
+    </bean>
+    <!-- 应用使用该bean对cloud里的服务进行访问 -->
+    <bean id="mkCloudClient" 
+        class="com.landray.kmss.third.mk.cloud.EkpCloudClientFactoryBean">
+        <property name="restClientBuilder" ref="defaultRestClientBuilder"/>
+        <property name="cloudClientBuilder" ref="ekpCloudEurekaClientBuilder"/>
+    </bean>
+    <bean id="eurekaApiAdaptorService"
+        class="com.landray.kmss.third.mk.cloud.eureka.EurekaApiAdaptorService">
+        <property name="ekpCloudClient" ref="ekpCloudClient"/>
+    </bean>
+	<bean id="eurekaController" class="com.landray.kmss.third.mk.controller.EurekaController">
+		<property name="ekpCloudClient" ref="ekpCloudClient"/>
+	</bean>
+   
+</beans>

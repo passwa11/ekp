@@ -1,0 +1,54 @@
+var massDataView = render.parent;
+var columns = massDataView.config.columns;
+{$
+<div class="massdata-container">
+	<div class="massdata-toolbar">$}
+		if(massDataView.config.right == "edit"){
+			{$<button type="button" class="com_bgcolor_d  massdata-btn massdata-btn-primary" data-btn-type="getData">获取数据</button>$}
+		} else if(massDataView.config.right == "view" && !(window.isPrintModel != "undefined" && window.isPrintModel == true)){
+			{$<button type="button" class="com_bgcolor_d  massdata-btn massdata-btn-primary" data-btn-type="excelExport">Excel导出</button>$}
+		}
+	{$</div>
+	<div class="massdata-content">
+		<table width="100%" class="massdata-table">
+			<thead class="massdata-table-thead"><tr>$}
+			var length = Object.keys(columns).length;
+			if(length > 0){
+				var width = parseInt(100/length) + "%";
+				for(var key in columns){
+					var column = columns[key];
+					{$ <th width="{%width%}">{%column.title%}</th>$}
+				}			
+			}
+			{$</tr></thead>
+			<tbody>$}
+			// [{docSubject:{value:xx},fdId:{value:xx},fdName:{value:xx},docCreateTime:{value:xx}}]
+			var records = data;
+			if(records && records.length && records.length > 0){
+				// 遍历所有行记录
+				for(var i = 0;i < records.length;i++){
+					{$ <tr>$}
+					// 每行记录都是一个json，key为字段名
+					var record = records[i];
+					for(var key in columns){
+						if(record != null && typeof record != "undefined" && record.hasOwnProperty(key)){
+							var valueInfo = record[key];
+							massDataView.config.allColInvalid = false;
+							{$ <td>{%valueInfo.value%}</td>$}
+						}else{
+							// 没有记录，可能是该列已被删除
+							{$ <td></td>$}
+						}
+					}
+					{$ </tr>$}
+				}
+			}
+			{$</tbody>
+		</table>
+	</div>
+	<div class="massdata-foot">
+		<div class="massdata-foot-paging">
+		</div>
+	</div>
+</div>
+$}

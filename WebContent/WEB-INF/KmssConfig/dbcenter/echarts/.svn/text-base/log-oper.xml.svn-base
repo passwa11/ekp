@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<oper
+			id="bEchartsTemplateOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.dbcenter.echarts.model.DbEchartsTemplate"
+			action="/dbcenter/echarts/db_echarts_template/dbEchartsTemplate.do">
+			<query
+				method="copy"
+				logPoint="Base_UrlParam;Action_Find"
+				messageKey="button.copy">
+			</query>
+		</oper>
+		<oper
+			id="dbEchartsChartOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.dbcenter.echarts.model.DbEchartsChart"
+			action="/dbcenter/echarts/db_echarts_chart/dbEchartsChart.do">
+			<query
+				method="chartData"
+				logPoint="Base_UrlParam;Action_Find"
+				messageKey="button.view">
+			</query>
+			<query
+				method="exportInfo"
+				logPoint="Base_UrlParam"
+				messageKey="dbcenter-echarts:dbEchartsTable.exportInfo">
+			</query>
+		</oper>
+		<oper
+			id="dbEchartsTableOperLog"
+			extends="BaseOperLog"
+			model="com.landray.kmss.dbcenter.echarts.model.DbEchartsTable"
+			action="/dbcenter/echarts/db_echarts_table/dbEchartsTable.do">
+			<query
+				method="exportInfo"
+				logPoint="Base_UrlParam"
+				messageKey="dbcenter-echarts:dbEchartsTable.exportInfo">
+			</query>
+		</oper>
+	</logset>
+</log-oper>

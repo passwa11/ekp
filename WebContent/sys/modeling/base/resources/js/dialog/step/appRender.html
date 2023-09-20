@@ -1,0 +1,72 @@
+var appView = render.parent;
+var appInfos = appView.formateSourceData(data.apps);
+var noCategorys = appInfos.noCategorys;    // 数组
+var categorys = appInfos.categorys;        // json {"xxx(categoryId)" : {"name":"xxx","order":"xxx","apps":[{...},{...}]} }
+
+{$<div class="item-list">$}
+	if(noCategorys.length > 0){
+		{$<div class="item-block">
+			<div class="item-desc">
+				<span>无分类</span>
+			</div>
+			<div class="item-box-wrap">
+		$}
+		for(var i = 0;i < noCategorys.length;i++){
+			var boxInfo = noCategorys[i];
+			{$
+				<div class="item-box" data-trigger='true' data-item-value="{%boxInfo.id%}">$}
+					if(appView.curAppId && appView.curAppId === boxInfo.id){
+						{$
+							<div class="item-box-highlight">当前</div>
+						$}
+					}
+					{$
+					<div class="item-box-content" title="{%boxInfo.name%}">
+						<div class="item-box-icon">
+							<i class="iconfont_nav {%boxInfo.icon%}"></i>
+						</div>
+						<p>{%boxInfo.name%}</p>
+					</div>
+				</div>
+			$}
+		}
+		{$
+			</div>
+		</div>
+		$}
+	}
+	for(var key in categorys){
+	    var category = categorys[key];
+	    if(category.apps && category.apps.length > 0){
+		    {$<div class="item-block">
+				<div class="item-desc">
+					<span>{%category.name%}</span>
+				</div>
+				<div class="item-box-wrap">
+			$}
+			for(var i = 0;i < category.apps.length;i++){
+				var boxInfo = category.apps[i];
+				{$
+					<div class="item-box" data-trigger='true' data-item-value="{%boxInfo.id%}">$}
+						if(appView.curAppId && appView.curAppId === boxInfo.id){
+							{$
+								<div class="item-box-highlight">当前</div>
+							$}
+						}
+						{$<div class="item-box-content" title="{%boxInfo.name%}">
+							<div class="item-box-icon">
+								<i class="iconfont_nav {%boxInfo.icon%}"></i>
+							</div>
+							<p>{%boxInfo.name%}</p>
+						</div>
+					</div>
+				$}
+			}
+			{$
+				</div>
+			</div>
+			$}
+	    }
+	}
+	{$</div>
+$}

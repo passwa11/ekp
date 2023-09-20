@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+	<!-- 图表选择 -->
+	<portlet id="dbcenter.echarts.dbchart" name="{dbcenter-echarts:portlet.dbchartchoose}"
+		module="{dbcenter-echarts:module.dbcenter.piccenter}">
+		<source format="sys.ui.iframe" type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":"/dbcenter/echarts/db_echarts_chart/dbEchartsChart.do?method=view&fdId=!{fdId}&db_dynamic=!{db_dynamic}&showButton=0&LUIID=!{lui.element.id}"
+				}
+			]]>
+			</code>
+		</source>
+		<vars>
+			<var key="fdId" kind="custom" name="{dbcenter-echarts:portlet.dbchart}"
+				required="true">
+				{"file":"/dbcenter/echarts/application/portlet/dbChart_portlet_category.jsp?modelName=com.landray.kmss.dbcenter.echarts.model.DbEchartsChart"}
+			</var>
+			<var key="db_dynamic" kind="custom">{}</var>
+		</vars>
+	</portlet>
+	<!-- 自定义数据选择 -->
+	<portlet id="dbcenter.echarts.dbcustom" name="{dbcenter-echarts:portlet.dbcustomchoose}"
+		module="{dbcenter-echarts:module.dbcenter.piccenter}">
+		<source format="sys.ui.iframe" type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":"/dbcenter/echarts/db_echarts_custom/dbEchartsCustom.do?method=view&fdId=!{fdId}&db_dynamic=!{db_dynamic}&showButton=0&LUIID=!{lui.element.id}"
+				}
+			]]>
+			</code>
+		</source>
+		<vars>
+			<var key="fdId" kind="custom" name="{dbcenter-echarts:portlet.dbcustom}"
+				required="true">
+				{"file":"/dbcenter/echarts/application/portlet/dbChart_portlet_category.jsp?modelName=com.landray.kmss.dbcenter.echarts.model.DbEchartsCustom"}
+			</var>
+			<var key="db_dynamic" kind="custom">{}</var>
+		</vars>
+	</portlet>
+	<!-- 图表集选择 -->
+	<portlet id="dbcenter.echarts.dbchartset" name="{dbcenter-echarts:portlet.dbchartsetchoose}"
+		module="{dbcenter-echarts:module.dbcenter.piccenter}">
+		<source format="sys.ui.iframe" type="Static">
+			<code>
+			<![CDATA[
+				{
+					"src":"/dbcenter/echarts/db_echarts_chart_set/dbEchartsChartSet.do?method=view&divHeight=0&fdId=!{fdId}&showButton=0&LUIID=!{lui.element.id}"
+				}
+			]]>
+			</code>
+		</source>
+		<vars>
+			<var key="fdId" kind="dialogJs" name="{dbcenter-echarts:portlet.dbchartset}"
+				required="true">
+				{"jsp":"/dbcenter/echarts/db_echarts_chart_set/dbChartSet_choose.jsp"}
+			</var>
+		</vars>
+	</portlet>
+
+<!-- 以下为支持cloud数据源 -->
+<!-- 图表选择 -->
+	<portlet id="dbcenter.echarts.dbchart" name="{dbcenter-echarts:portlet.dbchartchoose}"
+		module="{dbcenter-echarts:module.dbcenter.piccenter}"
+		forSystem="cloud">
+		<source id="dbcenter-echarts.dbchart" format="data.page.iframe" type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/dbcenter-echarts/dbEchartsApplication/portletUrl?portletId=dbcenter.echarts.dbchart&fdId=!{fdId}&db_dynamic=!{db_dynamic}"
+				}
+			]]>
+			</code>
+		</source>
+		<vars>
+			<var key="fdId" kind="list" name="{dbcenter-echarts:portlet.dbchart}" required="true">
+				<![CDATA[
+				{
+					"url":"/data/dbcenter-echarts/dbEchartsApplication/listPortlet?modelName=com.landray.kmss.dbcenter.echarts.model.DbEchartsChart",
+					"model":"com.landray.kmss.dbcenter.echarts.model.DbEchartsChart",
+					"dataType":"json"
+				}
+				]]>
+			</var>
+			<var key="db_dynamic" kind="custom">{}</var>
+		</vars>
+	</portlet>
+	<!-- 自定义数据选择 -->
+	<portlet id="dbcenter.echarts.dbcustom" name="{dbcenter-echarts:portlet.dbcustomchoose}"
+		module="{dbcenter-echarts:module.dbcenter.piccenter}"
+		forSystem="cloud">
+		<source id="dbcenter-echarts.dbcustom" format="data.page.iframe" type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/dbcenter-echarts/dbEchartsApplication/portletUrl?portletId=dbcenter.echarts.dbcustom&fdId=!{fdId}&db_dynamic=!{db_dynamic}"
+				}
+			]]>
+			</code>
+		</source>
+		<vars>
+			<var key="fdId" kind="list" name="{dbcenter-echarts:portlet.dbcustom}" required="true">
+				<![CDATA[
+				{
+					"url":"/data/dbcenter-echarts/dbEchartsApplication/listPortlet?modelName=com.landray.kmss.dbcenter.echarts.model.DbEchartsCustom",
+					"model":"com.landray.kmss.dbcenter.echarts.model.DbEchartsCustom",
+					"dataType":"json"
+				}
+				]]>
+			</var>
+			<var key="db_dynamic" kind="custom">{}</var>
+		</vars>
+	</portlet>
+	<!-- 图表集选择 -->
+	<portlet id="dbcenter.echarts.dbchartset" name="{dbcenter-echarts:portlet.dbchartsetchoose}"
+		module="{dbcenter-echarts:module.dbcenter.piccenter}"
+		forSystem="cloud">
+		<source id="dbcenter-echarts.dbchartset" format="data.page.iframe" type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/dbcenter-echarts/dbEchartsApplication/portletUrl?portletId=dbcenter.echarts.dbchartset&fdId=!{fdId}"
+				}
+			]]>
+			</code>
+		</source>
+		<vars>
+			<var key="fdId" kind="list" name="{dbcenter-echarts:portlet.dbchartset}" required="true">
+				<![CDATA[
+				{
+					"url":"/data/dbcenter-echarts/dbEchartsChartSetPortlet/listPortlet",
+					"model":"com.landray.kmss.dbcenter.echarts.model.DbEchartsChartSet",
+					"dataType":"json"
+				}
+				]]>
+			</var>
+		</vars>
+	</portlet>
+
+</root>

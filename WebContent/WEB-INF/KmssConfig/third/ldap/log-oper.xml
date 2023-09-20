@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="ldapOmsInConfig"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/third/ldap/oms/in/config.do">
+        </oper>
+		<oper
+            id="ldapSettingConfig"
+            extends="sysAppConfigOperLog"
+            model="*"
+            action="/third/ldap/setting.do"> 
+            <query 
+                method="edit"
+                logPoint="Action_Go_Edit"
+                messageKey="third-ldap.system.setting" /> 
+            <query 
+                method="save"
+                logPoint="sysAppConfigUpdate"
+                messageKey="third-ldap.system.setting" />
+            <query 
+                method="deleteTimeStamp"
+                logPoint="sysAppConfigUpdate"
+                messageKey="third-ldap.system.setting" />
+            <query 
+                method="updateTimeStamp"
+                logPoint="sysAppConfigUpdate"
+                messageKey="third-ldap.system.setting" />
+        </oper>
+	</logset>
+</log-oper>

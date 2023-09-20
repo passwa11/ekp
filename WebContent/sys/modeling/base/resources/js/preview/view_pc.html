@@ -1,0 +1,194 @@
+var test = render.parent;
+var lang = test.getModelingLang();
+var testSource = test.source;
+var config = testSource.config;
+var datas = config.datas || [];
+var listOperations = [];//业务操作
+var listTags = [];//业务标签
+if(datas && datas.length > 0){
+	listOperations = datas[0].listOperations || [];//业务操作
+	listTags = datas[0].listTags || [];//业务标签
+}
+
+{$
+	<div class="model-edit-left-wrap">
+		<div class="model-edit-view">
+			<div class="model-edit-view-title">
+				<div onclick="returnListPage('pc')">
+					<i></i>
+					<p>{%lang['sys.profile.modeling.homePage.back']%}</p>
+				</div>
+			</div>
+			<div class="model-edit-view-content">
+				<div class="model-edit-view-content-top" data-lui-position="fdOperation" onclick='switchSelectPosition(this,"left")'>
+					<div class="model-edit-view-subtitle">{%lang['modelingAppListview.listOperation']%}<i></i></div>
+					<div class="model-edit-view-btn">
+						$}
+						var listOperationsLen = listOperations.length;
+						var len = listOperationsLen;
+						if(listOperationsLen > 4){
+							len = 4;
+						}
+						for(var i=0; i<len; i++){
+							var listOperation = listOperations[i] || {};
+							var index = i;
+							var temp = i+1;
+							if(listOperation.name){
+							{$
+								<div class="model-edit-view-btn-item" data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left")'>{%listOperation.name%}</div>
+							$}
+							}else{
+							{$
+								<div class="model-edit-view-btn-item" data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left")'>{%lang['listview.action.item']%}{%temp%}</div>
+							$}
+							}
+						}
+						var moreLen = 0;
+						if(listOperationsLen < 4 && listOperationsLen > 0){
+							var restLen = 4-listOperationsLen;
+							for(var i=restLen; i>0; i--){
+								var index = 4-i+1;
+								var temp = index-1;
+								{$
+									<div class="model-edit-view-btn-item disabled" data-lui-position='fdOperation-{%temp%}'>{%lang['listview.action.item']%}{%index%}</div>
+								$}
+							}
+						}else if(listOperationsLen<=0){
+							{$
+								<div class="model-edit-view-btn-item disabled" data-lui-position='fdOperation-1'>{%lang['listview.action.item']%}1</div>
+								<div class="model-edit-view-btn-item disabled" data-lui-position='fdOperation-2'>{%lang['listview.action.item']%}2</div>
+								<div class="model-edit-view-btn-item disabled" data-lui-position='fdOperation-3'>{%lang['listview.action.item']%}3</div>
+								<div class="model-edit-view-btn-item disabled" data-lui-position='fdOperation-4'>{%lang['listview.action.item']%}4</div>
+							$}		
+						}else{
+								moreLen = listOperationsLen - 4;
+							}
+							if(moreLen > 0){
+						{$
+							<div class="model-edit-view-btn-item dots" onclick='showMoreItem(this,"fdOperation_more")'>...</div>
+						$}	
+							}else{
+						{$
+							<div class="model-edit-view-btn-item dots disabled">...</div>
+						$}
+							}
+						if(moreLen > 0){
+							{$
+								<div id='fdOperation_more' style="display:none">
+								<ul>
+							$}
+								for(var i=0; i<moreLen; i++){
+									var index = 4+i;
+									var temp = 4+i+1;
+									var listOperation = listOperations[index] || {};
+							if(listOperation.name){
+							{$
+								<li data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdOperation_more")'>{%listOperation.name%}</li>
+							$}
+							}else{
+							{$
+								<li data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdOperation_more")'>{%lang['listview.action.item']%}{%temp%}</li>
+							$}
+							}
+								}
+							{$
+								</ul></div>
+							$}
+						}
+						{$
+					</div>
+				</div>
+				<div class="model-edit-view-content-center">
+					<div class="model-edit-view-subtitle">{%lang['view.content.title']%}</div>
+					<div class="model-edit-view-line-bg">
+						<div class="first"></div>
+						<div class="second"></div>
+						<div class="third"></div>
+						<div class="fourth"></div>
+						<!-- <div class="fifth"></div>
+						<div class="sixth"></div> -->
+					</div>
+				</div>
+				<div class="model-edit-view-content-bottom view-content-bottom" data-lui-position="fdTag" onclick='switchSelectPosition(this,"left")'>
+					<div class="model-edit-view-subtitle">{%lang['modelingAppView.listTabs']%}<i></i></div>
+					<div class="model-edit-view-btn tag-btn">
+						$}
+						var listTagsLen = listTags.length;
+						var len = listTagsLen;
+						if(listTagsLen > 4){
+							len = 4;
+						}
+						for(var i=0; i<len; i++){
+							var listTag = listTags[i];
+							var index = i;
+							var temp = i+1;
+							if(listTag.name){
+							{$
+								<div class="model-edit-view-btn-item" data-lui-position='fdTag-{%index%}' onclick='switchSelectPosition(this,"left")'>{%listTag.name%}</div>
+							$}
+							}else{
+							{$
+								<div class="model-edit-view-btn-item" data-lui-position='fdTag-{%index%}' onclick='switchSelectPosition(this,"left")'>{%lang['view.label']%}{%temp%}</div>
+							$}
+							}
+						}
+						var moreLen = 0;
+						if(listTagsLen < 4 && listTagsLen > 0){
+							var restLen = 4-listTagsLen;
+							for(var i=restLen; i>0; i--){
+								var index = 4-i+1;
+								var temp = index-1;
+								{$
+									<div class="model-edit-view-btn-item disabled" data-lui-position='fdTag-{%temp%}'>{%lang['view.label']%}{%index%}</div>
+								$}
+							}
+						}else if(listTagsLen<=0){
+							{$
+								<div class="model-edit-view-btn-item disabled" data-lui-position='fdTag-1'>{%lang['view.label']%}1</div>
+								<div class="model-edit-view-btn-item disabled" data-lui-position='fdTag-2'>{%lang['view.label']%}2</div>
+								<div class="model-edit-view-btn-item disabled" data-lui-position='fdTag-3'>{%lang['view.label']%}3</div>
+								<div class="model-edit-view-btn-item disabled" data-lui-position='fdTag-4'>{%lang['view.label']%}4</div>
+							$}		
+						}else{
+								moreLen = listTagsLen - 4;
+							}
+							if(moreLen > 0){
+						{$
+							<div class="model-edit-view-btn-item dots"  onclick='showMoreItem(this,"fdTag_more",true)'>...</div>
+						$}	
+							}else{
+						{$
+							<div class="model-edit-view-btn-item dots disabled">...</div>
+						$}
+							}
+						if(moreLen > 0){
+							{$
+								<div id='fdTag_more' style="display:none">
+								<ul>
+							$}
+								for(var i=0; i<moreLen; i++){
+									var index = 4+i;
+									var temp = 4+i+1;
+									var listTag = listTags[index];
+							if(listTag.name){
+							{$
+								<li data-lui-position='fdTag-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdTag_more")'>{%listTag.name%}</li>
+							$}
+							}else{
+							{$
+								<li data-lui-position='fdTag-{%index%}' onclick='switchSelectPosition(this,"left");hideMoreItem("fdTag_more")'>{%lang['view.label']%}{%temp%}</li>
+							$}
+							}
+								}
+							{$
+								</ul></div>
+							$}
+						}
+						{$
+					</div>
+				</div>
+				<div id="moreList" class='moreList' style="display: none"></div>
+			</div>
+		</div>
+	</div>
+$}

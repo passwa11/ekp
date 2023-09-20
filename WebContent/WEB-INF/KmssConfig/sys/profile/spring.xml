@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="sysProfileOrderService"
+		class="com.landray.kmss.sys.profile.service.spring.SysProfileOrderServiceImp">
+	</bean>
+	
+	<bean
+		id="sysOrgImportService"
+		class="com.landray.kmss.sys.profile.service.spring.SysOrgImportServiceImp">
+	</bean>
+	
+	<bean
+		id="sysOrgExportService"
+		class="com.landray.kmss.sys.profile.service.spring.SysOrgExportServiceImp">
+	</bean>
+	
+	<bean
+		id="sysOrgImportXMLDataService"
+		class="com.landray.kmss.sys.profile.service.spring.SysOrgImportXMLDataServiceImp">
+		<property name="sysOrgImportService">
+			<ref bean="sysOrgImportService"/>
+		</property>
+	</bean>
+	
+	<!-- 自定义兼容浏览器接收器 -->
+	<bean 
+		id="passwordSecurityConfigReceiver"
+		class="com.landray.kmss.sys.profile.service.spring.PasswordSecurityConfigReceiver">
+	</bean>
+	
+	<!-- 网段策略 -->
+	<bean
+		id="sysProfileNetworkStrategyDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.profile.dao.hibernate.SysProfileNetworkStrategyDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.profile.model.SysProfileNetworkStrategy" />
+	</bean>
+	<bean
+		id="sysProfileNetworkStrategyTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.profile.service.spring.SysProfileNetworkStrategyServiceImp">
+		<property name="baseDao">
+			<ref bean="sysProfileNetworkStrategyDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysProfileNetworkStrategyService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysProfileNetworkStrategyTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysProfileI18nConfigService"
+		class="com.landray.kmss.sys.profile.service.spring.SysProfileI18nConfigService">
+		<property name="sysProfileI18nFileKeyService">
+			<ref bean="sysProfileI18nFileKeyService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysProfileI18nFileKeyDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.profile.dao.hibernate.SysProfileI18nFileKeyDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.profile.model.SysProfileI18nFileKey" />
+	</bean>
+	<bean
+		id="sysProfileI18nFileKeyServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.profile.service.spring.SysProfileI18nFileKeyServiceImp">
+		<property name="baseDao">
+			<ref bean="sysProfileI18nFileKeyDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysProfileI18nFileKeyService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysProfileI18nFileKeyServiceTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysProfileSensitiveWordService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysProfileSensitiveWordTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysProfileSensitiveWordDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.sys.profile.dao.hibernate.SysProfileSensitiveWordDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.profile.model.SysProfileSensitiveWord" />	
+	</bean>
+	<bean
+		id="sysProfileSensitiveWordTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.profile.service.spring.SysProfileSensitiveWordServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysProfileSensitiveWordDao" />
+		</property>
+	</bean>
+	<!-- 敏感词配置 -->
+	<bean id="sysCommonSensitiveDataBean" class="com.landray.kmss.sys.profile.service.spring.SysCommonSensitiveDataBean">
+	</bean>
+	<bean
+		id="sysListShowDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.profile.dao.hibernate.SysListShowDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.profile.model.SysListShow" />
+	</bean>
+	<bean
+		id="sysListShowTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.profile.service.spring.SysListShowServiceImp">
+		<property name="baseDao">
+			<ref bean="sysListShowDao" />
+		</property>
+		<property name="sysListshowCategoryService">
+			<ref bean="sysListshowCategoryService" />
+		</property>
+	</bean>
+	<bean
+		id="sysListShowService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysListShowTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysListshowCategoryDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.profile.dao.hibernate.SysListshowCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.profile.model.SysListshowCategory" />
+	</bean>
+	<bean
+		id="sysListshowCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.profile.service.spring.SysListshowCategoryServiceImp">
+		<property name="baseDao">
+			<ref bean="sysListshowCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysListshowCategoryService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysListshowCategoryTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="analysisOnlineReportDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.profile.behavior.dao.hibernate.AnalysisOnlineReportDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.profile.behavior.model.AnalysisOnlineReport" />
+	</bean>
+	<bean
+		id="analysisOnlineReportServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.profile.behavior.service.spring.AnalysisOnlineReportServiceImp">
+		<property name="baseDao">
+			<ref bean="analysisOnlineReportDao" />
+		</property>
+	</bean>
+	<bean
+		id="analysisOnlineReportService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="analysisOnlineReportServiceTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysLoginTemplateDao"
+		parent="KmssAuthAreaBaseDao"
+		class="com.landray.kmss.sys.profile.dao.hibernate.SysLoginTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.profile.model.SysLoginTemplate" />
+	</bean>
+	<bean
+		id="sysLoginTemplateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.profile.service.spring.SysLoginTemplateServiceImp">
+		<property name="baseDao">
+			<ref bean="sysLoginTemplateDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysLoginTemplateService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysLoginTemplateTarget" />
+		</property>
+	</bean>
+	<bean id="sysLoginTemplateMessageReceiver" class="com.landray.kmss.sys.profile.model.SysLoginTemplateMessageReceiver"></bean>
+
+	<bean id="sysI18nMessageReceiver" class="com.landray.kmss.sys.profile.model.SysI18nMessageReceiver"></bean>
+
+	<!-- 登录模板初始化监听器,系统启动时检查并还原标准登录模板、自定义登录模板备份在附件目录中的内容至项目web目录下 -->
+	<bean id="sysLoginTemplateListener" class="com.landray.kmss.sys.profile.listener.SysLoginTemplateListener"></bean>
+	
+	<!-- 密码混淆配置实现 -->
+	<bean id="passwordConfusionAES" class="com.landray.kmss.sys.profile.password.interfaces.PasswordConfusionAES" />
+	<bean id="passwordConfusionDES" class="com.landray.kmss.sys.profile.password.interfaces.PasswordConfusionDES" />
+	<bean id="passwordConfusionMD5" class="com.landray.kmss.sys.profile.password.interfaces.PasswordConfusionMD5" />
+	
+	<bean id="passwordConfusionSM2" class="com.landray.kmss.sys.profile.password.interfaces.sm.PasswordConfusionSM2" />
+    <bean id="passwordConfusionSM3" class="com.landray.kmss.sys.profile.password.interfaces.sm.PasswordConfusionSM3" />
+    <bean id="passwordConfusionSM4" class="com.landray.kmss.sys.profile.password.interfaces.sm.PasswordConfusionSM4" />
+
+
+	<!-- 发送电子邮件 -->
+	<bean id="sysSendEmailService"
+		  class="com.landray.kmss.sys.profile.service.spring.SysSendMailServiceImpl">
+		<property name="sysSenderEmailInfoService">
+			<ref bean="sysSenderEmailInfoService"/>
+		</property>
+	</bean>
+
+	<!-- 邮箱发件人维护 -->
+	<bean
+			id="sysSenderEmailInfoDao"
+			class="com.landray.kmss.sys.profile.dao.hibernate.SysSenderEmailInfoDaoImp"
+			parent="KmssAuthBaseDao">
+		<property name="modelName">
+			<value>com.landray.kmss.sys.profile.model.SysSenderEmailInfo</value>
+		</property>
+	</bean>
+
+	<bean
+			id="sysSenderEmailInfoTarget"
+			class="com.landray.kmss.sys.profile.service.spring.SysSenderEmailInfoServiceImp"
+			parent="KmssExtendDataTarget">
+		<property name="baseDao">
+			<ref bean="sysSenderEmailInfoDao"/>
+		</property>
+		<property name="sysSendEmailService">
+			<ref bean="sysSendEmailService"/>
+		</property>
+	</bean>
+	<bean
+			id="sysSenderEmailInfoService"
+			parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysSenderEmailInfoTarget"/>
+		</property>
+	</bean>
+	<!-- 蓝小悦售后 -->
+	<bean id="sysProfileBlueAfterService"
+		  class="com.landray.kmss.sys.profile.service.spring.SysProfileBlueAfterServiceImp">
+		<property name="url" value="https://myekp.landray.com.cn/third/customer/thirdCustomerSso.do?method=redirect"/>
+		<property name="remoteUrl" value="https://myekp.landray.com.cn/third/customer/thirdCustomerSso.do?method=sso"/>
+	</bean>
+	<!-- 复合索引 -->
+	<bean id="sysCompositeIndexService" class="com.landray.kmss.sys.profile.service.spring.SysCompositeIndexService"/>
+</beans>

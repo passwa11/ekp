@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/fssc/budget/" 
+        messageKey="fssc-budget:module.fssc.budget" 
+        defaultValidator="roleValidator(role=ROLE_FSSCBUDGET_DEFAULT)">
+        <roles>
+        	ROLE_FSSCBUDGET_DEFAULT;	<!-- 预算管理默认权限 -->
+        	ROLE_FSSCBUDGET_SETTING; <!-- 预算管理后台设置 -->
+        	ROLE_FSSCBUDGET_ADJUST_ADD; <!-- 预算调整新增权限 -->
+            ROLE_FSSCBUDGET_ADJUST_DELETE; <!-- 预算调整删除权限 -->
+            ROLE_FSSCBUDGET_ADJUST_VIEW; <!-- 预算调整查看权限 -->
+            ROLE_FSSCBUDGET_VIEW; <!-- 预算查看权限 -->
+        	ROLE_FSSCBUDGET_ADD; <!-- 预算新建 -->
+        	ROLE_FSSCBUDGET_DELETE; <!-- 预算删除权限-->
+        	ROLE_FSSCBUDGET_TRANSFER; <!-- 预算结转权限-->
+        	ROLE_FSSCBUDGET_ADJUST_DATA; <!-- 预算查看调整按钮权限-->
+        	ROLE_FSSCBUDGET_RESTART_PAUSE; <!-- 预算重启、暂停-->
+        	ROLE_FSSCBUDGET_CLOSE; <!-- 预算关闭-->
+        	ROLE_FSSCBUDGET_ADJUST_AUTH;  <!--调整预算数据的可阅读者权限-->
+        	ROLE_FSSCBUDGET_DATA_VIEW; <!-- 预算数据查看权限-->
+        	ROLE_FSSCBUDGET_DATA_DELETE; <!-- 预算数据删除权限-->
+            ROLE_FSSCBUDGET_REPORT; <!-- 预算报表权限-->
+            ROLE_FSSCBUDGET_INIT; <!-- 预算初始化导入权限-->
+            ROLE_FSSCBUDGET_CHANGERIGHT;	<!-- 批量修改预算权限 -->
+            ROLE_FSSCBUDGET_ADJUST_MAIN_CHANGERIGHT;    <!-- 预算调整批量修改权限 -->
+        </roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_FSSCBUDGET_SETTING)"/>
+        <request 
+            path="resource/jsp/fsscBudgetInitImport.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_FSSCBUDGET_INIT)"/>
+        <request 
+            path="fssc_budget_main/fsscBudgetMain.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.budget.model.FsscBudgetMain" 
+            defaultValidator="roleValidator(role=ROLE_FSSCBUDGET_DEFAULT)">
+            <query 
+                queryString="method=add|save" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_ADD)"/>
+            <query 
+                queryString="method=delete" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_DELETE)"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_DELETE)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)|authFieldValidator(type=creator)"/>
+            <query 
+                queryString="method=transferBudget"
+                validator="roleValidator(role=ROLE_FSSCBUDGET_TRANSFER)"/>
+            <query 
+                queryString="method=initBudget"
+                validator="roleValidator(role=ROLE_FSSCBUDGET_INIT)"/>
+        </request>
+        <request 
+            path="fssc_budget_adjust_main/fsscBudgetAdjustMain.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.budget.model.FsscBudgetAdjustMain,cateModel=com.landray.kmss.fssc.budget.model.FsscBudgetAdjustCategory,adminRoleName=ROLE_FSSCBUDGET_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCBUDGET_DEFAULT)">
+            <!-- 控制新建页面 -->
+            <query 
+                queryString="method=add|save|saveadd&amp;i.docTemplate=*" 
+                validator="authSimpleCategoryReaderValidator(cateId=i.docTemplate)&amp;roleValidator(role=ROLE_FSSCBUDGET_ADJUST_ADD)"/>
+            <!-- 控制新建按钮，没有模板参数 -->
+            <query 
+                queryString="method=add|save" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_ADJUST_ADD)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)|authSimpleCategoryEditorValidator(cateId=docTemplate)"/>
+             <query 
+                queryString="method=edit" 
+                validator="authFieldValidator(type=SYS_EDITOR)|[fieldValueValidator(fieldproperty=docStatus,value=10;11)&amp;authFieldValidator(type=creator)]"/>
+            <query 
+                queryString="method=update" 
+                validator="authFieldValidator(type=creator)&amp;fieldValueValidator(fieldproperty=docStatus,value=10;11)|lbpmCurHandlerValidator(method=update)"/>
+            <query 
+                queryString="method=delete" 
+                validator="[authFieldValidator(type=creator)|roleValidator(role=ROLE_FSSCBUDGET_ADJUST_DELETE)]&amp;fieldValueValidator(fieldproperty=docStatus,value=00;10;11)"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_ADJUST_DELETE)"/>
+        </request>
+        <request 
+            path="fssc_budget_data/fsscBudgetData.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.budget.model.FsscBudgetData" 
+            defaultValidator="roleValidator(role=ROLE_FSSCBUDGET_DEFAULT)">
+            <!-- 若是有查看权限，则查看所有的预算数据，若是财务人员或者财务管理员，则只能查看对应所在公司的预算数据 -->
+            <query 
+                queryString="method=view" 
+                validator="fsscBudgetDataValidator()|authFieldValidator(type=SYS_READER)|authFieldValidator(type=creator)"/>
+            <query 
+                queryString="method=deleteall"
+                validator="roleValidator(role=ROLE_FSSCBUDGET_DATA_DELETE)"/>
+            <!-- 预算数据查看页面，预算调整按钮权限 -->
+            <query 
+                queryString="method=adjustBudgetData"
+                validator="roleValidator(role=ROLE_FSSCBUDGET_ADJUST_DATA)"/>
+            <!-- 预算暂停、重启、关闭按钮权限 -->
+            <query 
+                queryString="method=alterBudgetStatus" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_RESTART_PAUSE)|roleValidator(role=ROLE_FSSCBUDGET_CLOSE)"/>
+        </request>
+        <request 
+            path="fssc_budget_execute/fsscBudgetExecute.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.budget.model.FsscBudgetExecute" 
+            defaultValidator="roleValidator(role=ROLE_FSSCBUDGET_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)"/>
+            <query 
+                queryString="method=billBudget" 
+                validator="fsscBudgetExecuteBillView()"/>
+        </request>
+        <request 
+            path="fssc_budget_adjust_category/fsscBudgetAdjustCategory.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.budget.model.FsscBudgetAdjustCategory,adminRoleName=ROLE_FSSCBUDGET_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCBUDGET_SETTING)">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="sysSimpleCategoryEditorValidator(recid=parentId)"/>
+            <query 
+                queryString="method=view" 
+                validator="sysSimpleCategoryReaderValidator()"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=delete" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_SETTING)"/>
+        </request>
+        <request 
+            path="fssc_budget_adjust_log/fsscBudgetAdjustLog.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.budget.model.FsscBudgetAdjustLog" 
+            defaultValidator="roleValidator(role=ROLE_FSSCBUDGET_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)"/>
+        </request>
+        <filters
+			modelName="com.landray.kmss.fssc.budget.model.FsscBudgetMain">
+			<filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+			<!-- <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCBUDGET_VIEW)"/> -->
+		</filters>
+        <filters
+			modelName="com.landray.kmss.fssc.budget.model.FsscBudgetData">
+            <filter
+                type="SYS_READER"
+                expression="roleFilter(role=ROLE_FSSCBUDGET_DATA_VIEW)"/>
+            <filter
+                type="SYS_READER"
+                expression="fsscBudgetDataFilter()"/>
+            <filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+            <filter
+                type="SYS_READER"
+                expression="authFieldFilter(field=authAllReaders.fdId)" />
+            <filter
+                type="SYS_READER"
+                expression="flagFieldFilter(field=authReaderFlag,value=1)" />
+		</filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.budget.model.FsscBudgetAdjustMain">
+            <filter 
+                type="creator" 
+                expression="authFieldFilter(field=docCreator.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCBUDGET_ADJUST_VIEW)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.budget.model.FsscBudgetAdjustCategory">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCBUDGET_SETTING)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_FSSCBUDGET_SETTING)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.budget.model.FsscBudgetExecute">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCBUDGET_DEFAULT)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.budget.model.FsscBudgetAdjustLog">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCBUDGET_DEFAULT)"/>
+        </filters>
+    </module>
+    <module 
+        urlPrefix="/sys/lbpmservice/support/">
+        <request 
+            path="lbpm_template/**">
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.budget.model.FsscBudgetAdjustCategory" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_SETTING)"/>
+        </request>
+        <request
+			path="lbpm_template/lbpmTemplate*">			
+			<query
+				queryString="fdModelName=com.landray.kmss.fssc.budget.model.FsscBudgetAdjustCategory"
+				validator="roleValidator(role=ROLE_FSSCBUDGET_SETTING)" />				
+		</request>
+    </module>
+    <module 
+        urlPrefix="/sys/number/">
+        <request 
+            path="sys_number_main/sysNumberMain*">
+            <query 
+                queryString="modelName=com.landray.kmss.fssc.budget.model.FsscBudgetAdjustMain" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_SETTING)"/>
+        </request>
+    </module>
+     <module 
+        urlPrefix="/sys/circulation/">
+        <request 
+            path="sys_circulation_main/sysCirculationMain*">
+            <query 
+                queryString="method=add|save|saveadd&amp;fdModelName=com.landray.kmss.fssc.budget.model.FsscBudgetAdjustMain" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_DEFAULT)|roleValidator(role=ROLE_FSSCBUDGET_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.budget.model.FsscBudgetAdjustMain)"/>
+            <query 
+                queryString="method=delete&amp;fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseMain" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.budget.model.FsscBudgetAdjustMain)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.budget.model.FsscBudgetAdjustMain" 
+                validator="roleValidator(role=ROLE_FSSCBUDGET_DEFAULT)"/>
+        </request>
+    </module>
+
+    <!-- 文档视图列表批量修改权限 -->
+    <module urlPrefix="/sys/right/">
+        <request path="rightDocChange*">
+            <query queryString="method=docRightEdit&amp;modelName=com.landray.kmss.fssc.budget.model.FsscBudgetMain"
+                   validator="areaRoleValidator(role=ROLE_FSSCBUDGET_CHANGERIGHT)" />
+        </request>
+    </module>
+    <module urlPrefix="/sys/right/">
+        <request path="rightDocChange*">
+            <query queryString="method=docRightEdit&amp;modelName=com.landray.kmss.fssc.budget.model.FsscBudgetAdjustMain"
+                   validator="areaRoleValidator(role=ROLE_FSSCBUDGET_ADJUST_MAIN_CHANGERIGHT)" />
+        </request>
+    </module>
+         <module urlPrefix="/sys/right/">
+        <request path="rightDocChange*">
+            <query queryString="method=docRightEdit&amp;modelName=com.landray.kmss.fssc.budget.model.FsscBudgetData"
+                   validator="areaRoleValidator(role=ROLE_FSSCBUDGET_CHANGERIGHT)" />
+        </request>
+    </module>
+    <quartz
+		messageKey="fssc-budget:createBudgetData.quartz.job"  
+		jobService="fsscBudgetDataQuartzJobService"    
+		cronExpression="0 0 1 * * ?" 
+		jobMethod="createBudgetData" />
+		<quartz
+		messageKey="fssc-budget:fsscTransferBudgetQuartzJobService.quartz.job"  
+		jobService="fsscTransferBudgetQuartzJobService"    
+		cronExpression="0 0 1 * * ?" 
+		jobMethod="transferBudget" />
+		
+    <quartz
+            messageKey="fssc-budget:delBudgetExecute.quartz.job"
+            jobService="fsscBudgetExecuteQuartzJobService"
+            cronExpression="0 0 1 * * ?"
+            jobMethod="delBudgetExecute" />
+    <homePage 
+        messageKey="fssc-budget:module.fssc.budget" 
+        urlPrefix="fssc/budget" 
+        url="/fssc/budget/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/fssc/budget/tree.jsp"/>
+    <flowDef 
+        modelName="com.landray.kmss.fssc.budget.model.FsscBudgetAdjustMain" 
+        key="fsscBudgetAdjustMain" 
+        type="oa" 
+        templatePropertyName="docTemplate" 
+        moduleMessageKey="fssc-budget:module.fssc.budget" 
+        templateModelName="com.landray.kmss.fssc.budget.model.FsscBudgetAdjustCategory"/>
+    <profileConfig 
+        key="fssc/budget" 
+        messageKey="{fssc-budget:module.fssc.budget}" 
+        url="/sys/profile/moduleindex.jsp?nav=/fssc/budget/tree.jsp" 
+        icon="lui_icon_l_profile_icon_default" 
+        type="fs" 
+        description="{fssc-budget:module.fssc.budget.description}"/>
+</configs>

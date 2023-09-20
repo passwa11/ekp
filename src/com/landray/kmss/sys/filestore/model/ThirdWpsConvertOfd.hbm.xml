@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.filestore.model.ThirdWpsConvertOfd"
+		table="third_wps_convert_ofd">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+			
+		<property
+			name="fdAttMainId"
+			column="fd_attmain_id"
+			update="true"
+			insert="true"
+			length="36"
+			not-null="false"
+			index="idx_thirdWpsCvtOfd_fdAttMId"/>
+		
+		<property
+			name="resultId"
+			column="result_id"
+			update="true"
+			insert="true"
+			length="100"
+			not-null="false" />
+			
+		<property
+			name="downloadId"
+			column="download_id"
+			update="true"
+			insert="true"
+			length="100"
+			not-null="false" />
+			
+		<property
+			name="previewId"
+			column="preview_id"
+			update="true"
+			insert="true"
+			length="100"
+			not-null="false" />
+			
+		 <many-to-one 
+            name="docCreator" 
+            column="doc_creator_id" 
+            update="true" 
+            insert="true"/>
+         <many-to-one 
+            name="docAlteror" 
+            column="doc_alteror_id" 
+            update="true" 
+            insert="true"/>
+	</class>
+</hibernate-mapping>

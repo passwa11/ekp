@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+        xmlns="http://www.example.org/plugin-config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+
+    <!-- 编号机制 -->
+    <extension
+            point="com.landray.kmss.sys.number.config"
+            model="*">
+        <item name="extend">
+            <param name="modelName" value="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain"/>
+            <param name="templatePropertyName" value="fdModel"/>
+            <param name="moduleName" value="{sys-modeling-base:modeling.model.mechanism.number.set }"/>
+            <param name="isReform" value="false"/>
+            <param name="order" value="10"/>
+        </item>
+    </extension>
+
+    <extension
+            point="com.landray.kmss.sys.number.config"
+            model="*">
+        <item name="extend">
+            <param name="modelName" value="com.landray.kmss.sys.modeling.main.model.ModelingAppSimpleMain"/>
+            <param name="templatePropertyName" value="fdModel"/>
+            <param name="moduleName" value="{sys-modeling-base:modeling.model.mechanism.number.set }"/>
+            <param name="isReform" value="false"/>
+            <param name="order" value="11"/>
+        </item>
+    </extension>
+
+    <!--应用状态过滤器-->
+    <extension point="com.landray.kmss.sys.authentication">
+        <item name="authenticationProcessingFilter">
+            <param name="bean" value="modelingAppStatusFilter"/>
+        </item>
+    </extension>
+
+    <!--用于自定义业务建模请求的处理-->
+    <extension point="com.landray.kmss.sys.authentication">
+        <item name="authenticationProcessingFilter">
+            <param name="bean" value="dynamicLinkFilter"/>
+        </item>
+    </extension>
+
+    <!--运行时校验应用状态-->
+    <extension point="com.landray.kmss.sys.authentication">
+        <item name="authenticationProcessingFilter">
+            <param name="bean" value="modelingMainFilter" />
+        </item>
+    </extension>
+    <!--配置时校验应用状态-->
+    <extension point="com.landray.kmss.sys.authentication">
+        <item name="authenticationProcessingFilter">
+            <param name="bean" value="modelingBaseFilter" />
+        </item>
+    </extension>
+
+    <extension
+            point="com.landray.kmss.sys.mobile.more.navItem.config">
+        <item name="info">
+            <param name="name" value="{sys-modeling-main:module.modelmain}" />
+            <param name="modelName" value="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain" />
+            <param name="filePath" value="/sys/modeling/main/resources/js/mobile/listView/navItem.json" />
+        </item>
+    </extension>
+
+    <extension
+            point="com.landray.kmss.sys.mobile.more.navItem.config">
+        <item name="info">
+            <param name="name" value="{sys-modeling-main:module.modelSimpleMain}" />
+            <param name="modelName" value="com.landray.kmss.sys.modeling.main.model.ModelingAppSimpleMain" />
+            <param name="filePath" value="/sys/modeling/main/resources/js/mobile/listView/navItem.json" />
+        </item>
+    </extension>
+    <!-- 业务触发执行队列任务集群调度 -->
+    <extension
+            point="com.landray.kmss.sys.cluster">
+        <item
+                name="dispatcher">
+            <param
+                    name="id"
+                    value="modelingQueueExecuteDispatcher" />
+            <param
+                    name="service"
+                    value="modelingQueueExecuteDispatcher" />
+        </item>
+    </extension>
+
+    <extension
+            point="com.landray.kmss.lbpm.engine.event"
+            model="com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+        <item
+                name="listener">
+            <param
+                    name="unid"
+                    value="modelingArchivesAutoFileListener" />
+            <param
+                    name="messageKey"
+                    value="sys-modeling-main:modeling.event.autoArchivesFile" />
+            <param
+                    name="eventTypes"
+                    value="lbpmProcessFinishEvent" />
+            <param
+                    name="listener"
+                    value="modelingArchivesAutoFileListener" />
+            <param name="conditionJsp"
+                   value="/sys/modeling/base/mechanism/archives/sysModelingSubside.jsp"/>
+            <param
+                    name="description"
+                    value="sys-modeling-main:modeling.event.autoArchivesFileDescription" />
+        </item>
+    </extension>
+
+</plugin>

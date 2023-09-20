@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="mainDataIndexDao"
+		class="com.landray.kmss.third.intell.dao.hibernate.MainDataIndexDaoImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="KmssParentDao" />
+		</property>
+	</bean>
+		
+	<bean
+		id="mainDataIndexTaskRunner"
+		class="com.landray.kmss.third.intell.service.spring.MainDataIndexTaskRunner">
+		<property
+			name="mainDataIndexDao">
+			<ref
+				bean="mainDataIndexDao" />
+		</property>
+		<property 
+			name="sysFormMainDataShowDao">
+			<ref
+				bean="sysFormMainDataShowDao" />
+		</property>
+	</bean>
+	<bean 
+		id="searchInfoDataTaskRunner"
+		class="com.landray.kmss.third.intell.service.spring.SearchInfoDataTaskRunner">
+		<property
+			name="mainDataIndexDao">
+			<ref
+				bean="mainDataIndexDao" />
+		</property>		
+	</bean>
+	
+	<bean
+		id="kgDataTaskRunner"
+		class="com.landray.kmss.third.intell.service.spring.KgDataTaskRunner">
+		<property
+			name="mainDataIndexDao">
+			<ref
+				bean="mainDataIndexDao" />
+		</property>
+	</bean>
+	
+	<bean
+		id="propertyInfoService"
+		class="com.landray.kmss.third.intell.service.spring.PropertyInfoServiceImp">
+	</bean>
+	
+	<bean
+		id="thIntellRestService"
+		class="com.landray.kmss.third.intell.service.spring.ThIntellRestServiceImp">
+		<property 
+			name="sysOrgCoreService">
+			<ref
+				bean="sysOrgCoreService" />
+		</property>
+		<property 
+			name="sysZonePersonInfoService">
+			<ref
+				bean="sysZonePersonInfoService" />
+		</property>
+		<property 
+			name="propertyInfoService">
+			<ref
+				bean="propertyInfoService" />
+		</property>
+		<property 
+			name="backgroundAuthService">
+			<ref
+				bean="backgroundAuthService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ekpIntellThirdOmsRelationImpl"
+		class="com.landray.kmss.third.intell.service.spring.EkpIntellThirdOmsRelationImpl">
+		<property
+			name="baseDao">
+			<ref
+				bean="KmssParentDao" />
+		</property>
+	</bean>
+	
+	<bean
+		id="syncUserBehaviorDataTask"
+		class="com.landray.kmss.third.intell.service.spring.SyncUserBehaviorDataTaskRunner">
+		<property
+			name="baseDao">
+			<ref
+				bean="KmssParentDao" />
+		</property>
+		<property name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+	</bean>
+</beans>

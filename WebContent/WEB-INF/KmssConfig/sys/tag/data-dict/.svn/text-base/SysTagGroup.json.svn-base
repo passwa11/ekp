@@ -1,0 +1,92 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.tag.model.SysTagGroup",
+        "messageKey": "sys-tag:table.sysTagGroup",
+        "displayProperty": "fdName",
+        "serviceBean": "sysTagGroupService",
+        "table": "sys_tag_group",
+        "url": "/sys/tag/sys_tag_group/sysTagGroup.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-tag:sysTagGroup.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "length": "200",
+            "validate": "true",
+            "canLogShow": "1"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "sys-tag:sysTagGroup.fdOrder",
+            "type": "Integer",
+            "column": "fd_order",
+            "notNull": "false",
+            "length": "10",
+            "validate": "true",
+            "canLogShow": "1"
+        },
+        "fdEnabled":         {
+            "propertyType": "simple",
+            "messageKey": "sys-tag:sysTagGroup.fdEnabled",
+            "type": "Boolean",
+            "column": "fd_enabled",
+            "notNull": "false",
+            "length": "4",
+            "validate": "false",
+            "canLogShow": "1"
+        },
+        "fdCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-tag:sysTagGroup.fdCreateTime",
+            "type": "DateTime",
+            "column": "fd_create_time",
+            "notNull": "false",
+            "validate": "false",
+            "canLogShow": "1"
+        },
+        "fdModelName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-tag:sysTagGroup.fdModelName",
+            "type": "String",
+            "column": "fd_model_name",
+            "notNull": "false",
+            "length": "100",
+            "validate": "false",
+            "canLogShow": "1"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-tag:sysTagGroup.docCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "fd_creator_id",
+            "notNull": "false",
+            "validate": "false",
+            "canLogShow": "1"
+        },
+        "fdDetails":         {
+            "propertyType": "list",
+            "messageKey": "sys-tag:sysTagGroup.fdDetails",
+            "type": "com.landray.kmss.sys.tag.model.SysTagGroupDetail",
+            "column": "fd_group_id",
+            "cascade": "all-delete-orphan",
+            "table": "sys_tag_group_detail",
+            "canLogShow": "1"
+        },
+        "authEditors":         {
+            "propertyType": "list",
+            "messageKey": "sys-tag:sysTagGroup.authEditors",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "sys_tag_group_editor",
+            "column": "fd_doc_id",
+            "elementColumn": "fd_org_id",
+            "canLogShow": "1"
+        }
+    }
+}

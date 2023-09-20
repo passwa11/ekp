@@ -1,0 +1,374 @@
+var resPanel = render.parent;
+var buildParam = resPanel.buildDrawPanelParam(data);
+var lang = resPanel.getModelingLang();
+var headX =buildParam.headX;
+var table =buildParam.table;
+{$
+<style>
+    .dialogHidden {
+        display: none !important;
+    }
+
+</style>
+<div class="lui_calendar_frame">
+    <div class="lui_calendar_header" style="background-color: white;">
+        <table class="lui_calendar_header_tab">
+            <tbody>
+            <tr>
+                <!--                <td class="lui_calendar_header_left">-->
+                <!--                    <div cal-opt="prev"><span class="lui_calendar_header_prev"></span></div>-->
+                <!--                    <div cal-opt="next"><span class="lui_calendar_header_next"></span></div>-->
+                <!--                </td>-->
+
+                <td class="lui_calendar_header_right">
+                    $}
+                    //# 日/周切换
+                    if(buildParam.headerCategory ==="1"){
+                    {$
+                    <div class="lui_calendar_header_collection">
+                        <div class="lui_calendar_header_month lui_calendar_header_button_on" cal-opt="1">{%lang['modelingRes.day']%}</div>
+                        <div class="lui_calendar_header_month " cal-opt="0">{%lang['modelingRes.week']%}</div>
+                        <div class="lui_calendar_header_month " cal-opt="2">{%lang['modelingRes.month']%}</div>
+
+                        $}
+                        }else if(buildParam.headerCategory ==="0") {
+                        {$
+                        <div class="lui_calendar_header_collection">
+                            <div class="lui_calendar_header_month" cal-opt="1">{%lang['modelingRes.day']%}</div>
+                            <div class="lui_calendar_header_month lui_calendar_header_button_on" cal-opt="0">{%lang['modelingRes.week']%}</div>
+                            <div class="lui_calendar_header_month " cal-opt="2">{%lang['modelingRes.month']%}</div>
+                            $}
+                            }else{
+                            {$
+                            <div class="lui_calendar_header_collection">
+                                <div class="lui_calendar_header_month" cal-opt="1">{%lang['modelingRes.day']%}</div>
+                                <div class="lui_calendar_header_month" cal-opt="0">{%lang['modelingRes.week']%}</div>
+                                <div class="lui_calendar_header_month lui_calendar_header_button_on" cal-opt="2">{%lang['modelingRes.month']%}</div>
+                                $}
+                                }
+                                if(buildParam.isToday && buildParam.rebackToday){
+                                {$
+                                <div class="lui_calendar_header_today lui_calendar_header_button_on" >{%lang['modelingRes.today']%}</div>
+                            </div>
+                </td>
+                $}
+                }else{
+                {$
+                <div class="lui_calendar_header_today " >{%lang['modelingRes.today']%}</div>
+                $}
+                }
+                if(buildParam.rebackToday){
+                {$
+                <div class="rebacktoday"  style="display: none" >true</div>
+                $}
+                }
+                {$
+                <td class="lui_calendar_header_center">
+                    <div class="lui_calendar_header_title">{%buildParam.title%}</div>
+                </td>
+                <td class="lui_calendar_header_right" >
+                    <span><div class="lui_calendar_header_refresh"><i></i></div></span>
+                    <span class="meeting_calendar_label_box">
+                        $}
+                        //# 图例显示
+                        var navColors = buildParam.navColors || [];
+                        for(var colorIdx = 0;colorIdx< navColors.length;colorIdx++){
+                        {$
+                        <span class="meeting_calendar_label_examing"
+                              style="background:{%navColors[colorIdx].color%} ">&nbsp;</span>
+                        <span class="meeting_calendar_label_text">{%navColors[colorIdx].title%}</span>
+                        $}
+                        }
+                        {$
+                    </span>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div data-lui-mark="calender.content.inside.week" class="lui_calendar_content">
+        <!--        表头-标题列-->
+        <ul class="res_calendar_rescontent">
+            <li class="res_calendar_cate" style="height: 82px">
+                <div class="res_calendar_cate_title" style="background: none !important;">
+                    <span class="res_table_row">{%lang['modelingRes.time']%}</span>
+                    <span class="res_table_col" title="{%buildParam.colTitle%}">{%buildParam.colTitle%}</span>
+                </div>
+            </li>
+            $}
+            for(var i = 0;i< table.length;i++){
+            {$
+            <li class="res_calendar_rescontent_row" respanel-tab-col="{%table[i].head.val%}"
+                respanel-tab-idx="{%table[i].head.idx%}">
+                <div style="height: {%table[i].yHeight-1%}px;line-height: {%table[i].yHeight-1%}px;">
+                    {%table[i].head.text%}
+                </div>
+            </li>
+            $}
+            }
+            {$
+        </ul>
+
+        <div class="res_calendar_rightContent" style="height: {%buildParam.fullHeight-120%}px;">
+            <!--        表头-标题行-->
+            <table class="res_calendar_header" style="height: 83px">
+                <tbody>
+                <tr style="border: 1px solid #efefef;">
+                    <td class="lui_calendar_header_center" colspan="16" style="text-align: center;">
+
+                        <span class="lui_calendar_btn_arrow lui_calendar_btn_arrow_prev" >
+                            <i>前</i>
+                        </span>
+                        <span class="lui_calendar_header_title" style="margin:0 5px">{%buildParam.dataTitle%}</span>
+                        <span class="lui_calendar_btn_arrow lui_calendar_btn_arrow_next">
+                            <i>后</i>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="res_calendar_header_row">
+                    $}
+                    for(var i = 0;i< headX.length;i++){
+                    if(headX[i].value == buildParam.today){
+                    {$
+                    <td class="res_calendar_headerDate res_today"  respanel-tab-row="{%headX[i].val%}"
+                        respanel-tab-idx="{%headX[i].idx%}" data-left="{%headX[i].dataLeft%}" value="{%headX[i].value%}">
+                        <div class="model-fc-header model-fc-today">
+                            $}
+                            if(buildParam.headerCategory ==="0") {
+                            {$
+                            <div class="model-fc-week">{%headX[i].text%}</div>
+                            <div class="model-fc-day">{%headX[i].timeText%}</div>
+                            $}
+                            }else{
+                            {$
+                            <div >{%headX[i].text%}</div>
+                            $}
+                            }
+                            {$
+                        </div>
+                    </td>
+                    $}
+                    }else if(headX[i].text.indexOf("星期六")>-1||headX[i].text.indexOf("星期日")>-1){
+                    {$
+                    <td class="res_calendar_headerDate" respanel-tab-row="{%headX[i].val%}" style="background-color: #F8F8F8;"
+                        respanel-tab-idx="{%headX[i].idx%}" data-left="{%headX[i].dataLeft%}" value="{%headX[i].value%}">
+                        <div class="model-fc-header ">
+                            <div class="model-fc-week">{%headX[i].text%}</div>
+                            <div class="model-fc-day">{%headX[i].timeText%}</div>
+                        </div>
+                    </td>
+                    $}
+                    }else{
+                    {$
+                    <td class="res_calendar_headerDate" respanel-tab-row="{%headX[i].val%}"
+                        respanel-tab-idx="{%headX[i].idx%}" data-left="{%headX[i].dataLeft%}" value="{%headX[i].value%}">
+                        <div class="model-fc-header ">
+                            <div class="model-fc-week">{%headX[i].text%}</div>
+                            <div class="model-fc-day">{%headX[i].timeText%}</div>
+                        </div>
+                    </td>
+                    $}
+                    }
+                    }
+                    {$
+                </tr>
+                </tbody>
+            </table>
+            <!--        表格内容-->
+            <table class="res_calendar_content">
+                <tbody>
+                $}
+                for(var y = 0;y< table.length;y++){
+                /*----------------------Y轴循环开始 -生成tr */
+                var yItem = table[y]
+                {$
+                <tr class="res_calendar_tablecontent_row"
+                    style="height: {%yItem.yHeight%}px;line-height: {%yItem.yHeight%}px;">
+                    $}
+                    for(var x = 0;x< yItem.xArray.length;x++){
+                    /*----------------------X轴循环开始 -生成td */
+                    var xItem = yItem.xArray[x]
+                    {$
+                    <td class="res_calendar_tablecontent_column">
+
+                        $}
+                        for(var d = 0;d< xItem.dataArray.length;d++){
+                        /*----------------------数据循环开始 -生成div */
+                        var dataItem = xItem.dataArray[d]
+                        var topPx = d*22
+                        <!--  数据大于4条后面的不展示-->
+                        if(d==3 && xItem.dataArray.length>4){
+                        var length = xItem.dataArray.length
+                        {$
+                        <div style="position:relative" class="more_calendar_data_dom " >
+                            <div class="res_calendar_data more_calendar_data" length="1" respanel-data-fdid="{%dataItem.fdId%}">共{%length%}</div>
+                            $}
+                            if(xItem.dataArray.length>4){
+                            {$
+                            <div class="meeting_more_calendar_dialog  dialogHidden ">
+                                <div class="dialog_time_title" >{%xItem.head.text%}</div>
+                                $}
+                                for(var d = 0;d< xItem.dataArray.length;d++){
+                                /*----------------------数据循环开始 -生成div */
+                                var dataItem = xItem.dataArray[d]
+                                var topPx = d*22
+                                {$
+                                <div style="position:relative" class=" res_calendar_data_collection">
+                                    <!--  数据显示 -->
+                                    <div class="res_calendar_data" length="1" respanel-data-fdid="{%dataItem.fdId%}"
+                                         style="{%dataItem.cssStrA%}; width: 100%;">
+                                        <span style="{%dataItem.cssStr%}"></span>
+                                        <div class="res_calendar_data_inner">
+                                            <p class="textEllipsis" title="{%dataItem.title%}">{%dataItem.title%}</p>
+                                        </div>
+                                    </div>
+                                    <!--  数据弹窗-->
+                                    $}
+                                    if(dataItem.dialog){
+                                    var dlg = dataItem.dialog
+                                    {$
+                                    <div class="meeting_calendar_dialog dialogHidden"
+                                         style="position: absolute; top: 5px; left:30%; display: block;min-width: 310px">
+                                        <div class="meeting_calendar_dialog_top">
+                                            <div class="textEllipsis meeting_calendar_dialog_title ">
+                                                {%dataItem.title%}
+                                            </div>
+                                        </div>
+                                        <div class="lui_imeeting_order_list">
+                                            <ul>
+                                                <li>
+                                                    <em>{%lang['modelingRes.subject']%}</em>
+                                                    <span class="textEllipsis">{%dlg.title%}</span>
+                                                </li>
+                                                <li>
+                                                    <em>{%lang['modelingRes.time']%}</em>
+                                                    <span class="textEllipsis">{%dlg.time%}</span>
+                                                </li>
+                                                <li>
+                                                    <em>{%lang['modelingRes.submitter']%}</em>
+                                                    <span class="textEllipsis">{%dlg.person%}</span>
+                                                </li>
+                                                <li>
+                                                    <em>{%lang['modelingRes.content']%}</em>
+                                                    <span style="display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:6;overflow:hidden;">{%dlg.content%}</span>
+                                                </li>
+                                                $}
+                                                if(dlg.__link){
+                                                {$
+                                                <li style="text-align: right;color: #699EF6">
+                                                    <div class="to-model-view">
+                                                        <span>{%lang['modelingRes.jump']%}</span>
+                                                        <input class="href"style="display: none" type="text" value="{%dlg.__link%}" >
+                                                        <i class="right-arrow"></i>
+                                                    </div>
+                                                </li>
+                                                $}
+                                                }
+                                                {$
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    $}
+                                    }
+                                    {$
+                                    <!--  数据弹窗结束-->
+                                </div>
+                                $}
+                                /*-----------------------数据循环结束 */
+                                }
+                                {$
+                            </div>
+                            $}
+                            }
+                            {$
+                        </div>
+                        $}
+                        break
+                        }
+                        {$
+                        <div style="position:relative" class="res_calendar_data_dom">
+                            <!--  数据显示 -->
+                            <div class="res_calendar_data" length="1" respanel-data-fdid="{%dataItem.fdId%}"
+                                 style="{%dataItem.cssStrA%}; width: 100%;">
+                                <span style="{%dataItem.cssStr%}"></span>
+                                <div class="res_calendar_data_inner">
+                                    <p class="textEllipsis" title="{%dataItem.title%}">{%dataItem.title%}</p>
+                                </div>
+                            </div>
+                            <!--  数据弹窗-->
+                            $}
+                            if(dataItem.dialog){
+                            var dlg = dataItem.dialog
+                            {$
+                            <div class="meeting_calendar_dialog dialogHidden"
+                                 style="position: absolute; top: 5px; left:30%; display: block;min-width: 310px">
+                                <div class="meeting_calendar_dialog_top">
+                                    <div class="textEllipsis meeting_calendar_dialog_title ">
+                                        {%dataItem.title%}
+                                    </div>
+                                </div>
+                                <div class="lui_imeeting_order_list">
+                                    <ul>
+                                        <li>
+                                            <em>{%lang['modelingRes.subject']%}</em>
+                                            <span class="textEllipsis">{%dlg.title%}</span>
+                                        </li>
+                                        <li>
+                                            <em>{%lang['modelingRes.time']%}</em>
+                                            <span class="textEllipsis">{%dlg.time%}</span>
+                                        </li>
+                                        <li>
+                                            <em>{%lang['modelingRes.submitter']%}</em>
+                                            <span class="textEllipsis">{%dlg.person%}</span>
+                                        </li>
+                                        <li>
+                                            <em>{%lang['modelingRes.content']%}</em>
+                                            <span style="display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:6;overflow:hidden;">{%dlg.content%}</span>
+                                        </li>
+                                        $}
+                                        if(dlg.__link){
+                                        {$
+                                        <li style="text-align: right;color: #699EF6">
+                                            <div class="to-model-view">
+                                                <span>{%lang['modelingRes.jump']%}</span>
+                                                <input class="href"style="display: none" type="text" value="{%dlg.__link%}" >
+                                                <i class="right-arrow"></i>
+                                            </div>
+                                        </li>
+                                        $}
+                                        }
+                                        {$
+                                    </ul>
+                                </div>
+                            </div>
+                            $}
+                            }
+                            {$
+                            <!--  数据弹窗结束-->
+                        </div>
+                        $}
+
+                        /*-----------------------数据循环结束 */
+                        }
+
+                        {$
+
+                    </td>
+                    $}
+                    /*----------------------X轴循环结束 */
+                    }
+                    {$
+                </tr>
+                $}
+                /*----------------------Y轴循环结束 */
+                }
+                {$
+                </tbody>
+            </table>
+            <div class="clearfloat"></div>
+        </div>
+    </div>
+
+</div>
+$}

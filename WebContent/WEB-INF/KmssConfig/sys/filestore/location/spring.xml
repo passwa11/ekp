@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="sysFileServerDirectService"
+		class="com.landray.kmss.sys.filestore.location.server.service.spring.SysFileServerDirectServiceImpl">
+	</bean>
+	
+	<bean id="sysFileServerProxyTarget"
+		class="com.landray.kmss.sys.filestore.location.server.service.spring.SysFileServerProxyServiceImpl">
+		<property name="sysAttUploadDao">
+			<ref bean="sysAttUploadDao" />
+		</property>
+		<property name="sysAttCatalogDao">
+            <ref bean="sysAttCatalogDao" />
+        </property>
+	</bean>
+
+	<bean id="sysFileServerProxyService" 
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFileServerProxyTarget" />
+		</property>
+	</bean>
+
+	<bean id="serverResourceProxyServiceImpl"
+		  class="com.landray.kmss.sys.filestore.location.server.service.spring.ServerResourceProxyServiceImpl">
+	</bean>
+
+	<bean id="sysFileResourceTmpPathProvider"
+		  class="com.landray.kmss.sys.filestore.location.server.service.spring.SysFileResourceTmpPathProvider">
+	</bean>
+
+</beans>

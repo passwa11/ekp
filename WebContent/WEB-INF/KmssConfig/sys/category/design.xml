@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="sys-category:module.sys.category"
+		defaultValidator="roleValidator(role=SYSROLE_USER)"
+		urlPrefix="/sys/category/">
+
+		<areaRoles>
+			ROLE_SYSCATEGORY_DEFAULT;
+			ROLE_SYSCATEGORY_MAINTAINER;
+			ROLE_PROPERTY_MAINTAINER
+		</areaRoles>
+		<request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_SYSCATEGORY_DEFAULT)"/>
+		<request
+			path="sys_category_main/sysCategoryMain*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.category.model.SysCategoryMain">
+			<query
+				queryString="method=add"
+				validator="sysCategoryEditorValidator(recid=parentId)" />
+			<query
+				queryString="method=save|saveadd"
+				validator="sysCategoryEditorValidator(recid=fdParentId)" />
+			<query
+				queryString="method=savecopy"
+				validator="sysCategoryEditorValidator(recid=fdCopyId)" />
+			<query
+				queryString="method=edit|delete|update"
+				validator="sysCategoryEditorValidator()" />
+			<query
+				queryString="method=copy"
+				validator="sysCategoryEditorValidator(recid=fdCopyId)" />
+			<query
+				queryString="method=view"
+				validator="sysCategoryReaderValidator()" />
+		</request>
+		<request
+			path="sys_category_property/sysCategoryProperty*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.category.model.SysCategoryProperty">
+			<query
+				queryString="method=deleteall|add"
+				validator="sysCategoryEditorValidator(recid=parentId)" />
+			<query
+				queryString="method=save|saveadd"
+				validator="sysCategoryEditorValidator(recid=fdParentId)" />
+			<query
+				queryString="method=edit|update|delete|copy"
+				validator="sysCategoryReaderValidator()" />
+			<query
+				queryString="method=view"
+				validator="sysCategoryReaderValidator()" />
+
+		</request>
+		<request
+			path="sys_category_config/sysCategoryConfig*">
+			<query
+				queryString="method=edit"
+				validator="roleValidator(role=ROLE_SYSCATEGORY_MAINTAINER)" />
+		</request>
+	</module>
+	<!-- 批量修改全局分类权限控制 -->
+	<module urlPrefix="/sys/right/">
+		<request 
+			path="/cchange_cate_right/cchange_cate_right.jsp*" 
+			defaultValidator="roleValidator(role=ROLE_SYSCATEGORY_MAINTAINER)">
+		</request>
+		<request 
+			path="/cchange_tmp_right/cchange_tmp_right.jsp*" 
+			defaultValidator="roleValidator(role=ROLE_SYSCATEGORY_MAINTAINER)">
+		</request>
+		<request 
+			path="/cchange_doc_right/cchange_doc_right.jsp*" 
+			defaultValidator="roleValidator(role=ROLE_SYSCATEGORY_MAINTAINER)">
+		</request>
+	</module>
+	<!-- 系统配置 -->
+	<homePage
+		urlPrefix="sys/category"
+		messageKey="sys-category:menu.sysCategory.title"
+		config="/moduleindex_notopic.jsp?nav=/sys/category/tree.jsp&amp;main=/sys/category/sys_category_main/sysCategoryMain_tree.jsp"
+		type="global" />
+		
+	<profileConfig
+		key="category"
+		messageKey="{sys-category:module.sys.category}" 
+		url="/sys/profile/moduleindex.jsp?nav=/sys/category/tree.jsp&amp;main=/sys/category/sys_category_main/sysCategoryMain_tree.jsp" 
+		icon="sys_category"
+		type="mechanism"
+		description="{sys-category:sysCategory.profileCfg.description}"/>
+</configs>

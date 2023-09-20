@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+			id="modelingLoaderHandlerLicenseThread"
+			class="com.landray.kmss.sys.modeling.common.loader.ModelingLoaderHandlerLicenseThread">
+	</bean>
+	<bean
+			id="modelingLoaderHandlerLicenseRedisInit"
+			class="com.landray.kmss.sys.modeling.common.loader.ModelingLoaderHandlerLicenseRedisInit">
+	</bean>
+	<bean
+			id="modelingAppEndTimeCheck"
+			class="com.landray.kmss.sys.modeling.common.service.spring.ModelingAppEndTimeCheck">
+	</bean>
+	<bean
+			id="modelingAppSelfBuildNumCheck"
+			class="com.landray.kmss.sys.modeling.common.service.spring.ModelingAppSelfBuildNumCheck">
+	</bean>
+	<bean
+			id="modelingAppCdKeyFormalCheck"
+			class="com.landray.kmss.sys.modeling.common.service.spring.ModelingAppCdKeyFormalCheck">
+	</bean>
+	<bean
+			id="modelingAppCdKeyLegitimateCheck"
+			class="com.landray.kmss.sys.modeling.common.service.spring.ModelingAppCdKeyLegitimateCheck">
+	</bean>
+	<bean
+			id="modelingAppMappingCheck"
+			class="com.landray.kmss.sys.modeling.common.service.spring.ModelingAppMappingCheck">
+	</bean>
+
+	<!-- cdKeyMapping start -->
+	<bean
+			id="modelingCdKeyMappingDao"
+			parent="KmssBaseDao"
+			class="com.landray.kmss.sys.modeling.common.dao.hibernate.ModelingCdKeyMappingDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.sys.modeling.common.model.ModelingCdKeyMapping"/>
+	</bean>
+
+	<bean
+			id="modelingCdKeyMappingServiceTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.sys.modeling.common.service.spring.ModelingCdKeyMappingServiceImp">
+		<property name="baseDao">
+			<ref bean="modelingCdKeyMappingDao"/>
+		</property>
+	</bean>
+
+	<bean id="modelingCdKeyMappingService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="modelingCdKeyMappingServiceTarget"/>
+		</property>
+	</bean>
+	<!-- cdKeyMapping end -->
+
+	<bean id="modelingLicenseDispatcher"
+		  class="com.landray.kmss.sys.modeling.common.loader.ModelingLicenseDispatcher">
+	</bean>
+
+	<bean
+			id="modelingLoaderHandlerMonitorTask"
+			class="com.landray.kmss.sys.modeling.common.loader.ModelingLoaderHandlerMonitorTask">
+	</bean>
+</beans>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysSimpleCategoryService"
+		class="com.landray.kmss.sys.simplecategory.service.SysSimpleCategoryServiceImp">
+	</bean>
+	<bean
+		id="sysSimpleCategoryTreeService"
+		class="com.landray.kmss.sys.simplecategory.service.spring.SysSimpleCategoryTreeService">
+	</bean>
+
+	<bean
+		id="sysSimpleCategoryAuthList"
+		class="com.landray.kmss.sys.simplecategory.service.spring.SysSimpleCategoryAuthList">
+	</bean>
+	
+	<bean
+		id="sysSimpleCategoryEditorBatchValidator"
+		class="com.landray.kmss.sys.simplecategory.service.spring.SysSimpleCategoryBatchValidator">
+	</bean>
+	
+	<bean
+		id="sysSimpleCategoryEditorValidator"
+		class="com.landray.kmss.sys.simplecategory.service.spring.SysSimpleCategoryValidator">
+		<property
+			name="fieldType">
+			<value>Editors</value>
+		</property>
+	</bean>
+	<bean
+		id="sysSimpleCategoryReaderValidator"
+		class="com.landray.kmss.sys.simplecategory.service.spring.SysSimpleCategoryValidator">
+		<property
+			name="fieldType">
+			<value>Readers</value>
+		</property>
+	</bean>
+
+	<bean
+		id="cateChgTarget"
+		class="com.landray.kmss.sys.simplecategory.service.spring.CateChgServiceImp">
+		<property name="sysEditionMainService">
+			<ref bean="sysEditionMainService" />
+		</property>
+	</bean>
+	<bean
+		id="cateChgService"
+		lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property
+			name="transactionManager">
+			<ref
+				bean="transactionManager" />
+		</property>
+		<property
+			name="target">
+			<ref
+				bean="cateChgTarget" />
+		</property>
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop
+					key="update*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean
+		id="sysSimpleCategoryNavController"
+		class="com.landray.kmss.sys.simplecategory.controller.SysSimpleCategoryNavController">
+	</bean>
+    <bean
+        id="sysSimpleCategoryController"
+        class="com.landray.kmss.sys.simplecategory.controller.SysSimpleCategoryController">
+    </bean>
+	<bean
+		id="cateChgController"
+		class="com.landray.kmss.sys.simplecategory.controller.CateChgController">
+	</bean>
+</beans>

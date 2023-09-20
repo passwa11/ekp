@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root
+        xmlns:m="http://www.landray.com.cn/schema/mportlet"
+        xmlns="http://www.landray.com.cn/schema/lui"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.landray.com.cn/schema/mportlet
+	../../../sys/mobile/mportlet.xsd
+		http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd">
+
+    <m:mportlet
+        id="kms.knowledge.mobile.firstpic"
+        description="{kms-knowledge:kms.knowledge.mobile.firstpic.desc}"
+        name="{kms-knowledge:kmsKnowledge.portlet.list}"
+        moduleUrl="/kms/knowledge/mobile/mportal/index.jsp#path=!{type}&amp;query=q.docCategory%3A!{cateid}%3Borderby%3A!{orderby}%3Bordertype%3Adown%3B"
+        module="{kms-knowledge:module.kms.knowledge}"
+        jsUrl="/kms/knowledge/mobile/mportal/kmsKnowledgeBaseDoc_piclist.js?categoryId=!{cateid}&amp;rowsize=!{rowsize}&amp;type=!{type}&amp;orderby=!{orderby}">
+        <m:vars>
+            <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="6"/>
+            <var name="{kms-knowledge:kmsKnowledge.portlet.type}" key="type" kind="enumValue" default="1">
+                {
+                "values":[{"text":"{kms-knowledge:kms.knowledge.4m.all}", "value":"1"},
+                {"text":"{kms-knowledge:kms.knowledge.4m.introduce}", "value":"2"}],
+                "showType":"radio"
+                }
+            </var>
+            <var name="{kms-knowledge:kmsKnowledge.list.orderType}" key="orderby" kind="enumValue" default="docPublishTime">
+                {
+                "values":[{"text":"{kms-knowledge:kmsKnowledge.portlet.newest}", "value":"docPublishTime"},
+                {"text":"{kms-knowledge:kmsKnowledge.portlet.hot}", "value":"fdTotalCount"}],
+                "showType":"radio"
+                }
+            </var>
+            <var key="cateid" kind="dialogJs" name="{portlet.cate}" >
+                {
+                "js":
+                "seajs.use('lui/dialog',function(dialog){dialog.simpleCategory({modelName: 'com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory',mulSelect : false,authType: 2,idField: '!{idField}',nameField: '!{nameField}',canClose: true})})"
+                }
+            </var>
+        </m:vars>
+        <m:operations>
+            <m:operation name="换一批" type="random" />
+            <m:operation
+                    name="添加知识"
+                    type="create"
+                    href="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=add">
+                {
+                "type" : "simplecategory",
+                "cateModelName" : "com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory",
+                "___urlParam" : "fdTemplateType:1;fdTemplateType:3",
+                "urlParamName" : "fdTemplateId",
+                "varKey" : "cateid"
+                }
+            </m:operation>
+        </m:operations>
+    </m:mportlet>
+
+    <m:mportlet
+        id="kms.knowledge.mobile.simple"
+        description="{kms-knowledge:kms.knowledge.mobile.simple.desc}"
+        name="{kms-knowledge:kmsKnowledge.portlet.list}"
+        moduleUrl="/kms/knowledge/mobile/mportal/index.jsp#path=!{type}&amp;query=q.docCategory%3A!{cateid}%3Borderby%3A!{orderby}%3Bordertype%3Adown%3B"
+        module="{kms-knowledge:module.kms.knowledge}"
+        jsUrl="/kms/knowledge/mobile/mportal/kmsKnowledgeBaseDoc_simplelist.js?categoryId=!{cateid}&amp;rowsize=!{rowsize}&amp;type=!{type}&amp;orderby=!{orderby}">
+        <m:vars>
+            <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="6"/>
+            <var name="{kms-knowledge:kmsKnowledge.portlet.type}" key="type" kind="enumValue" default="1">
+                {
+                "values":[{"text":"{kms-knowledge:kms.knowledge.4m.all}", "value":"1"},
+                {"text":"{kms-knowledge:kms.knowledge.4m.introduce}", "value":"2"}],
+                "showType":"radio"
+                }
+            </var>
+            <var name="{kms-knowledge:kmsKnowledge.list.orderType}" key="orderby" kind="enumValue" default="docPublishTime">
+                {
+                "values":[{"text":"{kms-knowledge:kmsKnowledge.portlet.newest}", "value":"docPublishTime"},
+                {"text":"{kms-knowledge:kmsKnowledge.portlet.hot}", "value":"fdTotalCount"}],
+                "showType":"radio"
+                }
+            </var>
+            <var key="cateid" kind="dialogJs" name="{portlet.cate}" >
+                {
+                "js":
+                "seajs.use('lui/dialog',function(dialog){dialog.simpleCategory({modelName: 'com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory',mulSelect : false,authType: 2,idField: '!{idField}',nameField: '!{nameField}',canClose: true})})"
+                }
+            </var>
+        </m:vars>
+        <m:operations>
+            <m:operation name="换一批" type="random" />
+            <m:operation
+                    name="添加知识"
+                    type="create"
+                    href="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=add">
+                {
+                "type" : "simplecategory",
+                "cateModelName" : "com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory",
+                "___urlParam" : "fdTemplateType:1;fdTemplateType:3",
+                "urlParamName" : "fdTemplateId",
+                "varKey" : "cateid"
+                }
+            </m:operation>
+        </m:operations>
+    </m:mportlet>
+
+    <m:mportlet
+        id="kms.knowledge.mobile.left"
+        description="{kms-knowledge:kms.knowledge.mobile.left.desc}"
+        name="{kms-knowledge:kmsKnowledge.portlet.list}"
+        moduleUrl="/kms/knowledge/mobile/mportal/index.jsp#path=!{type}&amp;query=q.docCategory%3A!{cateid}%3Borderby%3A!{orderby}%3Bordertype%3Adown%3B"
+        module="{kms-knowledge:module.kms.knowledge}"
+        jsUrl="/kms/knowledge/mobile/mportal/kmsKnowledgeBaseDoc_leftlist.js?categoryId=!{cateid}&amp;rowsize=!{rowsize}&amp;type=!{type}&amp;orderby=!{orderby}">
+        <m:vars>
+            <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="6"/>
+            <var name="{kms-knowledge:kmsKnowledge.portlet.type}" key="type" kind="enumValue" default="1">
+                {
+                "values":[{"text":"{kms-knowledge:kms.knowledge.4m.all}", "value":"1"},
+                {"text":"{kms-knowledge:kms.knowledge.4m.introduce}", "value":"2"}],
+                "showType":"radio"
+                }
+            </var>
+            <var name="{kms-knowledge:kmsKnowledge.list.orderType}" key="orderby" kind="enumValue" default="docPublishTime">
+                {
+                "values":[{"text":"{kms-knowledge:kmsKnowledge.portlet.newest}", "value":"docPublishTime"},
+                {"text":"{kms-knowledge:kmsKnowledge.portlet.hot}", "value":"fdTotalCount"}],
+                "showType":"radio"
+                }
+            </var>
+            <var key="cateid" kind="dialogJs" name="{portlet.cate}" >
+                {
+                "js":
+                "seajs.use('lui/dialog',function(dialog){dialog.simpleCategory({modelName: 'com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory',mulSelect : false,authType: 2,idField: '!{idField}',nameField: '!{nameField}',canClose: true})})"
+                }
+            </var>
+        </m:vars>
+        <m:operations>
+            <m:operation name="换一批" type="random" />
+            <m:operation
+                    name="添加知识"
+                    type="create"
+                    href="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=add">
+                {
+                "type" : "simplecategory",
+                "cateModelName" : "com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory",
+                "___urlParam" : "fdTemplateType:1;fdTemplateType:3",
+                "urlParamName" : "fdTemplateId",
+                "varKey" : "cateid"
+                }
+            </m:operation>
+        </m:operations>
+    </m:mportlet>
+
+    <m:mportlet
+        id="kms.knowledge.mobile.chosen"
+        description="{kms-knowledge:description.kms.knowledge.chosen}"
+        name="{kms-knowledge:kmsKnowledge.portlet.knowledge.chosen}"
+        moduleUrl="/kms/knowledge/mobile/mportal/index.jsp#path=!{type}&amp;query=q.docCategory%3A!{cateid}%3Borderby%3A!{orderby}%3Bordertype%3Adown%3B"
+        module="{kms-knowledge:module.kms.knowledge}"
+        jsUrl="/kms/knowledge/mobile/mportal/kmsKnowledgeBaseDoc_chosen.js?categoryId=!{cateid}&amp;rowsize=!{rowsize}&amp;type=!{type}&amp;orderby=!{orderby}">
+        <m:vars>
+            <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="6"/>
+            <var name="{kms-knowledge:kmsKnowledge.portlet.type}" key="type" kind="enumValue" default="1">
+                {
+                "values":[{"text":"{kms-knowledge:kms.knowledge.4m.all}", "value":"1"},
+                {"text":"{kms-knowledge:kms.knowledge.4m.introduce}", "value":"2"}],
+                "showType":"radio"
+                }
+            </var>
+            <var name="{kms-knowledge:kmsKnowledge.list.orderType}" key="orderby" kind="enumValue" default="docPublishTime">
+                {
+                "values":[{"text":"{kms-knowledge:kmsKnowledge.portlet.newest}", "value":"docPublishTime"},
+                {"text":"{kms-knowledge:kmsKnowledge.portlet.hot}", "value":"fdTotalCount"}],
+                "showType":"radio"
+                }
+            </var>
+            <var key="cateid" kind="dialogJs" name="{portlet.cate}" >
+                {
+                "js":
+                "seajs.use('lui/dialog',function(dialog){dialog.simpleCategory({modelName: 'com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory',mulSelect : false,authType: 2,idField: '!{idField}',nameField: '!{nameField}',canClose: true})})"
+                }
+            </var>
+        </m:vars>
+        <m:operations>
+            <m:operation name="换一批" type="random" />
+            <m:operation
+                    name="添加知识"
+                    type="create"
+                    href="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=add">
+                {
+                "type" : "simplecategory",
+                "cateModelName" : "com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory",
+                "___urlParam" : "fdTemplateType:1;fdTemplateType:3",
+                "urlParamName" : "fdTemplateId",
+                "varKey" : "cateid"
+                }
+            </m:operation>
+        </m:operations>
+    </m:mportlet>
+
+    <m:mportlet
+        id="kms.knowledge.mobile.above"
+        description="{kms-knowledge:kms.knowledge.mobile.above.desc}"
+        name="{kms-knowledge:kmsKnowledge.portlet.list}"
+        moduleUrl="/kms/knowledge/mobile/mportal/index.jsp#path=!{type}&amp;query=q.docCategory%3A!{cateid}%3Borderby%3A!{orderby}%3Bordertype%3Adown%3B"
+        module="{kms-knowledge:module.kms.knowledge}"
+        jsUrl="/kms/knowledge/mobile/mportal/kmsKnowledgeBaseDoc_abovelist.js?categoryId=!{cateid}&amp;rowsize=!{rowsize}&amp;type=!{type}&amp;orderby=!{orderby}">
+        <m:vars>
+            <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="6"/>
+            <var name="{kms-knowledge:kmsKnowledge.portlet.type}" key="type" kind="enumValue" default="1">
+                {
+                "values":[{"text":"{kms-knowledge:kms.knowledge.4m.all}", "value":"1"},
+                {"text":"{kms-knowledge:kms.knowledge.4m.introduce}", "value":"2"}],
+                "showType":"radio"
+                }
+            </var>
+            <var name="{kms-knowledge:kmsKnowledge.list.orderType}" key="orderby" kind="enumValue" default="docPublishTime">
+                {
+                "values":[{"text":"{kms-knowledge:kmsKnowledge.portlet.newest}", "value":"docPublishTime"},
+                {"text":"{kms-knowledge:kmsKnowledge.portlet.hot}", "value":"fdTotalCount"}],
+                "showType":"radio"
+                }
+            </var>
+            <var key="cateid" kind="dialogJs" name="{portlet.cate}" >
+                {
+                "js":
+                "seajs.use('lui/dialog',function(dialog){dialog.simpleCategory({modelName: 'com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory',mulSelect : false,authType: 2,idField: '!{idField}',nameField: '!{nameField}',canClose: true})})"
+                }
+            </var>
+        </m:vars>
+        <m:operations>
+            <m:operation name="换一批" type="random" />
+            <m:operation
+                    name="添加知识"
+                    type="create"
+                    href="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=add">
+                {
+                "type" : "simplecategory",
+                "cateModelName" : "com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory",
+                "___urlParam" : "fdTemplateType:1;fdTemplateType:3",
+                "urlParamName" : "fdTemplateId",
+                "varKey" : "cateid"
+                }
+            </m:operation>
+        </m:operations>
+    </m:mportlet>
+
+    <!-- 上面图片轮播，下面知识列表（横向展现） -->
+    <m:mportlet
+        id="kms.knowledge.mobile.pic.and.list"
+        description="上面幻灯片轮播，下面知识列表（横向展现）"
+        name="{kms-knowledge:kmsKnowledge.portlet.list}"
+        moduleUrl="/kms/knowledge/mobile/mportal/index.jsp#path=!{type}&amp;query=q.docCategory%3A!{cateid}%3Borderby%3A!{orderby}%3Bordertype%3Adown%3B"
+        module="{kms-knowledge:module.kms.knowledge}"
+        jsUrl="/kms/knowledge/mobile/mportal/kmsKnowledgeBasedoc_horizontalList.js?categoryId=!{cateid}&amp;rowsize=!{rowsize}&amp;type=!{type}&amp;showSubject=!{showSubject}&amp;height=!{height}&amp;refreshtime=!{refreshtime}&amp;fdIds=!{fdIds}&amp;orderby=!{orderby}">
+        <m:vars>
+            <var key="fdIds" kind="dialogJs" name="顶部幻灯片选择" required="true">
+
+                {
+                "js":
+                "seajs.use('sys/mportal/sys_mportal_imgsource/js/selectImgSource.js',function(SelectImgSource){SelectImgSource('!{idField}','!{nameField}')})"
+                }
+            </var>
+            <var key="refreshtime" name="幻灯片刷新时间（秒）" kind="int" default="0">
+                {"help":"（为0则不自动刷新）"}
+            </var>
+            <var name="{sys-news:sysNewsMain.portlet.image.height}" key="height" kind="int" default="180">
+                {"help":"px （建议高度为180px）"}
+            </var>
+            <var key="showSubject" kind="enumValue" name="显示幻灯片标题" default="true">
+                {"values":[{"text":"显示", "value":"true"}],"showType":"checkbox"}
+            </var>
+
+            <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="4"/>
+            <var name="{kms-knowledge:kmsKnowledge.portlet.type}" key="type" kind="enumValue" default="1">
+                {
+                "values":[{"text":"{kms-knowledge:kms.knowledge.4m.all}", "value":"1"},
+                {"text":"{kms-knowledge:kms.knowledge.4m.introduce}", "value":"2"}],
+                "showType":"radio"
+                }
+            </var>
+            <var name="{kms-knowledge:kmsKnowledge.list.orderType}" key="orderby" kind="enumValue" default="docPublishTime">
+                {
+                "values":[{"text":"{kms-knowledge:kmsKnowledge.portlet.newest}", "value":"docPublishTime"},
+                {"text":"{kms-knowledge:kmsKnowledge.portlet.hot}", "value":"fdTotalCount"}],
+                "showType":"radio"
+                }
+            </var>
+            <var key="cateid" kind="dialogJs" name="{portlet.cate}" >
+                {
+                "js":
+                "seajs.use('lui/dialog',function(dialog){dialog.simpleCategory({modelName: 'com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory',mulSelect : false,authType: 2,idField: '!{idField}',nameField: '!{nameField}',canClose: true})})"
+                }
+            </var>
+        </m:vars>
+        <m:operations>
+            <m:operation name="换一批" type="random" />
+            <m:operation
+                    name="添加知识"
+                    type="create"
+                    href="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=add">
+                {
+                "type" : "simplecategory",
+                "cateModelName" : "com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory",
+                "___urlParam" : "fdTemplateType:1;fdTemplateType:3",
+                "urlParamName" : "fdTemplateId",
+                "varKey" : "cateid"
+                }
+            </m:operation>
+        </m:operations>
+    </m:mportlet>
+
+
+    <m:mportlet
+        id="kms.knowledge.mobile.summary"
+        description="{kms-knowledge:kms.knowledge.mobile.summary.desc}"
+        name="{kms-knowledge:kmsKnowledge.portlet.list}"
+        moduleUrl = "/kms/knowledge/mobile/mportal/index.jsp#path=1&amp;query=q.docCategory%3A!{cateid}"
+        module="{kms-knowledge:module.kms.knowledge}"
+        jsUrl="/kms/knowledge/mobile/mportal/kmsKnowledgeBaseDoc_summarylist.js?categoryId=!{cateid}&amp;rowsize=!{rowsize}&amp;forward=!{forward}&amp;orderby=!{orderby}">
+        <m:vars>
+            <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="6"/>
+            <var key="cateid" kind="dialogJs" name="{portlet.cate}" >
+                {
+                "js":
+                "seajs.use('lui/dialog',function(dialog){dialog.simpleCategory({modelName: 'com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory',mulSelect : false,authType: 2,idField: '!{idField}',nameField: '!{nameField}',canClose: true})})"
+                }
+            </var>
+            <var name="{kms-knowledge:kmsKnowledge.portlet.type}" key="forward" kind="enumValue" default="0">
+                {
+                "values":[{"text":"全文", "value":"0"},
+                {"text":"只显示内容", "value":"content"}],
+                "showType":"radio"
+                }
+            </var>
+        </m:vars>
+        <m:operations>
+            <m:operation name="换一批" type="random" />
+            <m:operation
+                    name="添加知识"
+                    type="create"
+                    href="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=add">
+                {
+                "type" : "simplecategory",
+                "cateModelName" : "com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory",
+                "___urlParam" : "fdTemplateType:1;fdTemplateType:3",
+                "urlParamName" : "fdTemplateId",
+                "varKey" : "cateid"
+                }
+            </m:operation>
+        </m:operations>
+    </m:mportlet>
+
+    <!-- 首页-全部统计 -->
+    <m:mportlet
+        id="kms.knowledge.mobile.allCount"
+        description="{kms-knowledge:kms.knowledge.mobile.allCount.desc}"
+        name="{kms-knowledge:kmsKnowledge.portlet.allCount}"
+        moduleUrl = "/kms/knowledge/mobile/mportal/index.jsp#path=0"
+        module="{kms-knowledge:module.kms.knowledge}"
+        jsUrl="/kms/knowledge/mobile/mportal/index/allCount.js?type=!{type}">
+        <m:vars>
+            <var name="{kms-knowledge:kms.knowledge.kind.selectCategory}" key="type" kind="enumValue" default="1,2,3">
+                {
+                "values":[
+                {"text":"{kms-knowledge:title.kms.multidoc}", "value":"1"},
+                {"text":"{kms-knowledge:title.kms.wiki}", "value":"2"},
+                {"text":"{kms-knowledge:title.kms.all}","value":"1,2,3"}
+                ],
+                "showType":"checkbox"
+                }
+            </var>
+        </m:vars>
+    </m:mportlet>
+
+    <!-- 首页-我的统计 -->
+    <m:mportlet
+        id="kms.knowledge.mobile.myCount"
+        description="{kms-knowledge:kms.knowledge.mobile.myCount.desc}"
+        name="{kms-knowledge:kmsKnowledge.portlet.myCount}"
+        moduleUrl = "/kms/knowledge/mobile/mportal/index.jsp#path=0"
+        module="{kms-knowledge:module.kms.knowledge}"
+        jsUrl="/kms/knowledge/mobile/mportal/index/myCount.js?type=!{type}">
+        <m:vars>
+            <var name="{kms-knowledge:kmsKnowledge.portlet.knowledge.num.view}" key="type" kind="custom">
+                {"file":"/kms/knowledge/mobile/mportal/index/setting/index_my_count_set.jsp"}
+            </var>
+        </m:vars>
+    </m:mportlet>
+
+    <!-- 首页-知识排行 -->
+    <m:mportlet
+        id="kms.knowledge.mobile.rank"
+        description="{kms-knowledge:kms.knowledge.mobile.rank.desc}"
+        name="{kms-knowledge:kmsKnowledge.portlet.rank}"
+        moduleUrl = "/kms/knowledge/mobile/mportal/index.jsp#path=!{type}&amp;query=q.docCategory%3A!{cateid}%3Borderby%3A!{orderby}%3Bordertype%3Adown%3B"
+        module="{kms-knowledge:module.kms.knowledge}"
+        jsUrl="/kms/knowledge/mobile/mportal/index/rank.js?categoryId=!{cateid}&amp;rowsize=!{rowsize}&amp;type=!{type}&amp;orderby=!{orderby}">
+        <m:vars>
+            <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="6"/>
+            <var name="{kms-knowledge:kmsKnowledge.portlet.type}" key="type" kind="enumValue" default="1">
+                {
+                "values":[{"text":"{kms-knowledge:kms.knowledge.4m.all}", "value":"1"},
+                {"text":"{kms-knowledge:kms.knowledge.4m.introduce}", "value":"2"}],
+                "showType":"radio"
+                }
+            </var>
+            <var name="{kms-knowledge:kmsKnowledge.list.orderType}" key="orderby" kind="enumValue" default="docPublishTime">
+                {
+                "values":[{"text":"{kms-knowledge:kmsKnowledge.portlet.newest}", "value":"docPublishTime"},
+                {"text":"{kms-knowledge:kmsKnowledge.portlet.hot}", "value":"fdTotalCount"}],
+                "showType":"radio"
+                }
+            </var>
+            <var key="cateid" kind="dialogJs" name="{portlet.cate}" >
+                {
+                "js":
+                "seajs.use('lui/dialog',function(dialog){dialog.simpleCategory({modelName: 'com.landray.kmss.kms.knowledge.model.KmsKnowledgeCategory',mulSelect : false,authType: 2,idField: '!{idField}',nameField: '!{nameField}',canClose: true})})"
+                }
+            </var>
+        </m:vars>
+    </m:mportlet>
+</root>

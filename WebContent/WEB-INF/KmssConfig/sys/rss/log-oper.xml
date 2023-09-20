@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<log-oper>
+    <logset>
+        <oper
+            id="sysRssCategoryOperLog"
+            desc="log for sysRssCategory.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.rss.model.SysRssCategory"
+            action="/sys/rss/sys_rss_category/sysRssCategory.do">
+        </oper>
+        <oper
+            id="sysRssMainOperLog"
+            desc="log for sysRssMain.do"
+            extends="BaseOperLog"
+            model="com.landray.kmss.sys.rss.model.SysRssMain"
+            action="/sys/rss/sys_rss_main/sysRssMain.do">
+            <query
+                method="read"
+                logPoint="Base_UrlParam;Action_Find"
+                messageKey="button.view" />
+            <query
+                method="proxy"
+                logPoint="Base_UrlParam"
+                messageKey="button.list" />
+        </oper>
+    </logset>
+</log-oper>

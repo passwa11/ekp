@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.mportal.model.SysMportalCpageRelation"
+		table="sys_mportal_cpage_relation">
+		<id name="fdId" column="fd_id" length="36">
+			<generator class="assigned" />
+		</id>
+
+		<property name="fdName" column="fd_name" update="true"
+			insert="true" length="200" not-null="false" />
+
+		<property name="fdOrder" column="fd_order" update="true"
+			insert="true" length="36" not-null="false" />
+			
+		<property name="fdIcon" column="fd_icon" update="true"
+			insert="true" length="200" not-null="false" />
+
+		<property name="fdImg" column="fd_img" update="true"
+				  insert="true" length="500" not-null="false" />
+
+		<property name="fdType" column="fd_type" update="true"
+			insert="true" length="2" not-null="false" />
+		
+		<property name="fdMainCompositeId" column="fd_main_composite_id" update="true"
+			insert="true" length="36" not-null="false" />
+
+		<many-to-one name="sysMportalCpage" column="fd_page_id"
+			insert="true" update="true" not-null="false" />
+			
+		<bag name="childPageRelations" cascade="all" inverse="true">  
+			<key column="fd_parent_id"></key>
+			<one-to-many class="com.landray.kmss.sys.mportal.model.SysMportalCpageRelation"/>   
+		</bag>
+			
+		<many-to-one name="fdParent" column="fd_parent_id"
+			insert="true" update="true" not-null="false" />
+			
+		<many-to-one name="sysMportalComposite" column="fd_composite_id"
+			insert="true" update="true" not-null="false" />
+
+	</class>
+</hibernate-mapping>

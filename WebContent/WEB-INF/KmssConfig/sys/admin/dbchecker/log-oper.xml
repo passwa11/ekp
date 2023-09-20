@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="sysAdminDbchecker"
+            extends="BaseOperLog"
+            model="*"
+            action="/sys/admin/sys_admin_dbchecker/sysAdminDbchecker.do">
+            <query 
+                method="check"
+                logPoint="Base_UrlParam;check"
+                messageKey="sys-admin:sysAdminDbchecker.dbchecker">
+            </query>
+        </oper>
+        <oper
+            id="sysAdminDbRepairService"
+            model="*"
+            action="/sys/admin/resource/jsp/jsonp.jsp">
+            <query 
+                paramName="s_name"
+                paramValue="com.landray.kmss.sys.admin.dbchecker.service.spring.SysAdminDbRepairService"
+                logPoint="Base_UrlParam;sysAdminDbRepairService"
+                messageKey="sys-admin:sysAdminDbchecker.repair">
+            </query>
+        </oper>
+	</logset>
+</log-oper>

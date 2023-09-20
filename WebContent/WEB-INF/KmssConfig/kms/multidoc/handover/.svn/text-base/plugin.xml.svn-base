@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../../plugin.xsd ">
+	<!-- 文档权限 -->
+	<extension
+		point="com.landray.kmss.sys.handover.doc.auth">
+		<item
+			name="config">
+			<param
+				name="module"
+				value="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge" />
+			<param 
+				name="messageKey" 
+				value="kms-multidoc:title.kms.multidoc"/>
+			<param 
+				name="provider" 
+				value="com.landray.kmss.sys.handover.support.config.auth.DocAuthProvider"/>
+			<param 
+				name="subSql" 
+				value="and fd_doc_id in (select distinct fd_fk_id from kms_multidoc_knowledge)"/>
+			<param 
+				name="order" 
+				value="3"/>
+		</item>
+	</extension>
+</plugin>

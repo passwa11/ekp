@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		name="/sys/modeling/main/mobile/modelingAppMainMobile.do"
+		class="com.landray.kmss.sys.modeling.main.mobile.actions.ModelingAppMainMobileAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+                <entry key="default" value="/sys/modeling/main/mobile/homePage/default.jsp" />
+                <entry key="list" value="/sys/modeling/main/mobile/homePage/list.jsp" />
+                <entry key="mportal" value="/sys/modeling/main/mobile/homePage/mportal.jsp" />
+                <entry key="mportalList" value="/sys/modeling/main/mobile/homePage/mportalList.jsp" />
+				<entry key="custom" value="/sys/modeling/main/mobile/homePage/custom.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean
+		name="/sys/modeling/main/mobile/modelingAppMainMobileListView.do"
+		class="com.landray.kmss.sys.modeling.main.mobile.actions.ModelingAppMainMobileListViewAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+                <entry key="listViewIndex" value="/sys/modeling/main/mobile/listView/index.jsp" />
+			</map>
+		</property>
+	</bean>
+	<!-- 新版移动列表视图运行时 -->
+	<bean
+			name="/sys/modeling/main/mobile/modelingAppMobileCollectionView.do"
+			class="com.landray.kmss.sys.modeling.main.views.mobile.actions.ModelingAppMobileCollectionViewAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry key="listViewIndex" value="/sys/modeling/main/mobile/listView/index.jsp" />
+				<entry key="data" value="/sys/modeling/main/mobile/listView/data.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- 用户进入查看视图入口 -->
+	<bean
+		name="/sys/modeling/main/mobile/modelingAppMainMobileView.do"  
+        class="com.landray.kmss.sys.modeling.main.mobile.actions.ModelingAppMainMobileViewAction" 
+        parent="KmssBaseAction" 
+        lazy-init="true">
+    </bean>
+    
+    <!-- 树图 -->
+    <bean
+		name="/sys/modeling/main/mobile/ModelingAppTreeMobile.do"
+		class="com.landray.kmss.sys.modeling.main.mobile.actions.ModelingAppTreeMobileAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<!-- 日历视图 -->
+	<bean
+			name="/sys/modeling/main/mobile/calendar.do"
+			class="com.landray.kmss.sys.modeling.main.views.mobile.actions.ModelingCalendarMobileAction"
+			lazy-init="true"
+			parent="KmssBaseAction">
+	</bean>
+</beans>

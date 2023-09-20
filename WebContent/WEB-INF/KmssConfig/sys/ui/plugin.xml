@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+        xmlns="http://www.example.org/plugin-config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+    <extension-point id="com.landray.kmss.sys.ui.compressExecutor">
+        <item name="executor">
+            <param name="unid"
+                   required="true"
+                   kind="unid">
+                <description>唯一标识</description>
+            </param>
+            <param name="bean"
+                   basedOn="com.landray.kmss.sys.ui.service.ISysUiCompressExecutor"
+                   required="true"
+                   kind="spring">
+                <description>压缩合并js执行接口的具体实现类</description>
+            </param>
+            <description>js合并压缩扩展点，在门户维护参数>参数配置中开启压缩合并js时执行</description>
+        </item>
+        <description>js合并压缩执行配置</description>
+    </extension-point>
+
+    <extension-point id="com.landray.kmss.sys.ui.compress">
+        <item name="js-pkg">
+            <!--TODO 此扩展点配置项需优化，支持指定是否混淆压缩还是只压缩，支持指定到具体文件等-->
+            <param name="name" required="true" kind="string">
+                <description>任务名</description>
+            </param>
+            <param name="srcFile" required="true" kind="string">
+                <description>需要压缩的文件目录或文件</description>
+            </param>
+            <param name="munge" required="false" kind="boolean">
+                <description>是否混淆，默认不混淆</description>
+            </param>
+            <description>js压缩任务配置</description>
+        </item>
+        <!--TODO 参照移动端压缩逻辑，这里后续可以扩展定义css-pkg等其它文件类型静态资源的压缩-->
+        <description>文件压缩配置</description>
+    </extension-point>
+    <extension point="com.landray.kmss.sys.config.design">
+        <item name="xml">
+            <param name="namespace" value="http://www.landray.com.cn/schema/lui"/>
+            <param name="handler" value="com.landray.kmss.sys.ui.xml.LuiNamespaceHandler"/>
+        </item>
+    </extension>
+    <extension
+            point="com.landray.kmss.sys.admin.commontools">
+        <item
+                name="tools">
+            <param
+                    name="name"
+                    value="{sys-ui:ui.tools.statictool}"/>
+            <param
+                    name="path"
+                    value="/sys/ui/tools.jsp"/>
+            <param
+                    name="description"
+                    value="{sys-ui:ui.tools.statictool.desc}"/>
+            <param
+                    name="icon"
+                    value="profile_tool_part"/>
+        </item>
+    </extension>
+    <!-- 参数配置统一管理 -->
+    <extension point="com.landray.kmss.sys.admin.transfer">
+        <item name="config">
+            <param name="unid"
+                   value="com.landray.kmss.sys.ui.model.SysUiConfig"/>
+            <param name="name"
+                   value="{sys-ui:sys.ui.config.transfer.name}"/>
+            <param name="path"
+                   value="/sys/ui/"/>
+            <param name="check"
+                   value="com.landray.kmss.sys.ui.transfer.SysUiConfigChecker"/>
+            <param name="upgrade"
+                   value="com.landray.kmss.sys.ui.transfer.SysUiConfigTask"/>
+            <param name="description"
+                   value="{sys-ui:sys.ui.config.transfer.description}"/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.sys.cluster">
+        <item name="messageReceiver">
+            <param name="service" value="resourceCacheListener"/>
+            <param name="type" value="resourceCacheType"/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.sys.config.admin.do">
+        <item name="config">
+            <param name="jsp" value="/sys/ui/config.jsp"/>
+            <param name="type" value="application"/>
+            <param name="order" value="205"/>
+        </item>
+    </extension>
+    <!-- 云商城门户服务 -->
+    <extension point="com.landray.kmss.third.mall.portal">
+        <!--登录页(login)，主题包(theme)，部件呈现(render)，部件外观(panel)，页眉(header)，页脚(footer)，页面模板(template)-->
+        <item name="portalItem">
+            <param name="fdKey" value="theme"/>
+            <param name="parser" value="sysUiExtendService"/>
+        </item>
+        <item name="portalItem">
+            <param name="fdKey" value="render"/>
+            <param name="parser" value="sysUiComponentService"/>
+        </item>
+        <item name="portalItem">
+            <param name="fdKey" value="panel"/>
+            <param name="parser" value="sysUiComponentService"/>
+        </item>
+        <item name="portalItem">
+            <param name="fdKey" value="header"/>
+            <param name="parser" value="sysUiComponentService"/>
+        </item>
+        <item name="portalItem">
+            <param name="fdKey" value="footer"/>
+            <param name="parser" value="sysUiComponentService"/>
+        </item>
+        <item name="portalItem">
+            <param name="fdKey" value="template"/>
+            <param name="parser" value="sysUiComponentService"/>
+        </item>
+    </extension>
+    <!--系统启动时进行静态资源文件压缩-->
+    <extension point="com.landray.kmss.sys.config.loader">
+        <item name="framework">
+            <param name="name" value="pcCompress"/>
+            <param name="loader" value="com.landray.kmss.sys.ui.loader.SysUiCompressLoader"/>
+            <param name="order" value="100"/>
+        </item>
+    </extension>
+    <!-- admin.do PC端压缩静态资源配置 -->
+    <extension point="com.landray.kmss.sys.config.admin.do">
+        <item name="config">
+            <param name="properties" value="/WEB-INF/KmssConfig/sys/ui/default.properties"/>
+            <param name="jsp" value="/sys/ui/adminConfig/config.jsp"/>
+            <param name="type" value="application"/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.sys.ui.compress" model="com.landray.kmss.sys.ui.model.SysUiConfig">
+        <!--PC端压缩js扩展点实现-->
+        <item name="js-pkg">
+            <param name="name" value="compress_resource_js"/>
+            <param name="srcFile" value="/resource/js"/>
+            <param name="munge" value="true"/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.sys.cluster">
+        <item name="messageReceiver">
+            <param name="type" value="com.landray.kmss.sys.ui.service.spring.message.SysUiMessage"/>
+            <param name="service" value="sysUiMessageReceiver"/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.sys.ui.compressExecutor"
+               model="com.landray.kmss.sys.ui.service.ISysUiCompressExecutor">
+        <item name="executor">
+            <param name="unid" value="sysUiCompressExecutor" />
+            <param name="bean" value="sysUiCompressExecutor"/>
+        </item>
+    </extension>
+    <extension point="com.landray.kmss.sys.cluster">
+        <item name="messageReceiver">
+            <param name="type" value="com.landray.kmss.sys.ui.service.spring.message.SysUiCompressMessage"/>
+            <param name="service" value="sysUiCompressMessageReceiver"/>
+        </item>
+    </extension>
+
+    <extension
+            point="com.landray.kmss.sys.cache.filter.webcontentcache">
+        <item name="provider">
+            <param name="bean" value="simpleJspCache"/>
+        </item>
+    </extension>
+
+    <!-- 默认不需要处理权限校验的请求 -->
+    <extension point="com.landray.kmss.light.request">
+        <!-- 前端多语言 -->
+        <item name="config">
+            <param name="uri" value="/sys/ui/js/lang/lang.jsp" />
+        </item>
+    </extension>
+</plugin>

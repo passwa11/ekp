@@ -1,0 +1,67 @@
+var test = render.parent;
+var lang = test.getModelingLang();
+var testSource = test.source;
+var config = testSource.config;
+var datas = config.datas || {};
+var listOperations = [];//业务操作
+if(datas && datas.length > 0){
+	listOperations = datas[0].listOperations || [];//业务操作
+}
+{$
+	<div class="model-body-wrap">
+       <div class="model-body-content">
+         <div class="model-body-content-desc" onclick="returnListPage('mobile')">
+         	<i></i>
+			<p>{%lang['sys.profile.modeling.homePage.back']%}</p>
+         </div>
+         <!-- 这里放入你的组件 starts -->
+         <div class="model-body-content-wrap" style="overflow:auto">
+         	<div class="model-body-content-phone check-phone">
+              <div class="model-body-content-phone-wrap">
+                <div class="model-body-content-phone-view">
+                  <div class="model-body-content-phone-bottom">
+                    <div class="model-phone-opt finish" data-lui-position='fdOperation'>
+                      <div class="model-phone-opt-flag">{%lang['modelingAppListview.listOperation']%}</div>
+                      <div class="model-phone-opt-wrap clearfix">
+                      $}
+                      var listOperationsLen = listOperations.length;
+						for(var i=0; i<listOperationsLen; i++){
+							var listOperation = listOperations[i] || {};
+							var index = i;
+							var temp = i+1;
+							var className = "first-item";
+							if(i != 0){
+								className = "";
+							}
+							if(listOperation.name){
+							{$
+								 <div class="model-phone-opt-item col-{%listOperationsLen%} {%className%}" data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left")'>
+		                          <p>{%listOperation.name%}</p>
+		                        </div>
+							$}
+							}else{
+							{$
+								<div class="model-phone-opt-item col-{%listOperationsLen%} {%className%}" data-lui-position='fdOperation-{%index%}' onclick='switchSelectPosition(this,"left")'>
+		                          <p>{%lang['listview.action.item']%}{%temp%}</p>
+		                        </div>
+							$}
+							}
+						}
+						if(listOperationsLen<=0){
+							{$
+								<div class="model-phone-opt-item col-1 no-item first-item" data-lui-position='fdOperation-1'>
+		                          <p>{%lang['modelingAppListview.listOperation']%}</p>
+		                        </div>
+							$}		
+						}
+						{$
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+         </div>
+       </div>
+    </div>
+$}

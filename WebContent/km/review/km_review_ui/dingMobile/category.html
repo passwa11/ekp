@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流程管理</title>
+    <link rel="stylesheet" href="./css/lib/common.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/lib/swiper.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background: white;
+            background:#f7f7f8;
+        }
+        .ld-review-category {
+            height:100%;
+        }
+        /* checkbox */
+        .ld-review-popup-checkbox-item {
+            border: none;
+            float: right;
+            margin-left: 20px;
+        }
+
+        .ld-review-popup-checkbox-item .checkbox-label {
+            padding-left: 15px;
+        }
+
+        .ld-review-popup-checkbox-item input[type="checkbox"]+span:before {
+            left: -32px;
+        }
+
+        /* radio */
+
+        .ld-review-popup-radio-item input[type="radio"] {
+            opacity: 0;
+        }
+
+        .ld-review-popup-radio-item input[type="radio"]+span {
+            position: relative;
+        }
+
+        .ld-review-popup-radio-item input[type="radio"]+span:before {
+            content: '';
+            position: absolute;
+            height: 14px;
+            width: 14px;
+            border: 1px solid rgba(17, 31, 44, 0.24);
+            background: transparent;
+            z-index: 8;
+            box-sizing: border-box;
+            border-radius: 100%;
+            left: -22px;
+            top: 3px;
+        }
+
+        .ld-review-popup-radio-item input[type="radio"]:checked+span:before {
+            border: 4px solid #0089FF;
+        }
+
+        .ld-review-popup-radio-item .radio-label {
+            padding-left: 4px;
+        }
+
+        .ld-review-popup-radio-item input[type="radio"]+span:before {
+            left: -22px;
+        }
+
+        
+        /* 搜索开始 */
+        .ld-review-list-top{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 16px;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+        .ld-review-list-search{
+            background:rgba(17,31,44,0.08);
+            border-radius: 15px;
+            height:36px;
+            flex:1;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0 16px;
+        }
+        .ld-review-list-search i {
+            height:16px;
+            width:16px;
+            background: url(./images/icon-search@2x.png) no-repeat center center;
+            background-size: contain;
+            margin-right: 10px;
+        }
+        .ld-review-list-search input {
+            border: none;
+            outline: none;
+            line-height: 36px;
+            background: transparent;
+            width:100%;
+        }
+        .ld-review-list-top-cancel{
+            width:0;
+            overflow: hidden;
+            text-align: center;
+            display: none;
+        }
+        .ld-review-list-top-cancel.show {
+            width:40px;
+            text-align: left;
+            margin-left: 10px;
+            display: inline-block;
+        }
+        /* 搜索结束 */
+        /* footer */
+        .ld-review-modal-screen-footer{
+            position: fixed;
+            bottom: 0;
+            height:75px;
+            width:100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 25px;
+            box-sizing: border-box;
+            box-shadow: 0 -2px 8px 0 rgba(173,173,173,0.50);
+            align-items: center;
+            background:white;
+            display: flex;
+        }
+        .ld-review-modal-screen-footer div{
+            height:52px;
+            line-height: 52px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 17px;
+            width:180px;
+        }
+        .ld-review-modal-screen-footer div.reset {
+            margin-right:10px;
+            border: 1px solid #e8eaeb;
+            color: rgba(17,31,44,0.56);
+        }
+        .ld-review-modal-screen-footer div.confirm{
+            background: #0089ff;
+            color: #fff;
+        }
+        /* title */
+        .ld-review-category-title{
+            height:40px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background:#f2f2f6;
+            padding: 0 15px;
+        }
+        .ld-review-category-title span {
+            color:#2a304a;
+            padding-right: 15px;
+        }
+        /* content */
+        .ld-review-category-mian{
+            height: calc( 100% - 132px);
+        }
+        .ld-review-category-content {
+            height:calc( 100% - 40px);
+            overflow: auto;
+        }
+        /* left */
+        .ld-review-category-content-left{
+            width:45%;
+            height:100%;
+            border-right:1px solid #eee;
+        }
+        .ld-review-category .ld-review-popup-radio-item {
+            display: block;
+            height:48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-left:15px;
+        }
+        .ld-review-category .ld-review-popup-radio-item .radio-label {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center
+        }
+        .ld-review-category .ld-review-popup-radio-item .getMore{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width:45px;
+            height:100%;
+        }
+        .ld-review-category .ld-review-popup-radio-item i {
+            height: 10px;
+            width: 10px;
+            left: 20px;
+            top: 14px;
+            transform: rotate(225deg);
+            border-bottom: 1px solid #111f2c;
+            border-left: 1px solid #111f2c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ld-review-category">
+        <div class="ld-review-list-top">
+            <div class="ld-review-list-search">
+                <i></i>
+                <input type="text" class="searchInp" placeholder="请输入搜索内容">
+            </div>
+            <span class="ld-review-list-top-cancel">取消</span>
+        </div>
+        <!-- 分类主体 -->
+        <div class="ld-review-category-mian">
+            <div class="ld-review-category-title">
+                <span class="firstLevel">全部分类</span>
+            </div> 
+            <div class="ld-review-category-content">
+                <div class="ld-review-category-content-left">
+                    <div class="ld-review-popup-option-list">
+                        <div class="ld-review-popup-radio-item">
+                            <label class="radio-label">
+                                <input name="radio" type="radio">
+                                <span>行政类</span>
+                            </label>
+                            <div class="getMore">
+                                <i></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ld-review-category-content-right"></div>
+            </div>
+        </div>
+        <!-- footer -->
+        <div class="ld-review-modal-screen-footer">
+            <div class="reset" onClick="reset()">重置</div>
+            <div class="confirm" onClick="window.location.href='./waitToApproval.html'">确定</div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="./js/jquery.min.js"></script>
+<script>
+    // search
+    $("input.searchInp").focus(function(){
+        $('.ld-review-list-top-cancel').addClass('show')
+    })
+    $("input.searchInp").blur(function(){
+        $('.ld-review-list-top-cancel').removeClass('show')
+    });
+    function reset(){
+        $('input[type=radio]:checked').attr("checked", false);
+    }
+</script>

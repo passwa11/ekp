@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root 
+    xmlns:m="http://www.landray.com.cn/schema/mportlet" 
+    xmlns="http://www.landray.com.cn/schema/lui" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.landray.com.cn/schema/mportlet 
+	../../../sys/mobile/mportlet.xsd
+		http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd">
+	
+	<m:mportlet 
+		id="sys.lbpmperson.list.mobile"
+		name="{sys-lbpmperson:module.lbpm.person.mportlet}"
+		module= "{sys-lbpmperson:module.sys.lbpmperson}"
+		description="{sys-lbpmperson:module.lbpm.person.mportlet}"
+		moduleUrl = "/sys/lbpmperson/mobile/index.jsp?key=!{key}"
+		jsUrl="/sys/lbpmperson/mobile/resource/js/mportal/lbpmPersonPortlet_list.js?rowsize=!{rowsize}&amp;key=!{key}">
+		<m:vars>
+			<var name="{portlet.rowsize}" key="rowsize" kind="rowsize" default="5"/>
+			<var name="{sys-lbpmperson:lbpmperson.mobile.type}" key="key" kind="enumValue" default="listCreator">
+		    	 {  "values":[{ "text":"{sys-lbpmperson:lbpmperson.submitprocess}", "value":"listCreator"},
+                              { "text":"{sys-lbpmperson:lbpmperson.approvaling}", "value":"listApproval"},
+                              { "text":"{sys-lbpmperson:lbpmperson.approvaled}", "value":"listApproved"},
+                              { "text":"{sys-lbpmperson:lbpmperson.myctracked}", "value":"listTrack"},
+                              { "text":"{sys-lbpmperson:lbpmperson.processdaft}", "value":"listDraft"},
+                              { "text":"{sys-lbpmperson:lbpmperson.abandon}", "value":"listAbandon"}],
+                   "showType":"radio"
+                  }
+		    </var>
+		</m:vars>
+	</m:mportlet>
+	
+</root>	

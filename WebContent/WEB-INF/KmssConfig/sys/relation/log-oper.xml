@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<log-oper>
+	<logset>
+
+		<oper id="sysRelationMainOperLog" desc="" extends="BaseOperLog"
+			model="com.landray.kmss.sys.relation.model.SysRelationMain" action="/sys/relation/sys_relation_main/sysRelationMain.do">
+			<!-- 阅读页面查看关联 -->
+			<query method="preview" logPoint="Base_UrlParam;preview"
+				messageKey="button.list" />
+			<!-- 阅读页面修改关联 -->
+			<query method="updateRelation" logPoint="Service_Update"
+				messageKey="button.update" />
+		</oper>
+
+		<!-- 静态关联总览 -->
+		<oper id="sysRelationStaticNewOperLog" extends="BaseOperLog"
+			action="/sys/relation/sys_relation_main/sysRelationOverView.do"
+			model="com.landray.kmss.sys.relation.model.SysRelationStaticNew">
+			<query method="listOverView" logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="button.list" />
+		</oper>
+
+
+		<!--权限扩散日志 -->
+		<oper id="sysRelationDocOperLog" extends="BaseOperLog"
+			action="/sys/relation/relationDoc.do" model="com.landray.kmss.sys.relation.model.SysRelationDocLog">
+			<query method="docLogList" logPoint="Base_UrlParam;docLogList"
+				messageKey="button.list" />
+		</oper>
+
+		<!-- 外部关联模块 -->
+		<oper id="sysRelationForeignModuleOperLog" extends="BaseOperLog"
+			action="/sys/relation/sys_relation_foreign_module/sysRelationForeignModule.do"
+			model="com.landray.kmss.sys.relation.model.SysRelationForeignModule">
+			<query method="listRelative" logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="button.list" />
+		</oper>
+
+	</logset>
+</log-oper>

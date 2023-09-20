@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.signature.model.KmSignatureDocumentSignature"
+		table="km_signature_doc_signature">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+		<!-- 自动编号 -->
+		<property
+			name="fdDocumentSignatureId"
+			column="fd_signature_document_id"
+			update="true"
+			insert="true"
+			length="10"/>
+		<!-- 此印章对应的文档编号 -->
+		<property
+			name="fdRecordId"
+			column="fd_record_id"
+			update="true"
+			insert="true"
+			length="36"
+			not-null="false" />
+		<!-- 此印章对应的字段(或区域名称) -->
+		<property
+			name="fdFieldName"
+			column="fd_field_name"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+		<!-- 此印章对应的印章信息(即当前印章的加密图片信息) -->
+		<property
+			name="fdFieldValue"
+			column="fd_field_value"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 用户名称 -->
+		<property
+			name="fdUserName"
+			column="fd_user_name"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+		<!-- 印章时间 -->
+		<property
+			name="fdDateTime"
+			column="fd_date_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<!-- 印章用户IP地址 -->
+		<property
+			name="fdHostName"
+			column="fd_host_name"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+
+	</class>
+</hibernate-mapping>

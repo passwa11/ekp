@@ -1,0 +1,51 @@
+<customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui" onLoad="OnWPSWorkTabLoad" >
+  <ribbon startFromScratch="false">
+    <tabs>
+      <tab id="WPSWorkExtTab" label="OA助手" getVisible="OnGetVisible">	<!-- OA菜单开启显隐处理-->
+        <group id="OAEntryGroup" label="OA常用功能">
+          <button id="btnSaveToServer" label="保存到OA" onAction="OnAction" 
+              getEnabled="OnGetEnabled" getImage="GetImage" size="large"/>
+<!--       项目定制  注释
+    <button id="btnSaveAsFile" label="保存本地" getLabel="OnGetLabel"  onAction="OnAction"  
+              getEnabled="OnGetEnabled" getVisible="OnGetVisible" getImage="GetImage" size="large" /> -->
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+  
+   <commands>
+        <!-- idMso支持getEnabled和onAction，不支持visible属性和事件-->
+        <!-- 文档复制和剪切控制-->
+        <command idMso="Copy" getEnabled="OnGetEnabled" />
+        <command idMso="Cut" getEnabled="OnGetEnabled" />
+        <!-- 文档保存和另存控制-->
+        <command idMso="FileSave" getEnabled="OnGetEnabled" onAction="OnAction"/>
+        <command idMso="SaveAll" getEnabled="OnGetEnabled" />
+        <command idMso="FileSaveAsMenu" getEnabled="OnGetEnabled" onAction="OnAction"/>
+        <command idMso="FileSaveAs" getEnabled="OnGetEnabled" onAction="OnAction"/>
+        <command idMso="FileSaveAsPicture" getEnabled="OnGetEnabled" />
+        <command idMso="SaveAsPicture" getEnabled="OnGetEnabled" />
+        <command idMso="FileMenuSendMail" getEnabled="OnGetEnabled" />
+        <!-- 输出PDF控制-->
+        <command idMso="SaveAsPDF" getEnabled="OnGetEnabled"/>
+        <command idMso="FileSaveAsPDF" getEnabled="OnGetEnabled"/>
+        <command idMso="ExportToPDF" getEnabled="OnGetEnabled"/>
+        <command idMso="FileSaveAsPdfOrXps" getEnabled="OnGetEnabled"/>
+        <!-- 输出OFD控制-->
+        <command idMso="SaveAsOfd" getEnabled="OnGetEnabled"/>
+        <command idMso="FileSaveAsOfd" getEnabled="OnGetEnabled"/>
+        <!--文档打印控制-->
+        <command idMso="FilePrint" getEnabled="OnGetEnabled"/>
+        <command idMso="FilePrintMenu" getEnabled="OnGetEnabled"/>
+        <command idMso="FilePrintPreview" getEnabled="OnGetEnabled"/>
+        <!--文档修订控制-->
+        <command idMso="ReviewTrackChangesMenu" getEnabled="OnGetEnabled"/>
+        <command idMso="ReviewRejectChangeMenu" getEnabled="OnGetEnabled"/>
+        <command idMso="ReviewAcceptChangeMenu" getEnabled="OnGetEnabled"/>
+        <!--文档新建控制-->
+        <command idMso="FileNewMenu" getEnabled="OnGetEnabled"/>
+        <command idMso="FileNew" getEnabled="OnGetEnabled"/>
+        <command idMso="WindowNew" getEnabled="OnGetEnabled"/>
+        <command idMso="FileNewBlankDocument" getEnabled="OnGetEnabled"/>
+    </commands>
+</customUI>

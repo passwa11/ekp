@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+
+	<bean name="/sys/authentication/verify/sysAuthenVerify.do"
+		class="com.landray.kmss.sys.authentication.identity.actions.SysAuthenVerifyAction"
+		lazy-init="true" parent="KmssBaseAction">
+		<property name="formType"
+			value="com.landray.kmss.sys.authentication.identity.forms.SysAuthenVerifyForm" />
+		<property name="forwards">
+			<map>
+				<entry key="edit"
+					value="/sys/authentication/identity/verify/sysAuthenVerify_edit.jsp" />
+				<entry key="passEdit"
+					value="/sys/authentication/identity/verify/sysAuthenVerifyPass_edit.jsp" />
+				<entry key="phoneEdit"
+					value="/sys/authentication/identity/verify/phone_edit.jsp" />
+				<entry key="phoneAgainEdit"
+					value="/sys/authentication/identity/verify/phoneAgain_edit.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean name="/sys/authentication/log/sysAuthenValidateLog.do"
+		class="com.landray.kmss.sys.authentication.identity.actions.SysAuthenValidateLogAction"
+		lazy-init="true" parent="KmssBaseAction">
+		<property name="formType"
+			value="com.landray.kmss.sys.authentication.identity.forms.SysAuthenValidateLogForm" />
+		<property name="forwards">
+			<map>
+				<entry key="data"
+					value="/sys/authentication/identity/log/sysAuthenValidateLog_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean name="/sys/authentication/indentity/sysValidationCode.do"
+		class="com.landray.kmss.sys.authentication.identity.actions.SysValidationCodeAction"
+		lazy-init="true" parent="KmssBaseAction">
+	</bean>
+	
+	<bean name="/sys/authentication/indentity/sysIdentityValidate.do"
+		class="com.landray.kmss.sys.authentication.identity.actions.SysIdentityValidateAction"
+		lazy-init="true" parent="KmssBaseAction">
+	</bean>
+
+
+</beans>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="ticRestCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.rest.connector.dao.hibernate.TicRestCategoryDaoImp">
+		<property 
+            name="modelName">
+            <value>com.landray.kmss.tic.rest.connector.model.TicRestCategory</value>
+        </property>
+	</bean>
+	<bean
+		id="ticRestCategoryTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.tic.rest.connector.service.spring.TicRestCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticRestCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticRestCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticRestCategoryTarget" />
+		</property>
+	</bean>
+    <bean
+		id="ticRestCategoryTreeService"
+		class="com.landray.kmss.tic.rest.connector.service.spring.TicRestCategoryTreeServiceImp">
+		<property name="ticRestCategoryService">
+			<ref bean="ticRestCategoryService" />
+		</property>
+	</bean>
+
+	<bean id="ticRestSettingDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.rest.connector.dao.hibernate.TicRestSettingDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.rest.connector.model.TicRestSetting" />
+	</bean>
+	<bean id="ticRestSettingTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.rest.connector.service.spring.TicRestSettingServiceImp">
+		<property name="baseDao">
+			<ref bean="ticRestSettingDao" />
+		</property>
+	</bean>
+	<bean id="ticRestSettingService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticRestSettingTarget" />
+		</property>
+	</bean>
+	
+	<bean id="ticRestAuthDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.rest.connector.dao.hibernate.TicRestAuthDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.rest.connector.model.TicRestAuth" />
+	</bean>
+	<bean id="ticRestAuthTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.rest.connector.service.spring.TicRestAuthServiceImp">
+		<property name="baseDao">
+			<ref bean="ticRestAuthDao" />
+		</property>
+	</bean>
+	<bean id="ticRestAuthService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticRestAuthTarget" />
+		</property>
+	</bean>
+
+  <!-- soap注册的目录 -->
+    <bean
+		id="ticRestSettCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.rest.connector.dao.hibernate.TicRestSettCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.rest.connector.model.TicRestSettCategory" />
+	</bean>
+	<bean
+		id="ticRestSettCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.rest.connector.service.spring.TicRestSettCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticRestSettCategoryDao" />
+		</property>
+	</bean>
+		
+	<bean id="ticRestSettCategoryTreeService"
+		class="com.landray.kmss.tic.rest.connector.service.spring.TicRestSettCategoryTreeServiceImp">
+		<property name="ticRestSettCategoryService">
+			<ref bean="ticRestSettCategoryService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ticRestSettCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticRestSettCategoryTarget" />
+		</property>
+	</bean>
+
+	<bean id="ticRestMainDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.rest.connector.dao.hibernate.TicRestMainDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.rest.connector.model.TicRestMain" />
+	</bean>
+	<bean id="ticRestMainTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.rest.connector.service.spring.TicRestMainServiceImp">
+		<property name="baseDao">
+			<ref bean="ticRestMainDao" />
+		</property>
+	</bean>
+	<bean id="ticRestMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticRestMainTarget" />
+		</property>
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop
+					key="doTest">PROPAGATION_REQUIRED</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="init*">PROPAGATION_REQUIRED</prop>
+				<prop key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="restDispatcherExecutor"
+		class="com.landray.kmss.tic.rest.executor.RestDispatcherExecutor">
+	</bean>
+  <bean id="ticRestLoadAuthInfoService" class="com.landray.kmss.tic.rest.connector.service.spring.TicRestLoadAuthInfoService"></bean>
+  
+  <bean id="ticRestCookieSettingDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.rest.connector.dao.hibernate.TicRestCookieSettingDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.rest.connector.model.TicRestCookieSetting" />
+	</bean>
+	<bean id="ticRestCookieSettingTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.rest.connector.service.spring.TicRestCookieSettingServiceImp">
+		<property name="baseDao">
+			<ref bean="ticRestCookieSettingDao" />
+		</property>
+	</bean>
+	<bean id="ticRestCookieSettingService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticRestCookieSettingTarget" />
+		</property>
+	</bean>
+	
+	<bean id="ticRestLoadCookieSettingService" class="com.landray.kmss.tic.rest.connector.service.spring.TicRestLoadCookieSettingService"></bean>
+	
+	
+	
+	<bean id="ticRestPrefixReqSettingDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.rest.connector.dao.hibernate.TicRestPrefixReqSettingDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.rest.connector.model.TicRestPrefixReqSetting" />
+	</bean>
+	<bean id="ticRestPrefixReqSettingTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.rest.connector.service.spring.TicRestPrefixReqSettingServiceImp">
+		<property name="baseDao">
+			<ref bean="ticRestPrefixReqSettingDao" />
+		</property>
+	</bean>
+	<bean id="ticRestPrefixReqSettingService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticRestPrefixReqSettingTarget" />
+		</property>
+	</bean>
+	
+	<bean id="ticRestLoadPrefixReqSettingService" class="com.landray.kmss.tic.rest.connector.service.spring.TicRestLoadPrefixReqSettingService"></bean>
+	
+	
+	
+	
+	
+	<!-- 函数查询 -->
+	<bean id="ticRestQueryDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.rest.connector.dao.hibernate.TicRestQueryDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.rest.connector.model.TicRestQuery" />
+	</bean>
+	<bean id="ticRestQueryTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.rest.connector.service.spring.TicRestQueryServiceImp">
+		<property name="baseDao">
+			<ref bean="ticRestQueryDao" />
+		</property>
+	</bean>
+	<bean id="ticRestQueryService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticRestQueryTarget" />
+		</property>
+	</bean>
+	
+			<!-- 获取函数返回json -->
+	<bean id="ticRestMappingFuncXmlService"
+		class="com.landray.kmss.tic.rest.connector.service.spring.TicRestMappingFuncXmlService">
+	</bean>
+	
+	<bean
+		id="ticRestSyncUniteQuartzService"
+		class="com.landray.kmss.tic.rest.connector.service.spring.TicRestSyncUniteQuartzService">
+	</bean>
+	
+</beans>
+	

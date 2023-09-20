@@ -1,0 +1,191 @@
+
+{
+    "global" : {
+        "modelName" : "com.landray.kmss.hr.ratify.model.HrRatifyTransfer",
+        "messageKey" : "hr-ratify:table.hrRatifyTransfer",
+        "serviceBean" : "hrRatifyTransferService",
+        "displayProperty" : "docSubject",
+        "extendClass": "com.landray.kmss.hr.ratify.model.HrRatifyMain",
+        "discriminatorValue": "com.landray.kmss.hr.ratify.model.HrRatifyTransfer",
+        "table" : "hr_ratify_transfer",
+        "url" : "/hr/ratify/hr_ratify_transfer/hrRatifyTransfer.do?method=view&fdId=${fdId}"
+    },
+    "attrs" : {
+        "fdId" : {
+            "propertyType" : "id",
+            "generator" : {
+                "type" : "assigned"
+            }
+        },
+        "fdTransferDate" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferDate",
+            "type" : "Date",
+            "column" : "fd_transfer_date",
+            "notNull" : "true",
+            "readOnly" : "false",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true"
+        },
+        "fdTransferReason" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferReason",
+            "type" : "String",
+            "column" : "fd_transfer_reason",
+            "notNull" : "false",
+            "readOnly" : "false",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true",
+            "length" : "2000"
+        },
+        "fdTransferLeaveLeaderView" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferLeaveLeaderView",
+            "type" : "String",
+            "column" : "fd_transfer_leave_leader_view",
+            "notNull" : "false",
+            "readOnly" : "false",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true",
+            "length" : "2000"
+        },
+        "fdTransferEnterLeaderView" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferEnterLeaderView",
+            "type" : "String",
+            "column" : "fd_transfer_enter_leader_view",
+            "notNull" : "false",
+            "readOnly" : "false",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true",
+            "length" : "2000"
+        },
+        "fdTransferHrView" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferHrView",
+            "type" : "String",
+            "column" : "fd_transfer_hr_view",
+            "notNull" : "false",
+            "readOnly" : "false",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true",
+            "length" : "2000"
+        },
+        "fdTransferRemark" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferRemark",
+            "type" : "String",
+            "column" : "fd_transfer_remark",
+            "notNull" : "false",
+            "readOnly" : "false",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true",
+            "length" : "2000"
+        },
+        "fdTransferStaff" : {
+            "propertyType" : "model",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferStaff",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column" : "fd_transfer_staff_id",
+            "notNull" : "true",
+            "readOnly" : "false",
+            "dialogJS" : "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_PERSON);",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true"
+        },
+        "fdTransferLeaveDept" : {
+            "propertyType" : "model",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferLeaveDept",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column" : "fd_transfer_leave_dept_id",
+            "notNull" : "true",
+            "readOnly" : "false",
+            "dialogJS" : "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_ORGORDEPT);",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true"
+        },
+        "fdTransferEnterDept" : {
+            "propertyType" : "model",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferEnterDept",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column" : "fd_transfer_enter_dept_id",
+            "notNull" : "true",
+            "readOnly" : "false",
+            "dialogJS" : "Dialog_Address(!{mulSelect}, '!{idField}','!{nameField}', ';',ORG_TYPE_ORGORDEPT);",
+            "validate" : "true",
+            "canDisplay" : "true",
+            "canRelation" : "true"
+        },
+        "fdTransferLeavePosts" : {
+            "propertyType" : "list",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferLeavePosts",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPost",
+            "column" : "fd_leave_id",
+            "table": "hr_ratify_transfer_leave_post",
+            "elementColumn": "fd_post_id",
+            "dialogJS": "Dialog_Address(true, '!{idField}', '!{nameField}', null, ORG_TYPE_POST);"
+        },
+        "fdTransferEnterPosts" : {
+            "propertyType" : "list",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferEnterPosts",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPost",
+            "column" : "fd_enter_id",
+            "table": "hr_ratify_transfer_enter_post",
+            "elementColumn": "fd_post_id",
+            "dialogJS": "Dialog_Address(true, '!{idField}', '!{nameField}', null, ORG_TYPE_POST);"
+        },
+        "fdTransferOldLevel":         {
+            "propertyType": "model",
+            "messageKey": "hr-ratify:hrRatifyTransfer.fdTransferOldLevel",
+            "type": "com.landray.kmss.sys.organization.model.SysOrganizationStaffingLevel",
+            "column": "fd_transfer_old_level_id",
+            "notNull": "false"
+        },
+        "fdTransferNewLevel":         {
+            "propertyType": "model",
+            "messageKey": "hr-ratify:hrRatifyTransfer.fdTransferNewLevel",
+            "type": "com.landray.kmss.sys.organization.model.SysOrganizationStaffingLevel",
+            "column": "fd_transfer_new_level_id",
+            "notNull": "false"
+        },
+        "fdTransferLeaveSalary" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferLeaveSalary",
+            "type" : "Double",
+            "column" : "fd_transfer_leave_salary",
+            "notNull" : "true",
+            "readOnly" : "false",
+            "validate" : "false",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true"
+        },
+        "fdTransferEnterSalary" : {
+            "propertyType" : "simple",
+            "messageKey" : "hr-ratify:hrRatifyTransfer.fdTransferEnterSalary",
+            "type" : "Double",
+            "column" : "fd_transfer_enter_salary",
+            "notNull" : "true",
+            "readOnly" : "false",
+            "validate" : "false",
+            "canDisplay" : "true",
+            "canRelation" : "true",
+            "canSearch" : "true"
+        }
+    }
+}

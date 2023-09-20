@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="sysFormMassDataDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.sys.xform.base.dao.controls.massdata.hibernate.SysFormMassDataDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.base.model.controls.massdata.SysFormMassData" />
+	</bean>
+
+	<bean
+		id="sysFormMassDataTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.base.service.controls.massdata.spring.SysFormMassDataServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFormMassDataDao" />
+		</property>
+	</bean>
+	<bean id="sysFormMassDataService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormMassDataTarget" />
+		</property>
+	</bean>
+	
+</beans>

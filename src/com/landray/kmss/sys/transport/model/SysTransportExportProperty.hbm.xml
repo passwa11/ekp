@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.transport.model.SysTransportExportProperty"
+		table="sys_transport_export_property">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<property
+			name="fdName"
+			column="fd_name"
+			not-null="false"
+			length="100" />
+		<property
+			name="fdOrder"
+			column="fd_order"
+			not-null="false" />
+		<many-to-one
+			name="config"
+			class="com.landray.kmss.sys.transport.model.SysTransportExportConfig" 
+			column="fd_parent_id"
+			not-null="false" />
+		<bag
+			name="keyList"
+			table="sys_transport_export_key"
+			cascade="all">
+			<key column="fd_parent_id" />
+			<one-to-many class="com.landray.kmss.sys.transport.model.SysTransportExportKey" />
+		</bag>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.km.imeeting.model.KmImeetingMainHistory"
+		table="km_imeeting_main_history">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="fdOptType"
+			column="fd_opt_type"
+			update="true"
+			insert="true"
+			length="36"
+			not-null="false" />
+
+		<property
+			name="fdOptContent"
+			column="fd_opt_content"
+			update="true"
+			insert="true"
+			length="1000000"
+			not-null="false"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true" />
+
+		<property
+			name="fdOptDate"
+			column="fd_opt_date"
+			update="true"
+			insert="true"
+			not-null="false" />
+			
+		<many-to-one
+			name="fdOptPerson"
+			column="fd_opt_person"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+		<many-to-one
+			name="fdMeeting"
+			column="fd_meeting_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+	</class>
+</hibernate-mapping>

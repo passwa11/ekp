@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+			id="sysCirculationOpinionShowByAll"
+			class="com.landray.kmss.sys.xform.base.service.controls.circulationOpinion.SysCirculationOpinionShowByAll" scope="prototype"/>
+	<bean
+			id="sysCirculationOpinionShowByFormal"
+			class="com.landray.kmss.sys.xform.base.service.controls.circulationOpinion.SysCirculationOpinionShowByFormal" scope="prototype"/>
+	<bean
+		id="sysCirculationOpinionShowByHandler"
+		class="com.landray.kmss.sys.xform.base.service.controls.circulationOpinion.SysCirculationOpinionShowByHandler" scope="prototype"/>
+	<bean
+		id="sysCirculationOpinionShowByDeptHandler"
+		class="com.landray.kmss.sys.xform.base.service.controls.circulationOpinion.SysCirculationOpinionShowByDeptHandler" scope="prototype"/>
+	<bean
+		id="sysCirculationOpinionShowByTable"
+		class="com.landray.kmss.sys.xform.base.service.controls.circulationOpinion.SysCirculationOpinionShowByTable" scope="prototype"/>
+	<bean
+			id="sysXformCirculationOpinionDao"
+			parent="KmssExtendDataAreaDao"
+			class="com.landray.kmss.sys.xform.base.dao.controls.circulationOpinion.hibernate.SysXformCirculationOpinionDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.sys.xform.base.model.controls.circulationOpinion.SysXformCirculationOpinion" />
+	</bean>
+
+	<bean
+			id="sysXformCirculationOpinionTarget"
+			parent="KmssExtendDataTarget"
+			class="com.landray.kmss.sys.xform.base.service.controls.circulationOpinion.spring.SysXformCirculationOpinionServiceImp">
+		<property
+				name="baseDao">
+			<ref bean="sysXformCirculationOpinionDao" />
+		</property>
+	</bean>
+	<bean
+			id="sysXformCirculationOpinionService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="sysXformCirculationOpinionTarget" />
+		</property>
+	</bean>
+</beans>

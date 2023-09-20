@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/fssc/k3/" 
+        messageKey="fssc-k3:module.fssc.k3" 
+        defaultValidator="roleValidator(role=ROLE_FSSCK3_DEFAULT)">
+        <roles>ROLE_FSSCK3_DEFAULT;ROLE_FSSCK3_SETTING</roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_FSSCK3_SETTING)"/>
+        <request 
+            path="fssc_k3_switch/fsscK3Switch.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.k3.model.FsscK3Switch" 
+            defaultValidator="roleValidator(role=ROLE_FSSCK3_SETTING)">
+            <query 
+                queryString="method=add|save|saveadd|edit|update" 
+                validator="roleValidator(role=ROLE_FSSCK3_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCK3_SETTING)"/>
+        </request>
+    </module>
+    <profileConfig 
+        key="fssc/k3" 
+        messageKey="{fssc-k3:module.fssc.k3}" 
+        url="/sys/profile/moduleindex.jsp?nav=/fssc/k3/tree.jsp" 
+        icon="km_comminfo" 
+        type="fs"
+        description="{fssc-k3:module.fssc.k3.description}"/>
+</configs>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	<extension-point
+		id="com.landray.kmss.sys.readlog.service.spring">
+		<item
+			name="createLog"
+			singleton="true">
+			<param
+				name="bean"
+				required="true"
+				kind="java"
+				basedOn="com.landray.kmss.sys.readlog.service.spring.ITriggerCreateLog">
+				<description>触发条件功能实现bean。</description>
+			</param>
+			<description>生成阅读记录的触发条件扩展。比如：需要在流程结束后，阅读文档时才生成阅读记录。</description>
+		</item>
+		<description>阅读机制的扩展点配置</description>
+	</extension-point>
+    <extension-point id="com.landray.kmss.sys.readlog.updateReadInfo">
+        <item name="config">
+            <param name="modelName" required="true" kind="unid">
+                <description>需要更新阅读信息的model</description>
+            </param>
+            <param name="service" kind="java"
+                basedOn="com.landray.kmss.sys.readlog.interfaces.ISysReadLogUpdInfoService">
+                <description>更新阅读信息执行实现接口</description>
+            </param>
+            <description>配置更新阅读信息的扩展</description>
+        </item>
+        <description>阅读机制定时任务扩展点</description>
+    </extension-point>
+	<extension
+		point="com.landray.kmss.sys.readlog.service.spring"
+		model="*">
+		<item
+			name="createLog">
+			<param
+				name="bean"
+				value="com.landray.kmss.sys.readlog.service.spring.DefaultTriggerCreateLog" />
+		</item>
+	</extension>
+	
+	<!-- 初始化阅读统计的最后更新时间 -->
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.sys.readlog.service.spring.InitLastUpdateReadCountTimeTransfer" />
+			<param
+				name="name"
+				value="初始化阅读统计任务的最后更新时间" />
+			<param
+				name="path"
+				value="/sys/readlog/" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.sys.readlog.service.spring.InitLastUpdateReadCountTimeTransfer" />
+			<param
+				name="description"
+				value="初始化阅读统计任务的最后更新时间，解决阅读次数统计带来的性能问题 " />
+		</item>
+	</extension>
+	<extension 
+		point="com.landray.kmss.sys.cluster">
+		<item 
+			name="messageReceiver">
+			<param 
+				name="type" 
+				value="com.landray.kmss.sys.readlog.service.spring.LockMessage" />
+			<param 
+				name="service" 
+				value="sysReadLogService" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item 
+			name="css-file">
+			<param 
+				name="name" 
+				value="mui-readlog-index.css" />
+			<param 
+				name="targetFile" 
+				value="/sys/readlog/mobile/css/index.css"/>
+		</item>
+	</extension>
+	<!-- 前后端分离列表字段信息 -->
+    <extension point="com.landray.kmss.sys.list.field.config"
+               model="com.landray.kmss.sys.readlog.model.SysReadLog">
+        <item name="field">
+            <param name="unid" value="listdata"></param>
+            <param name="property" value="fdReader.fdName"></param>
+            <param name="title" value="{sys-readlog:sysReadLog.fdReaderId}"></param>
+            <param name="convertor" value="arrayIndexConvertor"></param>
+            <param name="convertorProps" value="index:0"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="listdata"></param>
+            <param name="property" value="fdReadTime"></param>
+            <param name="title" value="{sys-readlog:sysReadLog.fdReadTime}"></param>
+            <param name="convertor" value="arrayIndexConvertor"></param>
+            <param name="convertorProps" value="index:2"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="listdata"></param>
+            <param name="property" value="fdReader.fdParent.fdName"></param>
+            <param name="title" value="{sys-organization:sysOrgElement.dept}"></param>
+            <param name="convertor" value="arrayIndexConvertor"></param>
+            <param name="convertorProps" value="index:1"></param>
+        </item>
+        <item name="field">
+            <param name="unid" value="listdata"></param>
+            <param name="property" value="readType"></param>
+            <param name="title" value="{sys-readlog:sysReadLog.fdReadType}"></param>
+            <param name="convertor" value="arrayIndexConvertor"></param>
+            <param name="convertorProps" value="index:3"></param>
+        </item>
+    </extension>
+
+	<!-- 复合索引 -->
+	<extension point="com.landray.kmss.sys.db.composite.index">
+		<item name="index">
+			<param name="moduleKey" value="{sys-readlog:readlog.mechanism}"/>
+			<param name="tableName" value="com.landray.kmss.sys.readlog.model.SysReadLog"/>
+			<param name="columnNames" value="fdModelName,fdModelId"/>
+		</item>
+		<item name="index">
+			<param name="moduleKey" value="{sys-readlog:readlog.mechanism}"/>
+			<param name="tableName" value="sys_readprocess_log"/>
+			<param name="columnNames" value="fd_model_name,fd_model_id"/>
+		</item>
+	</extension>
+</plugin>

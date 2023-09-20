@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../../plugin.xsd ">
+	<extension-point
+		id="com.landray.kmss.lbpm.engine.robot">
+		<item
+			name="robot">
+			<param
+				name="unid"
+				required="true"
+				kind="unid">
+				<description>唯一标识，此标识在所有的机器人节点中都是唯一的，强烈建议使用java bean的全限定名。</description>
+			</param>
+			<param
+				name="class"
+				kind="string"
+				default="others">
+				<description>
+					顶级分类标识，可选，默认为others。内置顶级分类及其对应的标识如下：
+					流程引擎类：lbpm，应用模块类：app，集成服务类：integrate，其它扩展类：others。
+				</description>
+			</param>
+			<param
+				name="category"
+				required="true"
+				kind="string">
+				<description>主分类</description>
+			</param>
+			<param
+				name="type"
+				required="true"
+				kind="string">
+				<description>子分类</description>
+			</param>
+			<param
+				name="bean"
+				required="true"
+				kind="spring"
+				basedOn="com.landray.kmss.sys.lbpmservice.node.robotnode.interfaces.RobotNodeService">
+				<description>机器人功能实现bean。请继承com.landray.kmss.sys.lbpmservice.node.robotnode.support.AbstractRobotNodeServiceImp，此类有些默认方法可提供。</description>
+			</param>
+			<param
+				name="url"
+				kind="string"
+				default="/sys/lbpmservice/node/robotnode/attribute_robotnode_default.html">
+				<description>
+					机器人节点前端配置页面的URL，可选。URL为模块路径，比如：审批流程的URL是/km/review/*。
+					在机器人节点前端配置页面必须有个returnValue函数，此为js函数，此函数的返回值是机器人节点配置信息组成的字符串信息。
+				</description>
+			</param>
+			<param
+				name="description"
+				kind="string"
+				default="">
+				<description>
+					机器人节点功能说明
+				</description>
+			</param>
+			<description>机器人节点配置</description>
+		</item>
+		<description>机器人节点的扩展。若需自定义机器人节点，请实现此扩展点。</description>
+	</extension-point>
+	<extension
+		point="com.landray.kmss.lbpm.engine.node">
+		<item
+			name="nodeType" id="138406b2eed4f0391139152483daf593">
+			<param
+				name="type"
+				value="robotNode" />
+			<param
+				name="messageKey"
+				value="sys-lbpmservice:lbpm.nodeType.robotNode" />
+			<param
+				name="defClass"
+				value="com.landray.kmss.sys.lbpmservice.node.robotnode.RobotNode" />
+			<param
+				name="attributesJsp"
+				value="/sys/lbpmservice/node/robotnode/node_attribute.jsp" />	
+			<param
+				name="nodeDescType"
+				value="robotNodeDesc" />
+			<param
+				name="taskBehaviour"
+				value="robotNodeBehaviourService" />																										
+		</item>
+		<item
+			name="nodeDescType" id="1388594ea211a0353df27694d2194ce4">
+			<param
+				name="type"
+				value="robotNodeDesc"/>
+			<param
+				name="chartJs"
+				value="/sys/lbpmservice/node/robotnode/node_flowchart.js"/>
+			<param
+				name="taskDesc"
+				value="robotNodeDesc" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.lbpm.engine.robot"
+		model="*">
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="ReadUseSQL" />
+			<param
+				name="category"
+				value="RDB" />
+			<param
+				name="type"
+				value="{sys-lbpmservice-node-robotnode:lbpmRobotNode.type.readUseSQL}" />
+			<param
+				name="bean"
+				value="robotNodeReadUseSQLService" />
+			<param
+				name="url"
+				value="/sys/lbpmservice/node/robotnode/attribute_robotnode_readusesql.html" />
+			<param 
+				name="class" 
+				value="lbpm" />
+			<param 
+				name="description" 
+				value="{sys-lbpmservice-node-robotnode:FlowChartObject.Lang.Node.robot_RDB_Read_Help}" />
+		</item>
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="WriteUseSQL" />
+			<param
+				name="category"
+				value="RDB" />
+			<param
+				name="type"
+				value="{sys-lbpmservice-node-robotnode:lbpmRobotNode.type.writeUseSQL}" />
+			<param
+				name="bean"
+				value="robotNodeWriteUseSQLService" />
+			<param
+				name="url"
+				value="/sys/lbpmservice/node/robotnode/attribute_robotnode_writeusesql.html" />
+			<param 
+				name="class" 
+				value="lbpm" />
+			<param 
+				name="description" 
+				value="{sys-lbpmservice-node-robotnode:FlowChartObject.Lang.Node.robot_RDB_Write_Help}" />
+		</item>
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="UpdateFormData" />
+			<param
+				name="category"
+				value="{sys-lbpmservice-node-robotnode:lbpmRobotNode.category.form}" />
+			<param
+				name="type"
+				value="{sys-lbpmservice-node-robotnode:lbpmRobotNode.type.updateFormData}" />
+			<param
+				name="bean"
+				value="robotNodeUpdateFormDataService" />
+			<param
+				name="url"
+				value="/sys/lbpmservice/node/robotnode/attribute_robotnode_updateformdata.html" />
+			<param 
+				name="class" 
+				value="lbpm" />
+			<param 
+				name="description" 
+				value="{sys-lbpmservice-node-robotnode:FlowChartObject.Lang.Node.robot_Others_UpdateField_Help}" />
+		</item>
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="RunScript" />
+			<param
+				name="category"
+				value="{sys-lbpmservice-node-robotnode:lbpmRobotNode.category.runScript}" />
+			<param
+				name="type"
+				value="{sys-lbpmservice-node-robotnode:lbpmRobotNode.type.commonRunScript}" />
+			<param
+				name="bean"
+				value="robotNodeRunScriptService" />
+			<param
+				name="url"
+				value="/sys/lbpmservice/node/robotnode/attribute_robotnode_runscript.html" />
+			<param 
+				name="class" 
+				value="lbpm" />
+			<param 
+				name="description" 
+				value="{sys-lbpmservice-node-robotnode:FlowChartObject.Lang.Node.robot_RunScript_Help}" />
+		</item>
+		<item
+			name="robot">
+			<param
+				name="unid"
+				value="SuspendAndWake" />
+			<param
+				name="category"
+				value="{sys-lbpmservice-node-robotnode:lbpmRobotNode.category.lbpm}" />
+			<param
+				name="type"
+				value="{sys-lbpmservice-node-robotnode:lbpmRobotNode.type.lbpm.suspendAndWake}" />
+			<param
+				name="bean"
+				value="robotNodeSuspendAndWakeService" />
+			<param
+				name="url"
+				value="/sys/lbpmservice/node/robotnode/attribute_robotnode_suspendandwake.jsp" />
+			<param 
+				name="class" 
+				value="lbpm" />
+			<param 
+				name="description" 
+				value="{sys-lbpmservice-node-robotnode:FlowChartObject.Lang.Node.robot_Lbpm_SuspendAndWake_Help}" />
+		</item>
+	</extension>
+</plugin>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysCirculationMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.circulation.dao.hibernate.SysCirculationMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.circulation.model.SysCirculationMain" />
+	</bean>
+	<bean
+		id="sysCirculationMainTarget"
+		parent="KmssBaseCoreTarget"
+		class="com.landray.kmss.sys.circulation.service.spring.SysCirculationMainServiceImp">
+		<property name="baseDao">
+			<ref bean="sysCirculationMainDao" />
+		</property>
+		<property name="notifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="sysCirculationOpinionService">
+			<ref bean="sysCirculationOpinionService" />
+		</property>
+		<property name="sysQuartzCoreService">
+			<ref bean="sysQuartzCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="sysCirculationMainService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<ref bean="sysCirculationMainTarget" />
+		</property>
+	</bean>
+	
+	
+	<bean
+		id="sysCirculationOpinionDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.sys.circulation.dao.hibernate.SysCirculationOpinionDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.circulation.model.SysCirculationOpinion" />
+	</bean>
+	<bean
+		id="sysCirculationOpinionTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.circulation.service.spring.SysCirculationOpinionServiceImp">
+		<property name="baseDao">
+			<ref bean="sysCirculationOpinionDao" />
+		</property>
+		<property name="notifyMainCoreService">
+			<ref bean="sysNotifyMainCoreService" />
+		</property>
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		<property name="sysCirculationMainService">
+			<ref bean="sysCirculationMainService" />
+		</property>
+	</bean>
+	<bean
+		id="sysCirculationOpinionService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysCirculationOpinionTarget" />
+		</property>
+	</bean>
+	
+
+	<bean
+		id="sysCirculationCoreService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<bean
+				class="com.landray.kmss.sys.circulation.service.spring.SysCirculationCoreServiceImp">
+				<property name="sysCirculationMainService">
+					<ref bean="sysCirculationMainService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean
+		id="sysCirculationGoalCheckService"
+		class="com.landray.kmss.sys.circulation.service.spring.SysCirculationGoalCheckService">
+		<property name="sysCirculationMainService">
+			<ref bean="sysCirculationMainService" />
+		</property>
+	</bean>
+	<bean id="sysCirculateCheckValidator"
+		class="com.landray.kmss.sys.circulation.service.spring.SysCirculateCheckValidator" >
+		<property name="sysCirculationOpinionService">
+			<ref bean="sysCirculationOpinionService" />
+		</property>
+	</bean>
+
+	<bean id="sysCirculateViewModelValidator"
+		  class="com.landray.kmss.sys.circulation.service.spring.SysCirculateViewModelValidator" >
+	</bean>
+
+	<bean id="sysCirculateOrgScopeService"
+		class="com.landray.kmss.sys.circulation.service.spring.SysCirculateOrgScopeService" >
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+	</bean>	
+	
+	<bean id="sysCirculationOpinionDataService"
+		class="com.landray.kmss.sys.circulation.service.spring.SysCirculationOpinionDataService" >
+		<property name="sysCirculationOpinionService">
+			<ref bean="sysCirculationOpinionService" />
+		</property>
+	</bean>	
+	<bean
+		id="sysCirculationOpinionStyleDefault"
+		class="com.landray.kmss.sys.circulation.service.spring.SysCirculationOpinionStyleDefault" />
+	<bean
+		id="sysCirculationOpinionStyleDept"
+		class="com.landray.kmss.sys.circulation.service.spring.SysCirculationOpinionStyleDept" />
+	<bean
+		id="sysCirculationOpinionStyleTable"
+		class="com.landray.kmss.sys.circulation.service.spring.SysCirculationOpinionStyleTable" />
+	<bean
+		id="sysCirculationMainController"
+	 	class="com.landray.kmss.sys.circulation.rest.controller.SysCirculationMainController"/>
+</beans>

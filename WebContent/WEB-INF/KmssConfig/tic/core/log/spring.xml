@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 日志 -->
+	<bean
+		id="ticCoreLogMainBackupDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.log.dao.hibernate.TicCoreLogMainBackupDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.log.model.TicCoreLogMainBackup" />
+	</bean>
+	<bean
+		id="ticCoreLogMainBackupTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.log.service.spring.TicCoreLogMainBackupServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticCoreLogMainBackupDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticCoreLogMainBackupService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticCoreLogMainBackupTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticCoreLogOptDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.log.dao.hibernate.TicCoreLogOptDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.log.model.TicCoreLogOpt" />
+	</bean>
+	<bean
+		id="ticCoreLogOptTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.log.service.spring.TicCoreLogOptServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticCoreLogOptDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticCoreLogOptService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticCoreLogOptTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticCoreLogMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.log.dao.hibernate.TicCoreLogMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.log.model.TicCoreLogMain" />
+	</bean>
+	<bean
+		id="ticCoreLogMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.log.service.spring.TicCoreLogMainServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticCoreLogMainDao" />
+		</property>
+		<property name="ticCoreLogManageService">
+			<ref bean="ticCoreLogManageService" />
+		</property>
+		<property name="ticCoreLogMainBackupService">
+			<ref bean="ticCoreLogMainBackupService" />
+		</property>
+	</bean>
+	<bean id="ticCoreLogMainService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticCoreLogMainTarget" />
+		</property>
+		
+	</bean>
+
+	<bean
+		id="ticCoreLogManageDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.log.dao.hibernate.TicCoreLogManageDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.log.model.TicCoreLogManage" />
+	</bean>
+	<bean
+		id="ticCoreLogManageTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.log.service.spring.TicCoreLogManageServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticCoreLogManageDao" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ticCoreLogManageService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticCoreLogManageTarget" />
+		</property>
+	</bean>
+	<bean
+		id="ticCoreLogInterface"
+		class="com.landray.kmss.tic.core.log.interfaces.TicCoreLogInterfaceImpl">
+		<property name="ticCoreLogMainService">
+			<ref bean="ticCoreLogMainService" />
+		</property>
+		<property name="ticCoreLogManageService">
+			<ref bean="ticCoreLogManageService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ticCoreLogTypeTreeService"
+		class="com.landray.kmss.tic.core.log.service.bean.TicCoreLogTypeTreeServiceImp">
+	</bean>
+	
+		
+</beans>

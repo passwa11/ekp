@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="fsscK3SwitchDao" 
+        class="com.landray.kmss.fssc.k3.dao.hibernate.FsscK3SwitchDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.fssc.k3.model.FsscK3Switch</value>
+        </property>
+    </bean>
+    <bean 
+        id="fsscK3SwitchTarget" 
+        class="com.landray.kmss.fssc.k3.service.spring.FsscK3SwitchServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="fsscK3SwitchDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="fsscK3SwitchService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="fsscK3SwitchTarget"/>
+        </property>
+    </bean>
+    <bean id="fsscCommonK3Service" class="com.landray.kmss.fssc.k3.service.spring.FsscCommonK3ServiceImp">
+    </bean>
+</beans>

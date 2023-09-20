@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/third/wps/" 
+        messageKey="third-wps:module.third.wps" 
+        defaultValidator="roleValidator(role=ROLE_THIRDWPS_DEFAULT)">
+        <roles>ROLE_THIRDWPS_DEFAULT;ROLE_THIRDWPS_SETTING</roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWPS_SETTING)"/>
+        <request 
+            path="config.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWPS_SETTING)"/>
+        <request 
+            path="third_wps_file_syn/thirdWpsFileSyn.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.wps.model.ThirdWpsFileSyn" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWPS_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWPS_SETTING)"/>
+        </request>
+        <request 
+            path="third_wps_ltpatoken/thirdWpsLtpatoken.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.wps.model.ThirdWpsLtpatoken" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWPS_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWPS_SETTING)"/>
+        </request>
+        <request 
+            path="third_wps_org_record/thirdWpsOrgRecord.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.wps.model.ThirdWpsOrgRecord" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWPS_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWPS_SETTING)"/>
+        </request>
+        <request 
+            path="third_wps_org_element/thirdWpsOrgElement.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.wps.model.ThirdWpsOrgElement" 
+            defaultValidator="roleValidator(role=ROLE_THIRDWPS_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDWPS_SETTING)"/>
+        </request>
+        
+        <request 
+		    path="third_wps_convert/thirdWpsConvert.do*" defaultValidator="roleValidator(role=ROLE_THIRDWPS_DEFAULT)">
+            <query 
+                queryString="method=notifyResult" 
+                validator="true"/>
+        </request>	
+        <request 
+		    path="third_wps_webhook/thirdWpsWebhook.do*" defaultValidator="roleValidator(role=ROLE_THIRDWPS_DEFAULT)">
+            <query 
+                queryString="method=notifyResult" 
+                validator="true"/>
+        </request>	
+        <request 
+		    path="third_wps_webhook/notifyResult.jsp" defaultValidator="true">
+        </request>	
+    </module>
+    
+    <!-- 每天一点10同步组织架构
+	<quartz
+		messageKey="third-wps:thirdWps.quartz.syncOrgStruct2Wps"
+		jobService="thirdWpsOrgElementService"
+		jobMethod="quartzSyncOrgStruct2Wps"
+		cronExpression="0 10 1 * * ?" /> 
+	 -->
+	<!-- 定时从wps云文档下载文件-->
+	<quartz
+		messageKey="third-wps:thirdWps.quartz.syncWpsFile"
+		jobService="thirdWpsFileSynService"
+		cronExpression="0 0/5 * * * ?"
+		jobMethod="syncWpsFile"
+		enable="true"
+		runType="SINGLENODE" 
+		description="third-wps:thirdWps.quartz.syncWpsFile.description"/>
+	  		
+	<!-- 定时更新WPS云文档消息订阅 -->
+	<quartz
+		messageKey="third-wps:thirdWps.quartz.syncWpsWebhook"
+		jobService="thirdWpsWebhookService"
+		cronExpression="0 0 3 * * ?"
+		jobMethod="syncWpsWebhook"
+		enable="true"
+		runType="SINGLENODE" 
+		description="third-wps:thirdWps.quartz.syncWpsWebhook.description"/>
+
+    <quartz
+        messageKey="third-wps:thirdWps.quartz.clearExpiredTokens"
+        jobService="thirdWpsCenterTokenService"
+        jobMethod="clearExpiredTokens"
+        cronExpression="0 0/5 * * * ?"
+        enable="true"
+        runType="SINGLENODE"
+        description="third-wps:thirdWps.quartz.clearExpiredTokens.description" />
+	 	
+    <homePage 
+        messageKey="third-wps:module.third.wps" 
+        urlPrefix="third/wps" 
+        config="/moduleindex_notopic.jsp?nav=/third/wps/tree.jsp"/>
+    <profileConfig 
+        key="third/wps" 
+        messageKey="{third-wps:module.third.wps}" 
+        url="/sys/profile/moduleindex.jsp?nav=/third/wps/tree.jsp" 
+        icon="third_im_rtx" 
+        type="other" 
+        description="{third-wps:module.third.wps.description}"/>
+
+</configs>

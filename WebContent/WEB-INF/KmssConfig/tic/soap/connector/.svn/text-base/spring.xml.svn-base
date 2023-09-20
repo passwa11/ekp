@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="ticSoapMainDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.soap.connector.dao.hibernate.TicSoapMainDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.soap.connector.model.TicSoapMain" />
+	</bean>
+	<bean id="ticSoapMainTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.soap.connector.service.spring.TicSoapMainServiceImp">
+		<property name="baseDao">
+			<ref bean="ticSoapMainDao" />
+		</property>
+	</bean>
+	<bean id="ticSoapMainService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticSoapMainTarget" />
+		</property>
+	</bean>
+
+	<bean id="ticSoapCategoryDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.soap.connector.dao.hibernate.TicSoapCategoryDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.soap.connector.model.TicSoapCategory" />
+	</bean>
+	<bean id="ticSoapCategoryTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.soap.connector.service.spring.TicSoapCategoryServiceImp">
+		<property name="baseDao">
+			<ref bean="ticSoapCategoryDao" />
+		</property>
+	</bean>
+	<bean id="ticSoapCategoryService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticSoapCategoryTarget" />
+		</property>
+	</bean>
+
+	<bean id="ticSoapSettingDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.soap.connector.dao.hibernate.TicSoapSettingDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.soap.connector.model.TicSoapSetting" />
+	</bean>
+	<bean id="ticSoapSettingTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.soap.connector.service.spring.TicSoapSettingServiceImp">
+		<property name="baseDao">
+			<ref bean="ticSoapSettingDao" />
+		</property>
+	</bean>
+	<bean id="ticSoapSettingService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticSoapSettingTarget" />
+		</property>
+	</bean>
+
+	<bean id="ticSoapSettingExtDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.soap.connector.dao.hibernate.TicSoapSettingExtDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.soap.connector.model.TicSoapSettingExt" />
+	</bean>
+	<bean id="ticSoapSettingExtTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.soap.connector.service.spring.TicSoapSettingExtServiceImp">
+		<property name="baseDao">
+			<ref bean="ticSoapSettingExtDao" />
+		</property>
+	</bean>
+	<bean id="ticSoapSettingExtService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticSoapSettingExtTarget" />
+		</property>
+	</bean>
+	<!-- 函数查询 -->
+	<bean id="ticSoapQueryDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.soap.connector.dao.hibernate.TicSoapQueryDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.tic.soap.connector.model.TicSoapQuery" />
+	</bean>
+	<bean id="ticSoapQueryTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.soap.connector.service.spring.TicSoapQueryServiceImp">
+		<property name="baseDao">
+			<ref bean="ticSoapQueryDao" />
+		</property>
+	</bean>
+	<bean id="ticSoapQueryService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticSoapQueryTarget" />
+		</property>
+	</bean>
+
+	<!-- 分类树service -->
+	<bean id="ticSoapCategoryTreeService"
+		class="com.landray.kmss.tic.soap.connector.service.bean.TicSoapCategoryTreeServiceImp">
+		<property name="ticSoapCategoryService">
+			<ref bean="ticSoapCategoryService" />
+		</property>
+	</bean>
+
+	<!-- 通过WSDL地址获取服务 -->
+	<bean id="ticSoapWsdlImpl"
+		class="com.landray.kmss.tic.soap.connector.service.bean.TicSoapWsdlImpl">
+	</bean>
+
+	<!-- 抽取函数 -->
+	<bean id="ticSoapBindFuncImpl"
+		class="com.landray.kmss.tic.soap.connector.service.bean.TicSoapBindFuncImpl">
+		<property name="ticSoapSettingService">
+			<ref bean="ticSoapSettingService" />
+		</property>
+	</bean>
+
+
+	<!-- SOAPUI -->
+	<bean id="ticSoap"
+		class="com.landray.kmss.tic.soap.connector.impl.TicSoapImpl">
+	</bean>
+
+	<!-- EKP方式登录 -->
+	<bean id="TicEkpHeaderType"
+		class="com.landray.kmss.tic.soap.connector.util.header.EkpHeaderTypeImpl">
+	</bean>
+	<!-- SOAPHeader方式登录 -->
+	<bean id="TicSoapHeaderTypeImpl"
+		class="com.landray.kmss.tic.soap.connector.util.header.SoapHeaderTypeImpl">
+	</bean>
+
+	<!-- 加载方法列表bean -->
+	<bean id="ticSoapSelectOptionsBean"
+		class="com.landray.kmss.tic.soap.connector.service.bean.TicSoapSelectOptionsBean"></bean>
+
+	<!-- Soap版本的bean -->
+	<bean id="ticSoapVersionBean"
+		class="com.landray.kmss.tic.soap.connector.service.bean.TicSoapVersionBean">
+	</bean>
+
+	<!-- 清除缓存 -->
+	<bean id="ticSoapCleanCache"
+		class="com.landray.kmss.tic.soap.connector.service.bean.TicSoapCleanCacheBean">
+	</bean>
+
+	<!-- 加载Soap头信息模版 -->
+	<bean id="ticSoapLoadHeaderTemplateBean"
+		class="com.landray.kmss.tic.soap.connector.service.bean.TicSoapLoadHeaderTemplateBean">
+	</bean>
+
+
+	<bean id="ticSoapFindSettingService"
+		class="com.landray.kmss.tic.soap.connector.service.bean.TicSoapFindSettingService">
+		<property name="ticSoapSettCategoryService">
+			<ref bean="ticSoapSettCategoryService" />
+		</property>
+	</bean>
+
+	<!-- 返回模版 -->
+	<bean id="ticSoapInputTemplateBean"
+		class="com.landray.kmss.tic.soap.connector.service.bean.TicSoapInputTemplateBean">
+	</bean>
+	<!-- 请求后返回XML -->
+	<bean id="ticSoapBackXmlBean"
+		class="com.landray.kmss.tic.soap.connector.service.bean.TicSoapBackXmlBean">
+	</bean>
+
+
+	<bean
+		class="com.landray.kmss.tic.soap.connector.util.header.TicSoapEasParamsParser"
+		id="ticSoapEasParamsParser"></bean>
+
+	<!-- eas登录方式 -->
+	<bean
+		class="com.landray.kmss.tic.soap.connector.util.header.TicSoapEasplugin"
+		id="ticSoapEasplugin"></bean>
+
+
+	<!-- provider 相关 -->
+	<bean
+		class="com.landray.kmss.tic.soap.provider.interfaces.impl.TicSoapInfo"
+		id="ticSoapInfo">
+		<property name="ticSoapCategoryService">
+			<ref bean="ticSoapCategoryService" />
+		</property>
+		<property name="ticSoapMainService">
+			<ref bean="ticSoapMainService" />
+		</property>
+	</bean>
+
+	<bean
+		class="com.landray.kmss.tic.soap.provider.interfaces.impl.TicSoapProvider"
+		id="ticSoapProvider">
+		<property name="ticSoap">
+			<ref bean="ticSoap" />
+		</property>
+		<property name="ticSoapMainService">
+			<ref bean="ticSoapMainService" />
+		</property>
+	</bean>
+	
+
+  <!-- soap注册的目录 -->
+    <bean
+		id="ticSoapSettCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.soap.connector.dao.hibernate.TicSoapSettCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.soap.connector.model.TicSoapSettCategory" />
+	</bean>
+	<bean
+		id="ticSoapSettCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.soap.connector.service.spring.TicSoapSettCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticSoapSettCategoryDao" />
+		</property>
+	</bean>
+	
+	
+	<!-- SOAP注册分类树service -->
+	<bean id="ticSoapSettCategoryTreeService"
+		class="com.landray.kmss.tic.soap.connector.service.bean.TicSoapSettCategoryTreeServiceImp">
+		<property name="ticSoapSettCategoryService">
+			<ref bean="ticSoapSettCategoryService" />
+		</property>
+	</bean>
+	
+	
+	<bean
+		id="ticSoapSettCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticSoapSettCategoryTarget" />
+		</property>
+	</bean>
+
+	<!-- k3登录方式 -->
+    <bean
+		class="com.landray.kmss.tic.soap.connector.util.header.TicSoapK3ParamsParser"
+		id="ticSoapK3ParamsParser"></bean>
+		
+	<bean
+		class="com.landray.kmss.tic.soap.connector.util.header.TicSoapK3plugin"
+		id="ticSoapK3plugin"></bean>	
+		
+	<!-- tic适配处理器 -->
+	<bean id="soapDispatcherExecutor"
+		class="com.landray.kmss.tic.soap.executor.SoapDispatcherExecutor"></bean>
+
+</beans>
+	

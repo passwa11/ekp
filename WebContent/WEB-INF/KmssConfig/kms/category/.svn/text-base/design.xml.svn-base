@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/kms/category/" 
+        messageKey="kms-category:module.kms.category" 
+        defaultValidator="roleValidator(role=ROLE_KMSCATEGORY_DEFAULT)">
+        <roles>
+        	ROLE_KMSCATEGORY_DEFAULT;
+        	ROLE_KMSCATEGORY_SETTING;
+        	ROLE_KMSCATEGORY_IMPORT;
+        	ROLE_KMSCATEGORY_EIDTOR;
+        	ROLE_KMSCATEGORY_BACKSTAGE_MANAGER;
+        	ROLE_KMSCATEGORY_BASIC_CONFIGURATION
+        </roles>
+     	<request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_KMSCATEGORY_BACKSTAGE_MANAGER)"/>
+        <!--  
+        <request 
+            path="kms_category_main/sysCategoryMain_tree.jsp" 
+            defaultValidator="roleValidator(role=ROLE_KMSCATEGORY_SETTING)"/> -->
+        <request 
+            path="kmsCategoryConfig.do" 
+            defaultValidator="roleValidator(role=ROLE_KMSCATEGORY_SETTING)"/>
+        <request 
+            path="kms_category_main/categorytree.jsp" 
+            defaultValidator="roleValidator(role=ROLE_KMSCATEGORY_SETTING)"/>
+         <request 
+            path="kms_category_knowledge_repeat/kms_category_knowledge_repeat_list.jsp" 
+            defaultValidator="roleValidator(role=ROLE_KMSCATEGORY_SETTING)"/>
+         <request 
+            path="config_create_view.jsp" 
+            defaultValidator="roleValidator(role=ROLE_KMSCATEGORY_SETTING)"/>
+         <request 
+            path="kmsCategoryMainConfig.do?method=update" 
+            defaultValidator="roleValidator(role=ROLE_KMSCATEGORY_BASIC_CONFIGURATION)"/>
+            
+        <request 
+            path="kms_category_main/kmsCategoryMain.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.kms.category.model.KmsCategoryMain,adminRoleName=ROLE_KMSCATEGORY_EIDTOR">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="sysSimpleCategoryEditorValidator(recid=parentId)"/>
+            <query 
+                queryString="method=view" 
+                validator="sysSimpleCategoryReaderValidator()"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=delete" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=getBigDataCategory|getBigDataTag" 
+                validator="roleValidator(role=ROLE_KMSCATEGORY_DEFAULT)"/>
+        </request>
+        
+        <request 
+            path="kms_category_knowledge_rel/kmsCategoryKnowledgeRel.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.kms.category.model.KmsCategoryKnowledgeRel" 
+            defaultValidator="roleValidator(role=ROLE_KMSCATEGORY_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_KMSCATEGORY_SETTING)"/>
+            <query 
+                queryString="method=data" 
+                validator="roleValidator(role=ROLE_KMSCATEGORY_DEFAULT)"/>
+        </request>
+       
+        <filters 
+            modelName="com.landray.kmss.kms.category.model.KmsCategoryMain">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_KMSCATEGORY_SETTING)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_KMSCATEGORY_SETTING)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+    </module>
+    <module 
+        urlPrefix="/sys/transport/">
+        <request 
+            path="sys_transport_import/SysTransportImport*">
+            <query 
+                queryString="fdModelName=com.landray.kmss.kms.category.model.KmsCategoryMain" 
+                validator="areaRoleValidator(role=ROLE_KMSCATEGORY_IMPORT)|roleValidator(role=ROLE_KMSCATEGORY_SETTING)"/>
+        </request>
+        <request path="sys_transport_import/SysTransportUpload*">
+			<query 
+                queryString="fdModelName=com.landray.kmss.kms.category.model.KmsCategoryMain" 
+                validator="areaRoleValidator(role=ROLE_KMSCATEGORY_IMPORT)|roleValidator(role=ROLE_KMSCATEGORY_SETTING)"/>
+		</request>
+    </module>
+    
+    <!-- 定时计算统一分类分类预览 -->
+	<quartz
+		cronExpression="0 0 4 * * ?"
+		jobService="kmsCategoryPreManagerService"
+		messageKey="kms-category:category.quartz.preview"
+		jobMethod="____previeQuartz" 
+		description="kms-category:category.quartz.preview.description"/>
+		
+    <homePage 
+        messageKey="kms-category:module.kms.category" 
+        urlPrefix="kms/category" 
+        url="/sys/portal/page.jsp#j_start=/kms/category/index.jsp&amp;j_target=_iframe"
+        config="/moduleindex_notopic.jsp?nav=/kms/category/tree.jsp"/>
+     
+    <profileConfig 
+        key="kms/category" 
+        messageKey="{kms-category:module.kms.category}" 
+        url="/sys/profile/moduleindex.jsp?nav=/kms/category/tree.jsp" 
+        icon="ex_cooperCenter" 
+        type="kms" 
+        description="{kms-category:module.kms.category.description}"/>
+</configs>

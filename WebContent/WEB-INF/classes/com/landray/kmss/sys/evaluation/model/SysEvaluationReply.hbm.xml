@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.evaluation.model.SysEvaluationReply"
+		table="sys_evaluation_reply">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="docContent"
+			column="doc_content"
+			update="true"
+			insert="true"
+			length="1000000"
+			not-null="false"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true" />
+
+		<property
+			name="fdReplyTime"
+			column="fd_reply_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+
+		<property
+			name="fdModelId"
+			column="fd_model_id"
+			insert="true"
+			update="true"
+			not-null="false" 
+			length="36"/>
+			
+		<property
+			name="fdModelName"
+			column="fd_model_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100"/>
+
+		<many-to-one
+			name="fdReplyer"
+			column="fd_replyer_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+			
+		<property
+			name="fdParentId"
+			column="fd_parent_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+			
+		<property
+			name="fdHierarchyId"
+			column="fd_hierarchy_id"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1000" />
+		
+		<property
+			name="docPraiseCount"
+			column="doc_praise_count"
+			update="true"
+			insert="true"
+			length="10"
+			not-null="false" />
+		
+		<many-to-one
+			name="fdParentReplyer"
+			column="fd_parent_replyer_id"
+			insert="true"
+			update="true"
+			not-null="false" />
+
+	</class>
+</hibernate-mapping>

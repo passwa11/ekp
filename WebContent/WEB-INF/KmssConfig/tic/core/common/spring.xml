@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean 
+        id="ticCoreFuncBaseDao" 
+        class="com.landray.kmss.tic.core.common.dao.hibernate.TicCoreFuncBaseDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.tic.core.common.model.TicCoreFuncBase</value>
+        </property>
+    </bean>
+    <bean 
+        id="ticCoreFuncBaseTarget" 
+        class="com.landray.kmss.tic.core.common.service.spring.TicCoreFuncBaseServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="ticCoreFuncBaseDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="ticCoreFuncBaseService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="ticCoreFuncBaseTarget"/>
+        </property>
+    </bean>
+    <bean 
+        id="ticCoreBusiCateDao" 
+        class="com.landray.kmss.tic.core.common.dao.hibernate.TicCoreBusiCateDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.tic.core.common.model.TicCoreBusiCate</value>
+        </property>
+    </bean>
+    <bean 
+        id="ticCoreBusiCateTarget" 
+        class="com.landray.kmss.tic.core.common.service.spring.TicCoreBusiCateServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="ticCoreBusiCateDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="ticCoreBusiCateService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="ticCoreBusiCateTarget"/>
+        </property>
+    </bean>
+       <bean
+		id="ticCoreBusiCateTreeService"
+		class="com.landray.kmss.tic.core.common.service.spring.TicCoreBusiCateTreeServiceImp">
+		<property name="ticCoreBusiCateService">
+			<ref bean="ticCoreBusiCateService" />
+		</property>
+	</bean>
+    <bean 
+        id="ticCoreTransSettDao" 
+        class="com.landray.kmss.tic.core.common.dao.hibernate.TicCoreTransSettDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.tic.core.common.model.TicCoreTransSett</value>
+        </property>
+    </bean>
+    <bean 
+        id="ticCoreTransSettTarget" 
+        class="com.landray.kmss.tic.core.common.service.spring.TicCoreTransSettServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="ticCoreTransSettDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="ticCoreTransSettService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="ticCoreTransSettTarget"/>
+        </property>
+    </bean>
+    
+    <bean id="ticCoreFindFunctionService"
+		class="com.landray.kmss.tic.core.common.service.spring.TicCoreFindFunctionService">
+		<property name="ticCoreBusiCateService">
+			<ref bean="ticCoreBusiCateService" />
+		</property>
+		<property name="ticCoreFuncBaseService">
+			<ref bean="ticCoreFuncBaseService" />
+		</property>
+	</bean>
+	
+	    <bean id="ticCoreFindTransSettService"
+		class="com.landray.kmss.tic.core.common.service.spring.TicCoreFindTransSettService">
+		<property name="ticCoreBusiCateService">
+			<ref bean="ticCoreBusiCateService" />
+		</property>
+		<property name="ticCoreTransSettService">
+			<ref bean="ticCoreTransSettService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ticCommonFormTreeService"
+		class="com.landray.kmss.tic.core.common.service.bean.TicCommonFormTreeService">
+		<property name="loader">
+			<ref bean="sysFormDictLoadService" />
+		</property>
+	</bean>
+	
+	<bean id="ticCoreFindFormulaJsonService"
+		class="com.landray.kmss.tic.core.common.service.spring.TicCoreFindFormulaJsonService">
+		<property name="ticCoreTransSettService">
+			<ref bean="ticCoreTransSettService" />
+		</property>
+	</bean>
+	<bean id="ticCoreFindFuncParaInJsonService"
+		class="com.landray.kmss.tic.core.common.service.spring.TicCoreFindFuncParaInJsonService">
+		<property name="ticCoreFuncBaseService">
+			<ref bean="ticCoreFuncBaseService" />
+		</property>
+	</bean>
+	<bean id="ticMiddlewareService" init-method="initExecutorBeanNames" class="com.landray.kmss.tic.core.middleware.TicMiddlewareService"/>
+
+	<bean
+		id="ticCoreWebService"
+		class="com.landray.kmss.tic.core.common.webservice.TicCoreWebServiceImp">
+		
+	</bean>
+</beans>

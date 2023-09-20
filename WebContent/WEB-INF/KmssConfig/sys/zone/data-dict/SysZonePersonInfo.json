@@ -1,0 +1,167 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.zone.model.SysZonePersonInfo",
+        "url": "/sys/zone/sys_zone_personInfo/sysZonePersonInfo.do?method=view&fdId=${fdId}",
+        "messageKey": "sys-zone:sysZonePersonInfo.zone",
+        "displayProperty": "docSubject",
+        "serviceBean": "sysZonePersonInfoService",
+        "table": "sys_zone_person_info"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "foreign"}
+        },
+        "fdEnglishName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePersonInfo.fdEnglishName",
+            "type": "String",
+            "column": "fd_english_name",
+            "notNull": "false",
+            "unique": "false",
+            "length": "100"
+        },
+        "fdDefaultLang":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePersonInfo.fdDefaultLang",
+            "type": "String",
+            "column": "fd_default_lang",
+            "notNull": "false",
+            "unique": "false",
+            "length": "50"
+        },
+        "fdSignature":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePersonInfo.fdSignature",
+            "type": "RTF",
+            "column": "fd_signature",
+            "notNull": "false",
+            "unique": "false",
+            "length": "1000000"
+        },
+        "person":         {
+            "propertyType": "model",
+            "messageKey": "sys-zone:sysZonePersonInfo.person",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "fd_id",
+            "notNull": "true",
+            "unique": "true",
+            "constrained": "true"
+        },
+        "isContactPrivate":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePrivate.isContactPrivate.hide",
+            "type": "Boolean",
+            "column": "is_contact_private",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "1"
+        },
+        "authAttNodownload":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePersonInfo.authAttNodownload",
+            "type": "Boolean",
+            "column": "auth_att_nodownload",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "1"
+        },
+        "isDepInfoPrivate":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePrivate.isDepInfoPrivate.hide",
+            "type": "Boolean",
+            "column": "is_depinfo_private",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "1"
+        },
+        "isRelationshipPrivate":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePrivate.isRelationshipPrivate.hide",
+            "type": "Boolean",
+            "column": "is_relationship_private",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "1"
+        },
+        "isWorkmatePrivate":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePrivate.isWorkmatePrivate.hide",
+            "type": "Boolean",
+            "column": "is_workmate_private",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "1"
+        },
+        "fdAttentionNum":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePerson.fdAttentionNum",
+            "type": "Integer",
+            "column": "fd_attention_nums",
+            "notNull": "false",
+            "length": "10",
+            "validate": "false"
+        },
+        "fdFansNum":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePerson.fdFansNum",
+            "type": "Integer",
+            "column": "fd_fans_nums",
+            "notNull": "false",
+            "length": "10",
+            "validate": "false"
+        },
+        "fdLastModifiedTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePerson.fdLastModifiedTime",
+            "type": "DateTime",
+            "column": "fd_last_modified_time",
+            "notNull": "true",
+            "canDisplay": "false"
+        },
+        "docEvalCount":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePerson.docEvalCount",
+            "type": "Integer",
+            "column": "doc_eval_count",
+            "notNull": "false",
+            "length": "10"
+        },
+        "authAttDownloads":         {
+            "propertyType": "list",
+            "messageKey": "sys-zone:sys.zone.personInfo.authAttDownloads",
+            "column": "fd_person_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "elementColumn": "auth_att_download_id",
+            "table": "sys_zone_person_attdl",
+            "canDisplay": "true",
+            "canLogShow": "1"
+        },
+        "docReadCount":         {
+            "propertyType": "simple",
+            "messageKey": "sys-zone:sysZonePerson.docReadCount",
+            "type": "Long",
+            "column": "doc_read_count",
+            "notNull": "false",
+            "length": "19"
+        },
+        "fdDatas":         {
+            "propertyType": "list",
+            "messageKey": "sys-zone:sysZonePerson.fdDatas",
+            "type": "com.landray.kmss.sys.zone.model.SysZonePersonData",
+            "column": "fd_person_id",
+            "cascade": "all-delete-orphan",
+            "table": "sys_zone_person_data"
+        }
+    },
+    "attachments":     {
+        "personPic":         {
+            "propertyType": "att",
+            "messageKey": "sys-zone:sysZonePersonImg.upload"
+        },
+        "multiResume":         {
+            "propertyType": "att",
+            "messageKey": "sys-zone:sysZonePersonInfo.fdPersonResume"
+        }
+    }
+}

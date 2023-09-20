@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 数据集管理分类 -->	
+	<bean
+		id="xformJdbcDataSetCategoryDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.maindata.dao.hibernate.SysFormJdbcDataSetCategoryDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.maindata.model.SysFormJdbcDataSetCategory" />
+	</bean>
+	<bean
+		id="xFormJdbcDataSetCategoryTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormJdbcDataSetCategoryServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="xformJdbcDataSetCategoryDao" />
+		</property>
+	</bean>
+	<bean
+		id="xFormJdbcDataSetCategoryService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="xFormJdbcDataSetCategoryTarget" />
+		</property>
+	</bean>
+	 
+	<!-- JDBC数据集 -->
+	<bean
+		id="xFormJdbcDataSetDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.maindata.dao.hibernate.SysFormJdbcDataSetDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.maindata.model.SysFormJdbcDataSet" />
+	</bean>
+	<bean
+		id="xFormJdbcDataSetTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormJdbcDataSetServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="xFormJdbcDataSetDao" />
+		</property>
+	</bean>
+	<bean
+		id="xFormJdbcDataSetService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="xFormJdbcDataSetTarget" />
+		</property>
+	</bean>
+	
+	<bean id="sysFormJdbcDataSetCategoryTreeService"
+		class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormJdbcDataSetCategoryTreeServiceImp">
+		<property name="xFormJdbcDataSetCategoryService">
+			<ref bean="xFormJdbcDataSetCategoryService" />
+		</property>
+	</bean>
+	<bean id="sysFormJdbcDataSetParamBean"
+		class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormJdbcDataSetParamBean">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+
+	<bean
+		id="sysFormJdbcControlRelation" class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormJdbcControlRelation">
+	    <property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property
+			name="sysFormJdbcControlTreeInfo">
+			<ref
+				bean="sysFormJdbcControlTreeInfo" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormJdbcControlTreeInfo" class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormJdbcControlTreeInfo"
+		>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property
+			name="xFormJdbcDataSetService">
+			<ref
+				bean="xFormJdbcDataSetService" />
+		</property>
+		<property
+			name="xFormJdbcDataSetCategoryService">
+			<ref
+				bean="xFormJdbcDataSetCategoryService" />
+		</property>
+	</bean>
+	<bean name="sysFormJdbcControlTreeBean" 
+		  class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormJdbcControlTreeBean" >
+	</bean>
+	
+	
+		<!-- 控件缓存 -->
+	<bean
+		id="sysFormJdbcMappControlFieldDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.maindata.dao.hibernate.SysFormJdbcMappControlFieldDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tib.common.mapping.plugins.control.model.TibCommonMappControlField" />
+	</bean>
+	<bean
+		id="sysFormJdbcMappControlFieldTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormJdbcMappControlFieldServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysFormJdbcMappControlFieldDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormJdbcMappControlFieldService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysFormJdbcMappControlFieldTarget" />
+		</property>
+	</bean>
+	<!-- 主数据通用 start -->
+		<bean
+		id="sysFormMainDataCommonServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormMainDataCommonServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="KmssAuthBaseDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormMainDataCommonService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysFormMainDataCommonServiceTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysFormMainDataCommonControlTreeInfo" class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormMainDataCommonControlTreeInfo"
+		>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property
+			name="xFormJdbcDataSetCategoryService">
+			<ref
+				bean="xFormJdbcDataSetCategoryService" />
+		</property>
+		<property name="sysFormMainDataCommonService">
+			<ref bean="sysFormMainDataCommonService"/>
+		</property>
+	</bean>
+	<!-- 主数据通用 end -->
+	
+	<!-- 系统内数据 start -->
+	<bean
+		id="sysFormMainDataInsystemDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.maindata.dao.hibernate.SysFormMainDataInsystemDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.maindata.model.SysFormMainDataInsystem" />
+	</bean>
+	<bean
+		id="sysFormMainDataInsystemServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormMainDataInsystemServiceImp">
+		<property
+			name="baseDao">
+			<ref bean="sysFormMainDataInsystemDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormMainDataInsystemService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysFormMainDataInsystemServiceTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysFormMainDataInsystemControlRelation" class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormMainDataInsystemControlRelation"
+		>
+	    <property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property
+			name="sysFormMainDataInsystemControlTreeInfo">
+			<ref
+				bean="sysFormMainDataInsystemControlTreeInfo" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormMainDataInsystemControlTreeInfo" class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormMainDataInsystemControlTreeInfo"
+		parent="sysFormMainDataCommonControlTreeInfo" >
+		<property
+			name="sysFormMainDataInsystemService">
+			<ref
+				bean="sysFormMainDataInsystemService" />
+		</property>
+	</bean>
+	<bean name="sysFormMainDataInsystemControlTreeBean" 
+		  class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormMainDataInsystemControlTreeBean" >
+	</bean>
+	<!-- 系统内数据 end -->
+	
+	<!-- 自定义数据 start -->
+	<bean id="sysFormMainDataCustomDao" parent="KmssAuthBaseDao" class="com.landray.kmss.sys.xform.maindata.dao.hibernate.SysFormMainDataCustomDaoImp">
+		<property name="modelName" value="com.landray.kmss.sys.xform.maindata.model.SysFormMainDataCustom" />
+	</bean>
+	<bean id="sysFormMainDataCustomServiceTarget" parent="KmssBaseTarget" class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormMainDataCustomServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFormMainDataCustomDao" />
+		</property>
+	</bean>
+	<bean id="sysFormMainDataCustomService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormMainDataCustomServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="init*">PROPAGATION_REQUIRED</prop>
+				<prop key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop key="load*">PROPAGATION_REQUIRED</prop>
+				<prop key="redirect*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 自定义数据明细 start -->
+	<bean id="sysFormMainDataCustomListDao" parent="KmssAuthBaseDao" class="com.landray.kmss.sys.xform.maindata.dao.hibernate.SysFormMainDataCustomListDaoImp">
+		<property name="modelName" value="com.landray.kmss.sys.xform.maindata.model.SysFormMainDataCustomList" />
+	</bean>
+	<bean id="sysFormMainDataCustomListServiceTarget" parent="KmssBaseTarget" class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormMainDataCustomListServiceImp">
+		<property name="baseDao">
+			<ref bean="sysFormMainDataCustomListDao" />
+		</property>
+	</bean>
+	<bean id="sysFormMainDataCustomListService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="sysFormMainDataCustomListServiceTarget" />
+		</property>
+	</bean>
+	<!--自定义数据明细 end -->
+	
+	<bean id="SysFormMainDataCustomTreeService"
+		class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormMainDataCustomTreeServiceImp">
+		<property name="sysFormMainDataCustomService">
+			<ref bean="sysFormMainDataCustomService" />
+		</property>
+	</bean>
+	<bean id="sysFormMainDataCustomControlRelation" class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormMainDataCustomControlRelation" >
+	    <property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="sysFormMainDataCustomControlTreeInfo">
+			<ref bean="sysFormMainDataCustomControlTreeInfo" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormMainDataCustomControlTreeInfo" class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormMainDataCustomControlTreeInfo"
+		parent="sysFormMainDataCommonControlTreeInfo" >
+		<property
+			name="sysFormMainDataCustomService">
+			<ref
+				bean="sysFormMainDataCustomService" />
+		</property>
+	</bean>
+	<bean name="sysFormMainDataCustomControlTreeBean" 
+		  class="com.landray.kmss.sys.xform.maindata.service.bean.SysFormMainDataCustomControlTreeBean" >
+	</bean>
+	<!-- 自定义数据 end -->
+	
+	
+	<bean
+		id="sysFormMainDataShowDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.maindata.dao.hibernate.SysFormMainDataShowDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.maindata.model.SysFormMainDataShow" />
+	</bean>
+	<bean
+		id="sysFormMainDataShowServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormMainDataShowServiceImp">
+		<property
+			name="baseDao">
+			<ref bean="sysFormMainDataShowDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormMainDataShowService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysFormMainDataShowServiceTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysFormMainDataShowRelateDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.maindata.dao.hibernate.SysFormMainDataShowRelateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.maindata.model.SysFormMainDataShowRelate" />
+	</bean>
+	<bean
+		id="sysFormMainDataShowRelateServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormMainDataShowRelateServiceImp">
+		<property
+			name="baseDao">
+			<ref bean="sysFormMainDataShowRelateDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormMainDataShowRelateService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysFormMainDataShowRelateServiceTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysFormMainDataUseDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.maindata.dao.hibernate.SysFormMainDataUseDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.maindata.model.SysFormMainDataUse" />
+	</bean>
+	<bean
+		id="sysFormMainDataUseServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormMainDataUseServiceImp">
+		<property
+			name="baseDao">
+			<ref bean="sysFormMainDataUseDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormMainDataUseService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysFormMainDataUseServiceTarget" />
+		</property>
+	</bean>
+	
+	<!-- 数据中台 -->
+	<bean id="sysFormMyDataCoreService" parent="KmssBaseCoreService">
+		<property name="target">
+			<bean class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormMyDataCoreServiceImp">
+				<property name="sysFormMainDataUseService">
+					<ref bean="sysFormMainDataUseService" />
+				</property>
+				<property name="sysFormMainDataShowService">
+					<ref bean="sysFormMainDataShowService" />
+				</property>
+				<property name="sysFormMainDataDeleteLogService">
+					<ref bean="sysFormMainDataDeleteLogService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean
+		id="sysFormMainDataShowValidator"
+		class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormMainDataShowValidator">
+		<property name="sysFormMainDataShowService">
+			<ref bean="sysFormMainDataShowService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="sysFormMainDataDeleteLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.xform.maindata.dao.hibernate.SysFormMainDataDeleteLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.xform.maindata.model.SysFormMainDataDeleteLog" />
+	</bean>
+	<bean
+		id="sysFormMainDataDeleteLogServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.xform.maindata.service.spring.SysFormMainDataDeleteLogServiceImp">
+		<property
+			name="baseDao">
+			<ref bean="sysFormMainDataDeleteLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysFormMainDataDeleteLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysFormMainDataDeleteLogServiceTarget" />
+		</property>
+	</bean>
+	
+	<bean id="sysMainDataValidator"
+		class="com.landray.kmss.sys.xform.maindata.validator.SysMainDataValidator">
+	</bean>
+
+	<bean id="sysMainUseValidator"
+		  class="com.landray.kmss.sys.xform.maindata.validator.SysMainUseValidator">
+	</bean>
+	
+	<bean
+		id="sysFormMainDataInsystemRestservice"
+		class="com.landray.kmss.sys.xform.maindata.restservice.SysFormMainDataInsystemRestserviceImp">
+		<property
+			name="sysFormMainDataInsystemService">
+			<ref
+				bean="sysFormMainDataInsystemService" />
+		</property>
+		<property
+			name="backgroundAuthService">
+			<ref
+				bean="backgroundAuthService" />
+		</property>
+		<property
+			name="sysOrgCoreService">
+			<ref
+				bean="sysOrgCoreService" />
+		</property>
+	</bean>
+	
+	
+	<bean
+		id="sysFormMainDataInsystemWebservice"
+		class="com.landray.kmss.sys.xform.maindata.webservice.SysFormMainDataInsystemWebserviceImp">
+		<property
+			name="sysFormMainDataInsystemService">
+			<ref
+				bean="sysFormMainDataInsystemService" />
+		</property>
+		<property
+			name="backgroundAuthService">
+			<ref
+				bean="backgroundAuthService" />
+		</property>
+		<property
+			name="sysOrgCoreService">
+			<ref
+				bean="sysOrgCoreService" />
+		</property>
+	</bean>
+    <bean id="sysFormMyDataController" class="com.landray.kmss.sys.xform.maindata.controller.SysFormMyDataController">
+    </bean>
+</beans>

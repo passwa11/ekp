@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		messageKey="sys-restservice-server:module.sys.restservice.server"
+		urlPrefix="/sys/restservice/server/"
+		defaultValidator="roleValidator(role=ROLE_SYSRESTSERVICESERVER_ADMIN)">
+		<roles>
+			ROLE_SYSRESTSERVICESERVER_ADMIN
+		</roles>
+		<!--权限分类，把roles和arearoles里权限中应该属于三员体系的分拣（复制）到以下标签 -->
+		<roleType>
+			<!-- 系统管理员权限 -->
+			<sysadmin>
+				ROLE_SYSRESTSERVICESERVER_ADMIN
+			</sysadmin>
+		</roleType>
+
+		<request
+			path="sys_restservice_server_main/sysRestserviceServerMain*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.restservice.server.model.SysRestserviceServerMain">
+		</request>
+
+		<request
+			path="sys_restservice_server_policy/sysRestserviceServerPolicy*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.restservice.server.model.SysRestserviceServerPolicy">
+		</request>
+
+		<request
+			path="sys_restservice_server_log/sysRestserviceServerLog*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.restservice.server.model.SysRestserviceServerLog">
+		</request>
+
+		<request
+			path="sys_restservice_server_log_backup/sysRestserviceServerLogBackup*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.sys.restservice.server.model.SysRestserviceServerLogBackup">
+		</request>
+
+	</module>
+
+	<!-- 日志备份设置 -->
+	<module messageKey="" urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.sys.restservice.server.model.SysRestServiceBaseInfo"
+				validator="roleValidator(role=ROLE_SYSRESTSERVICESERVER_ADMIN)" />
+		</request>
+	</module>
+
+
+    <!-- 定时任务  -->
+	<quartz
+		messageKey="sys-restservice-server:sysRestserviceServerLog.taskName"
+		jobService="sysRestserviceServerLogBackupService"
+		cronExpression="0 0 0 * * ?"
+		jobMethod="backup"
+		enable="true"
+		description="sys-restservice-server:sysRestserviceServerLog.taskName.description"
+		runType="SINGLENODE" />	
+		
+	<!-- 搜索 -->
+	<search
+		modelName="com.landray.kmss.sys.restservice.server.model.SysRestserviceServerLog"
+		messageKey="sys-restservice-server:table.sysRestserviceServerLogSearch"
+		resultProperties="fdServiceName;fdServiceName;fdUserName;fdClientIp;fdStartTime;fdEndTime;fdExecResult;" />
+
+	<!-- 功能模块首页 -->
+	<homePage
+		urlPrefix="sys/restservice/server"
+		url="/moduleindex.jsp?nav=/sys/restservice/server/tree.jsp&amp;main=%2Fsys%2FRestService%2Fsys_restservice_server_main%2Findex.jsp%3Fs_path%3D!{message(sys-restservice-server:table.sysRestserviceServerMain)}"
+		config="/moduleindex_notopic.jsp?nav=/sys/restservice/server/tree.jsp"
+		messageKey="sys-restservice-server:module.sys.restservice.server" 
+		type="sys"/>
+		
+	<profileConfig
+		key="RestService" 
+		messageKey="{sys-restservice-server:module.sys.restservice.server}"
+		url="/sys/profile/moduleindex.jsp?nav=/sys/restservice/server/tree.jsp"
+		type="integrate"
+		userType="2"
+		order="7" />
+	
+</configs>

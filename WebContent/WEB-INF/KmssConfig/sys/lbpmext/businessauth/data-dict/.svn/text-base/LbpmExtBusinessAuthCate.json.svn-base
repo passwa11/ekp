@@ -1,0 +1,76 @@
+
+{
+    "global" : {
+        "modelName" : "com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuthCate",
+        "messageKey" : "sys-lbpmext-businessauth:table.lbpmext.businessAuthCate",
+        "serviceBean" : "lbpmExtBusinessAuthCateService",
+        "displayProperty" : "fdName",
+        "table" : "lbpm_ext_business_auth_cate",
+        "url" : "/sys/lbpmext/businessauth/lbpmBusinessAuthCate.do?method=view&fdId=${fdId}"
+    },
+    "attrs" : {
+        "fdId" : {
+            "propertyType" : "id",
+            "generator" : {
+                "type" : "assigned"
+            }
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-lbpmext-businessauth:lbpmext.businessAuthCate.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "length": "200",
+            "validate": "true"
+        },
+        "fdParent":{
+        	"propertyType" : "model",
+            "messageKey" : "sys-lbpmext-businessauth:lbpmext.businessAuthCate.fdParent",
+            "type" : "com.landray.kmss.sys.lbpmext.businessauth.model.LbpmExtBusinessAuthCate",
+            "column" : "fd_parent_id",
+            "notNull" : "false"
+        },
+        "fdCreateTime" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-lbpmext-businessauth:lbpmext.businessAuthCate.fdCreateTime",
+            "type" : "DateTime",
+            "column" : "fd_create_time",
+            "notNull" : "true",
+            "readOnly": "true"
+        },
+        "fdAlterTime" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-lbpmext-businessauth:lbpmext.businessAuthCate.fdAlterTime",
+            "type" : "DateTime",
+            "column" : "fd_alter_time",
+            "notNull" : "false",
+            "readOnly": "true"
+        },
+        "fdCreator" : {
+            "propertyType" : "model",
+            "messageKey" : "sys-lbpmext-businessauth:lbpmext.businessAuthCate.fdCreator",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column" : "fd_creator_id",
+            "notNull" : "true",
+            "readOnly": "true"
+        },
+        "fdAlteror" : {
+            "propertyType" : "model",
+            "messageKey" : "sys-lbpmext-businessauth:lbpmext.businessAuthCate.fdAlteror",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column" : "fd_alteror_id",
+            "notNull" : "false",
+            "readOnly": "true"
+        },
+        "authEditors" : {
+            "propertyType" : "list",
+            "messageKey" : "sys-lbpmext-businessauth:lbpmext.businessAuthCate.authEditors",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table" : "lbpm_ext_bus_auth_cate_edi",
+            "elementColumn" : "auth_editor_id",
+            "column" : "fd_cate_id",
+            "notNull" : "false"
+        }
+    }
+}

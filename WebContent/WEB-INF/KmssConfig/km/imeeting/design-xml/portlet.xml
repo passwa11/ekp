@@ -1,0 +1,900 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+	
+	<!-- 会议资源日历 -->
+	<portlet id="km.imeeting.calendar.portlet" 
+			name="{km-imeeting:kmImeeting.tree.calender.rescalendar}" 
+			module="{km-imeeting:module.km.imeeting}" 
+			description="{km-imeeting:kmImeeting.tree.calender.rescalendar.description}">
+		<source format="sys.ui.html" type="AjaxText">
+			<code>
+				<![CDATA[
+					{"url":"/km/imeeting/km_imeeting_calendar/kmImeetingCalendar_portlet.jsp",
+					 "formatKey":"html"
+					}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{^/sys/portal/example_images/km/imeeting/portlet_calendar.png$}
+					]]>
+				</code>
+			</example>
+		</source>
+	</portlet>
+	
+	<!-- 所有会议 (简单列表)-->
+	<portlet
+		id="km.imeeting.all.classic"
+		name="{km-imeeting:kmImeeting.tree.meeting.allMeeting}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{portlet.list.desc1}">
+		<source format="sys.ui.classic" type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/imeeting/km_imeeting_main/kmImeetingMainPortlet.do?method=listPortlet&rowsize=!{rowsize}&scope=!{scope}&dataview=classic"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"2020企业云栖大会会","created":"2020-02-29","creator":"王泽烽","person":["张社丽;易荣烽;朱湖强;王兵"],"catename":"科技峰会","catehref":"#","holdDate":"2020-01-07 19:00 ~ 2020-01-10 18:00","placeName":"星河湾演播厅","href":"#"},{"text":"关于复工返潮期间做好新冠疫情防控措施会议","created":"2020-02-08","creator":"王泽烽","person":["张社丽;易荣烽;朱湖强;王兵"],"catename":"全体单位动员会议","catehref":"#","holdDate":"2020-01-07 19:00 ~ 2020-01-10 18:00","placeName":"402会议室","href":"#"},{"text":"防疫新冠疫情管控措施重要会议","created":"2020-01-24","creator":"王泽烽","person":["张社丽;易荣烽;朱湖强;王兵"],"catename":"全体单位动员会议","catehref":"#","holdDate":"2020-01-07 19:00 ~ 2020-01-10 18:00","placeName":"402会议室","href":"#"},{"text":"开发区化工园区认定部门动员会议","created":"2020-01-07","creator":"王泽烽","person":["张社丽;易荣烽;朱湖强;王兵"],"catename":"全体单位动员会议","catehref":"#","holdDate":"2020-01-07 19:00 ~ 2020-01-10 18:00","placeName":"402会议室","href":"#"},{"text":"市工商局2019年局长办公会会议","created":"2020-01-07","creator":"王泽烽","person":["张社丽;易荣烽;王芳;王卫荣"],"catename":"局长办公会","catehref":"#","holdDate":"2020-01-07 17:00 ~ 2020-01-10 18:00","placeName":"1050民评中心","href":"#"},{"text":"银行召开2019年集团经营分析会议（演示）","created":"2020-01-07","creator":"王泽烽","person":["张社丽;易荣烽;戴婷;潘星灵;王磊;王芳;蒋志广;朱湖强;王亮;王卫荣"],"catename":"经营会议","catehref":"#","holdDate":"2020-01-07 15:00 ~ 2020-01-23 01:00","placeName":"101会议室","href":"#"},{"text":"召开2019年集团经营分析会议","created":"2019-12-26","creator":"王泽烽","person":["张社丽;易荣烽;戴婷;潘星灵;王磊;王芳;蒋志广;朱湖强;王亮;王卫荣"],"catename":"经营会议","catehref":"#","holdDate":"2019-12-26 15:00 ~ 2019-12-27 20:00","placeName":"101会议室","href":"#"},{"text":"控股召开2019年集团经营分析会议","created":"2019-11-28","creator":"王泽烽","person":["张社丽;易荣烽;戴婷;潘星灵;王磊;王芳;蒋志广;朱湖强;王亮;王卫荣"],"catename":"经营会议","catehref":"#","holdDate":"2019-11-29 13:30 ~ 2019-11-29 19:30","placeName":"101会议室","href":"#"},{"text":"召开劳动法律法规专项培训第二次会议","created":"2019-11-28","creator":"王泽烽","person":["张社丽;易荣烽;邓春喜;潘星灵;王磊;王芳"],"catename":"专题会议","catehref":"#","holdDate":"2019-11-29 09:00 ~ 2019-11-29 10:00","placeName":"101会议室","href":"#"},{"text":"军民融合项目推进座谈会","created":"2019-11-26","creator":"王泽烽","person":["张社丽;戴婷;朱湖强;王佳飞;蒋志广;王卫荣;王亮;黄伟强;黄建;郑抄辉;任和珍;杨贺明;陈志勇;张继成;唐小玉"],"catename":"工作布置会","catehref":"#","holdDate":"2019-11-26 21:00 ~ 2019-11-27 23:00","placeName":"403会议室","href":"#"},{"text":"召开劳动法律法规专项培训会议","created":"2019-11-26","creator":"王泽烽","person":["张社丽;戴婷;朱湖强;王佳飞;蒋志广;王卫荣;王亮;黄伟强;黄建;任和珍;杨贺明;陈志勇;张继成;唐小玉;王芳"],"catename":"专题会议","catehref":"#","holdDate":"2019-11-26 18:00 ~ 2019-11-28 19:00","placeName":"101会议室","href":"#"},{"text":"召开不忘初心、牢记使命主题教育工作第一次会议","created":"2019-11-26","creator":"王泽烽","person":["张社丽;戴婷;王佳飞;朱湖强;蒋志广;王卫荣;王亮;黄伟强;黄建;郑抄辉;杨贺明;陈志勇;张继成;唐小玉"],"catename":"常务会议","catehref":"#","holdDate":"2019-11-26 16:00 ~ 2019-11-27 20:02","placeName":"402会议室","href":"#"},{"text":"2019年工作总结会议（401会议室）三","created":"2019-11-22","creator":"管理员","person":["朱湖强;易荣烽;张社丽;邓春喜"],"catename":"经营会议","catehref":"#","holdDate":"2019-11-22 20:00 ~ 2019-11-22 21:00","placeName":"101会议室","href":"#"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{km-imeeting:kmImeeting.porlet.publishDate}" key="scope" kind="enumValue" default="no">
+	                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	                   "showType":"radio"
+	                  }
+	        </var>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		</vars>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/imeeting" />
+	    </operations>
+	</portlet>
+	
+	
+	<!-- 所有会议 (可配置题头)-->
+	<portlet
+		id="km.imeeting.all.listtable"
+		name="{km-imeeting:kmImeeting.tree.meeting.allMeeting}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{km-imeeting:kmImeeting.portlet.list.description}">
+		<source format="sys.ui.listtable" type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/imeeting/km_imeeting_main/kmImeetingMainPortlet.do?method=listPortlet&rowsize=!{rowsize}&scope=!{scope}&dataview=listtable"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"fdId"},{"title":"会议名称","property":"docSubject"},{"title":"会议时间","property":"fdHoldDate","headerClass":"width250"},{"title":"会议地点","property":"fdHoldPlace"},{"props":"fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docDept.fdName;docStatus"}],"datas":[[{"col":"fdId","value":"16f7f27e73aaad7d4a3d0e841828bba5"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">2020年企业云栖大会<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2020-02-29 19:00 ~\r\n\t\t   2020-03-01 18:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"星河湾演播厅"}],[{"col":"fdId","value":"16f7f27e73aaad7d4a3d0e841828bba5"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">关于复工返潮期间做好新冠疫情防控措施会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2020-02-08 19:00 ~\r\n\t\t   2020-02-08 21:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"402会议室"}],[{"col":"fdId","value":"16f7f27e73aaad7d4a3d0e841828bba5"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">防疫新冠疫情管控措施重要会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2020-01-24 19:00 ~\r\n\t\t   2020-01-24 23:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"402会议室"}],[{"col":"fdId","value":"16f7f27e73aaad7d4a3d0e841828bba5"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">开发区化工园区认定部门动员会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2020-01-07 19:00 ~\r\n\t\t   2020-01-10 18:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"402会议室"}],[{"col":"fdId","value":"16f7f227b0c5361126335f74d4d82259"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">市工商局2019年局长办公会会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2020-01-07 17:00 ~\r\n\t\t   2020-01-10 18:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"1050民评中心"}],[{"col":"fdId","value":"16f7e045549ba145dc5d0f748b0a555c"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">银行召开2019年集团经营分析会议（演示）<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2020-01-07 15:00 ~\r\n\t\t   2020-01-23 01:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"101会议室"}],[{"col":"fdId","value":"16f4001525c1aa0425dd0ec4879a2cb5"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">召开2019年集团经营分析会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-12-26 15:00 ~\r\n\t\t   2019-12-27 20:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"101会议室"}],[{"col":"fdId","value":"16eb0e53653624fd3c06f7b42e5aabb6"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">控股召开2019年集团经营分析会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-11-29 13:30 ~\r\n\t\t   2019-11-29 19:30","styleClass":"width250"},{"col":"fdHoldPlace","value":"101会议室"}],[{"col":"fdId","value":"16eaff8bb2d7a44b2bca5b143549f0e6"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">召开劳动法律法规专项培训第二次会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-11-29 09:00 ~\r\n\t\t   2019-11-29 10:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"101会议室"}],[{"col":"fdId","value":"16ea7528286d948463c2138402181c2e"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">军民融合项目推进座谈会<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-11-26 21:00 ~\r\n\t\t   2019-11-27 23:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"403会议室"}],[{"col":"fdId","value":"16ea6c5e5e7ba0d8b80ce5943f29c3f0"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">召开劳动法律法规专项培训会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-11-26 18:00 ~\r\n\t\t   2019-11-28 19:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"101会议室"}],[{"col":"fdId","value":"16ea64a048b100b03913f8a4d55b63a3"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">召开不忘初心、牢记使命主题教育工作第一次会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-11-26 16:00 ~\r\n\t\t   2019-11-27 20:02","styleClass":"width250"},{"col":"fdHoldPlace","value":"402会议室"}],[{"col":"fdId","value":"16e914a6df5a6eee4ca551a4565b6b48"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">2019年工作总结会议（401会议室）三<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-11-22 20:00 ~\r\n\t\t   2019-11-22 21:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"101会议室"}]]}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{km-imeeting:kmImeeting.porlet.publishDate}" key="scope" kind="enumValue" default="no">
+	                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	                   "showType":"radio"
+	                  }
+	        </var>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		</vars>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/imeeting" />
+	    </operations>
+	</portlet>
+	
+	<!-- 我的会议 (简单列表)-->
+	<portlet
+		id="km.imeeting.my.attend.classic"
+		name="{km-imeeting:kmImeeting.porlet.meetings.my}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{portlet.list.desc1}">
+		<source format="sys.ui.classic" type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/imeeting/km_imeeting_main/kmImeetingMainPortlet.do?method=listPortlet&rowsize=!{rowsize}&type=!{type}&scope=!{scope}&datetype=!{datetype}&dataview=classic"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"2020年企业云栖大会","created":"2020-02-29","creator":"王泽烽","person":["张社丽;易荣烽;朱湖强;王兵"],"catename":"科技峰会","catehref":"#","holdDate":"2020-02-29 19:00 ~ 2020-03-01 18:00","placeName":"星河湾演播厅","href":"#"},{"text":"关于复工返潮期间做好新冠疫情防控措施会议","created":"2020-02-08","creator":"王泽烽","person":["张社丽;易荣烽;朱湖强;王兵"],"catename":"社区安全会","catehref":"#","holdDate":"2020-02-08 19:00 ~ 2020-02-08 21:00","placeName":"402会议室","href":"#"},{"text":"防疫新冠疫情管控措施重要会议","created":"2020-01-24","creator":"王泽烽","person":["张社丽;易荣烽;朱湖强;王兵"],"catename":"全体单位动员会议","catehref":"#","holdDate":"2020-01-24 19:00 ~ 2020-01-24 23:00","placeName":"402会议室","href":"#"},{"text":"开发区化工园区认定部门动员会议","created":"2020-01-07","creator":"王泽烽","person":["张社丽;易荣烽;朱湖强;王兵"],"catename":"全体单位动员会议","catehref":"#","holdDate":"2020-01-07 19:00 ~ 2020-01-10 18:00","placeName":"402会议室","href":"#"},{"text":"市工商局2019年局长办公会会议","created":"2020-01-07","creator":"王泽烽","person":["张社丽;易荣烽;王芳;王卫荣"],"catename":"局长办公会","catehref":"#","holdDate":"2020-01-07 17:00 ~ 2020-01-10 18:00","placeName":"1050民评中心","href":"#"},{"text":"银行召开2019年集团经营分析会议（演示）","created":"2020-01-07","creator":"王泽烽","person":["张社丽;易荣烽;戴婷;潘星灵;王磊;王芳;蒋志广;朱湖强;王亮;王卫荣"],"catename":"经营会议","catehref":"#","holdDate":"2020-01-07 15:00 ~ 2020-01-23 01:00","placeName":"101会议室","href":"#"},{"text":"召开2019年集团经营分析会议","created":"2019-12-26","creator":"王泽烽","person":["张社丽;易荣烽;戴婷;潘星灵;王磊;王芳;蒋志广;朱湖强;王亮;王卫荣"],"catename":"经营会议","catehref":"#","holdDate":"2019-12-26 15:00 ~ 2019-12-27 20:00","placeName":"101会议室","href":"#"},{"text":"控股召开2019年集团经营分析会议","created":"2019-11-28","creator":"王泽烽","person":["张社丽;易荣烽;戴婷;潘星灵;王磊;王芳;蒋志广;朱湖强;王亮;王卫荣"],"catename":"经营会议","catehref":"#","holdDate":"2019-11-29 13:30 ~ 2019-11-29 19:30","placeName":"101会议室","href":"#"},{"text":"召开劳动法律法规专项培训第二次会议","created":"2019-11-28","creator":"王泽烽","person":["张社丽;易荣烽;邓春喜;潘星灵;王磊;王芳"],"catename":"专题会议","catehref":"#","holdDate":"2019-11-29 09:00 ~ 2019-11-29 10:00","placeName":"101会议室","href":"#"},{"text":"军民融合项目推进座谈会","created":"2019-11-26","creator":"王泽烽","person":["张社丽;戴婷;朱湖强;王佳飞;蒋志广;王卫荣;王亮;黄伟强;黄建;郑抄辉;任和珍;杨贺明;陈志勇;张继成;唐小玉"],"catename":"工作布置会","catehref":"#","holdDate":"2019-11-26 21:00 ~ 2019-11-27 23:00","placeName":"403会议室","href":"#"},{"text":"召开劳动法律法规专项培训会议","created":"2019-11-26","creator":"王泽烽","person":["张社丽;戴婷;朱湖强;王佳飞;蒋志广;王卫荣;王亮;黄伟强;黄建;任和珍;杨贺明;陈志勇;张继成;唐小玉;王芳"],"catename":"专题会议","catehref":"#","holdDate":"2019-11-26 18:00 ~ 2019-11-28 19:00","placeName":"101会议室","href":"#"},{"text":"召开不忘初心、牢记使命主题教育工作第一次会议","created":"2019-11-26","creator":"王泽烽","person":["张社丽;戴婷;王佳飞;朱湖强;蒋志广;王卫荣;王亮;黄伟强;黄建;郑抄辉;杨贺明;陈志勇;张继成;唐小玉"],"catename":"常务会议","catehref":"#","holdDate":"2019-11-26 16:00 ~ 2019-11-27 20:02","placeName":"402会议室","href":"#"},{"text":"2019年工作总结会议（401会议室）三","created":"2019-11-22","creator":"管理员","person":["朱湖强;易荣烽;张社丽;邓春喜"],"catename":"经营会议","catehref":"#","holdDate":"2019-11-22 20:00 ~ 2019-11-22 21:00","placeName":"101会议室","href":"#"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{km-imeeting:kmImeeting.porlet.publishDate}" key="scope" kind="enumValue" default="no">
+	                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	                   "showType":"radio"
+	                  }
+	        </var>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		   	<var name="{km-imeeting:kmImeeting.porlet.meetings.datetype}" key="datetype" kind="enumValue" default="today">
+			  {    "values":[ { "text":"{km-imeeting:kmImeeting.porlet.meetings.type.today}", "value":"today" },
+							  { "text":"{km-imeeting:kmImeeting.porlet.meetings.type.tomorrow}", "value":"tomorrow" },
+							  { "text":"{km-imeeting:kmImeeting.porlet.meetings.type.afterDay}", "value":"afterDay" }],
+	               "showType":"radio",
+                }
+			</var>
+		    <var name="{km-imeeting:kmImeeting.porlet.meetings.my}" key="type" kind="enumValue" default="myAttend">
+			  {    "values":[ { "text":"{km-imeeting:kmImeeting.porlet.Attend.my}", "value":"myAttend" },
+							  { "text":"{km-imeeting:kmImeeting.porlet.Host.my}", "value":"myHost" },
+							  { "text":"{km-imeeting:kmImeeting.porlet.Emcc.my}", "value":"myEmcee" },
+							  { "text":"{km-imeeting:kmImeeting.porlet.Sum.my}", "value":"mySummary" }],
+	               "showType":"checkbox",
+                }
+			</var>
+		</vars>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/imeeting" />
+	    </operations>
+	</portlet>
+	
+	<!-- 我的会议 (可配置题头)-->
+	<portlet
+		id="km.imeeting.my.attend"
+		name="{km-imeeting:kmImeeting.porlet.meetings.my}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{km-imeeting:kmImeeting.portlet.list.description}">
+		<source format="sys.ui.listtable" type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/imeeting/km_imeeting_main/kmImeetingMainPortlet.do?method=listPortlet&rowsize=!{rowsize}&type=!{type}&scope=!{scope}&datetype=!{datetype}&dataview=listtable"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"fdId"},{"title":"会议名称","property":"docSubject"},{"title":"会议时间","property":"fdHoldDate","headerClass":"width250"},{"title":"会议地点","property":"fdHoldPlace"},{"props":"fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docDept.fdName;docStatus"}],"datas":[[{"col":"fdId","value":"16f7f27e73aaad7d4a3d0e841828bba5"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">2020年企业云栖大会<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2020-02-29 19:00 ~\r\n\t\t   2020-03-01 18:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"星河湾演播厅"}],[{"col":"fdId","value":"16f7f27e73aaad7d4a3d0e841828bba5"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">关于复工返潮期间做好新冠疫情防控措施会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2020-02-08 19:00 ~\r\n\t\t   2020-02-08 23:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"402会议室"}],[{"col":"fdId","value":"16f7f27e73aaad7d4a3d0e841828bba5"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">防疫新冠疫情管控措施重要会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2020-01-24 19:00 ~\r\n\t\t   2020-01-24 23:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"402会议室"}],[{"col":"fdId","value":"16f7f27e73aaad7d4a3d0e841828bba5"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">开发区化工园区认定部门动员会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2020-01-07 19:00 ~\r\n\t\t   2020-01-10 18:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"402会议室"}],[{"col":"fdId","value":"16f7f227b0c5361126335f74d4d82259"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">市工商局2019年局长办公会会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2020-01-07 17:00 ~\r\n\t\t   2020-01-10 18:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"1050民评中心"}],[{"col":"fdId","value":"16f7e045549ba145dc5d0f748b0a555c"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">银行召开2019年集团经营分析会议（演示）<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2020-01-07 15:00 ~\r\n\t\t   2020-01-23 01:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"101会议室"}],[{"col":"fdId","value":"16f4001525c1aa0425dd0ec4879a2cb5"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">召开2019年集团经营分析会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-12-26 15:00 ~\r\n\t\t   2019-12-27 20:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"101会议室"}],[{"col":"fdId","value":"16eb0e53653624fd3c06f7b42e5aabb6"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">控股召开2019年集团经营分析会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-11-29 13:30 ~\r\n\t\t   2019-11-29 19:30","styleClass":"width250"},{"col":"fdHoldPlace","value":"101会议室"}],[{"col":"fdId","value":"16eaff8bb2d7a44b2bca5b143549f0e6"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">召开劳动法律法规专项培训第二次会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-11-29 09:00 ~\r\n\t\t   2019-11-29 10:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"101会议室"}],[{"col":"fdId","value":"16ea7528286d948463c2138402181c2e"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">军民融合项目推进座谈会<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-11-26 21:00 ~\r\n\t\t   2019-11-27 23:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"403会议室"}],[{"col":"fdId","value":"16ea6c5e5e7ba0d8b80ce5943f29c3f0"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">召开劳动法律法规专项培训会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-11-26 18:00 ~\r\n\t\t   2019-11-28 19:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"101会议室"}],[{"col":"fdId","value":"16ea64a048b100b03913f8a4d55b63a3"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">召开不忘初心、牢记使命主题教育工作第一次会议<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-11-26 16:00 ~\r\n\t\t   2019-11-27 20:02","styleClass":"width250"},{"col":"fdHoldPlace","value":"402会议室"}],[{"col":"fdId","value":"16e914a6df5a6eee4ca551a4565b6b48"},{"col":"docSubject","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">2019年工作总结会议（401会议室）三<\/a>","style":"text-align:left;min-width:100px"},{"col":"fdHoldDate","value":"2019-11-22 20:00 ~\r\n\t\t   2019-11-22 21:00","styleClass":"width250"},{"col":"fdHoldPlace","value":"101会议室"}]]}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{km-imeeting:kmImeeting.porlet.publishDate}" key="scope" kind="enumValue" default="no">
+	                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	                   "showType":"radio"
+	                  }
+	        </var>
+		    <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+		   	<var name="{km-imeeting:kmImeeting.porlet.meetings.datetype}" key="datetype" kind="enumValue" default="today">
+			  {    "values":[ { "text":"{km-imeeting:kmImeeting.porlet.meetings.type.today}", "value":"today" },
+							  { "text":"{km-imeeting:kmImeeting.porlet.meetings.type.tomorrow}", "value":"tomorrow" },
+							  { "text":"{km-imeeting:kmImeeting.porlet.meetings.type.afterDay}", "value":"afterDay" }],
+	               "showType":"radio",
+                }
+			</var>
+		    <var name="{km-imeeting:kmImeeting.porlet.meetings.my}" key="type" kind="enumValue" default="myAttend">
+			  {    "values":[ { "text":"{km-imeeting:kmImeeting.porlet.Attend.my}", "value":"myAttend" },
+							  { "text":"{km-imeeting:kmImeeting.porlet.Host.my}", "value":"myHost" },
+							  { "text":"{km-imeeting:kmImeeting.porlet.Emcc.my}", "value":"myEmcee" },
+							  { "text":"{km-imeeting:kmImeeting.porlet.Sum.my}", "value":"mySummary" }],
+	               "showType":"checkbox",
+                }
+			</var>
+		</vars>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/imeeting" />
+	    </operations>
+	</portlet>
+	
+	<!-- 会议纪要 (简单列表)-->
+	<portlet
+		id="km.imeeting.summary.classic"
+		name="{km-imeeting:table.kmImeetingSummary}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{portlet.list.desc1}">
+		<source format="sys.ui.classic" type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/imeeting/km_imeeting_summary/kmImeetingSummaryPortlet.do?method=listPortlet&scope=!{scope}&rowsize=!{rowsize}&type=!{type}&fdCategoryId=!{cateid}&dataview=classic"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"企业云栖大会会议纪要（第11次）","created":"2020-02-29","creator":"王泽烽","catename":"科技峰会","catehref":"#","href":"#"},{"text":"关于复工返潮期间做好新冠疫情防控措施会会议纪要（第3次）","created":"2020-02-08","creator":"王泽烽","catename":"社区安全会","catehref":"#","href":"#"},{"text":"卫建委防疫新冠疫情管控措施会会议纪要（第5次）","created":"2020-01-24","creator":"王泽烽","catename":"社区安全会","catehref":"#","href":"#"},{"text":"市工商局2017年局长办公会会议纪要（第11次）","created":"2020-01-07","creator":"王泽烽","catename":"局长办公会","catehref":"#","href":"#"},{"text":"市体育局召开2016年度工作总结布置会议","created":"2020-01-07","creator":"王泽烽","catename":"工作布置会","catehref":"#","href":"#"},{"text":"园区认定部门动员会议纪要（第58次）","created":"2020-01-07","creator":"王泽烽","catename":"全体单位动员会议","catehref":"#","href":"#"},{"text":"举办生产经营单位负责人集中约谈暨量化考核培训会","created":"2020-01-07","creator":"王泽烽","catename":"全体单位动员会议","catehref":"#","href":"#"},{"text":"市广播电视台关于领导分工党组会议纪要","created":"2020-01-07","creator":"王泽烽","catename":"常务会议","catehref":"#","href":"#"},{"text":"市工商局2017年局长办公会会议纪要（第10次）","created":"2020-01-07","creator":"王泽烽","catename":"局长办公会","catehref":"#","href":"#"},{"text":"经济开发区重点工程项目调度会议纪要","created":"2020-01-07","creator":"王泽烽","catename":"常务会议","catehref":"#","href":"#"},{"text":"召开不忘初心、牢记使命主题教育工作第一次会议","created":"2019-11-28","creator":"王泽烽","catename":"常务会议","catehref":"#","href":"#"},{"text":"2019年工作总结会议（401会议室）三","created":"2019-11-26","creator":"王泽烽","catename":"经营会议","catehref":"#","href":"#"},{"text":"部门经营会议-会议纪要","created":"2019-10-17","creator":"谢宇冶","catename":"部门例会","catehref":"#","href":"#"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{km-imeeting:kmImeeting.porlet.publishDate}" key="scope" kind="enumValue" default="no">
+                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+                   "showType":"radio"
+                  }
+	        </var>
+	        <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+	        <var name="{km-imeeting:kmImeetingSummary.summary.type}" key="type" kind="enumValue" default="all">
+			  {    "values":[ { "text":"{km-imeeting:kmImeetingSummary.summary.all}", "value":"all" },
+							  { "text":"{km-imeeting:kmImeetingSummary.summary.myCreate}", "value":"myCreate" },
+							  { "text":"{km-imeeting:kmImeetingSummary.summary.myApproval}", "value":"unExecuted" },
+							  { "text":"{km-imeeting:kmImeetingSummary.summary.myApproved}", "value":"executed" }],
+	               "showType":"radio",
+              }
+			</var>
+			<var
+				name="{portlet.cate}"
+				key="cateid"
+				kind="sys.category">
+				{"model":"com.landray.kmss.km.imeeting.model.KmImeetingTemplate","name":"选择分类"}
+			</var>
+	  </vars>
+	  <operations>
+	    <operation
+			name="{operation.create}"
+			type="create"
+			href="/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=add" />
+		<operation
+			name="{operation.more}"
+			type="more"
+			href="/km/imeeting/#j_path=/myHandleSummary&amp;except=docStatus:00&amp;cri.q=fdTemplate:!{cateid}" />
+    	</operations>
+	</portlet>
+	
+	<!-- 会议纪要 (可配置题头)-->
+	<portlet
+		id="km.imeeting.summary.listtable"
+		name="{km-imeeting:table.kmImeetingSummary}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{km-imeeting:kmImeeting.portlet.list.description}">
+		<source format="sys.ui.listtable" type="AjaxJson">
+			<code>
+			<![CDATA[
+				{
+					"url":"/km/imeeting/km_imeeting_summary/kmImeetingSummaryPortlet.do?method=listPortlet&scope=!{scope}&rowsize=!{rowsize}&type=!{type}&fdCategoryId=!{cateid}&dataview=listtable"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"fdId"},{"title":"会议名称","property":"fdName"},{"title":"纪要人员","property":"docCreator.fdName","headerStyle":"width:80px"},{"title":"会议时间","property":"fdDate","headerStyle":"width:135px;"},{"title":"会议类型","property":"fdTemplate.fdName","headerStyle":"width:150px"},{"props":"fdName;fdHost;fdPlace;fdDate;fdHoldDate;fdFinishDate;docCreator.fdName;docCreateTime"}],"datas":[[{"col":"fdId","value":""},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">企业云栖大会会议纪要（第11次）<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2020-02-29"},{"col":"fdTemplate.fdName","value":"科技峰会"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}],[{"col":"fdId","value":""},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">关于复工返潮期间做好新冠疫情防控措施会会议纪要（第3次）<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2020-02-08"},{"col":"fdTemplate.fdName","value":"社区安全会"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}],[{"col":"fdId","value":""},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">防疫新冠疫情管控措施重要会议会议纪要（第5次）<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2020-01-24"},{"col":"fdTemplate.fdName","value":"社区安全会"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}],[{"col":"fdId","value":"16f7f165a521800fc0e4111448388bc7"},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">市工商局2017年局长办公会会议纪要（第11次）<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2020-01-07"},{"col":"fdTemplate.fdName","value":"局长办公会"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}],[{"col":"fdId","value":"16f7f0f56e28882144b4db3426a9adac"},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">市体育局召开2016年度工作总结布置会议<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2020-01-07"},{"col":"fdTemplate.fdName","value":"工作布置会"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}],[{"col":"fdId","value":"16f7f0d180bb81b7d5b71c74844b13e1"},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">园区认定部门动员会议纪要（第58次）<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2020-01-07"},{"col":"fdTemplate.fdName","value":"全体单位动员会议"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}],[{"col":"fdId","value":"16f7f0b48fd7b3b16a8722d4d3f8afa4"},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">举办生产经营单位负责人集中约谈暨量化考核培训会<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2020-01-07"},{"col":"fdTemplate.fdName","value":"全体单位动员会议"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}],[{"col":"fdId","value":"16f7f0a2bf4065335496d8f4dd9aaf08"},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">市广播电视台关于领导分工党组会议纪要<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2020-01-07"},{"col":"fdTemplate.fdName","value":"常务会议"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}],[{"col":"fdId","value":"16f7f084a272e5db18ad2404a9d95167"},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">市工商局2017年局长办公会会议纪要（第10次）<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2020-01-07"},{"col":"fdTemplate.fdName","value":"局长办公会"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}],[{"col":"fdId","value":"16f7f054d14ae836913ce474ff6a7d18"},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">经济开发区重点工程项目调度会议纪要<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2020-01-07"},{"col":"fdTemplate.fdName","value":"常务会议"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}],[{"col":"fdId","value":"16eb1c8593389de131c57984f42a2fe1"},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">召开不忘初心、牢记使命主题教育工作第一次会议<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2019-11-28"},{"col":"fdTemplate.fdName","value":"常务会议"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}],[{"col":"fdId","value":"16ea575885acb3d4aa1107c48c781879"},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">2019年工作总结会议（401会议室）三<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2019-11-26"},{"col":"fdTemplate.fdName","value":"经营会议"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}],[{"col":"fdId","value":"16dd9b422e69f9151e191f54337a4652"},{"col":"fdName","value":"<a class=\"com_subject textEllipsis\" title=\"\" href=\"#\" target=\"_blank\">部门经营会议-会议纪要<\/a>","style":"text-align:left;min-width:150px;"},{"col":"docCreator.fdName","value":"<a class=\"com_author\" href=\"#\">王泽烽</a>"},{"col":"fdDate","value":"2019-10-17"},{"col":"fdTemplate.fdName","value":"部门例会"},{"col":"href","value":"#"},{"col":"target","value":"_blank"}]]}
+					]]>
+				</code>
+			</example>
+		</source>
+		<vars>
+			<var name="{km-imeeting:kmImeeting.porlet.publishDate}" key="scope" kind="enumValue" default="no">
+                 {  "values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+                              { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+                              { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+                              { "text":"{portlet.var.date.oneYear}", "value":"year"},
+                              { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+                   "showType":"radio"
+                  }
+	        </var>
+	        <var name="{portlet.rowsize}" key="rowsize" kind="rowsize" />
+	        <var name="{km-imeeting:kmImeetingSummary.summary.type}" key="type" kind="enumValue" default="all">
+			  {    "values":[ { "text":"{km-imeeting:kmImeetingSummary.summary.all}", "value":"all" },
+							  { "text":"{km-imeeting:kmImeetingSummary.summary.myCreate}", "value":"myCreate" },
+							  { "text":"{km-imeeting:kmImeetingSummary.summary.myApproval}", "value":"unExecuted" },
+							  { "text":"{km-imeeting:kmImeetingSummary.summary.myApproved}", "value":"executed" }],
+	               "showType":"radio",
+              }
+			</var>
+			<var
+				name="{portlet.cate}"
+				key="cateid"
+				kind="sys.category">
+				{"model":"com.landray.kmss.km.imeeting.model.KmImeetingTemplate","name":"选择分类"}
+			</var>
+	  </vars>
+	  <operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				href="/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				href="/km/imeeting/#j_path=/myHandleSummary&amp;except=docStatus:00&amp;cri.q=fdTemplate:!{cateid}" />
+	    </operations>
+	</portlet>
+	
+	<!-- 以下为支持cloud数据源 -->
+	<!-- 所有会议 (简单列表)-->
+	<portlet
+		id="km.imeeting.all.classic"
+		name="{km-imeeting:kmImeeting.tree.meeting.allMeeting.list}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{portlet.list.desc1}"
+		forSystem="cloud"
+		varExtend="km.imeeting.all.classic">
+		<source id="km-imeeting.allClassic" format="data.list" type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-imeeting/kmImeetingMainPortlet/listPortlet?rowsize=!{rowsize}&scope=!{scope}&dataview=classic"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"产品质量部周例会","created":"1566903444166","creator":{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"},"cateName":"产品质量部会议","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:16b204e4436cd745265d3224c898e50a","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b205d00c18e68532b5ae1420891f36","statusInfo":"进行中","statusColor":"primary"},{"text":"专项测试会议","created":"1566903444166","creator":{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"},"cateName":"产品质量部会议","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:16b204e4436cd745265d3224c898e50a","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b208acb935b72332adeb74653b14cf","statusInfo":"已召开","statusColor":"info"},{"text":"国开金融参观交流","created":"1566903444166","statusInfo":"未召开","statusColor":"success","creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"place":"大培训室","cateName":"金融投资","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:14c0d9ae2234f534f95a7b04cc89673a","placeName":"大培训室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c98e7e03fc01ebfed04d24963ba4b5"},{"text":"18年产品半年会","created":"1566903444166","statusInfo":"已召开","statusColor":"info","creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"place":"403会议室","cateName":"公司会议管理","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:14c0d966aa5df014911ca3343d09b451","placeName":"403会议室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c478898e472b542a72f87422384861"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				mobileHref="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add"
+				href="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/imeeting/mobile"
+				href="/km/imeeting" />
+	    </operations>
+	</portlet>
+	<!-- 所有会议 (简单列表) new-->
+	<portlet
+			id="km.imeeting.all.classic.new"
+			name="{km-imeeting:kmImeeting.tree.meeting.allMeeting.list.new}"
+			module="{km-imeeting:module.km.imeeting}"
+			description="{portlet.list.desc1}"
+			forSystem="cloud"
+			varExtend="km.imeeting.all.classic">
+		<source id="km-imeeting.allClassic.new" format="data.fieldlist" type="json">
+			<code>
+				<![CDATA[
+				{
+					"url":"/data/km-imeeting/kmImeetingMainPortlet/listPortlet?rowsize=!{rowsize}&scope=!{scope}&dataview=classic&isNew=true"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+					[{"text":"产品质量部周例会","created":{"text":1566903444166},"creator":{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"},"cateName":{"text":"产品质量部会议","href":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:16b204e4436cd745265d3224c898e50a"},"href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b205d00c18e68532b5ae1420891f36","statusInfo":{"text":"进行中","color":"primary"}},{"text":"专项测试会议","created":{"text":1566903444166},"creator":{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"},"cateName":{"text":"产品质量部会议","href":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:16b204e4436cd745265d3224c898e50a"},"href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b208acb935b72332adeb74653b14cf","statusInfo":{"text":"已召开","color":"info"}},{"text":"国开金融参观交流","created":{"text":1566903444166},"statusInfo":{"text":"未召开","color":"success"},"creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"place":"大培训室","cateName":{"text":"金融投资","href":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:14c0d9ae2234f534f95a7b04cc89673a"},"placeName":"大培训室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c98e7e03fc01ebfed04d24963ba4b5"},{"text":"18年产品半年会","created":{"text":1566903444166},"statusInfo":{"text":"已召开","color":"info"},"creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"place":"403会议室","cateName":{"text":"公司会议管理","href":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:14c0d966aa5df014911ca3343d09b451"},"placeName":"403会议室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c478898e472b542a72f87422384861"}]
+					]]>
+				</code>
+			</example>
+			<dataFields>
+				<code>
+					<![CDATA[
+						 {
+						   "base": {
+						   "label": "基础信息",
+						   "items": [
+							{"key": "statusInfo", "text": "状态"}
+						   ]
+						   },
+						   "info": {
+						   "label": "辅助信息",
+						   "items": [
+							{"key": "created", "text": "创建时间", "type": "timestamp"},
+							{"key": "creator", "text": "作者", "type": "person"},
+							{"key": "cateName", "text": "分类", "type": "string"},
+							{"key": "place", "text": "地点", "type": "string"}
+						   ]
+						   },
+						   "tag": {
+						   "label": "标签",
+						   "items": []
+						   }
+						 }
+					]]>
+				</code>
+			</dataFields>
+		</source>
+		<operations>
+			<operation
+					name="{operation.create}"
+					type="create"
+					mobileHref="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add"
+					href="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add" />
+			<operation
+					name="{operation.more}"
+					type="more"
+					mobileHref="/km/imeeting/mobile"
+					href="/km/imeeting" />
+		</operations>
+	</portlet>
+	<!-- 所有会议 (可配置题头)-->
+	<portlet
+		id="km.imeeting.all.listtable"
+		name="{km-imeeting:kmImeeting.tree.meeting.allMeeting.table}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{km-imeeting:kmImeeting.portlet.list.description}"
+		forSystem="cloud"
+		varExtend="km.imeeting.all.listtable">
+		<source id="km-imeeting.allListtable" format="data.table" type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-imeeting/kmImeetingMainPortlet/listPortlet?rowsize=!{rowsize}&scope=!{scope}&dataview=listtable"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"fdId","renderType":"hidden"},{"property":"docSubject","title":"会议名称"},{"property":"fdHoldDate","title":"召开时间"},{"property":"fdFinishDate","title":"结束时间"},{"property":"fdHoldPlace","title":"会议地点"}],"data":[{"href":null,"cells":[{"col":"fdId","value":"16b205d00c18e68532b5ae1420891f36"},{"col":"docSubject","value":"产品质量部周例会","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b205d00c18e68532b5ae1420891f36"},{"col":"fdHoldDate","value":"2019-06-10 14:00"},{"col":"fdFinishDate","value":"2019-06-10 15:00"},{"col":"fdHoldPlace","value":"401会议室"}]},{"href":null,"cells":[{"col":"fdId","value":"16b208acb935b72332adeb74653b14cf"},{"col":"docSubject","value":"专项测试会议","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b208acb935b72332adeb74653b14cf"},{"col":"fdHoldDate","value":"2019-06-04 12:00"},{"col":"fdFinishDate","value":"2019-06-04 13:00"},{"col":"fdHoldPlace","value":"404会议室"}]},{"href":null,"cells":[{"col":"fdId","value":"16c9874fc82b3d3a3e79ce74550bb9a1"},{"col":"docSubject","value":"项目会议","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c9874fc82b3d3a3e79ce74550bb9a1"},{"col":"fdHoldDate","value":"2019-08-16 11:31 ~ 2019-08-23 13:00"},{"col":"fdHoldPlace","value":"民生金融大厦"}]},{"href":null,"cells":[{"col":"fdId","value":"16c4b1709a0b7cb094abb6f47e28fbf1"},{"col":"docSubject","value":"KMS研发周例会","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c4b1709a0b7cb094abb6f47e28fbf1"},{"col":"fdHoldDate","value":"2019-08-01 11:00"},{"col":"fdFinishDate","value":"2019-08-01 12:00"},{"col":"fdHoldPlace","value":"402会议室"}]}]}
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				mobileHref="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add"
+				href="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/imeeting/mobile"
+				href="/km/imeeting" />
+	    </operations>
+	</portlet>
+	<!-- 所有会议 (事宜)-->
+	<portlet
+		id="km.imeeting.all.listmatter"
+		name="{km-imeeting:kmImeeting.tree.meeting.allMeeting.matter}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{km-imeeting:kmImeeting.portlet.list.description}"
+		forSystem="cloud"
+		varExtend="km.imeeting.all.classic">
+		<source id="km-imeeting.allListmatter" format="data.list.matter" type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-imeeting/kmImeetingMainPortlet/listPortlet?rowsize=!{rowsize}&scope=!{scope}&dataview=classic"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"coremail技术交流会","created":"1566903444166","creator":{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"},"person":[{"fdId":"16b1be30221806292b1765e4633942cd","fdName":"应用集成部"}],"cateName":"公司会议管理","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:16b204e4436cd745265d3224c898e50a","placeName":"401会议室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b205d00c18e68532b5ae1420891f36","statusInfo":"进行中","statusColor":"primary"},{"text":"专项测试会议","created":"1566903444166","creator":{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"},"person":[{"fdId":"16b1be4126934e822461cc04cb3ae04e","fdName":"mlx01","fdLoginName":"mlx01","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be4126934e822461cc04cb3ae04e"},{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"郑超","fdLoginName":"zhengc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"}],"cateName":"产品质量部会议","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:16b204e4436cd745265d3224c898e50a","placeName":"404会议室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b208acb935b72332adeb74653b14cf","statusInfo":"已召开","statusColor":"info"},{"text":"国开金融参观交流","created":"1566903444166","statusInfo":"未召开","statusColor":"success","creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"person":[{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},{"fdId":"16b64263f8736d286b830a14ba19dd30","fdName":"冯天源","fdLoginName":"fengty","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b64263f8736d286b830a14ba19dd30"},{"fdId":"16b641e86e9766395a34bba4fd3bb77f","fdName":"欧阳天晓","fdLoginName":"ouyantx","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b641e86e9766395a34bba4fd3bb77f"}],"place":"大培训室","cateName":"金融投资","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:14c0d9ae2234f534f95a7b04cc89673a","placeName":"大培训室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c98e7e03fc01ebfed04d24963ba4b5"},{"text":"18年产品半年会","created":"1566903444166","statusInfo":"已召开","statusColor":"info","creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"person":[{"fdId":"16bc2030d890a4a1e471c03477095851","fdName":"yuxd005","fdLoginName":"yuxd005","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16bc2030d890a4a1e471c03477095851"},{"fdId":"16bc202b24e34a107d3d50948f58725f","fdName":"yuxd004","fdLoginName":"yuxd004","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16bc202b24e34a107d3d50948f58725f"},{"fdId":"16bb19328e7f06243f01e5a473faa76c","fdName":"蔡兵兵","fdLoginName":"caibb","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16bb19328e7f06243f01e5a473faa76c"},{"fdId":"16babefd263465370e30a804df1bef98","fdName":"陈奕迅","fdLoginName":"chenyx","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16babefd263465370e30a804df1bef98"},{"fdId":"16b688935e61e258e5990084b829107b","fdName":"李尚志","fdLoginName":"lishangz","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b688935e61e258e5990084b829107b"}],"place":"403会议室","cateName":"公司会议管理","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:14c0d966aa5df014911ca3343d09b451","placeName":"403会议室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c478898e472b542a72f87422384861"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				mobileHref="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add"
+				href="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/imeeting/mobile"
+				href="/km/imeeting" />
+	    </operations>
+	</portlet>
+	<!-- 我的会议 (事宜)-->
+	<portlet
+		id="km.imeeting.my.attend.listmatter"
+		name="{km-imeeting:kmImeeting.porlet.meetings.my.matter}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{portlet.list.desc1}"
+		forSystem="cloud"
+		varExtend="km.imeeting.my.attend.classic">
+		<source id="km-imeeting.myAttendListmatter" format="data.list.matter" type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-imeeting/kmImeetingMainPortlet/listPortlet?rowsize=!{rowsize}&type=!{type}&scope=!{scope}&datetype=!{datetype}&dataview=classic"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"coremail技术交流会","created":"1566903444166","creator":{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"},"person":[{"fdId":"16b1be30221806292b1765e4633942cd","fdName":"应用集成部"}],"cateName":"公司会议管理","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:16b204e4436cd745265d3224c898e50a","placeName":"401会议室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b205d00c18e68532b5ae1420891f36","statusInfo":"进行中","statusColor":"primary"},{"text":"专项测试会议","created":"1566903444166","creator":{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"},"person":[{"fdId":"16b1be4126934e822461cc04cb3ae04e","fdName":"mlx01","fdLoginName":"mlx01","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be4126934e822461cc04cb3ae04e"},{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"mlx","fdLoginName":"mlx","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"}],"cateName":"产品质量部会议","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:16b204e4436cd745265d3224c898e50a","placeName":"404会议室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b208acb935b72332adeb74653b14cf","statusInfo":"已召开","statusColor":"info"},{"text":"国开金融参观交流","created":"1566903444166","statusInfo":"未召开","statusColor":"success","creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"person":[{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},{"fdId":"16b64263f8736d286b830a14ba19dd30","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b64263f8736d286b830a14ba19dd30"},{"fdId":"16b641e86e9766395a34bba4fd3bb77f","fdName":"欧阳天晓","fdLoginName":"ouyantx","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b641e86e9766395a34bba4fd3bb77f"}],"place":"大培训室","cateName":"金融投资","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:14c0d9ae2234f534f95a7b04cc89673a","placeName":"大培训室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c98e7e03fc01ebfed04d24963ba4b5"},{"text":"18年产品半年会","created":"1566903444166","statusInfo":"已召开","statusColor":"info","creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"person":[{"fdId":"16bc202b24e34a107d3d50948f58725f","fdName":"唐超","fdLoginName":"tangc","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16bc202b24e34a107d3d50948f58725f"},{"fdId":"16bb19328e7f06243f01e5a473faa76c","fdName":"蔡兵兵","fdLoginName":"caibb","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16bb19328e7f06243f01e5a473faa76c"},{"fdId":"16babefd263465370e30a804df1bef98","fdName":"陈奕迅","fdLoginName":"chenyx","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16babefd263465370e30a804df1bef98"},{"fdId":"16b688935e61e258e5990084b829107b","fdName":"李尚志","fdLoginName":"lishangz","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b688935e61e258e5990084b829107b"}],"place":"403会议室","cateName":"公司会议管理","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:14c0d966aa5df014911ca3343d09b451","placeName":"403会议室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c478898e472b542a72f87422384861"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				mobileHref="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add"
+				href="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/imeeting/mobile"
+				href="/km/imeeting" />
+	    </operations>
+	</portlet>
+	<!-- 我的会议 (简单列表)-->
+	<portlet
+		id="km.imeeting.my.attend.classic"
+		name="{km-imeeting:kmImeeting.porlet.meetings.my.list}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{portlet.list.desc1}"
+		forSystem="cloud"
+		varExtend="km.imeeting.my.attend.classic">
+		<source id="km-imeeting.myAttendClassic" format="data.list" type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-imeeting/kmImeetingMainPortlet/listPortlet?rowsize=!{rowsize}&type=!{type}&scope=!{scope}&datetype=!{datetype}&dataview=classic"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"产品质量部周例会","created":"1566903444166","creator":{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"},"cateName":"产品质量部会议","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:16b204e4436cd745265d3224c898e50a","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b205d00c18e68532b5ae1420891f36","statusInfo":"进行中","statusColor":"primary"},{"text":"专项测试会议","created":"1566903444166","creator":{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"},"cateName":"产品质量部会议","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:16b204e4436cd745265d3224c898e50a","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b208acb935b72332adeb74653b14cf","statusInfo":"已召开","statusColor":"info"},{"text":"国开金融参观交流","created":"1566903444166","statusInfo":"未召开","statusColor":"success","creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"place":"大培训室","cateName":"金融投资","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:14c0d9ae2234f534f95a7b04cc89673a","placeName":"大培训室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c98e7e03fc01ebfed04d24963ba4b5"},{"text":"18年产品半年会","created":"1566903444166","statusInfo":"已召开","statusColor":"info","creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"place":"403会议室","cateName":"公司会议管理","cateHref":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:14c0d966aa5df014911ca3343d09b451","placeName":"403会议室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c478898e472b542a72f87422384861"}]
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				mobileHref=""
+				href="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/imeeting"
+				href="/km/imeeting" />
+	    </operations>
+	</portlet>
+	<!-- 我的会议 (简单列表) new-->
+	<portlet
+			id="km.imeeting.my.attend.classic.new"
+			name="{km-imeeting:kmImeeting.porlet.meetings.my.list.new}"
+			module="{km-imeeting:module.km.imeeting}"
+			description="{portlet.list.desc1}"
+			forSystem="cloud"
+			varExtend="km.imeeting.my.attend.classic">
+		<source id="km-imeeting.myAttendClassic.new" format="data.fieldlist" type="json">
+			<code>
+				<![CDATA[
+				{
+					"url":"/data/km-imeeting/kmImeetingMainPortlet/listPortlet?rowsize=!{rowsize}&type=!{type}&scope=!{scope}&datetype=!{datetype}&dataview=classic&isNew=true"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"产品质量部周例会","created":{"text":1566903444166},"creator":{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"},"cateName":{"text":"产品质量部会议","href":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:16b204e4436cd745265d3224c898e50a"},"href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b205d00c18e68532b5ae1420891f36","statusInfo":{"text":"进行中","color":"primary"}},{"text":"专项测试会议","created":{"text":1566903444166},"creator":{"fdId":"16b1be478d7d58e609c940945d187af0","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16b1be478d7d58e609c940945d187af0"},"cateName":{"text":"产品质量部会议","href":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:16b204e4436cd745265d3224c898e50a"},"href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b208acb935b72332adeb74653b14cf","statusInfo":{"text":"已召开","color":"info"}},{"text":"国开金融参观交流","created":{"text":1566903444166},"statusInfo":{"text":"未召开","color":"success"},"creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"place":"大培训室","cateName":{"text":"金融投资","href":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:14c0d9ae2234f534f95a7b04cc89673a"},"placeName":"大培训室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c98e7e03fc01ebfed04d24963ba4b5"},{"text":"18年产品半年会","created":{"text":1566903444166},"statusInfo":{"text":"已召开","color":"info"},"creator":{"fdId":"16a8bf9fefce4086f98098e4eb48e1e2","fdName":"陈俊耀","fdLoginName":"chenjy","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=16a8bf9fefce4086f98098e4eb48e1e2"},"place":"403会议室","cateName":{"text":"公司会议管理","href":"/km/imeeting/index.jsp?#j_path=/kmImeeting_fixed&cri.q=fdTemplate:14c0d966aa5df014911ca3343d09b451"},"placeName":"403会议室","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16c478898e472b542a72f87422384861"}]
+					]]>
+				</code>
+			</example>
+			<dataFields>
+				<code>
+					<![CDATA[
+						 {
+						   "base": {
+						   "label": "基础信息",
+						   "items": [
+							{"key": "statusInfo", "text": "状态"}
+						   ]
+						   },
+						   "info": {
+						   "label": "辅助信息",
+						   "items": [
+							{"key": "created", "text": "创建时间", "type": "timestamp"},
+							{"key": "creator", "text": "作者", "type": "person"},
+							{"key": "cateName", "text": "分类", "type": "string"}
+						   ]
+						   },
+						   "tag": {
+						   "label": "标签",
+						   "items": []
+						   }
+						 }
+					]]>
+				</code>
+			</dataFields>
+		</source>
+		<operations>
+			<operation
+					name="{operation.create}"
+					type="create"
+					mobileHref=""
+					href="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add" />
+			<operation
+					name="{operation.more}"
+					type="more"
+					mobileHref="/km/imeeting"
+					href="/km/imeeting" />
+		</operations>
+	</portlet>
+	<!-- 我的会议 (可配置题头)-->
+	<portlet
+		id="km.imeeting.my.attend"
+		name="{km-imeeting:kmImeeting.porlet.meetings.my.table}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{km-imeeting:kmImeeting.portlet.list.description}"
+		forSystem="cloud"
+		varExtend="km.imeeting.my.attend">
+		<source id="km-imeeting.myAttend" format="data.table" type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-imeeting/kmImeetingMainPortlet/listPortlet?rowsize=!{rowsize}&type=!{type}&scope=!{scope}&datetype=!{datetype}&dataview=listtable"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"fdId","renderType":"hidden"},{"property":"docSubject","title":"会议名称"},{"property":"fdHoldDate","title":"召开时间"},{"property":"fdFinishDate","title":"结束时间"},{"property":"fdHoldPlace","title":"会议地点"}],"data":[{"href":null,"cells":[{"col":"fdId","value":"16b205d00c18e68532b5ae1420891f36"},{"col":"docSubject","value":"产品质量部周例会","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b205d00c18e68532b5ae1420891f36"},{"col":"fdHoldDate","value":"2019-06-10 14:00"},{"col":"fdFinishDate","value":"2019-06-10 15:00"},{"col":"fdHoldPlace","value":"401会议室"}]},{"href":null,"cells":[{"col":"fdId","value":"16b208acb935b72332adeb74653b14cf"},{"col":"docSubject","value":"专项测试会议","href":"/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=view&fdId=16b208acb935b72332adeb74653b14cf"},{"col":"fdHoldDate","value":"2019-06-04 12:00"},{"col":"fdFinishDate","value":"2019-06-04 13:00"},{"col":"fdHoldPlace","value":"404会议室"}]}]}
+					]]>
+				</code>
+			</example>
+		</source>
+		<operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				mobileHref="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add"
+				href="/km/imeeting/km_imeeting_main/kmImeetingMain.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/imeeting/mobile"
+				href="/km/imeeting" />
+	    </operations>
+	</portlet>
+	<!-- 会议纪要 (简单列表)-->
+	<portlet
+		id="km.imeeting.summary.classic"
+		name="{km-imeeting:kmImeetingSummary.portlet.list}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{portlet.list.desc1}"
+		forSystem="cloud"
+		varExtend="km.imeeting.summary.classic">
+		<source id="km-imeeting.summaryClassic" format="data.list" type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-imeeting/kmImeetingSummaryPortlet/listPortlet?scope=!{scope}&rowsize=!{rowsize}&type=!{type}&fdCategoryId=!{cateid}&dataview=classic"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"产品研发中心-蓝凌戈壁挑战赛分享&培训","created":"1559301300000","statusInfo":"进行中","statusColor":"success","creator":{"fdId":"123c068aa589eb1efaa4f2548b987d79","fdName":"刘丽娜","fdLoginName":"liuln","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=123c068aa589eb1efaa4f2548b987d79"},"cateName":"中心会议","cateHref":"/km/imeeting/#j_path=/myHandleSummary&cri.q=fdTemplate:14d9ecfb35f823dfbbe477544d5ad836","href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=16b0dea2bf31a1403cd837c44f0a1827"},{"text":"蓝锐公司半年度会议纪要","created":"1564053300000","statusInfo":"进行中","statusColor":"success","creator":{"fdId":"1646404e6f5cfa84e05beda40828dc2e","fdName":"邱思睿","fdLoginName":"qiusr","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=1646404e6f5cfa84e05beda40828dc2e"},"cateName":"中心会议","cateHref":"/km/imeeting/#j_path=/myHandleSummary&cri.q=fdTemplate:14d9ecfb35f823dfbbe477544d5ad836","href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=164d02b2e7b5f00ccf6164c4b40bae18"},{"text":"蓝锐公司半年度会议纪要","created":"1563448500000","statusInfo":"进行中","statusColor":"success","creator":{"fdId":"1646404e6f5cfa84e05beda40828dc2e","fdName":"邱思睿","fdLoginName":"qiusr","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=1646404e6f5cfa84e05beda40828dc2e"},"cateName":"部门会议","cateHref":"/km/imeeting/#j_path=/myHandleSummary&cri.q=fdTemplate:14d9ecf4081da1a4b2d5b4349b3a43ac","href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=164acdb8f09e557c98387194c83b7dad"},{"text":"ETS部门会议纪要20170724","created":"1564485300000","statusInfo":"进行中","statusColor":"success","creator":{"fdId":"154ffa88da95c1f0a7a0dfd44d3b419d","fdName":"孙乐","fdLoginName":"sunle","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=154ffa88da95c1f0a7a0dfd44d3b419d"},"cateName":"部门会议","cateHref":"/km/imeeting/#j_path=/myHandleSummary&cri.q=fdTemplate:14d9ecf4081da1a4b2d5b4349b3a43ac","href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=15d9355f73bc6a35a4ced8a48379c906"},{"text":"ETS部门会议纪要20170626","created":"1562238900000","statusInfo":"进行中","statusColor":"success","creator":{"fdId":"154ffa88da95c1f0a7a0dfd44d3b419d","fdName":"孙乐","fdLoginName":"sunle","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=154ffa88da95c1f0a7a0dfd44d3b419d"},"cateName":"部门会议","cateHref":"/km/imeeting/#j_path=/myHandleSummary&cri.q=fdTemplate:14d9ecf4081da1a4b2d5b4349b3a43ac","href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=15d0d2e1b8eb132691d1d304d3998d92"}]
+					]]>
+				</code>
+			</example>
+		</source>
+	  <operations>
+	    <operation
+			name="{operation.create}"
+			type="create"
+			mobileHref="/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=add"
+			href="/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=add" />
+		<operation
+			name="{operation.more}"
+			type="more"
+			mobileHref="/km/imeeting/mobile"
+			href="/km/imeeting/#j_path=/myHandleSummary&amp;except=docStatus:00&amp;cri.q=fdTemplate:!{cateid}" />
+    	</operations>
+	</portlet>
+	<!-- 会议纪要 (简单列表) new-->
+	<portlet
+			id="km.imeeting.summary.classic.new"
+			name="{km-imeeting:kmImeetingSummary.portlet.list.new}"
+			module="{km-imeeting:module.km.imeeting}"
+			description="{portlet.list.desc1}"
+			forSystem="cloud"
+			varExtend="km.imeeting.summary.classic">
+		<source id="km-imeeting.summaryClassic.new" format="data.fieldlist" type="json">
+			<code>
+				<![CDATA[
+				{
+					"url":"/data/km-imeeting/kmImeetingSummaryPortlet/listPortlet?scope=!{scope}&rowsize=!{rowsize}&type=!{type}&fdCategoryId=!{cateid}&dataview=classic&isNew=true"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"产品研发中心-蓝凌戈壁挑战赛分享&培训","created":{"text":1559301300000},"statusInfo":{"text":"进行中","color":"success"},"creator":{"fdId":"123c068aa589eb1efaa4f2548b987d79","fdName":"刘丽娜","fdLoginName":"liuln","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=123c068aa589eb1efaa4f2548b987d79"},"cateName":{"text":"中心会议","href":"/km/imeeting/#j_path=/myHandleSummary&cri.q=fdTemplate:14d9ecfb35f823dfbbe477544d5ad836"},"href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=16b0dea2bf31a1403cd837c44f0a1827"},{"text":"蓝锐公司半年度会议纪要","created":{"text":1564053300000},"statusInfo":{"text":"进行中","color":"success"},"creator":{"fdId":"1646404e6f5cfa84e05beda40828dc2e","fdName":"邱思睿","fdLoginName":"qiusr","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=1646404e6f5cfa84e05beda40828dc2e"},"cateName":{"text":"中心会议","href":"/km/imeeting/#j_path=/myHandleSummary&cri.q=fdTemplate:14d9ecfb35f823dfbbe477544d5ad836"},"href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=164d02b2e7b5f00ccf6164c4b40bae18"},{"text":"蓝锐公司半年度会议纪要","created":{"text":1563448500000},"statusInfo":{"text":"进行中","color":"success"},"creator":{"fdId":"1646404e6f5cfa84e05beda40828dc2e","fdName":"邱思睿","fdLoginName":"qiusr","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=1646404e6f5cfa84e05beda40828dc2e"},"cateName":{"text":"部门会议","href":"/km/imeeting/#j_path=/myHandleSummary&cri.q=fdTemplate:14d9ecf4081da1a4b2d5b4349b3a43ac"},"href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=164acdb8f09e557c98387194c83b7dad"},{"text":"ETS部门会议纪要20170724","created":{"text":1564485300000},"statusInfo":{"text":"进行中","color":"success"},"creator":{"fdId":"154ffa88da95c1f0a7a0dfd44d3b419d","fdName":"孙乐","fdLoginName":"sunle","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=154ffa88da95c1f0a7a0dfd44d3b419d"},"cateName":{"text":"部门会议","href":"/km/imeeting/#j_path=/myHandleSummary&cri.q=fdTemplate:14d9ecf4081da1a4b2d5b4349b3a43ac"},"href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=15d9355f73bc6a35a4ced8a48379c906"},{"text":"ETS部门会议纪要20170626","created":{"text":1562238900000},"statusInfo":{"text":"进行中","color":"success"},"creator":{"fdId":"154ffa88da95c1f0a7a0dfd44d3b419d","fdName":"孙乐","fdLoginName":"sunle","avatarUrl":"http://java.landray.com.cn/sys/person/image.jsp?personId=154ffa88da95c1f0a7a0dfd44d3b419d"},"cateName":{"text":"部门会议","href":"/km/imeeting/#j_path=/myHandleSummary&cri.q=fdTemplate:14d9ecf4081da1a4b2d5b4349b3a43ac"},"href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=15d0d2e1b8eb132691d1d304d3998d92"}]
+					]]>
+				</code>
+			</example>
+			<dataFields>
+				<code>
+					<![CDATA[
+						 {
+						   "base": {
+						   "label": "基础信息",
+						   "items": [
+							{"key": "statusInfo", "text": "状态"}
+						   ]
+						   },
+						   "info": {
+						   "label": "辅助信息",
+						   "items": [
+							{"key": "created", "text": "创建时间", "type": "timestamp"},
+							{"key": "creator", "text": "作者", "type": "person"},
+							{"key": "cateName", "text": "分类", "type": "string"}
+						   ]
+						   },
+						   "tag": {
+						   "label": "标签",
+						   "items": []
+						   }
+						 }
+					]]>
+				</code>
+			</dataFields>
+		</source>
+		<operations>
+			<operation
+					name="{operation.create}"
+					type="create"
+					mobileHref="/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=add"
+					href="/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=add" />
+			<operation
+					name="{operation.more}"
+					type="more"
+					mobileHref="/km/imeeting/mobile"
+					href="/km/imeeting/#j_path=/myHandleSummary&amp;except=docStatus:00&amp;cri.q=fdTemplate:!{cateid}" />
+		</operations>
+	</portlet>
+	<!-- 会议纪要 (可配置题头)-->
+	<portlet
+		id="km.imeeting.summary.listtable"
+		name="{km-imeeting:kmImeetingSummary.portlet.table}"
+		module="{km-imeeting:module.km.imeeting}"
+		description="{km-imeeting:kmImeeting.portlet.list.description}"
+		forSystem="cloud"
+		varExtend="km.imeeting.summary.listtable">
+		<source id="km-imeeting.summaryListtable" format="data.table" type="json">
+			<code>
+			<![CDATA[
+				{
+					"url":"/data/km-imeeting/kmImeetingSummaryPortlet/listPortlet?scope=!{scope}&rowsize=!{rowsize}&type=!{type}&fdCategoryId=!{cateid}&dataview=listtable"
+				}
+			]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						{"columns":[{"property":"fdId","renderType":"hidden"},{"property":"fdName","title":"会议名称"},{"property":"docCreator.fdName","title":"纪要人员"},{"property":"fdDate","title":"会议时间"},{"property":"fdTemplate.fdName","title":"会议类型"}],"data":[{"href":null,"cells":[{"col":"fdId","value":"16b206112aa244e64d0f9e0495c9daf4"},{"col":"fdName","value":"产品质量部周例会","href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=16b206112aa244e64d0f9e0495c9daf4"},{"col":"docCreator.fdName","value":"唐超"},{"col":"fdDate","value":"2019-06-03 14:00 ~ 2019-06-03 15:00"},{"col":"fdTemplate.fdName","value":"产品质量部会议"}]},{"href":null,"cells":[{"col":"fdId","value":"160fe5d7a45e4d0a8fb582c47ce8898d"},{"col":"fdName","value":"小组讨论会","href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=160fe5d7a45e4d0a8fb582c47ce8898d"},{"col":"docCreator.fdName","value":"郑超"},{"col":"fdDate","value":"2018-01-16 18:00 ~ 2018-01-16 19:00"},{"col":"fdTemplate.fdName","value":"例会"}]},{"href":null,"cells":[{"col":"fdId","value":"164d02b2e7b5f00ccf6164c4b40bae18"},{"col":"fdName","value":"蓝锐公司半年度会议纪要","href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=164d02b2e7b5f00ccf6164c4b40bae18"},{"col":"docCreator.fdName","value":"陈鹏"},{"col":"fdDate","value":"2018-07-17 10:00 ~ 2018-07-17 11:00"},{"col":"fdTemplate.fdName","value":"中心会议"}]},{"href":null,"cells":[{"col":"fdId","value":"15d9355f73bc6a35a4ced8a48379c906"},{"col":"fdName","value":"ETS部门会议纪要20170724","href":"/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=view&fdId=15d9355f73bc6a35a4ced8a48379c906"},{"col":"docCreator.fdName","value":"李尚志"},{"col":"fdDate","value":"2017-07-24 09:30 ~ 2017-07-24 11:30"},{"col":"fdTemplate.fdName","value":"部门会议"}]}]}
+					]]>
+				</code>
+			</example>
+		</source>
+	  <operations>
+		    <operation
+				name="{operation.create}"
+				type="create"
+				mobileHref="/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=add"
+				href="/km/imeeting/km_imeeting_summary/kmImeetingSummary.do?method=add" />
+			<operation
+				name="{operation.more}"
+				type="more"
+				mobileHref="/km/imeeting/mobile"
+				href="/km/imeeting/#j_path=/myHandleSummary&amp;except=docStatus:00&amp;cri.q=fdTemplate:!{cateid}" />
+	    </operations>
+	</portlet>
+	<!-- 我的会议日历(月) -->
+	<!-- <portlet id="km.imeeting.mycalendar.portlet.month" 
+			name="{km-imeeting:kmImeeting.tree.calender}" 
+			module="{km-imeeting:module.km.imeeting}" 
+			description="{km-imeeting:kmImeeting.tree.calender.description}"
+			forSystem="cloud"
+			varExtend="km.imeeting.mycalendar.portlet">
+		<source id="km-imeeting.mycalendarPortlet" format="data.page.iframe" type="json">
+			<code>
+				<![CDATA[
+					{"url":"/data/km-imeeting/kmImeetingCalendar/mycalendar?showType=my&viewType=month&fdStart=!{startTime}&fdEnd=!{endTime}"}
+				]]>
+			</code>
+		</source>
+	</portlet> -->
+	<!-- 我的会议日历(周) -->
+	<portlet id="km.imeeting.mycalendar.portlet" 
+			name="{km-imeeting:kmImeeting.tree.calender}" 
+			module="{km-imeeting:module.km.imeeting}" 
+			description="{km-imeeting:kmImeeting.tree.calender.description}"
+			forSystem="cloud"
+			varExtend="km.imeeting.mycalendar.portlet">
+		<source id="km-imeeting.mycalendarPortlet" format="data.page.iframe" type="json">
+			<code>
+				<![CDATA[
+					{"url":"/data/km-imeeting/kmImeetingCalendar/iframe?portletId=km.imeeting.mycalendar.portlet"}
+				]]>
+			</code>
+		</source>
+	</portlet>
+	<!-- 会议资源日历 -->
+	<portlet id="km.imeeting.calendar.portlet" 
+			name="{km-imeeting:kmImeeting.tree.calender.rescalendar}" 
+			module="{km-imeeting:module.km.imeeting}" 
+			description="{km-imeeting:kmImeeting.tree.calender.rescalendar.description}"
+			forSystem="cloud"
+			varExtend="km.imeeting.calendar.portlet">
+		<source id="km-imeeting.calendarPortlet" format="data.page.iframe" type="json">
+			<code>
+				<![CDATA[
+					{"url":"/data/km-imeeting/kmImeetingCalendar/iframe?portletId=km.imeeting.calendar.portlet"}
+				]]>
+			</code>
+		</source>
+	</portlet>
+</root>

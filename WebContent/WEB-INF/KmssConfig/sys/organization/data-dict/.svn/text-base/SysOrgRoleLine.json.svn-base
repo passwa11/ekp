@@ -1,0 +1,100 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.organization.model.SysOrgRoleLine",
+        "messageKey": "sys-organization:table.sysOrgRoleLine",
+        "displayProperty": "fdName",
+        "serviceBean": "sysOrgRoleLineService",
+        "table": "sys_org_role_line",
+        "url": "/sys/organization/sys_org_role_line/sysOrgRoleLine.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgRoleLine.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "false",
+            "length": "200",
+            "validate": "true",
+            "langSupport": "true"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgRoleLine.fdOrder",
+            "type": "Long",
+            "column": "fd_order",
+            "notNull": "false",
+            "validate": "true"
+        },
+        "fdHierarchyId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgRoleLine.fdHierarchyId",
+            "type": "String",
+            "column": "fd_hierarchy_id",
+            "notNull": "true",
+            "canDisplay": "false",
+            "length": "2500"
+        },
+        "fdCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgRoleLine.fdCreateTime",
+            "column": "fd_create_time",
+            "type": "DateTime",
+            "canDisplay": "false",
+            "notNull": "false"
+        },
+        "sysOrgRoleMember":         {
+            "propertyType": "model",
+            "messageKey": "sys-organization:sysOrgRoleLine.fdMember",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_member_id",
+            "notNull": "false"
+        },
+        "sysOrgRoleConf":         {
+            "propertyType": "model",
+            "messageKey": "sys-organization:sysOrgRoleLine.sysOrgRoleConf",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgRoleConf",
+            "column": "fd_role_line_conf_id",
+            "notNull": "false"
+        },
+        "hbmParent":         {
+            "propertyType": "model",
+            "messageKey": "sys-organization:sysOrgRoleLine.fdParent",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgRoleLine",
+            "column": "fd_parent_id",
+            "notNull": "false",
+            "cascade": "save-update"
+        },
+        "hbmChildren":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrgRoleLine.hbmChildren",
+            "column": "fd_parent_id",
+            "canDisplay": "false",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgRoleLine",
+            "cascade": "none",
+            "inverse": "true",
+            "table": "sys_org_role_line"
+        },
+        "fdHasChild":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgRoleLine.fdHasChild",
+            "type": "Boolean",
+            "column": "fd_has_child",
+            "notNull": "false",
+            "unique": "false",
+            "defaultValue": "1",
+            "canDisplay": "false"
+        },
+        "fdAlterTime":         {
+            "propertyType": "simple",
+            "type": "DateTime",
+            "column": "fd_alter_time",
+            "canDisplay": "false",
+            "messageKey": "sys-organization:sysOrgRoleLine.fdAlterTime"
+        }
+    }
+}

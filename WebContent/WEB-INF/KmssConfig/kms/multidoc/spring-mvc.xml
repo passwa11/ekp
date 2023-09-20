@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do"
+		class="com.landray.kmss.kms.multidoc.actions.KmsMultidocKnowledgeAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.kms.multidoc.forms.KmsMultidocKnowledgeForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="add.4m"
+					value="/kms/multidoc/mobile/edit_data.jsp" />
+				<entry
+					key="stylepage.4m"
+					value="/kms/multidoc/mobile/view_data.jsp" />
+				<entry
+					key="stylepageWait.4m"
+					value="/kms/multidoc/mobile/view_examine_data.jsp" />
+				<entry
+					key="content"
+					value="/kms/multidoc/kms_multidoc_ui/kmsMultidocKnowledge_view.jsp" />
+				<entry
+					key="content.4m"
+					value="/kms/multidoc/mobile/view_content.jsp" />
+				<entry
+					key="view"
+					value="/kms/multidoc/kms_multidoc_ui/kmsMultidocKnowledge_view.jsp" />
+				<entry
+					key="edit"
+					value="/kms/multidoc/kms_multidoc_ui/kmsMultidocKnowledge_edit.jsp" />
+				<entry
+					key="add"
+					value="/kms/multidoc/kms_multidoc_ui/kmsMultidocKnowledge_add.jsp" />
+				<entry
+					key="list"
+					value="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge_list.jsp" />
+				<entry
+					key="data"
+					value="/kms/multidoc/kms_multidoc_ui/kmsMultidocKnowledge_list.jsp" />
+				<entry
+					key="listChildren"
+					value="/kms/multidoc/kms_multidoc_ui/kmsMultidocKnowledge_list.jsp" />
+				<entry
+					key="searchResult"
+					value="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge_list.jsp" />
+				<entry
+					key="manageList"
+					value="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge_list.jsp" />
+				<entry
+					key="listOut"
+					value="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge_list_out.jsp" />
+				<entry
+					key="stylepage"
+					value="/kms/multidoc/kms_multidoc_ui/kmsMultidocKnowledge_view.jsp" />
+				<entry
+					key="stylepageWait"
+					value="/kms/multidoc/kms_multidoc_ui/kmsMultidocKnowledge_view.jsp" />
+				<entry
+					key="editProperty"
+					value="/kms/multidoc/kms_multidoc_ui/kmsMultidocKnowledge_info_property.jsp" />
+				<entry
+					key="importDoc"
+					value="/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge_importDoc.jsp" />
+				<entry
+					key="viewOfLearnOnMobile"
+					value="/kms/multidoc/mobile/viewOfKmsLearn.jsp" />
+				<entry
+					key="viewOfLearnOnMobile.4m"
+					value="/kms/multidoc/mobile/viewOfKmsLearn.jsp" />
+				<entry
+					key="viewOfLearnOnMobile.4pda"
+					value="/kms/multidoc/mobile/viewOfKmsLearn.jsp" />
+				<entry
+					key="topView"
+					value="/kms/knowledge/kms_knowledge_base_doc/kmsKnowledgeBaseDoc_topInfo.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/kms/multidoc/kms_multidoc_index/kmsMultidocKnowledgeIndex.do"
+		class="com.landray.kmss.kms.multidoc.actions.KmsMultidocKnowledgeIndexAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.kms.multidoc.forms.KmsMultidocKnowledgeForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="listChildren"
+					value="/kms/multidoc/kms_multidoc_ui/kmsMultidocKnowledge_list.jsp" />
+				<entry
+					key="attList"
+					value="/kms/multidoc/kms_multidoc_ui/kmsMultidocKnowledge_att_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/kms/multidoc/kms_multidoc_portlet/kmsMultidocKnowledgePortlet.do"
+		class="com.landray.kmss.kms.multidoc.actions.KmsMultidocKnowledgePortletAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property name="forwards">
+			<map>
+				<entry
+					key="data"
+					value="/kms/multidoc/kms_multidoc_portlet/kms_multidoc_portlet_data.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/kms/multidoc/kms_outer_search/kmsMultidocKnowledgeOuterSearch.do"
+		class="com.landray.kmss.kms.multidoc.actions.KmsMultidocKnowledgeOuterSearchAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+	</bean>
+	<bean
+		name="/kms/multidoc/kms_multidoc_subside/kmsMultidocSubside.do"
+		class="com.landray.kmss.kms.multidoc.actions.KmsMultidocSubsideAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.kms.multidoc.forms.KmsMultidocSubsideForm" />
+	</bean>
+		
+	<bean id="kmsMultidocKnowledgePortletController"
+        class="com.landray.kmss.kms.multidoc.actions.KmsMultidocKnowledgePortletController">
+    </bean>
+</beans>

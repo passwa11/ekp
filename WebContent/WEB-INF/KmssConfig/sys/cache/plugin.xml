@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+        xmlns="http://www.example.org/plugin-config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+
+    <extension-point id="com.landray.kmss.sys.hibernate.cache" type="framework">
+        <item name="region">
+            <param name="type" required="true" kind="string" restriction="query;entity;collection">
+                <description>query(查询缓存)，entity(实体缓存)，collection(集合缓存)</description>
+            </param>
+            <param name="name" required="true" kind="string">
+                <description>
+                    缓存区域的命名，全局唯一，规则如下
+                    若type=query：请按照功能的英文单词拼接，比如sys.org.expand.orgids；如果在hbm.xml里声明了query，一般默认使用query的name
+                    若type=entity：在hbm.xml里指定的缓存&lt;cache region="xxx"&gt;，一般不建议在hbm里指定，默认使用model的全限定名，比如com.landray.kmss.sys.organization.model.SysOrgElement
+                    若type=collection：在hbm.xml里bag的缓存&lt;cache region="yyy"&gt;，一般不建议在hbm指定，默认使用类属性的全限定名，比如com.landray.kmss.sys.organization.model.SysOrgElement.hbmSuperLeaderChildren
+                </description>
+            </param>
+            <param name="nameMessageKey" kind="string">
+                <description>描述该缓存区域的名称</description>
+            </param>
+            <param name="descMessageKey" required="true" kind="string">
+                <description>描述该缓存区域的作用、以及其配置等信息，方便管理员理解并管理</description>
+            </param>
+            <param name="moduleResourceKey" kind="string" required="true">
+                <description>缓存所属模块对应的资源key，比如module.sys.cache，module.km.review等等</description>
+            </param>
+            <param name="ttl" kind="string" default="0">
+                <description>该缓存区域的有效期，数值类型，单位毫秒，一到点就整个区域刷新，是个大动作，所以一般不设置，通过idle来进行条目级的控制比较好</description>
+            </param>
+            <param name="capacity" default="300" kind="string">
+                <description>该缓存区域的容量，数值类型，建议不要设置超过1000，否则在刷新时造成系统停摆</description>
+            </param>
+            <param name="idle" default="60000" kind="string">
+                <description>该缓存区域的内空闲的资源存在时间，数值类型，单位毫秒，多久时间内没有被访问过就移除，一般对于query来说设置一个较短的时间</description>
+            </param>
+            <description>二级缓存区域配置描述</description>
+        </item>
+        <description>
+            hibernate二级缓存区域配置扩展，由于hibernate并没有提供二级缓存的详细配置及管理功能，该扩展就是为了弥补这一点，为管理员提供实时的缓存管理。
+            业务必须先在hbm.xml文件里声明缓存，在这里声明对应的控制信息即可
+        </description>
+    </extension-point>
+
+    <extension-point id="com.landray.kmss.sys.cache.filter.webcontentcache">
+        <item name="provider">
+            <param name="bean" required="true" kind="spring"
+                   basedOn="com.landray.kmss.sys.cache.filter.AbstractWebContentCache">
+                <description>
+                    请求缓存实现类，继承自com.landray.kmss.sys.cache.filter.AbstractWebContentCache抽象类。
+                </description>
+            </param>
+            <param name="loadable" required="false" kind="string">
+                <description>
+                    该内容缓存器是否能被加载的标记，标记为true才会被系统加载并纳入管理，如果不声明，默认为true
+                </description>
+            </param>
+            <description>
+                页面内容缓存实现
+            </description>
+        </item>
+        <description>页面内容缓存器，把某个请求的内容缓存起来，一定时间内有效，从而提高效率</description>
+    </extension-point>
+
+
+    <extension
+            point="com.landray.kmss.sys.config.admin.do">
+        <item
+                name="config">
+            <param
+                    name="jsp"
+                    value="/sys/cache/redisConfig.jsp"/>
+            <param
+                    name="type"
+                    value="base"/>
+            <param
+                    name="order"
+                    value="11"/>
+        </item>
+    </extension>
+
+    <extension point="com.landray.kmss.sys.hibernate.cache" model="*">
+        <item name="region">
+            <param name="type" value="query"/>
+            <param name="name" value="default-query-results-region"/>
+            <param name="nameMessageKey" value="sys-cache:default.query.region"/>
+            <param name="descMessageKey" value="sys-cache:default.query.region.desc"/>
+            <param name="moduleResourceKey" value="sys-cache:module.sys.cache"/>
+            <param name="ttl" value="0"/>
+            <param name="capacity" value="1000"/>
+            <param name="idle" value="60100"/>
+        </item>
+    </extension>
+
+    <!--hibernate 二级缓存 统计-->
+    <extension point="com.landray.kmss.sys.cluster">
+        <item name="messageReceiver">
+            <param name="type" value="com.landray.kmss.sys.cache.message.SysCacheOptionMessage" />
+            <param name="service" value="sysHCacheMessageReceiver" />
+        </item>
+        <item name="messageReceiver">
+            <param name="type" value="com.landray.kmss.sys.cache.message.SysCacheOptionMessage" />
+            <param name="service" value="sysHCacheMessageReceiver" />
+        </item>
+    </extension>
+</plugin>

@@ -1,0 +1,138 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.handover.model.SysHandoverConfigMain",
+        "messageKey": "sys-handover:table.sysHandoverConfigMain",
+        "displayProperty": "fdFromId",
+        "serviceBean": "sysHandoverConfigMainService",
+        "table": "sys_handover_config_main",
+        "url": "/sys/handover/sys_handover_config_main/sysHandoverConfigMain.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdFromId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-handover:sysHandoverConfigMain.fdFromId",
+            "type": "String",
+            "column": "fd_from_id",
+            "notNull": "true",
+            "length": "36",
+            "validate": "true"
+        },
+        "fdFromName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-handover:sysHandoverConfigMain.fdFromName",
+            "type": "String",
+            "column": "fd_from_name",
+            "notNull": "true",
+            "length": "200",
+            "validate": "true"
+        },
+        "fdToId":         {
+            "propertyType": "simple",
+            "messageKey": "sys-handover:sysHandoverConfigMain.fdToId",
+            "type": "String",
+            "column": "fd_to_id",
+            "notNull": "false",
+            "length": "36",
+            "validate": "true"
+        },
+        "fdToName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-handover:sysHandoverConfigMain.fdToName",
+            "type": "String",
+            "column": "fd_to_name",
+            "notNull": "false",
+            "length": "200",
+            "validate": "true"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-handover:sysHandoverConfigMain.docCreatorId",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "doc_creator_id",
+            "unique": "false",
+            "canSearch": "true",
+            "notNull": "true",
+            "validate": "true"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-handover:sysHandoverConfigMain.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "true",
+            "validate": "true"
+        },
+        "handoverType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-handover:sysHandoverConfigMain.handoverType",
+            "type": "Integer",
+            "column": "handover_type",
+            "notNull": "true",
+            "unique": "false",
+            "readOnly": "true",
+            "canDisplay": "false"
+        },
+        "fdContent":         {
+            "propertyType": "simple",
+            "messageKey": "sys-handover:sysHandoverConfigMain.fdContent",
+            "type": "RTF",
+            "column": "fd_content",
+            "notNull": "false",
+            "length": "1000000",
+            "validate": "true"
+        },
+        "total":         {
+            "propertyType": "simple",
+            "messageKey": "sys-handover:sysHandoverConfigMain.total",
+            "type": "Long",
+            "column": "total",
+            "notNull": "true",
+            "unique": "false",
+            "readOnly": "true",
+            "canDisplay": "false"
+        },
+        "fdState":         {
+            "propertyType": "simple",
+            "messageKey": "sys-handover:sysHandoverConfigMain.status",
+            "type": "Integer",
+            "column": "fd_state",
+            "notNull": "true",
+            "unique": "false",
+            "readOnly": "true",
+            "enumType": "sys_handover_state",
+            "canDisplay": "false"
+        },
+        "execMode":         {
+            "propertyType": "simple",
+            "messageKey": "sys-handover:sysHandoverConfigMain.execMode",
+            "type": "Integer",
+            "column": "exec_mode",
+            "notNull": "true",
+            "unique": "false",
+            "readOnly": "true",
+            "canDisplay": "false"
+        },
+        "configLogs":         {
+            "propertyType": "list",
+            "messageKey": "sys-handover:sysHandoverConfigMain.configLogs",
+            "type": "com.landray.kmss.sys.handover.model.SysHandoverConfigLog",
+            "column": "fd_main",
+            "cascade": "all-delete-orphan",
+            "inverse": "true",
+            "table": "sys_handover_config_log"
+        },
+        "configAuthLogs":         {
+            "propertyType": "list",
+            "messageKey": "sys-handover:sysHandoverConfigMain.configAuthLogs",
+            "type": "com.landray.kmss.sys.handover.model.SysHandoverConfigAuthLogDetail",
+            "column": "fd_main_id",
+            "cascade": "all-delete-orphan",
+            "inverse": "true",
+            "table": "sys_handover_auth_log_detail"
+        }
+    }
+}

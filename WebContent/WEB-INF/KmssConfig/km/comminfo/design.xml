@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey="km-comminfo:module.km.comminfo"
+		urlPrefix="/km/comminfo/"
+		defaultValidator="roleValidator(role=ROLE_COMMINFO_MAIN_DEFAULT)">
+		<roles>
+			<!-- 常用资料信息 -->
+			ROLE_COMMINFO_MAIN_DEFAULT; 
+			ROLE_COMMINFO_MAIN_CREATE;
+			ROLE_COMMINFO_MAIN_EDITOR;
+			ROLE_COMMINFO_MAIN_DELETE;
+			ROLE_COMMINFO_MANAGER;
+			ROLE_COMMINFO_MAIN_CATEGORY_MAINTAINER;
+			<!-- 后台管理  -->
+			ROLE_COMMINFO_BACKSTAGE_MANAGER;
+			ROLE_COMMINFO_MAIN_READER
+		</roles>
+		<request
+			path="tree_config.jsp*"
+			defaultValidator="roleValidator(role=ROLE_COMMINFO_BACKSTAGE_MANAGER)"/>
+		<!-- 分类权限 -->
+		<request
+			path="km_comminfo_category/kmComminfoCategory.do*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.km.comminfo.model.KmComminfoCategory">
+			<!-- 新建、编辑、删除 -->
+			<query
+				queryString="method=add|save|saveadd|edit|update|delete|deleteall|transfer|view"
+				validator="roleValidator(role=ROLE_COMMINFO_MAIN_CATEGORY_MAINTAINER) | roleValidator(role=ROLE_COMMINFO_MANAGER)" />
+		</request>
+		<!-- 常用资料信息 -->
+		<request
+			path="km_comminfo_main/kmComminfoMain.do*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.km.comminfo.model.KmComminfoMain">
+			<!-- 新建 -->
+			<query
+				queryString="method=add"
+				validator="roleValidator(role=ROLE_COMMINFO_MANAGER) | roleValidator(role=ROLE_COMMINFO_MAIN_CREATE) | roleValidator(role=ROLE_COMMINFO_MAIN_CATEGORY_MAINTAINER) | authComminfoEditorValidator(property=docCategory)" />
+			<!-- 保存 -->
+			<query
+				queryString="method=save|saveadd"
+				validator="roleValidator(role=ROLE_COMMINFO_MANAGER) | roleValidator(role=ROLE_COMMINFO_MAIN_CREATE) | roleValidator(role=ROLE_COMMINFO_MAIN_CATEGORY_MAINTAINER) | authComminfoEditorValidator(property=docCategory)" />
+			<!-- 编辑 -->
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_COMMINFO_MANAGER) | [roleValidator(role=ROLE_COMMINFO_MAIN_EDITOR) &amp;  authComminfoEditorValidator(property=docCategory) ] | roleValidator(role=ROLE_COMMINFO_MAIN_CATEGORY_MAINTAINER) | authComminfoEditorValidator(property=docCategory)" />
+			<!-- 删除 -->
+			<query
+				queryString="method=delete"
+				validator="roleValidator(role=ROLE_COMMINFO_MANAGER) | roleValidator(role=ROLE_COMMINFO_MAIN_DELETE) | roleValidator(role=ROLE_COMMINFO_MAIN_CATEGORY_MAINTAINER) | authComminfoEditorValidator(property=docCategory)" />
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_COMMINFO_MANAGER) | roleValidator(role=ROLE_COMMINFO_MAIN_CATEGORY_MAINTAINER) | authComminfoEditorValidator(property=docCategory) " />
+			<!-- 阅读 -->
+			<query
+				queryString="method=view"
+				validator="authFieldValidator(type=SYS_READER)" />
+		</request>
+		
+		<!-- 常用资料可阅读者过滤器 -->
+		<filters modelName="com.landray.kmss.km.comminfo.model.KmComminfoMain">
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_COMMINFO_MAIN_READER)" />
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=authAllReaders.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="flagFieldFilter(field=authReaderFlag,value=1)" />
+		</filters>
+		
+		<!-- 可维护者过滤器 -->
+		<filters modelName="com.landray.kmss.km.comminfo.model.KmComminfoCategory">
+			<filter
+				type="commManager"
+				expression="authFieldFilter(field=authEditors.fdId)" />
+		</filters>
+	</module>	
+	<!-- 批量修改权限 -->
+	<module urlPrefix="/sys/right/">
+		<request path="rightCateChange*">
+			<query
+				queryString="method=cateRightEdit&amp;cateModelName=com.landray.kmss.km.comminfo.model.KmComminfoCategory"
+				validator="roleValidator(role=ROLE_COMMINFO_MAIN_CATEGORY_MAINTAINER)|roleValidator(role=ROLE_COMMINFO_BACKSTAGE_MANAGER)" />
+		</request>
+	</module>
+	
+	<!-- 搜索权限 -->
+	<module
+		messageKey=""
+		urlPrefix="/sys/ftsearch/">
+		<request path="searchBuilder*">
+			<query
+				queryString="modelName=com.landray.kmss.km.comminfo.model.KmComminfoMain"
+				validator="roleValidator(role=ROLE_COMMINFO_MAIN_DEFAULT)" />
+		</request>
+	</module>
+		
+	<!-- 高级搜索 -->
+	<search
+		modelName="com.landray.kmss.km.comminfo.model.KmComminfoMain"
+		messageKey="km-comminfo:tree.search" resultProperties="docSubject;docContent;" />	
+	<!-- 主文档全文搜索 -->
+	<ftSearch
+		modelName="com.landray.kmss.km.comminfo.model.KmComminfoMain"
+		boost="2.0"
+		timeField="fdLastModifiedTime">
+		<luceneField
+			name="subject"
+			property="docSubject"
+			type="text" />
+		<luceneField
+			name="content"
+			property="docContent"
+			type="text" />
+		<luceneField
+            name="category"
+            property="docCategory.fdHierarchyId"
+            type="Text" />
+		<luceneField
+			name="creator"
+			property="docCreator.fdName"
+			type="keyword" />
+		<luceneField
+			name="createTime"
+			property="docCreateTime"
+			type="keyword" />
+	</ftSearch>
+		<!-- 常用资料信息主页配置 -->
+	<!-- 常用资料配置 -->
+	<treeNodes type="config">
+		<treeNode messageKey="km-comminfo:table.kmComminfoMain">
+		<treeNode
+			messageKey="km-comminfo:kmComminfoCategory.fdId"
+			url="/km/comminfo/km_comminfo_category/kmComminfoCategory.do?method=list%26orderby%3DfdOrder+asc%2CdocCreateTime+desc" />
+		</treeNode>
+	</treeNodes>
+	<homePage
+		urlPrefix="km/comminfo"
+		url="/km/comminfo/index.jsp"
+		messageKey="km-comminfo:table.kmComminfoMain" 
+		config="/moduleindex_notopic.jsp?nav=/km/comminfo/tree_config.jsp"/>
+	
+	<profileConfig
+	    key="km/comminfo"
+		messageKey="{km-comminfo:module.km.comminfo}" 
+		url="/sys/profile/moduleindex.jsp?nav=/km/comminfo/tree_config.jsp" 
+		icon="km_comminfo"
+		type="ekp"
+		description="{km-comminfo:kmComminfo.profileCfg.description}"
+		order="202"/>	
+		
+</configs>

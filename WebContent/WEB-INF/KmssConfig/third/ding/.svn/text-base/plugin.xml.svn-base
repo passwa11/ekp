@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	<!-- SSO -->
+	<extension
+		point="com.landray.kmss.sys.authentication">
+		<item
+			name="authenticationProcessingFilter">
+			<param
+				name="bean"
+				value="dingOauth2ProcessingFilter" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.authentication">
+		<item
+			name="authenticationProcessingFilter">
+			<param
+				name="bean"
+				value="dingPcAuthProcessingFilter" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.sys.authentication">
+		<item
+			name="authenticationProcessingFilter">
+			<param
+				name="bean"
+				value="dingPcOutOpenFilter" />
+		</item>
+	</extension>
+
+	<extension
+			point="com.landray.kmss.sys.authentication">
+		<item
+				name="authenticationProcessingFilter">
+			<param
+					name="bean"
+					value="dingPc2OuterBrowserFilter" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.notify">
+		<item name="todoExtend">
+			<param name="bean" value="dingNotifyProvider" />
+			<param name="name" value="{third-ding:third.ding.extension.notify}" />
+		</item>
+	</extension>
+	
+	
+	<extension point="com.landray.kmss.sys.notify">
+		<item name="todoExtend">
+			<param name="bean" value="thirdDingWorkrecordProvider" />
+			<param name="name" value="{third-ding:third.ding.extension.notify.work}" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.notify">
+		<item name="todoExtend">
+			<param name="bean" value="thirdDingTodoProvider" />
+			<param name="name" value="{third-ding:third.ding.extension.notify.todo}" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.notify">
+		<item name="todoExtend">
+			<param name="bean" value="thirdDingTodoTaskProvider" />
+			<param name="name" value="{third-ding:third.ding.extension.notify.task}" />
+		</item>
+	</extension>
+	
+	
+	<!--
+    <extension
+		point="com.landray.kmss.sys.config.admin.do">
+		<item
+			name="config">
+			<param
+				name="jsp"
+				value="/third/ding/dingConfig.jsp" />
+			<param
+				name="type"
+				value="integrate" />
+			<param
+				name="order"
+				value="200" />
+		</item>
+	</extension>
+	-->
+	
+	<extension point="com.landray.kmss.sys.mobile.third.integrate">
+		<item name="sign">
+			<param 
+				name="key" 
+				value="ding" />
+			<param 
+				name="clientType" 
+				value="11" />
+			<param 
+				name="file" 
+				value="/third/ding/mobile/third.js" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.lbpm.engine.robot" model="*">
+		<item name="robot">
+			<param name="unid"
+				value="com.landray.kmss.third.ding.service.spring.RobotNodeSendDynamicInfoToDingServiceImp" />
+			<param name="category" value="{third-ding:lbpmRobotNode.category.ding}" />
+			<param name="type"
+				value="{third-ding:lbpmRobotNode.type.sendDynamicInfoToDing}" />
+			<param name="bean" value="robotNodeSendDynamicInfoToDingService" />
+			<param name="class" value="integrate" />
+			<param name="description" value="{third-ding:lbpmRobotNode.type.sendDynamicInfoToDing}"/>
+			<param name="url" value="/third/ding/robot_node.jsp" />
+		</item>
+	</extension>
+	
+	<!-- 机器人节点同步ekp流程到钉钉 -->
+	<!-- <extension point="com.landray.kmss.lbpm.engine.robot" model="*">
+		<item name="robot">
+			<param name="unid"
+				value="com.landray.kmss.third.ding.service.robot.RobotNodeFlowToDingServiceImp" />
+			<param name="category" value="{third-ding:lbpmRobotNode.category.ding}" />
+			<param name="type"
+				value="{third-ding:lbpmRobotNode.write.ding}" />
+			<param name="bean" value="robotNodeFlowToDingService" />
+			<param name="class" value="integrate" />
+			<param name="description" value="{third-ding:lbpmRobotNode.write.ding}"/>
+			<param name="url" value="/third/ding/robot/robotFlow_node.jsp" />
+		</item>
+	</extension> -->
+	
+	<extension point="com.landray.kmss.sys.profile.login.third" model="*">
+		<item name="config">
+			<param name="bean" value="dingPcScanLogin"></param>
+		</item>
+	</extension>
+	
+	<!--
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="thirdDingLBPMEventHandlerService" />
+			<param
+				name="messageKey"
+				value="third-ding:third.ding.start.flow" />
+			<param
+				name="eventTypes"
+				value="enterWorkitemEvent" />
+			<param
+				name="listener"
+				value="thirdDingLBPMEventHandlerService" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain">
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="thirdDingFlowEventHandlerService" />
+			<param
+				name="messageKey"
+				value="third-ding:third.ding.end.flow" />
+			<param
+				name="eventTypes"
+				value="endedNodeEvent" />
+			<param
+				name="listener"
+				value="thirdDingFlowEventHandlerService" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	-->
+	
+	<extension
+		point="com.landray.kmss.km.calendar.cms">
+		<item
+			name="cms"
+			enable="true">
+			<param
+				name="key"
+				value="dingCalendar" />
+			<param
+				name="name"
+				value="{third-ding:module.third.ding.calendar}" />
+			<param
+				name="cmsService"
+				value="dingCalendarProvider" />
+			<param
+				name="order"
+				value="20" />
+		</item>
+	</extension>
+	
+	<!-- 请假流程结束事件 -->
+	<extension 
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item name="listener">
+			<param
+				name="unid"
+				value="leaveApprovalListener" />
+			<param
+				name="messageKey"
+				value="third-ding:third.ding.leave.end.flow" />
+			<param
+				name="eventTypes"
+				value="endedNodeEvent" />
+			<param
+				name="listener"
+				value="leaveApprovalListener" />
+			<param
+				name="conditionJsp"
+				value="/third/ding/third_ding_listener/thirdDing_listener_leave.jsp" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<!-- 外出流程结束事件 -->
+	<extension 
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item name="listener">
+			<param
+				name="unid"
+				value="businessApprovalListener" />
+			<param
+				name="messageKey"
+				value="third-ding:third.ding.business.end.flow" />
+			<param
+				name="eventTypes"
+				value="endedNodeEvent" />
+			<param
+				name="listener"
+				value="businessApprovalListener" />
+			<param
+				name="conditionJsp"
+				value="/third/ding/third_ding_listener/thirdDing_listener_business.jsp" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<!-- 出差流程结束事件 -->
+	<extension 
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item name="listener">
+			<param
+				name="unid"
+				value="tripApprovalListener" />
+			<param
+				name="messageKey"
+				value="third-ding:third.ding.trip.end.flow" />
+			<param
+				name="eventTypes"
+				value="endedNodeEvent" />
+			<param
+				name="listener"
+				value="businessApprovalListener" />
+			<param
+				name="conditionJsp"
+				value="/third/ding/third_ding_listener/thirdDing_listener_trip.jsp" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<!-- ===========================销假流程结束事件  start===========================-->
+	<!-- 销假流程结束事件： 请假、出差、外出、加班 -->
+	
+	<!-- 撤销请假 -->
+	<extension 
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item name="listener">
+			<param
+				name="unid"
+				value="cancelLeaveApprovalListener" />
+			<param
+				name="messageKey"
+				value="third-ding:third.ding.cancel.leave.end.flow" />
+			<param
+				name="eventTypes"
+				value="endedNodeEvent" />
+			<param
+				name="listener"
+				value="cancelApprovalListener" />
+			<param
+				name="conditionJsp"
+				value="/third/ding/third_ding_listener/thirdDing_listener_cancel.jsp" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<!-- 撤销出差 -->
+	<extension 
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item name="listener">
+			<param
+				name="unid"
+				value="cancelTripApprovalListener" />
+			<param
+				name="messageKey"
+				value="third-ding:third.ding.cancel.trip.end.flow" />
+			<param
+				name="eventTypes"
+				value="endedNodeEvent" />
+			<param
+				name="listener"
+				value="cancelTripApprovalListener" />
+			<param
+				name="conditionJsp"
+				value="/third/ding/third_ding_listener/thirdDing_listener_trip_cancel.jsp" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<!-- 撤销外出 -->
+	<extension 
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item name="listener">
+			<param
+				name="unid"
+				value="cancelBusinessApprovalListener" />
+			<param
+				name="messageKey"
+				value="third-ding:third.ding.cancel.business.end.flow" />
+			<param
+				name="eventTypes"
+				value="endedNodeEvent" />
+			<param
+				name="listener"
+				value="cancelBusinessApprovalListener" />
+			<param
+				name="conditionJsp"
+				value="/third/ding/third_ding_listener/thirdDing_listener_business_cancel.jsp" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<!-- 撤销加班 -->
+	<extension 
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item name="listener">
+			<param
+				name="unid"
+				value="cancelOvertimeApprovalListener" />
+			<param
+				name="messageKey"
+				value="third-ding:third.ding.cancel.overtime.end.flow" />
+			<param
+				name="eventTypes"
+				value="endedNodeEvent" />
+			<param
+				name="listener"
+				value="cancelOverTimeApprovalListener" />
+			<param
+				name="conditionJsp"
+				value="/third/ding/third_ding_listener/thirdDing_listener_overtime_cancel.jsp" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<!-- ===========================销假流程结束事件  end===========================-->
+		
+	<!-- 补卡流程结束事件 -->
+	<extension 
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item name="listener">
+			<param
+				name="unid"
+				value="checkApprovalListener" />
+			<param
+				name="messageKey"
+				value="third-ding:third.ding.check.end.flow" />
+			<param
+				name="eventTypes"
+				value="endedNodeEvent" />
+			<param
+				name="listener"
+				value="checkApprovalListener" />
+			<param
+				name="conditionJsp"
+				value="/third/ding/third_ding_listener/thirdDing_listener_check.jsp" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<!-- 换班流程结束事件 -->
+	<extension 
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item name="listener">
+			<param
+				name="unid"
+				value="switchApprovalListener" />
+			<param
+				name="messageKey"
+				value="third-ding:third.ding.switch.end.flow" />
+			<param
+				name="eventTypes"
+				value="endedNodeEvent" />
+			<param
+				name="listener"
+				value="switchApprovalListener" />
+			<param
+				name="conditionJsp"
+				value="/third/ding/third_ding_listener/thirdDing_listener_switch.jsp" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<!-- 加班流程结束事件 -->
+	<extension 
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain;com.landray.kmss.sys.modeling.main.model.ModelingAppModelMain">
+		<item name="listener">
+			<param
+				name="unid"
+				value="overtimeApprovalListener" />
+			<param
+				name="messageKey"
+				value="third-ding:third.ding.overtime.end.flow" />
+			<param
+				name="eventTypes"
+				value="endedNodeEvent" />
+			<param
+				name="listener"
+				value="overtimeApprovalListener" />
+			<param
+				name="conditionJsp"
+				value="/third/ding/third_ding_listener/thirdDing_listener_overtime.jsp" />
+			<param
+				name="enforce"
+				value="false" />
+		</item>
+	</extension>
+	
+	<!--  自定义公式函数 -->
+	<extension
+		point="com.landray.kmss.sys.formula"
+		model="*">
+		<item
+			name="function">
+			<param
+				name="className"
+				value="com.landray.kmss.third.ding.function.DingFunctions" />
+		</item>
+	</extension>
+	
+	<!-- 自定义业务函数 -->
+	<extension point="com.landray.kmss.sys.xform.relation.params">
+		<item name="config">
+			<param name="sourceName" value="【钉钉考勤】获取人员排班"></param>
+			<param name="sourceUUID" value="ding_schdule_relation"></param>
+			<param name="sourceBean" value="schduleDataAdapta"></param>
+			<param name="paramsURL" value=""></param>
+			<param name="order" value="0"></param>
+		</item>
+	</extension>
+	
+	<!-- 自定义业务函数：请假销假 -->
+	<extension point="com.landray.kmss.sys.xform.relation.params">
+		<item name="config">
+			<param name="sourceName" value="【钉钉考勤】获取人员销假记录"></param>
+			<param name="sourceUUID" value="ding_cancel_data"></param>
+			<param name="sourceBean" value="cancelDataAdapta"></param>
+			<param name="paramsURL" value=""></param>
+			<param name="order" value="0"></param>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.xform.relation.params">
+		<item name="config">
+			<param name="sourceName" value="【钉钉考勤】获取人员销出差记录"></param>
+			<param name="sourceUUID" value="ding_cancel_trip_data"></param>
+			<param name="sourceBean" value="tripDataAdapta"></param>
+			<param name="paramsURL" value=""></param>
+			<param name="order" value="0"></param>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.xform.relation.params">
+		<item name="config">
+			<param name="sourceName" value="【钉钉考勤】获取人员销外出记录"></param>
+			<param name="sourceUUID" value="ding_cancel_business_data"></param>
+			<param name="sourceBean" value="businessDataAdapta"></param>
+			<param name="paramsURL" value=""></param>
+			<param name="order" value="0"></param>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.xform.relation.params">
+		<item name="config">
+			<param name="sourceName" value="【钉钉考勤】获取人员销加班记录"></param>
+			<param name="sourceUUID" value="ding_cancel_overtime_data"></param>
+			<param name="sourceBean" value="overtimeDataAdapta"></param>
+			<param name="paramsURL" value=""></param>
+			<param name="order" value="0"></param>
+		</item>
+	</extension>
+	
+	
+	<!-- 发起钉钉聊天 -->
+	<extension point="com.landray.kmss.sys.zone.communicate" >
+ 		<item name="communicate" >
+	   		<param name="unid" value="ImDing" />
+	   		<param name="order" value="0"/>
+	   		<param name="icon" value="/third/ding/resource/images/scanCode-ding.png" />
+			<param name="js_class" value="ImDing" />
+	   		<param name="js_src" value="/third/ding/resource/plugin/ImDing.js" />
+	   		<param name="title" value="third-ding:third.ding.ImDing.title" />
+ 		</item>
+	</extension>
+	
+	<!-- 消息机制扩展:DING消息 注意 asynch项要设置 否则在流程模板中不会出现该可选项 -->
+	<extension
+		point="com.landray.kmss.sys.notify" >
+		<item
+			name="notifyType"
+			enable="${kmss.notify.type.ding.enabled}">
+			<param
+				name="key"
+				value="ding" />
+			<param
+				name="name"
+				value="{third-ding:kmss.nofify.type.ding}" />
+			<param
+				name="isDefault"
+				value="${kmss.notify.type.ding.default}" />
+			<param
+				name="asynch"
+				value="false" />	
+			<param
+				name="bean"
+				value="sendDINGNotifyProvider" />
+		</item>
+	</extension>
+	
+	<!-- 钉钉表单套件数据源 -->
+	<extension point="com.landray.kmss.sys.xform.template.source" 
+		model="*">
+		<item name="config">
+			<param name="sourceName" value="{third-ding:ding.xformTemplate}"></param>
+			<param name="sourceUUID" value="ding"></param>
+			<param name="sourceBean" value="thirdDingXFormTemplateService"></param>
+			<param name="sourceURL" value="third/ding/third_ding_xform/thirdDingXFormTemplate_index.jsp"></param>
+			<param name="order" value="3"></param>
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.xform.base.service.controls" model="*">
+		<!--遮罩控件-->
+		<item name="control">
+			<param name="class" value="com.landray.kmss.third.ding.xform.controls.SysFormTemplateMaskControl" />
+			<param name="file"  value="/third/ding/third_ding_xform/control/mask_lang.jsp;/third/ding/third_ding_xform/control/mask.js" />
+		</item>
+	</extension>
+	
+	<!--钉钉风格的明细表控件-->	
+	<extension point="com.landray.kmss.sys.xform.base.service.controls" model="*">
+		<item name="control">
+			<param name="class" value="com.landray.kmss.third.ding.xform.controls.ThirdDingDetailsTableControl" />
+			<param name="file"  value="/third/ding/third_ding_xform/control/dingDetailsTable.js" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.xform.mobile.controls" model="*">
+		<item name="control">
+			<param name="class" value="com.landray.kmss.third.ding.xform.controls.ThirdDingMobileDetailsTableControl" />
+		</item>
+	</extension>
+	
+	<!-- 钉钉套件：考勤 -->
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain">
+		<!-- 流程事件监听 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="attendenceLeaveApprovalListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessFinishEvent" />
+			<param
+				name="listener"
+				value="attendenceLeaveApprovalListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+	
+	<!-- 钉钉套件：考勤 提交人发起 -->
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain">
+		<!-- 流程事件监听 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="attendenceDrafterSubmitListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="drafterSubmitEvent" />
+			<param
+				name="listener"
+				value="attendenceDrafterSubmitListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+	
+	<!-- 钉钉套件：废弃 -->
+	<extension
+		point="com.landray.kmss.lbpm.engine.event"
+		model="com.landray.kmss.km.review.model.KmReviewMain">
+		<!-- 流程事件监听 -->
+		<item
+			name="listener">
+			<param
+				name="unid"
+				value="attendenceAbandonListener" />
+			<param
+				name="messageKey"
+				value="" />
+			<param
+				name="eventTypes"
+				value="lbpmProcessAbandonEvent;drafterReturnEvent;lbpmHandlerRefuseEvent" />
+			<param
+				name="listener"
+				value="attendenceAbandonListener" />
+			<param
+				name="enforce"
+				value="true" />
+		</item>
+	</extension>
+	
+	<!-- 钉盘 -->
+	<extension point="com.landray.kmss.sys.attachment.transmission">
+        <item name="transmission">
+            <param name="key" value="ding" />
+            <param name="provider" value="dingAttachmentTransmissionProvider" />
+        </item>
+    </extension>
+
+	<!--钉聊：自动进入群-->
+	<extension
+			point="com.landray.kmss.lbpm.engine.event"
+			model="com.landray.kmss.km.review.model.KmReviewMain">
+		<item
+				name="listener">
+			<param
+					name="unid"
+					value="ding_workitemEnterListener" />
+			<param
+					name="messageKey"
+					value="third-ding:thirdDingGroup.listener" />
+			<param
+					name="eventTypes"
+					value="enterWorkitemEvent" />
+			<param
+					name="listener"
+					value="dingGroupEnterNodeListener" />
+			<param
+					name="enforce"
+					value="true" />
+		</item>
+	</extension>
+		
+</plugin>

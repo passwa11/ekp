@@ -1,0 +1,71 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.organization.model.SysOrgElementExternal",
+        "messageKey": "sys-organization:table.sysOrgElementExternal",
+        "serviceBean": "sysOrgElementExternalService",
+        "table": "sys_org_element_external"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdDeptTable":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgElementExternal.fdDeptTable",
+            "type": "String",
+            "column": "fd_dept_table",
+            "notNull": "true",
+            "unique": "false",
+            "length": "30"
+        },
+        "fdPersonTable":         {
+            "propertyType": "simple",
+            "messageKey": "sys-organization:sysOrgElementExternal.fdPersonTable",
+            "type": "String",
+            "column": "fd_person_table",
+            "notNull": "true",
+            "unique": "false",
+            "length": "30"
+        },
+        "fdElement":         {
+            "propertyType": "model",
+            "messageKey": "sys-organization:sysOrgElementExternal.fdElement",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgOrg",
+            "column": "fd_element_id",
+            "notNull": "true",
+            "unique": "false",
+            "canDisplay": "false"
+        },
+        "fdDeptProps":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrgElementExternal.fdDeptProps",
+            "column": "fd_external_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElementExtProp",
+            "inverse": "false",
+            "canDisplay": "false",
+            "readOnly": "true",
+            "table": "sys_org_element_ext_prop",
+            "cascade": "all-delete-orphan"
+        },
+        "fdPersonProps":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrgElementExternal.fdPersonProps",
+            "column": "fd_external_id",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElementExtProp",
+            "inverse": "false",
+            "canDisplay": "false",
+            "readOnly": "true",
+            "table": "sys_org_element_ext_prop",
+            "cascade": "all-delete-orphan"
+        },
+        "authReaders":         {
+            "propertyType": "list",
+            "messageKey": "sys-organization:sysOrgElementExternal.authReaders",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_external_id",
+            "elementColumn": "fd_reader_id",
+            "table": "sys_org_element_ext_readers"
+        }
+    }
+}

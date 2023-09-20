@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:m="http://www.landray.com.cn/schema/mportlet" xmlns="http://www.landray.com.cn/schema/lui"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.landray.com.cn/schema/mportlet 
+	../../../sys/mobile/mportlet.xsd
+		http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd">
+
+	<m:mportlet 
+		id="sys.news.main.img.mobile"
+		name="{sys-news:sysNewsMain.portlet.img.mobile}"
+		moduleUrl = "/sys/news/mobile/index.jsp#query=categoryId%3A!{cateid}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.img.mobile}"
+		jsUrl="/sys/news/mobile/mportal/sysNewsMportalPicSlide.js?cateid=!{cateid}&amp;rowsize=!{rowsize}&amp;scope=!{scope}&amp;refreshtime=!{refreshtime}&amp;showSubject=!{showSubject}&amp;height=!{height}">
+		<m:vars>
+		    <var key="scope" name="{sys-news:sysNewsMain.docPublishTime}" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+       		</var>
+			<var key="rowsize" name="{portlet.rowsize}"  kind="int" default="3"/>
+			<var key="cateid" name="{sys-news:sysNewsPublishMain.fdCayegoryId}" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+			<var key="height" name="{sys-news:sysNewsMain.portlet.image.height}" kind="int" default="180">
+			      {"help":"{sys-news:sysNewsMain.portlet.image.height.help}"}
+			</var>
+			<var key="refreshtime" name="{sys-news:sysNewsMain.portlet.image.refreshTime}" kind="int" default="0">
+				{"help":"{sys-news:sysNewsMain.portlet.image.refreshTime.help}"}
+			</var>
+			<var key="showSubject" kind="enumValue" name="{sys-news:sysNewsMain.portlet.image.showTitle}" default="true">
+				{"values":[{"text":"{sys-news:sysNewsMain.portlet.image.showTitle.value1.text}", "value":"true"}],"showType":"checkbox"}
+			</var>
+		</m:vars>
+	</m:mportlet>
+	<m:mportlet 
+		id="sys.news.main.textImg.mobile"
+		name="{sys-news:sysNewsMain.portlet.textImg.mobile}"
+		moduleUrl = "/sys/news/mobile/index.jsp#query=categoryId%3A!{cateid}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.textImg.mobile}"
+		jsUrl="/sys/news/mobile/mportal/sysNewsMportalTextImg.js?cateid=!{cateid}&amp;rowsize=!{rowsize}&amp;scope=!{scope}">
+		<m:vars>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="int" default="3"/>
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+		</m:vars>
+		<m:operations>
+			<m:operation name="{sys-mportal:sysMportalPage.changeBatch}" type="random" />
+		</m:operations>
+	</m:mportlet>
+	<m:mportlet 
+		id="sys.news.main.text.mobile"
+		name="{sys-news:sysNewsMain.portlet.text.mobile}"
+		moduleUrl = "/sys/news/mobile/index.jsp#query=categoryId%3A!{cateid}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.text.mobile}"
+		jsUrl="/sys/news/mobile/mportal/sysNewsMportalText.js?cateid=!{cateid}&amp;rowsize=!{rowsize}&amp;scope=!{scope}">
+		<m:vars>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="int" default="3"/>
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+		</m:vars>
+		<m:operations>
+			<m:operation name="{sys-mportal:sysMportalPage.changeBatch}" type="random" />
+		</m:operations>
+	</m:mportlet>
+	<m:mportlet 
+		id="sys.news.main.textSort.mobile"
+		name="{sys-news:sysNewsMain.portlet.textSort.mobile}"
+		moduleUrl = "/sys/news/mobile/index.jsp#query=categoryId%3A!{cateid}"
+		module="{sys-news:news.moduleName}"
+		description="{sys-news:sysNewsMain.portlet.textSort.mobile}"
+		jsUrl="/sys/news/mobile/mportal/sysNewsMportalTextSort.js?cateid=!{cateid}&amp;rowsize=!{rowsize}&amp;scope=!{scope}">
+		<m:vars>
+		    <var name="{sys-news:sysNewsMain.docPublishTime}" key="scope" kind="enumValue" default="no">
+                 {"values":[{ "text":"{portlet.var.date.oneMonth}", "value":"month"},
+	                        { "text":"{portlet.var.date.threeMonths}", "value":"season"},
+	                        { "text":"{portlet.var.date.halfAYear}", "value":"halfYear"},
+	                        { "text":"{portlet.var.date.oneYear}", "value":"year"},
+	                        { "text":"{portlet.var.date.unlimited}", "value":"no"}],
+	              "showType":"radio"
+	              }
+
+       		</var>
+			<var name="{portlet.rowsize}" key="rowsize" kind="int" default="3"/>
+			<var name="{sys-news:sysNewsPublishMain.fdCayegoryId}" key="cateid" kind="sys.simplecategory">
+				{"model":"com.landray.kmss.sys.news.model.SysNewsTemplate","name":"{sys-news:sysNewsMain.portlet.selectCategory}"}
+			</var>
+		</m:vars>
+		<m:operations>
+			<m:operation name="{sys-mportal:sysMportalPage.changeBatch}" type="random" />
+		</m:operations>
+	</m:mportlet>
+</root>

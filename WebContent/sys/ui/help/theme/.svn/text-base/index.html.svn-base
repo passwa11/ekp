@@ -1,0 +1,268 @@
+<div portal-type='Template' ref='template.t' data-config="%7B%22pageWidth%22%3A%221000px%22%7D">
+    <div portal-key="headerDesigner" portal-type="./Header">
+        <div class="headerEditor">
+            <div class="headerPreview">
+                默认页眉
+            </div>
+            <div class="editHeader">
+                设置
+            </div>
+        </div>
+        <input type="hidden" name="fdHeader" value="header.default5">
+        <input type="hidden" name="fdHeaderVars">
+        <input type="hidden" name="fdLogo">
+        <div class="logoDiv">
+            <img class="logoImg" src="/ekp/resource/images/logo.png">
+            <div class="logoEdit">
+                选择LOGO
+            </div>
+        </div>
+    </div>
+    <div portal-key="aside" portal-type="./AsideEditable" class="editbox">
+        <div portal-key="p_891c4dc0661335de5d64" portal-type="./AsideWidget" portal-innertype="personHead"
+        class="editbox widget" style="padding: 0px; border: 1px solid rgb(151, 193, 242);">
+            <script type="text/config">
+                {
+                    "portlet": [{
+                        "title": "个人头像",
+                        "format": "sys.ui.html",
+                        "sourceId": "sys.person.head.tab.source",
+                        "renderId": "sys.ui.html.default"
+                    }],
+                    "panel": "panel",
+                    "panelType": "none",
+                    "layoutId": "sys.ui.nonepanel.default",
+                    "layoutOpt": {},
+                    "heightExt": "auto"
+                }
+            </script>
+            <div class="preview">
+                <div class="lui_person_usertitle">
+                    <div>
+                        <div id="sys_person_userpic" class="lui_person_userpic">
+                            <img src="/ekp/sys/person/image.jsp?personId=1183b0b84ee4f581bba001c47a78b2d9&amp;size=b&amp;s_time=1589189344000"
+                            id="sys_person_userpic_img">
+                            <div id="sys_person_usermask" class="lui_person_usermask" style="white-space: nowrap; ">
+                                更换头像
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lui_person_author" style="text-align: center;padding: 5px 10px;">
+                        <a class="com_author" href="/ekp/sys/person/setting.do?setting=sys_zone_person_info"
+                        target="_blank">
+                            冯友友
+                        </a>
+                    </div>
+                    <div class="lui_person_dept">
+                        <span>
+                            产品研发中心
+                        </span>
+                    </div>
+                    <div class="clr">
+                    </div>
+                </div>
+                <script>
+                    seajs.use(['lui/jquery', 'lui/topic'],
+                    function($, topic) {
+                        $(function() {
+                            var setting = Com_GetUrlParameter(location.href, 'setting');
+                            if (setting != 'sys_zone_person_photo') {
+                                var pic = $('#sys_person_userpic'),
+                                mask = $('#sys_person_usermask');
+                                pic.css('cursor', 'pointer');
+                                pic.click(function() {
+                                    var url = '/ekp/sys/person/setting.do?setting=sys_zone_person_photo' + "&j_iframe=true&j_aside=false";
+                                    LUI.pageOpen(url, '_rIframe');
+                                    //window.open('/ekp/sys/person/setting.do?setting=sys_zone_person_photo');
+                                }).mouseover(function() {
+                                    mask.show();
+                                }).mouseout(function() {
+                                    mask.hide();
+                                });
+                            }
+
+                            topic.subscribe('lui.crop.success',
+                            function(data) {
+                                if (data && data.modelId) {
+                                    if (data.modelId == '1183b0b84ee4f581bba001c47a78b2d9') {
+                                        var img = $('#sys_person_userpic_img');
+                                        var src = img.attr("src");
+                                        if (src) {
+                                            var _s = Com_SetUrlParameter(src, "s_time", new Date().getTime());
+                                            img.attr("src", _s);
+                                        }
+                                    }
+                                }
+                            })
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+        <div portal-key="p_778179ca675a797981a8" portal-type="./AsideWidget" portal-innertype="nav"
+        class="editbox widget" style="padding: 0px; border: 1px solid rgb(151, 193, 242);">
+            <script type="text/config">
+                {
+                    "portlet": [{
+                        "title": "",
+                        "format": "sys.ui.sysnav",
+                        "sourceId": "sys.portal.sysnav.source",
+                        "sourceOpt": {
+                            "fdId": {
+                                "fdId": "16144c06f081a91fa244c954daf93823",
+                                "fdName": "知识门户导航"
+                            }
+                        },
+                        "renderId": "sys.ui.sysnav.default"
+                    }],
+                    "panel": "panel",
+                    "panelType": "none",
+                    "layoutId": "sys.ui.nonepanel.default",
+                    "layoutOpt": {},
+                    "heightExt": "auto"
+                }
+            </script>
+            <div class="preview">
+                <div id="lui-id-46" class="lui-component" data-lui-cid="lui-id-46" style="display: block;">
+                    <div class="lui_accordionpanel_frame">
+                        <div class="lui_accordionpanel_content_frame">
+                            <div class="lui_accordionpanel_header_l">
+                                <div class="lui_accordionpanel_header_r">
+                                    <div class="lui_accordionpanel_header_c">
+                                        <div class="lui_accordionpanel_nav_l" data-lui-mark="panel.nav.head" style="cursor: pointer;">
+                                            <div class="lui_accordionpanel_nav_r">
+                                                <div class="lui_accordionpanel_nav_c">
+                                                    <span class="lui_accordionpanel_nav_text" title="知识管理" data-lui-mark="panel.nav.title">
+                                                        <span class="lui_tabpanel_navs_item_title">
+                                                            知识管理
+                                                        </span>
+                                                    </span>
+                                                    <span data-lui-mark="panel.nav.toggle" class="lui_accordionpanel_toggle_up"
+                                                    data-lui-switch-class="lui_accordionpanel_toggle_down">
+                                                        &nbsp;
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lui_accordionpanel_content_l">
+                                <div class="lui_accordionpanel_content_r">
+                                    <div class="lui_accordionpanel_content_c" data-lui-mark="panel.content"
+                                    style="display: block;">
+                                        <div>
+                                            <div data-lui-mark="panel.content.inside" class="lui_panel_content_inside">
+                                                <div id="lui-id-48" class="lui-component" data-lui-type="lui/panel!Content"
+                                                data-lui-cid="lui-id-48" style="display: block;">
+                                                    <ul class="lui_list_nav_list">
+                                                        <li>
+                                                            <a title="知识案例">
+                                                                <i class="icon iconfont_nav lui_iconfont_nav_km_doc">
+                                                                </i>
+                                                                <span>
+                                                                    知识案例
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a title="知识地图">
+                                                                <i class="icon iconfont_nav lui_iconfont_nav_kms_kmaps">
+                                                                </i>
+                                                                <span>
+                                                                    知识地图
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a title="维基知识">
+                                                                <i class="icon iconfont_nav lui_iconfont_nav_kms_wiki">
+                                                                </i>
+                                                                <span>
+                                                                    维基知识
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a title="文档知识">
+                                                                <i class="icon iconfont_nav lui_iconfont_nav_kms_multidoc">
+                                                                </i>
+                                                                <span>
+                                                                    文档知识
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a title="考试管理">
+                                                                <i class="icon iconfont_nav lui_iconfont_nav_kms_exam">
+                                                                </i>
+                                                                <span>
+                                                                    考试管理
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a title="工作总结">
+                                                                <i class="icon iconfont_nav lui_iconfont_nav_km_summary">
+                                                                </i>
+                                                                <span>
+                                                                    工作总结
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a title="规范制度">
+                                                                <i class="icon iconfont_nav lui_iconfont_nav_km_institution">
+                                                                </i>
+                                                                <span>
+                                                                    规范制度
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a title="常用资料">
+                                                                <i class="icon iconfont_nav lui_iconfont_nav_km_comminfo">
+                                                                </i>
+                                                                <span>
+                                                                    常用资料
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div data-lui-mark="panel.content.operation" class="lui_portlet_operations clearfloat">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lui_accordionpanel_footer_l">
+                                <div class="lui_accordionpanel_footer_r">
+                                    <div class="lui_accordionpanel_footer_c">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div portal-key="content" portal-type="./Editable" class="editbox" style="min-height: 463px;">
+        <div class="widgetDock" style="height: 10px;">
+        </div>
+    </div>
+    <div portal-key="footerDesigner" portal-type="./Footer">
+        <div class="footerEditor">
+            <div class="footerPreview">
+                默认页脚
+            </div>
+            <div class="editFooter">
+                设置
+            </div>
+        </div>
+        <input type="hidden" name="fdFooter" value="footer.default">
+        <input type="hidden" name="fdFooterVars">
+    </div>
+</div>

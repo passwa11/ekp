@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="lbpmSystemEmptyOperationBehaviour"
+		parent="abstractOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.operation.system.LbpmSystemEmptyOperationBehaviour">
+	</bean>
+	<bean
+		id="lbpmSystemEmptyOperationBinder"
+		class="com.landray.kmss.sys.lbpmservice.operation.system.LbpmSystemEmptyOperationBinder" />
+
+	<bean
+		id="lbpmValidateProcessAdditionOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.operation.system.ValidateProcessAdditionOperationBehaviour">
+		<property name="processServiceManager">
+			<ref bean="lbpmProcessServiceManager" />
+		</property>
+		<property name="throughNodeCalculator">
+			<ref bean="lbpmThroughNodeCalculator" />
+		</property>
+	</bean>
+	
+	<bean
+		id="lbpmSystemAbandonOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.operation.system.LbpmSystemAbandonOperationBehaviour" />
+		
+	<bean
+		id="lbpmSystemWakeOperationBehaviour"
+		parent="abstractOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.operation.system.LbpmSystemWakeOperationBehaviour">
+	</bean>
+	
+	<bean
+		id="lbpmSystemWakeOperationBinder"
+		class="com.landray.kmss.sys.lbpmservice.operation.system.LbpmSystemWakeOperationBinder" />
+</beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	
+	<module messageKey="sys-remind:module.sys.remind" urlPrefix="/sys/remind/">
+		<roles>
+			SYS_REMIND_ADMIN
+		</roles>
+		
+		<request path="sys_remind_main/*" defaultValidator="roleValidator(role=SYS_REMIND_ADMIN;SYSROLE_ADMIN)"/>
+		<request path="sys_remind_main_task/*" defaultValidator="roleValidator(role=SYS_REMIND_ADMIN;SYSROLE_ADMIN)"/>
+		<request path="sys_remind_main_task_log/*" defaultValidator="roleValidator(role=SYS_REMIND_ADMIN;SYSROLE_ADMIN)"/>
+		<request path="tree.jsp*" defaultValidator="roleValidator(role=SYS_REMIND_ADMIN;SYSROLE_ADMIN)"/>
+	</module>
+	
+	<profileConfig 
+		key="remind"
+		messageKey="{sys-remind:module.sys.remind}"
+		url="/sys/profile/moduleindex.jsp?nav=/sys/remind/tree.jsp"
+		icon="sys_remind"
+		type="mechanism"
+		userType="4"
+		description="{sys-remind:sysRemind.profileCfg.description}"/>
+		
+</configs>

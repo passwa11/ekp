@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/hrext/staff/" 
+        messageKey="hrext-staff:module.hrext.staff" 
+        defaultValidator="roleValidator(role=ROLE_HREXTSTAFF_DEFAULT)">
+        <roles>ROLE_HREXTSTAFF_DEFAULT;ROLE_HREXTSTAFF_SETTING</roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_HREXTSTAFF_SETTING)"/>
+        <request 
+            path="hrext_staff_expand/hrextStaffExpand.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.hrext.staff.model.HrextStaffExpand" 
+            defaultValidator="roleValidator(role=ROLE_HREXTSTAFF_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_HREXTSTAFF_SETTING)"/>
+        </request>
+    </module>
+    <homePage 
+        messageKey="hrext-staff:module.hrext.staff" 
+        urlPrefix="hrext/staff" 
+        url="/hrext/staff/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/hrext/staff/tree.jsp"/>
+    <profileConfig 
+        key="hrext/staff" 
+        messageKey="{hrext-staff:module.hrext.staff}" 
+        url="/sys/profile/moduleindex.jsp?nav=/hrext/staff/tree.jsp" 
+        icon="km_comminfo" 
+        type="ekp" 
+        description="{hrext-staff:module.hrext.staff.description}"/>
+</configs>

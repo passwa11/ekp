@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.example.org/plugin-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../../plugin.xsd ">
+
+	<extension-point id="com.landray.kmss.kms.common">
+	
+		<item name="cardInfo">
+			<param name="icon" kind="string" required="true">
+				<description>图标</description>
+			</param>
+			<param name="text" kind="string" required="true">
+				<description>名称</description>
+			</param>
+			<param name="href" kind="string" required="true">
+				<description>跳转地址</description>
+			</param>
+			<param name="auth" kind="string" required="true">
+				<description>显示该图标所需的权限</description>
+			</param>			
+			<param name="order" kind="string" required="true">
+				<description>排序号</description>
+			</param>
+			<description>卡片数据</description>
+		</item>
+		<item name="chartInfo">
+			<param name="serviceBean" kind="spring" required="true" basedOn="com.landray.kmss.kms.common.service.IKmsKnowledgeHomeMobileService">
+				<description>任务运行bean</description>
+			</param>
+			<param name="order" kind="string" required="true">
+				<description>排序号</description>
+			</param>
+			<description>图表数据</description>
+		</item>
+		
+		<item name="module">
+			<param name="unid" required="true" kind="unid">
+				<description>
+					唯一标识，建议使用java bean的全限定名。
+				</description>
+			</param>
+			<param name="order" kind="int" default="99">
+				<description>
+					可选，同类配置排序号
+				</description>
+			</param>
+			<param name="target" kind="string" default="_self">
+				<description>
+					连接目标
+				</description>
+			</param>
+			<param name="titleMessageKey" required="true" kind="string">
+				<description>
+					必选，模块名称的Key
+				</description>
+			</param>
+			<param name="navMessageKey" required="true" kind="string">
+				<description>
+					必选，导航栏上的文字的Key
+				</description>
+			</param>
+			<param name="indexPage" required="true" kind="string">
+				<description>
+					必选，首页路径
+				</description>
+			</param>
+			<param name="modulePath" required="true" kind="string">
+				<description>
+					必选，模块路径 ，例如kms/ask
+				</description>
+			</param>
+			<description>KMS模块信息扩展点</description>
+		</item>
+		
+		<item name="search">
+			<param name="canSearch" kind="string" default="true">
+				<description>
+					是否能收索
+				</description>
+			</param>
+			<param name="searchMessageKey" required="true" kind="string">
+				<description>
+					必选，搜索框上显示的模块名称的Key
+				</description>
+			</param>
+			<param name="order" required="true" kind="int">
+				<description>
+					搜索框上排序
+				</description>
+			</param>
+			<param name="modelClass" required="true" kind="string">
+				<description>
+					必选，modelClass
+				</description>
+			</param>
+			<description>全文检索扩展点</description>
+		</item>
+		
+		
+		<item name="personal">
+			<param name="navMessageKey" kind="string" default="true">
+				<description>
+					必选，左边导航栏上的key
+				</description>
+			</param>
+			<param name="order" required="true" kind="int">
+				<description>
+					必选，左边导航排序号
+				</description>
+			</param>
+			<param name="canDisplay" kind="string" default="true">
+				<description>
+					必选，是否显示该模块
+				</description>
+			</param>
+			<param name="personalUrl" kind="string" default="true">
+				<description>
+					必选，各个人主页路径
+				</description>
+			</param>
+			<param name="modulePath" required="true" kind="string">
+				<description>
+					必选，模块路径 ，例如kms/ask
+				</description>
+			</param>
+			<param name="modelClass" required="true" kind="string">
+				<description>
+					必选，modelClass
+				</description>
+			</param>
+			<description>个人主页扩展点</description>
+		</item>
+		<!-- 
+		<item name="sns">
+			<param name="modelName" required="true" kind="string">
+				<description>
+					必选，modelName
+				</description>
+			</param>
+			<param name="categoryModelName" required="true" kind="string">
+				<description>
+					必选，分类categoryModelName
+				</description>
+			</param>
+			<param name="shareMessageKey" kind="string" required="true">
+				<description>
+					必选，shareMessageKey
+				</description>
+			</param>
+			<param name="page" kind="string" required="true">
+				<description>
+					必选，分享点实现页面
+				</description>
+			</param>
+			<param name="order" required="true" kind="int">
+				<description>
+					必选，分享点排序号
+				</description>
+			</param>
+			<description>SNS分享扩展点</description>
+		</item>
+		 -->
+		<item name="person">
+			<param name="modelName" required="true" kind="string">
+				<description>
+					必选，modelName
+				</description>
+			</param>
+			<param name="shareMessageKey" kind="string" required="true">
+				<description>
+					必选，shareMessageKey
+				</description>
+			</param>
+			<param name="page" kind="string" required="true">
+				<description>
+					必选，分享点实现页面
+				</description>
+			</param>
+			<param name="order" required="true" kind="int">
+				<description>
+					必选，分享点排序号
+				</description>
+			</param>
+			<description>分享到个人扩展点</description>
+		</item>
+		
+		<item name="group">
+			<param name="modelName" required="true" kind="string">
+				<description>
+					必选，modelName
+				</description>
+			</param>
+			<param name="categoryModelName" required="true" kind="string">
+				<description>
+					必选，分类categoryModelName
+				</description>
+			</param>
+			<param name="shareMessageKey" kind="string" required="true">
+				<description>
+					必选，shareMessageKey
+				</description>
+			</param>
+			<param name="page" kind="string" required="true">
+				<description>
+					必选，分享点实现页面
+				</description>
+			</param>
+			<param name="order" required="true" kind="int">
+				<description>
+					必选，分享点排序号
+				</description>
+			</param>
+			<description>分享到朋友圈扩展点，生成二维码分享</description>
+		</item>	
+			
+		<item name="circle">
+			<param name="modelName" required="true" kind="string">
+				<description>
+					必选，modelName
+				</description>
+			</param>
+			<param name="categoryModelName" required="true" kind="string">
+				<description>
+					必选，分类categoryModelName
+				</description>
+			</param>
+			<param name="shareMessageKey" kind="string" required="true">
+				<description>
+					必选，shareMessageKey
+				</description>
+			</param>
+			<param name="page" kind="string" required="true">
+				<description>
+					必选，分享点实现页面
+				</description>
+			</param>
+			<param name="order" required="true" kind="int">
+				<description>
+					必选，分享点排序号
+				</description>
+			</param>
+			<description>分享到圈子扩展点</description>
+		</item>	
+		
+		<item name="entry">
+			<param name="unid" kind="string" required="true">
+				<description>
+					必选，主键
+				</description>
+			</param>
+			<param name="moduleName" kind="string" required="true">
+				<description>
+					必选，模块名称
+				</description>
+			</param>
+			<param name="order" required="true" kind="int">
+				<description>
+					必选，排序号
+				</description>
+			</param>
+			<param name="jspUrl" kind="string" required="false">
+				<description>
+					可选，jsp路径
+				</description>
+			</param>
+			<param name="modelClass" kind="string" required="true">
+				<description>
+					必选，modelClass
+				</description>
+			</param>
+			<param name="categoryClass" kind="string" required="true">
+				<description>
+					必选，分类modelClass
+				</description>
+			</param>
+			<param name="catePropertyName" kind="string" >
+				<description>
+					分类属性名，比如fdCategory
+				</description>
+			</param>
+			<param name="service" kind="spring" required="true"
+				basedOn="com.landray.kmss.kms.common.interfaces.IKmsDataBean">
+				<description>
+					可选，情景列表service，场景配置使用
+				</description>
+			</param>
+			<param name="exceptProps" kind="string" >
+				<description>
+					接口场景中例外的字段，比如维基知识库从知识仓库继承过来的docEffectiveTime之类，多个用;隔开，非必须
+				</description>
+			</param>
+			<description>情景管理实体</description>
+		</item>
+		
+		<item name="multidocLifeCycleConfig">
+			<param name="name" required="true" kind="string">
+				<description>
+					模块名字
+				</description>
+			</param>
+			<param name="modelName" required="true" kind="string">
+				<description>
+					必选，modelName
+				</description>
+			</param>
+			<param name="configModelName" required="true" kind="string">
+				<description>
+					配置模块名字
+				</description>
+			</param>
+			<description>知识仓库生命周期配置</description>
+		</item>		
+		
+		<description>数据库检测扩展配置</description>
+	</extension-point>
+	
+	<extension-point id="com.landray.kmss.kms.kmatch.case.publish">
+		<item name="case">
+			<param name="key" kind="unid" required="true">
+				<description>扩展对应的key值</description>
+			</param>
+			<param name="name" kind="unid" required="true">
+				<description>扩展名称</description>
+			</param>
+			<param name="provider" kind="spring" required="true"
+				   basedOn="com.landray.kmss.kms.common.interfaces.IKmsKmatchCasePublish">
+				<description>沉淀实现接口</description>
+			</param>
+			<description>案例沉淀到文档</description>
+		</item>
+		<item name="multidoc">
+			<param name="key" kind="unid" required="true">
+				<description>扩展对应的key值</description>
+			</param>
+			<param name="name" kind="unid" required="true">
+				<description>扩展名称</description>
+			</param>
+			<param name="provider" kind="spring" required="true"
+				   basedOn="com.landray.kmss.kms.common.interfaces.IKmsKmatchCasePublish">
+				<description>关联实现接口</description>
+			</param>
+			<description>案例关联文档</description>
+		</item>
+		<description>案例大赛与文档知识库模块解耦扩展点</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.kms.common.datapush">
+		<item name="push">
+			<param name="unid" required="true" kind="unid">
+				<description>
+					唯一标识，建议使用java bean的全限定名。
+				</description>
+			</param>
+			<param name="pushModules" required="true" kind="string">
+				<description>
+					必选，跳转模块,用分号隔开
+				</description>
+			</param>
+			<description>推送扩展点配置</description>
+		</item>
+		
+		<item name="bepush">
+			<param name="unid" required="true" kind="unid">
+				<description>
+					唯一标识，建议使用java bean的全限定名。
+				</description>
+			</param>
+			<param name="pushURL" required="true" kind="string">
+				<description>
+					必选，跳转路径
+				</description>
+			</param>
+			<param name="name" required="true" kind="string">
+				<description>
+					名称
+				</description>
+			</param>
+			<param name="img" required="true" kind="string">
+				<description>
+					推送图标
+				</description>
+			</param>
+			<param name="cateModelName"  kind="string">
+				<description>
+					分类model
+				</description>	
+			</param>
+			<param name="auths"  kind="string">
+				<description>
+					创建权限
+				</description>	
+			</param>
+			<description>被推送的扩展点配置</description>
+		</item>
+		<description>被推送的扩展点配置</description>
+	</extension-point>
+	
+	<extension-point id="com.landray.kmss.kms.common.courseNotes">
+		<item name="basicInfo">
+			<param name="fdModelName" required="true" kind="string">
+				<description>
+					部署模块的ModelName
+				</description>
+			</param>
+			<description>学习笔记基本信息扩展点配置</description>
+		</item>
+		<description>学习笔记扩展点配置</description>
+	</extension-point>
+
+	<extension-point id="com.landray.kmss.kms.common.kms.learn.courseware.publish">
+		<item name="attachmentInfo">
+			<param name="fdKey" required="true" kind="string">
+				<description>
+					附件的fdKey
+				</description>
+			</param>
+			<description>学习课件附件信息配置</description>
+		</item>
+		<description>学习课件发布扩展点配置</description>
+	</extension-point>
+	
+	<extension point="com.landray.kmss.sys.config.loader.extend">
+		<item name="frameworkExtend">
+			<param name="fileSuffix" value="kms"></param>
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.kms.log">
+		<item name="logType">
+			<param name="messageText" value="kms-common:kmsShareLog.readRecord"/>
+			<param name="className" value="com.landray.kmss.kms.common.service.spring.KmsShareMainServiceImp"/>
+			<param name="operateMethod" value="addShareRecord"/>
+			<param name="modelName" value="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge,com.landray.kmss.kms.wiki.model.KmsWikiMain,com.landray.kmss.kms.ask.model.KmsAskTopic,com.landray.kmss.kms.kmaps.model.KmsKmapsMain,com.landray.kmss.kms.learn.model.KmsLearnMain,com.landray.kmss.kms.learn.model.KmsLearnCourseware,com.landray.kmss.kms.exam.model.KmsExamUnifiedTemplate,com.landray.kmss.kms.exam.model.KmsExamUnifiedActivity,com.landray.kmss.kms.exam.model.KmsExamTopic,com.landray.kmss.kms.awiki.model.KmsAwikiMain,com.landray.kmss.kms.train.model.KmsTrainMain,com.landray.kmss.kms.kmtopic.model.KmsKmtopicMain"/>
+			<param name="type" value="6"/>
+			<param name="logServiceBean" value="kmsLogShareProxy"/>
+		</item>
+	</extension>
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item name="config">
+			<param name="unid"
+				value="com.landray.kmss.kms.common.transfer.KmsShareTransferTask" />
+			<param name="name" value="KMS分享功能数据迁移" />
+			<param name="path" value="/kms/common/" />
+			<param name="check"
+				value="com.landray.kmss.kms.common.transfer.KmsShareTransferChecker" />
+			<param name="upgrade"
+				value="com.landray.kmss.kms.common.transfer.KmsShareTransferTask" />
+			<param name="description"
+				value="将KMS分享功能中分享对象数据迁移到新的分享对象表kms_share_goal中" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.kms.common">
+		<item name="multidocLifeCycleConfig">
+			<param name="name" value="kms-common:module.multidoc" />
+			<param name="modelName"
+				value="com.landray.kmss.kms.multidoc.model.KmsMultidocKnowledge" />
+			<param name="configModelName"
+				value="com.landray.kmss.kms.common.model.KmsMultidocLifeCycleConfig" />
+		</item> 
+	</extension>
+	
+	<extension point="com.landray.kmss.kms.lservice">
+		
+		<item name="bank"> 
+			<param name="modelName" value="com.landray.kmss.kms.common.model.KmsCourseNotes" />
+			<param name="titleMessage" value="kms-common:module.kms.courseNotes" />
+			<param name="type" value="student" />
+			<param name="icon" value="lservice-notebook"/>
+			<param name="jsp" value="/kms/common/kms_course_notes/student/index.jsp" />
+			<param name="navJsp" value="/kms/common/kms_course_notes/student/nav.jsp" />
+			<param name="order" value="30" />
+		</item>
+		
+	</extension>
+	
+	
+	<extension
+		point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.kms.common.transfer.KmsHomeKnowledgeIntroCategoryTransferTask" />
+			<param
+				name="name"
+				value="推荐知识分类数据迁移" />
+			<param
+				name="path"
+				value="/kms/common/" />
+			<param
+				name="check"
+				value="com.landray.kmss.kms.common.transfer.KmsHomeKnowledgeIntroCategoryTransferChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.kms.common.transfer.KmsHomeKnowledgeIntroCategoryTransferTask" />
+			<param
+				name="description"
+				value="进行推荐知识数据迁移，将原来没有分类的推荐知识迁移到一个叫“未分类”的分类里"/>
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+	
+		<item name="js-pkg">
+			<param name="name" value="mui-kms-common.js" />
+			<param name="targetFile" value="/kms/common/mobile/module/js/mui-kms-common.js" />
+			<param name="srcFold" value="/kms/common/mobile/module/js" />
+		</item>
+		<item 
+			name="css-file">
+			<param 
+				name="name" 
+				value="mui-kms-common.css" />
+			<param 
+				name="targetFile" 
+				value="/kms/common/mobile/module/css/module.css" />
+		</item>
+		
+		<item name="js-pkg">
+			<param name="name" value="mui-kms-common-myNote.js" />
+			<param name="targetFile" value="/kms/common/mobile/myNote/js/mui-kms-common-myNote.js" />
+			<param name="srcFold" value="/kms/common/mobile/myNote/js" />
+		</item>		
+		<item 
+			name="css-file">
+			<param 
+				name="name"
+				value="mui-kms-common-myNote.css" />
+			<param 
+				name="targetFile"
+				value="/kms/common/mobile/myNote/css/myNote.css" />
+		</item>
+		
+	</extension>
+
+	<extension point="com.landray.kmss.sys.authentication">
+		<item name="authenticationProcessingFilter" enable="true">
+			<param name="bean" value="kmsEditionFilter" />
+			<param name="order" value="1" />
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.authorization">
+		<item name="roleOperation">
+			<param name="modulePath" value="/kms/multidoc;/kms/knowledge;/kms/wiki;/kms/category"/>
+			<param name="serviceName" value="kmsMultidocAuthorizationHandleServiceImpl"/>
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.profile.filter">
+		<item name="profileFilter">
+			<param name="modulePrefixs" value="/kms/category"/>
+			<param name="serviceName" value="kmsSysProfileFilterPlugin"/>
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.profile.filter">
+		<item name="profileFilter">
+			<param name="modulePrefixs" value="/kms/common"/>
+			<param name="serviceName" value="kmsCommonHandleSysProfileFilterPlugin"/>
+		</item>
+	</extension>
+
+	<extension point="com.landray.kmss.sys.relation.config">
+		<item name="searchCfg">
+			<param name="serviceName" value="kmsRelationCfgService"/>
+			<param name="moduleName" value="/kms/multidoc;/kms/wiki"/>
+		</item>
+	</extension>
+</plugin>

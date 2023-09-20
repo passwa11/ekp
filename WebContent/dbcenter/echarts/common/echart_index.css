@@ -1,0 +1,518 @@
+
+/* 默认样式 */
+ul li {
+    list-style: none;
+}
+html,body{
+}
+.lui-theChart-main{
+    padding: 6px;
+    background: #e9ecef;
+    border-radius: 4px;
+}
+.lui-theChart-main-header{
+    height:40px;
+    line-height: 40px;
+    text-align: left;
+    padding-left: 20px;
+    border-bottom: 1px solid #4285F4;
+    font-family: MicrosoftYaHei;
+    font-size: 16px;
+    color: #4285F4;
+    letter-spacing: 0;
+    background: white;
+}
+.lui-theChart-main-content{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    box-sizing: border-box;
+    overflow: hidden;
+    height:100%;
+} 
+
+.clearfix:after{
+    content:"";/*设置内容为空*/
+    height:0;/*高度为0*/
+    line-height:0;/*行高为0*/
+    display:block;/*将文本转为块级元素*/
+    visibility:hidden;/*将元素隐藏*/
+    clear:both;/*清除浮动*/
+}
+.clearfix{
+    zoom:1;/*为了兼容IE*/
+}
+/* 左边导航栏 */
+.lui-theChart-main-content-left{
+    display: table-cell;
+    width:220px;
+    background:white;
+    height:100%;
+    vertical-align: top;
+    overflow: auto;
+}
+.lui-theChart-main-content-left-box{
+    width:100%;
+    box-sizing: border-box;
+    padding: 0 10px;
+}
+.lui-theChart-main-content-left-title{
+    line-height: 24px;
+    margin-top:10px;
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #333333;
+    font-weight: 700;
+    padding-left: 10px;
+}
+.lui-theChart-main-content-left-item{
+    height:60px;
+    width:200px;
+    margin-top: 20px;
+    padding: 8 14px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.lui-theChart-main-content-left-tip{
+	margin-top: 5px;
+    color: #d9d9d9;
+    clear: both;
+    white-space:nowrap;
+}
+.lui-theChart-main-content-left-item.lui-theChart-active{
+    background: #FFFFFF;
+    box-shadow: 0 0 8px 0 rgba(66,133,244,0.40);
+    border-radius: 4px; 
+}
+.lui-theChart-main-content-left-item > span:first-child{
+    font-family: MicrosoftYaHei;
+    font-size: 14px;
+    color: #666666;
+}
+.lui-theChart-main-content-left-item.lui-theChart-active >span.lui-theChart-main-content-left-item-num{
+    color:#4285F4;
+}
+.lui-theChart-main-content-left-item > span.lui-theChart-main-content-left-item-num{
+    margin-right: 10px;
+    font-family: MicrosoftYaHei;
+    float: right;
+    font-weight:700;
+    font-size: 20px;
+    color:#666666;
+}
+/* 右边主体部分 */
+
+.lui-theChart-main-content-dataLsit.foldListStyle{
+    height:0;
+    overflow: hidden;
+}
+.lui-theChart-main-content-right{
+    height:100%;
+    padding-left: 6px;
+    overflow: auto;
+}
+.lui-theChart-main-content-right-top{
+    height:65px;
+    position: relative;
+    background: white;
+    margin-bottom: 6px;
+    border: 1px solid #E8E8E8;
+    border-radius: 0 0 4px 4px;
+}
+.lui-theChart-main-content-right-top > input {
+    position: absolute;
+    margin-left: 20px;
+    height:40px;
+    width:455px;
+    margin-top: 14px;
+    line-height: 40px;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    box-shadow: inset 0 1px 0 0 #E5E5E5;
+    border-radius: 4px;
+}
+/* 图表list */
+.lui-theChart-main-content-right-data{
+    background: white;
+    /* box-shadow: 0 0 6px 0 rgba(0,0,0,0.06); */
+    border-radius: 4px;
+}
+.lui-theChart-main-content-right-data-categoryItem{
+    background: white;
+    padding:0 5px 0 0;
+    margin-bottom: 25px;
+    border-radius: 4px;
+}
+.lui-theChart-main-content-right-data-categoryItem:last-child{
+    margin-bottom: 0;
+}
+.lui-theChart-main-content-right-data-categoryItem-title{
+    height:50px;
+    line-height: 50px;
+    padding: 0  15px;
+    border-bottom:1px solid #eee;
+}
+.lui-theChart-main-content-right-data-categoryItem-title-text{
+    float:left;
+}
+.lui-theChart-main-content-right-data-categoryItem-title span.lui-theChart-main-content-right-data-categoryItem-title-icon{
+    float:right;
+    height:12px;
+    width:12px;
+    vertical-align: middle;
+    background:url('images/down.png') no-repeat center center;
+    padding:0;
+    margin-top: 19px;
+    cursor: pointer;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.lui-theChart-main-content-right-data-categoryItem-title span.lui-theChart-main-content-right-data-categoryItem-title-icon.theUnfoldStyle{
+    background:url('images/up.png') no-repeat center center!important;
+}
+.lui-theChart-main-content-right-data-categoryItem-title > span {
+    display: inline-block;
+    padding: 0 5px;
+    height:100%;
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #4285F4;
+    font-weight: 500;
+}
+.lui-theChart-main-content-right-categoryItem-dataList ul {
+    padding: 20px 25px;
+}
+
+.lui-theChart-main-content-right-categoryItem-dataList li {
+    float:left;
+    width:20%;
+    height:40px;
+    line-height: 40px;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+}
+.lui-theChart-main-content-right-category-dataList-text{
+    position: absolute;
+    left:24px;
+    top:0;
+    line-height: 40px;
+    height:40px;
+    max-width: 98px;
+    right:10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+li:hover>.lui-theChart-main-content-right-category-dataList-text{
+    color:#4285F4;
+}
+li:hover>.lui-theChart-main-content-right-category-dataList-icon{
+    background:url('images/itemGroupIcon_active.png') no-repeat center center;
+}
+.lui-theChart-main-content-right-category-dataList-icon{
+    display: inline-block;
+    height:14px;
+    width:14px;
+    background:url('images/itemGroupIcon.png') no-repeat center center;
+    margin: 13px 10px 0 0;
+}
+/* 二级列表 */
+.lui-theChart-main-content-right-categoryItem-dataList-secondLevel {
+    padding: 20px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.lui-theChart-main-content-right-data-categoryItem .lui-theChart-main-content-dataLsit .lui-theChart-main-content-right-categoryItem-dataList-secondLevel:last-child{
+    border-bottom: none;
+}
+.lui-theChart-main-content-right-categoryItem-dataList-secondLevel .lui-theChart-main-content-right-categoryItem-dataList-secondLevel-title{
+    float: left;
+    width:20%;
+    height:40px;
+    line-height: 40px;
+    position: relative;
+}
+.lui-theChart-main-content-right-categoryItem-dataList-secondLevel-title-box span:first-child{
+    display: inline-block;
+    height:15px;
+    width:2px;
+    background: #4285F4;
+    position: absolute;
+    margin-top: 13px;
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+}
+.lui-theChart-main-content-right-categoryItem-dataList-secondLevel-title-box span.lui-theChart-main-content-right-categoryItem-dataList-secondLevel-title-box-text{
+    padding-left: 15px;
+    font-family: PingFangSC-Medium;
+    font-size: 14px;
+    color: #222222;
+    font-weight: 700;
+}
+.lui-theChart-main-content-right-categoryItem-dataList-secondLevel ul {
+    width:80%;
+    display: inline-block;
+}
+.lui-theChart-main-content-right-categoryItem-dataList-secondLevel ul li {
+    float:left;
+    width:25%;
+    height:40px;
+    line-height: 40px;
+    cursor: pointer;
+    position: relative;
+}
+
+/* empty */
+.emptyStyle{
+    height:257px;
+    width:470px;
+    text-align: center;
+}
+.emptyStyle .emptyIcon{
+    height:200px;
+    width:470px;
+    margin: 15px auto;
+    background: url(images/empty.png) no-repeat center center;
+}
+
+
+.delete_Attention{
+	height: 16px;
+	width:16px;
+	background-image:url(images/attention_img.png);
+	display:inline-block;
+}
+
+.create_Attention{
+	height: 16px;
+	width:16px;
+	background-image:url(images/no_attention_img.png);
+	display:inline-block;
+}
+
+/*头部应用弹层内容 Starts*/
+.lui_dataview_navEcharts_app{
+    margin: -8px 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+}
+.lui_dataview_navEcharts_app:after,
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all:after{
+    content: '';
+    display: table;
+    visibility: hidden;
+    clear: both;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_searchbar{
+    margin-left: 5px;
+    margin-top: 13px;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_searchbar:after{
+    content: '';
+    display: table;
+    visibility: hidden;
+    clear: both;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_searchbar_wrap{
+    width: 450px;
+    border: 1px solid #D8D8D8;
+    position: relative;
+    transition-duration: .3s;
+    margin-top: 25px;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_searchbar_wrap input{
+    border: 0;
+    outline: none;
+    text-align: left;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 11% 0 2%;
+    width: 85%;
+    transition: border 0.3s;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_searchbar_wrap:hover{
+    border: 1px solid #4285F4;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_searchbar_wrap span {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 16px;
+    height: 16px;
+    background-image: url(images/address_icon_search.png);
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    transition-duration: .3s;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_searchbar_wrap span:hover{
+    background-image: url(images/address_icon_search_on.png);
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_searchbar_wrap .deleteIcon {
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    top: 6px;
+    right: 30px;
+    width: 16px;
+    height: 16px;
+    background-image: url(images/address_icon_del_gray.png);
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    transition-duration: .3s;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_searchbar_association {
+    position: absolute;
+    width: 450px;
+    background-color: #ffffff;
+    border: 1px solid #EEEEEE;
+    box-shadow: 0 3px 8px 0 rgba(0,0,0,0.09);
+    z-index: 100;
+    display: none;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_searchbar_association .association_item{
+    height: 32px;
+    line-height: 32px;
+    padding: 0 8px;
+    cursor: pointer;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_searchbar_association .association_item:hover{
+    background-color: #E6E7E7;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_searchbar_association .association_item_keyword{
+    color: #459DF2;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_tip {
+    padding: 0 5px;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_tip_content {
+    font-size: 14px;
+    color: #999;
+    padding: 16px 0;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_tip_content .txtValue {
+    color: #4285f4;   
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_content {
+    margin-top: 10px;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv1_all{
+    padding: 10px 0;
+    min-height: 1px;
+    position: relative;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv1_all:last-child{ border-bottom: 0; }
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv1_all:last-child:before{ display: none; }
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv1_l {
+    padding: 0 5px;
+    float: left;
+    margin-top: 4px;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv1_c { margin-bottom: 8px; }
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv1_c > div.lui_dataview_navtree_app_1v1_separate{
+    content: '';
+    height:14px;
+    border-left: 2px solid #4285f4;
+    position:absolute;
+    left:0;
+    top: 18px;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv1_c > div.lui_dataview_navtree_app_1v1_title{
+    margin-left: 6px;
+    width: 64px;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv1_c > div > a{
+    color: #666666;
+    font-size: 16px;
+    cursor: default;
+    position: relative;
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all{
+    margin-left: 80px;
+    padding: 0;
+    list-style: none;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all:after{
+    content: '';
+    display: table;
+    visibility: hidden;
+    clear: both;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all > .lui_dataview_navtree_app_lv2{
+    padding: 0 5px;
+    text-align: center;
+    display: inline-block;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all > .lui_dataview_navtree_app_lv2 > a{
+    padding: 6px 2px;
+    width: 84px;
+    color: #666;
+    font-size: 12px;
+    border-radius: 4px;
+    border: 0px;
+    background-color: transparent;
+    display: block;
+    transition-duration: .3s;
+    cursor: pointer;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all > .lui_dataview_navtree_app_lv2 > a.app_selected{
+    background: #F7F7F7;
+    border: 1px solid #4285F4;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all > .lui_dataview_navtree_app_lv2 > a:hover{
+    background-color: #F7F7F7;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all > .lui_dataview_navtree_app_lv2 > a:hover .icon{
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
+}
+
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all > .lui_dataview_navtree_app_lv2 .icon {
+    display: inline-block;
+    height:14px;
+    width:14px;
+    background:url('images/itemGroupIcon.png') no-repeat center center;
+    vertical-align: middle;
+    margin-right:10px;
+}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all > .lui_dataview_navtree_app_lv2 .txt {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition-duration: .3s;
+    font-weight: bold;
+}
+
+/*应用图标背景颜色*/
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all > .lui_dataview_navtree_app_lv2 .icon_bg_1{ background-color: #5C99FF;}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all > .lui_dataview_navtree_app_lv2 .icon_bg_2{ background-color: #7676F0;}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all > .lui_dataview_navtree_app_lv2 .icon_bg_3{ background-color: #F5B15A;}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all > .lui_dataview_navtree_app_lv2 .icon_bg_4{ background-color: #F58754;}
+.lui_dataview_navEcharts_app .lui_dataview_navtree_app_lv2_all > .lui_dataview_navtree_app_lv2 .icon_bg_5{ background-color: #36BCB6;}
+
+
+/*头部应用弹层内容 Starts*/
+
+

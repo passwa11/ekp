@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="dingJsapiOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/third/ding/jsapi.do">
+            <query
+				method="jsapiSignature" 
+				logPoint="Base_UrlParam;jsapiSignature"
+				messageKey="third-ding:third.ding.dingJsapi.oper.jsapiSignature"/>
+			<query
+				method="pcJsapiSignature" 
+				logPoint="Base_UrlParam;pcJsapiSignature"
+				messageKey="third-ding:third.ding.dingJsapi.oper.pcJsapiSignature"/>
+			<query
+				method="userinfo" 
+				logPoint="Base_UrlParam;userinfo"
+				messageKey="third-ding:third.ding.dingJsapi.oper.userinfo"/>
+        </oper>
+        
+        <oper
+            id="dingOmsOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/third/ding/dingOms.do">
+            <query
+				method="generateMapping" 
+				logPoint="Base_UrlParam;addUser;updateUser;updateDept;addDept;processDeptRelation"
+				messageKey="third-ding:third.ding.dingSynchroOrgDing2Ekp.oper.generateMapping"/>
+        </oper>
+        
+		<oper
+            id="dingAttachmentOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/resource/third/ding/attachment.do">
+            <query
+				method="agentIdCheck" 
+				logPoint="Base_UrlParam;agentIdCheck"
+				messageKey="third-ding:third.ding.dingAttachment.oper.agentIdCheck"/>
+			<query
+				method="cleanTime" 
+				logPoint="Base_UrlParam;cleanTime"
+				messageKey="third-ding:third.ding.config.dingOrgIdBtn"/>
+			<query
+				method="download" 
+				logPoint="Base_UrlParam;download"
+				messageKey="third-ding:third.ding.dingAttachment.oper.download"/>
+        </oper>
+        
+		<oper
+            id="dingEndpointOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/resource/third/ding/endpoint.do">
+        	<query
+				method="service" 
+				logPoint="Base_UrlParam;addUser;updateUser;deleteUser;updateDept;addDept;deleteDept;processDeptRelation"/>
+			<query
+				method="check" 
+				logPoint="Base_UrlParam;check"/>
+        </oper>  
+        
+        <oper
+            id="thirdDingOmsInitOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ding.model.ThirdDingOmsInit"
+            action="/third/ding/third_ding_oms_init/thirdDingOmsInit.do">
+        	<query
+				method="omsInit" 
+				logPoint="Base_UrlParam;updateDept;updatePerson"/>
+			<query
+				method="dingDel" 
+				logPoint="Base_UrlParam;Service_Delete"/>
+			<query
+				method="ekpUpdate" 
+				logPoint="Base_UrlParam;updateEKP"/>
+			<query
+				method="appList" 
+				logPoint="Base_UrlParam;appList"/>
+        </oper>
+        
+        <oper
+            id="omsRelationModelOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ding.model.OmsRelationModel"
+            action="/third/ding/oms_relation_model/omsRelationModel.do">
+        	<query
+				method="addOrUpdateCheck" 
+				logPoint="Base_UrlParam;addOrUpdateCheck"
+				messageKey="button.save"/>
+			<query
+				method="loadExcel" 
+				logPoint="Base_UrlParam;addExcel"
+				messageKey="button.import"/>
+        </oper>
+        
+        <oper
+            id="oms2DingCheckOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/third/ding/oms2DingCheck.do">
+        	<query
+				method="checkData" 
+				logPoint="Base_UrlParam;checkData"
+				messageKey="third-ding:third.ding.oms.check.main"/>
+			<query
+				method="cleanTime" 
+				logPoint="Base_UrlParam;cleanTime"
+				messageKey="third-ding:third.ding.config.dingOrgIdBtn"/>
+        </oper>
+        
+        <oper
+            id="dingPcScanLoginOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/third/ding/pcScanLogin.do">
+        </oper>
+        
+        <oper
+            id="dingUserOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/third/ding/user.do">
+            <query
+				method="getUserId" 
+				logPoint="Base_UrlParam;getUserId"/>
+			<query
+				method="getDingUserId" 
+				logPoint="Base_UrlParam;getDingUserId"/>
+        </oper>
+        
+        <oper
+            id="thirdDingGroupOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ding.model.ThirdDingGroup"
+            action="/third/ding/third_ding_group/thirdDingGroup.do">
+            <query
+				method="checkGroup" 
+				logPoint="Base_UrlParam;checkGroup"/>
+			<query
+				method="createGroup" 
+				logPoint="Base_UrlParam;addGroup"/>
+			<query
+				method="getCreateInfo" 
+				logPoint="Base_UrlParam;getCreateInfo"/>
+        </oper>
+        
+        <oper
+            id="thirdDingOrmTempOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ding.model.ThirdDingOrmTemp"
+            action="/third/ding/third_ding_orm_temp/thirdDingOrmTemp.do">
+        </oper>
+        
+        <oper
+            id="thirdDingEventOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ding.model.ThirdDingEvent"
+            action="/third/ding/third_ding_event/thirdDingEvent.do">
+            <query
+				method="data" 
+				logPoint="Base_UrlParam;Action_FindAll"
+				messageKey="button.list"/>
+			<query
+				method="importEvent" 
+				logPoint="Base_UrlParam;importEvent"
+				messageKey="button.import"/>
+			<query
+				method="updateStatus" 
+				logPoint="Base_UrlParam;updateStatus"/>
+        </oper>
+        
+        <oper
+            id="thirdDingNotifyOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ding.model.ThirdDingNotify"
+            action="/third/ding/third_ding_notify/thirdDingNotify.do">
+        </oper>
+        
+        <oper
+            id="thirdDingFinstanceOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ding.model.ThirdDingFinstance"
+            action="/third/ding/third_ding_finstance/thirdDingFinstance.do">
+        </oper>
+        
+        <oper
+            id="thirdingMicroAppOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ding.model.ThirdDingApp"
+            action="/third/ding/third_ding_microapp/thirdingMicroApp.do">
+        </oper>
+        
+        <oper
+            id="thirdDingNotifylogOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ding.model.ThirdDingNotifylog"
+            action="/third/ding/third_ding_notifylog/thirdDingNotifylog.do">
+        </oper>
+        
+        <oper
+            id="thirdDingOmsErrorOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ding.model.ThirdDingOmsError"
+            action="/third/ding/third_ding_oms_error/thirdDingOmsError.do">
+        </oper>
+	</logset>
+</log-oper>

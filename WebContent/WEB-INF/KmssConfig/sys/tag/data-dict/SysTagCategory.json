@@ -1,0 +1,73 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.tag.model.SysTagCategory",
+        "messageKey": "sys-tag:table.sysTagCategory",
+        "displayProperty": "fdName",
+        "serviceBean": "sysTagCategoryService",
+        "table": "sys_tag_category",
+        "url": "/sys/tag/sys_tag_category/sysTagCategory.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "sys-tag:sysTagCategory.fdOrder",
+            "type": "Integer",
+            "column": "fd_order",
+            "notNull": "false",
+            "length": "10",
+            "canLogShow": "1"
+        },
+        "fdTagQuoteTimes":         {
+            "propertyType": "simple",
+            "messageKey": "sys-tag:sysTagCategory.fdTagQuoteTimes",
+            "type": "Integer",
+            "column": "fd_tag_quote_times",
+            "notNull": "false",
+            "length": "19",
+            "canDisplay": "false",
+            "canLogShow": "1"
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-tag:sysTagCategory.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "length": "200",
+            "langSupport": "true",
+            "canLogShow": "1",
+            "validate": "true"
+        },
+        "fdIsSpecial":         {
+            "propertyType": "simple",
+            "messageKey": "sys-tag:sysTagCategory.fdIsSpecial",
+            "type": "Integer",
+            "column": "fd_is_special",
+            "notNull": "false",
+            "enumType": "sysTagIsSpecial_YesOrNo",
+            "length": "19",
+            "canLogShow": "1"
+        },
+        "authEditors":         {
+            "propertyType": "list",
+            "messageKey": "kms-knowledge:kmsKnowledgeBaseDoc.authEditors",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "sys_tag_category_auth_editors",
+            "column": "fd_category_id",
+            "elementColumn": "fd_org_id",
+            "readOnly": "true",
+            "canLogShow": "1"
+        },
+        "fdManager":         {
+            "propertyType": "model",
+            "messageKey": "sys-tag:sysTagCategory.fdManagerId",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "fd_manager_id",
+            "canLogShow": "1"
+        }
+    }
+}

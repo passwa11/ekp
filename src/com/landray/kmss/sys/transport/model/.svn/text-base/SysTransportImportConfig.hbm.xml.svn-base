@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.transport.model.SysTransportImportConfig"
+		table="sys_transport_import_config">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="assigned" />
+		</id>
+		<property
+			name="fdName"
+			column="fd_name"
+			not-null="false"
+			length="100" />
+		<property
+			name="fdModelName"
+			column="fd_model_name"
+			not-null="false"
+			length="100" />
+		<many-to-one
+			name="creator"
+			column="fd_creator_id"
+			not-null="false" />
+		<property
+			name="createTime"
+			column="fd_create_time"
+			not-null="false" />
+		<bag
+			name="propertyList"
+			table="sys_transport_import_property"
+			cascade="all"
+			order-by="fd_order">
+			<key column="fd_parent_id" />
+			<one-to-many class="com.landray.kmss.sys.transport.model.SysTransportImportProperty" />
+		</bag>
+		<bag
+			name="primaryKeyPropertyList"
+			table="sys_transport_primary_key"
+			cascade="all">
+			<key column="fd_parent_id" />
+			<one-to-many class="com.landray.kmss.sys.transport.model.SysTransportPrimaryKeyProperty" />
+		</bag>
+		<property
+			name="fdImportType"
+			column="fd_import_type"
+			not-null="false" />
+	</class>
+</hibernate-mapping>

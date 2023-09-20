@@ -1,0 +1,43 @@
+
+var bgclass = (param!=null && param.bgcolor!=null)?('_'+param.bgcolor):'_bgcolor';
+		var _vars = layout.nonepanel.config.vars;
+		var _bgColor = '';
+		var _bg = '';
+		var _padding = '';
+		var _borderRadius = '';
+		var _top = 0;
+		var _top_style = '';
+
+		var _customStyle = '';
+		if(_vars){
+		_customStyle = _vars.style || '';
+		_bgColor = _vars.bgColor === '' ? '' : (_vars.bgColor!=null) ? 'background-color:'+_vars.bgColor+';': '';
+		_bg = _vars.bg === '' ? '' : (_vars.bg!=null) ? 'background-image:url('+layout.env.fn.formatUrl(_vars.bg)+');': '';
+		_padding = _vars.padding === '' ? '' : (_vars.padding!=null) ? 'padding:'+_vars.padding+';': '';
+		_borderRadius = _vars.borderRadius == '' ? '' : _vars.borderRadius!=null ? 'border-radius:'+_vars.borderRadius+';': '';
+		_top = _vars.top || 0;
+		_top_style = _top != 0 ? 'position:relative;top:-'+_top+'px;margin-bottom:-'+_top+'px;': '';
+
+		}
+		if(_bgColor || _bg){
+		{$
+<style>
+	#{%layout.nonepanel.cid%} .lui_nonepanel_color{
+			background:transparent;
+			}
+</style>
+		$}
+		}
+		{$
+<style>
+#{%layout.nonepanel.cid%} [data-lui-type='lui/panel!Content']{
+		{%_padding%}
+		}
+</style>
+<div class="lui_nonepanel_frame  lui_nonepanel_frame{%bgclass%}" style="{% _bgColor %} {% _bg %} {% _borderRadius %} {% _top_style %} {% _customStyle%}">
+<div class="lui_nonepanel{%bgclass%}">
+<div class="lui_nonepanel_content" data-lui-mark="panel.contents">
+</div>
+</div>
+</div>
+		$}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="joinNodeWorkitemBehaviourService"
+		parent="abstractManualWorkitemBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.joinnode.JoinNodeWorkitemBehaviour" />
+	<bean
+		id="joinNodeWorkitemDesc"
+		class="com.landray.kmss.sys.lbpmservice.node.joinnode.JoinNodeWorkitemDesc" />
+	<bean
+		id="joinWorkitemDataAccess"
+		class="com.landray.kmss.sys.lbpmservice.node.joinnode.JoinWorkitemDataAccess" />
+		
+	<bean
+		id="handlerConfirmconbranchBehaviour"
+		parent="abstractOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.joinnode.operation.HandlerConfirmconbranchOperationBehaviour" />
+	<bean
+		id="handlerRestartconbranchBehaviour"
+		parent="abstractOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.joinnode.operation.HandlerRestartconbranchOperationBehaviour">
+		<property name="concurrentFinder">
+			<ref bean="concurrentFinder" />
+		</property>
+		<property name="processDefinitionService">
+			<ref bean="lbpmProcessDefinitionService" />
+		</property>
+	</bean>
+	<bean
+		id="handlerCancelconbranchBehaviour"
+		parent="abstractOperationBehaviour"
+		class="com.landray.kmss.sys.lbpmservice.node.joinnode.operation.HandlerCancelconbranchOperationBehaviour">
+	</bean>
+	<bean
+		id="handlerConbranchOperationBinder"
+		class="com.landray.kmss.sys.lbpmservice.node.joinnode.operation.HandlerConbranchOperationBinder">
+	</bean>
+	<bean
+		id="getConBranchStatusService"
+		class="com.landray.kmss.sys.lbpmservice.node.joinnode.GetConBranchStatusService">
+	</bean>
+	
+</beans>

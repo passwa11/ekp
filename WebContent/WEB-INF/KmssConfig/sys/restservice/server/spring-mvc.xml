@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/mvc 
+            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+    <!-- OAuth2 相关配置  开始 -->
+    <!-- 内存版的客户端信息服务，类似于KmssUserDetailService的用法，可用于测试
+        可换成 org.springframework.security.oauth2.provider.client.JdbcClientDetailsService-->
+    <!--
+    <bean id="inMemoryClientDetailsService" 
+        class="com.landray.kmss.sys.restservice.server.auth.KmssInMemoryClientDetailsService">
+    </bean>
+    -->
+    <!-- Token存储，默认是内存存储，也可以换成org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore -->
+   <!--
+    <bean id="defaultTokenStore" class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore">
+    </bean>
+    -->
+    <!-- 核心TokenService，必须被产生Token和验证Token两个bean共享 -->
+    <!--
+    <bean id="defaultTokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
+        <property name="tokenStore" ref="defaultTokenStore"/>
+        &lt;!&ndash; 默认的token有效时间，如果ClientDetailsService.loadClientByClientId返回的token里没有配置的话 &ndash;&gt;
+        <property name="accessTokenValiditySeconds" value="15"/>
+    </bean>
+    <bean id="oauth2AuthenticationManager"
+        class="org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager">
+        <property name="clientDetailsService" ref="inMemoryClientDetailsService"/>
+        <property name="tokenServices" ref="defaultTokenServices"/>
+    </bean>
+    &lt;!&ndash; 从header里获取 &ndash;&gt;
+    <bean id="configurableTokenExtractor" class="com.landray.kmss.sys.restservice.server.auth.ConfigurableTokenExtractor">
+        &lt;!&ndash;  <property name="tokenType" value="Basic"/>&ndash;&gt;
+    </bean>
+    &lt;!&ndash; OAuth方式下，拦截除获取token请求之外的所有API请求 &ndash;&gt;
+    <bean id="oauth2Filter" class="org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter">
+        <property name="authenticationManager" ref="oauth2AuthenticationManager"/>
+        <property name="tokenExtractor" ref="configurableTokenExtractor"/>
+    </bean>
+    <bean id="clientDetailsUserDetailsService"
+        class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
+        <constructor-arg index="0" ref="inMemoryClientDetailsService"/>
+    </bean>
+
+    <bean id="defaultOAuth2RequestFactory"
+        class="org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory">
+        <constructor-arg index="0" ref="inMemoryClientDetailsService"/>
+    </bean>
+    <bean id="clientCredentialsTokenGranter"
+        class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenGranter">
+        <constructor-arg index="0" ref="defaultTokenServices"/>
+        <constructor-arg index="1" ref="inMemoryClientDetailsService"/>
+        <constructor-arg index="2" ref="defaultOAuth2RequestFactory"/>
+    </bean>
+    &lt;!&ndash; 用来产生ClientCridentialsToken   /api/**/oauth2/token&ndash;&gt;
+    <bean id="restApiOauth2TokenGeneratorService"
+        class="com.landray.kmss.sys.restservice.server.auth.RestApiOauth2TokenGeneratorService">
+        <property name="enabled" value="false"/>
+        <property name="tokenGranter" ref="clientCredentialsTokenGranter"/>
+        <property name="oAuth2RequestFactory" ref="defaultOAuth2RequestFactory"/>
+        <property name="clientDetailsService" ref="inMemoryClientDetailsService"/>
+    </bean>-->
+    <!-- OAuth2 相关配置  结束-->
+    
+    <!-- 通过plugin的方式使用 -->
+    <bean id="basicAndOauthRestApiAuthFilter" class="com.landray.kmss.sys.restservice.server.filter.RestApiAuthFilter">
+    <!-- 
+        <property name="oauth2Filter" ref="oauth2Filter"/>
+         -->
+         <property name="ekpCloudClient" ref="ekpCloudClient"/>
+    </bean>
+    <bean id="restApiLoggerFilter" class="com.landray.kmss.sys.restservice.server.filter.RestApiLoggerFilter">
+    </bean>
+    <!-- servers管理 -->
+	<bean
+		name="/sys/restservice/server/sys_restservice_server_main/sysRestserviceServerMain.do"
+		class="com.landray.kmss.sys.restservice.server.actions.SysRestserviceServerMainAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.restservice.server.forms.SysRestserviceServerMainForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/restservice/server/sys_restservice_server_main/sysRestserviceServerMain_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/restservice/server/sys_restservice_server_main/sysRestserviceServerMain_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/restservice/server/sys_restservice_server_main/sysRestserviceServerMain_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/restservice/server/sys_restservice_server_init/sysRestserviceServerInit.do"
+		class="com.landray.kmss.sys.restservice.server.actions.SysRestserviceServerInitAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.restservice.server.forms.SysRestserviceServerMainForm" />
+	</bean>
+	<bean
+		name="/sys/restservice/server/sys_restservice_server_policy/sysRestserviceServerPolicy.do"
+		class="com.landray.kmss.sys.restservice.server.actions.SysRestserviceServerPolicyAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.restservice.server.forms.SysRestserviceServerPolicyForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/restservice/server/sys_restservice_server_policy/sysRestserviceServerPolicy_view.jsp" />
+				<entry
+					key="edit"
+					value="/sys/restservice/server/sys_restservice_server_policy/sysRestserviceServerPolicy_edit.jsp" />
+				<entry
+					key="list"
+					value="/sys/restservice/server/sys_restservice_server_policy/sysRestserviceServerPolicy_list.jsp" />
+				<entry
+					key="editPassword"
+					value="/sys/restservice/server/sys_restservice_server_policy/editPassword.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/restservice/server/sys_restservice_server_log/sysRestserviceServerLog.do"
+		class="com.landray.kmss.sys.restservice.server.actions.SysRestserviceServerLogAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.restservice.server.forms.SysRestserviceServerLogForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="view"
+					value="/sys/restservice/server/sys_restservice_server_log/sysRestserviceServerLog_view.jsp" />
+				<entry
+					key="list"
+					value="/sys/restservice/server/sys_restservice_server_log/sysRestserviceServerLog_list.jsp" />
+			</map>
+		</property>
+	</bean>
+	<bean
+		name="/sys/restservice/server/sys_restservice_server_log_config/sysRestserviceServerLogConfig.do"
+		class="com.landray.kmss.sys.restservice.server.actions.SysRestserviceServerLogConfigAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.appconfig.forms.SysAppConfigForm" />
+	</bean>
+</beans>

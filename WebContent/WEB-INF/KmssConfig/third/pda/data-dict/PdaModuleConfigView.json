@@ -1,0 +1,84 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.third.pda.model.PdaModuleConfigView",
+        "messageKey": "third-pda:table.pdaModuleConfigView",
+        "displayProperty": "fdKeyword",
+        "serviceBean": "pdaModuleConfigViewService",
+        "table": "pda_module_config_view",
+        "url": "/third/pda/pda_module_config_view/pdaModuleConfigView.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "third-pda:pdaModuleConfigView.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "length": "100",
+            "validate": "true"
+        },
+        "fdKeyword":         {
+            "propertyType": "simple",
+            "messageKey": "third-pda:pdaModuleConfigView.fdKeyword",
+            "type": "String",
+            "column": "fd_keyword",
+            "notNull": "false",
+            "length": "100",
+            "validate": "true"
+        },
+        "fdModelName":         {
+            "propertyType": "simple",
+            "messageKey": "third-pda:pdaModuleConfigView.fdModelName",
+            "type": "String",
+            "column": "fd_model_name",
+            "notNull": "false",
+            "length": "100",
+            "validate": "true"
+        },
+        "fdOrder":         {
+            "propertyType": "simple",
+            "messageKey": "third-pda:pdaModuleLabelList.fdOrder",
+            "column": "fd_order",
+            "type": "Integer",
+            "length": "10",
+            "notNull": "false"
+        },
+        "fdReadingModel":         {
+            "propertyType": "simple",
+            "column": "fd_reading_model",
+            "messageKey": "third-pda:pdaModuleConfigView.releasedDocReadindMode",
+            "type": "String",
+            "length": "2",
+            "notNull": "false"
+        },
+        "fdNewsModelCfgInfo":         {
+            "propertyType": "simple",
+            "column": "fd_news_model_cfg_info",
+            "messageKey": "third-pda:pdaModuleConfigView.fdCfgInfo",
+            "length": "1000000",
+            "notNull": "false",
+            "type": "RTF"
+        },
+        "fdModule":         {
+            "propertyType": "model",
+            "messageKey": "third-pda:pdaModuleConfigView.fdModule",
+            "type": "com.landray.kmss.third.pda.model.PdaModuleConfigMain",
+            "column": "fd_module_id",
+            "notNull": "false",
+            "validate": "true"
+        },
+        "fdItems":         {
+            "propertyType": "list",
+            "column": "fd_cfg_view_id",
+            "messageKey": "third-pda:table.pdaModuleLabelView",
+            "type": "com.landray.kmss.third.pda.model.PdaModuleLabelView",
+            "cascade": "all-delete-orphan",
+            "orderBy": "fd_order asc",
+            "table": "pda_module_label_view"
+        }
+    }
+}

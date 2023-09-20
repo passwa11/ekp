@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/fssc/alitrip/" 
+        messageKey="fssc-alitrip:module.fssc.alitrip" 
+        defaultValidator="roleValidator(role=ROLE_FSSCALITRIP_DEFAULT)">
+        <roles>ROLE_FSSCALITRIP_DEFAULT;ROLE_FSSCALITRIP_SETTING;ROLE_FSSCALITRIP_ADD;ROLE_FSSCALITRIP_VIEW;ROLE_FSSCALITRIP_DELETE;ROLE_FSSCALITRIP_LOG_ROLE</roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+        <request 
+            path="fssc_alitrip_message/fsscAlitripMessage.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.alitrip.model.FsscAlitripMessage" 
+            defaultValidator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING;ROLE_FSSCALITRIP_SETTING)"/>
+        </request>
+        <request 
+            path="fssc_alitrip_order/fsscAlitripOrder.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.alitrip.model.FsscAlitripOrder" 
+            defaultValidator="roleValidator(role=ROLE_FSSCALITRIP_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_DELETE)"/>
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_ADD)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_VIEW)"/>
+        </request>
+        <request 
+            path="fssc_alitrip_mapping/fsscAlitripMapping.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.alitrip.model.FsscAlitripMapping" 
+            defaultValidator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING;ROLE_FSSCALITRIP_SETTING)"/>
+        </request>
+        <request 
+            path="fssc_alitrip_model/fsscAlitripModel.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.alitrip.model.FsscAlitripModel" 
+            defaultValidator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING;ROLE_FSSCALITRIP_SETTING)"/>
+        </request>
+        <request 
+            path="fssc_alitrip_city/fsscAlitripCity.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.alitrip.model.FsscAlitripCity" 
+            defaultValidator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+        </request>
+
+        <request 
+            path="fssc_alitrip_log/fsscAlitripLog.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.alitrip.model.FsscAlitripLog" 
+            defaultValidator="roleValidator(role=ROLE_FSSCALITRIP_LOG_ROLE;ROLE_FSSCALITRIP_DEFAULT)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_LOG_ROLE)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_LOG_ROLE)"/>
+        </request>
+    </module>
+    <module 
+        urlPrefix="/sys/transport/">
+        <request 
+            path="sys_transport_import/SysTransportImport*"/>
+        <request 
+            path="sys_transport_export/SysTransportExport*"/>
+    </module>
+    <module 
+        urlPrefix="/sys/transport/">
+        <request 
+            path="sys_transport_import/SysTransportImport*">
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.alitrip.model.FsscAlitripOrder" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.alitrip.model.FsscAlitripMapping" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.alitrip.model.FsscAlitripModel" 
+		validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.alitrip.model.FsscAlitripCity" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+                
+        </request>
+        <request 
+            path="sys_transport_export/SysTransportExport*">
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.alitrip.model.FsscAlitripOrder" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_ADD)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.alitrip.model.FsscAlitripMapping" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.alitrip.model.FsscAlitripModel" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.alitrip.model.FsscAlitripCity" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_SETTING)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.alitrip.model.FsscAlitripLog" 
+                validator="roleValidator(role=ROLE_FSSCALITRIP_LOG_ROLE)"/>
+        </request>
+    </module>
+    <!-- 【财务共享】同步成本中心信息到阿里商旅 -->
+    <quartz
+        messageKey="fssc-alitrip:syn.fssc.alitrip.costcenter"
+        jobService="fsscAlitripSynCostCenterService"
+        jobMethod="quartzRemind"
+        cronExpression="0 0 1 * * ?"
+        description="fssc-alitrip:syn.fssc.alitrip.costcenter.description" />
+        <!-- 	【财务共享】同步阿里商旅订单—火车订单信息 -->
+    <quartz
+        messageKey="fssc-alitrip:syn.fssc.alitrip.train.order"
+        jobService="fsscAlitripSynTrainOrderService"
+        jobMethod="quartzRemind"
+        cronExpression="0 0 1 * * ?"
+        description="fssc-alitrip:syn.fssc.alitrip.train.order.description" />
+          <!-- 	【财务共享】同步阿里商旅订单—机票订单信息 -->
+    <quartz
+        messageKey="fssc-alitrip:syn.fssc.alitrip.plan.order"
+        jobService="fsscAlitripSynPlanOrderService"
+        jobMethod="quartzRemind"
+        cronExpression="0 0 1 * * ?"
+        description="fssc-alitrip:syn.fssc.alitrip.plan.order.description" />
+        
+          <!-- 	【财务共享】同步阿里商旅订单—酒店订单信息 -->
+    <quartz
+        messageKey="fssc-alitrip:syn.fssc.alitrip.hotal.order"
+        jobService="fsscAlitripSynHotalOrderService"
+        jobMethod="quartzRemind"
+        cronExpression="0 0 1 * * ?"
+        description="fssc-alitrip:syn.fssc.alitrip.hotal.order.description" />
+        
+    <homePage 
+        messageKey="fssc-alitrip:module.fssc.alitrip" 
+        urlPrefix="fssc/alitrip" 
+        url="/fssc/alitrip/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/fssc/alitrip/tree.jsp"/>
+    <profileConfig 
+        key="fssc/alitrip" 
+        messageKey="{fssc-alitrip:module.fssc.alitrip}" 
+        url="/sys/profile/moduleindex.jsp?nav=/fssc/alitrip/tree.jsp" 
+        icon="fs_trip" 
+        type="fs" 
+        description="{fssc-alitrip:module.fssc.alitrip.description}"/>
+    <profileConfig 
+        key="fssc/alitrip" 
+        messageKey="{fssc-alitrip:module.fssc.alitrip}" 
+        url="/sys/profile/moduleindex.jsp?nav=/fssc/alitrip/tree.jsp" 
+        icon="fs_trip" 
+        type="saas" 
+        description="{fssc-alitrip:module.fssc.alitrip.description}"/>
+</configs>

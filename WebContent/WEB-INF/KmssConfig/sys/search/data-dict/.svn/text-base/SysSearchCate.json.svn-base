@@ -1,0 +1,88 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.search.model.SysSearchCate",
+        "messageKey": "sys-search:table.sysSearchCate",
+        "displayProperty": "fdName",
+        "serviceBean": "sysSearchCateService",
+        "table": "sys_search_cate",
+        "url": "/sys/search/sys_search_cate/sysSearchCate.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-search:sysSearchCate.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "true",
+            "unique": "false",
+            "length": "200",
+            "langSupport": "true"
+        },
+        "fdCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "model.fdCreateTime",
+            "type": "DateTime",
+            "column": "fd_create_time",
+            "notNull": "false",
+            "unique": "false",
+            "readOnly": "true"
+        },
+        "fdAlterTime":         {
+            "propertyType": "simple",
+            "messageKey": "model.fdAlterTime",
+            "type": "DateTime",
+            "column": "fd_alter_time",
+            "notNull": "false",
+            "unique": "false",
+            "readOnly": "true"
+        },
+        "hbmParent":         {
+            "propertyType": "model",
+            "messageKey": "sys-search:sysSearchCate.fdParent",
+            "type": "com.landray.kmss.sys.search.model.SysSearchCate",
+            "column": "fd_parent_id",
+            "notNull": "false",
+            "unique": "false",
+            "treeModel": "true",
+            "dialogJS": "Dialog_Tree(!{mulSelect},'!{idField}','!{nameField}',null,Tree_GetBeanNameFromService('sysSearchCateService', 'hbmParent', 'fdName:fdId'),'!{message(sys-search:table.sysSearchCate)');"
+        },
+        "hbmChildren":         {
+            "propertyType": "list",
+            "messageKey": "sys-search:sysSearchCate.hbmChildren",
+            "column": "fd_parent_id",
+            "type": "com.landray.kmss.sys.search.model.SysSearchCate",
+            "inverse": "true",
+            "readOnly": "true",
+            "canDisplay": "false",
+            "table": "sys_search_cate"
+        },
+        "fdCreator" : {
+            "propertyType" : "model",
+            "messageKey" : "model.fdCreator",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column" : "fd_creator_id",
+            "notNull" : "true",
+            "readOnly": "true"
+        },
+        "fdAlteror" : {
+            "propertyType" : "model",
+            "messageKey" : "model.docAlteror",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column" : "fd_alteror_id",
+            "notNull" : "false",
+            "readOnly": "true"
+        },
+        "fdModelName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-search:sysSearchCate.fdModelName",
+            "type": "String",
+            "column": "fd_model_name",
+            "notNull": "true",
+            "length": "200"
+        }
+    }
+}

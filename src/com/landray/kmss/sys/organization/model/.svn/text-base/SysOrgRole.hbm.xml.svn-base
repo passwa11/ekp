@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<subclass
+		discriminator-value="32"
+		name="com.landray.kmss.sys.organization.model.SysOrgRole"
+		extends="com.landray.kmss.sys.organization.model.SysOrgElement">
+		<join
+			table="sys_org_role"
+			fetch="select">
+			<key
+				column="fd_id"></key>
+			<property
+				name="fdPlugin"
+				column="fd_plugin"
+				update="true"
+				insert="true"
+				length="100" />
+			<property
+				name="fdParameter"
+				column="fd_parameter"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="1000" />
+			<property
+				name="fdIsMultiple"
+				column="fd_is_multiple"
+				update="true"
+				insert="true" />
+			<property
+				name="fdRtnValue"
+				column="fd_rtn_value"
+				update="true"
+				insert="true"
+				not-null="false" />
+			<many-to-one
+				name="fdRoleConf"
+				column="fd_role_conf_id"
+				insert="true"
+				update="true"
+				not-null="false" />
+		</join>
+	</subclass>
+</hibernate-mapping>

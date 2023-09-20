@@ -1,0 +1,102 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.attend.model.SysAttendReport",
+        "messageKey": "sys-attend:sysAttendReport.report",
+        "displayProperty": "fdMonth",
+        "serviceBean": "sysAttendReportService",
+        "table": "sys_attend_report",
+        "url": "/sys/attend/sys_attend_report/sysAttendReport.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdMonth":         {
+            "propertyType": "simple",
+            "messageKey": "sys-attend:sysAttendReport.fdMonth",
+            "type": "DateTime",
+            "column": "fd_month",
+            "notNull": "false",
+            "validate": "true"
+        },
+        "docCreateTime":         {
+            "propertyType": "simple",
+            "messageKey": "sys-attend:sysAttendReport.docCreateTime",
+            "type": "DateTime",
+            "column": "doc_create_time",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "fdName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-attend:sysAttendReport.fdName",
+            "type": "String",
+            "column": "fd_name",
+            "notNull": "false",
+            "length": "200",
+            "validate": "false"
+        },
+        "docCreator":         {
+            "propertyType": "model",
+            "messageKey": "sys-attend:sysAttendReport.docCreator",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column": "doc_creator_id",
+            "notNull": "false",
+            "validate": "false"
+        },
+        "authReaders":         {
+            "propertyType": "list",
+            "messageKey": "sys-attend:sysAttendReport.authReaders",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "sys_attend_report_reader",
+            "column": "fd_report_id",
+            "elementColumn": "fd_org_id"
+        },
+        "fdDepts":         {
+            "propertyType": "list",
+            "messageKey": "sys-attend:sysAttendReport.fdDepts",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table": "sys_attend_report_depts",
+            "column": "fd_report_id",
+            "elementColumn": "fd_org_id"
+        },
+        "fdIsQuit":         {
+            "propertyType": "simple",
+            "messageKey": "sys-attend:sysAttendReport.fdIsQuit",
+            "type": "Boolean",
+            "column": "fd_is_quit",
+            "length": "4"
+        },
+        "authArea":         {
+            "propertyType": "model",
+            "messageKey": "sys-authorization:sysAuthArea.authArea",
+            "type": "com.landray.kmss.sys.authorization.model.SysAuthArea",
+            "column": "auth_area_id",
+            "notNull": "false",
+            "unique": "false",
+            "readOnly": "true"
+        },
+        "fdCategoryIds":         {
+            "propertyType": "simple",
+            "messageKey": "sys-attend:sysAttendReport.fdCategoryIds",
+            "type": "String",
+            "column": "fd_category_ids",
+            "length": "4000"
+        },
+        "fdCategoryNames":         {
+            "propertyType": "simple",
+            "messageKey": "sys-attend:sysAttendReport.fdCategoryNames",
+            "type": "String",
+            "column": "fd_category_names",
+            "length": "2500"
+        },
+        "fdTargetType":         {
+            "propertyType": "simple",
+            "messageKey": "sys-attend:sysAttendReport.fdTargetType",
+            "type": "Integer",
+            "column": "fd_target_type",
+            "length": "4"
+        }
+    }
+}

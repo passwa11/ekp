@@ -1,0 +1,165 @@
+
+{
+    "global" : {
+        "modelName" : "com.landray.kmss.sys.rule.model.SysRuleSetDoc",
+        "messageKey" : "sys-rule:table.sysRuleSetDoc",
+        "serviceBean" : "sysRuleSetDocService",
+        "displayProperty" : "fdName",
+        "table" : "sys_ruleset_doc",
+        "url" : "/sys/rule/sys_ruleset_doc/sysRuleSetDoc.do?method=view&fdId=${fdId}"
+    },
+    "attrs" : {
+        "fdId" : {
+            "propertyType" : "id",
+            "generator" : {
+                "type" : "assigned"
+            }
+        },
+        "fdName" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleSetDoc.fdName",
+            "type" : "String",
+            "column" : "fd_name",
+            "notNull" : "true",
+            "canSearch": "true",
+            "validate": "true",
+            "langSupport": "true",
+            "length" : "200"
+        },
+        "fdOrder" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleSetDoc.fdOrder",
+            "type" : "Long",
+            "column" : "fd_order",
+            "notNull" : "false",
+            "length":"10"
+        },
+        "docCreateTime" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleSetDoc.docCreateTime",
+            "type" : "DateTime",
+            "column" : "doc_create_time",
+            "notNull" : "true",
+            "readOnly": "true"
+         },
+        "fdDesc" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleSetDoc.fdDesc",
+            "type" : "String",
+            "column" : "fd_desc",
+            "notNull" : "false",
+            "validate" : "true",
+            "langSupport": "true",
+            "length" : "2000"
+        },
+        "docAlterTime" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleSetDoc.docAlterTime",
+            "type" : "DateTime",
+            "column" : "doc_alter_time",
+            "notNull" : "false",
+            "readOnly": "true"
+        },
+        "fdIsAvailable" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleSetDoc.fdIsAvailable",
+            "type" : "Boolean",
+            "column" : "fd_is_available",
+            "notNull" : "true",
+            "defaultValue" : "true"
+        },
+        "fdVersion" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleSetDoc.fdVersion",
+            "type" : "Long",
+            "column" : "fd_version",
+            "notNull" : "false",
+            "length":"19"
+        },
+         "fdMode" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleQuoteInfo.fdMode",
+            "type" : "String",
+            "column" : "fd_mode"
+         },
+          "defaultDisVal" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleSetDoc.defaultDisVal",
+            "type" : "String",
+            "column" : "default_dis_val",
+            "length" : "2000"
+        },
+        "defaultVal" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleSetDoc.defaultVal",
+            "type" : "String",
+            "column" : "default_val",
+            "length" : "2000"
+        },
+        "defaultValType" : {
+            "propertyType" : "simple",
+            "messageKey" : "sys-rule:sysRuleSetDoc.defaultValType",
+            "type" : "String",
+            "column" : "default_val_type"
+        },
+        "sysRuleSetCate" : {
+            "propertyType" : "model",
+            "messageKey" : "sys-rule:sysRuleSetDoc.sysRuleSetCate",
+            "type" : "com.landray.kmss.sys.rule.model.SysRuleSetCate",
+            "column" : "sys_ruleset_cate_id",
+            "validate" : "true"
+        },
+        "docCreator" : {
+            "propertyType" : "model",
+            "messageKey" : "sys-rule:sysRuleSetDoc.docCreator",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column" : "doc_creator_id",
+            "notNull" : "true",
+            "readOnly": "true"
+        },
+        "docAlteror" : {
+            "propertyType" : "model",
+            "messageKey" : "sys-rule:sysRuleSetDoc.docAlteror",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPerson",
+            "column" : "doc_alteror_id",
+            "notNull" : "false",
+            "readOnly": "true"
+        },
+        "authReaders" : {
+            "propertyType" : "list",
+            "messageKey" : "sys-rule:sysRuleSetDoc.authReaders",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table" : "sys_ruleset_reader",
+            "elementColumn" : "auth_reader_id",
+            "column" : "sys_ruleset_doc_id",
+            "notNull" : "false"
+        },
+        "authEditors" : {
+            "propertyType" : "list",
+            "messageKey" : "sys-rule:sysRuleSetDoc.authEditors",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "table" : "sys_ruleset_editor",
+            "elementColumn" : "auth_editor_id",
+            "column" : "sys_ruleset_doc_id",
+            "notNull" : "false"
+        },
+        "sysRuleSetParams" : {
+        	"propertyType" : "list",
+            "messageKey" : "sys-rule:sysRuleSetDoc.sysRuleSetParams",
+            "type" : "com.landray.kmss.sys.rule.model.SysRuleSetParam",
+            "column": "sys_ruleset_doc_id",
+            "table": "sys_ruleset_param",
+            "cascade": "all-delete-orphan",
+            "inverse": "false"
+        },
+        "sysRuleSetRules" : {
+        	"propertyType" : "list",
+            "messageKey" : "sys-rule:sysRuleSetDoc.sysRuleSetRules",
+            "type" : "com.landray.kmss.sys.rule.model.SysRuleSetRule",
+            "table" : "sys_ruleset_rule",
+            "column" : "sys_ruleset_doc_id",
+            "cascade": "all-delete-orphan",
+            "inverse": "false"
+        }
+    }
+}

@@ -1,0 +1,72 @@
+ 
+var parent = render.parent;
+ 
+if(parent.config.showStatus === "edit"){
+	data = parent.handleSourceData(data || []);
+	if(data && null != data.result){
+		{$
+		<div class="select_div_box xform_Select" style="display: inline-block; width: auto;" fd_type="select">
+			<xformflag flagid="{%parent.config.keyName%}" id="_xform_{%parent.config.name%}" property="{%parent.config.name%}"
+				flagtype="xform_select" _xform_type="select">
+				<select name="{%parent.config.name%}" subject="" title="" style="display: inline-block; width: auto;">$}
+				for(var i = 0;i < data.result.form_data_list.length;i++){
+					var record = data.result.form_data_list[i]["extend_value"];
+					var recordJson = eval("("+record+")");
+					if(i==0){
+						{$
+						<option style='display: none' value="">请选择</option>
+						$}
+					}
+					if(parent.config.value === recordJson["leaveCode"]) {
+						{$
+							<option value="{%getOptionValue(record)%}" selected>{%getOptionText(record)%}</option>
+						$}
+					} else {
+						{$
+							<option value="{%getOptionValue(record)%}">{%getOptionText(record)%}</option>
+						$}
+					}
+				}
+				{$</select><span class="txtstrong">*</span>
+			</xformflag>
+		</div>
+		$}
+	}else{
+		{$
+		<div class="select_div_box xform_Select" style="display: inline-block; width: auto;" fd_type="select">
+			<xformflag flagid="{%parent.config.keyName%}" id="_xform_{%parent.config.name%}" property="{%parent.config.name%}"
+				flagtype="xform_select" _xform_type="select">
+				<select name="{%parent.config.name%}" subject="" title="" style="display: inline-block; width: auto;">$}
+						{$
+						<option value="">===请选择===</option>
+						$}
+				{$
+				</select><span class="txtstrong">*</span>
+			</xformflag>
+		</div>
+		$}
+	}
+}
+
+
+function getOptionValue(record){
+	record = eval("("+record+")");
+	var value = record["leaveCode"];
+	return value;
+}
+function getOptionText(record){
+	record = eval("("+record+")");
+	var name = record["leaveName"];
+	var unit = record["leaveViewUnit"];
+	var unitTxt = (unit === "day" || unit === "halfDay") ? "天" : "小时";
+	// record["leave_rest"]为null则不需要显示剩余额度
+	if(record.hasOwnProperty("leaveBalanceQuotaVo")){
+	     if(unit === "day" || unit === "halfDay"){
+	       name += "（剩余" + record["leaveBalanceQuotaVo"]["quotaNumPerDay"] + unitTxt + ")";
+	     }else{
+	       name += "（剩余" + record["leaveBalanceQuotaVo"]["quotaNumPerHour"] + unitTxt + ")";
+	     }
+		
+	}
+	return name;
+}

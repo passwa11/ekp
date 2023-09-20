@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+
+	<module
+		urlPrefix="/third/ctrip/"
+		messageKey="third-ctrip:module.third.ctrip"
+		defaultValidator="roleValidator(role=ROLE_THIRDCTRIP_DEFAULT)">
+		<roles>ROLE_THIRDCTRIP_DEFAULT;ROLE_THIRDCTRIP_SETTING</roles>
+		 
+		<request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)" />
+		<request
+			path="third_ctrip_config/thirdCtripConfig.do*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.third.ctrip.model.ThirdCtripConfig"
+			defaultValidator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)">
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)" />
+			<query
+				queryString="method=delete|deleteall"
+				validator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)" />
+			<query
+				queryString="method=add|save|saveadd"
+				validator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)" />
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_THIRDCTRIP_SETTING;ROLE_THIRDCTRIP_SETTING)" />
+		</request>
+		<request 
+            path="third_ctrip_hotel/thirdCtripHotel.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ctrip.model.ThirdCtripHotel" 
+            defaultValidator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)"/>
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDCTRIP_SETTING;ROLE_THIRDCTRIP_SETTING)"/>
+        </request>
+        <request 
+            path="third_ctrip_flight/thirdCtripFlight.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.third.ctrip.model.ThirdCtripFlight" 
+            defaultValidator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)">
+            <query 
+                queryString="method=edit|update" 
+                validator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)"/>
+            <query 
+                queryString="method=delete|deleteall" 
+                validator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)"/>
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_THIRDCTRIP_SETTING)"/>
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_THIRDCTRIP_SETTING;ROLE_THIRDCTRIP_SETTING)"/>
+        </request>
+	</module>
+	<quartz
+		messageKey="third-ctrip:thirdCtripConfig.synch"
+		description="third-ctrip:thirdCtripConfig.synch.desc"
+		jobService="thirdCtripConfigService"
+		jobMethod="synPerson"
+		enable="false"
+		cronExpression="0 30 23 * * ?" />
+	<quartz
+		messageKey="third-ctrip:thirdCtripConfig.base.synch"
+		description="third-ctrip:thirdCtripConfig.base.synch.desc"
+		jobService="thirdCtripConfigService"
+		jobMethod="synBaseData"
+		enable="false"
+		cronExpression="0 0 23 * * ?" />
+	<homePage
+		messageKey="third-ctrip:module.third.ctrip"
+		urlPrefix="third/ctrip"
+		url="/third/ctrip/index.jsp"
+		config="/moduleindex_notopic.jsp?nav=/third/ctrip/tree.jsp" />
+	<profileConfig
+		key="ctrip"
+		messageKey="{third-ctrip:module.third.ctrip}"
+		url="/sys/profile/moduleindex.jsp?nav=/third/ctrip/tree.jsp"
+		icon="fs_trip"
+		type="saas"
+		order="1"
+		description="{third-ctrip:module.third.ctrip.description}" />
+</configs>

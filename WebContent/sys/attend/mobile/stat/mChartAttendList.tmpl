@@ -1,0 +1,24 @@
+<div id="chartMonthListView" class="chartListView" data-dojo-type='dojox/mobile/View'>
+	<div class="muiChartHead muiCommonHead" data-dojo-type="mui/header/Header" data-dojo-props="height:'2.8rem'">
+			<div class="leftArea"><span>{title}</span></div>
+			<div class="rightArea">
+				<div id="mChartList_statDate" data-dojo-type="mui/form/DateTime"
+					 data-dojo-mixins="mui/datetime/_DateMixin,sys/attend/mobile/resource/js/stat/MonthMixin"
+					 data-dojo-props="optClass:'mui-down-n',valueField:'nowDate',value:'{nowDate}',edit:false"></div>
+			</div>
+	</div>
+	<div id="mChartScroll" data-dojo-type="mui/list/StoreScrollableView" class="">
+	    <ul
+	    	data-dojo-type="mui/list/JsonStoreList" 
+	    	data-dojo-mixins="sys/attend/mobile/resource/js/stat/AttendMChartItemListMixin"
+	    	data-dojo-props="url:'/sys/attend/sys_attend_stat_month/sysAttendStatMonth.do?method=list&orderby=sysAttendStatMonth.fdTotalTime&ordertype=down&rowsize=10',lazy:true">
+		</ul>
+	</div>
+		
+	<ul data-dojo-type="mui/tabbar/TabBar" fixed="bottom" style="display:none;">
+	  	<li class="muiMonthChartBack" data-dojo-type="mui/back/BackButton"></li>	   		
+	    <li data-dojo-type="mui/tabbar/TabBarButtonGroup" data-dojo-props="icon1:'mui mui-more'">
+	    	<div data-dojo-type="mui/back/HomeButton"></div>
+	    </li>
+	</ul>
+</div>

@@ -1,0 +1,32 @@
+
+if(data.status !== "00"){ 
+	console.log(data.errmsg); 
+	return; 
+}
+
+data = data.data.template || []; 
+
+{$
+	<div class="model-mask-bg"></div>
+	<div class="model-mask-phone">
+		<div class="model-mask-phone-wrap">
+			<div class="model-mask-phone-left">
+				<div class="model-mask-phone-slide">$}
+					for(var i = 0;i < data.length;i++){
+						var tmp = data[i];
+						{$
+							<div class="model-mask-phone-slide-item {%tmp.bgClass%}" data-tmp-value="{%tmp.value%}">
+								<div class="model-mask-phone-slide-img"></div>
+							</div>
+						$}
+					}
+				{$</div>
+			</div>
+			<div class="model-mask-phone-right">
+				<i class="index-close-icon"></i>
+				<div class="model-mask-phone-right-item">
+				</div>
+			</div>
+		</div>
+	</div>
+$}

@@ -1,0 +1,134 @@
+package com.landray.kmss.hr.ratify.actions;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.landray.kmss.common.actions.RequestContext;
+import com.landray.kmss.common.dao.HQLInfo;
+import com.landray.kmss.common.forms.IExtendForm;
+import com.landray.kmss.common.service.IBaseService;
+import com.landray.kmss.common.test.TimeCounter;
+import com.landray.kmss.hr.ratify.forms.HrRatifyRemoveForm;
+import com.landray.kmss.hr.ratify.model.HrRatifyRemove;
+import com.landray.kmss.hr.ratify.model.HrRatifyTemplate;
+import com.landray.kmss.hr.ratify.service.IHrRatifyRemoveService;
+import com.landray.kmss.sys.print.interfaces.ISysPrintLogCoreService;
+import com.landray.kmss.sys.print.interfaces.ISysPrintMainCoreService;
+import com.landray.kmss.util.HQLHelper;
+import com.landray.kmss.util.HtmlToMht;
+import com.landray.kmss.util.KmssMessages;
+import com.landray.kmss.util.KmssReturnPage;
+import com.landray.kmss.web.action.ActionForm;
+import com.landray.kmss.web.action.ActionForward;
+import com.landray.kmss.web.action.ActionMapping;
+
+public class HrRatifyRemoveAction extends HrRatifyMainAction {
+
+    private IHrRatifyRemoveService hrRatifyRemoveService;
+
+    @Override
+    public IBaseService getServiceImp(HttpServletRequest request) {
+        if (hrRatifyRemoveService == null) {
+            hrRatifyRemoveService = (IHrRatifyRemoveService) getBean("hrRatifyRemoveService");
+        }
+        return hrRatifyRemoveService;
+    }
+
+    @Override
+    public void changeFindPageHQLInfo(HttpServletRequest request, HQLInfo hqlInfo) throws Exception {
+        HQLHelper.by(request).buildHQLInfo(hqlInfo, HrRatifyRemove.class);
+        hqlInfo.setOrderBy(getFindPageOrderBy(request, hqlInfo.getOrderBy()));
+        com.landray.kmss.hr.ratify.util.HrRatifyUtil.buildHqlInfoDate(hqlInfo, request, com.landray.kmss.hr.ratify.model.HrRatifyRemove.class);
+        com.landray.kmss.hr.ratify.util.HrRatifyUtil.buildHqlInfoModel(hqlInfo, request);
+    }
+
+    @Override
+    public ActionForm createNewForm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		((IHrRatifyRemoveService) getServiceImp(request)).initFormSetting(
+				(IExtendForm) form, new RequestContext(request));
+        HrRatifyRemoveForm hrRatifyRemoveForm = (HrRatifyRemoveForm) super.createNewForm(mapping, form, request, response);
+		hrRatifyRemoveForm.setDocTemplateName(
+				getTemplatePath(hrRatifyRemoveForm.getDocTemplateId()));
+        return hrRatifyRemoveForm;
+    }
+
+	/**
+	 * 打印
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+    public ActionForward print(ActionMapping mapping, ActionForm form,
+                               HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		TimeCounter.logCurrentTime("Action-print", true, getClass());
+		KmssMessages messages = new KmssMessages();
+		try {
+			HtmlToMht.setLocaleWhenExport(request);
+			loadActionForm(mapping, form, request, response);
+			// 引入打印机制
+			HrRatifyRemoveForm ratifyForm = (HrRatifyRemoveForm) form;
+			HrRatifyTemplate template = (HrRatifyTemplate) getHrRatifyTemplateService()
+					.findByPrimaryKey(ratifyForm.getDocTemplateId());
+			boolean enable = getSysPrintMainCoreService()
+					.isEnablePrintTemplate(template, null, request);
+
+			HrRatifyRemove main = (HrRatifyRemove) getServiceImp(
+					null)
+							.convertFormToModel(ratifyForm, null,
+									new RequestContext(request));
+			getSysPrintMainCoreService().initPrintData(main, ratifyForm,
+					request);
+			if (enable) {
+				request.setAttribute("isShowSwitchBtn", "true");
+			}
+			// 打印日志
+			getSysPrintLogCoreService().addPrintLog(main,
+					new RequestContext(request));
+			String printPageType = request.getParameter("_ptype");
+			if (enable && !"old".equals(printPageType)) {
+				return mapping.findForward("sysprint");
+			}
+		} catch (Exception e) {
+			messages.addError(e);
+		}
+
+		TimeCounter.logCurrentTime("Action-print", false, getClass());
+		if (messages.hasError()) {
+			KmssReturnPage.getInstance(request).addMessages(messages)
+					.addButton(KmssReturnPage.BUTTON_CLOSE).save(request);
+			return getActionForward("failure", mapping, form, request,
+					response);
+		} else {
+			return getActionForward("print", mapping, form, request, response);
+		}
+	}
+
+	protected ISysPrintMainCoreService sysPrintMainCoreService;
+
+	@Override
+    public ISysPrintMainCoreService getSysPrintMainCoreService() {
+		if (sysPrintMainCoreService == null) {
+			sysPrintMainCoreService = (ISysPrintMainCoreService) getBean(
+					"sysPrintMainCoreService");
+		}
+		return sysPrintMainCoreService;
+	}
+
+	protected ISysPrintLogCoreService sysPrintLogCoreService;
+
+	@Override
+    public ISysPrintLogCoreService getSysPrintLogCoreService() {
+		if (sysPrintLogCoreService == null) {
+			sysPrintLogCoreService = (ISysPrintLogCoreService) getBean(
+					"sysPrintLogCoreService");
+		}
+		return sysPrintLogCoreService;
+	}
+}

@@ -1,0 +1,72 @@
+if(!data){
+	return;
+}
+var wgt = render.parent;
+var lang = wgt.getModelingLang();
+console.log("lang",lang);
+var dataValue = data.value || {};
+var title = dataValue.title || lang["modeling.Undefined"];
+data.info = data.info || {};
+var dataValidate = data.info.validate || {};
+{$
+	<div class="field_item_value multi-list-block">
+		<div class='content_name'>
+			<p class="form_item_title">{%title%}</p>
+			<i class="form_item_delete"></i>
+		</div>
+		<div class="field_item_content">
+		<div class="content_item_form_element content_input">
+			<p class="content_body_title">{%lang['modeling.Entrance.name']%}</p>
+			<div class="content_opt">
+				<input name='{%data.uuId%}_formItemTitle' title="{%lang['modeling.Entrance.name']%}" type="text" placeholder="{%lang['modeling.please.enter']%}" value="{%(dataValue.title) || ''%}" data-validate="{%dataValidate.title%}" data-update-event='input' data-updateView="true"/>
+			</div>
+			<p class="content_opt_info"></p>
+		</div>
+			<div class=" content_choose" style="display: none">
+				<p class="content_body_title">{%lang['table.modelingCollectionView']%}</p>
+				<input name="{%data.uuId%}_oldlistView" title="{%lang['table.modelingCollectionView']%}" value="{%dataValue.listView%}" type="hidden"  />
+				<input name="{%data.uuId%}_oldlistViewText" value="{%dataValue.listViewText%}" type="hidden" />
+				<div class="content_opt listVieElement">
+					<p class="listViewText">{%dataValue.listViewText || lang['modeling.page.choose']%}</p>
+					<i></i>
+				</div>
+			</div>
+		<div class="content-through content_item_form_element">
+			<p>{%lang['modeling.View.penetration.set']%}</p>
+			<div class="content_item_form_element ">
+		<div class="content-through-button addTabButton "  >{%lang['modeling.form.Set']%}</div>
+			<input name=\"{%data.uuId%}_listView\" title=\"{%lang['modeling.View.penetration.set']%}\"  style="display: none" value=""/>
+				</div>
+			<div class="content-through-tabs" style="display: none"  >
+				<ui class="content-tabs"></ui>
+				<div class="content-through-button" style="float: right">{%lang['modeling.form.Set']%}</div>
+				<input name="{%data.uuId%}_listviews" type="hidden"  data-update-event="change" data-validate="required"title="{%lang['modeling.penetration.set']%}"/>
+			</div>
+			<p class="content_opt_info"></p>
+		</div>
+		</div>
+
+		<div class="field_item_content content_item_tab_box " >
+			<div class="field_item_listTabs" tabindex="0"style="display:none;">
+			<div class="content-reback"><span></span>{%lang['sys.profile.modeling.homePage.back']%}</div>
+				<div class="field-item-throuth">
+					<div>{%lang['modeling.View.penetration.set']%}</div>
+
+					<div class="field-item-throuth-add" style="float: right;margin-top: -20px;">{%lang['button.add']%}</div>
+				</div>
+			</div>
+
+		</div>
+		$}
+		if(wgt.isCount){
+		{$<div class="content_item_form_element content_select" style="display: none">
+		<p class="content_body_title">tab</p>
+		<div class="lvCountWrap"></div>
+		<input name='{%data.uuId%}_countLv' title="tab" data-update-event='change' type='hidden' value="{%dataValue.countLv%}"/>
+		<input name="{%data.uuId%}_lvCollection" type="hidden" />
+		<p class="content_opt_info"></p>
+	</div>$}
+		}
+		{$
+	</div>
+$}

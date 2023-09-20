@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysQuartzDispatcher"
+		class="com.landray.kmss.sys.quartz.scheduler.SysQuartzDispatcher">
+	</bean>
+	<bean
+		id="sysQuartzJobExecutor"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<bean class="com.landray.kmss.sys.quartz.scheduler.SysQuartzJobExecutor">
+				<property name="sysQuartzJobDao">
+					<ref bean="sysQuartzJobDao"/>
+				</property>
+				<property name="sysLogJobService">
+					<ref bean="sysLogJobService"/>
+				</property>
+				<property name="sysLogSystemService">
+					<ref bean="sysLogSystemService"/>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean
+		id="sysQuartzJobDao"
+		parent="KmssBaseDao"
+		class="com.landray.kmss.sys.quartz.dao.hibernate.SysQuartzJobDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.quartz.model.SysQuartzJob" />
+	</bean>
+	<bean
+		id="sysQuartzJobTarget"
+		parent="KmssBaseCoreTarget"
+		class="com.landray.kmss.sys.quartz.service.spring.SysQuartzJobServiceImp">
+		<property name="baseDao">
+			<ref bean="sysQuartzJobDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysQuartzJobService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<ref bean="sysQuartzJobTarget" />
+		</property>
+		
+		<property name="transactionAttributes">
+		   <props>
+		      <prop key="delete">PROPAGATION_REQUIRES_NEW</prop>
+		      <prop key="*">PROPAGATION_REQUIRED</prop>
+		   </props>
+		</property>
+		
+	</bean>
+
+	<bean
+		id="sysQuartzCoreService"
+		parent="KmssBaseCoreService">
+		<property name="target">
+			<bean
+				id="sysQuartzCoreTarget"
+				class="com.landray.kmss.sys.quartz.service.spring.SysQuartzCoreServiceImp">
+				<property name="sysQuartzJobService">
+					<ref bean="sysQuartzJobService" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 线程池 MBEAN -->
+	<bean id="quartzThreadPoolMBean"
+		class="com.landray.kmss.sys.quartz.scheduler.ThreadPoolMBean">
+	</bean>
+	
+	<!-- 线程池大小接收器 -->
+	<bean id="sysQuartzThreadPoolSizeReceiver" class="com.landray.kmss.sys.quartz.scheduler.SysQuartzThreadPoolSizeReceiver"></bean>
+</beans>

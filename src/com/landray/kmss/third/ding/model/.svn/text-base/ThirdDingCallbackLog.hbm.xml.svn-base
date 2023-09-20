@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        name="com.landray.kmss.third.ding.model.ThirdDingCallbackLog" 
+        table="third_ding_callback_log">
+        <id 
+            name="fdId" 
+            column="fd_id" 
+            length="36"/>
+        <property 
+            name="fdEventType" 
+            column="fd_event_type" 
+            update="true" 
+            insert="true" 
+            length="100"/>
+         <property 
+            name="fdEventTypeTip" 
+            column="fd_event_type_tip" 
+            update="true" 
+            insert="true" 
+            length="200"/>
+          <property 
+            name="fdEventTime" 
+            column="fd_event_time" 
+            update="true" 
+            insert="true" 
+            length="100"
+            index="idx_thirdDingCbLog_eventTime"/>
+        <property 
+            name="docContent" 
+            column="doc_content" 
+            update="true" 
+            insert="true" 
+            length="1000000" 
+            type="com.landray.kmss.common.dao.ClobStringType" 
+            lazy="true"/>
+        <property 
+            name="fdIsSuccess" 
+            column="fd_is_success" 
+            update="true" 
+            insert="true"/>
+        <property 
+            name="docCreateTime" 
+            column="doc_create_time" 
+            update="true" 
+            insert="true" 
+            index="idx_thirdDingCbLog_creaTime"/>
+         <property
+			name="fdErrorInfo"
+			column="fd_error_info"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true"
+			length="1000000"
+			update="true"
+			insert="true"
+			not-null="false" />
+    </class>
+</hibernate-mapping>

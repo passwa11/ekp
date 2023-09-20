@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module urlPrefix="/sys/news/">
+		<!-- 主文档权限 -->
+		<request
+			path="sysNewsMain/*"
+            validatorParameter="recid=fdId,model=com.landray.kmss.sys.news.model.SysNewsMain,
+			cateModel=com.landray.kmss.sys.news.model.SysNewsTemplate,adminRoleName=ROLE_SYSNEWS_CATEGORY_MAINTAINER">
+            <!-- 新增 -->
+            <query
+                queryString="add&amp;fdTemplateId=*"
+                validator="areaRoleValidator(role=ROLE_SYSNEWS_CREATE)&amp;authSimpleCategoryReaderValidator(cateId=fdTemplateId)" />
+            <!-- 保存 -->
+            <query
+                queryString="save|saveadd"
+                validator="areaRoleValidator(role=ROLE_SYSNEWS_CREATE)&amp;authSimpleCategoryReaderValidator(cateId=fdTemplateId)" />
+            <!-- 阅读 -->
+            <query
+                queryString="view"
+                validator="sysRecycleAuthFieldValidator(type=recycle)|authFieldValidator(type=SYS_READER,isArea=true)|authSimpleCategoryEditorValidator(property=fdTemplate)" />
+            <!-- 编辑、更新 -->
+            <query
+                queryString="edit|update"
+                validator="" />
+            <!-- 删除 -->
+            <query
+                queryString="delete"
+                validator="fieldValueValidator(fieldproperty=docStatus,value=10)&amp;authFieldValidator(type=creator)|areaRoleValidator(role=ROLE_SYSNEWS_DELETE)&amp;[areaRoleValidator(role=ROLE_SYSNEWS_OPTALL)|areaRoleValidator(role=ROLE_SYSNEWS_CATEGORY_MAINTAINER)|authSimpleCategoryEditorValidator(property=fdTemplate)]" />
+            <!-- 删除所有草稿视图 -->
+            <query
+                queryString="deleteall&amp;status=10"
+                validator="areaRoleValidator(role=ROLE_SYSNEWS_DEFAULT)" />
+            <!-- 删除所有其他视图 -->
+            <query
+                queryString="deleteall"
+                validator="roleValidator(role=ROLE_SYSNEWS_DELETE)&amp;[roleValidator(role=ROLE_SYSNEWS_OPTALL)|roleValidator(role=ROLE_SYSNEWS_CATEGORY_MAINTAINER)|authSimpleCategoryEditorValidator(cateId=categoryId)]" />
+            <!-- “取消置顶”按钮在置顶文档树的显示及操作权限 -->
+            <query
+                queryString="setTop&amp;top=true"
+                validator="roleValidator(role=ROLE_SYSNEWS_VIEWDISPLY)&amp;[roleValidator(role=ROLE_SYSNEWS_OPTALL)|roleValidator(role=ROLE_SYSNEWS_CATEGORY_MAINTAINER)]" />
+            <!-- 置顶和取消置顶 -->
+            <query
+                queryString="setTop"
+                validator="roleValidator(role=ROLE_SYSNEWS_VIEWDISPLY)&amp;[roleValidator(role=ROLE_SYSNEWS_OPTALL)|roleValidator(role=ROLE_SYSNEWS_CATEGORY_MAINTAINER)|authSimpleCategoryEditorValidator(cateId=categoryId)]" />
+            <!-- 取消/重新发布 -->
+            <query
+                queryString="setPublish"
+                validator="roleValidator(role=ROLE_SYSNEWS_ISSUENEWS)&amp;[roleValidator(role=ROLE_SYSNEWS_OPTALL)|roleValidator(role=ROLE_SYSNEWS_CATEGORY_MAINTAINER)|authSimpleCategoryEditorValidator(cateId=categoryId)]" />
+            <!-- 转移分类-->
+            <query
+                queryString="cateChgEdit"
+                validator="roleValidator(role=ROLE_SYSNEWS_CHANGECATE)&amp;[roleValidator(role=ROLE_SYSNEWS_OPTALL)|roleValidator(role=ROLE_SYSNEWS_CATEGORY_MAINTAINER)|authSimpleCategoryEditorValidator(cateId=categoryId)]" />
+            <!-- 维护界面 -->
+            <query
+                queryString="manageList"
+                validator="authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_SYSNEWS_CATEGORY_MAINTAINER)" />
+            <!-- 权限变更 -->
+            <query
+                queryString="docRightEdit"
+                validator="areaRoleValidator(role=ROLE_SYSNEWS_CHANGERIGHT)&amp;[areaRoleValidator(role=ROLE_SYSNEWS_OPTALL)|authSimpleCategoryEditorValidator(cateId=categoryId,role=ROLE_SYSNEWS_CATEGORY_MAINTAINER)]" />
+		</request>
+    </module>
+
+    <!-- 点评权限 -->
+    <module
+        messageKey=""
+        urlPrefix="/sys/evaluation/">
+        <request
+                path="sysEvaluationMain/*">
+            <query
+                queryString="fdModelName=com.landray.kmss.sys.news.model.SysNewsMain&amp;method=add|save|saveadd"
+                validator="roleValidator(role=ROLE_SYSNEWS_EVALUATE_CREATE)&amp;fieldValueValidator(recid=fdModelId,model=com.landray.kmss.sys.news.model.SysNewsMain,fieldproperty=docStatus,value=30)" />
+            <query
+                queryString="fdModelName=com.landray.kmss.sys.news.model.SysNewsMain&amp;method=delete"
+                validator="areaRoleValidator(role=ROLE_SYSNEWS_EVALUATE_DELETE,recid=fdModelId,model=com.landray.kmss.sys.news.model.SysNewsMain)&amp;[areaRoleValidator(role=ROLE_SYSNEWS_OPTALL,recid=fdModelId,model=com.landray.kmss.sys.news.model.SysNewsMain)|areaRoleValidator(role=ROLE_SYSNEWS_CATEGORY_MAINTAINER,recid=fdModelId,model=com.landray.kmss.sys.news.model.SysNewsMain)|authSimpleCategoryEditorValidator(recid=fdModelId,model=com.landray.kmss.sys.news.model.SysNewsMain,property=fdTemplate)]" />
+            <query
+                queryString="fdModelName=com.landray.kmss.sys.news.model.SysNewsMain"
+                validator="roleValidator(role=ROLE_SYSNEWS_DEFAULT)" />
+        </request>
+    </module>
+</configs>

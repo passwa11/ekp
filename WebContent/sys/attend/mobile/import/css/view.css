@@ -1,0 +1,825 @@
+@CHARSET "UTF-8";
+
+/* 第三方签到Start
+  ========================================================================== */      
+.sysAttendContainer,
+.sysAttendContainer *{
+	-webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.sysAttendTimeContainer{
+    margin: 0;
+    padding: 0 1rem;
+    list-style: none;
+    background-color: #fff;
+    width: 100%;
+    display: table;
+}
+.sysAttendTimeContainer > li {
+    display: table-cell;
+    padding: 1.2rem .5rem;
+    vertical-align: middle;
+    text-align: center;
+    color: #999;
+    font-size: 1.2rem;
+}
+.sysAttendView.finish .sysAttendTimeContainer > li,
+.sysAttendView.unStart .sysAttendTimeContainer > li{
+	color: #999;
+}
+.sysAttendTimeContainer > li.sysAttendStatusContainer {
+    color: #37AEE9;
+}
+.sysAttendTimeContainer > li > span {
+    display: block;
+}
+.sysAttendTimeContainer > li .sysAttendTime {
+    margin-bottom: .3rem;
+    color: #F87F2D;
+    font-size: 1.8rem;
+}
+.sysAttendViewNodata{
+	background-image: url(../image/nodata.png);
+    width: 240px;
+    height: 200px;
+    background-repeat: no-repeat;
+    margin: 5rem auto;
+    margin-bottom: 1rem;
+}
+.sysAttendViewNodataText{
+	margin: 0 auto;
+	color: #333;
+    font-size: 2rem;
+    font-weight: normal;
+	text-align: center;
+}
+.sysAttendView.finish .sysAttendTimeContainer > li .sysAttendTime,
+.sysAttendView.unStart .sysAttendTimeContainer > li .sysAttendTime{
+	color: #666;
+}
+.sysAttendTimeContainer > li.sysAttendStatusContainer > .sysAttendDate {
+    padding-bottom: .3rem;
+    font-size: 1.2rem;
+    border-bottom: 1px dashed #999;
+}
+.sysAttendTimeContainer > li.sysAttendStatusContainer > .sysAttendDate{
+	border-bottom-color:#bbb;
+}
+.sysAttendTimeContainer > li.sysAttendStatusContainer > .sysAttendStatus {
+    padding-top: .5rem;
+}
+.sysAttendTimeContainer > li.sysAttendStatusContainer > .sysAttendStatus.finish {
+	color: #999;
+}
+.sysAttendMainContainer {
+	border-top : 1px solid #eee;
+	border-bottom : 1px solid #eee;
+    padding: 3rem 1rem;
+    background-color: #fff;
+    text-align: center;
+    padding-bottom: 2rem;
+}
+.sysAttendMainContainer > .mui_meetingSign_success{
+	margin: 0 auto 1rem;
+}
+.sysAttendBtn {
+    margin: 0 auto 1rem;
+    padding: .5rem;
+    width: 11rem;
+    height: 11rem;
+    color: #fff;
+    font-size: 1.8rem;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background-color: #4297ff;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -webkit-appearance: none;
+    outline: none;
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-box-pack: center;
+    box-pack: center;
+    -webkit-box-align: center;
+    box-align: center;
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+    transition: all .3s ease-in-out;
+        font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+}
+.sysAttendBtn > .currentTime {
+	display: block;
+	font-size: 2rem;
+}
+.sysAttendBtn > .signName {
+	display: block;
+	font-size: 1.8rem;
+}
+.sysAttendBtn.disbale{
+	background-color: #d8dade;
+    pointer-events: none;
+}
+.sysAttendBtn.finish{
+	background-color: #f90;
+    pointer-events: none;
+}
+.sysAttendView.finish .sysAttendMainContainer .sysAttendBtn,
+.sysAttendView.unStart .sysAttendMainContainer .sysAttendBtn {
+    background-color: #d8dade;
+    pointer-events: none;
+}
+.sysAttendView.hasAttend .sysAttendMainContainer .sysAttendBtn{
+	background-color: #4cbe45;
+}
+.sysAttendView.hasAttend .sysAttendMain{
+	display: none;
+}
+.sysAttendView .mui.mui-checked{
+	display: none;
+}
+.sysAttendView.hasAttend .mui.mui-checked{
+	display: inline-block;
+	font-size: 5.4rem;
+}
+.sysAttendView.hasAttend .sysAttendMainContainer .sysAttendTxt{
+	color: #4cbe45;
+}
+.sysAttendTxt{
+    margin: 0;
+    text-align: center;
+    color: #666;
+    font-size: 1.3rem;
+    margin-bottom: .5rem;
+    padding-left: 1.2rem
+}
+.sysAttendTxt > .mui {
+    margin-left: -1.2rem;
+    margin-right: .2rem;
+    color: #888;
+    top: -.2rem;
+}
+.sysAttendTxt .muiSignInLimit {
+	padding-left: 5px;
+    color: #4297ff;
+}.sysAttendMainContainer
+.sysAttendTxt .muiSignInLimit.unLimit {
+	color: #999;
+    font-size: 10px;
+}
+.sysAttendMainContainer > .refashSingIn{
+	margin-left: 1rem;
+    color: #4297ff;
+    font-size: 1.2rem;
+    transition: color .1s ease-in-out;
+    outline: none;
+}
+.sysAttendStatContainer {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    display: table;
+    background-color: #fff;
+}
+.sysAttendStatContainer > li {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    padding: 1rem;
+    color: #888;
+    font-size: 1.2rem;
+}
+.sysAttendStatContainer > li .num, 
+.sysAttendStatContainer > li .txt {
+    display: block;
+    color: #999;
+}
+.sysAttendStatContainer > li .num {
+    margin-bottom: .3rem;
+    font-size: 2rem;
+}
+.sysAttendStatContainer > li.sysAttendStatCount .num {
+    color: #333;
+    font-size: 1.8rem;
+}
+.sysAttendStatContainer > li.sysAttendStatDo .num {
+    color: #333;
+    font-size: 1.8rem;
+}
+.sysAttendStatContainer > li.sysAttendStatUndo .num {
+    color: #333;
+    font-size: 1.8rem;
+}
+.sysAttendBtnContainer {
+    padding: .5rem 1.5rem;
+}
+.sysAttendBtnContainer > .sysAttendBtn {
+    margin: .5rem 0;
+}
+.sysAttendBtn.primary {
+    width: 100%;
+    height: auto;
+    padding: 1rem 1.6rem;
+    font-size: 1.8rem;
+    line-height: 1.3333333;
+    border-radius: .6rem;
+    display: inline-block;
+}
+.sysAttendBtn.warn{
+	width: 100%;
+    height: auto;
+    padding: 1rem 1.6rem;
+    font-size: 1.8rem;
+    line-height: 1.3333333;
+    border-radius: .6rem;
+    background-color: #ff8484;
+    display: inline-block;
+}
+.sysAttendQRcodeContainer,
+.sysAttendListContainer{
+		font-size: 14px;
+		color: #333;
+		padding: 1rem;
+    background-color: #fff;
+    border-top: 1px solid #d5d5d5;
+}
+.sysAttendQRcodeContainer i.mui,
+.sysAttendListContainer i.mui{
+	line-height: 1.5rem;
+    font-size: 1.5rem;
+    float: right;
+    color: #aaa;
+}
+.sysAttendHeader {
+    width: 100%;
+    display: inline-table;
+    border-bottom: 0.1rem solid #C9D7E0;
+    background-color: #18b4ed!important;
+    color: #fff;
+    table-layout: fixed;
+}
+.sysAttendHeader > div {
+    display: table-cell;
+    vertical-align: middle;
+    overflow: hidden;
+}
+.sysAttendHeaderReturn {
+    padding-left: 1rem;
+    color: #fff;
+    /* float: right; */
+    cursor: pointer;
+}
+.sysAttendListItem{
+	padding: 1rem 1.2rem;
+    border-bottom: 1px solid #D3DCE6;
+    color: #888;
+    font-size: 1.4rem;
+    margin: 0;
+}
+.sysAttendListItem:after {
+    content: '';
+    display: table;
+    visibility: hidden;
+    clear: both;
+}
+.sysAttendListItem .sysAttendListImgContainer {
+    margin-right: 1rem;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    background-color: #f8f8f8;
+    overflow: hidden;
+    display: inline-block;
+    float: left;
+}
+.sysAttendListItem .sysAttendListImgContainer > img {
+    width: 100%;
+    height: 100%;
+}
+.sysAttendListItem .sysAttendListContentContainer {
+    max-width: 50%;
+    min-height: 4rem;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-box-pack: center;
+    box-pack: center;
+    -webkit-box-align: center;
+    box-align: center;
+}
+.sysAttendListItem .sysAttendListContentContainer .sysAttendListTitle {
+    color: #333;
+    font-size: 1.7rem;
+    font-weight: normal;
+}
+.sysAttendListItem .sysAttendListContentContainer .sysAttendListTime {
+    color: #888;
+    font-size: 1.2rem;
+}
+.sysAttendListItem.muiAttendItem{position:relative;}
+.sysAttendListStatus {
+    float: right;
+    background-color: #fef0f0;
+    border-radius: 2px;
+    padding: 1px 2px;
+    font-size: 1.1rem;
+    border: 1px solid #F56B6B;
+    margin-top: 12px;
+}
+.sysAttendListStatus.attend{
+	color: #4297ff;
+	border: 1px solid #4297ff;
+}
+.sysAttendListStatus.unAttend{
+	color: #F56B6B;
+}
+.sysAttendListBtn {
+	float: right;
+    background-color: #4297ff;
+    border-radius: 2px;
+    padding: 1px 2px;
+    font-size: 1.1rem;
+    margin-top: 12px;
+    margin-left: 5px;
+    color: #fff;
+    border: 1px solid #4297ff;
+}
+.sysAttendListView .muiNavbarContainer .muiNavitem{
+	border-bottom: 1px solid #d1d1d1;
+	margin-bottom: -1px;
+    padding: 0 1rem;
+    width: 50%;
+    text-align: center;
+    color: #888;
+    font-size: 1.5rem;
+    float: left;
+    position: relative;
+    box-sizing: border-box;
+}
+.sysAttendListView .muiNavitem span{
+	 color: #666;
+}
+.sysAttendListView .muiNavitem.muiNavitemSelected,
+.sysAttendListView .muiNavitem.muiNavitemSelected span{
+	/* color: #0D93D6;
+	border-bottom: 2px solid #008DD2; */
+}
+.sysAttendListView .muiNavbarSelected{
+	display: none;
+}
+ /* 第三方签到End
+ ========================================================================== */
+ 
+ /* 公用色彩 Starts
+   ========================================================================== */
+.mui_meetingSign_text_primary{ color: #4285f4; }
+
+/* 公用色彩 Ends
+   ========================================================================== */
+
+
+/* 按钮 Starts
+   ========================================================================== */
+.mui_meetingSign_btn {
+  display: inline-block;
+  width: 100%;
+  padding: 7px 10px;
+  height: 44px;
+  margin-bottom: 0;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  background-color: #4285f4;
+  border: 1px solid #4285f4;
+  border-radius: 4px;
+  outline: 0;
+}
+.mui_meetingSign_btn:active{
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+.mui_meetingSign_btn[readonly],
+.mui_meetingSign_btn.readonly{
+  opacity: .5;
+}
+.mui_meetingSign_btn[readonly]:active,
+.mui_meetingSign_btn.readonly:active{
+  box-shadow: none;
+}
+
+/* 按钮 Ends
+   ========================================================================== */
+
+
+/* 表单 Starts
+   ========================================================================== */
+.mui_meetingSign_form_control {
+  display: block;
+  width: 100%;
+  height: 44px;
+  padding: 7px 10px !important;
+  line-height: 1.42857143;
+  color: #333;
+  font-size: 1.4rem;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 4px;
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.mui_meetingSign_form_control:focus {
+  border-color: rgba(66, 133, 244, .5);
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(66, 133, 244, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(66, 133, 244, .6);
+}
+.mui_meetingSign_form_control .muiFormRequired {
+  top: -0.2rem;
+}
+.mui_meetingSign_form_control::-moz-placeholder {
+  color: #b2b2b2;
+  opacity: 1;
+}
+.mui_meetingSign_form_control:-ms-input-placeholder {
+  color: #b2b2b2;
+}
+.mui_meetingSign_form_control::-webkit-input-placeholder {
+  color: #b2b2b2;
+}
+
+.mui_meetingSign_input_group {
+  position: relative;
+  display: table;
+  border-collapse: separate;
+}
+.mui_meetingSign_input_group .mui_meetingSign_left{
+  position: relative;
+  z-index: 2;
+  float: left;
+  width: 100%;
+  margin-bottom: 0;
+}
+.mui_meetingSign_input_group .mui_meetingSign_left .mui_meetingSign_form_control:first-child{
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.mui_meetingSign_input_group .mui_meetingSign_right{
+  width: 30%;
+}
+.mui_meetingSign_input_group_addon {
+  display: block;
+  height: 44px;
+  padding: 0;
+  width: 100%;
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: 1;
+  color: #555;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.mui_meetingSign_input_group .mui_meetingSign_right .mui_meetingSign_input_group_addon:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 0;
+}
+.mui_meetingSign_input_group .mui_meetingSign_right,
+.mui_meetingSign_input_group .mui_meetingSign_left {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.mui_meetingSign_input_group_addon > span{
+  display: block;
+  height: 42px;
+  line-height: 42px;
+}
+.mui_meetingSign_input_group_addon > span.mui_meetingSign_text_primary:active{
+  background-color: #f8f8f8;
+}
+.mui_meetingSign_input_group_addon i{
+  font-weight: normal;
+  font-style: normal;
+}
+.mui_meetingSign_input_group_addon.readonly > span{
+  opacity: .5;
+}
+/* 表单 Ends
+   ========================================================================== */
+
+
+/* 签到-头部 Starts
+   ========================================================================== */
+.mui_meetingSign_header,
+.mui_meetingSign_header *{
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.mui_meetingSign_header{
+  padding: 1.5rem 1rem;
+  height: 160px;
+  background: #f7fafe url(../image/header-img.png) no-repeat 50% 100%;
+  background-size: 100% auto;
+  overflow: hidden;
+}
+.mui_meetingSign_header_title{
+  margin-bottom: 1rem;
+  min-height: 50px;
+  color: #333;
+  font-size: 2rem;
+  font-weight: normal;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  word-break:break-all;
+  word-wrap:break-word;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+          box-orient: vertical;
+  -webkit-box-pack: start;
+          box-pack: start;
+  -webkit-box-align: center;
+          box-align: center;
+}
+.mui_meetingSign_header_board{
+  margin: 1.5rem 0 0;
+  padding: 0 1rem;
+  list-style: none;
+  text-align: center;
+  color: #333;
+}
+.mui_meetingSign_header_board:after{
+  content: '';
+  display: table;
+  visibility: hidden;
+  clear: both;
+}
+.mui_meetingSign_header_board > li{
+  padding: .5rem;
+  width: 30%;
+  float: left;
+}
+.mui_meetingSign_header_board > li:nth-child(2){
+  width: 40%;
+}
+.mui_meetingSign_header_board > li .time{
+  font-family: Arial;
+  font-size: 2.6rem;
+  font-weight: bold;
+}
+.mui_meetingSign_header_board > li .txt{
+  color: #999;
+  font-size: 1.2rem;
+}
+.mui_meetingSign_header_board > li .tip,
+.mui_meetingSign_header_board > li .date{
+  padding: .3rem 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+.mui_meetingSign_header_board > li .tip{
+  margin-top: .3rem;
+  border-bottom: 1px solid rgba(213, 213, 213, .35);
+}
+.mui_meetingSign_header_board > li .date,
+.mui_meetingSign_header_board > li .tip > span{
+  font-family: Arial;
+
+
+}
+.mui_meetingSign_body{
+  padding: 1.5rem;
+  background-color: #fff;
+}
+/* 签到-头部 Ends
+   ========================================================================== */
+
+
+/* 缩略图提示 Starts
+   ========================================================================== */
+.mui_meetingSign_tip{
+  padding: 3.5rem 1rem 2.5rem;
+  text-align: center;
+  border: 0;
+}
+.mui_meetingSign_tip > .imgbox{
+  margin: 0 auto;
+  width: 120px;
+  height: 90px;
+  background: url(../image/tip-img.png) no-repeat 50%;
+  background-size: 100% auto;
+  display: block;
+  overflow: hidden;
+}
+.mui_meetingSign_tip > .txt{
+  text-align: center;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+  /* 签到成功 Starts */
+.mui_meetingSign_success{
+  margin: 0 auto;
+  width: 9rem;
+  height: 9rem;
+  color: #4285f4;
+  font-size: 5rem;
+  border-radius: 50%;
+  border: 2px solid #4285f4;
+    display: -webkit-flex;
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.mui_meetingSign_success >
+
+
+  /* 签到成功 Ends */
+
+/* 缩略图提示 Ends
+   ========================================================================== */
+
+
+/* 外部签到-登录框 Starts
+   ========================================================================== */
+.mui_meetingSign_external_view{
+	background-color: #fff;
+}
+.mui_meetingSign_external_login,
+.mui_meetingSign_external_login *{
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.mui_meetingSign_external_login{
+  padding: 1.5rem;
+}
+.mui_meetingSign_external_login .login_title{
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #333;
+  font-size: 2rem;
+  font-weight: normal;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mui_meetingSign_external_login .mui_meetingSign_btn{
+  margin-top: 1.5rem;
+  display: block;
+  width: 100%;
+}
+.mui_meetingSign_external_login_list{
+  margin: 0;
+  padding: 1.5rem 0 .2rem;
+  list-style: none;
+}
+.mui_meetingSign_external_login_list > li{}
+.mui_meetingSign_external_login_list > li:not(:last-child){ margin-bottom: 10px; }
+
+.mui_meetingSign_external_login_list .mui_meetingSign_input_group{
+  width: 100%;
+}
+
+.mui_meetingSign_external_login .login_title_warning{
+  line-height: 1.7;
+  color: #ea4335;
+  font-size: 1.2rem;
+  word-wrap: break-word;
+}
+
+/* 外部签到-登录框 Ends
+   ========================================================================== */
+
+
+/* 选择登录列表 Starts
+   ========================================================================== */
+.mui_meetingSign_chooseLogin{
+  margin: 0;
+  padding: 2rem 2.5rem;
+  list-style: none;
+}
+.mui_meetingSign_chooseLogin > li:not(:last-child){
+  margin-bottom: 2.5rem;
+}
+.mui_meetingSign_chooseLogin .chooseLogin_item{
+  padding: 1rem;
+  padding-right: 4rem;
+  color: #333;
+  text-decoration: none;
+  border-radius: 4px;
+  border: 1px solid #4285f4;
+  box-shadow: 0 3px 7px rgba(94, 139, 214, .37);
+  display: block;
+  position: relative;
+}
+.mui_meetingSign_chooseLogin .chooseLogin_item:active{
+  background-color: rgba(66, 133, 244, .1);
+}
+.mui_meetingSign_chooseLogin .chooseLogin_item:active > .mui{
+  color: rgba(66, 133, 244, 1);
+}
+.mui_meetingSign_chooseLogin .chooseLogin_item > .mui{
+  color: #999;
+  font-size: 1.6rem;
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  margin-top: -8px;
+}
+.mui_meetingSign_chooseLogin .chooseLogin_item > .chooseLogin_title{
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 2rem;
+  font-weight: normal;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mui_meetingSign_chooseLogin .chooseLogin_item > .chooseLogin_summary{
+  color: #999;
+  font-size: 1.2rem;
+}
+
+/* 选择登录列表 Ends
+   ========================================================================== */
+
+
+/* 会议签到信息列表 Starts
+   ========================================================================== */
+.mui_meetingSign_info_list{
+  margin: 0 0 1.5rem;
+  padding: 1rem;
+  list-style: none;
+  border-radius: 2px;
+  background-color: #f7f7f7;
+}
+.mui_meetingSign_info_list > li{
+  padding: .3rem 0;
+  padding-left: 1.8rem;
+  color: #333;
+  font-size: 1.2rem;
+}
+.mui_meetingSign_info_list > li:after{
+  content: '';
+  display: table;
+  visibility: hidden;
+  clear: both;
+}
+.mui_meetingSign_info_list > li .mui{
+  margin-top: 1px;
+  margin-left: -1.8rem;
+  color: #d5d5d5;
+  font-size: 1.3rem;
+  float: left;
+}
+.mui_meetingSign_info_list > li .mui.mui-staff{
+  margin-top: 2px;
+}
+
+
+/* 会议签到信息列表 Ends
+   ========================================================================== */
+ 
+
+

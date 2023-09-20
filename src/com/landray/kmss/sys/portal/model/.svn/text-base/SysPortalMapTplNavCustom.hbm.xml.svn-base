@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.landray.kmss.sys.portal.model.SysPortalMapTplNavCustom"
+		table="sys_portal_map_tpl_nav_custom">
+		
+		<id name="fdId" column="fd_id" length="36">
+			<generator class="assigned" />
+		</id>
+
+		<property name="fdName" column="fd_name" update="true"
+			insert="true" length="255" not-null="false" />
+
+		<property name="fdContent" column="fd_content" update="true"
+			insert="true" length="1000000" not-null="false"
+			type="com.landray.kmss.common.dao.ClobStringType" lazy="true" />
+
+		<property name="fdAttachmentId" column="fd_attachment_id"
+			update="true" insert="true" not-null="false" />
+
+		<many-to-one name="fdMain" column="fd_tpl_id" insert="true"
+			update="true" cascade="save-update" not-null="false" />
+	</class>
+</hibernate-mapping>

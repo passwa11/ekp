@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.zone.model.SysZonePersonInfo"
+		table="sys_zone_person_info">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator class="foreign">
+				<param name="property">person</param>
+			</generator>
+		</id>
+
+		<property
+			name="fdEnglishName"
+			column="fd_english_name"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="100" />
+		<property
+			name="fdSignature"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true"
+			length="1000000"
+			column="fd_signature"
+			update="true"
+			insert="true"
+			not-null="false" />
+		<one-to-one
+			name="person"
+			class="com.landray.kmss.sys.organization.model.SysOrgPerson"
+			constrained="true" />
+		<!-- =======================员工黄页 开始================= -->
+		<property
+			name="isContactPrivate"
+			column="is_contact_private"
+			update="true"
+			insert="true"
+			not-null="false"/>
+		<property
+			name="isDepInfoPrivate"
+			column="is_depinfo_private"
+			update="true"
+			insert="true"
+			not-null="false"/>
+		<property
+			name="isRelationshipPrivate"
+			column="is_relationship_private"
+			update="true"
+			insert="true"
+			not-null="false"/>
+		<property
+			name="isWorkmatePrivate"
+			column="is_workmate_private"
+			update="true"
+			insert="true"
+			not-null="false"/>
+		<property
+			name="fdAttentionNum"
+			column="fd_attention_nums"
+			update="true"
+			insert="true"
+			length="10"
+			not-null="false"/>
+
+		<property
+			name="fdFansNum"
+			column="fd_fans_nums"
+			update="true"
+			insert="true"
+			length="10"
+			not-null="false" />
+		<property
+			name="fdLastModifiedTime"
+			column="fd_last_modified_time"
+			update="true"
+			insert="true"
+			not-null="false" />		
+		<!-- 点评次数 -->	
+		<property
+			name="docEvalCount"
+			column="doc_eval_count"
+			update="true"
+			insert="true"
+			length="10"
+			not-null="false" />
+			
+		<property
+			name="docReadCount"
+			column="doc_read_count"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="19" />
+			
+		<bag
+			name="fdDatas"
+			cascade="all-delete-orphan"
+			lazy="true">
+			<key
+				column="fd_person_id" />
+			<one-to-many
+				class="com.landray.kmss.sys.zone.model.SysZonePersonData" />
+		</bag>
+		
+		<bag
+			name="authAttDownloads"
+			table="sys_zone_person_attdl"
+			lazy="true">
+			<key
+				column="fd_person_id" />
+			<many-to-many
+				class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="auth_att_download_id" />
+		</bag>
+		<property
+			name="authAttNodownload"
+			column="auth_att_nodownload"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1" />
+		<!-- 默认语言 -->
+		<property
+			name="fdDefaultLang"
+			column="fd_default_lang"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="50" />	
+		<!-- =================员工黄页 结束===================== -->	
+	</class>
+</hibernate-mapping>

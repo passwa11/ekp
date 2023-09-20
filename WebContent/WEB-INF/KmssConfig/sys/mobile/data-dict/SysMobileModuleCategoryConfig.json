@@ -1,0 +1,34 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.sys.mobile.model.SysMobileModuleCategoryConfig",
+        "messageKey": "sys-mobile:module.sys.mobile",
+        "serviceBean": "sysMobileModuleCategoryConfigService",
+        "table": "sys_mobile_module_cate_cfg",
+        "url": "/sys/mobile/sys_mobile_module_category_config/sysMobileModuleCategoryConfig.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdModelName":         {
+            "propertyType": "simple",
+            "messageKey": "sys-mobile:sysMobileModuleCategoryConfig.fdModelName",
+            "type": "String",
+            "column": "fd_model_name",
+            "notNull": "true",
+            "length": "450",
+            "validate": "true",
+            "canDisplay": "false"
+        },
+        "fdCateDetails":         {
+            "propertyType": "list",
+            "messageKey": "sys-mobile:sysMobileModuleCategoryConfig.fdCateDetails",
+            "column": "fd_main_id",
+            "type": "com.landray.kmss.sys.mobile.model.SysMobileModuleCateDetailConfig",
+            "inverse": "true",
+            "cascade": "all-delete-orphan",
+            "table": "sys_mobile_module_catedtl_cfg"
+        }
+    }
+}

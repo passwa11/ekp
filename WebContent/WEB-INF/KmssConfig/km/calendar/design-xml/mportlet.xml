@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root 
+    xmlns:m="http://www.landray.com.cn/schema/mportlet" 
+    xmlns="http://www.landray.com.cn/schema/lui" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.landray.com.cn/schema/mportlet 
+	../../../sys/mobile/mportlet.xsd
+		http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd">
+	
+	<!-- name:日程列表       description:我的日程 -->
+	<m:mportlet 
+		id="kms.calendar.list.mobile"
+		name="{km-calendar:mui.kmCalendar.portlet.list}"
+		module= "{km-calendar:module.km.calendar}"
+		description="{km-calendar:module.km.calendar.mportlet.myCalendar}"
+		moduleUrl = "/km/calendar/mobile/index.jsp"
+		jsUrl="/km/calendar/mobile/mportal/kmCalendar_list.js?rowsize=!{rowsize}&amp;type=!{type}">
+		<m:vars>
+			<var name="日程行数(为空则不限)" key="rowsize" kind="rowsize" default="5"></var>
+			<var name="日程范围" key="type" kind="enumValue" default="today">
+		    	{"values":
+		    		[{"text":"今天", "value":"today"},
+		    		{"text":"本周", "value":"week"},
+		    		{"text":"最近三天", "value":"less3"},
+		    		{"text":"最近一周", "value":"less7"},
+		    		{"text":"未来三天", "value":"more3"},
+		    		{"text":"未来一周", "value":"more7"}],
+		    		"showType":"radio"
+		    	}
+		    </var>
+		</m:vars>
+		<m:operations>
+			<m:operation name="添加日程" type="create" href="/km/calendar/km_calendar_main/kmCalendarMain.do?method=addEvent"/>
+		</m:operations>
+	</m:mportlet>
+	
+	<!-- name:日程跑马灯       description:我的日程 -->
+	<m:mportlet 
+		id="kms.calendar.marquee.mobile"
+		name="{km-calendar:mui.kmCalendar.portlet.marquee}"
+		module= "{km-calendar:module.km.calendar}"
+		description="{km-calendar:module.km.calendar.mportlet.myCalendar}"
+		moduleUrl = "/km/calendar/mobile/index.jsp"
+		jsUrl="/km/calendar/mobile/mportal/kmCalendar_marquee.js?rowsize=!{rowsize}">
+		<m:vars>
+			<var name="日程行数(为空则不限)" key="rowsize" kind="rowsize" default="5"></var>
+		</m:vars>
+	</m:mportlet>
+	
+	<!-- name:日程部件       description:日程部件,暂不支持在多标签中配置 -->	
+	<m:mportlet 
+		id="kms.calendar.widget.mobile"
+		name="{km-calendar:module.km.calendar.mportlet.widget}"
+		module= "{km-calendar:module.km.calendar}"
+		description="{km-calendar:module.km.calendar.mportlet.widget.description}"
+		moduleUrl = "/km/calendar/mobile/index.jsp"
+		jsUrl="/km/calendar/mobile/mportal/kmCalendar_widget.js?rowsize=!{rowsize}&amp;displayType=!{displayType}">
+		<m:vars>
+			<var name="日程行数" key="rowsize" kind="rowsize" default="5"/>
+		    <var name="视图类型" key="displayType"  kind="enumValue" default="month">
+		    	{"values":
+		    		[{"text":"月视图", "value":"month"},
+		    		{"text":"周视图", "value":"week"}],
+		    		"showType":"radio"
+		    	}
+		    </var>
+		</m:vars>
+	</m:mportlet>
+	
+	
+</root>	

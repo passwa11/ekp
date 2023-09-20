@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="com.landray.kmss.sys.restservice.server.model.SysRestserviceServerLogBackup"
+		table="sys_rest_server_log_backup">
+		<id
+			name="fdId"
+			column="fd_id"
+			length="36">
+			<generator
+				class="assigned" />
+		</id>
+
+		<property
+			name="fdName"
+			column="fd_name"
+			update="true"
+			insert="true"
+			length="100"
+			not-null="false" />
+
+		<property
+			name="fdServiceName"
+			column="fd_service_name"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false"
+			index="idx_sysRestSerLogBak_fdSerNm" />
+
+		<property
+			name="fdUserName"
+			column="fd_user_name"
+			update="true"
+			insert="true"
+			length="50"
+			not-null="false"
+			index="idx_sysRestSerLogBak_fdUserNm" />
+
+		<property
+			name="fdClientIp"
+			column="fd_client_ip"
+			update="true"
+			insert="true"
+			length="15"
+			not-null="false" />
+
+		<property
+			name="fdStartTime"
+			column="fd_start_time"
+			update="true"
+			insert="true"
+			not-null="false"
+			index="idx_sysRestSerLogBak_fdStarTm" />
+
+		<property
+			name="fdEndTime"
+			column="fd_end_time"
+			update="true"
+			insert="true"
+			not-null="false" />
+
+		<property
+			name="fdExecResult"
+			column="fd_exec_result"
+			update="true"
+			insert="true"
+			length="2"
+			not-null="false" />
+
+		<property
+			name="fdErrorMsg"
+			column="fd_error_msg"
+			update="true"
+			insert="true"
+			length="1000000"
+			not-null="false"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true" />
+
+		<property
+			name="fdRunTime"
+			column="fd_run_time"
+			update="true"
+			insert="true"
+			length="8"
+			not-null="false" />
+		
+		<property
+			name="fdRunTimeMillis"
+			column="fd_run_time_millis"
+			update="true"
+			insert="true"
+			length="100"
+			not-null="false" />
+			
+		<property
+			name="fdOriginUri"
+			column="fd_origin_uri"
+			update="true"
+			insert="true"
+			length="200"
+			not-null="false" />
+			
+		<property
+			name="fdRequestHeader"
+			column="fd_request_header"
+			update="true"
+			insert="true"
+			length="1000"
+			not-null="false" />
+		
+		<property
+			name="fdResponseHeader"
+			column="fd_response_header"
+			update="true"
+			insert="true"
+			length="1000"
+			not-null="false" />
+			
+		<property
+			name="fdRequestMsg"
+			column="fd_request_msg"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1000000"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true" />
+			
+		<property
+			name="fdResponseMsg"
+			column="fd_response_msg"
+			update="true"
+			insert="true"
+			not-null="false"
+			length="1000000"
+			type="com.landray.kmss.common.dao.ClobStringType"
+			lazy="true" />
+	</class>
+</hibernate-mapping>

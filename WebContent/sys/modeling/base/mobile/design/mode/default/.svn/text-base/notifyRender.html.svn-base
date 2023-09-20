@@ -1,0 +1,29 @@
+if(!data){
+	return;
+}
+var dataValue = data.value || {};
+var dataValidate = data.validate || {};
+var wgt = render.parent;
+var lang = wgt.getModelingLang();
+{$
+<div class="notify-wrap">
+	<div class="content_item_form_element content_radio">
+		<p class="content_body_title">{%lang['modeling.todo.data.sources']%}</p>
+		<label class="todo_source_type"><input type="radio" name="{%data.uuId%}_sourceType" value="system" data-update-event='change' />{%lang['modeling.System.todo']%}</label>
+		&nbsp;
+		<label class="todo_source_type"><input type="radio" name="{%data.uuId%}_sourceType" value="custom" data-update-event='change' />{%lang['modeling.customize']%}</label>
+	</div>
+	<div class="content_item_form_element content_choose">
+		<p class="content_body_title">{%lang['table.modelingCollectionView']%}</p>
+		<input name="{%data.uuId%}_listView" title="{%lang['table.modelingCollectionView']%}" value="{%dataValue.listView%}" type="hidden" data-update-event="change" data-validate="{%dataValidate.listView%}"/>
+		<input name="{%data.uuId%}_listViewText" value="{%dataValue.listViewText%}" type="hidden" />
+		<input name="{%data.uuId%}_listViewAppId" value="{%dataValue.listViewAppId%}" type="hidden" />
+		<input name="{%data.uuId%}_nodeType" value="{%dataValue.nodeType%}" type="hidden" />
+		<div class="content_opt listVieElement">
+			<p class="listViewText">{%dataValue.listViewText || lang['modeling.page.choose']%}</p>
+			<i class="listViewIcon"></i>
+		</div>
+		<p class="content_opt_info"></p>
+	</div>$}
+
+{$</div>$}

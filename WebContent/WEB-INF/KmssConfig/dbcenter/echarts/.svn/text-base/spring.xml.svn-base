@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="dbEchartsOperationDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.dbcenter.echarts.dao.hibernate.DbEchartsOperationDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.dbcenter.echarts.model.DbEchartsOperation" />
+	</bean>
+
+	<bean
+		id="dbEchartsOperationTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.dbcenter.echarts.service.spring.DbEchartsOperationServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="dbEchartsOperationDao" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsOperationService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="dbEchartsOperationTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="dbEchartsJobDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.dbcenter.echarts.dao.hibernate.DbEchartsJobDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.dbcenter.echarts.model.DbEchartsJob" />
+	</bean>
+
+	<bean
+		id="dbEchartsJobTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.dbcenter.echarts.service.spring.DbEchartsJobServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="dbEchartsJobDao" />
+		</property>
+		<property
+			name="dbEchartsOperationService">
+			<ref
+				bean="dbEchartsOperationService" />
+		</property>
+		<property
+			name="sysQuartzCoreService">
+			<ref
+				bean="sysQuartzCoreService" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsJobService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="dbEchartsJobTarget" />
+		</property>
+	</bean>
+
+
+	<bean
+		id="dbEchartsChartSetDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.dbcenter.echarts.dao.hibernate.DbEchartsChartSetDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.dbcenter.echarts.model.DbEchartsChartSet" />
+	</bean>
+
+	<bean
+		id="dbEchartsChartSetTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.dbcenter.echarts.service.spring.DbEchartsChartSetServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="dbEchartsChartSetDao" />
+		</property>
+		<property
+			name="dbEchartsTemplateService">
+			<ref bean="dbEchartsTemplateService"/>
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsChartSetService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="dbEchartsChartSetTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="dbEchartsChartDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.dbcenter.echarts.dao.hibernate.DbEchartsChartDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.dbcenter.echarts.model.DbEchartsChart" />
+	</bean>
+
+	<bean
+		id="dbEchartsChartTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.dbcenter.echarts.service.spring.DbEchartsChartServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="dbEchartsChartDao" />
+		</property>
+		<property
+			name="dbEchartsTemplateService">
+			<ref bean="dbEchartsTemplateService"/>
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsChartService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="dbEchartsChartTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="dbEchartsTableDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.dbcenter.echarts.dao.hibernate.DbEchartsTableDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.dbcenter.echarts.model.DbEchartsTable" />
+	</bean>
+
+	<bean
+		id="dbEchartsTableTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.dbcenter.echarts.service.spring.DbEchartsTableServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="dbEchartsTableDao" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsTableService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="dbEchartsTableTarget" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsTemplateDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.dbcenter.echarts.dao.hibernate.DbEchartsTemplateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.dbcenter.echarts.model.DbEchartsTemplate" />
+	</bean>
+	<bean
+		id="dbEchartsTemplateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.dbcenter.echarts.service.spring.DbEchartsTemplateServiceImp">
+		<property name="baseDao">
+			<ref bean="dbEchartsTemplateDao" />
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsTemplateService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="dbEchartsTemplateTarget" />
+		</property>
+	</bean>
+	
+	<!-- 自定义数据 -->
+	<bean
+		id="dbEchartsCustomDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.dbcenter.echarts.dao.hibernate.DbEchartsCustomDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.dbcenter.echarts.model.DbEchartsCustom" />
+	</bean>
+
+	<bean
+		id="dbEchartsCustomTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.dbcenter.echarts.service.spring.DbEchartsCustomServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="dbEchartsCustomDao" />
+		</property>
+		<property
+			name="dbEchartsTemplateService">
+			<ref bean="dbEchartsTemplateService"/>
+		</property>
+	</bean>
+	<bean
+		id="dbEchartsCustomService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="dbEchartsCustomTarget" />
+		</property>
+	</bean>
+	
+	<!-- 汇总数据 -->
+	<bean
+			id="dbEchartsTotalDao"
+			parent="KmssExtendDataAreaDao"
+			class="com.landray.kmss.dbcenter.echarts.dao.hibernate.DbEchartsTotalDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.dbcenter.echarts.model.DbEchartsTotal" />
+	</bean>
+
+	<bean
+			id="dbEchartsTotalTarget"
+			parent="KmssExtendDataTarget"
+			class="com.landray.kmss.dbcenter.echarts.service.spring.DbEchartsTotalServiceImpl">
+		<property
+				name="baseDao">
+			<ref
+					bean="dbEchartsTotalDao" />
+		</property>
+		<property
+				name="dbEchartsTemplateService">
+			<ref bean="dbEchartsTemplateService"/>
+		</property>
+		<property
+				name="dbEchartsCustomService">
+			<ref bean="dbEchartsCustomService"/>
+		</property>
+		<property
+				name="dbEchartsChartService">
+			<ref bean="dbEchartsChartService"/>
+		</property>
+		<property
+				name="dbEchartsTableService">
+			<ref bean="dbEchartsTableService"/>
+		</property>
+		<property
+				name="dbEchartsChartSetService">
+			<ref bean="dbEchartsChartSetService"/>
+		</property>
+		<property
+				name="dbEchartsAttentionService">
+			<ref bean="dbEchartsAttentionService"/>
+		</property>
+	</bean>
+
+	<bean
+			id="dbEchartsTotalService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="dbEchartsTotalTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="createMyAttentionEcharts">PROPAGATION_REQUIRED</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="init*">PROPAGATION_REQUIRED</prop>
+				<prop key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 关注中间表 -->
+	<bean
+			id="dbEchartsAttentionDao"
+			parent="KmssExtendDataAreaDao"
+			class="com.landray.kmss.dbcenter.echarts.dao.hibernate.DbEchartsAttentionDaoImp">
+		<property
+				name="modelName"
+				value="com.landray.kmss.dbcenter.echarts.model.DbEchartsAttention" />
+	</bean>
+
+	<bean
+			id="dbEchartsAttentionTarget"
+			parent="KmssExtendDataTarget"
+			class="com.landray.kmss.dbcenter.echarts.service.spring.DbEchartsAttentionServiceImp">
+		<property
+				name="baseDao">
+			<ref
+					bean="dbEchartsAttentionDao" />
+		</property>
+	</bean>
+
+	<bean
+			id="dbEchartsAttentionService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="dbEchartsAttentionTarget" />
+		</property>
+	</bean>
+	
+	<bean
+		id="dbEchartsSQLService"
+		class="com.landray.kmss.dbcenter.echarts.service.spring.DbEchartsSQLServiceImp">
+	</bean>
+
+</beans>

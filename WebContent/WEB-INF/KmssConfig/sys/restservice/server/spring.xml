@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security 
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	
+	<bean
+		id="sysRestserviceServerMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.restservice.server.dao.hibernate.SysRestserviceServerMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.restservice.server.model.SysRestserviceServerMain" />
+	</bean>
+	<bean
+		id="sysRestserviceServerMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.restservice.server.service.spring.SysRestserviceServerMainServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysRestserviceServerMainDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysRestserviceServerMainService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysRestserviceServerMainTarget" />
+		</property>
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop
+					key="add*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="update*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="save*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="init*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="start*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="stop*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean
+		id="sysRestserviceServerInitTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.restservice.server.service.spring.SysRestserviceServerInitServiceImp">
+		<property
+			name="sysRsMainService">
+			<ref
+				bean="sysRestserviceServerMainTarget" />
+		</property>
+	</bean>
+	<bean
+		id="sysRestserviceServerInitService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysRestserviceServerInitTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysRestserviceServerPolicyDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.restservice.server.dao.hibernate.SysRestserviceServerPolicyDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.restservice.server.model.SysRestserviceServerPolicy" />
+	</bean>
+	<bean
+		id="sysRestserviceServerPolicyTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.restservice.server.service.spring.SysRestserviceServerPolicyServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysRestserviceServerPolicyDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysRestserviceServerPolicyService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysRestserviceServerPolicyTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysRestserviceServerLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.restservice.server.dao.hibernate.SysRestserviceServerLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.restservice.server.model.SysRestserviceServerLog" />
+	</bean>
+	<bean
+		id="sysRestserviceServerLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.restservice.server.service.spring.SysRestserviceServerLogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysRestserviceServerLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysRestserviceServerLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysRestserviceServerLogTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysRestserviceServerLogBackupDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.restservice.server.dao.hibernate.SysRestserviceServerLogBackupDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.restservice.server.model.SysRestserviceServerLogBackup" />
+	</bean>
+	<bean
+		id="sysRestserviceServerLogBackupTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.restservice.server.service.spring.SysRestserviceServerLogBackupServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysRestserviceServerLogBackupDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysRestserviceServerLogBackupService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysRestserviceServerLogBackupTarget" />
+		</property>
+		<property
+			name="transactionAttributes">
+			<props>
+				<prop
+					key="add*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="copy*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="update*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="save*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="init*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="clone*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="backup*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="clear*">PROPAGATION_REQUIRED</prop>
+				<prop
+					key="*">PROPAGATION_REQUIRED,readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean
+		id="restApiLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.restservice.server.log.RestApiLogService">
+		<property
+			name="sysRestserviceServerLogService">
+			<ref bean="sysRestserviceServerLogTarget" />
+		</property>
+		<property
+			name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+	</bean>
+	<bean
+		id="restApiLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref bean="restApiLogTarget" />
+		</property>
+	</bean>
+</beans>

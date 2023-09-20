@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		id="thirdMallAuthorizeDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.mall.dao.hibernate.ThirdMallAuthorizeDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.mall.model.ThirdMallAuthorize" />
+	</bean>
+	<bean
+		id="thirdMallAuthorizeTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.third.mall.service.spring.ThirdMallAuthorizeServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="thirdMallAuthorizeDao" />
+		</property>
+		<property name="mallUrlPrefix">
+            <value>
+             	http://mall.landray.com.cn/core01
+            </value>
+        </property>
+	</bean>
+	<bean
+		id="thirdMallAuthorizeService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="thirdMallAuthorizeTarget" />
+		</property>
+	</bean>
+	
+	<!-- 模板来源 -->
+	<bean
+		id="thirdMallTemplateDataServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.third.mall.service.spring.ThirdMallTemplateDataService">
+		<property
+			name="baseDao">
+			<ref
+				bean="KmssBaseDao" />
+		</property>
+	</bean>
+	<bean
+		id="thirdMallTemplateDataService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="thirdMallTemplateDataServiceTarget" />
+		</property>
+	</bean>
+	
+	<!-- 门户服务 -->
+	<bean
+		id="thirdMallPortalDataServiceTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.third.mall.service.spring.ThirdMallPortalDataService">
+		<property
+			name="baseDao">
+			<ref
+				bean="KmssBaseDao" />
+		</property>
+	</bean>
+	<bean
+		id="thirdMallPortalDataService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="thirdMallPortalDataServiceTarget" />
+		</property>
+	</bean>
+	<!-- 复用平台公共查询数据-->
+	<bean
+			id="thirdMallPublicDataServiceTarget"
+			parent="KmssBaseTarget"
+			class="com.landray.kmss.third.mall.service.spring.ThirdMallPublicDataService">
+		<property
+				name="baseDao">
+			<ref
+					bean="KmssBaseDao" />
+		</property>
+	</bean>
+	<bean
+			id="thirdMallPublicDataService"
+			parent="KmssBaseService">
+		<property
+				name="target">
+			<ref
+					bean="thirdMallPublicDataServiceTarget" />
+		</property>
+	</bean>
+
+</beans>

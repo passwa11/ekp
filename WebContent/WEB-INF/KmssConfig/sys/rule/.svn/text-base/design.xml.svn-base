@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/sys/rule/" 
+        messageKey="sys-rule:module.sys.rule"
+        defaultValidator="roleValidator(role=SYSROLE_USER;SYSROLE_SYSADMIN)" >
+        <roles>
+        	ROLE_SYSRULE_DEFAULT;
+        	ROLE_SYSRULE_ADMIN;
+        	ROLE_SYSRULE_MAINTAINER;
+        </roles>
+        <request
+			path="tree.jsp*"
+			defaultValidator="roleValidator(role=ROLE_SYSRULE_DEFAULT)"/>
+		<request 
+			path="sys/profile/moduleindex.jsp?nav=/sys/rule/tree.jsp"
+			defaultValidator="roleValidator(role=ROLE_SYSRULE_DEFAULT)"/>
+        <request 
+            path="sys_ruleset_doc/sysRuleSetDoc.do*"
+            defaultValidator="roleValidator(role=ROLE_SYSRULE_DEFAULT)" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.sys.rule.model.SysRuleSetDoc,adminRoleName=ROLE_SYSRULE_ADMIN">
+            <!-- 保存 -->
+			<query
+				queryString="method=add"
+				validator="roleValidator(role=ROLE_SYSRULE_ADMIN)|roleValidator(role=ROLE_SYSRULE_MAINTAINER)|sysRuleSetCateReaderValidator(recid=category,model=com.landray.kmss.sys.rule.model.SysRuleSetCate)" />			
+			<query
+				queryString="method=save|saveadd"
+				validator="roleValidator(role=ROLE_SYSRULE_ADMIN)|roleValidator(role=ROLE_SYSRULE_MAINTAINER)|sysRuleSetCateReaderValidator(recid=category,model=com.landray.kmss.sys.rule.model.SysRuleSetCate)" />
+			<!-- 阅读 -->
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_SYSRULE_ADMIN)|[roleValidator(role=ROLE_SYSRULE_DEFAULT)&amp;ruleSetDocValidator()]" />
+			<!-- 编辑 -->
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_SYSRULE_ADMIN)|roleValidator(role=ROLE_SYSRULE_MAINTAINER)|ruleSetDocValidator()" />
+			<!-- 删除 -->
+			<query
+				queryString="method=delete"
+				validator="roleValidator(role=ROLE_SYSRULE_ADMIN)|roleValidator(role=ROLE_SYSRULE_MAINTAINER)|ruleSetDocValidator()" />
+			<!-- 删除所有 -->
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYSRULE_ADMIN)|roleValidator(role=ROLE_SYSRULE_MAINTAINER)|ruleSetDocValidator(recid=List_Selected)" />
+        </request>
+        
+        <request 
+            path="sys_ruleset_cate/sysRuleSetCate.do*" 
+            defaultValidator="roleValidator(role=ROLE_SYSRULE_DEFAULT)" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.sys.rule.model.SysRuleSetCate,adminRoleName=ROLE_SYSRULE_ADMIN">
+            <query
+				queryString="method=add"
+				validator="roleValidator(role=ROLE_SYSRULE_ADMIN)|roleValidator(role=ROLE_SYSRULE_MAINTAINER)|sysRuleSetCateEditorValidator(recid=parentId)" />			
+			<!-- 阅读 -->
+			<query
+				queryString="method=view"
+				validator="roleValidator(role=ROLE_SYSRULE_ADMIN)|[roleValidator(role=ROLE_SYSRULE_DEFAULT)&amp;sysRuleSetCateEditorValidator()]" />
+			<!-- 编辑 -->
+			<query
+				queryString="method=edit|update"
+				validator="roleValidator(role=ROLE_SYSRULE_ADMIN)|roleValidator(role=ROLE_SYSRULE_MAINTAINER)|sysRuleSetCateEditorValidator()" />
+			<!-- 删除 -->
+			<query
+				queryString="method=delete"
+				validator="roleValidator(role=ROLE_SYSRULE_ADMIN)|roleValidator(role=ROLE_SYSRULE_MAINTAINER)|sysRuleSetCateEditorValidator()" />
+			<!-- 删除所有 -->
+			<query
+				queryString="method=deleteall"
+				validator="roleValidator(role=ROLE_SYSRULE_ADMIN)|roleValidator(role=ROLE_SYSRULE_MAINTAINER)|sysRuleSetCateEditorValidator(recid=List_Selected)" />
+        </request>
+        
+        <filters
+			modelName="com.landray.kmss.sys.rule.model.SysRuleSetCate">
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_SYSRULE_ADMIN)" />
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=fdCreator.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=authReaders.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=authEditors.fdId)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="authFieldFilter(field=authEditors.fdId)" />
+		</filters>
+        
+        <filters
+			modelName="com.landray.kmss.sys.rule.model.SysRuleSetDoc">
+			<filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="roleFilter(role=ROLE_SYSRULE_ADMIN)" />
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+			<filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=authReaders.fdId)" />
+			<filter
+				type="SYS_EDITOR"
+				expression="authFieldFilter(field=authEditors.fdId)" />
+		</filters>
+    </module>
+    
+    <homePage
+		urlPrefix="sys/rule"
+		url="/moduleindex.jsp?nav=/sys/rule/tree.jsp"
+		messageKey="sys-rule:module.sys.rule" />
+    
+    <profileConfig 
+        key="sys/rule" 
+        messageKey="{sys-rule:module.sys.rule}" 
+        url="/sys/profile/moduleindex.jsp?nav=/sys/rule/tree.jsp" 
+        icon="ex_reviewCenter" 
+        type="mechanism" 
+        description="{sys-rule:module.sys.rule.description}"/>
+    <profileConfig 
+        key="sys/lbpmext/rule" 
+        messageKey="{sys-rule:module.sys.rule}" 
+        url="/sys/profile/moduleindex.jsp?nav=/sys/rule/tree.jsp" 
+        icon="ex_reviewCenter" 
+        type="lbpm" 
+        description="{sys-rule:module.sys.rule.description}"/>
+</configs>

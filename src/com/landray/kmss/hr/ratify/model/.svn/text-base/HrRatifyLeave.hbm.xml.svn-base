@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <subclass 
+        name="com.landray.kmss.hr.ratify.model.HrRatifyLeave" 
+        extends="com.landray.kmss.hr.ratify.model.HrRatifyMain"
+        discriminator-value="com.landray.kmss.hr.ratify.model.HrRatifyLeave">
+        <join table="hr_ratify_leave">
+	        <key
+				column="fd_id"></key>
+	        <property 
+	            name="fdLeaveDate" 
+	            column="fd_leave_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdLeaveRealDate" 
+	            column="fd_leave_real_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdLeaveEnterDate" 
+	            column="fd_leave_enter_date" 
+	            update="true" 
+	            insert="true"/>
+	        <property 
+	            name="fdLeaveReason" 
+	            column="fd_leave_reason" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdLeaveLeaderView" 
+	            column="fd_leave_leader_view" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdLeaveHrView" 
+	            column="fd_leave_hr_view" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <property 
+	            name="fdLeaveRemark" 
+	            column="fd_leave_remark" 
+	            update="true" 
+	            insert="true" 
+	            length="2000"/>
+	        <many-to-one 
+	            name="fdLeaveStaff" 
+	            column="fd_leave_staff_id" 
+	            update="true" 
+	            insert="true"/>
+	        <many-to-one 
+	            name="fdLeaveDept" 
+	            column="fd_leave_dept_id" 
+	            update="true" 
+	            insert="true"/>
+	        <property
+	        	name="fdLeaveStatus"
+	        	column="fd_leave_status"
+	        	update="true" 
+	        	insert="true" 
+	        	length="2"/>
+	        <property
+				name="fdNextCompany"
+				column="fd_next_company"
+				update="true"
+				insert="true"
+				not-null="false"
+				length="254" />
+        </join>
+    </subclass>
+</hibernate-mapping>

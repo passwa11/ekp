@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs
+	xmlns="http://www.example.org/design-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<module
+		messageKey=""
+		urlPrefix="/sys/authentication/">
+		<request
+			path="validate*"
+			defaultValidator="true" />
+		<request
+			path="pwdValidate*"
+			defaultValidator="true" />
+		<request
+			path="ssoclient*"
+			defaultValidator="true" />
+		<request
+			path="sso/*"
+			defaultValidator="true" />
+	</module>
+	
+	
+	
+	<quartz
+		cronExpression="0 0 * * * ?"
+		jobService="sysIdentityValidationCacheService"
+		messageKey="sys-authentication-identity:identity.validate.clear"
+		jobMethod="clear"
+		description="sys-authentication-identity:identity.validate.clear.description"/>
+		
+</configs>

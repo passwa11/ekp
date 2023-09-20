@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="sysSearchConfigTree"
+		class="com.landray.kmss.sys.search.service.spring.SysSearchConfigTree">
+		<property
+			name="sysSearchMainService">
+			<ref
+				bean="sysSearchMainService" />
+		</property>
+	</bean>
+	<bean
+		id="sysSearchMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.search.dao.hibernate.SysSearchMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.search.model.SysSearchMain" />
+	</bean>
+	<bean
+		id="sysSearchMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.search.service.spring.SysSearchMainServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysSearchMainDao" />
+		</property>
+		<property
+			name="sysDictLoader">
+			<ref
+				bean="sysDictLoader" />
+		</property>
+		
+	</bean>
+	<bean
+		id="sysSearchMainService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysSearchMainTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysSearchCateDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.sys.search.dao.hibernate.SysSearchCateDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.sys.search.model.SysSearchCate" />
+	</bean>
+	<bean
+		id="sysSearchCateTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.sys.search.service.spring.SysSearchCateServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="sysSearchCateDao" />
+		</property>
+	</bean>
+	<bean
+		id="sysSearchCateService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="sysSearchCateTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysSearchCategoryDictLoader"
+		class="com.landray.kmss.sys.search.service.spring.SysSearchCategoryDictLoaderImp">
+		<property
+			name="sysDictLoader">
+			<ref
+				bean="sysDictLoader" />
+		</property>
+	</bean>
+
+	<bean
+		id="sysSearchModelDictService"
+		class="com.landray.kmss.sys.search.service.spring.SysSearchModelDictService">
+		<!--
+			property name="dictLoader"> <ref bean="sysSearchCategoryDictLoader"
+			/> </property
+		-->
+	</bean>
+
+	<bean
+		id="sysSearchTemplateTree"
+		class="com.landray.kmss.sys.search.service.spring.SysSearchTemplateTree">
+	</bean>
+
+	<bean
+		id="sysSearchResultExportDictService"
+		class="com.landray.kmss.sys.search.service.spring.SysSearchResultExportDictService">
+		<property
+			name="sysSearchMainService">
+			<ref
+				bean="sysSearchMainService" />
+		</property>
+	</bean>
+</beans>

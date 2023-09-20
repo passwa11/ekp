@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		name="/admin.do"
+		class="com.landray.kmss.sys.config.action.SysConfigAdminAction"
+		lazy-init="true"
+		parent="KmssBaseAction">
+		<property
+			name="formType"
+			value="com.landray.kmss.sys.config.form.SysConfigAdminForm" />
+		<property name="forwards">
+			<map>
+				<entry
+					key="config"
+					value="/sys/config/config.jsp" />
+				<entry
+					key="backup"
+					value="/sys/config/backup.jsp" />
+				<entry
+					key="editPassWord"
+					value="/sys/config/editPassWord.jsp" />
+				<entry
+					key="success"
+					value="/sys/config/resource/success.jsp" />
+				<entry
+					key="failure"
+					value="/sys/config/resource/error.jsp" />
+			</map>
+		</property>
+	</bean>
+</beans>

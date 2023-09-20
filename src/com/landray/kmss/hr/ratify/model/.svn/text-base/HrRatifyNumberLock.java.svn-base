@@ -1,0 +1,77 @@
+package com.landray.kmss.hr.ratify.model;
+
+import java.util.Map;
+
+import com.landray.kmss.common.convertor.ModelToFormPropertyMap;
+import com.landray.kmss.component.locker.interfaces.ComponentLockable;
+import com.landray.kmss.sys.config.dict.SysDictModel;
+
+public class HrRatifyNumberLock implements ComponentLockable {
+
+	@Override
+	public String getFdId() {
+		// TODO Auto-generated method stub
+		return "123";
+	}
+
+	@Override
+	public void setFdId(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void recalculateFields() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public SysDictModel getSysDictModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setSysDictModel(SysDictModel sysDictModel) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Class getFormClass() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ModelToFormPropertyMap getToFormPropertyMap() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, String> getDynamicMap() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getCustomPropMap() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setVersion(Integer version) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Integer getVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

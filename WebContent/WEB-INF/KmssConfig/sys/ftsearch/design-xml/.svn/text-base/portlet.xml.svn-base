@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.landray.com.cn/schema/lui" xmlns:degign="http://www.landray.com.cn/schema/design"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.landray.com.cn/schema/lui
+	../../../sys/ui/lui.xsd
+	http://www.landray.com.cn/schema/design
+	../../../design-xml.xsd">
+
+	<!-- 获取已启用的模块 -->
+	<portlet
+		id="sys.ftsearch.modules"
+		name="{sys-ftsearch:ftsearch.models}"
+		module="{sys-ftsearch:module.sys.ftsearch}"
+		description="{sys-ftsearch:portlet.list.desc}"
+		forSystem="cloud">
+		<source
+			id="sys-ftsearch.modules"
+			format="data.module.search"
+			type="xml">
+			<code>
+				<![CDATA[
+				{"url":"/data/sys-common/dataxml?s_bean=searchModulePortlet&dataview=classic"}
+				]]>
+			</code>
+			<example>
+				<code>
+					<![CDATA[
+						[{"text":"流程管理","key":"KmReviewMain"},{"text":"学习管理","key":"KmsLearnMain"},{"text":"论坛话题","key":"KmForumTopic"},{"text":"员工黄页","key":"SysZonePersonInfo"},{"text":"知识专辑","key":"KmsKmtopicMain"}]
+					]]>
+				</code>
+			</example>
+		</source>
+	</portlet>
+</root>

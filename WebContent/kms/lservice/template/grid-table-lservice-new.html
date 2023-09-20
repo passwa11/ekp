@@ -1,0 +1,56 @@
+window.decodeHTML = function(str){
+       if(str){
+			return str.replace(/&quot;/g, '"')
+			.replace(/&apos;/g, '\'')
+			.replace(/&gt;/g, '>')
+			.replace(/&lt;/g, '<')
+			.replace(/&amp;/g, '&')
+			.replace(/&sup1;/g, "¹")
+			.replace(/&sup2;/g, "²")
+			.replace(/&sup3;/g, "³");
+		}
+};
+var datas = data;
+var columnNum = template.parent.columnNum;                                                             				
+for (var i = 0; i < datas.length; i ++) {
+var grid = datas[i];
+					{$<div style="display: flex;margin-bottom: 40px;">
+					<div class="lservice_student_mission_img" style="flex:1">
+					 <img style="width: 100%;border-radius: 6px;" src="{%env.fn.formatUrl('/kms/lservice/index/common/style/img/course.png')%}"/>
+					</div>
+					<div class="lservice_student_mission_info" style="flex:3"> $}
+					if(!grid['process'].text){
+						{$<div style="margin-top: 25px;">$}
+					}
+					if(grid['process'].text){
+						{$<div>$}
+					}					
+					{$
+								<div class="lservice_student_mission_sum" title="{%decodeHTML(grid['docSubject'].text)%}">$}
+									{$<span class="lservice_student_mission_info_s">{%grid['fdModel'].text%}</span>$}
+								{$
+								<h>{%decodeHTML(grid['docSubject'].text)%}</h>
+							</div>
+							<div class="lservice_student_mission_info_c">
+								<em>{%grid['score'].text%}</em>
+								<em style="margin-left: 25px;margin-right: 20px;">{%grid['fdName'].text%}</em>
+								<em>{%grid['time'].text%}</em>
+							</div>$}
+							if(grid['process'].text){
+							{$<div class="lservice_student_mission_info_bars">
+								<span class="lservice_student_mission_info_chart">
+									<em class="bars" style="width: {%grid['process'].text%}%;"></em>
+								</span>
+								<span class="num">{%grid['process'].text%}%</span>
+							</div>$}
+							}
+						{$	
+						</div>
+					</div>
+					<a  href="javascript:;" data-lui-mark-id="{%grid.rowId%}" style="flex:0.8">
+						<div class="lservice_student_mission_button">
+							{%grid['button'].text%}
+						</div>
+					</a>
+				</div>$}
+}				

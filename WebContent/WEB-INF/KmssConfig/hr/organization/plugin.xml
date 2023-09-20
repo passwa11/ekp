@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	
+	
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.hr.organization.transfer.HrOrganizationPersonTask" />
+			<param
+				name="name"
+				value="人事档案数据迁移" />
+			<param
+				name="path"
+				value="/hr/organization/" />
+			<param
+				name="check"
+				value="com.landray.kmss.hr.organization.transfer.HrOrganizationPersonChecker" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.hr.organization.transfer.HrOrganizationPersonTask" />
+			<param
+				name="description"
+				value="新增人事组织架构，需要将人事档案中的数据迁移到人事组织架构中。（特别注意：1、执行前先备份好数据库。2、执行前全部应用服务器需要停止用户访问。3、执行过程可能比较久，请耐心等待。建议：先在测试环境执行成功，才到生产环境执行。）"/>
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.admin.transfer">
+		<item
+			name="config">
+			<param
+				name="unid"
+				value="com.landray.kmss.hr.organization.transfer.HrOrgFileAuthorTranferTask" />
+			<param
+				name="name"
+				value="人事档案档案授权数据迁移" />
+			<param
+				name="path"
+				value="/hr/organization/" />
+			<param
+				name="check"
+				value="com.landray.kmss.hr.organization.transfer.HrOrgFileAuthorTranferTask" />
+			<param
+				name="upgrade"
+				value="com.landray.kmss.hr.organization.transfer.HrOrgFileAuthorTranferTask" />
+			<param
+				name="description"
+				value="新增人事组织架构，需要将人事档案中的档案授权数据同步到人事组织中。后续操作人事组织的授权会自动同步到人事档案中的档案授权中。（特别注意：1、执行前先备份好数据库。2、执行前全部应用服务器需要停止用户访问。3、执行过程可能比较久，请耐心等待。建议：先在测试环境执行成功，才到生产环境执行。）"/>
+		</item>
+	</extension>
+	
+	<!--  自定义公式函数 -->
+	<extension
+		point="com.landray.kmss.sys.formula"
+		model="*">
+		<item
+			name="function">
+			<param
+				name="className"
+				value="com.landray.kmss.hr.function.HrFunctions" />
+		</item>
+	</extension>
+</plugin>

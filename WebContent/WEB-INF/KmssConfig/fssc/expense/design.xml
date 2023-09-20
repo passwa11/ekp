@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs 
+    xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd " 
+    xmlns="http://www.example.org/design-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module 
+        urlPrefix="/fssc/expense/" 
+        messageKey="fssc-expense:module.fssc.expense" 
+        defaultValidator="roleValidator(role=ROLE_FSSCEXPENSE_DEFAULT)">
+        <roles>
+        	ROLE_FSSCEXPENSE_DEFAULT;	<!-- 报销默认权限 -->
+        	ROLE_FSSCEXPENSE_EXPENSE_SETTING;	<!-- 报销类别设置 -->
+        	ROLE_FSSCEXPENSE_BALANCE_SETTING;	<!-- 调账后台设置 -->
+        	ROLE_FSSCEXPENSE_SHARE_SETTING;	<!-- 事后分摊后台设置 -->
+        	ROLE_FSSCEXPENSE_ADD;	<!-- 报销单创建权限 -->
+        	ROLE_FSSCEXPENSE_VIEW;	<!-- 报销单查看权限 -->
+        	ROLE_FSSCEXPENSE_DELETE;	<!-- 报销单删除权限 -->
+        	ROLE_FSSCEXPENSE_BALANCE_ADD;	<!-- 调账创建权限 -->
+        	ROLE_FSSCEXPENSE_BALANCE_VIEW;	<!-- 调账查看权限 -->
+        	ROLE_FSSCEXPENSE_BALANCE_DELETE;	<!-- 调账删除权限 -->
+        	ROLE_FSSCEXPENSE_SHARE_ADD;	<!-- 事后分摊创建权限 -->
+        	ROLE_FSSCEXPENSE_SHARE_VIEW;	<!-- 事后分摊查看权限 -->
+        	ROLE_FSSCEXPENSE_SHARE_DELETE;	<!-- 事后分摊删除权限 -->
+        	ROLE_FSSCEXPENSE_SEARCHLIST;   <!-- 报销台账查询权限 -->
+            ROLE_FSSCEXPENSE_FUZHU_VIEW;   <!-- 报销查看辅助信息权限 -->
+            ROLE_FSSCEXPENSE_CHANGERIGHT;  <!--报销批量修改的权限-->
+            ROLE_FSSCEXPENSE_BALANCE_CHANGERIGHT;    <!-- 调账批量修改权限 -->
+            ROLE_FSSCEXPENSE_SHARE_MAIN_CHANGERIGHT;    <!-- 事后分摊批量修改权限 -->
+        </roles>
+        <request 
+            path="tree.jsp*" 
+            defaultValidator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)|roleValidator(role=ROLE_FSSCEXPENSE_BALANCE_SETTING)|roleValidator(role=ROLE_FSSCEXPENSE_SHARE_SETTING)"/>
+        <request 
+            path="fssc_expense_balance_category/fsscExpenseBalanceCategory.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.expense.model.FsscExpenseBalanceCategory,adminRoleName=ROLE_FSSCEXPENSE_BALANCE_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCEXPENSE_BALANCE_SETTING)">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="sysSimpleCategoryEditorValidator(recid=parentId)"/>
+            <query 
+                queryString="method=view" 
+                validator="sysSimpleCategoryReaderValidator()"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=delete" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_BALANCE_SETTING)"/>
+        </request>
+        <request 
+            path="fssc_expense_balance/fsscExpenseBalance.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.expense.model.FsscExpenseBalance" 
+            defaultValidator="roleValidator(role=ROLE_FSSCEXPENSE_DEFAULT)">
+             <!-- 按钮控制 -->
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_BALANCE_ADD)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)|authSimpleCategoryEditorValidator(cateId=docTemplate)"/>
+            <query 
+                queryString="method=edit" 
+                validator="authFieldValidator(type=SYS_EDITOR)|[fieldValueValidator(fieldproperty=docStatus,value=10;11)&amp;authFieldValidator(type=creator)]"/>
+            <query 
+                queryString="method=update" 
+                validator="authFieldValidator(type=SYS_EDITOR)|lbpmCurHandlerValidator(method=update)|[fieldValueValidator(fieldproperty=docStatus,value=10;11)]"/>
+            <query 
+                queryString="method=delete"
+                validator="[authFieldValidator(type=creator)|roleValidator(role=ROLE_FSSCEXPENSE_BALANCE_DELETE)]&amp;fieldValueValidator(fieldproperty=docStatus,value=00;10;11)"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_BALANCE_DELETE)"/>
+        </request>
+        <request 
+            path="fssc_expense_main/fsscExpenseMain.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.expense.model.FsscExpenseMain,cateModel=com.landray.kmss.fssc.expense.model.FsscExpenseCategory,adminRoleName=ROLE_FSSCEXPENSE_EXPENSE_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCEXPENSE_DEFAULT)">
+            <query 
+                queryString="method=add|save|saveadd&amp;i.docTemplate=*" 
+                validator="authSimpleCategoryReaderValidator(cateId=i.docTemplate)&amp;roleValidator(role=ROLE_FSSCEXPENSE_ADD)"/>
+            <!-- 按钮控制 -->
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_ADD)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)|authSimpleCategoryEditorValidator(cateId=docTemplate)|authFieldValidator(type=creator)"/>
+            <query 
+                queryString="method=edit" 
+                validator="authFieldValidator(type=SYS_EDITOR)|[fieldValueValidator(fieldproperty=docStatus,value=10;11)&amp;authFieldValidator(type=creator)]"/>
+            <query 
+                queryString="method=update" 
+                validator="authFieldValidator(type=SYS_EDITOR)|lbpmCurHandlerValidator(method=update)|[fieldValueValidator(fieldproperty=docStatus,value=10;11)&amp;authFieldValidator(type=creator)]"/>
+            <query 
+                queryString="method=delete" 
+                validator="[authFieldValidator(type=creator)|roleValidator(role=ROLE_FSSCEXPENSE_DELETE)]&amp;fieldValueValidator(fieldproperty=docStatus,value=00;10;11)"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_DELETE)"/>
+            <query 
+                queryString="method=batchConfirmPayment|downloadBankFile" 
+                validator="fsscCommonFinanceAuthValidator()"/>
+             <query 
+                queryString="method=refreshPaymentForm" 
+                validator="fsscCommonRefreshPaymentAuthValidator()"/>
+        </request>
+        <request 
+            path="fssc_expense_category/fsscExpenseCategory.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.expense.model.FsscExpenseCategory,adminRoleName=ROLE_FSSCEXPENSE_EXPENSE_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="sysSimpleCategoryEditorValidator(recid=parentId)"/>
+            <query 
+                queryString="method=view" 
+                validator="sysSimpleCategoryReaderValidator()"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=delete" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)"/>
+        </request>
+        <request 
+            path="fssc_expense_item_config/fsscExpenseItemConfig.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.expense.model.FsscExpenseItemConfig" 
+            defaultValidator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)">
+            <query 
+                queryString="method=view" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)"/>
+        </request>
+        <request 
+            path="fssc_expense_share_category/fsscExpenseShareCategory.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.expense.model.FsscExpenseShareCategory,adminRoleName=ROLE_FSSCEXPENSE_SHARE_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCEXPENSE_SHARE_SETTING)">
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="sysSimpleCategoryEditorValidator(recid=parentId)"/>
+            <query 
+                queryString="method=view" 
+                validator="sysSimpleCategoryReaderValidator()"/>
+            <query 
+                queryString="method=edit|update" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=delete" 
+                validator="sysSimpleCategoryEditorValidator()"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_SHARE_SETTING)"/>
+        </request>
+        <request 
+            path="fssc_expense_share_main/fsscExpenseShareMain.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.expense.model.FsscExpenseShareMain,cateModel=com.landray.kmss.fssc.expense.model.FsscExpenseShareCategory,adminRoleName=ROLE_FSSCEXPENSE_SHARE_SETTING" 
+            defaultValidator="roleValidator(role=ROLE_FSSCEXPENSE_DEFAULT)">
+            <query 
+                queryString="method=add|save|saveadd&amp;i.docTemplate=*" 
+                validator="fsscCommonAccountsAuthValidator()&amp;authSimpleCategoryReaderValidator(cateId=i.docTemplate)&amp;roleValidator(role=ROLE_FSSCEXPENSE_SHARE_ADD)"/>
+            <!-- 按钮权限 -->
+            <query 
+                queryString="method=add|save|saveadd" 
+                validator="fsscCommonAccountsAuthValidator()&amp;roleValidator(role=ROLE_FSSCEXPENSE_SHARE_ADD)"/>
+            <query 
+                queryString="method=view" 
+                validator="authFieldValidator(type=SYS_READER)|authSimpleCategoryEditorValidator(cateId=docTemplate)|authFieldValidator(type=creator)"/>
+            <query 
+                queryString="method=edit" 
+                validator="authFieldValidator(type=SYS_EDITOR)|[fieldValueValidator(fieldproperty=docStatus,value=10;11)&amp;authFieldValidator(type=creator)]"/>
+            <query 
+                queryString="method=update" 
+                validator="authFieldValidator(type=SYS_EDITOR)|lbpmCurHandlerValidator(method=update)|[fieldValueValidator(fieldproperty=docStatus,value=10;11)&amp;authFieldValidator(type=creator)]"/>
+            <query 
+                queryString="method=delete" 
+                validator="[authFieldValidator(type=creator)|roleValidator(role=ROLE_FSSCEXPENSE_SHARE_DELETE)]&amp;fieldValueValidator(fieldproperty=docStatus,value=00;10;11)"/>
+            <query 
+                queryString="method=deleteall" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_SHARE_DELETE)"/>
+        </request>
+        <request 
+            path="fssc_expense_temp/fsscExpenseTemp.do*" 
+            validatorParameter="recid=fdId,model=com.landray.kmss.fssc.expense.model.FsscExpenseTemp" 
+            defaultValidator="roleValidator(role=ROLE_FSSCEXPENSE_DEFAULT)">
+           
+        </request>
+        <request
+                path="fssc_expense_main/fsscExpenseMainArchives.do*"
+                defaultValidator="true" />
+        <filters 
+            modelName="com.landray.kmss.fssc.expense.model.FsscExpenseBalanceCategory">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCEXPENSE_BALANCE_SETTING)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_FSSCEXPENSE_BALANCE_SETTING)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.expense.model.FsscExpenseBalance">
+           <filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCEXPENSE_BALANCE_VIEW)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.expense.model.FsscExpenseMain">
+            <filter
+				type="creator"
+				expression="authFieldFilter(field=docCreator.fdId)" />
+            <filter
+				type="creator"
+				expression="authFieldFilter(field=fdClaimant.fdId)" />
+            <filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=fdClaimant.fdId)" />
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCEXPENSE_VIEW)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <!-- 类别维护者 -->
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docTemplate.authEditors.fdId)"/>
+            <!-- 类别可阅读者 -->
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docTemplate.authTmpReaders.fdId)"/>
+            <!-- 类别可编辑者 -->
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docTemplate.authTmpEditors.fdId)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.expense.model.FsscExpenseDetail">
+            <filter
+				type="SYS_READER"
+				expression="authFieldFilter(field=docMain.fdClaimant.fdId)" />
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCEXPENSE_VIEW)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=docMain.authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=docMain.authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=docMain.authAllEditors.fdId)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.expense.model.FsscExpenseCategory">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.expense.model.FsscExpenseShareCategory">
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCEXPENSE_SHARE_SETTING)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="roleFilter(role=ROLE_FSSCEXPENSE_SHARE_SETTING)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+        <filters 
+            modelName="com.landray.kmss.fssc.expense.model.FsscExpenseShareMain">
+            <filter 
+                type="creator" 
+                expression="authFieldFilter(field=fdOperator.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="roleFilter(role=ROLE_FSSCEXPENSE_SHARE_VIEW)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="authFieldFilter(field=authAllReaders.fdId)"/>
+            <filter 
+                type="SYS_READER" 
+                expression="flagFieldFilter(field=authReaderFlag,value=1)"/>
+            <filter 
+                type="SYS_EDITOR" 
+                expression="authFieldFilter(field=authAllEditors.fdId)"/>
+        </filters>
+    </module>
+    <module 
+        urlPrefix="/sys/xform/">
+        <request 
+            path="base/sys_form_db_table/sysFormDbTable*">
+            <query 
+                queryString="method=config|edit|save|delete&amp;fdFormType=common&amp;fdTemplateModel=com.landray.kmss.fssc.expense.model.FsscExpenseCategory" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)"/>
+            <query 
+                queryString="method=config|edit|save|delete&amp;fdFormType=template&amp;fdTemplateModel=com.landray.kmss.fssc.expense.model.FsscExpenseCategory" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)|authFieldValidator(type=SYS_EDITOR,recid=fdModelId,model=com.landray.kmss.fssc.expense.model.FsscExpenseCategory)|authSimpleCategoryEditorValidator(cateId=fdModelId,property=docCategory,cateModel=com.landray.kmss.fssc.expense.model.FsscExpenseCategory)"/>
+            <query 
+                queryString="method=deleteall&amp;fdTemplateModel=com.landray.kmss.fssc.expense.model.FsscExpenseCategory" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)"/>
+        </request>
+        <request 
+            path="sys_form_common_template/sysFormCommonTemplate*">
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseCategory" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)"/>
+        </request>
+    </module>
+    <module 
+        urlPrefix="/sys/lbpmservice/support/">
+        <request 
+            path="lbpm_template/**">
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseCategory" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseBalanceCategory" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_BALANCE_SETTING)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseShareCategory" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_SHARE_SETTING)"/>
+        </request>
+        <request
+			path="lbpm_template/lbpmTemplate*">			
+			<query
+				queryString="fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseCategory"
+				validator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)" />				
+			<query
+				queryString="fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseBalanceCategory"
+				validator="roleValidator(role=ROLE_FSSCEXPENSE_BALANCE_SETTING)" />				
+			<query
+				queryString="fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseShareCategory"
+				validator="roleValidator(role=ROLE_FSSCEXPENSE_SHARE_SETTING)" />				
+		</request>
+    </module>
+    <module 
+        urlPrefix="/sys/number/">
+        <request 
+            path="sys_number_main/sysNumberMain*">
+            <query 
+                queryString="modelName=com.landray.kmss.fssc.expense.model.FsscExpenseMain" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING)"/>
+            <query 
+                queryString="modelName=com.landray.kmss.fssc.expense.model.FsscExpenseShareMain" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_SHARE_SETTING)"/>
+            <query 
+                queryString="modelName=com.landray.kmss.fssc.expense.model.FsscExpenseBalance" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_BALANCE_SETTING)"/>
+        </request>
+    </module>
+    <module 
+        urlPrefix="/sys/circulation/">
+        <request 
+            path="sys_circulation_main/sysCirculationMain*">
+            <query 
+                queryString="method=add|save|saveadd&amp;fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseMain" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_DEFAULT)|roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.expense.model.FsscExpenseMain)"/>
+            <query 
+                queryString="method=delete&amp;fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseMain" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.expense.model.FsscExpenseMain)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseMain" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_DEFAULT)"/>
+            <query 
+                queryString="method=add|save|saveadd&amp;fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseBalance" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_DEFAULT)|roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.expense.model.FsscExpenseBalance)"/>
+            <query 
+                queryString="method=delete&amp;fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseBalance" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.expense.model.FsscExpenseBalance)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseBalance" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_DEFAULT)"/>
+            <query 
+                queryString="method=add|save|saveadd&amp;fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseShareMain" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_DEFAULT)|roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.expense.model.FsscExpenseShareMain)"/>
+            <query 
+                queryString="method=delete&amp;fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseShareMain" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_EXPENSE_SETTING,recid=fdModelId,model=com.landray.kmss.fssc.expense.model.FsscExpenseShareMain)"/>
+            <query 
+                queryString="fdModelName=com.landray.kmss.fssc.expense.model.FsscExpenseShareMain" 
+                validator="roleValidator(role=ROLE_FSSCEXPENSE_DEFAULT)"/>
+        </request>
+    </module>
+    <!-- 文档视图列表批量修改权限 -->
+    <module urlPrefix="/sys/right/">
+        <request path="rightDocChange*">
+            <query queryString="method=docRightEdit&amp;modelName=com.landray.kmss.fssc.expense.model.FsscExpenseMain"
+                   validator="areaRoleValidator(role=ROLE_FSSCEXPENSE_CHANGERIGHT)" />
+        </request>
+    </module>
+    <module urlPrefix="/sys/right/">
+        <request path="rightDocChange*">
+            <query queryString="method=docRightEdit&amp;modelName=com.landray.kmss.fssc.expense.model.FsscExpenseBalance"
+                   validator="areaRoleValidator(role=ROLE_FSSCEXPENSE_BALANCE_CHANGERIGHT)" />
+        </request>
+    </module>
+    <module urlPrefix="/sys/right/">
+        <request path="rightDocChange*">
+            <query queryString="method=docRightEdit&amp;modelName=com.landray.kmss.fssc.expense.model.FsscExpenseShareMain"
+                   validator="areaRoleValidator(role=ROLE_FSSCEXPENSE_SHARE_MAIN_CHANGERIGHT)" />
+        </request>
+    </module>
+    <relation 
+        messageKey="fssc-expense:table.fsscExpenseMain" 
+        modelName="com.landray.kmss.fssc.expense.model.FsscExpenseMain"/>
+    <relation 
+        messageKey="fssc-expense:table.fsscExpenseBalance" 
+        modelName="com.landray.kmss.fssc.expense.model.FsscExpenseBalance"/>
+    <relation 
+        messageKey="fssc-expense:table.fsscExpenseShareMain" 
+        modelName="com.landray.kmss.fssc.expense.model.FsscExpenseShareMain"/>
+    <homePage 
+        messageKey="fssc-expense:module.fssc.expense" 
+        urlPrefix="fssc/expense" 
+        url="/fssc/expense/index.jsp" 
+        config="/moduleindex_notopic.jsp?nav=/fssc/expense/tree.jsp"/>
+    <flowDef 
+        modelName="com.landray.kmss.fssc.expense.model.FsscExpenseMain" 
+        key="fsscExpenseMain" 
+        type="oa" 
+        templatePropertyName="docTemplate" 
+        moduleMessageKey="fssc-expense:module.fssc.expense" 
+        templateModelName="com.landray.kmss.fssc.expense.model.FsscExpenseCategory">
+        <variant name="examine" key="fssc-expense:flow.variant.examine"/>
+        <variant name="confirmPayment" key="fssc-expense:flow.variant.confirmPayment"/>
+        <variant name="voucherVariant" key="fssc-expense:flow.variant.voucher.voucherVariant"/>
+        <variant name="checkInvoice" key="fssc-expense:flow.variant.check.invoice"/>
+        <variant name="presOperation" key="fssc-expense:flow.variant.pres.operation"/>
+    </flowDef>
+    <flowDef 
+        modelName="com.landray.kmss.fssc.expense.model.FsscExpenseShareMain" 
+        key="fsscExpenseShareMain" 
+        type="oa" 
+        moduleMessageKey="fssc-expense:table.fsscExpenseShareMain" 
+        templatePropertyName="docTemplate" 
+        templateModelName="com.landray.kmss.fssc.expense.model.FsscExpenseShareCategory">
+        <variant name="voucherVariant" key="fssc-expense:flow.variant.voucher.voucherVariant"/>
+    </flowDef>
+    <flowDef 
+        modelName="com.landray.kmss.fssc.expense.model.FsscExpenseBalance" 
+        key="fsscExpenseBalance" 
+        type="oa" 
+        templatePropertyName="docTemplate" 
+        moduleMessageKey="fssc-expense:table.fsscExpenseBalance" 
+        templateModelName="com.landray.kmss.fssc.expense.model.FsscExpenseBalanceCategory">
+        <variant name="voucherVariant" key="fssc-expense:flow.variant.voucher.voucherVariant"/>
+    </flowDef>
+    <profileConfig 
+        key="fssc/expense" 
+        messageKey="{fssc-expense:module.fssc.expense}" 
+        url="/sys/profile/moduleindex.jsp?nav=/fssc/expense/tree.jsp" 
+        icon="kms_expert" 
+        type="fs" 
+        description="{fssc-expense:module.fssc.expense.description}"/>
+</configs>

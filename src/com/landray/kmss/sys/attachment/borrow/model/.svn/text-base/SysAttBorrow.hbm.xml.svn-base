@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.landray.kmss.sys.attachment.borrow.model.SysAttBorrow"
+		table="sys_att_borrow">
+		<id name="fdId" column="fd_id" length="36" />
+		<property name="docSubject" column="doc_subject" update="true"
+			insert="true" length="2000" />
+		<property name="docCreateTime" column="doc_create_time"
+			update="true" insert="true" index="idx_sysAttBrw_docCreaTime" />
+		<property name="fdBorrowEffectiveTime" column="fd_borrow_effective_time"
+			update="true" insert="true" index="idx_sysAttBor_effectTime" />
+		<property name="fdBorrowExpireTime" column="fd_borrow_expire_time"
+			update="true" insert="true" index="idx_sysAttBorrow_fdExpireTime" />
+		<property name="fdDuration" column="fd_duration" update="true"
+			insert="true" />
+		<property name="fdReason" column="fd_reason" update="true"
+			insert="true" length="1000" />
+		<property name="fdReadEnable" column="fd_read_enable" update="true"
+			insert="true" />
+		<property name="fdDownloadEnable" column="fd_download_enable"
+			update="true" insert="true" />
+		<property name="fdCopyEnable" column="fd_copy_enable" update="true"
+			insert="true" />
+		<property name="fdPrintEnable" column="fd_print_enable"
+			update="true" insert="true" />
+		<property name="fdStatus" column="fd_status" update="true"
+			insert="true" length="2" />
+		<property name="fdAttId" column="fd_att_id" update="true"
+			insert="true" length="36" index="idx_sysAttBorrow_fdAttId" />
+		<property name="docStatus" column="doc_status" update="true"
+			insert="true" length="2" />
+		<many-to-one name="docCreator" column="doc_creator_id"
+			update="true" insert="true" />
+		<bag name="fdBorrowers" table="sys_att_borrowers" lazy="true">
+			<key column="fd_source_id" />
+			<many-to-many class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_target_id" />
+		</bag>
+		<bag name="authReaders" table="sys_att_borrow_reader" lazy="true">
+			<key column="fd_source_id" />
+			<many-to-many class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_target_id" />
+		</bag>
+		<bag name="authEditors" table="sys_att_borrow_editor" lazy="true">
+			<key column="fd_source_id" />
+			<many-to-many class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_target_id" />
+		</bag>
+		<bag name="authOtherReaders" table="sys_att_borrow_oreader" lazy="true">
+			<key column="fd_source_id" />
+			<many-to-many class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_target_id" />
+		</bag>
+		<bag name="authAllReaders" table="sys_att_borrow_areader" lazy="true">
+			<key column="fd_source_id" />
+			<many-to-many class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_target_id" />
+		</bag>
+		<bag name="authOtherEditors" table="sys_att_borrow_oeditor" lazy="true">
+			<key column="fd_source_id" />
+			<many-to-many class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_target_id" />
+		</bag>
+		<bag name="authAllEditors" table="sys_att_borrow_aeditor" lazy="true">
+			<key column="fd_source_id" />
+			<many-to-many class="com.landray.kmss.sys.organization.model.SysOrgElement"
+				column="fd_target_id" />
+		</bag>
+	</class>
+</hibernate-mapping>

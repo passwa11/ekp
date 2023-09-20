@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration
+    PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.show_sql">false</property>
+        <!--
+        可选值
+        none: 任何时候都不生成表，包括系统的动态建表相关的业务，所以一般在开发阶段使用，能减少启动时间
+        update: 系统启动时会检查数据库并决定是新建还是更新表结构，可能占用很长时间
+        part-update: (自定义属性值,不是hibernate自带)V16新增，动态检查系统表结构，有变更才更新，否则与none相同，兼容了none的与update，建议在生产环境下使用
+        -->
+        <property name="hibernate.hbm2ddl.auto">part-update</property>
+        <property name="hibernate.max_fetch_depth">3</property>
+        <property name="hibernate.max_fetch_size">50</property>
+        <property name="hibernate.jdbc.batch_size">50</property>
+        <!-- 
+        <property name="hibernate.default_schema">用户名（oracle使用）</property>
+        <property name="hibernate.generate_statistics">true</property>
+        -->
+    </session-factory>
+</hibernate-configuration>

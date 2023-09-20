@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<extension-point id="com.landray.kmss.sys.attachment.watermark.service">
+		<item name="service">
+			<param name="bean" required="true" kind="spring"
+				basedOn="com.landray.kmss.sys.attachment.watermark.service.IWatermarkService">
+				<description>水印接口</description>
+			</param>
+			<param name="providerName" kind="string" required="true">
+                <description>水印提供方: yfWatermark...，同时作为唯一标识</description>
+            </param>
+            <param name="configJsp" kind="string"  required="false">
+                <description>服务对应的配置页面，/**/*.jsp</description>
+            </param>
+            <param name="order" default="50" kind="int">
+                <description>排序号，providerName冲突时，序号小的优先被调用。</description>
+            </param>
+            <description>水印服务</description>
+        </item>
+        <item name="yfService">
+			<param name="bean" required="true" kind="spring"
+				basedOn="com.landray.kmss.sys.attachment.watermark.service.IYuFeiWatermarkService">
+				<description>水印接口</description>
+			</param>
+			<param name="providerName" kind="string" required="true">
+                <description>水印提供方: yfWatermark...，同时作为唯一标识</description>
+            </param>
+            <param name="configJsp" kind="string"  required="false">
+                <description>服务对应的配置页面，/**/*.jsp</description>
+            </param>
+            <param name="order" default="50" kind="int">
+                <description>排序号，providerName冲突时，序号小的优先被调用。</description>
+            </param>
+            <description>水印服务</description>
+        </item>
+        <description>水印相关的扩展点</description>
+	</extension-point>
+</plugin>

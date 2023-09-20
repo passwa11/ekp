@@ -1,0 +1,22 @@
+if(!data){
+	return;
+}
+var dataValue = data.value || {};
+var dataValidate = data.validate || {};
+var wgt = render.parent;
+var lang = wgt.getModelingLang();
+{$
+<div class="list-block">
+	<div class="content_item_form_element content_choose">
+		<p class="content_body_title">{%lang['table.modelingCollectionView']%}</p>
+		<input name="{%data.uuId%}_listView" title="{%lang['table.modelingCollectionView']%}" value="{%dataValue.listView%}" type="hidden" data-update-event="change" data-validate="{%dataValidate.listView%}" data-updateView="true"/>
+		<input name="{%data.uuId%}_listViewText" value="{%dataValue.listViewText%}" type="hidden" />
+		<input name="{%data.uuId%}_listViewAppId" value="{%dataValue.listViewAppId%}" type="hidden" />
+		<div class="content_opt listVieElement">
+			<p class="listViewText">{%dataValue.listViewText || lang['modeling.page.choose']%}</p>
+			<i class="listViewIcon"></i>
+		</div>
+		<p class="content_opt_info"></p>
+	</div>
+	<input name="{%data.uuId%}_lvCollection" type="hidden" data-validate="{%dataValidate.lvCollection%}" value='{%JSON.stringify(dataValue.lvCollection || [])%}'/>
+</div>$}

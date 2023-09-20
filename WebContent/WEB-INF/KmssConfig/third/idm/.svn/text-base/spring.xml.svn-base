@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean
+		id="idmSynchroInIteratorProviderTarget"
+		class="com.landray.kmss.third.idm.oms.in.IdmSynchroInIteratorProviderImp">
+	</bean>
+	
+	
+	<bean
+		id="idmSynchroInIteratorProvider"
+		lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="idmSynchroInIteratorProviderTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="terminate">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+		
+	</bean>
+</beans>

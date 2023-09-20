@@ -1,0 +1,80 @@
+{
+    "global":     {
+        "modelName": "com.landray.kmss.hr.staff.model.HrStaffRatifyLog",
+        "messageKey": "hr-staff:table.HrStaffRatifyLog",
+        "serviceBean": "hrStaffRatifyLogService",
+        "table": "hr_staff_ratify_log",
+        "url": "/hr/staff/hr_staff_ratify_log/hrStaffRatifyLog.do?method=view&fdId=${fdId}"
+    },
+    "attrs":     {
+        "fdId":         {
+            "propertyType": "id",
+            "generator": {"type": "assigned"}
+        },
+        "fdRatifyType":         {
+            "propertyType": "simple",
+            "messageKey": "hr-staff:hrStaffRatifyLog.fdRatifyType",
+            "type": "String",
+            "column": "fd_ratify_type",
+            "notNull": "false",
+            "unique": "false",
+            "enumType": "hrStaffRatifyLog_fdRatifyType",
+            "length": "36"
+        },
+        "fdRatifyDate":         {
+            "propertyType": "simple",
+            "messageKey": "hr-staff:hrStaffRatifyLog.fdRatifyDate",
+            "type": "DateTime",
+            "column": "fd_ratify_date",
+            "unique": "false"
+        },
+        "fdOrgPerson":         {
+            "propertyType": "model",
+            "messageKey": "hr-staff:hrStaffRatifyLog.fdOrgPerson",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_org_person_id",
+            "notNull": "false"
+        },
+        "fdRatifyOldDept":         {
+            "propertyType": "model",
+            "messageKey": "hr-staff:hrStaffRatifyLog.fdRatifyOldDept",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_ratify_old_dept_id",
+            "notNull": "false"
+        },
+        "fdRatifyOldPosts":         {
+            "propertyType": "list",
+            "messageKey": "hr-staff:hrStaffRatifyLog.fdRatifyOldPosts",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPost",
+            "column" : "fd_log_id",
+            "table": "hr_staff_ratify_log_post_old",
+            "elementColumn": "fd_post_id",
+            "dialogJS": "Dialog_Address(true, '!{idField}', '!{nameField}', null, ORG_TYPE_POST);"
+        },
+        "fdRatifyDept":         {
+            "propertyType": "model",
+            "messageKey": "hr-staff:hrStaffRatifyLog.fdRatifyDept",
+            "type": "com.landray.kmss.sys.organization.model.SysOrgElement",
+            "column": "fd_ratify_dept_id",
+            "notNull": "false"
+        },
+        "fdRatifyPosts":         {
+            "propertyType": "list",
+            "messageKey": "hr-staff:hrStaffRatifyLog.fdRatifyPosts",
+            "type" : "com.landray.kmss.sys.organization.model.SysOrgPost",
+            "column" : "fd_log_id",
+            "table": "hr_staff_ratify_log_post",
+            "elementColumn": "fd_post_id",
+            "dialogJS": "Dialog_Address(true, '!{idField}', '!{nameField}', null, ORG_TYPE_POST);"
+        },
+        "fdRatifyProcess":         {
+            "propertyType": "simple",
+            "messageKey": "hr-staff:hrStaffRatifyLog.fdRatifyProcess",
+            "type": "String",
+            "column": "fd_ratify_process",
+            "notNull": "false",
+            "unique": "false",
+            "length": "500"
+        }
+    }
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	xmlns="http://www.example.org/plugin-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd ">
+	<extension point="com.landray.kmss.sys.person.mobile.my">
+		<item name="config">
+			<param name="message" value="{sys-bookmark:sysBookmarkMain.portlet.mine}" />
+			<param name="url" value="/sys/bookmark/mobile/index.jsp" />
+		</item>
+   </extension>
+	
+	<!-- 个人中心个人收藏个数计数 -->
+	<extension point="com.landray.kmss.sys.portal">
+		<item name="stat">
+			<!-- 模块名称 -->
+			<param
+				name="moduleName"
+				value="sys-bookmark:module.sys.bookmark" />
+			<!-- 主文档全名称 -->
+			<param
+				name="modelName"
+				value="com.landray.kmss.sys.bookmark.model.SysBookmarkMain" />
+			<param
+				name="url"
+				value="/sys/bookmark/sys_bookmark_main/sysBookmarkMainStat.do?method=showStat" />
+			<param name="icon" value="lui_iconfont_nav_sys_bookmark" />
+			<param name="viewUrl" value="/sys/bookmark/sys_bookmark_personal/sysBookmark_personal.jsp" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.config">
+		<item name="info">
+			<param name="name" value="{sys-bookmark:module.sys.bookmark}" />
+			<param name="modelName" value="com.landray.kmss.sys.bookmark.model.SysBookmarkMain" />
+			<param name="defaultUrl" value="/sys/bookmark/mobile/nav.json" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.mobile.compress" model="*">
+		<item name="js-pkg">
+			<param name="name" value="mui-sys-bookmark.js" />
+			<param name="targetFile" value="/sys/bookmark/mobile/import/js/mui-sys-bookmark.js" />
+			<param name="srcFold" value="/sys/bookmark/mobile/js" />
+		</item>
+		<item name="css-file">
+			<param name="name" value="mui-sys-bookmark.css" />
+			<param name="targetFile" value="/sys/bookmark/mobile/style/book_index.css" />
+		</item>
+	</extension>
+		
+</plugin>

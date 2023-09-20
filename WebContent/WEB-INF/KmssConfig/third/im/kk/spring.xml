@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean 
+		id="kkPcScanLogin"
+		class="com.landray.kmss.third.im.kk.model.KKPcScanLogin"></bean>
+		
+	<bean 
+		id="thirdImKKCommunicate"
+		class="com.landray.kmss.third.im.kk.service.spring.ThirdImKKCommunicate"></bean>
+	
+	<bean
+		id="kkNotifyLogDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.im.kk.dao.hibernate.KkNotifyLogDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.im.kk.model.KkNotifyLog" />
+	</bean>
+	<bean
+		id="kkNotifyLogTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.third.im.kk.service.spring.KkNotifyLogServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kkNotifyLogDao" />
+		</property>
+	</bean>
+	<bean
+		id="kkNotifyLogService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kkNotifyLogTarget" />
+		</property>
+	</bean>
+	
+	<!-- kk5待办集成 -->
+	<bean id="kk5NotifyTodoProvider"
+		class="com.landray.kmss.third.im.kk.provider.Kk5NotifyTodoProvider">
+		<property name="sysNotifyTodoService">
+			<ref bean="sysNotifyTodoService" />
+		</property>	
+		<property name="kkImConfigService">
+			<ref bean="kkImConfigService" />
+		</property>	
+		<property name="kkImNotifyService">
+		    <ref bean="kkImNotifyService"/>
+		</property>
+		<property name="pdaModuleConfigMainService">
+			<ref bean="pdaModuleConfigMainService" />
+		</property>
+	</bean>
+	
+	<!-- kk待办集成 -->
+	<bean id="kkNotifyTodoProvider"
+		class="com.landray.kmss.third.im.kk.provider.KkNotifyTodoProvider">
+	 	<property name="kkTaskExecutor">
+		    <ref bean="kkTaskExecutor"/>
+		</property>
+		<property name="sysNotifyTodoService">
+			<ref bean="sysNotifyTodoService" />
+		</property>		
+		<property name="kk5NotifyTodoProvider">
+			<ref bean="kk5NotifyTodoProvider" />
+		</property>
+		<property name="kkImConfigService">
+			<ref bean="kkImConfigService" />
+		</property>	
+		<property name="kkImNotifyService">
+		    <ref bean="kkImNotifyService"/>
+		</property>
+	</bean>
+	
+	
+	
+	<!-- kk5服务号待办集成 -->
+	<bean id="kk5ServiceNotifyTodoProvider"
+		class="com.landray.kmss.third.im.kk.provider.Kk5ServiceNotifyTodoProvider">
+		<property name="kkImConfigService">
+			<ref bean="kkImConfigService" />
+		</property>	
+	</bean>
+	
+	
+	<!-- 发送kk待办线程池 -->
+	<bean id="kkTaskExecutor"
+			class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+			<!-- 向kk发送待办的线程池维护线程的最小数量 
+			<property name="corePoolSize" value="2" />
+			 向kk发送待办的线程池维护线程的最大数量 
+			<property name="maxPoolSize" value="10" />
+			 向kk发送待办的线程池线程队列容量 
+			<property name="queueCapacity" value="25" />
+			-->
+	</bean>
+	
+	<bean id="kKImageBean" 
+			class="com.landray.kmss.third.im.kk.service.spring.KKImageBean">
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService" />
+		</property>
+		<property name="kkImConfigService">
+			<ref bean="kkImConfigService" />
+		</property>	
+	</bean>
+	
+	
+	<!-- 机器人节点设置 -->
+	<bean id="robotNodeSendDynamicInfoToKKService"
+		class="com.landray.kmss.third.im.kk.service.spring.RobotNodeSendDynamicInfoToKKServiceImp">
+		<property name="thirdImKKGzhDynamicinfoService">
+			<ref bean="thirdImKKGzhDynamicinfoService" />
+		</property>
+		<property name="thirdImKKWriteDynamicInfoService">
+			<ref bean="thirdImKKWriteDynamicInfoService" />
+		</property>
+		<property name="kkImConfigService">
+			<ref bean="kkImConfigService" />
+		</property>	
+	</bean>
+	
+	<bean id="thirdImKKGzhDynamicinfoDao" parent="KmssAuthBaseDao"
+		class="com.landray.kmss.third.im.kk.dao.hibernate.ThirdImKKGzhDynamicinfoDaoImp">
+		<property name="modelName"
+			value="com.landray.kmss.third.im.kk.model.ThirdImKKGzhDynamicinfo" />
+	</bean>
+	<bean id="thirdImKKGzhDynamicinfoTarget" parent="KmssBaseTarget"
+		class="com.landray.kmss.third.im.kk.service.spring.ThirdImKKGzhDynamicinfoServiceImp">
+		<property name="baseDao">
+			<ref bean="thirdImKKGzhDynamicinfoDao" />
+		</property>
+	</bean>
+	<bean id="thirdImKKGzhDynamicinfoService" parent="KmssBaseService">
+		<property name="target">
+			<ref bean="thirdImKKGzhDynamicinfoTarget" />
+		</property>
+	</bean>
+	
+	<!-- 定时任务设置 -->
+	<bean id="thirdImKKWriteDynamicInfoService"
+		class="com.landray.kmss.third.im.kk.service.spring.ThirdImKKWriteDynamicInfoServiceImp">
+		<property name="thirdImKKGzhDynamicinfoService">
+			<ref bean="thirdImKKGzhDynamicinfoService" />
+		</property>
+	</bean>
+	
+	<!-- 定时任务，每天清理前一天生成的待办推送失败的记录 -->
+	<bean id="thirdImKKNotifyTaskService"
+		class="com.landray.kmss.third.im.kk.service.spring.ThirdImKKNotifyTaskServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kkImNotifyDao" />
+		</property>
+	</bean>
+	
+	
+	<bean id="kk5PersonImageBean" 
+			class="com.landray.kmss.third.im.kk.service.spring.KK5PersonImageBean">
+	</bean>
+	
+	<!-- webservice bean -->
+	<bean id="thirdImSyncForKKWebService"		
+			class="com.landray.kmss.third.im.kk.webservice.ThirdImSyncForKKWebService">
+		<property name="pdaModuleConfigMainService">
+			<ref bean="pdaModuleConfigMainService" />
+		</property>
+		
+		<property name="sysOrganizationVisibleService">
+			<ref bean="sysOrganizationVisibleService" />
+		</property>
+		
+		<property name="sysOrgPersonService">
+			<ref bean="sysOrgPersonService"/>
+		</property>
+		
+		<property name="sysWebserviceMainService">
+			<ref bean="sysWebserviceMainService"/>
+		</property>
+		
+		<property name="sysWsOrgService">
+			<ref bean="sysWsOrgService" />
+		</property>
+		
+		<property name="sysOrgCoreService">
+			<ref bean="sysOrgCoreService" />
+		</property>
+		
+		<property name="sysNotifyTodoService">
+			<ref bean="sysNotifyTodoService" />
+		</property>	
+		
+		<property name="sysNotifyTodoDoneInfoService">
+			<ref bean="sysNotifyTodoDoneInfoService" />
+		</property>
+		
+		<property name="sysAppConfigService">
+			<ref bean="sysAppConfigService" />
+		</property>
+	</bean>
+	
+	
+	<!-- kk一体化 保存配置信息 -->
+	<bean
+		id="kkImConfigDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.third.im.kk.dao.hibernate.KkImConfigDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.im.kk.model.KkImConfig" />
+	</bean>
+
+	<bean
+		id="kkImConfigTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.third.im.kk.service.spring.KkImConfigServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kkImConfigDao" />
+		</property>
+	</bean>
+	<bean
+		id="kkImConfigService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kkImConfigTarget" />
+		</property>
+	</bean>
+	
+	
+	<!-- 保存推送记录 -->
+	<bean
+		id="kkImNotifyDao"
+		parent="KmssExtendDataAreaDao"
+		class="com.landray.kmss.third.im.kk.dao.hibernate.KkImNotifyDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.third.im.kk.model.KkImNotify" />
+	</bean>
+
+	<bean
+		id="kkImNotifyTarget"
+		parent="KmssExtendDataTarget"
+		class="com.landray.kmss.third.im.kk.service.spring.KkImNotifyServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="kkImNotifyDao" />
+		</property>
+	</bean>
+	<bean
+		id="kkImNotifyService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="kkImNotifyTarget" />
+		</property>
+	</bean>
+	
+	
+	<!-- kk二维码登录 -->
+	<bean
+		id="kkUserServiceTarget"
+		class="com.landray.kmss.third.im.kk.service.spring.KkUserServiceImp">
+		<property name="kkImConfigService">
+			<ref bean="kkImConfigService" />
+		</property>	
+	</bean>
+	<bean
+		id="kkUserService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="kkUserServiceTarget" />
+		</property>
+	</bean>
+	
+	<!-- 群协作扩展点service -->
+	<bean id="kkCogroupServiceTarget" class="com.landray.kmss.third.im.kk.service.spring.KKCogroupServiceImp">
+	</bean>
+	
+			    <bean 
+        id="thirdImLoginDao" 
+        class="com.landray.kmss.third.im.kk.dao.hibernate.ThirdImLoginDaoImp" 
+        parent="KmssAuthBaseDao">
+        <property 
+            name="modelName">
+            <value>com.landray.kmss.third.im.kk.model.ThirdImLogin</value>
+        </property>
+    </bean>
+    <bean 
+        id="thirdImLoginTarget" 
+        class="com.landray.kmss.third.im.kk.service.spring.ThirdImLoginServiceImp" 
+        parent="KmssExtendDataTarget">
+        <property 
+            name="baseDao">
+            <ref 
+                bean="thirdImLoginDao"/>
+        </property>
+    </bean>
+    <bean 
+        id="thirdImLoginService" 
+        parent="KmssBaseService">
+        <property 
+            name="target">
+            <ref 
+                bean="thirdImLoginTarget"/>
+        </property>
+    </bean>
+
+	<bean
+			id="kkNotifyQueueErrorDao"
+			class="com.landray.kmss.third.im.kk.queue.dao.hibernate.KkNotifyQueueErrorDaoImp"
+			parent="KmssAuthBaseDao">
+		<property
+				name="modelName">
+			<value>com.landray.kmss.third.im.kk.queue.model.KkNotifyQueueError</value>
+		</property>
+	</bean>
+	<bean
+			id="kkNotifyQueueErrorTarget"
+			class="com.landray.kmss.third.im.kk.queue.service.spring.KkNotifyQueueErrorServiceImp"
+			parent="KmssExtendDataTarget">
+		<property
+			name="baseDao">
+		<ref
+			bean="kkNotifyQueueErrorDao"/>
+		</property>
+	</bean>
+	<bean
+			id="kkNotifyQueueErrorService"
+			parent="KmssBaseService">
+		<property
+			name="target">
+		<ref
+			bean="kkNotifyQueueErrorTarget"/>
+		</property>
+	</bean>
+	
+		
+</beans>

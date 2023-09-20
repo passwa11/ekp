@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs xmlns="http://www.example.org/design-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/design-config ../../design.xsd ">
+	<!-- 权限控制 -->
+	<module messageKey="hr-staff:module.hr.staff" defaultValidator="roleValidator(role=ROLE_HRSTAFF_DEFAULT)"
+		urlPrefix="/hr/staff/">
+		<roles>
+			<!-- 默认权限 -->
+			ROLE_HRSTAFF_DEFAULT;
+			<!-- 员工信息（增加、编辑、删除、打印、阅读所有） -->
+			ROLE_HRSTAFF_CREATE;
+			ROLE_HRSTAFF_EDIT;
+			ROLE_HRSTAFF_DELETE;
+			ROLE_HRSTAFF_PRINT;
+				<!-- 人事档案_档案授权查看 -->
+			ROLE_HRSTAFF_READ;
+			
+			ROLE_HRSTAFF_READALL;
+			ROLE_HRSTAFF_TRANSPORT;
+			ROLE_HRSTAFF_SEARCH;
+			ROLE_HRSTAFF_EXPORT;
+			<!-- 个人经历 -->
+			ROLE_HRSTAFF_EXPERIENCE;
+			<!-- 考勤管理 -->
+			ROLE_HRSTAFF_ATTENDANCE;
+			<!-- 薪酬福利 -->
+			ROLE_HRSTAFF_EMOLUMENT;
+			<!-- 后台管理 -->
+			ROLE_HRSTAFF_BACKGROUND;
+			<!-- 统计报表 -->
+			ROLE_HRSTAFF_REPORT;
+			<!-- 工资条发放 -->
+			ROLE_HRSTAFF_PAYMENT;
+			<!-- 提醒预警 -->
+			ROLE_HRSTAFF_WARNING;
+			<!-- 员工动态（日志） -->
+			ROLE_HRSTAFF_LOG_VIEW;
+			ROLE_HRSTAFF_LOG_DELETE;
+			ROLE_HRSTAFF_ENTRYCHECK
+		</roles>
+
+		<request path="tree.jsp" defaultValidator="roleValidator(role=ROLE_HRSTAFF_BACKGROUND)">
+		</request>
+		<!-- 待确认员工信息 -->
+		<request path="hr_staff_entry/hrStaffEntry*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.hr.staff.model.HrStaffEntry">
+			<!-- 新增 -->
+			<query queryString="method=save|add" validator="roleValidator(role=ROLE_HRSTAFF_CREATE)" />
+			<!-- 编辑 -->
+			<query queryString="method=edit|update" validator="roleValidator(role=ROLE_HRSTAFF_EDIT)" />
+			<!-- 删除 -->
+			<query queryString="method=delete|deleteall" validator="roleValidator(role=ROLE_HRSTAFF_DELETE)" />
+			<!-- 阅读 -->
+			<query queryString="method=view"
+				validator="authFieldValidator(type=SYS_READER)|hrStaffEntryValidator(recid=fdId)" />
+			<query queryString="method=list"
+				validator="roleValidator(role=ROLE_HRSTAFF_READALL)|[roleValidator(role=ROLE_HRSTAFF_READ)&amp;hrStaffEntryValidator()]" />
+			<query queryString="method=check"
+				validator="roleValidator(role=ROLE_HRSTAFF_ENTRYCHECK)" />
+		</request>
+
+		<!-- 员工信息 -->
+		<request path="hr_staff_person_info/hrStaffPersonInfo*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.hr.staff.model.HrStaffPersonInfo">
+			<!-- 新增 -->
+			<query queryString="method=save|add" validator="roleValidator(role=ROLE_HRSTAFF_CREATE)" />
+			<!-- 编辑 -->
+			<query queryString="method=edit|update|fileUpload|downloadTemplet"
+				validator="roleValidator(role=ROLE_HRSTAFF_EDIT)" />
+			<!-- 删除 -->
+			<query queryString="method=delete|deleteall" validator="roleValidator(role=ROLE_HRSTAFF_DELETE)" />
+			<!-- 打印 -->
+			<query queryString="method=print" validator="roleValidator(role=ROLE_HRSTAFF_PRINT)" />
+			<!-- 导出 -->
+			<query queryString="method=exportPerson" validator="roleValidator(role=ROLE_HRSTAFF_EXPORT)" />
+			<!-- 阅读 -->
+			<query queryString="method=view"
+				validator="roleValidator(role=ROLE_HRSTAFF_READALL)|[roleValidator(role=ROLE_HRSTAFF_READ)&amp;hrStaffPersonInfoValidator(recid=fdId)]|roleValidator(role=ROLE_HRSTAFF_ATTENDANCE)|hrStaffConfigValidator()" />
+			<query queryString="method=list"
+				validator="roleValidator(role=ROLE_HRSTAFF_READALL)|[roleValidator(role=ROLE_HRSTAFF_READ)&amp;hrStaffPersonInfoValidator(recid=fdId)]" />
+			<!-- 提醒预警 -->
+			<query
+				queryString="method=lastBirthdayShow|contractExpirationShow|trialExpirationShow|birthdayList|contractList|trialList"
+				validator="roleValidator(role=ROLE_HRSTAFF_WARNING)" />
+			<query queryString="method=getPersonInfo" validator="true" />
+			<query queryString="method=chgPwd|savePwd" validator="roleValidator(role=ROLE_HRSTAFF_EDIT)" />
+		</request>
+
+		<!-- 员工动态（日志） -->
+		<request path="hr_staff_person_info_log/hrStaffPersonInfoLog*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.hr.staff.model.HrStaffPersonInfoLog">
+			<query queryString="method=view" validator="authFieldValidator(type=SYS_READER)" />
+			<query queryString="method=list"
+				validator="roleValidator(role=ROLE_HRSTAFF_LOG_VIEW)|hrStaffConfigValidator()" />
+			<query queryString="method=delete|deleteall"
+				validator="roleValidator(role=ROLE_HRSTAFF_LOG_DELETE)" />
+		</request>
+
+		<!-- 统计报表 -->
+		<request path="hr_staff_person_report/hrStaffPersonReport*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.hr.staff.model.HrStaffPersonReport">
+			<!-- 阅读 -->
+			<query queryString="method=view" validator="authFieldValidator(type=SYS_READER)" />
+			<!-- 增、删、改 -->
+			<query queryString="method=add|save|edit|update|delete"
+				validator="roleValidator(role=ROLE_HRSTAFF_REPORT)" />
+		</request>
+
+		<!-- 个人经历 -->
+		<request path="hr_staff_person_experience/*"
+			defaultValidator="roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)|hrStaffConfigValidator()">
+		</request>
+		<request
+			path="hr_staff_person_experience/bonusMalus/hrStaffPersonExperience*">
+			<!-- 增、删、改 -->
+			<query queryString="method=add|save|edit|update|delete|deleteall"
+				validator="roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)|hrStaffPersonExperienceValidator()" />
+		</request>
+		<request path="hr_staff_person_experience/brief/hrStaffPersonExperience*">
+			<!-- 增、删、改 -->
+			<query queryString="method=add|save|edit|update|delete|deleteall"
+				validator="roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)|hrStaffPersonExperienceValidator()" />
+		</request>
+		<request
+			path="hr_staff_person_experience/contract/hrStaffPersonExperience*">
+			<!-- 增、删、改 -->
+			<query queryString="method=add|save|edit|update|delete|deleteall"
+				validator="roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)|hrStaffPersonExperienceValidator()" />
+			<query queryString="method=print" validator="hrStaffPersonExperienceValidator()" />
+		</request>
+		<request
+			path="hr_staff_person_experience/education/hrStaffPersonExperience*">
+			<!-- 增、删、改 -->
+			<query queryString="method=add|save|edit|update|delete|deleteall"
+				validator="roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)|hrStaffPersonExperienceValidator()" />
+		</request>
+		<request
+			path="hr_staff_person_experience/qualification/hrStaffPersonExperience*">
+			<!-- 增、删、改 -->
+			<query queryString="method=add|save|edit|update|delete|deleteall"
+				validator="roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)|hrStaffPersonExperienceValidator()" />
+		</request>
+		<request
+			path="hr_staff_person_experience/training/hrStaffPersonExperience*">
+			<!-- 增、删、改 -->
+			<query queryString="method=add|save|edit|update|delete|deleteall"
+				validator="roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)|hrStaffPersonExperienceValidator()" />
+		</request>
+		<request path="hr_staff_person_experience/work/hrStaffPersonExperience*">
+			<!-- 增、删、改 -->
+			<query queryString="method=add|save|edit|update|delete|deleteall"
+				validator="roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)|hrStaffPersonExperienceValidator()" />
+		</request>
+		<!-- 任职记录 -->
+		<request path="hr_staff_person_track_record/index.jsp*"
+			defaultValidator="roleValidator(role=ROLE_HRSTAFF_READALL)|[roleValidator(role=ROLE_HRSTAFF_READ)&amp;hrStaffPersonInfoValidator(recid=fdId)]|roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)">
+		</request>
+		<!--异动信息 -->
+		<request path="hr_staff_move_record/index.jsp*"
+			defaultValidator="roleValidator(role=ROLE_HRSTAFF_READALL)|[roleValidator(role=ROLE_HRSTAFF_READ)&amp;hrStaffPersonInfoValidator(recid=fdId)]|roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)">
+		</request>
+		<request path="hr_staff_person_track_record/hrStaffTrackRecord*">
+			<!-- 增、删、改 -->
+			<query queryString="method=add|save|edit|update|delete|deleteall"
+				validator="roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)" />
+		</request>
+		<!-- 家庭信息 -->
+		<request path="hr_staff_person_family/index.jsp*"
+			defaultValidator="roleValidator(role=ROLE_HRSTAFF_READALL)|roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)|[roleValidator(role=ROLE_HRSTAFF_READ)&amp;hrStaffPersonInfoValidator(recid=fdId)]">
+		</request>
+		<request path="hr_staff_person_family/hrStaffPersonFamily*">
+			<!-- 增、删、改 -->
+			<query queryString="method=add|save|edit|update|delete|deleteall"
+				validator="roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)" />
+		</request>
+
+
+
+		<!-- 考勤管理 -->
+		<request
+			path="hr_staff_attendance_manage/detailed/hrStaffAttendanceManageDetailed*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.hr.staff.model.HrStaffAttendanceManageDetailed">
+			<!-- 阅读 -->
+			<query queryString="method=view" validator="authFieldValidator(type=SYS_READER)" />
+			<!-- 增、删、改 -->
+			<query
+				queryString="method=add|save|edit|update|delete|deleteall|fileUpload|downloadTemplet"
+				validator="roleValidator(role=ROLE_HRSTAFF_ATTENDANCE)" />
+		</request>
+		<request path="hr_staff_attendance_manage/*/*"
+			defaultValidator="roleValidator(role=ROLE_HRSTAFF_DEFAULT)">
+		</request>
+
+		<!-- 薪酬福利 -->
+		<request path="hr_staff_emolument_welfare/*" defaultValidator="roleValidator(role=ROLE_HRSTAFF_EMOLUMENT)">
+			<query queryString="method=list"
+				validator="roleValidator(role=ROLE_HRSTAFF_EMOLUMENT)|hrStaffConfigValidator()" />
+		</request>
+
+		<!-- 隐私设置 -->
+		<request path="hr_staff_private_change/hrStaffPrivateChange*">
+			<query queryString="method=editPrivate|updatePrivate"
+				validator="roleValidator(role=ROLE_SYSZONE_ADMIN)" />
+		</request>
+		<!-- 档案授权 -->
+		<request path="hr_staff_file_author/hrStaffFileAuthor*"
+			validatorParameter="recid=fdId,model=com.landray.kmss.hr.staff.model.HrStaffFileAuthor">
+		</request>
+		<!-- 工资单发放 -->
+		<request path="hr_staff_payroll_issuance/hrStaffPayrollIssuance*"
+			defaultValidator="roleValidator(role=ROLE_HRSTAFF_PAYMENT)">
+			<query queryString="method=viewSalary|salaryLogin|setSalaryTodoDone"
+				validator="roleValidator(role=ROLE_HRSTAFF_DEFAULT;SYSROLE_USER)" />
+		</request>
+		<!-- 在职员工信息 -->
+		<request path="hr_staff_person_info/index.jsp*"
+			defaultValidator="roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)|hrStaffPersonExperienceValidator()|roleValidator(role=ROLE_HRSTAFF_READALL)|[roleValidator(role=ROLE_HRSTAFF_READ)&amp;hrStaffPersonInfoValidator(recid=fdId)]">
+		</request>
+		<!-- 离职员工信息 -->
+		<request path="hr_staff_person_info/index_quit.jsp*"
+			defaultValidator="roleValidator(role=ROLE_HRSTAFF_EXPERIENCE)|hrStaffPersonExperienceValidator()|roleValidator(role=ROLE_HRSTAFF_READALL)|[roleValidator(role=ROLE_HRSTAFF_READ)&amp;hrStaffPersonInfoValidator(recid=fdId)]">
+		</request>
+		<filters modelName="com.landray.kmss.hr.staff.model.HrStaffPersonReport">
+			<filter type="SYS_READER" expression="authFieldFilter(field=authReaders.fdId)" />
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_HRSTAFF_REPORT)" />
+		</filters>
+		<filters modelName="com.landray.kmss.hr.staff.model.HrStaffPersonInfo">
+			<!-- <filter type="SYS_READER" expression="authFieldFilter(field=fdTargets.fdId)" 
+				/> -->
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_HRSTAFF_READALL)" />
+			<filter type="SYS_READER" expression="hrStaffEntryAuthFilter()" />
+		</filters>
+		<filters modelName="com.landray.kmss.hr.staff.model.HrStaffPersonInfoLog">
+			<!-- <filter type="SYS_READER" expression="authFieldFilter(field=fdTargets.fdId)" 
+				/> -->
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_HRSTAFF_LOG_VIEW)" />
+		</filters>
+		<filters
+			modelName="com.landray.kmss.hr.staff.model.HrStaffAttendanceManageDetailed">
+			<filter type="SYS_READER" expression="roleFilter(role=ROLE_HRSTAFF_ATTENDANCE)" />
+			<filter type="SYS_READER" expression="authFieldFilter(field=fdPersonInfo.fdId)" />
+		</filters>
+	</module>
+
+	<!-- 提醒预警后台配置 -->
+	<module messageKey="" urlPrefix="/sys/appconfig/">
+		<request path="sys_appconfig/sysAppConfig*">
+			<query
+				queryString="modelName=com.landray.kmss.hr.staff.model.HrStaffAlertWarningBirthday"
+				validator="roleValidator(role=ROLE_HRSTAFF_WARNING)" />
+			<query
+				queryString="modelName=com.landray.kmss.hr.staff.model.HrStaffAlertWarningContract"
+				validator="roleValidator(role=ROLE_HRSTAFF_WARNING)" />
+			<query
+				queryString="modelName=com.landray.kmss.hr.staff.model.HrStaffAlertWarningTrial"
+				validator="roleValidator(role=ROLE_HRSTAFF_WARNING)" />
+			<query
+				queryString="modelName=com.landray.kmss.hr.staff.model.HrStaffPrivateConfig"
+				validator="roleValidator(role=ROLE_SYSZONE_ADMIN)" />
+		</request>
+	</module>
+
+	<!-- 高级导入 -->
+	<module urlPrefix="/sys/transport/">
+		<request path="sys_transport_import/SysTransportImport*">
+			<query validator="roleValidator(role=ROLE_HRSTAFF_TRANSPORT)"
+				queryString="fdModelName=com.landray.kmss.hr.staff.model.HrStaffPersonInfo" />
+		</request>
+		<request path="sys_transport_import/SysTransportUpload*">
+			<query validator="roleValidator(role=ROLE_HRSTAFF_TRANSPORT)"
+				queryString="fdModelName=com.landray.kmss.hr.staff.model.HrStaffPersonInfo" />
+		</request>
+	</module>
+
+	<!-- 搜索权限 -->
+	<module urlPrefix="/sys/search/">
+		<request path="sys_search_main/sysSearchMain*">
+			<query validator="roleValidator(role=ROLE_HRSTAFF_SEARCH)"
+				queryString="fdModelName=com.landray.kmss.hr.staff.model.HrStaffPersonInfo" />
+		</request>
+		<request path="search*">
+			<query validator="roleValidator(role=ROLE_HRSTAFF_SEARCH)"
+				queryString="method=com.landray.kmss.hr.staff.model.HrStaffPersonInfo" />
+		</request>
+	</module>
+
+	<!--自定义属性 -->
+	<module urlPrefix="/sys/property/">
+		<request path="custom_field/index.jsp*">
+			<query validator="roleValidator(role=ROLE_HRSTAFF_BACKGROUND)"
+				queryString="modelName=com.landray.kmss.hr.staff.model.HrStaffPersonInfo" />
+		</request>
+	</module>
+
+	<!-- 组织架构人员数据同步到员工信息 （迁移到人事组织架构中） -->
+	<!-- <quartz cronExpression="0 30 4 ? * *" jobService="hrStaffPersonInfoDataSyncService" 
+		messageKey="hr-staff:hrStaffPersonInfo.dataSync.quartz.name" jobMethod="dataSynchronization" 
+		description="hr-staff:hrStaffPersonInfo.dataSync.quartz.description"/> -->
+	<!-- 合同到期提醒 -->
+	<quartz messageKey="hr-staff:hr.staff.contract.expiration.reminder"
+		jobService="hrStaffSendAlertWarningContractService" cronExpression="0 0 8 ? * *"
+		jobMethod="sendAlertWarning" description="hr-staff:hr.staff.contract.expiration.reminder.description" />
+	<!-- 试用期到期提醒 -->
+	<quartz messageKey="hr-staff:hr.staff.trial.expiration.reminder"
+		jobService="hrStaffSendAlertWarningTrialService" cronExpression="0 0 8 ? * *"
+		jobMethod="sendAlertWarning" description="hr-staff:hr.staff.trial.expiration.reminder.description" />
+	<!-- 生日提醒 人事提醒 -->
+	<quartz messageKey="hr-staff:hr.staff.birthday.reminder.staff"
+		jobService="hrStaffSendAlertWarningBirthdayService" cronExpression="0 0 8 ? * *"
+		jobMethod="sendAlertWarning" description="hr-staff:hr.staff.birthday.reminder.staff.description" />
+	<!-- 合同置为已过期 -->
+	<quartz messageKey="hr-staff:hr.staff.contract.expiration.status"
+		jobService="hrStaffPersonExperienceContractService" cronExpression="0 0 8 ? * *"
+		jobMethod="updateStatus" description="hr-staff:hr.staff.contract.expiration.status.description" />
+	<!-- 试用到期自动转正 -->
+	<quartz messageKey="hr-staff:hr.staff.positive.content"
+		jobService="hrStaffPersonInfoService" cronExpression="0 0 4 ? * *"
+		jobMethod="updatePersonInfPositive" description="hr-staff:hr.staff.positive.description" />
+	<!-- 人事档案的“入职日期”同步到组织架构的“入职日期” -->
+	<quartz cronExpression="0 0 3 ? * *" jobService="hrStaffPersonInfoService"
+		messageKey="hr-staff:hrStaffPersonInfo.entryTime.quartz.name"
+		jobMethod="updateSyncHireDate" description="hr-staff:hrStaffPersonInfo.entryTime.quartz.description" />
+	<!-- 人事档案的“离职日期”同步到组织架构的“离职日期” -->
+	<quartz cronExpression="0 0 4 ? * *" jobService="hrStaffPersonInfoService"
+		messageKey="hr-staff:hrStaffPersonInfo.leaveTime.quartz.name"
+		jobMethod="updateSyncLeaveDate" description="hr-staff:hrStaffPersonInfo.leaveTime.quartz.description" />
+	<!-- 人事档案的拟转正日期的30天前提醒” -->
+	<quartz cronExpression="0 30 4 ? * *" jobService="hrBecomeRegularWorkerRemind"
+		messageKey="hr-staff:quartz.hrBecomeRegularWorkerRemind" jobMethod="createForm"
+		description="hr-staff:quartz.hrBecomeRegularWorkerRemind.description" />
+	<!-- 人事档案的合同结束日期的45天前提醒” -->
+	<quartz cronExpression="0 30 4 ? * *" jobService="hrExpContractExpirationRemind"
+		messageKey="hr-staff:quartz.hrExpContractExpirationRemind" jobMethod="createForm"
+		description="hr-staff:quartz.hrExpContractExpirationRemind.description" />
+	<!-- 人事档案的个税个人自动提醒功能 -->
+	<quartz cronExpression="0 30 4 28 * ?" jobService="hrPersonalIncomeTaxRemind"
+		messageKey="hr-staff:quartz.hrPersonalIncomeTaxRemind" jobMethod="createFormPerson"
+		description="hr-staff:quartz.hrPersonalIncomeTaxRemind.description" />
+	<!-- 人事档案的个税财务和人事自动提醒功能 -->
+	<quartz cronExpression="0 30 4 26 * ?" jobService="hrPersonalIncomeTaxRemind"
+		messageKey="hr-staff:quartz.hrPersonalIncomeTaxFinance" jobMethod="createFormFinance"
+		description="hr-staff:quartz.hrPersonalIncomeTaxFinance.description" />
+	<!-- 人事档案的离职手续办理提醒 -->
+	<quartz cronExpression="0 30 4 ? * *" jobService="hrLeaveHandelRemind"
+		messageKey="hr-staff:quartz.hrLeaveHandelRemind" jobMethod="createForm"
+		description="hr-staff:quartz.hrLeaveHandelRemind.description" />
+	<!-- 员工试用期报告-入职第一周提醒 -->
+	<quartz cronExpression="0 30 4 ? * *" jobService="hrProbationFeedbackRemind"
+		messageKey="hr-staff:quartz.hrProbationFeedbackRemind" jobMethod="createForm"
+		description="hr-staff:quartz.hrProbationFeedbackRemind.description" />
+		
+	<!-- 员工关怀-入职第一周提醒 -->
+	<quartz cronExpression="0 30 4 ? * *" jobService="hrEmployeeCareRemind"
+		messageKey="hr-staff:quartz.hrEmployeeCareRemind" jobMethod="createForm"
+		description="hr-staff:quartz.hrEmployeeCareRemind.description" />
+
+	<!-- 员工信息搜索 -->
+	<search modelName="com.landray.kmss.hr.staff.model.HrStaffPersonInfo"
+		messageKey="hr-staff:hrStaffPersonInfo.search" />
+
+	<!-- 主页配置 -->
+	<homePage urlPrefix="hr/staff"
+		url="/sys/portal/page.jsp#j_start=/hr/staff/index.jsp&amp;j_target=_iframe"
+		messageKey="hr-staff:module.hr.staff" config="/moduleindex_notopic.jsp?nav=/hr/staff/tree.jsp" />
+
+	<!-- 后台配置 -->
+	<profileConfig key="hr/staff" messageKey="{hr-staff:module.hr.staff}"
+		url="/sys/profile/moduleindex.jsp?nav=/hr/staff/tree.jsp" icon="hr_staff"
+		description="{hr-staff:hrStaff.profileCfg.description}" type="hr"
+		order="305" />
+
+</configs>

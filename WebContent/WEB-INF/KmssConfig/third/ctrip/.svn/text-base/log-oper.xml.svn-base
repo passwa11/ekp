@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<log-oper>
+	<logset>
+		<oper
+            id="ctripCommonOperLog"
+            extends="BaseOperLog"
+            model="*"
+            action="/third/ctrip/ctripCommon.do">
+            <query
+				method="searchCtripOrder" 
+				logPoint="Base_UrlParam;orderSearch"
+				messageKey="button.list"/>
+			<query
+				method="appovalCtripOrder" 
+				logPoint="Base_UrlParam;appovalCtripOrder"
+				messageKey="third-ctrip:ctrip.oper.appovalCtripOrder"/>
+			<query
+				method="ctripSsoAuth" 
+				logPoint="Base_UrlParam;ctripSsoAuth"
+				messageKey="third-ctrip:ctrip.oper.ctripSsoAuth"/>
+        </oper>
+        
+        <oper
+            id="thirdCtripConfigOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ctrip.model.ThirdCtripConfig"
+            action="/third/ctrip/third_ctrip_config/thirdCtripConfig.do">
+            <query
+				method="updateTime" 
+				logPoint="Base_UrlParam;updateTime"
+				messageKey="third-ctrip:thirdCtripConfig.clean.time"/>
+        </oper>
+        
+        <oper
+            id="thirdCtripHotelOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ctrip.model.ThirdCtripHotel"
+            action="/third/ctrip/third_ctrip_hotel/thirdCtripHotel.do">
+        </oper>
+       
+       <oper
+            id="thirdCtripFlightOperLog"
+            extends="BaseOperLog"
+            model="com.landray.kmss.third.ctrip.model.ThirdCtripFlight"
+            action="/third/ctrip/third_ctrip_flight/thirdCtripFlight.do">
+        </oper>
+	</logset>
+</log-oper>

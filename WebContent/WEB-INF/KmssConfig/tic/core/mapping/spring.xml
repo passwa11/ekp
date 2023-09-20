@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean
+		id="ticCoreMappingMainDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.mapping.dao.hibernate.TicCoreMappingMainDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.mapping.model.TicCoreMappingMain" />
+	</bean>
+	<bean
+		id="ticCoreMappingMainTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.mapping.service.spring.TicCoreMappingMainServiceImp">
+		<property name="baseDao">
+			<ref bean="ticCoreMappingMainDao" />
+		</property>
+		<property name="ticCoreMappingModuleService">
+			<ref bean="ticCoreMappingModuleService" />
+		</property>
+	</bean>
+	<bean
+		id="ticCoreMappingMainService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticCoreMappingMainTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticCoreMappingModuleDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.mapping.dao.hibernate.TicCoreMappingModuleDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.mapping.model.TicCoreMappingModule" />
+	</bean>
+	<bean
+		id="ticCoreMappingModuleTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.mapping.service.spring.TicCoreMappingModuleServiceImp">
+		<property name="baseDao">
+			<ref bean="ticCoreMappingModuleDao" />
+		</property>
+		<property name="ticCoreMappingSimpleCategoryTreeBean">
+			<ref bean="ticCoreMappingSimpleCategoryTreeBean" />
+		</property>
+		<property name="ticCoreMappingGlobalCategoryTreeBean">
+			<ref bean="ticCoreMappingGlobalCategoryTreeBean" />
+		</property>
+	</bean>
+	
+	<!-- 控件缓存 -->
+	<bean
+		id="ticCoreMappControlFieldDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.mapping.plugins.control.dao.hibernate.TicCoreMappControlFieldDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.mapping.plugins.control.model.TicCoreMappControlField" />
+	</bean>
+	<bean
+		id="ticCoreMappControlFieldTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.mapping.plugins.control.service.spring.TicCoreMappControlFieldServiceImp">
+		<property
+			name="baseDao">
+			<ref
+				bean="ticCoreMappControlFieldDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticCoreMappControlFieldService"
+		parent="KmssBaseService">
+		<property
+			name="target">
+			<ref
+				bean="ticCoreMappControlFieldTarget" />
+		</property>
+	</bean>
+	
+	<!-- TIC自定义简单分类bean -->
+	<bean
+		id="ticCoreMappingSimpleCategoryTreeBean"
+		class="com.landray.kmss.tic.core.mapping.service.bean.TicCoreMappingSimpleCategoryTreeBean">
+	</bean>
+	<!-- TIC自定义全局分类bean -->
+	<bean
+		id="ticCoreMappingGlobalCategoryTreeBean"
+		class="com.landray.kmss.tic.core.mapping.service.bean.TicCoreMappingGlobalCategoryTreeBean">
+		<property name="sysCategoryMainService">
+			<ref bean="sysCategoryMainService" />
+		</property>
+	</bean>
+	<bean
+		id="ticCoreMappingModuleService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticCoreMappingModuleTarget" />
+		</property>
+	</bean>
+
+	<bean
+		id="ticCoreMappingFuncDao"
+		parent="KmssAuthBaseDao"
+		class="com.landray.kmss.tic.core.mapping.dao.hibernate.TicCoreMappingFuncDaoImp">
+		<property
+			name="modelName"
+			value="com.landray.kmss.tic.core.mapping.model.TicCoreMappingFunc" />
+	</bean>
+	<bean
+		id="ticCoreMappingFuncTarget"
+		parent="KmssBaseTarget"
+		class="com.landray.kmss.tic.core.mapping.service.spring.TicCoreMappingFuncServiceImp">
+		<property name="baseDao">
+			<ref bean="ticCoreMappingFuncDao" />
+		</property>
+	</bean>
+	<bean
+		id="ticCoreMappingFuncService"
+		parent="KmssBaseService">
+		<property name="target">
+			<ref bean="ticCoreMappingFuncTarget" />
+		</property>
+	</bean>
+	<!-- 构造服务器或模块树的service-->
+	<bean
+		id="ticCoreMappingModuleTreeService"
+		class="com.landray.kmss.tic.core.mapping.service.bean.TicCoreMappingModuleTreeService">
+		<property name="ticCoreMappingModuleService">
+			<ref bean="ticCoreMappingModuleService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ticCoreMappingFormEventFuncXmlService"
+		class="com.landray.kmss.tic.core.mapping.service.bean.TicCoreMappingFormEventFuncXmlService">
+		<property name="ticCoreMappingFuncService">
+			<ref bean="ticCoreMappingFuncService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ticCoreMappingFuncListService"
+		class="com.landray.kmss.tic.core.mapping.service.bean.TicCoreMappingFuncListService">
+		<property name="ticCoreMappingFuncService">
+			<ref bean="ticCoreMappingFuncService" />
+		</property>
+	</bean>
+	
+	<bean
+		id="ticCoreMappingExportTreeService"
+		class="com.landray.kmss.tic.core.mapping.service.bean.TicCoreMappingExportTreeService">
+		<property name="loader">
+			<ref bean="sysFormDictLoadService" />
+		</property>
+	</bean>
+
+
+	<!-- 启动生成表单事件jsp片段 且 生成应用模块注册配置文件 -->
+	<!-- 启动生成表单事件jsp片段 -->
+	<bean
+		id="ticCoreMappingCreateJspFile"
+		class="com.landray.kmss.tic.core.mapping.service.spring.TicCoreMappingCreateJspFile">
+		<property
+			name="ticCoreMappingMainService"
+			ref="ticCoreMappingMainService">
+		</property>
+		<property
+			name="ticCoreMappingModuleService"
+			ref="ticCoreMappingModuleService">
+		</property>
+	</bean>
+
+	
+	<bean name="ticCoreMappingSettingService" class="com.landray.kmss.tic.core.mapping.service.bean.TicCoreMappingSettingService" ></bean>
+	
+	<!-- TIC取数据字典，为公式定义器左边目录树使用 -->
+	<bean name="ticCoreMappingDictVarTree" 
+		  class="com.landray.kmss.tic.core.mapping.service.bean.TicCoreMappingDictVarTree" >
+	</bean>
+	<!-- 实现通过数据字典赋值操作 -->
+	<bean name="ticCoreMappingMetaParse" 
+		  class="com.landray.kmss.tic.core.mapping.service.bean.TicCoreMappingMetaParseImpl" >
+		<property name="extendDataDao">
+			<ref bean="KmssExtendDataDao" />
+		</property>
+		<property name="sysMetadataParser">
+			<ref bean="sysMetadataParser" />
+		</property>
+	</bean>
+	
+	<!-- 表单控件函数树 -->
+	<bean name="ticCoreMappingControlTreeBean" 
+		  class="com.landray.kmss.tic.core.mapping.plugins.control.TicCoreMappingControlTreeBean" >
+		  <property name="ticCoreTransSettService">
+			<ref bean="ticCoreTransSettService" />
+		</property>
+		<property name="ticCoreBusiCateService">
+			<ref bean="ticCoreBusiCateService" />
+		</property>
+	</bean>
+	<!-- 表单控件接口实现类 -->
+	<bean name="ticCoreMappingControlRelation" 
+		  class="com.landray.kmss.tic.core.mapping.plugins.control.TicCoreMappingControlRelation" >
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="ticCoreTransSettService">
+			<ref bean="ticCoreTransSettService" />
+		</property>
+	</bean>
+	<!-- 表单控件 -->
+	<bean name="ticCoreControlTreeInfo" 
+		  class="com.landray.kmss.tic.core.mapping.plugins.control.TicCoreControlTreeInfo" >
+		<property name="ticCoreBusiCateService">
+			<ref bean="ticCoreBusiCateService" />
+		</property>
+		<property name="ticCoreTransSettService">
+			<ref bean="ticCoreTransSettService" />
+		</property>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 流程机器人节点服务 -->
+	<bean name="ticWfRobotNodeRunService" class="com.landray.kmss.tic.core.common.service.spring.TicWfRobotNodeRunService"></bean>
+	<!-- 流程事件服务 -->
+	<bean name="ticCoreMappingFlowRefuseListener" class="com.landray.kmss.tic.core.common.service.spring.TicCoreMappingFlowRefuseListener"></bean>
+</beans>

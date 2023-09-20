@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+    xsi:schemaLocation="http://www.example.org/plugin-config ../../plugin.xsd" 
+    xmlns="http://www.example.org/plugin-config" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <!-- SSO 
+	<extension
+		point="com.landray.kmss.sys.authentication">
+		<item
+			name="authenticationProcessingFilter">
+			<param
+				name="bean"
+				value="welinkWebOauth2ProcessingFilter" />
+		</item>
+	</extension>
+	-->
+	
+	<!-- SSO -->
+	<extension
+		point="com.landray.kmss.sys.authentication">
+		<item
+			name="authenticationProcessingFilter">
+			<param
+				name="bean"
+				value="welinkClientSsoProcessingFilter" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.notify">
+		<item name="todoExtend">
+			<param name="bean" value="thirdWelinkTodoMessageProvider" />
+			<param
+					name="name"
+					value="{third-welink:third.welink.extension.notify}" />
+		</item>
+	</extension>
+	
+	<extension point="com.landray.kmss.sys.notify">
+		<item name="todoExtend">
+			<param name="bean" value="thirdWelinkTodoTaskProvider" />
+			<param
+					name="name"
+					value="{third-welink:third.welink.extension.notify.todo}" />
+		</item>
+	</extension>
+	
+</plugin>
